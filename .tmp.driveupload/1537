@@ -1,0 +1,89 @@
+import type { Metadata } from "next";
+import { requireOrgPage } from "@/lib/auth/guard";
+import { listMembers } from "@/lib/data/workspace";
+import { ASSIGNABLE_CLIENT_ROLES, capabilitiesFor } from "@/lib/auth/roles";
+import { ROLE_META, metaOf } from "@/lib/domain/enums";
+import { Card, CardBody, CardHeader } from "@/components/ui/card";
+import { Notice } from "@/components/ui/feedback";
+import { MembersTable, AddMemberButton } from "./members-client";
+
+export const metadata: Metadata = { title: "Members" };
+
+export default async function MembersPage({ params }: { params: Promise<{ org: string }> }) {
+  const { org: slug } = await params;
+  const ctx = await requireOrgPage(slug, "workspace.view");
+  const members = await listMembers(ctx.org.id);
+  const canManage = ctx.can("workspace.members");
+
+  const assignable = ctx.role === "super_admin"
+    ? (["client_admin", "client_member", "editor", "internal_operator"] as const)
+    : ctx.role === "internal_operator"
+      ? (["client_admin", "client_member", "editor", "internal_operator"] as const)
+      : ASSIGNABLE_CLIENT_ROLES;
+
+  return (
+    <div className="space-y-6">
+      <header className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="max-w-2xl">
+          <h1 className="text-section">Members</h1>
+          <p className="mt-2 text-[14px] leading-relaxed text-muted">
+            Who can see and do what. Permissions are enforced on the server, not just hidden in the
+            interface — a role without a capability cannot perform the action by any route.
+          </p>
+        </div>
+        {canManage ? (
+          <AddMemberButton slug={slug} assignableRoles={[...assignable]} />
+        ) : null}
+      </header>
+
+      <MembersTable
+        slug={slug}
+        canManage={canManage}
+        currentUserId={ctx.user.id}
+        assignableRoles={[...assignable]}
+        members={members.map((m) => ({
+          id: m.id,
+          name: m.name,
+          email: m.email,
+          title: m.title,
+          role: m.role,
+          avatarHue: m.avatarHue,
+          isActive: m.isActive,
+          lastSeenAt: m.lastSeenAt ? m.lastSeenAt.toISOString() : null,
+        }))}
+      />
+
+      <Card>
+        <CardHeader
+          title="What each role can do"
+          eyebrow="Reference"
+          description="One capability matrix drives both the interface and the server guards."
+        />
+        <CardBody className="pt-0">
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {(["client_admin", "client_member", "editor", "internal_operator", "super_admin"] as const).map(
+              (role) => {
+                const meta = metaOf(ROLE_META, role);
+                const capabilities = capabilitiesFor(role);
+                return (
+                  <div key={role} className="rounded-lg border border-line bg-surface p-4">
+                    <p className="text-[13px] font-medium text-ink">{meta.label}</p>
+                    <p className="mt-1 text-[12px] leading-relaxed text-muted">{meta.description}</p>
+                    <p className="mt-2.5 text-[11.5px] text-ghost">
+                      {capabilities.length} capabilities
+                    </p>
+                  </div>
+                );
+              },
+            )}
+          </div>
+        </CardBody>
+      </Card>
+
+      <Notice tone="neutral" title="How access is provisioned">
+        Threadline has no self-serve signup and does not send invitation emails in this version.
+        Adding a member creates their account with an initial password you set and share securely.
+      </Notice>
+    </div>
+  );
+}

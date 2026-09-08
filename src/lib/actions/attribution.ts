@@ -1,0 +1,370 @@
+"use server";
+
+import { z } from "zod";
+import { revalidatePath } from "next/cache";
+import { prisma } from "@/lib/db/client";
+import { audit, touchOrg } from "@/lib/auth/audit";
+import { requireOrgAccess } from "@/lib/auth/guard";
+import {
+  attributionClassSchema,
+  commercialEventKindSchema,
+  evidenceBasisSchema,
+  eventSourceSchema,
+  touchpointKindSchema,
+  workClassSchema,
+} from "@/lib/domain/enums";
+import { newSlug, validateDestination } from "@/lib/domain/tracked-link";
+import {
+  checkbox,
+  cleanText,
+  err,
+  guarded,
+  ok,
+  okVoid,
+  optionalDate,
+  parseForm,
+  type ActionResult,
+} from "./shared";
+import { assertEvidenceSupportable } from "@/lib/domain/attribution";
+
+/**
+ * Attribution writes.
+ *
+ * Two rules run through every action here:
+ *
+ *   1. **Evidence strength is set by a person, never by the system.** Nothing
+ *      in this file infers an attribution class from the shape of the data. A
+ *      journey with four touchpoints does not become "directly tracked" because
+ *      it has four touchpoints; somebody has to say what the evidence actually
+ *      supports.
+ *   2. **Provenance is recorded on every row.** Who entered it, when, from
+ *      where. A commercial figure with no source is a rumour with a currency
+ *      symbol, and it will eventually end up in a report.
+ */
+
+function revalidate(slug: string) {
+  revalidatePath(`/app/${slug}/performance`);
+  revalidatePath(`/app/${slug}/performance/attribution`);
+  revalidatePath(`/app/${slug}/pipeline`);
+  revalidatePath(`/app/${slug}/distribution`);
+}
+
+/* ------------------------------ Tracked links ------------------------------- */
+
+const linkSchema = z.object({
+  label: z.string().min(2, "Give the link a name you will recognise later.").max(200),
+  destinationUrl: z.string().min(3, "Where should this link go?").max(2000),
+  contentItemId: z.string().optional(),
+  publishRecordId: z.string().optional(),
+  platform: z.string().max(120).optional(),
+  campaign: z.string().max(120).optional(),
+});
+
+export async function createTrackedLinkAction(
+  orgSlug: string,
+  _prev: ActionResult<{ id: string; slug: string }> | null,
+  formData: FormData,
+): Promise<ActionResult<{ id: string; slug: string }>> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "attribution.manage");
+    const input = parseForm(linkSchema, formData);
+
+    // Validated here rather than trusted from the form. An unvalidated
+    // destination stored against a public slug on Threadline's own domain is an
+    // open redirect, and one wearing a company's domain is a phishing hop.
+    const destination = validateDestination(input.destinationUrl, process.env.NEXT_PUBLIC_APP_URL);
+
+    // Attribution must point at content in THIS workspace.
+    if (input.contentItemId) {
+      const content = await prisma.contentItem.findFirst({
+        where: { id: input.contentItemId, orgId: ctx.org.id },
+        select: { id: true },
+      });
+      if (!content) return err("That content item is not in this workspace.", "validation");
+    }
+
+    // Collisions are astronomically unlikely, but a collision would silently
+    // send one client's audience to another client's destination.
+    let slug = newSlug();
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      const clash = await prisma.trackedLink.findUnique({ where: { slug }, select: { id: true } });
+      if (!clash) break;
+      slug = newSlug();
+    }
+
+    const link = await prisma.trackedLink.create({
+      data: {
+        orgId: ctx.org.id,
+        slug,
+        label: cleanText(input.label, 200),
+        destinationUrl: destination.url,
+        contentItemId: input.contentItemId || null,
+        publishRecordId: input.publishRecordId || null,
+        platform: input.platform ? cleanText(input.platform, 120) : null,
+        campaign: input.campaign ? cleanText(input.campaign, 120) : null,
+        createdById: ctx.user.id,
+      },
+    });
+
+    await audit(ctx, {
+      action: "tracked_link.create",
+      entityType: "TrackedLink",
+      entityId: link.id,
+      summary: `Created tracked link "${link.label}" to ${destination.host}`,
+      meta: { slug, destination: destination.url },
+    });
+    await touchOrg(ctx.org.id);
+
+    revalidate(orgSlug);
+    return ok({ id: link.id, slug }, "Tracked link created.");
+  });
+}
+
+export async function setTrackedLinkActiveAction(
+  orgSlug: string,
+  linkId: string,
+  active: boolean,
+): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "attribution.manage");
+
+    const link = await prisma.trackedLink.findFirst({
+      where: { id: linkId, orgId: ctx.org.id },
+      select: { id: true, label: true },
+    });
+    if (!link) return err("That link is not in this workspace.", "not_found");
+
+    await prisma.trackedLink.update({ where: { id: link.id }, data: { active } });
+
+    await audit(ctx, {
+      action: active ? "tracked_link.enable" : "tracked_link.disable",
+      entityType: "TrackedLink",
+      entityId: link.id,
+      // Retiring a link is not deleting it: the touchpoints it already recorded
+      // stay, because they describe things that genuinely happened.
+      summary: `${active ? "Re-enabled" : "Retired"} tracked link "${link.label}"`,
+    });
+
+    revalidate(orgSlug);
+    return okVoid(active ? "Link is live again." : "Link retired. Past clicks are kept.");
+  });
+}
+
+/* ---------------------------- Commercial events ----------------------------- */
+
+const eventSchema = z.object({
+  kind: commercialEventKindSchema,
+  occurredAt: optionalDate,
+  inquiryId: z.string().optional(),
+  value: z.coerce.number().min(0).default(0),
+  source: eventSourceSchema.default("manual"),
+  externalProvider: z.string().max(60).optional(),
+  externalRecordId: z.string().max(200).optional(),
+  externalRecordUrl: z.string().max(600).optional(),
+  evidenceBasis: evidenceBasisSchema.default("client_reported"),
+  attribution: attributionClassSchema.default("qualitative_only"),
+  note: z.string().max(4000).optional(),
+});
+
+export async function recordCommercialEventAction(
+  orgSlug: string,
+  _prev: ActionResult<{ id: string }> | null,
+  formData: FormData,
+): Promise<ActionResult<{ id: string }>> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "attribution.manage");
+    const input = parseForm(eventSchema, formData);
+
+    let visitorId: string | null = null;
+    if (input.inquiryId) {
+      const inquiry = await prisma.inquiry.findFirst({
+        where: { id: input.inquiryId, orgId: ctx.org.id },
+        select: { id: true, visitorId: true },
+      });
+      if (!inquiry) return err("That record is not in this workspace.", "validation");
+      visitorId = inquiry.visitorId;
+    }
+
+    // The evidence class must be backed by the evidence it names (QA-005).
+    assertEvidenceSupportable(input.attribution, { visitorId, inquiryId: input.inquiryId || null });
+
+    // A monetary claim needs a source that could in principle be checked.
+    if (input.value > 0 && input.source === "manual" && !input.note?.trim()) {
+      return err(
+        "A figure entered by hand needs a note saying where it came from. Without one it is a number nobody can check.",
+        "workflow",
+      );
+    }
+
+    const event = await prisma.commercialEvent.create({
+      data: {
+        orgId: ctx.org.id,
+        kind: input.kind,
+        occurredAt: input.occurredAt ?? new Date(),
+        inquiryId: input.inquiryId || null,
+        visitorId,
+        valueMinor: Math.round(input.value * 100),
+        currency: ctx.org.currency,
+        source: input.source,
+        externalProvider: input.externalProvider ? cleanText(input.externalProvider, 60) : null,
+        externalRecordId: input.externalRecordId ? cleanText(input.externalRecordId, 200) : null,
+        externalRecordUrl: input.externalRecordUrl ? cleanText(input.externalRecordUrl, 600) : null,
+        evidenceBasis: input.evidenceBasis,
+        // Carried straight from what the operator selected. Nothing here infers
+        // a stronger class from the shape of the journey.
+        attribution: input.attribution,
+        note: input.note ? cleanText(input.note) : null,
+        recordedById: ctx.user.id,
+      },
+    });
+
+    await audit(ctx, {
+      action: "commercial_event.record",
+      entityType: "CommercialEvent",
+      entityId: event.id,
+      summary: `Recorded ${input.kind.replace(/_/g, " ")}${input.value > 0 ? ` worth ${input.value}` : ""}`,
+      meta: { source: input.source, attribution: input.attribution },
+    });
+    await touchOrg(ctx.org.id);
+
+    revalidate(orgSlug);
+    return ok({ id: event.id }, "Recorded.");
+  });
+}
+
+/* ---------------------------- Manual touchpoints ---------------------------- */
+
+const touchSchema = z.object({
+  kind: touchpointKindSchema.default("reported"),
+  contentItemId: z.string().optional(),
+  inquiryId: z.string().optional(),
+  platform: z.string().max(120).optional(),
+  occurredAt: optionalDate,
+  note: z.string().max(4000).optional(),
+});
+
+/**
+ * A touch somebody told us about.
+ *
+ * "They said they had seen the carve-out post" is real evidence and belongs in
+ * the journey — but it is a different kind of evidence from a click, so it is
+ * stored with `source: client_reported` and never silently becomes a tracked
+ * one.
+ */
+export async function recordTouchpointAction(
+  orgSlug: string,
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "attribution.manage");
+    const input = parseForm(touchSchema, formData);
+
+    if (!input.note?.trim()) {
+      return err("Write what was actually said. That is the entire evidence for this touch.", "workflow");
+    }
+
+    let visitorId: string | null = null;
+    if (input.inquiryId) {
+      const inquiry = await prisma.inquiry.findFirst({
+        where: { id: input.inquiryId, orgId: ctx.org.id },
+        select: { visitorId: true },
+      });
+      if (!inquiry) return err("That record is not in this workspace.", "validation");
+      visitorId = inquiry.visitorId;
+    }
+
+    if (input.contentItemId) {
+      const content = await prisma.contentItem.findFirst({
+        where: { id: input.contentItemId, orgId: ctx.org.id },
+        select: { id: true },
+      });
+      if (!content) return err("That content item is not in this workspace.", "validation");
+    }
+
+    await prisma.touchpoint.create({
+      data: {
+        orgId: ctx.org.id,
+        visitorId,
+        contentItemId: input.contentItemId || null,
+        kind: input.kind,
+        platform: input.platform ? cleanText(input.platform, 120) : null,
+        source: "client_reported",
+        note: cleanText(input.note),
+        occurredAt: input.occurredAt ?? new Date(),
+      },
+    });
+
+    await audit(ctx, {
+      action: "touchpoint.record",
+      entityType: "Touchpoint",
+      summary: "Recorded a reported touchpoint",
+      meta: { kind: input.kind },
+    });
+
+    revalidate(orgSlug);
+    return okVoid("Recorded.");
+  });
+}
+
+/* ------------------------------ Delivery load ------------------------------- */
+
+const loadSchema = z.object({
+  activeMinutes: z.coerce.number().int().min(0).max(10_000).optional(),
+  waitingMinutes: z.coerce.number().int().min(0).max(100_000).optional(),
+  cost: z.coerce.number().min(0).default(0),
+  workClass: workClassSchema.optional(),
+  loadNote: z.string().max(2000).optional(),
+  done: checkbox,
+});
+
+/**
+ * Delivery Load on a task.
+ *
+ * Filled in after the work, by whoever did it. Active and waiting minutes are
+ * kept apart because they have completely different fixes: active time is
+ * reduced by better tooling or delegation, waiting time by changing what the
+ * client is asked for and when.
+ */
+export async function logDeliveryLoadAction(
+  orgSlug: string,
+  taskId: string,
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "tasks.complete");
+    const input = parseForm(loadSchema, formData);
+
+    const task = await prisma.task.findFirst({
+      where: { id: taskId, orgId: ctx.org.id },
+      select: { id: true, title: true, status: true },
+    });
+    if (!task) return err("That task is not in this workspace.", "not_found");
+
+    await prisma.task.update({
+      where: { id: task.id },
+      data: {
+        activeMinutes: input.activeMinutes ?? null,
+        waitingMinutes: input.waitingMinutes ?? null,
+        costMinor: Math.round(input.cost * 100),
+        workClass: input.workClass ?? null,
+        loadNote: input.loadNote ? cleanText(input.loadNote, 2000) : null,
+        ...(input.done && task.status !== "done"
+          ? { status: "done", completedAt: new Date() }
+          : {}),
+      },
+    });
+
+    await audit(ctx, {
+      action: "task.load",
+      entityType: "Task",
+      entityId: task.id,
+      summary: `Logged delivery load for "${task.title}"`,
+      meta: { activeMinutes: input.activeMinutes ?? null, workClass: input.workClass ?? null },
+    });
+
+    revalidatePath(`/app/${orgSlug}/tasks`);
+    return okVoid("Logged.");
+  });
+}

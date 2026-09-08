@@ -1,0 +1,5 @@
+client,period,metric_layer,metric,baseline_value,current_value,asset_content_id,platform_channel,live_url,tracking_url_utm,source_evidence,measured_vs_reported,attribution_class,first_touch,last_touch,pipeline_value,closed_won_value,permission_state,notes
+,,OPERATIONAL,Founder hours on content/week,,,,,,,manual/client,MEASURED_OR_CLIENT_REPORTED,QUALITATIVE_ONLY,,,,,internal,
+,,ATTENTION,Views / retention / watch time,,,,,,,platform analytics,MEASURED,ASSOCIATED_CORRELATED,,,,,internal,
+,,COMMERCIAL_INTENT,Booked calls,,,,,,,CRM/booking/client,MEASURED_OR_CLIENT_REPORTED,DIRECTLY_TRACKED_OR_BUYER_NAMED,,,,,internal,
+,,COMMERCIAL_OUTCOME,Qualified pipeline / closed-won revenue,,,,,,,CRM/client,MEASURED_OR_CLIENT_REPORTED,DIRECTLY_TRACKED_BUYER_NAMED_MULTI_TOUCH_OR_ASSOCIATED,,,,,internal,
