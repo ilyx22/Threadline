@@ -1,0 +1,39 @@
+{
+  "links": [
+    "/",
+    "/archive",
+    "https://www.thebirdhouse.co/?el=newsletternavbar",
+    "/",
+    "/archive",
+    "https://www.thebirdhouse.co/?el=newsletternavbar"
+  ],
+  "meta": {
+    "viewport": "width=device-width, initial-scale=1, shrink-to-fit=no",
+    "mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-capable": "yes",
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
+    "theme-color": "#FDFDFD",
+    "description": "",
+    "keywords": "culture, business, creativity",
+    "author": "Marcos Ruiz",
+    "og:type": "website",
+    "og:url": "https://www.thebirdhouse.email/x-playbook",
+    "og:title": "X Playbook | The Birdhouse",
+    "og:description": "Daily insights read by top names on 𝕏 and LinkedIn.",
+    "og:site_name": "The Birdhouse",
+    "og:image": "https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/publication/thumbnail/c767854f-afc9-4370-a9dd-425c586457b",
+    "og:image:alt": "Daily insights read by top names on 𝕏 and LinkedIn.",
+    "twitter:url": "https://www.thebirdhouse.email/x-playbook",
+    "twitter:title": "X Playbook | The Birdhouse",
+    "twitter:description": "Daily insights read by top names on 𝕏 and LinkedIn.",
+    "twitter:image": "https://media.beehiiv.com/cdn-cgi/image/fit=scale-down,format=auto,onerror=redirect,quality=80/uploads/publication/thumbnail/c767854f-afc9-4370-a9dd-425c586457b",
+    "twitter:card": "summary_large_image",
+    "twitter:creator": "",
+    "fb:app_id": "1932054120322754"
+  },
+  "scripts": [
+    "app.birdie.so/widget/embed/q2je1lwj",
+    "client.px-cloud.net/PXeBumDLwe/main.min.js",
+    "elements.stytch.com/telemetry.js"
+  ]
+}

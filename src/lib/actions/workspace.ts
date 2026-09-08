@@ -29,7 +29,7 @@ import {
   EMPTY_VOICE,
 } from "@/lib/domain/brand-brain";
 import { parseWith } from "@/lib/db/json";
-import { getStorage } from "@/lib/storage";
+import { getStorage, storageProviderName } from "@/lib/storage";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import {
   cleanText,
@@ -905,6 +905,7 @@ export async function uploadLibraryAssetAction(
         mimeType: stored.mimeType,
         sizeBytes: stored.sizeBytes,
         storagePath: stored.storagePath,
+        storageProvider: storageProviderName(),
         tags: stringifyArray(input.tags),
         uploadedById: ctx.user.id,
       },

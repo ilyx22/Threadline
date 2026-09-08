@@ -1,0 +1,431 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "We’ll Build Your Personal Brand on , , , and more.",
+      "rect": {
+        "x": 30,
+        "y": 127,
+        "w": 330,
+        "h": 213
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "48px",
+        "fontWeight": "400",
+        "lineHeight": "52.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "Trusted By 100+ Founder-Led Companies",
+      "rect": {
+        "x": 12,
+        "y": 892,
+        "w": 365,
+        "h": 26
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "400",
+        "lineHeight": "26px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Why The Birdhouse?",
+      "rect": {
+        "x": 56,
+        "y": 1771,
+        "w": 277,
+        "h": 44
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "40px",
+        "fontWeight": "400",
+        "lineHeight": "44px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "What we do?",
+      "rect": {
+        "x": 110,
+        "y": 3327,
+        "w": 169,
+        "h": 44
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "40px",
+        "fontWeight": "400",
+        "lineHeight": "44px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Words from our clients",
+      "rect": {
+        "x": 47,
+        "y": 4041,
+        "w": 275,
+        "h": 40
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "40px",
+        "fontWeight": "400",
+        "lineHeight": "44px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Our Process:",
+      "rect": {
+        "x": 111,
+        "y": 4631,
+        "w": 168,
+        "h": 44
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "40px",
+        "fontWeight": "400",
+        "lineHeight": "44px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "About Us",
+      "rect": {
+        "x": 20,
+        "y": 6744,
+        "w": 350,
+        "h": 44
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "40px",
+        "fontWeight": "400",
+        "lineHeight": "44px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "Early Adoption",
+      "rect": {
+        "x": 45,
+        "y": 2083,
+        "w": 300,
+        "h": 29
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "400",
+        "lineHeight": "28.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Fractional Personal Brand",
+      "rect": {
+        "x": 45,
+        "y": 2513,
+        "w": 300,
+        "h": 29
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "400",
+        "lineHeight": "28.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Audience + Community",
+      "rect": {
+        "x": 45,
+        "y": 2960,
+        "w": 300,
+        "h": 29
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "400",
+        "lineHeight": "28.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Market Research and Competitor Analysis",
+      "rect": {
+        "x": 60,
+        "y": 4993,
+        "w": 170,
+        "h": 51
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "400",
+        "lineHeight": "28.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Done-For-You, Hands-Free Content Creation",
+      "rect": {
+        "x": 60,
+        "y": 5288,
+        "w": 156,
+        "h": 77
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "400",
+        "lineHeight": "28.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "In-House Graphic Designer",
+      "rect": {
+        "x": 60,
+        "y": 5608,
+        "w": 136,
+        "h": 51
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "400",
+        "lineHeight": "28.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "Partner with us to build a viral, profitable Personal Brand that stands the test of time.",
+      "rect": {
+        "x": 42,
+        "y": 360,
+        "w": 306,
+        "h": 34
+      },
+      "style": {
+        "fontFamily": "Roboto, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "16.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "𝕏 has over 600 Million active users. (over 1 billion during major news events)",
+      "rect": {
+        "x": 45,
+        "y": 2128,
+        "w": 300,
+        "h": 50
+      },
+      "style": {
+        "fontFamily": "Roboto, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "16.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(4, 50, 77, 0.5)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "It will become the most used social media platform on the planet - the \"Everything App\".",
+      "rect": {
+        "x": 45,
+        "y": 2186,
+        "w": 300,
+        "h": 34
+      },
+      "style": {
+        "fontFamily": "Roboto, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "16.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(4, 50, 77, 0.5)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Hiring writers, designers, and strategists is hard.",
+      "rect": {
+        "x": 45,
+        "y": 2558,
+        "w": 300,
+        "h": 17
+      },
+      "style": {
+        "fontFamily": "Roboto, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "16.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(4, 50, 77, 0.5)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We've curated the best talent on the internet with 10 billion impressions under our belt. ",
+      "rect": {
+        "x": 45,
+        "y": 2583,
+        "w": 300,
+        "h": 84
+      },
+      "style": {
+        "fontFamily": "Roboto, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "16.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(4, 50, 77, 0.5)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Since 2022, we've generated over 20,000 unique buyers for founder-led companies. These ran",
+      "rect": {
+        "x": 45,
+        "y": 3005,
+        "w": 300,
+        "h": 84
+      },
+      "style": {
+        "fontFamily": "Roboto, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "16.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(4, 50, 77, 0.5)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "The #1 way to build trust with your customers, is to create valuable content that position",
+      "rect": {
+        "x": 45,
+        "y": 3097,
+        "w": 300,
+        "h": 50
+      },
+      "style": {
+        "fontFamily": "Roboto, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "16.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(4, 50, 77, 0.5)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We build a full creative brief, voice & tone, and avatar breakdown as a foundation for you",
+      "rect": {
+        "x": 34,
+        "y": 3479,
+        "w": 311,
+        "h": 58
+      },
+      "style": {
+        "fontFamily": "Roboto, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(4, 50, 77, 0.66)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": []
+}

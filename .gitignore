@@ -18,3 +18,11 @@ next-env.d.ts
 .vercel
 coverage/
 scripts/qa/.shots/
+
+# reference analysis captures (observational cache, never served)
+reference-analysis/**/*.png
+reference-analysis/**/*.jpg
+reference-analysis/**/*.jpeg
+reference-analysis/**/cache/
+reference-analysis/**/.chrome-profile/
+.chrome-profile/

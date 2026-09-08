@@ -1,0 +1,304 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "section-hero",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1024,
+        "h": 1017
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "We’ll Build Your Personal Brand on  ,  ,  , and more."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "section-logos",
+      "rect": {
+        "x": 0,
+        "y": 1017,
+        "w": 1024,
+        "h": 226
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Trusted By 100+ Founder-Led Companies"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "section-three",
+      "rect": {
+        "x": 0,
+        "y": 1243,
+        "w": 1024,
+        "h": 827
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "why",
+      "cls": "section-why",
+      "rect": {
+        "x": 0,
+        "y": 2018,
+        "w": 1024,
+        "h": 836
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Why The Birdhouse?"
+    },
+    {
+      "tag": "section",
+      "id": "what",
+      "cls": "section-what",
+      "rect": {
+        "x": 0,
+        "y": 2854,
+        "w": 1024,
+        "h": 465
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "What we do?"
+    },
+    {
+      "tag": "section",
+      "id": "testimonials",
+      "cls": "section-testimonials",
+      "rect": {
+        "x": 0,
+        "y": 3319,
+        "w": 1024,
+        "h": 503
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Words from our clients"
+    },
+    {
+      "tag": "section",
+      "id": "included",
+      "cls": "section-included",
+      "rect": {
+        "x": 0,
+        "y": 3822,
+        "w": 1024,
+        "h": 1491
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Our Process:"
+    },
+    {
+      "tag": "section",
+      "id": "about-us",
+      "cls": "section-about-us",
+      "rect": {
+        "x": 0,
+        "y": 5313,
+        "w": 1024,
+        "h": 588
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "About Us"
+    },
+    {
+      "tag": "section",
+      "id": "faq",
+      "cls": "section-faq",
+      "rect": {
+        "x": 0,
+        "y": 5901,
+        "w": 1024,
+        "h": 836
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Frequently\nAsked Questions"
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "footer",
+      "rect": {
+        "x": 0,
+        "y": 6737,
+        "w": 1024,
+        "h": 709
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    }
+  ],
+  "ctas": [
+    {
+      "text": "APPLY",
+      "rect": {
+        "x": 871,
+        "y": 15,
+        "w": 133,
+        "h": 50
+      },
+      "style": {
+        "backgroundColor": "rgb(0, 172, 238)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "60px",
+        "border": "0px none rgb(255, 255, 255)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "padding": "0px 20px 0px 25px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Apply",
+      "rect": {
+        "x": 50,
+        "y": 699,
+        "w": 156,
+        "h": 60
+      },
+      "style": {
+        "backgroundColor": "rgb(0, 172, 238)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "60px",
+        "border": "0px none rgb(255, 255, 255)",
+        "boxShadow": "none",
+        "fontSize": "18px",
+        "fontWeight": "700",
+        "padding": "0px 40px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a Call",
+      "rect": {
+        "x": 412,
+        "y": 2760,
+        "w": 201,
+        "h": 60
+      },
+      "style": {
+        "backgroundColor": "rgb(0, 172, 238)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "60px",
+        "border": "0px none rgb(255, 255, 255)",
+        "boxShadow": "none",
+        "fontSize": "18px",
+        "fontWeight": "700",
+        "padding": "0px 40px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Watch Video",
+      "rect": {
+        "x": 242,
+        "y": 3685,
+        "w": 149,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "color": "rgb(4, 50, 77)",
+        "borderRadius": "40px",
+        "border": "0px none rgb(4, 50, 77)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "padding": "10px 15px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Watch Video",
+      "rect": {
+        "x": 919,
+        "y": 3685,
+        "w": 149,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "color": "rgb(4, 50, 77)",
+        "borderRadius": "40px",
+        "border": "0px none rgb(4, 50, 77)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "padding": "10px 15px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Watch Video",
+      "rect": {
+        "x": 1596,
+        "y": 3685,
+        "w": 149,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "color": "rgb(4, 50, 77)",
+        "borderRadius": "40px",
+        "border": "0px none rgb(4, 50, 77)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "padding": "10px 15px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Watch Video",
+      "rect": {
+        "x": 2273,
+        "y": 3685,
+        "w": 149,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "color": "rgb(4, 50, 77)",
+        "borderRadius": "40px",
+        "border": "0px none rgb(4, 50, 77)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "padding": "10px 15px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Watch Video",
+      "rect": {
+        "x": 2949,
+        "y": 3685,
+        "w": 149,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "color": "rgb(4, 50, 77)",
+        "borderRadius": "40px",
+        "border": "0px none rgb(4, 50, 77)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "padding": "10px 15px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

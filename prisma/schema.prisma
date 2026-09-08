@@ -32,43 +32,44 @@ model User {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
-  sessions           Session[]
-  memberships        Membership[]
-  auditLogs          AuditLog[]
-  notifications      Notification[]
-  tasksAssigned      Task[]                  @relation("TaskAssignee")
-  comments           Comment[]
-  assetsUploaded     Asset[]
-  ideasCreated       Idea[]
-  scriptVersions     ScriptVersion[]
-  contentAsEditor    ContentItem[]           @relation("ContentEditor")
-  contentAsFounder   ContentItem[]           @relation("ContentFounder")
-  contentApproved    ContentItem[]           @relation("ContentApprover")
-  contentEvents      ContentEvent[]
-  reportsGenerated   WeeklyReport[]
-  aiGenerations      AiGeneration[]
-  supportIssuesOwned SupportIssue[]
-  sopEdits           SopDocument[]
-  runsCreated        IntelligenceRun[]
-  signalDecisions    CandidateSignal[]
-  diagnosesCreated   ConstraintDiagnosis[]
-  milestonesSigned   InstallationMilestone[]
-  proofRecorded      ProofPeriod[]
-  readinessReviews   RecordingReadiness[]
-  packagesApproved   PlatformPackage[]       @relation("PackageApprover")
-  prospectsOwned     Prospect[]              @relation("ProspectOwner")
-  wedgesOwned        MarketWedge[]           @relation("WedgeOwner")
-  callsOwned         SalesCall[]             @relation("CallOwner")
-  funnelReviews      FunnelReview[]          @relation("ReviewAuthor")
-  trackedLinks       TrackedLink[]           @relation("LinkAuthor")
-  examplesAdded      ResearchExample[]       @relation("ExampleAuthor")
-  eventsRecorded     CommercialEvent[]       @relation("EventRecorder")
-  contentRoots        ContentRoot[]        @relation("RootAuthor")
-  expectationsAuthored ContentExpectation[] @relation("ExpectationAuthor")
-  diagnosesAuthored   ContentDiagnosis[]   @relation("DiagnosisAuthor")
-  diagnosesApproved   ContentDiagnosis[]   @relation("DiagnosisApprover")
-  correctionsAuthored CorrectionEntry[]    @relation("CorrectionAuthor")
-  oauthStatesStarted OAuthState[]      @relation("OAuthInitiator")
+  sessions             Session[]
+  memberships          Membership[]
+  auditLogs            AuditLog[]
+  notifications        Notification[]
+  tasksAssigned        Task[]                  @relation("TaskAssignee")
+  comments             Comment[]
+  assetsUploaded       Asset[]
+  ideasCreated         Idea[]
+  scriptVersions       ScriptVersion[]
+  contentAsEditor      ContentItem[]           @relation("ContentEditor")
+  contentAsFounder     ContentItem[]           @relation("ContentFounder")
+  contentApproved      ContentItem[]           @relation("ContentApprover")
+  contentEvents        ContentEvent[]
+  reportsGenerated     WeeklyReport[]
+  aiGenerations        AiGeneration[]
+  supportIssuesOwned   SupportIssue[]
+  sopEdits             SopDocument[]
+  runsCreated          IntelligenceRun[]
+  signalDecisions      CandidateSignal[]
+  diagnosesCreated     ConstraintDiagnosis[]
+  milestonesSigned     InstallationMilestone[]
+  proofRecorded        ProofPeriod[]
+  readinessReviews     RecordingReadiness[]
+  packagesApproved     PlatformPackage[]       @relation("PackageApprover")
+  prospectsOwned       Prospect[]              @relation("ProspectOwner")
+  wedgesOwned          MarketWedge[]           @relation("WedgeOwner")
+  callsOwned           SalesCall[]             @relation("CallOwner")
+  funnelReviews        FunnelReview[]          @relation("ReviewAuthor")
+  trackedLinks         TrackedLink[]           @relation("LinkAuthor")
+  examplesAdded        ResearchExample[]       @relation("ExampleAuthor")
+  eventsRecorded       CommercialEvent[]       @relation("EventRecorder")
+  contentRoots         ContentRoot[]           @relation("RootAuthor")
+  expectationsAuthored ContentExpectation[]    @relation("ExpectationAuthor")
+  diagnosesAuthored    ContentDiagnosis[]      @relation("DiagnosisAuthor")
+  diagnosesApproved    ContentDiagnosis[]      @relation("DiagnosisApprover")
+  correctionsAuthored  CorrectionEntry[]       @relation("CorrectionAuthor")
+  oauthStatesStarted   OAuthState[]            @relation("OAuthInitiator")
+  authTokens           AuthToken[]
 }
 
 model Session {
@@ -161,14 +162,16 @@ model Organization {
   commercialEvents     CommercialEvent[]
   judgeVerdicts        JudgeVerdict[]
 
+  proofPermission     ProofPermission?
+  contentRoots        ContentRoot[]
+  contentExpectations ContentExpectation[]
+  contentDiagnoses    ContentDiagnosis[]
+  corrections         CorrectionEntry[]
+  credentials         Credential[]
+  oauthStates         OAuthState[]
+
   @@index([kind, status])
   @@index([synthetic])
-  contentRoots       ContentRoot[]
-  contentExpectations ContentExpectation[]
-  contentDiagnoses   ContentDiagnosis[]
-  corrections        CorrectionEntry[]
-  credentials        Credential[]
-  oauthStates        OAuthState[]
 }
 
 model Membership {
@@ -537,6 +540,10 @@ model Idea {
   scripts      Script[]
   contentItems ContentItem[]
 
+  intendedJob String  @default("authority") // discovery | authority | conversion
+  requestId   String? // client-supplied idempotency key
+
+  @@unique([orgId, requestId])
   @@index([orgId, status])
   @@index([orgId, priorityScore])
   @@index([rootId])
@@ -639,16 +646,16 @@ model ContentItem {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  org        Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  idea       Idea?        @relation(fields: [ideaId], references: [id], onDelete: SetNull)
-  script     Script?      @relation(fields: [scriptId], references: [id], onDelete: SetNull)
-  editor     User?        @relation("ContentEditor", fields: [editorId], references: [id], onDelete: SetNull)
-  founder    User?        @relation("ContentFounder", fields: [founderId], references: [id], onDelete: SetNull)
-  approvedBy User?        @relation("ContentApprover", fields: [approvedById], references: [id], onDelete: SetNull)
-  root         ContentRoot?  @relation(fields: [rootId], references: [id], onDelete: SetNull)
-  derivedFrom  ContentItem?  @relation("ContentDerivatives", fields: [derivedFromId], references: [id], onDelete: SetNull)
-  derivatives  ContentItem[] @relation("ContentDerivatives")
-  diagnoses    ContentDiagnosis[]
+  org         Organization       @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  idea        Idea?              @relation(fields: [ideaId], references: [id], onDelete: SetNull)
+  script      Script?            @relation(fields: [scriptId], references: [id], onDelete: SetNull)
+  editor      User?              @relation("ContentEditor", fields: [editorId], references: [id], onDelete: SetNull)
+  founder     User?              @relation("ContentFounder", fields: [founderId], references: [id], onDelete: SetNull)
+  approvedBy  User?              @relation("ContentApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+  root        ContentRoot?       @relation(fields: [rootId], references: [id], onDelete: SetNull)
+  derivedFrom ContentItem?       @relation("ContentDerivatives", fields: [derivedFromId], references: [id], onDelete: SetNull)
+  derivatives ContentItem[]      @relation("ContentDerivatives")
+  diagnoses   ContentDiagnosis[]
 
   assets          Asset[]
   events          ContentEvent[]
@@ -658,6 +665,8 @@ model ContentItem {
   patternEvidence PatternEvidence[]
   trackedLinks    TrackedLink[]
   touchpoints     Touchpoint[]
+
+  intendedJob String @default("authority") // discovery | authority | conversion
 
   @@index([orgId, stage])
   @@index([orgId, dueDate])
@@ -705,6 +714,8 @@ model Asset {
   org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
   contentItem ContentItem? @relation(fields: [contentItemId], references: [id], onDelete: SetNull)
   uploadedBy  User?        @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+
+  storageProvider String @default("local") // local | s3
 
   @@index([orgId, category])
   @@index([contentItemId])
@@ -813,6 +824,11 @@ model PublishRecord {
   trackedLinks TrackedLink[]
   touchpoints  Touchpoint[]
 
+  distributionMode String  @default("organic") // organic | paid_amplified
+  externalId       String?
+  providerStatus   String?
+  providerPayload  String? // JSON — last provider response, secrets stripped
+
   @@index([orgId, status])
   @@index([orgId, scheduledFor])
   @@index([contentItemId])
@@ -847,6 +863,13 @@ model PerformanceSnapshot {
   org           Organization  @relation(fields: [orgId], references: [id], onDelete: Cascade)
   publishRecord PublishRecord @relation(fields: [publishRecordId], references: [id], onDelete: Cascade)
 
+  // Provenance for ingested rows. `providerRecordId` + `source` + `capturedAt` stop the same reading landing twice.
+  providerRecordId String?
+  fetchedAt        DateTime?
+  provenance       String? // JSON: { provider, endpoint, requestedAt, fields: { views: "0"|"unknown"|"unavailable"|"unsupported"|"stale" } }
+  unavailable      String    @default("[]") // JSON string[] of metric keys the provider could not supply
+
+  @@unique([publishRecordId, source, providerRecordId, capturedAt])
   @@index([orgId, capturedAt])
   @@index([publishRecordId, capturedAt])
 }
@@ -1240,10 +1263,10 @@ model ReadinessCheck {
 // ---------------------------------------------------------------------------
 
 model Integration {
-  id           String    @id @default(cuid())
-  orgId        String
-  provider     String // youtube | linkedin | instagram | tiktok | x | google_drive | dropbox | stripe | calendly | hubspot | gohighlevel | email | analytics
-  status       String    @default("not_configured") // not_configured | configured | error | disabled
+  id       String @id @default(cuid())
+  orgId    String
+  provider String // youtube | linkedin | instagram | tiktok | x | google_drive | dropbox | stripe | calendly | hubspot | gohighlevel | email | analytics
+  status   String @default("not_configured") // not_configured | configured | error | disabled
 
   /// ---------------------------------------------------------------------
   /// CAPABILITY-GRANULAR STATE
@@ -1283,27 +1306,27 @@ model Integration {
   externalAccountId    String?
   externalAccountLabel String?
 
-  tokenExpiresAt      DateTime?
-  lastVerifiedAt      DateTime?
+  tokenExpiresAt       DateTime?
+  lastVerifiedAt       DateTime?
   lastSuccessfulSyncAt DateTime?
-  lastErrorAt         DateTime?
-  lastErrorCode       String?
-  lastErrorMessage    String?
+  lastErrorAt          DateTime?
+  lastErrorCode        String?
+  lastErrorMessage     String?
   /// Set when the token is gone and only the operator can fix it.
-  reconnectRequired   Boolean   @default(false)
+  reconnectRequired    Boolean   @default(false)
   /// How access to this provider actually works for this client:
   /// manual | native_delegated | api
   ///
   /// This exists so "configured" can never be read as "connected to an API".
   /// native_delegated means a person publishes from the client's own account
   /// under delegated access. Threadline holds no credential in either case.
-  accessMethod String    @default("manual")
-  config       String    @default("{}") // JSON, non-secret configuration only
-  notes        String?
-  connectedAt  DateTime?
-  lastSyncAt   DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  accessMethod         String    @default("manual")
+  config               String    @default("{}") // JSON, non-secret configuration only
+  notes                String?
+  connectedAt          DateTime?
+  lastSyncAt           DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
 
   org      Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
   accounts SocialAccount[]
@@ -1389,6 +1412,13 @@ model Application {
   reviewNotes       String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
+
+  role             String?
+  typicalDealValue Int? // minor units, disclosed by the applicant
+  acquisitionToday String?
+  capacityNote     String?
+  prospectId       String?
+  prospect         Prospect? @relation(fields: [prospectId], references: [id], onDelete: SetNull)
 
   @@index([status, createdAt])
 }
@@ -1576,6 +1606,23 @@ model Prospect {
   checks SopCheck[]
   calls  SalesCall[]
 
+  // Discovery economics — every field nullable because "unknown" is a real answer.
+  econCurrency           String        @default("GBP")
+  typicalDealValueMinor  Int?
+  grossProfitMinor       Int?
+  grossMarginPct         Float?
+  ltvMinor               Int?
+  qualifiedOppValueMinor Int?
+  cycleLengthDays        Int?
+  closeRatePct           Float?
+  capacityNote           String?
+  acquisitionCostMinor   Int?
+  acquisitionNote        String?
+  urgency                String? // now | quarter | year | none
+  economicConsequence    String?
+  economicsUpdatedAt     DateTime?
+  applications           Application[]
+
   @@index([state, nextActionDueAt])
   @@index([tier, state])
   @@index([firstTouchAt])
@@ -1636,6 +1683,8 @@ model SalesCall {
 
   prospect Prospect @relation(fields: [prospectId], references: [id], onDelete: Cascade)
   owner    User?    @relation("CallOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+
+  scriptSnapshots SalesCallScriptSnapshot[]
 
   @@index([scheduledAt])
   @@index([prospectId])
@@ -1840,6 +1889,20 @@ model CommercialEvent {
   visitor    Visitor?     @relation(fields: [visitorId], references: [id], onDelete: SetNull)
   inquiry    Inquiry?     @relation(fields: [inquiryId], references: [id], onDelete: SetNull)
   recordedBy User?        @relation("EventRecorder", fields: [recordedById], references: [id], onDelete: SetNull)
+
+  // Rev-share-ready fields (v1.5). Nothing here is used for billing at launch.
+  cashCollectedMinor       Int?
+  attributableRevenueMinor Int?
+  attributionEligibility   String    @default("ineligible") // ineligible | eligible | agreed
+  attributionStatus        String    @default("pending") // pending | confirmed | disputed | excluded
+  attributablePercentage   Float?
+  exclusionReason          String?
+  collectedAt              DateTime?
+  externalDealId           String?
+  externalPaymentId        String?
+  statusChangedAt          DateTime?
+  statusChangedById        String?
+  statusHistory            String    @default("[]") // JSON [{ at, by, from, to, reason }]
 
   @@index([orgId, occurredAt])
   @@index([orgId, kind])
@@ -2079,13 +2142,13 @@ model ContentRoot {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  org         Organization        @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  createdBy   User?               @relation("RootAuthor", fields: [createdById], references: [id], onDelete: SetNull)
-  ideas       Idea[]
+  org          Organization         @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdBy    User?                @relation("RootAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+  ideas        Idea[]
   contentItems ContentItem[]
   expectations ContentExpectation[]
-  diagnoses   ContentDiagnosis[]
-  corrections CorrectionEntry[]
+  diagnoses    ContentDiagnosis[]
+  corrections  CorrectionEntry[]
 
   @@index([orgId, status])
   @@index([orgId, createdAt])
@@ -2102,7 +2165,7 @@ model ContentRoot {
 /// later calibration cannot retrospectively promote an opinion formed before
 /// there was evidence for it.
 model ContentExpectation {
-  id     String @id @default(cuid())
+  id     String  @id @default(cuid())
   orgId  String
   rootId String?
 
@@ -2132,18 +2195,18 @@ model ContentExpectation {
   /// Always false at write time. See ADR-018.
   calibrated Boolean @default(false)
 
-  provider      String @default("none")
-  model         String @default("none")
-  promptVersion String @default("none")
+  provider      String  @default("none")
+  model         String  @default("none")
+  promptVersion String  @default("none")
   /// Free-text reasoning kept for error analysis, never shown as a verdict.
   reasoning     String?
 
   createdById String?
   createdAt   DateTime @default(now())
 
-  org       Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  root      ContentRoot? @relation(fields: [rootId], references: [id], onDelete: SetNull)
-  createdBy User?        @relation("ExpectationAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+  org       Organization       @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  root      ContentRoot?       @relation(fields: [rootId], references: [id], onDelete: SetNull)
+  createdBy User?              @relation("ExpectationAuthor", fields: [createdById], references: [id], onDelete: SetNull)
   diagnoses ContentDiagnosis[]
 
   @@index([orgId, subjectType, subjectId])
@@ -2165,8 +2228,8 @@ model ContentDiagnosis {
   expectationId String?
 
   /// The observation window the conclusion rests on.
-  windowStart DateTime?
-  windowEnd   DateTime?
+  windowStart  DateTime?
+  windowEnd    DateTime?
   /// Days between publication and the last snapshot used.
   maturityDays Int?
 
@@ -2248,8 +2311,8 @@ model CorrectionEntry {
   rootId      String?
   diagnosisId String?
 
-  believed String
-  actual   String
+  believed         String
+  actual           String
   failedAssumption String
   correction       String
 
@@ -2260,7 +2323,7 @@ model CorrectionEntry {
 
   /// Did it work? Null until a retest has been read. Null is the honest state
   /// for most entries most of the time and must never be rendered as "no".
-  worked Boolean?
+  worked      Boolean?
   /// How we know, once we know.
   verdictNote String?
   verdictAt   DateTime?
@@ -2335,21 +2398,21 @@ model Credential {
 /// the row is consumed on use, which makes replay impossible rather than
 /// merely unlikely.
 model OAuthState {
-  id       String @id @default(cuid())
-  orgId    String
-  provider String
+  id              String  @id @default(cuid())
+  orgId           String
+  provider        String
   /// Random, single-use, compared in constant time.
-  state    String @unique
+  state           String  @unique
   /// PKCE verifier where the provider supports it. Sealed, because it is a
   /// secret for the lifetime of the handshake.
-  sealedVerifier String?
+  sealedVerifier  String?
   /// Where to send the operator once the callback completes. Validated against
   /// the app's own origin before use — an open redirect here would be handed a
   /// provider's trust.
-  returnTo String?
+  returnTo        String?
   /// JSON string[] — what we asked for, so the callback can report what was
   /// refused rather than assuming it got everything.
-  scopesRequested String @default("[]")
+  scopesRequested String  @default("[]")
 
   createdById String?
   expiresAt   DateTime
@@ -2361,4 +2424,144 @@ model OAuthState {
 
   @@index([orgId, provider])
   @@index([expiresAt])
+}
+
+/**
+ * -------------------------------------------------------------------------
+ */
+/**
+ * Completion pass 2026-09-09: email, jobs, sales scripts, proof permissions
+ */
+/**
+ * -------------------------------------------------------------------------
+ */
+
+model AuthToken {
+  id          String    @id @default(cuid())
+  userId      String
+  kind        String // invite | password_reset
+  tokenHash   String    @unique
+  orgId       String?
+  createdById String?
+  expiresAt   DateTime
+  usedAt      DateTime?
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, kind])
+  @@index([expiresAt])
+}
+
+model EmailMessage {
+  id         String    @id @default(cuid())
+  orgId      String?
+  toEmail    String
+  template   String
+  subject    String
+  textBody   String
+  htmlBody   String
+  provider   String // capture | resend | smtp
+  status     String    @default("queued") // queued | sent | failed | captured
+  providerId String?
+  error      String?
+  jobId      String?
+  sentAt     DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([toEmail, createdAt])
+  @@index([status])
+}
+
+model Job {
+  id             String    @id @default(cuid())
+  type           String
+  payload        String    @default("{}") // JSON
+  status         String    @default("queued") // queued | running | succeeded | failed | dead
+  attempts       Int       @default(0)
+  maxAttempts    Int       @default(5)
+  runAt          DateTime  @default(now())
+  lockedAt       DateTime?
+  lockedBy       String?
+  lastError      String?
+  completedAt    DateTime?
+  idempotencyKey String?   @unique
+  orgId          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([status, runAt])
+  @@index([type, status])
+}
+
+model SalesScript {
+  id         String                    @id @default(cuid())
+  key        String // stable identity across versions, e.g. "discovery.open"
+  version    Int
+  stage      String // outreach | research_call | discovery | diagnosis | offer | objection | close | kickoff
+  context    String // when this block is used, in a sentence
+  exactText  String
+  checksum   String // sha256 of exactText
+  status     String                    @default("draft") // draft | approved | retired
+  provenance String // where the wording came from — document, author, date
+  createdAt  DateTime                  @default(now())
+  approvedAt DateTime?
+  retiredAt  DateTime?
+  snapshots  SalesCallScriptSnapshot[]
+
+  @@unique([key, version])
+  @@index([stage, status])
+}
+
+model SalesCallScriptSnapshot {
+  id        String      @id @default(cuid())
+  callId    String
+  scriptId  String
+  key       String
+  version   Int
+  checksum  String
+  exactText String
+  usedAt    DateTime    @default(now())
+  call      SalesCall   @relation(fields: [callId], references: [id], onDelete: Cascade)
+  script    SalesScript @relation(fields: [scriptId], references: [id], onDelete: Restrict)
+
+  @@index([callId])
+}
+
+model ProofPermission {
+  id                     String       @id @default(cuid())
+  orgId                  String       @unique
+  interviewWillingness   String       @default("unknown") // unknown | yes | maybe | no
+  successConfirmedAt     DateTime?
+  successConfirmedById   String?
+  successNote            String?
+  allowInterview         Boolean      @default(false)
+  allowInternalUse       Boolean      @default(false)
+  allowTestimonial       Boolean      @default(false)
+  allowPublicTestimonial Boolean      @default(false)
+  allowNamedCaseStudy    Boolean      @default(false)
+  allowAnonCaseStudy     Boolean      @default(false)
+  allowPublishMetrics    Boolean      @default(false)
+  allowLogo              Boolean      @default(false)
+  grantedAt              DateTime?
+  grantedNote            String?
+  requestedAt            DateTime?
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+  org                    Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+}
+
+model WebhookEvent {
+  id          String    @id @default(cuid())
+  provider    String
+  externalId  String
+  orgId       String?
+  eventType   String
+  payload     String // JSON, secrets stripped
+  verified    Boolean   @default(false)
+  processedAt DateTime?
+  error       String?
+  receivedAt  DateTime  @default(now())
+
+  @@unique([provider, externalId])
+  @@index([provider, receivedAt])
 }

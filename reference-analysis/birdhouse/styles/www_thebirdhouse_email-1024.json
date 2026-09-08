@@ -1,0 +1,180 @@
+{
+  "url": "https://www.thebirdhouse.email/",
+  "title": "Home | The Birdhouse",
+  "viewport": {
+    "w": 1024,
+    "h": 900
+  },
+  "scrollHeight": 2090,
+  "fonts": [
+    "Instrument Serif 400 italic",
+    "Instrument Serif 400 normal",
+    "Roboto 100 italic",
+    "Roboto 300 italic",
+    "Roboto 400 italic",
+    "Roboto 500 italic",
+    "Roboto 700 italic",
+    "Roboto 900 italic",
+    "Roboto 100 normal",
+    "Roboto 300 normal",
+    "Roboto 400 normal",
+    "Roboto 500 normal",
+    "Roboto 700 normal",
+    "Roboto 900 normal",
+    "Inter 100 normal",
+    "Inter 200 normal",
+    "Inter 300 normal",
+    "Inter 400 normal",
+    "Inter 500 normal",
+    "Inter 600 normal",
+    "Inter 700 normal",
+    "Inter 800 normal",
+    "Inter 900 normal",
+    "Poppins 400 normal",
+    "Open Sans 400 normal",
+    "Montserrat 400 normal",
+    "Lora 400 normal",
+    "Merriweather 400 normal",
+    "Playfair Display 400 normal",
+    "Bitter 400 normal",
+    "Space Grotesk 400 normal",
+    "Helvetica Neue Condensed Black 400 normal"
+  ],
+  "families": {
+    "ui-sans-serif": 218,
+    "Roboto": 55,
+    "Instrument Serif": 14
+  },
+  "topColours": [
+    [
+      "rgb(0, 0, 0)",
+      295
+    ],
+    [
+      "rgb(229, 231, 235)",
+      237
+    ],
+    [
+      "rgb(4, 50, 77)",
+      102
+    ],
+    [
+      "rgb(232, 245, 254)",
+      84
+    ],
+    [
+      "rgb(253, 253, 253)",
+      29
+    ],
+    [
+      "rgb(0, 172, 238)",
+      25
+    ],
+    [
+      "rgba(255, 255, 255, 0)",
+      4
+    ],
+    [
+      "rgba(4, 50, 77, 0)",
+      2
+    ],
+    [
+      "rgb(255, 255, 255)",
+      2
+    ],
+    [
+      "rgba(247, 249, 250, 0)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "8px",
+      72
+    ],
+    [
+      "6px",
+      5
+    ],
+    [
+      "3px",
+      3
+    ],
+    [
+      "10px",
+      2
+    ],
+    [
+      "100px",
+      2
+    ],
+    [
+      "15px",
+      2
+    ],
+    [
+      "6px 0px 0px 6px",
+      1
+    ],
+    [
+      "0px 6px 6px 0px",
+      1
+    ],
+    [
+      "16px",
+      1
+    ],
+    [
+      "4px",
+      1
+    ]
+  ],
+  "shadows": [],
+  "containers": [
+    [
+      "100%",
+      150
+    ],
+    [
+      "1024px",
+      3
+    ],
+    [
+      "400px",
+      2
+    ],
+    [
+      "32px",
+      1
+    ],
+    [
+      "228.836px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Archives",
+      "href": "/archive"
+    },
+    {
+      "text": "Work With Us",
+      "href": "https://www.thebirdhouse.co/?el=newsletternavbar"
+    },
+    {
+      "text": "Subscribe",
+      "href": null
+    },
+    {
+      "text": "Log In",
+      "href": null
+    }
+  ],
+  "bodyBg": "rgba(0, 0, 0, 0)",
+  "htmlBg": "rgba(0, 0, 0, 0)",
+  "cards": []
+}

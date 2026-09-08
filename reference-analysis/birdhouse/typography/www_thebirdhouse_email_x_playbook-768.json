@@ -1,0 +1,49 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "GET YOUR BIRDHOUSE X PLAYBOOK NOW",
+      "rect": {
+        "x": 16,
+        "y": 108,
+        "w": 736,
+        "h": 58
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "800",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [],
+  "h3": [],
+  "p": [
+    {
+      "tag": "p",
+      "text": "The operating system behind 10 billion impressions. Build a viral, profitable personal bra",
+      "rect": {
+        "x": 16,
+        "y": 172,
+        "w": 736,
+        "h": 47
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": []
+}

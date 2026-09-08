@@ -1,0 +1,82 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "_1ny5scw0 _1ny5scw6 bg-cover bg-no-repeat",
+      "rect": {
+        "x": 0,
+        "y": 68,
+        "w": 390,
+        "h": 900
+      },
+      "bg": "rgb(253, 253, 253)",
+      "heading": "GET YOUR BIRDHOUSE X PLAYBOOK NOW"
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Get Access",
+      "rect": {
+        "x": 257,
+        "y": 409,
+        "w": 113,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(0, 172, 238)",
+        "color": "rgb(4, 50, 77)",
+        "borderRadius": "10px",
+        "border": "0px none rgb(0, 172, 238)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "padding": "0px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Log In",
+      "rect": {
+        "x": 16,
+        "y": 559,
+        "w": 358,
+        "h": 46
+      },
+      "style": {
+        "backgroundColor": "rgba(4, 50, 77, 0)",
+        "color": "rgb(4, 50, 77)",
+        "borderRadius": "8px",
+        "border": "0px none rgba(0, 0, 0, 0)",
+        "boxShadow": "none",
+        "fontSize": "20px",
+        "fontWeight": "500",
+        "padding": "8px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Subscribe",
+      "rect": {
+        "x": 16,
+        "y": 759,
+        "w": 358,
+        "h": 46
+      },
+      "style": {
+        "backgroundColor": "rgb(0, 172, 238)",
+        "color": "rgb(253, 253, 253)",
+        "borderRadius": "100px",
+        "border": "0px none rgba(0, 0, 0, 0)",
+        "boxShadow": "none",
+        "fontSize": "20px",
+        "fontWeight": "400",
+        "padding": "8px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "media": {
+    "img": 5,
+    "svg": 5,
+    "video": 0,
+    "canvas": 0,
+    "lottie": 0,
+    "imgSrcs": [
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,onerror=redirect/uploads/asset/file/e13f373f-31d2-4143-aa73-e6dca6a4fe24/Asset_6-8.png?t",
+        "w": 1292,
+        "h": 1200,
+        "alt": "Logo"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,onerror=redirect/uploads/asset/file/e13f373f-31d2-4143-aa73-e6dca6a4fe24/Asset_6-8.png?t",
+        "w": 1292,
+        "h": 1200,
+        "alt": "Logo"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/d226f24f-0961-440d-b948-ff8",
+        "w": 430,
+        "h": 193,
+        "alt": "Slide 1"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/63d36845-0060-447f-b86a-cf2",
+        "w": 804,
+        "h": 780,
+        "alt": "Slide 2"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/6aa3c10b-0529-4738-9e76-f51",
+        "w": 430,
+        "h": 430,
+        "alt": "Slide 3"
+      }
+    ]
+  },
+  "requests": [
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,onerror=redirect/uploads/asset/file/e13f373f-31d2-4143-aa73-e6dca6a4fe24/Asset_6-8.png?t=1751892012",
+      "type": "image/avif"
+    },
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/d226f24f-0961-440d-b948-ff826d1b8cff/Screenshot",
+      "type": "image/avif"
+    },
+    {
+      "url": "https://www.thebirdhouse.email/phosphor-icons-sprite.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/63d36845-0060-447f-b86a-cf252351f452/download.g",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/6aa3c10b-0529-4738-9e76-f5128eb20112/logo.png?t",
+      "type": "image/avif"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf",
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWub2bWmT.ttf",
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
+      "type": "font/woff2"
+    }
+  ]
+}

@@ -1,0 +1,126 @@
+{
+  "capturedAt": "2026-09-08T23:46:06.609Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://thebirdhouse.co/",
+      "width": 1440,
+      "finalUrl": "https://thebirdhouse.co/",
+      "title": "The Birdhouse",
+      "scrollHeight": 8215,
+      "frames": 28,
+      "fonts": 9,
+      "ms": 3979
+    },
+    {
+      "url": "https://thebirdhouse.co/",
+      "width": 1024,
+      "finalUrl": "https://thebirdhouse.co/",
+      "title": "The Birdhouse",
+      "scrollHeight": 7409,
+      "frames": 25,
+      "fonts": 9,
+      "ms": 3812
+    },
+    {
+      "url": "https://thebirdhouse.co/",
+      "width": 768,
+      "finalUrl": "https://thebirdhouse.co/",
+      "title": "The Birdhouse",
+      "scrollHeight": 14111,
+      "frames": 48,
+      "fonts": 9,
+      "ms": 5750
+    },
+    {
+      "url": "https://thebirdhouse.co/",
+      "width": 390,
+      "finalUrl": "https://thebirdhouse.co/",
+      "title": "The Birdhouse",
+      "scrollHeight": 9104,
+      "frames": 31,
+      "fonts": 9,
+      "ms": 3973
+    },
+    {
+      "url": "https://www.thebirdhouse.email/x-playbook",
+      "width": 1440,
+      "finalUrl": "https://www.thebirdhouse.email/x-playbook",
+      "title": "X Playbook | The Birdhouse",
+      "scrollHeight": 1011,
+      "frames": 4,
+      "fonts": 32,
+      "ms": 2813
+    },
+    {
+      "url": "https://www.thebirdhouse.email/x-playbook",
+      "width": 1024,
+      "finalUrl": "https://www.thebirdhouse.email/x-playbook",
+      "title": "X Playbook | The Birdhouse",
+      "scrollHeight": 1011,
+      "frames": 4,
+      "fonts": 32,
+      "ms": 2766
+    },
+    {
+      "url": "https://www.thebirdhouse.email/x-playbook",
+      "width": 768,
+      "finalUrl": "https://www.thebirdhouse.email/x-playbook",
+      "title": "X Playbook | The Birdhouse",
+      "scrollHeight": 1152,
+      "frames": 4,
+      "fonts": 32,
+      "ms": 2760
+    },
+    {
+      "url": "https://www.thebirdhouse.email/x-playbook",
+      "width": 390,
+      "finalUrl": "https://www.thebirdhouse.email/x-playbook",
+      "title": "X Playbook | The Birdhouse",
+      "scrollHeight": 1024,
+      "frames": 4,
+      "fonts": 32,
+      "ms": 2748
+    },
+    {
+      "url": "https://www.thebirdhouse.email/",
+      "width": 1440,
+      "finalUrl": "https://www.thebirdhouse.email/",
+      "title": "Home | The Birdhouse",
+      "scrollHeight": 2344,
+      "frames": 8,
+      "fonts": 32,
+      "ms": 3021
+    },
+    {
+      "url": "https://www.thebirdhouse.email/",
+      "width": 1024,
+      "finalUrl": "https://www.thebirdhouse.email/",
+      "title": "Home | The Birdhouse",
+      "scrollHeight": 2090,
+      "frames": 7,
+      "fonts": 32,
+      "ms": 2951
+    },
+    {
+      "url": "https://www.thebirdhouse.email/",
+      "width": 768,
+      "finalUrl": "https://www.thebirdhouse.email/",
+      "title": "Home | The Birdhouse",
+      "scrollHeight": 3623,
+      "frames": 13,
+      "fonts": 32,
+      "ms": 3287
+    },
+    {
+      "url": "https://www.thebirdhouse.email/",
+      "width": 390,
+      "finalUrl": "https://www.thebirdhouse.email/",
+      "title": "Home | The Birdhouse",
+      "scrollHeight": 4748,
+      "frames": 16,
+      "fonts": 32,
+      "ms": 3356
+    }
+  ]
+}

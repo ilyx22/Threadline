@@ -1,0 +1,74 @@
+thebirdhouse_co @1920: h=8494 frames=29
+thebirdhouse_co @1600: h=8229 frames=28
+thebirdhouse_co @1440: h=8215 frames=28
+thebirdhouse_co @1366: h=8149 frames=28
+thebirdhouse_co @1280: h=8028 frames=27
+thebirdhouse_co @1200: h=7884 frames=27
+thebirdhouse_co @1024: h=7409 frames=25
+thebirdhouse_co @900: h=15586 frames=52
+thebirdhouse_co @820: h=14678 frames=49
+thebirdhouse_co @768: h=14111 frames=48
+thebirdhouse_co @760: h=13816 frames=47
+thebirdhouse_co @720: h=13465 frames=45
+thebirdhouse_co @640: h=12485 frames=42
+thebirdhouse_co @600: h=12050 frames=41
+thebirdhouse_co @500: h=10960 frames=37
+thebirdhouse_co @460: h=9819 frames=33
+thebirdhouse_co @430: h=9526 frames=32
+thebirdhouse_co @390: h=9104 frames=31
+thebirdhouse_co @375: h=8998 frames=30
+thebirdhouse_co @320: h=8719 frames=30
+www_thebirdhouse_email_x_playbook @1920: h=1011 frames=4
+www_thebirdhouse_email_x_playbook @1600: h=1011 frames=4
+www_thebirdhouse_email_x_playbook @1440: h=1011 frames=4
+www_thebirdhouse_email_x_playbook @1366: h=1011 frames=4
+www_thebirdhouse_email_x_playbook @1280: h=1011 frames=4
+www_thebirdhouse_email_x_playbook @1200: h=1011 frames=4
+www_thebirdhouse_email_x_playbook @1024: h=1011 frames=4
+www_thebirdhouse_email_x_playbook @900: h=1011 frames=4
+www_thebirdhouse_email_x_playbook @820: h=1011 frames=4
+www_thebirdhouse_email_x_playbook @768: h=1152 frames=4
+www_thebirdhouse_email_x_playbook @760: h=1144 frames=4
+www_thebirdhouse_email_x_playbook @720: h=1162 frames=4
+www_thebirdhouse_email_x_playbook @640: h=1082 frames=4
+www_thebirdhouse_email_x_playbook @600: h=1058 frames=4
+www_thebirdhouse_email_x_playbook @500: h=1024 frames=4
+www_thebirdhouse_email_x_playbook @460: h=1024 frames=4
+www_thebirdhouse_email_x_playbook @430: h=1024 frames=4
+www_thebirdhouse_email_x_playbook @390: h=1024 frames=4
+www_thebirdhouse_email_x_playbook @375: h=1024 frames=4
+www_thebirdhouse_email_x_playbook @320: h=1024 frames=4
+www_thebirdhouse_email @1920: h=2711 frames=10
+www_thebirdhouse_email @1600: h=2466 frames=9
+www_thebirdhouse_email @1440: h=2344 frames=8
+www_thebirdhouse_email @1366: h=2308 frames=8
+www_thebirdhouse_email @1280: h=2262 frames=8
+www_thebirdhouse_email @1200: h=2225 frames=8
+www_thebirdhouse_email @1024: h=2090 frames=7
+www_thebirdhouse_email @900: h=3046 frames=11
+www_thebirdhouse_email @820: h=2971 frames=10
+www_thebirdhouse_email @768: h=3623 frames=13
+www_thebirdhouse_email @760: h=3631 frames=13
+www_thebirdhouse_email @720: h=3520 frames=12
+www_thebirdhouse_email @640: h=3347 frames=12
+www_thebirdhouse_email @600: h=5998 frames=20
+www_thebirdhouse_email @500: h=5309 frames=18
+www_thebirdhouse_email @460: h=5097 frames=17
+www_thebirdhouse_email @430: h=4928 frames=17
+www_thebirdhouse_email @390: h=4748 frames=16
+www_thebirdhouse_email @375: h=4662 frames=16
+www_thebirdhouse_email @320: h=4437 frames=15
+verify: [
+ "https://thebirdhouse.co/ @1440 The Birdhouse",
+ "https://thebirdhouse.co/ @1024 The Birdhouse",
+ "https://thebirdhouse.co/ @768 The Birdhouse",
+ "https://thebirdhouse.co/ @390 The Birdhouse",
+ "https://www.thebirdhouse.email/x-playbook @1440 X Playbook | The Birdhouse",
+ "https://www.thebirdhouse.email/x-playbook @1024 X Playbook | The Birdhouse",
+ "https://www.thebirdhouse.email/x-playbook @768 X Playbook | The Birdhouse",
+ "https://www.thebirdhouse.email/x-playbook @390 X Playbook | The Birdhouse",
+ "https://www.thebirdhouse.email/ @1440 Home | The Birdhouse",
+ "https://www.thebirdhouse.email/ @1024 Home | The Birdhouse",
+ "https://www.thebirdhouse.email/ @768 Home | The Birdhouse",
+ "https://www.thebirdhouse.email/ @390 Home | The Birdhouse"
+]

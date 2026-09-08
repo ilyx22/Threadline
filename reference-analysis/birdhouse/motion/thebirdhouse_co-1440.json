@@ -1,0 +1,33 @@
+{
+  "keyframes": [
+    {
+      "name": "spin",
+      "frames": [
+        "0% { transform: rotate(0deg); }",
+        "100% { transform: rotate(360deg); }"
+      ]
+    },
+    {
+      "name": "clickScale",
+      "frames": [
+        "0%, 100% { transform: scale(1); }",
+        "50% { transform: scale(0.8); }"
+      ]
+    }
+  ],
+  "animated": [],
+  "easings": [
+    [
+      "ease 0.3s",
+      25
+    ],
+    [
+      "linear 3.5s",
+      1
+    ],
+    [
+      "linear 20s",
+      1
+    ]
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "media": {
+    "img": 14,
+    "svg": 15,
+    "video": 0,
+    "canvas": 0,
+    "lottie": 0,
+    "imgSrcs": [
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,onerror=redirect/uploads/asset/file/e13f373f-31d2-4143-aa73-e6dca6a4fe24/Asset_6-8.png?t",
+        "w": 1292,
+        "h": 1200,
+        "alt": "Logo"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,onerror=redirect/uploads/asset/file/e13f373f-31d2-4143-aa73-e6dca6a4fe24/Asset_6-8.png?t",
+        "w": 1292,
+        "h": 1200,
+        "alt": "Logo"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/ea42263c-8fd3-4157-90e8-c05",
+        "w": 1920,
+        "h": 191,
+        "alt": ""
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/fd59d9a6-4f94-4a2b-8112-f43",
+        "w": 60,
+        "h": 60,
+        "alt": ""
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/e1e4b544-ae09-4e89-ada2-ac6",
+        "w": 1200,
+        "h": 644,
+        "alt": "One offer per personal brand, the rest is downsell"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/5695de9c-a1c6-458a-a606-4da",
+        "w": 1200,
+        "h": 644,
+        "alt": "your first 10k followers [STRATEGY]"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/05db389b-500f-477f-b8fa-208",
+        "w": 1200,
+        "h": 644,
+        "alt": "Why Your Content Generates No Leads"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/17ccd18b-d9f2-4aa8-af35-865",
+        "w": 1200,
+        "h": 644,
+        "alt": "One Front Door, Not Two"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/bac88a02-c0de-417e-9388-a84",
+        "w": 1200,
+        "h": 644,
+        "alt": "The leads you're ignoring..."
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/2dc77a6d-24fe-431b-8a38-eb6",
+        "w": 1200,
+        "h": 644,
+        "alt": "Full calendar, empty pipeline"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/b1002d61-d583-44b5-886c-404",
+        "w": 1200,
+        "h": 644,
+        "alt": "Your content and website disagree"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/684c169a-a2e9-40bc-8580-37e",
+        "w": 1200,
+        "h": 644,
+        "alt": "Tell me your numbers..."
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/ee56ed1f-3aa2-4fd1-8cd4-853",
+        "w": 1200,
+        "h": 644,
+        "alt": "Who really made your content?"
+      },
+      {
+        "src": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/555edc8a-046f-424f-966f-be5",
+        "w": 430,
+        "h": 430,
+        "alt": ""
+      }
+    ]
+  },
+  "requests": [
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,onerror=redirect/uploads/asset/file/e13f373f-31d2-4143-aa73-e6dca6a4fe24/Asset_6-8.png?t=1751892012",
+      "type": "image/avif"
+    },
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/ea42263c-8fd3-4157-90e8-c0592bc94d63/airship7.g",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/fd59d9a6-4f94-4a2b-8112-f4365b6588d9/Untitled-1",
+      "type": "image/avif"
+    },
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/e1e4b544-ae09-4e89-ada2-ac6563e43924/Stop_Selli",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/555edc8a-046f-424f-966f-be51c8b1d66d/bluebird.g",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://www.thebirdhouse.email/phosphor-icons-sprite.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://media.beehiiv.com/cdn-cgi/image/format=auto,width=430,fit=scale-down,onerror=redirect/uploads/asset/file/684c169a-a2e9-40bc-8580-37e6690ea00d/Give_them_",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-2zI.ttf",
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbGmT.ttf",
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbWmT.ttf",
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWub2bWmT.ttf",
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuYjammT.ttf",
+      "type": "font/ttf"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/roboto/v29/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://media.beehiiv.com/uploads/asset/file/05db389b-500f-477f-b8fa-208a624bae64/I_HOPE_SO.gif?t=1787934849",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://media.beehiiv.com/uploads/asset/file/5695de9c-a1c6-458a-a606-4dadcfb6e619/Your_Feed_Has_No_Ask.gif?t=1788608330",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://media.beehiiv.com/uploads/asset/file/bac88a02-c0de-417e-9388-a849a5da6456/The_leads_nobody_is_touching.gif?t=1787921955",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://media.beehiiv.com/uploads/asset/file/17ccd18b-d9f2-4aa8-af35-865111e73d84/One_Front_Door__Not_Two.gif?t=1787922602",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://media.beehiiv.com/uploads/asset/file/2dc77a6d-24fe-431b-8a38-eb64a0cab557/Full_calendar__empty_pipeline.gif?t=1787327687",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://media.beehiiv.com/uploads/asset/file/b1002d61-d583-44b5-886c-404b0359a117/Your_ad_and_page_disagree.gif?t=1787326651",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://media.beehiiv.com/uploads/asset/file/ee56ed1f-3aa2-4fd1-8cd4-853193cb97e9/Who_really_made_your_centent_.gif?t=1786794517",
+      "type": "image/gif"
+    }
+  ]
+}

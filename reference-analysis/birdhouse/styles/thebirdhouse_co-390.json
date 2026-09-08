@@ -1,0 +1,140 @@
+{
+  "url": "https://thebirdhouse.co/",
+  "title": "The Birdhouse",
+  "viewport": {
+    "w": 390,
+    "h": 900
+  },
+  "scrollHeight": 9104,
+  "fonts": [
+    "webflow-icons normal normal",
+    "Instrument Serif 400 normal",
+    "Roboto 300 normal",
+    "Roboto 400 normal",
+    "Roboto 500 normal",
+    "Roboto 600 normal",
+    "Roboto 700 normal",
+    "swiper-icons 400 normal",
+    "WistiaPlayerInterNumbersSemiBold normal normal"
+  ],
+  "families": {
+    "Roboto": 152,
+    "Instrument Serif": 33
+  },
+  "topColours": [
+    [
+      "rgb(4, 50, 77)",
+      581
+    ],
+    [
+      "rgba(4, 50, 77, 0.66)",
+      56
+    ],
+    [
+      "rgb(255, 255, 255)",
+      53
+    ],
+    [
+      "rgba(4, 50, 77, 0.5)",
+      44
+    ],
+    [
+      "rgb(0, 0, 238)",
+      24
+    ],
+    [
+      "rgb(222, 243, 255)",
+      12
+    ],
+    [
+      "rgba(255, 255, 255, 0.7)",
+      6
+    ],
+    [
+      "rgb(0, 172, 238)",
+      5
+    ],
+    [
+      "rgba(0, 0, 0, 0.1)",
+      5
+    ],
+    [
+      "rgb(255, 236, 222)",
+      2
+    ],
+    [
+      "rgb(243, 222, 255)",
+      2
+    ],
+    [
+      "rgb(226, 255, 222)",
+      1
+    ],
+    [
+      "rgb(255, 222, 223)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "20px",
+      45
+    ],
+    [
+      "30px",
+      9
+    ]
+  ],
+  "shadows": [],
+  "containers": [
+    [
+      "100%",
+      93
+    ],
+    [
+      "180px",
+      24
+    ],
+    [
+      "80%",
+      11
+    ],
+    [
+      "1280px",
+      9
+    ],
+    [
+      "1500px",
+      3
+    ],
+    [
+      "173px",
+      2
+    ],
+    [
+      "306px",
+      1
+    ],
+    [
+      "1064px",
+      1
+    ],
+    [
+      "1030px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "",
+      "href": "#"
+    },
+    {
+      "text": "APPLY",
+      "href": "https://form.fillout.com/t/rNuJX2wCuius"
+    }
+  ],
+  "bodyBg": "rgb(222, 243, 255)",
+  "htmlBg": "rgba(0, 0, 0, 0)",
+  "cards": []
+}

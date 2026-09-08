@@ -1,0 +1,129 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "_1ny5scw0 _1ny5scwj _1ny5scw6 bg-cover bg-no-repeat visible",
+      "rect": {
+        "x": 0,
+        "y": 68,
+        "w": 390,
+        "h": 526
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Learn to build a viral, profitable brand on\n𝕏 + LinkedIn."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "_1ny5scw0 _1ny5scw6 bg-cover bg-no-repeat",
+      "rect": {
+        "x": 0,
+        "y": 594,
+        "w": 390,
+        "h": 3262
+      },
+      "bg": "rgb(232, 245, 254)",
+      "heading": "Latest Files"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "_1ny5scw0 _1ny5scw6 bg-cover bg-no-repeat",
+      "rect": {
+        "x": 0,
+        "y": 3856,
+        "w": 390,
+        "h": 892
+      },
+      "bg": "rgb(255, 255, 255)",
+      "heading": ""
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Subscribe",
+      "rect": {
+        "x": 279,
+        "y": 490,
+        "w": 87,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(0, 172, 238)",
+        "color": "rgb(253, 253, 253)",
+        "borderRadius": "0px 6px 6px 0px",
+        "border": "1px solid rgb(0, 172, 238)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "padding": "0px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Subscribe",
+      "rect": {
+        "x": 49,
+        "y": 3960,
+        "w": 292,
+        "h": 51
+      },
+      "style": {
+        "backgroundColor": "rgb(0, 172, 238)",
+        "color": "rgb(253, 253, 253)",
+        "borderRadius": "15px",
+        "border": "0px none rgb(0, 0, 0)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "padding": "0px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Log In",
+      "rect": {
+        "x": 16,
+        "y": 559,
+        "w": 358,
+        "h": 46
+      },
+      "style": {
+        "backgroundColor": "rgba(4, 50, 77, 0)",
+        "color": "rgb(4, 50, 77)",
+        "borderRadius": "8px",
+        "border": "0px none rgba(0, 0, 0, 0)",
+        "boxShadow": "none",
+        "fontSize": "20px",
+        "fontWeight": "500",
+        "padding": "8px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Subscribe",
+      "rect": {
+        "x": 16,
+        "y": 759,
+        "w": 358,
+        "h": 46
+      },
+      "style": {
+        "backgroundColor": "rgb(0, 172, 238)",
+        "color": "rgb(253, 253, 253)",
+        "borderRadius": "100px",
+        "border": "0px none rgba(0, 0, 0, 0)",
+        "boxShadow": "none",
+        "fontSize": "20px",
+        "fontWeight": "400",
+        "padding": "8px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

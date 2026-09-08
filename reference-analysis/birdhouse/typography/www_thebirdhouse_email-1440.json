@@ -1,0 +1,330 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "Learn to build a viral, profitable brand on 𝕏 + LinkedIn.",
+      "rect": {
+        "x": 0,
+        "y": 248,
+        "w": 1440,
+        "h": 108
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "800",
+        "lineHeight": "16px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h1",
+      "text": "Latest Files",
+      "rect": {
+        "x": 65,
+        "y": 649,
+        "w": 1278,
+        "h": 38
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "800",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "One offer per personal brand, the rest is downsell",
+      "rect": {
+        "x": 73,
+        "y": 1024,
+        "w": 410,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "your first 10k followers [STRATEGY]",
+      "rect": {
+        "x": 515,
+        "y": 1024,
+        "w": 410,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Why Your Content Generates No Leads",
+      "rect": {
+        "x": 957,
+        "y": 1024,
+        "w": 410,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "One Front Door, Not Two",
+      "rect": {
+        "x": 73,
+        "y": 1437,
+        "w": 410,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "The leads you're ignoring...",
+      "rect": {
+        "x": 515,
+        "y": 1437,
+        "w": 410,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Full calendar, empty pipeline",
+      "rect": {
+        "x": 957,
+        "y": 1437,
+        "w": 410,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(4, 50, 77)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "Daily emails on building a viral, profitable brand on Twitter (X) and LinkedIn. Read by yo",
+      "rect": {
+        "x": 0,
+        "y": 390,
+        "w": 1440,
+        "h": 84
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "⭐⭐⭐⭐⭐ 4.9/5 from 1,200+ readers",
+      "rect": {
+        "x": 0,
+        "y": 564,
+        "w": 1440,
+        "h": 19
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Sep 7, 2026",
+      "rect": {
+        "x": 73,
+        "y": 995,
+        "w": 62,
+        "h": 19
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "•",
+      "rect": {
+        "x": 135,
+        "y": 991,
+        "w": 12,
+        "h": 27
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "2 min read",
+      "rect": {
+        "x": 147,
+        "y": 995,
+        "w": 56,
+        "h": 19
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "A short story",
+      "rect": {
+        "x": 73,
+        "y": 1054,
+        "w": 410,
+        "h": 21
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Sep 5, 2026",
+      "rect": {
+        "x": 515,
+        "y": 995,
+        "w": 62,
+        "h": 19
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "•",
+      "rect": {
+        "x": 577,
+        "y": 991,
+        "w": 12,
+        "h": 27
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "19.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": []
+}

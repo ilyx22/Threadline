@@ -11,7 +11,7 @@ import { contentStageSchema, prioritySchema, platformSchema } from "@/lib/domain
 import { canMoveContent, requiresNote, WorkflowError } from "@/lib/domain/workflow";
 import { assertPackageApprovable } from "@/lib/domain/longform";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
-import { getStorage } from "@/lib/storage";
+import { getStorage, storageProviderName } from "@/lib/storage";
 import {
   cleanText,
   cleanUrl,
@@ -383,6 +383,7 @@ export async function uploadContentAssetAction(
         mimeType: stored.mimeType,
         sizeBytes: stored.sizeBytes,
         storagePath: stored.storagePath,
+        storageProvider: storageProviderName(),
         version: existingVersions + 1,
         uploadedById: ctx.user.id,
       },
