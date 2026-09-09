@@ -606,7 +606,7 @@ A note on `@@unique([orgId, dedupeKey])`: `dedupeKey` is nullable, and both SQLi
 treat NULLs as distinct in a unique index, so hand-captured research items — which have no
 fingerprint — never collide with each other.
 
-## Completion pass additions (migration `20260908234429_completion_pass_email_jobs_scripts_permissions_economics`)
+## Completion pass additions (migration `20260909130000_completion_pass_email_jobs_scripts_permissions_economics`)
 
 New models:
 

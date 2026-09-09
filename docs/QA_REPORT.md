@@ -158,3 +158,84 @@ npm run build && npm start &  npm run qa:browser   # responsive/a11y/runtime swe
 8. Reports → finalise a draft → generate again for the same week: refused, the final report is untouched.
 9. Resize to phone width: hamburger nav, no sideways scroll on any screen.
 10. As `qa` operator: Admin → Clients → New client → the founder can log in with the password you set.
+
+
+---
+
+# Completion + public experience pass — verification (9 September 2026)
+
+Supersedes the executive verdict above for launch readiness. Everything below was run on this tree after the pass; regenerate with the commands in §11 plus `npm run qa:public`, `npm run qa:visual` and `npm run jobs:worker -- --once`.
+
+## Verdict: **MOSTLY — technically launch-ready to the external gates**
+
+- Every handoff / QA finding is dispositioned (`docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md`): 59 reviewed, 28 fixed this pass, 11 already fixed and verified, 2 superseded, 13 deliberate non-features, 2 pure external gates, 3 founder inputs, **0 still broken**.
+- Infrastructure that was "not built" is now built to the mocked boundary with tests: email, invites/reset, jobs, S3 storage, shared rate limit, five platform connectors, analytics ingestion, research providers, CRM/payment webhooks, rev-share-ready attribution.
+- The public experience is rebuilt on an original design system and verified at 20 widths on a production build.
+- "MOSTLY" because live delivery, storage, rate-limit store, platform credentials and review, and real client proof remain external gates; and because three founder inputs (domain, legal pages, canonical-script approval) are open. None is an implementation gap.
+
+## Exact verification results
+
+| Check | Result |
+|---|---|
+| `npm run typecheck` | exit 0 |
+| `npm run lint` | exit 0, 0 warnings |
+| `npm test` | 625 tests in 154 suites: 625 pass, 0 fail, 0 skipped (1.5s) |
+| `npm run build` | exit 0 (Next 15; new routes: `/playbook`, `/playbook/[chapter]` ×10, `/api/webhooks/[provider]`, `/admin/scripts`, `/admin/delivery`, `/forgot-password`, `/reset-password`, `/invite`, `/sitemap.xml`, `/robots.txt`, `/opengraph-image`, `/icon.svg`) |
+| `npx prisma migrate status` | 13 migrations, up to date; clean-database `migrate deploy` + seed verified on a temporary SQLite file (orgs 4, users 6, content 34) |
+| `npm run qa:all` | **494 checks: 485 PASS · 2 PASS WITH EXTERNAL GATE · 4 PARTIAL · 0 FAIL · 3 N/A** |
+| `npm run qa:spine` | three engagements incl. the text-led one: 0 FAIL (text piece starts in editing with no record task; second verdict refused; expectations byte-identical) |
+| `npm run qa:perf` | 9/9 — 20 clients, five populated with 60 pieces / 3 snapshots each (900 snapshots seeded in 3.5s); reads ≤ 94ms across 24 orgs; 10 concurrent dashboards 78ms |
+| `npm run qa:browser` (prod build) | **122 checks: 101 PASS · 21 PARTIAL · 0 FAIL** — 33 app/admin routes × 4 widths, keyboard reach; no runtime, console or hydration errors, no overflow. Partials: 20 routes list inline text links inside dense tables under the 24px WCAG 2.5.8 minimum at 390px (rows remain reachable; tracked as P3 polish), and the pipeline table at 1024px scrolls inside its own container by design |
+| `npm run qa:public` (prod build) | **62 checks: 62 PASS · 0 PARTIAL · 0 FAIL** — 11 routes × 20 widths, audit at 5 widths, brand-leak / placeholder / cadence / overclaim greps clean, reduced-motion honoured, application submits and persists (`db=true`) |
+| `npm run qa:visual` | 30 captures (5 widths × 6 pages), every reveal fired (27/27 home, 11/11 how-it-works, 7/7 who-its-for, 10/10 playbook); `qa-baselines/public/geometry.json` written |
+
+Remaining PARTIALs in `qa:all` (all assessed, none material): duplicate-deal dedupe with no visitor is now enforced at write time so the attribution read has nothing left to de-duplicate (harness note); decimal scores are valid input; print/export is browser print by design; the synthetic bad-week report shows the miss but not the learning because the harness stamps the diagnosis after that week (clock artefact).
+
+## Responsive QA (20 widths)
+
+1920 · 1600 · 1440 · 1366 · 1280 · 1200 · 1024 · 900 · 820 · 768 · 760 · 720 · 640 · 600 · 500 · 460 · 430 · 390 · 375 · 320 — every public route: no horizontal overflow, no console or hydration errors, skip link, one `h1`, nav and Apply present, metadata present, `lang="en-GB"`, no reference-brand / placeholder / "monthly" / overclaim text. Deeper checks (headings, labels, 44px targets, screenshots) at 1440 / 1024 / 768 / 390 / 320. Findings fixed during the sweep: hero scene overflow at 1200–1280 (negative margin + non-shrinking crates), memory-weave path exceeding its viewBox, crate SVG wider than its wrapper at 1024, 40px targets in nav/footer/auth links, "go viral" / "guaranteed revenue" wording in the not-fit list (rephrased so the overclaim grep and the doctrine agree), calculator heading order, and the application QA selecting fields by id.
+
+## Visual QA assets
+
+`qa-baselines/public/{1440,1024,768,390,320}-{home,how-it-works,who-its-for,playbook,apply,login}.jpg` (30 files) and `qa-baselines/public/geometry.json` — the approved public product baseline; `npm run qa:visual:compare` reports the largest x/y/w/h deltas and document-height changes against it. Viewport captures for inspection: `reference-analysis/threadline-self/responsive/*.jpg` (gitignored).
+
+## Security re-audit of new surfaces
+
+- Webhooks: signature verified before parsing (Stripe timestamped HMAC, HubSpot v3, shared-secret HMAC for Pipedrive/Attio/GoHighLevel); unverified deliveries stored, never acted on; `(provider, externalId)` unique; rate limited per org; no attribution invented.
+- Tokens: SHA-256 at rest, single-use via conditional update, 30m/72h TTL, newer token supersedes, enumeration-safe responses, rate limited, reset ends other sessions.
+- Storage: tenant-scoped keys enforced before any network call; traversal refused in every adapter; reads proxied through the membership-checked file route.
+- Jobs: payloads are JSON without secrets (email jobs carry links, not token hashes); dead jobs are visible, not looped.
+- Connectors: tokens read from the encrypted keyring at call time; provider responses stored with secrets stripped; expired tokens flagged for reconnect.
+- Research: SSRF guards unchanged; instruction-shaped text flagged and never forwarded as instruction; login walls refused by name.
+- Public site: no new mutation surface beyond the existing application action; skip link and 44px targets; forms re-validated server-side.
+
+## External gates
+
+| Category | Item |
+|---|---|
+| CREDENTIAL | `RESEND_API_KEY`/`EMAIL_FROM`; `S3_*`; `RATE_LIMIT_REDIS_*`; `LINKEDIN/YOUTUBE/INSTAGRAM/TIKTOK/X_CLIENT_*`; per-workspace webhook secrets; `ANTHROPIC_API_KEY`; `NEXT_PUBLIC_BOOKING_URL`; production domain in `NEXT_PUBLIC_APP_URL` |
+| PROVIDER REVIEW | Meta App Review (instagram_content_publish / insights); TikTok app audit (public posting); Google OAuth verification (YouTube scopes); LinkedIn Community Management / Marketing Developer access; X API tier |
+| LIVE CLIENT DATA | Real results for proof; Judge calibration from client outcomes; ICP relevance from analytics scopes |
+| FOUNDER DECISION | Approve canonical script blocks in `/admin/scripts`; confirm the production domain; decide when to add playbook email capture |
+| LEGAL / CONTENT | Privacy notice and terms pages (the footer currently links the "What we do not promise" chapter) |
+
+## Public content / claim blockers
+
+None that block publishing: every statement on the site is VERIFIED in `docs/site/CLAIMS_EVIDENCE_LEDGER.md` or labelled synthetic. Open owner inputs are in `docs/site/PLACEHOLDERS.json` (domain, email provider, booking URL, legal pages).
+
+## Founder manual QA (20 minutes)
+
+1. Open `/` on desktop and on a phone: the hero reads before anything moves; scroll the machine and watch stations light in order; the return pipe pulse travels back; the stamp lands on "Published".
+2. `/playbook` → chapter 4: the thread branches; turn the card; use the "Do this" line.
+3. `/apply`: complete the three steps with test data; confirm the application appears in `/admin/applications`; choose "Create prospect from this application" and land on a prospect with a next action due in two days.
+4. On that prospect: save discovery economics with only a deal value ("one more customer is worth" reads revenue with margin unknown); book a call; the script panel shows CANONICAL COPY IMPORT REQUIRED until `/admin/scripts` → "Import draft documents verbatim" → approve one block; return and record its use on the call.
+5. `/admin/delivery`: log 25 active minutes and a work class on any task in a client workspace, reload, see it aggregated by period.
+6. Client settings (as a client admin): answer the interview-willingness question and tick one permission; on the admin client page confirm an outcome; the testimonial ask becomes appropriate only then.
+7. `/forgot-password` with a demo address; run `npm run jobs:worker -- --once` and read the captured link from the `EmailMessage` row (or the worker log); reset the password; other sessions are gone.
+8. Create an idea and double-click Save: one idea. Send a `text_post` idea's script "to recording": it lands in Editing with no recording task.
+9. Reports → a finalised report shows sections 07–12 (expected vs actual, learned, weakest link, what changed, next tests, limitations).
+10. Resize to 320px: no sideways scroll on any public page.
+
+## Safe rollback
+
+`git checkout threadline-pre-public-experience-rebuild-2026-09-09` (or `git reset --hard` to it) — the tree before this pass. Approved public baseline after it: `threadline-public-baseline-2026-09-09`. The dev database is rebuilt from migrations + seed with `npm run db:reset`.

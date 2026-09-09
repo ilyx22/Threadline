@@ -64,8 +64,8 @@ export function ThreadLine({ className }: { className?: string }) {
 export function Crate({ label, tilt = 0, className, tone = "paper" }: { label: string; tilt?: number; className?: string; tone?: "paper" | "stamp" | "accent" }) {
   const fill = tone === "stamp" ? STAMP : tone === "accent" ? "var(--accent-soft)" : PAPER;
   return (
-    <div className={cn("inline-flex flex-col items-center", className)} style={{ transform: `rotate(${tilt}deg)` }}>
-      <Svg viewBox="0 0 120 84" className="h-auto w-[120px]" title={`Crate labelled ${label}`}>
+    <div className={cn("inline-flex w-[120px] max-w-full flex-col items-center", className)} style={{ transform: `rotate(${tilt}deg)` }}>
+      <Svg viewBox="0 0 120 84" className="h-auto w-full" title={`Crate labelled ${label}`}>
         <rect x="6" y="18" width="108" height="60" rx="6" fill={fill} stroke={INK} strokeWidth="2" />
         <path d="M6 40 H114 M6 58 H114" stroke={INK} strokeWidth="1.5" opacity="0.5" />
         <path d="M22 18 V78 M98 18 V78" stroke={INK} strokeWidth="1.5" opacity="0.5" />

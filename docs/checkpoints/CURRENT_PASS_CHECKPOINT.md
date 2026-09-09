@@ -5,7 +5,7 @@ Updated: 9 September 2026 (end of pass). Baseline before the pass: `threadline-p
 ## Completed
 
 1. **Findings disposition** — `docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md`: 59 items reviewed, 0 still broken.
-2. **Schema** — migration `20260908234429_completion_pass_email_jobs_scripts_permissions_economics`: 7 new models, 8 extended (see `docs/DATA_MODEL.md`).
+2. **Schema** — migration `20260909130000_completion_pass_email_jobs_scripts_permissions_economics`: 7 new models, 8 extended (see `docs/DATA_MODEL.md`).
 3. **Infrastructure** — email, tokens/invites/reset, jobs + worker, S3 storage, shared rate limit, five platform connectors, analytics ingestion, research providers, webhooks, rev-share-ready attribution. All with unit tests (`src/**/*.test.ts`).
 4. **Product gaps** — report learning sections, cold-start baselines, text-led workflow + Threads, idempotent ideas, event dedupe, intended job, distribution mode, discovery economics, canonical scripts (+ `/admin/scripts`), proof permissions (client settings + admin), delivery load (`/admin/delivery`), application → prospect.
 5. **Reference analysis** — `reference-analysis/birdhouse/` (20 widths; DNA; principles; forbidden-copy; notes).

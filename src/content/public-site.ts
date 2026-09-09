@@ -182,7 +182,7 @@ export const HOME = {
       "Wants overnight fame by the end of the month",
       "Wants thought leadership without the thoughts",
       "Cannot give the expertise the time it takes to record",
-      "Expects guaranteed revenue from content",
+      "Expects a revenue guarantee from content",
       "Could not serve more customers if they came",
     ],
   },

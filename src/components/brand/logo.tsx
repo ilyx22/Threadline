@@ -92,7 +92,7 @@ export function LogoLink({
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center gap-2 rounded-md transition-opacity hover:opacity-85",
+        "inline-flex min-h-6 min-w-6 items-center gap-2 rounded-md transition-opacity hover:opacity-85",
         className,
       )}
       aria-label="Threadline home"

@@ -28,3 +28,6 @@ reference-analysis/**/.chrome-profile/
 .chrome-profile/
 qa-baselines/**/.chrome-profile/
 qa-baselines/**/.candidate/
+
+# OneDrive upload cache
+.tmp.driveupload/

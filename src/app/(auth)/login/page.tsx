@@ -43,12 +43,12 @@ export default async function LoginPage({
         <div className="mt-6 flex items-center justify-between text-[12px]">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-faint transition-colors hover:text-muted"
+            className="inline-flex min-h-11 items-center gap-1.5 text-faint transition-colors hover:text-muted"
           >
             <ArrowLeft className="size-3" aria-hidden />
             Back to threadline.com
           </Link>
-          <Link href="/forgot-password" className="text-accent transition-colors hover:text-accent-bright">
+          <Link href="/forgot-password" className="inline-flex min-h-11 items-center text-accent transition-colors hover:text-accent-bright">
             Forgot your password?
           </Link>
         </div>
