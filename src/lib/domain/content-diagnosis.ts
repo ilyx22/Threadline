@@ -140,8 +140,12 @@ export const EMPTY_METRICS: ObservedMetrics = {
 
 export type ActualContext = {
   metrics: ObservedMetrics;
-  /** How this performed against the client's own comparable history. */
+  /** How this performed against the chosen baseline (own history first, then corpus cohort, then platform). */
   band: OutlierBand;
+  /** Which rung of the ladder the band rests on, and how many pieces it had. */
+  baselineSource?: string;
+  baselineSize?: number;
+  baselineLabel?: string;
   /** Days between publication and the newest snapshot used. */
   maturityDays: number | null;
   /** How many snapshots the reading rests on. */
@@ -305,11 +309,22 @@ function topDimension(dims: DimensionScore[]): ContentDimension | null {
  * is a *targeting* result however good the retention was. Only then the
  * craft-level causes.
  */
+export const INTENDED_JOBS = ["discovery", "authority", "conversion"] as const;
+export type IntendedJob = (typeof INTENDED_JOBS)[number];
+export const INTENDED_JOB_LABELS: Record<IntendedJob, string> = {
+  discovery: "Discovery — earn relevant reach",
+  authority: "Authority — earn depth and trust",
+  conversion: "Conversion — earn the next step",
+};
+
 export function readGap(input: {
   expectation: Expectation | null;
   actual: ActualContext;
+  /** What the piece was for. A discovery piece is not judged on conversions. */
+  intendedJob?: IntendedJob;
 }): Gap {
   const { expectation, actual } = input;
+  const intendedJob: IntendedJob = input.intendedJob ?? "authority";
   const sufficiency = readSufficiency(actual);
   const positives: string[] = [];
 
@@ -431,7 +446,9 @@ export function readGap(input: {
     };
   }
 
-  /* 5. It reached people, they engaged, and nobody did anything. */
+  /* 5. It reached people, they engaged, and nobody did anything. A discovery
+        piece was never asked to convert, so for it this is the outcome it was
+        built for and the thesis stands. */
   if (
     travelled &&
     engagedWell &&
@@ -439,6 +456,20 @@ export function readGap(input: {
     clickRate !== null &&
     clickRate < ENGAGED_ACTION_RATE_FLOOR
   ) {
+    if (intendedJob === "discovery") {
+      return {
+        sufficiency,
+        strongestDimension: strongest,
+        weakestDimension: null,
+        failureClass: "none",
+        preserveThesis: true,
+        confidence: "moderate",
+        explanation:
+          "Built for discovery, and it did that job: it reached materially more people than usual and they engaged. It was not asked to convert, so the absence of a next step is not a failure here — the follow-on authority and conversion pieces on this thesis are where that is read.",
+        failedAssumption: null,
+        positives,
+      };
+    }
     return {
       sufficiency,
       strongestDimension: strongest,

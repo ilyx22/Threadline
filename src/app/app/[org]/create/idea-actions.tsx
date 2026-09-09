@@ -25,6 +25,11 @@ export function NewIdeaButton({
   variant?: "secondary" | "primary";
 }) {
   const [open, setOpen] = React.useState(false);
+  // One key per opened form: a double-click or a retried submit creates one idea, not two.
+  const [requestId, setRequestId] = React.useState(() => crypto.randomUUID());
+  React.useEffect(() => {
+    if (open) setRequestId(crypto.randomUUID());
+  }, [open]);
   const router = useRouter();
 
   return (
@@ -91,6 +96,14 @@ export function NewIdeaButton({
                         ))}
                       </NativeSelect>
                     </Field>
+                    <Field label="Job of the piece" htmlFor="intendedJob" hint="Sets what it is judged on">
+                      <NativeSelect id="intendedJob" name="intendedJob" defaultValue="authority">
+                        <option value="discovery">Discovery — earn relevant reach</option>
+                        <option value="authority">Authority — earn depth and trust</option>
+                        <option value="conversion">Conversion — earn the next step</option>
+                      </NativeSelect>
+                    </Field>
+                    <input type="hidden" name="requestId" value={requestId} />
                   </div>
 
                   <div className="grid gap-4 sm:grid-cols-2">

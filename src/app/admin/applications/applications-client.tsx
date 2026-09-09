@@ -19,6 +19,7 @@ import {
 import { ApplicationStatusBadge } from "@/components/ui/status";
 import { toast } from "@/components/ui/toast";
 import { updateApplicationStatusAction } from "@/lib/actions/admin";
+import { createProspectFromApplicationAction } from "@/lib/actions/economics";
 import { APPLICATION_STATUSES, APPLICATION_STATUS_META } from "@/lib/domain/enums";
 import { relativeTime } from "@/lib/utils/dates";
 
@@ -113,6 +114,21 @@ function ApplicationCard({ application }: { application: Application }) {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
+                <DropdownMenuItem
+                  onSelect={() =>
+                    startTransition(async () => {
+                      const result = await createProspectFromApplicationAction(application.id);
+                      if (result.ok) {
+                        toast.success(result.message ?? "Prospect created.");
+                        router.push(`/admin/prospects/${result.data.prospectId}`);
+                      } else {
+                        toast.error(result.error);
+                      }
+                    })
+                  }
+                >
+                  Create prospect from this application
+                </DropdownMenuItem>
                 <DropdownMenuLabel>Move to</DropdownMenuLabel>
                 {APPLICATION_STATUSES.filter((s) => s !== application.status).map((status) => (
                   <DropdownMenuItem key={status} onSelect={() => setStatus(status)}>

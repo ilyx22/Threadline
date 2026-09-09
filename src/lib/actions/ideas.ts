@@ -40,6 +40,9 @@ const ideaInputSchema = z.object({
   objective: z.string().max(200).optional(),
   cta: z.string().max(300).optional(),
   commercialIntent: commercialIntentSchema.default("medium"),
+  intendedJob: z.enum(["discovery", "authority", "conversion"]).default("authority"),
+  /** Client-supplied idempotency key: two submits of one form make one idea. */
+  requestId: z.string().max(80).optional(),
   noveltyScore: scoreField.default(50),
   relevanceScore: scoreField.default(50),
   proofStrength: scoreField.default(50),
@@ -56,9 +59,18 @@ export async function createIdeaAction(
     const ctx = await requireOrgAccess(orgSlug, "ideas.create");
     const input = parseForm(ideaInputSchema, formData);
 
-    const idea = await prisma.idea.create({
+    if (input.requestId) {
+      const already = await prisma.idea.findUnique({ where: { orgId_requestId: { orgId: ctx.org.id, requestId: input.requestId } }, select: { id: true } });
+      if (already) return ok({ id: already.id }, "Idea created.");
+    }
+
+    let idea;
+    try {
+      idea = await prisma.idea.create({
       data: {
         orgId: ctx.org.id,
+        requestId: input.requestId ?? null,
+        intendedJob: input.intendedJob,
         title: cleanText(input.title, 240),
         concept: input.concept ? cleanText(input.concept) : null,
         audience: input.audience ?? null,
@@ -82,6 +94,14 @@ export async function createIdeaAction(
         createdById: ctx.user.id,
       },
     });
+    } catch (error) {
+      // Two submits raced past the lookup; the unique index caught the second.
+      if (input.requestId && String(error).includes("Unique")) {
+        const winner = await prisma.idea.findUniqueOrThrow({ where: { orgId_requestId: { orgId: ctx.org.id, requestId: input.requestId } }, select: { id: true } });
+        return ok({ id: winner.id }, "Idea created.");
+      }
+      throw error;
+    }
 
     await audit(ctx, {
       action: "idea.create",

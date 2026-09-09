@@ -15,6 +15,8 @@ import { recordingReadinessSummary } from "@/lib/data/readiness";
 import { READINESS_STATUS_META, type ReadinessStatus } from "@/lib/domain/readiness";
 import { LongFormScope } from "./longform-scope";
 import { SyntheticScope } from "./synthetic-scope";
+import { ProofAdmin } from "./proof-admin";
+import { proofPermissionView, testimonialGate } from "@/lib/data/proof-permission";
 import { Badge } from "@/components/ui/badge";
 import { ButtonLink } from "@/components/ui/button";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
@@ -49,6 +51,8 @@ export default async function ClientDetailPage({
     recordingReadinessSummary(client.id),
   ]);
   const scope = longFormScope(client.modulesEnabled);
+  const proofView = await proofPermissionView(client.id);
+  const proofGate = testimonialGate(proofView);
   const configuredIntegrations = client.integrations.filter((i) => i.status === "configured");
 
   return (
@@ -352,6 +356,17 @@ export default async function ClientDetailPage({
                 tone={scope.tone}
                 canManage={admin.can("longform.manage")}
               />
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader
+              title="Proof and testimonial"
+              eyebrow={proofGate.appropriate ? "Ask is appropriate" : "Not yet"}
+              description="A testimonial is asked for after a confirmed positive outcome, never because time has passed. Permissions are the client's to grant."
+            />
+            <CardBody className="pt-0">
+              <ProofAdmin orgSlug={client.slug} view={proofView} gate={proofGate} />
             </CardBody>
           </Card>
 

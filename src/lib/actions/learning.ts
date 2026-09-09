@@ -321,7 +321,7 @@ export async function diagnoseContentAction(
 
     const item = await prisma.contentItem.findFirst({
       where: { id: contentItemId, orgId: ctx.org.id },
-      select: { id: true, title: true, rootId: true },
+      select: { id: true, title: true, rootId: true, intendedJob: true },
     });
     if (!item) return err("That content is no longer in this workspace.", "not_found");
 
@@ -331,7 +331,7 @@ export async function diagnoseContentAction(
     ]);
     if (!actual) return err("That content has no publication record to read.", "validation");
 
-    const gap = readGap({ expectation, actual });
+    const gap = readGap({ expectation, actual, intendedJob: item.intendedJob as "discovery" | "authority" | "conversion" });
     const prescription = prescribe(gap);
 
     const diagnosis = await prisma.contentDiagnosis.create({

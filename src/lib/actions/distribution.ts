@@ -28,6 +28,7 @@ const createRecordSchema = z.object({
     .optional()
     .transform((v) => (v ? new Date(v) : null)),
   packageId: z.string().optional(),
+  distributionMode: z.enum(["organic", "paid_amplified"]).default("organic"),
 });
 
 export async function createPublishRecordAction(
@@ -74,6 +75,7 @@ export async function createPublishRecordAction(
         scheduledFor: input.scheduledFor,
         status: input.scheduledFor ? "scheduled" : "draft",
         method: "manual",
+        distributionMode: input.distributionMode,
       },
     });
 

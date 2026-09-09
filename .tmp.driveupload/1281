@@ -161,6 +161,11 @@ const eventSchema = z.object({
   externalProvider: z.string().max(60).optional(),
   externalRecordId: z.string().max(200).optional(),
   externalRecordUrl: z.string().max(600).optional(),
+  externalDealId: z.string().max(200).optional(),
+  externalPaymentId: z.string().max(200).optional(),
+  cashCollected: z.coerce.number().min(0).optional(),
+  /** Deliberate second event on the same deal within the window (e.g. two genuine calls). */
+  allowDuplicate: checkbox,
   evidenceBasis: evidenceBasisSchema.default("client_reported"),
   attribution: attributionClassSchema.default("qualitative_only"),
   note: z.string().max(4000).optional(),
@@ -188,6 +193,38 @@ export async function recordCommercialEventAction(
     // The evidence class must be backed by the evidence it names (QA-005).
     assertEvidenceSupportable(input.attribution, { visitorId, inquiryId: input.inquiryId || null });
 
+    // Duplicate protection without visitor identity (QA: manual dedupe).
+    // 1. An explicit external id is authoritative: the same provider record
+    //    for the same kind is the same event.
+    if (input.externalProvider && (input.externalRecordId || input.externalDealId)) {
+      const same = await prisma.commercialEvent.findFirst({
+        where: {
+          orgId: ctx.org.id,
+          kind: input.kind,
+          externalProvider: cleanText(input.externalProvider, 60),
+          OR: [
+            ...(input.externalRecordId ? [{ externalRecordId: cleanText(input.externalRecordId, 200) }] : []),
+            ...(input.externalDealId ? [{ externalDealId: cleanText(input.externalDealId, 200) }] : []),
+          ],
+        },
+        select: { id: true },
+      });
+      if (same) return err(`That ${input.kind.replace(/_/g, " ")} is already recorded from ${input.externalProvider} (${same.id}).`, "workflow");
+    }
+    // 2. Without an external id, the same funnel step on the same inquiry
+    //    inside 30 days is treated as the same deal unless the operator says
+    //    otherwise. Different deals with similar names are never merged —
+    //    the match is on the inquiry record, not on text.
+    if (input.inquiryId && !input.allowDuplicate && ["booked_call", "showed", "qualified", "opportunity", "won"].includes(input.kind)) {
+      const recent = await prisma.commercialEvent.findFirst({
+        where: { orgId: ctx.org.id, inquiryId: input.inquiryId, kind: input.kind, occurredAt: { gte: new Date((input.occurredAt ?? new Date()).getTime() - 30 * 86_400_000) } },
+        select: { id: true, occurredAt: true },
+      });
+      if (recent) {
+        return err(`A ${input.kind.replace(/_/g, " ")} for this inquiry was already recorded on ${recent.occurredAt.toLocaleDateString("en-GB")}. If this is genuinely a second one, tick "this is a separate event".`, "workflow");
+      }
+    }
+
     // A monetary claim needs a source that could in principle be checked.
     if (input.value > 0 && input.source === "manual" && !input.note?.trim()) {
       return err(
@@ -209,6 +246,11 @@ export async function recordCommercialEventAction(
         externalProvider: input.externalProvider ? cleanText(input.externalProvider, 60) : null,
         externalRecordId: input.externalRecordId ? cleanText(input.externalRecordId, 200) : null,
         externalRecordUrl: input.externalRecordUrl ? cleanText(input.externalRecordUrl, 600) : null,
+        externalDealId: input.externalDealId ? cleanText(input.externalDealId, 200) : null,
+        externalPaymentId: input.externalPaymentId ? cleanText(input.externalPaymentId, 200) : null,
+        cashCollectedMinor: input.cashCollected !== undefined ? Math.round(input.cashCollected * 100) : null,
+        collectedAt: input.cashCollected !== undefined ? (input.occurredAt ?? new Date()) : null,
+        attributionEligibility: eligibilityFor({ evidence: input.attribution, agreed: false }),
         evidenceBasis: input.evidenceBasis,
         // Carried straight from what the operator selected. Nothing here infers
         // a stronger class from the shape of the journey.

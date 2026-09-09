@@ -2,6 +2,7 @@ import "server-only";
 import { prisma } from "@/lib/db/client";
 import { parseWith } from "@/lib/db/json";
 import { weeklyReportPayloadSchema, type WeeklyReportPayload } from "@/lib/reports/weekly";
+import { EMPTY_LEARNING } from "@/lib/reports/learning-sections";
 
 const EMPTY_PAYLOAD = {
   periodLabel: "",
@@ -42,6 +43,7 @@ const EMPTY_PAYLOAD = {
     monetaryAllowed: false,
     dataQualityNote: "No measurement recorded for this period.",
   },
+  learning: EMPTY_LEARNING,
   generatedAt: new Date(0).toISOString(),
   isDemoNarrative: false,
 } satisfies WeeklyReportPayload;

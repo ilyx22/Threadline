@@ -1,5 +1,6 @@
 import "server-only";
 import { prisma } from "@/lib/db/client";
+import { COMPARABLE_WINDOW_DAYS } from "@/lib/data/corpus";
 import { parseJson } from "@/lib/db/json";
 import {
   EMPTY_METRICS,
@@ -127,20 +128,37 @@ async function bandAgainstOwnWork(
   publishedAt: Date | null,
   capturedAt: Date,
   format: string,
-): Promise<OutlierBand> {
-  if (views === null) return "unknown";
+  platform: string,
+): Promise<{ band: OutlierBand; baselineSource: string; baselineSize: number; baselineLabel: string }> {
+  if (views === null) return { band: "unknown", baselineSource: "none", baselineSize: 0, baselineLabel: "no view count" };
 
   const siblings = await prisma.contentItem.findMany({
-    where: { orgId, id: { not: contentItemId }, format },
-    select: { id: true, publishRecords: { select: { snapshots: { select: { views: true }, orderBy: { capturedAt: "desc" }, take: 1 } } } },
+    where: { orgId, id: { not: contentItemId }, platform },
+    select: { id: true, format: true, publishRecords: { select: { snapshots: { select: { views: true }, orderBy: { capturedAt: "desc" }, take: 1 } } } },
     take: 200,
   });
 
-  const baseline = siblings
-    .map((s) => s.publishRecords[0]?.snapshots[0]?.views ?? 0)
-    .filter((v) => v > 0);
+  const sameFormat = siblings.filter((s) => s.format === format).map((s) => s.publishRecords[0]?.snapshots[0]?.views ?? 0).filter((v) => v > 0);
+  const anyFormat = siblings.map((s) => s.publishRecords[0]?.snapshots[0]?.views ?? 0).filter((v) => v > 0);
 
-  return readOutlier({
+  // Cold start: a client's first pieces have no own history to stand against.
+  // The corpus supplies the wider rungs — same platform and comparable format
+  // first, then the platform as a whole — under the ladder's stricter minimums
+  // (ADR-019). The reading says which rung it used, so "under" against a
+  // cohort of strangers is never mistaken for "under" against yourself.
+  const corpusFormat = CORPUS_FORMAT_FOR[format] ?? null;
+  const cohort = await prisma.researchExample.findMany({
+    where: { platform, views: { gt: 0 }, ...(corpusFormat ? { format: corpusFormat } : {}), capturedAt: { gte: new Date(capturedAt.getTime() - COMPARABLE_WINDOW_DAYS * 86_400_000) } },
+    select: { views: true },
+    take: 400,
+  });
+  const platformWide = await prisma.researchExample.findMany({
+    where: { platform, views: { gt: 0 }, capturedAt: { gte: new Date(capturedAt.getTime() - COMPARABLE_WINDOW_DAYS * 86_400_000) } },
+    select: { views: true },
+    take: 800,
+  });
+
+  const reading = readOutlier({
     metrics: {
       views,
       likes: 0,
@@ -152,14 +170,27 @@ async function bandAgainstOwnWork(
       capturedAt,
     },
     baselines: [
-      { source: "creator_format", views: baseline },
-      { source: "creator", views: baseline },
-      { source: "cohort", views: [] },
-      { source: "platform", views: [] },
+      { source: "creator_format", views: sameFormat },
+      { source: "creator", views: anyFormat },
+      { source: "cohort", views: cohort.map((c) => c.views) },
+      { source: "platform", views: platformWide.map((c) => c.views) },
     ],
     relevance: { buyerRelevance: "unrated", commercialIntent: "unrated" },
-  }).band;
+  });
+  return { band: reading.band, baselineSource: reading.baselineSource, baselineSize: reading.baselineSize, baselineLabel: reading.baselineLabel };
 }
+
+/** Client content formats → corpus example formats (the corpus narrows on format first). */
+const CORPUS_FORMAT_FOR: Record<string, string> = {
+  short_form: "short_video",
+  talking_head: "short_video",
+  long_form: "long_video",
+  interview: "long_video",
+  screen_share: "long_video",
+  documentary: "long_video",
+  carousel: "carousel",
+  text_post: "text_post",
+};
 
 export async function actualForContent(
   orgId: string,
@@ -170,6 +201,7 @@ export async function actualForContent(
     select: {
       id: true,
       format: true,
+      platform: true,
       liveAt: true,
       publishRecords: {
         select: {
@@ -221,18 +253,22 @@ export async function actualForContent(
     ? Math.max(0, (newest.getTime() - publishedAt.getTime()) / 86_400_000)
     : null;
 
-  const band = await bandAgainstOwnWork(
+  const banded = await bandAgainstOwnWork(
     orgId,
     contentItemId,
     metrics.views,
     publishedAt,
     newest,
     item.format,
+    item.platform,
   );
 
   return {
     metrics,
-    band,
+    band: banded.band,
+    baselineSource: banded.baselineSource,
+    baselineSize: banded.baselineSize,
+    baselineLabel: banded.baselineLabel,
     maturityDays,
     snapshotCount: snapshots.length,
     // Observed buyer relevance needs audience data no platform gives us without

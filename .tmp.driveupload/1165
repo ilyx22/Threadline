@@ -76,6 +76,7 @@ export const PLATFORMS = [
   "instagram",
   "tiktok",
   "x",
+  "threads",
   "newsletter",
   "podcast",
 ] as const;
@@ -89,6 +90,7 @@ export const PLATFORM_META: Meta<Platform> = {
   instagram: { label: "Instagram Reels", tone: "purple" },
   tiktok: { label: "TikTok", tone: "neutral" },
   x: { label: "X", tone: "neutral" },
+  threads: { label: "Threads", tone: "neutral" },
   newsletter: { label: "Newsletter", tone: "warning" },
   podcast: { label: "Podcast", tone: "purple" },
 };

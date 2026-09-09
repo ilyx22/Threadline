@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { requireOrgPage } from "@/lib/auth/guard";
 import { loadBrandBrain } from "@/lib/data/workspace";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
+import { ProofPermissions } from "@/components/app/proof-permissions";
+import { proofPermissionView } from "@/lib/data/proof-permission";
 import { DefinitionList } from "@/components/ui/data";
 import { Notice } from "@/components/ui/feedback";
 import { Badge } from "@/components/ui/badge";
@@ -14,6 +16,7 @@ export const metadata: Metadata = { title: "Settings" };
 export default async function SettingsPage({ params }: { params: Promise<{ org: string }> }) {
   const { org: slug } = await params;
   const ctx = await requireOrgPage(slug, "workspace.view");
+  const proofView = await proofPermissionView(ctx.org.id);
   const brain = await loadBrandBrain(ctx.org.id);
   const canEdit = ctx.can("workspace.settings");
 
@@ -89,6 +92,17 @@ export default async function SettingsPage({ params }: { params: Promise<{ org: 
                 Package and status are set by your Threadline operator. Contact them to change
                 either.
               </p>
+            </CardBody>
+          </Card>
+
+          <Card>
+            <CardHeader
+              title="Your name, your words, your numbers"
+              eyebrow="Proof permissions"
+              description="Nothing about this engagement is used publicly or privately without a specific permission recorded here. Each one can be withdrawn."
+            />
+            <CardBody className="pt-0">
+              <ProofPermissions orgSlug={ctx.org.slug} view={proofView} canGrant={ctx.role === "client_admin" || ctx.role === "super_admin"} />
             </CardBody>
           </Card>
 

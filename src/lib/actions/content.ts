@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { isTextLed } from "@/lib/domain/workflow";
 import { prisma } from "@/lib/db/client";
 import { audit, touchOrg } from "@/lib/auth/audit";
 import { requireOrgAccess, type AuthContext } from "@/lib/auth/guard";
@@ -430,6 +431,7 @@ export async function markRecordedAction(
     });
     if (!item) return err("That content item no longer exists.", "not_found");
     if (item.stage !== "raw") return err("This piece has already moved past recording.", "workflow");
+    if (isTextLed(item)) return err("This is a text piece — it is written and edited, not recorded.", "workflow");
 
     await prisma.contentItem.update({
       where: { id: contentItemId },

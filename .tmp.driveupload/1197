@@ -37,6 +37,17 @@ export const CONTENT_TRANSITIONS: Record<ContentStage, ContentStage[]> = {
   live: ["scheduled"],
 };
 
+/**
+ * Text-led work — posts, threads, carousels, newsletters — is written, not
+ * recorded. It enters production at `editing` (copy and design), never at
+ * `raw`, and no recording task or readiness check applies to it.
+ */
+export const TEXT_LED_FORMATS = new Set(["text_post", "carousel"]);
+export const TEXT_LED_PLATFORMS = new Set(["x", "threads", "newsletter"]);
+export function isTextLed(input: { format?: string | null; platform?: string | null }) {
+  return TEXT_LED_FORMATS.has(input.format ?? "") || TEXT_LED_PLATFORMS.has(input.platform ?? "");
+}
+
 export function canMoveContent(from: ContentStage, to: ContentStage) {
   return CONTENT_TRANSITIONS[from]?.includes(to) ?? false;
 }

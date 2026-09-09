@@ -28,8 +28,7 @@ import {
   Stethoscope,
   Telescope,
   Video,
-  Workflow,
-} from "lucide-react";
+  Workflow, Timer } from "lucide-react";
 import type { Capability } from "@/lib/auth/roles";
 
 /**
@@ -374,6 +373,20 @@ export const ADMIN_NAV: NavItem[] = [
     href: "/admin/clients",
     icon: Building2,
     capability: "admin.clients.manage",
+  },
+  {
+    key: "delivery",
+    label: "Delivery load",
+    href: "/admin/delivery",
+    icon: Timer,
+    capability: "admin.view",
+  },
+  {
+    key: "scripts",
+    label: "Scripts",
+    href: "/admin/scripts",
+    icon: ScrollText,
+    capability: "admin.sops",
   },
   {
     key: "queue",
