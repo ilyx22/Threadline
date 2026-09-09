@@ -1,0 +1,77 @@
+{
+  "specimen": "The Birdhouse — thebirdhouse.co (agency site), thebirdhouse.email (newsletter + gated X Playbook)",
+  "capturedAt": "2026-09-09",
+  "method": "Headless Chrome over CDP: rendered DOM, computed styles, bounding boxes, document.fonts, CSSOM keyframes (same-origin only), screenshots at 20 widths. Public pages only. No source maps, no authenticated areas. Raw data under ../styles, ../typography, ../geometry, ../motion, ../assets, ../dom, ../responsive.",
+  "notObserved": [
+    "The playbook body itself sits behind an email gate on thebirdhouse.email/x-playbook; only the gate (h=1011px) was captured. The founder's description of the playbook UX (one concept per screen, oversized headings, physical analogies, card flips) is recorded in ../notes/README.md as reported, not as measured.",
+    "Testimonial video and carousel sections on thebirdhouse.co lazy-render (Wistia/Swiper); the full-page capture shows them blank. Their text was captured from the DOM; their motion was not.",
+    "IntersectionObserver-driven reveals: none detected in CSSOM (2 keyframes on the agency site, both marquee/loader); Webflow interactions run in JS and were not introspected."
+  ],
+  "colourRoles": {
+    "pageCanvas": { "value": "rgb(222, 243, 255)", "hex": "#DEF3FF", "note": "pale sky blue, whole page" },
+    "alternateCanvas": { "value": "rgb(232, 245, 254)", "hex": "#E8F5FE", "note": "newsletter grid band" },
+    "paperSurface": { "value": "rgb(255, 255, 255)", "hex": "#FFFFFF", "note": "hero and section cards, radius 40px" },
+    "textPrimary": { "value": "rgb(4, 50, 77)", "hex": "#04324D", "note": "deep navy; 603 occurrences at 1440" },
+    "textSecondary": { "value": "rgba(4, 50, 77, 0.5–0.66)", "note": "navy at alpha, never a separate grey" },
+    "cta": { "value": "rgb(0, 172, 238)", "hex": "#00ACEE", "note": "bright cyan pill, white text" },
+    "eyebrowAccent": { "value": "rgb(0, 172, 238)", "note": "italic serif eyebrow in cyan" },
+    "illustrationFills": ["#FFECDE peach", "#F3DEFF lilac", "#E2FFDE mint", "#FFDEDF pink", "green grass", "white clouds"],
+    "separators": "none — sections separated by illustrated grass/cloud edges and card boundaries rather than rules",
+    "inputs": "white field, 2px navy outline on the newsletter capture, cyan submit"
+  },
+  "typography": {
+    "display": { "family": "Instrument Serif", "weight": 400, "style": "regular + italic eyebrows", "h1": { "1440": "90px/99px", "1024": "90px/99px", "768": "64px/70.4px", "390": "48px/52.8px" }, "h2": { "desktop": "64px/70.4px", "390": "40px" }, "letterSpacing": "normal", "transform": "none (site); uppercase display on the playbook gate" },
+    "body": { "family": "Roboto", "sizes": { "lead": "20px/24px", "body": "16px/19.2px", "mobile": "14px" }, "weights": [300, 400, 500, 600, 700] },
+    "maxLineLength": "hero copy ~500px wide at 1440; card copy ~300px",
+    "emphasis": "italic serif for eyebrows ('Founders, CEOs, Business Owners:'); platform names replaced by icon chips inline in the headline",
+    "captions": "12–14px Roboto at 50% navy"
+  },
+  "layout": {
+    "maxWidth": "1280px (9 containers) inside 1500px shell",
+    "gutters": "~32px desktop, 16px mobile",
+    "hero": { "height": { "1440": 1017, "768": 1191, "390": 838 }, "composition": "two columns: headline left (~40%), illustration cluster right; white card with 40px radius floating on the sky canvas; grass edge at the card's foot" },
+    "sections": { "count": 10, "heights1440": [1017, 226, 1163, 874, 465, 657, 1588, 711, 836, 761], "rhythm": "each section is a floating white card or a stat cluster; vertical gaps ~90–120px" },
+    "documentHeight": { "1440": 8224, "1024": 7445, "768": 14111, "390": 9104 },
+    "grid": "stat cards 2×2 around a central tree illustration; process list as stacked rows; FAQ accordion",
+    "asymmetry": "illustrations overlap card edges (birdhouses over the hero card's right edge; owl and toucan over stat cards)",
+    "fullBleed": "footer wordmark spans the full width at ~200px"
+  },
+  "shapeLanguage": {
+    "radius": { "cards": "40px (45 uses)", "pills": "60px buttons", "chips": "30px" },
+    "borders": "none on cards; 2px navy outline on form fields",
+    "shadows": "none",
+    "imperfection": "hand-drawn grass and cloud edges; no rotation on cards"
+  },
+  "illustrationGrammar": {
+    "style": "cartoon mascots (anthropomorphised birdhouses, birds, owl, toucan) with black outlines, flat pastel fills, light shading, big expressive eyes",
+    "lineWeight": "medium-heavy ink outline",
+    "density": "clusters of 8–12 characters in the hero; single characters beside each stat",
+    "role": "decorative in the hero and stats; instructional in the newsletter thumbnails where each post is a physical analogy (a claw machine, a hose over pots, folding chairs, a front door)",
+    "placement": "overlapping card edges, sitting on grass, holding props (phone, laptop, cash, coins)",
+    "analogyUse": "newsletter: one physical scene per idea, headline explains the scene"
+  },
+  "animationGrammar": {
+    "observed": [
+      { "trigger": "load", "what": "logo marquee", "duration": "20s", "easing": "linear", "repeat": "infinite", "purpose": "decorative" },
+      { "trigger": "hover", "what": "buttons/links", "duration": "0.3s", "easing": "ease", "purpose": "feedback" },
+      { "trigger": "click", "what": "Swiper testimonial carousel", "technology": "swiper@8", "purpose": "navigation" },
+      { "trigger": "scroll", "what": "SmoothScroll.min.js smooth wheel", "purpose": "feel" }
+    ],
+    "technology": ["Webflow interactions", "Swiper 8", "SmoothScroll", "jQuery"],
+    "reducedMotion": "no prefers-reduced-motion rule detected in same-origin CSS",
+    "assessment": "Motion is light: the site relies on illustration and layout, not choreography."
+  },
+  "navigation": { "items": ["Careers", "Newsletter", "FAQ", "Case Studies"], "cta": "APPLY pill, cyan, far right", "sticky": "no (header scrolls away)", "mobile": "logo + APPLY pill; menu items hidden" },
+  "funnel": {
+    "primary": "Apply → external Fillout form",
+    "secondary": "Book a Call → Calendly",
+    "valueFirst": "Newsletter (daily emails) and a gated X Playbook on a separate domain; the agency site sells directly with social proof first",
+    "socialProof": "'Trusted By 100+' logo strip, stat cluster (3,000,000+ followers, 10 Billion+ views, $15,000,000+ client sales, 15,000+ calls booked), 5 video case studies",
+    "claims": "large unqualified numbers; 'results begin immediately, from Day one'; 'month-to-month'; 'from $5,000/month'",
+    "friction": "low — one click to an external form"
+  },
+  "playbookUx": {
+    "observed": "Gate only: uppercase serif headline, one-line promise, email + 'Get Access' inline form, preview card of the playbook cover with a mascot.",
+    "reported": "See ../notes/README.md — one major concept at a time, oversized headings, short text, physical analogy per concept, interactive reveals and card flips, sequential progression, CTA at the end."
+  }
+}

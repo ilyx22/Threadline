@@ -1,0 +1,24 @@
+{
+  "media": {
+    "img": 0,
+    "svg": 8,
+    "video": 0,
+    "canvas": 0,
+    "lottie": 0,
+    "imgSrcs": []
+  },
+  "requests": [
+    {
+      "url": "http://localhost:3000/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/media/cb9f64d62d112b41-s.p.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "http://localhost:3000/_next/static/media/558ca1a6aa3cb55e-s.p.woff2",
+      "type": "font/woff2"
+    }
+  ]
+}

@@ -576,3 +576,44 @@ Previous runs: 2026-09-06 (337 tests, 54 routes), 2026-09-04 (263 tests, 49 rout
 Manual acceptance results are recorded per-test in `docs/ACCEPTANCE_TESTS.md`.
 Outstanding: breakpoint QA below 1440px, and a browser confirmation of the checklist save and
 call outcome forms.
+
+---
+
+## Phase 16 — Completion + public experience rebuild (2026-09-09)
+
+### Findings disposition
+- [x] Every handoff / QA / backlog finding resolved in `docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md` (59 reviewed, 0 still broken)
+
+### Infrastructure
+- [x] Email (capture + Resend), templates, `EmailMessage` log — `email.test.ts`
+- [x] Invitations and password reset with single-use hashed tokens — `tokens.test.ts`
+- [x] Durable jobs with leases, backoff, dead state, worker — `jobs.test.ts`
+- [x] S3-compatible storage (SigV4 over fetch), memory adapter, provider selection — `storage.test.ts`
+- [x] Shared rate limit (Redis-REST) failing closed — `rate-limit.test.ts`
+- [x] Connectors for five platforms through a mocked HTTP boundary — `connectors.test.ts`
+- [x] Analytics normaliser and ingestion with provenance and dedupe — `normalise.test.ts`
+- [x] ResearchProvider interface, three providers, injection quarantine — `providers.test.ts`
+- [x] CRM/payment webhooks, signature-verified, idempotent — `webhooks.test.ts`
+- [x] Rev-share-ready attribution status and pool — `attribution-status.test.ts`
+
+### Product gaps
+- [x] Report learning sections (07–12) frozen into the payload
+- [x] Cold-start baseline from the corpus ladder; baseline source on the reading
+- [x] Text-led workflow (no recording stage/task), Threads platform, X threads
+- [x] Idempotent idea creation; intended-job classification honoured by `readGap`
+- [x] Manual commercial-event dedupe; distribution mode organic/paid
+- [x] Discovery economics; canonical scripts with checksums and call snapshots (import verbatim, approval required); proof permissions; delivery-load view; application → prospect
+
+### Public experience
+- [x] Reference analysed at 20 widths; DNA, transferable principles, forbidden-copy ledger written
+- [x] Threadline design DNA + scoped public CSS; Fraunces / Inter / JetBrains Mono
+- [x] Authority Factory illustration primitives and scenes; scroll-linked machine; six motion jobs with reduced-motion stills
+- [x] Home, how-it-works, who-its-for, apply, calculator (demoted), playbook (10 chapters), not-found, auth on paper
+- [x] Metadata: sitemap, robots, OG image, icon; skip link; 44px targets
+- [x] Claims ledger, brand source of truth, decisions log, placeholders manifest, project memory, customisation guide, handover
+
+### QA
+- [x] `qa:public` — 20 widths, console/hydration, overflow, links, metadata, reduced motion, brand-leak, placeholder, cadence, overclaim, application submit
+- [x] `qa:visual` — baseline screenshots + geometry at 1440/1024/768/390/320 with reveal counts
+- [x] `qa:perf` populates five workspaces with realistic rows
+- [x] `qa:all` / `qa:spine` updated for the new text-led, idempotent-idea, report-learning and delivery-load behaviour

@@ -26,3 +26,5 @@ reference-analysis/**/*.jpeg
 reference-analysis/**/cache/
 reference-analysis/**/.chrome-profile/
 .chrome-profile/
+qa-baselines/**/.chrome-profile/
+qa-baselines/**/.candidate/

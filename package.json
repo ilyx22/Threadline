@@ -22,7 +22,11 @@
     "qa:all": "node scripts/qa/run.cjs run-all",
     "qa:spine": "node scripts/qa/run.cjs suite-core-spine",
     "qa:browser": "node scripts/qa/run.cjs browser-qa",
-    "qa:perf": "node scripts/qa/run.cjs perf-smoke"
+    "qa:perf": "node scripts/qa/run.cjs perf-smoke",
+    "qa:public": "node scripts/qa/run.cjs public-qa",
+    "qa:visual": "node scripts/qa/run.cjs visual-capture",
+    "qa:visual:compare": "node scripts/qa/run.cjs visual-capture --compare",
+    "jobs:worker": "node scripts/jobs/run.cjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.0",

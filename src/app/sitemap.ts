@@ -1,0 +1,13 @@
+import type { MetadataRoute } from "next";
+import { PLAYBOOK } from "@/content/public-site";
+
+const BASE = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
+  const routes = ["/", "/how-it-works", "/who-its-for", "/playbook", "/apply", "/calculator"];
+  return [
+    ...routes.map((r) => ({ url: `${BASE}${r}`, lastModified: now, changeFrequency: "monthly" as const, priority: r === "/" ? 1 : 0.7 })),
+    ...PLAYBOOK.chapters.map((c) => ({ url: `${BASE}/playbook/${c.slug}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+}

@@ -53,7 +53,7 @@ proof.
 |---|---|
 | Auth, sessions, roles, capability matrix | Complete, tested |
 | Multi-tenancy and isolation | Complete, tested against the database |
-| Data model (60 models) + 6 migrations | Complete |
+| Data model (77 models) + 13 migrations | Complete |
 | **Attribution v1.5** (tracked links, touchpoints, three models, evidence classes) | Complete |
 | **Synthetic dry-run workspace** (excluded from proof and portfolio) | Complete |
 | **Delivery Load** (active/waiting minutes, cash cost, work class) | Complete |
@@ -87,7 +87,20 @@ proof.
 | Settings (workspace, members, integrations) | Complete |
 | Onboarding (15 steps, autosave, real build step) | Complete |
 | Admin portal (8 surfaces) | Complete |
-| Marketing site (rewritten around the outcome-first hierarchy) | Complete |
+| **Public site (rebuilt 2026-09-09: light illustrated "Authority Factory" system, playbook, claims ledger, 20-width QA)** | Complete |
+| **Email** (capture + Resend providers, branded templates, `EmailMessage` log) | Complete — live delivery needs `RESEND_API_KEY` |
+| **Invitations and password reset** (single-use hashed tokens, enumeration-safe) | Complete |
+| **Durable background jobs** (`Job` table, leases, backoff, dead state, worker) | Complete |
+| **Object storage** (local + S3-compatible adapter, tenant-scoped keys) | Complete — live bucket needs `S3_*` |
+| **Shared rate limit** (memory + Redis-REST, fails closed) | Complete — shared store needs `RATE_LIMIT_REDIS_*` |
+| **Platform connectors** (LinkedIn, YouTube, Instagram, TikTok, X: auth config, publish/status/metrics, error mapping) | Complete to the mocked boundary — credentials + platform review are external gates |
+| **Analytics ingestion** (normaliser with 0/unknown/unavailable/unsupported/stale, provenance, dedupe, freshness) | Complete — live provider data is an external gate |
+| **ResearchProvider** (internal / manual / URL; truthful states; prompt-injection quarantine) | Complete |
+| **CRM / payment webhooks** (Stripe, HubSpot, Pipedrive, Attio, GoHighLevel; signature-verified, idempotent) | Complete — secrets are external gates |
+| **Rev-share-ready attribution data** (eligibility, status, pool — no billing) | Complete |
+| **Discovery economics, canonical sales scripts, proof permissions, delivery-load view** | Complete — script approval is founder input |
+| **Weekly report learning sections** (expected vs actual, learned, weakest link, what changed, limitations, next tests) | Complete |
+| **Text-led workflow, Threads platform, intended-job classification, idempotent ideas, cold-start baselines** | Complete |
 | Public application flow | Complete, verified end to end |
 | Demo seed (2 client tenants + internal org) | Complete |
 | Demo tour (9 stops) | Complete |
@@ -116,8 +129,10 @@ These are **product decisions**, documented in the UI, not hidden gaps:
 
 ### Not built (deliberate — see `FUTURE_BACKLOG.md`)
 
-Email delivery, password reset, OAuth, payments, automated competitor ingestion, semantic search,
-multi-touch attribution, mobile app, white-labelling, background jobs.
+Payments/billing, semantic search, mobile app, white-labelling, an AI Brand Brain interview,
+real-time script collaboration, server-side PDF export, drag-and-drop on the board. (Email, reset,
+OAuth foundations, background jobs, object storage, multi-touch attribution and competitor
+ingestion via ResearchProvider were built in the 2026-09-08/09 passes — see `docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md`.)
 
 ---
 
@@ -635,9 +650,9 @@ weekly report.
 |---|---|
 | Low | Production board has no drag-and-drop; stage moves are via an explicit menu. This is arguably better — every move is deliberate and audited — but it is not what a board usually implies. |
 | Low | Weekly report "export" is browser print (print styles are implemented). No server-side PDF. |
-| Low | Rate limiting is per-instance. Fine for single-instance; needs a shared store before scaling out. |
+| Low | Rate limiting is per-instance by default (`RATE_LIMIT_STORE=memory`); set `RATE_LIMIT_STORE=redis` with an Upstash-compatible endpoint to share it across instances. It fails closed if the store is unreachable. |
 | Low | Global search is substring-based. Adequate at v1 volume; swap for full-text on Postgres. |
-| Low | No email delivery, so member creation shares an operator-set password out of band. Stated in the UI. |
+| Low | Email is captured, not delivered, until `EMAIL_PROVIDER=resend` is configured; invitations show the link directly in that state. |
 | Info | On Windows, the dev server must be stopped before `npm run build` (Prisma engine file lock). |
 | Info | Seeded library assets have no `storagePath` — they are metadata records, so no download link renders for them. Files uploaded through the UI work normally. |
 | Low | The URL reader extracts text with regex rather than a parser. Adequate for reading article text into evidence a human then reads; it is not a faithful renderer, and a JavaScript-rendered page returns nothing and says so. |

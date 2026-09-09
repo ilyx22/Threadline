@@ -605,3 +605,32 @@ and queue, `(orgId, dueDate)` for date-driven views, `(orgId, capturedAt)` for t
 A note on `@@unique([orgId, dedupeKey])`: `dedupeKey` is nullable, and both SQLite and PostgreSQL
 treat NULLs as distinct in a unique index, so hand-captured research items — which have no
 fingerprint — never collide with each other.
+
+## Completion pass additions (migration `20260908234429_completion_pass_email_jobs_scripts_permissions_economics`)
+
+New models:
+
+| Model | Purpose | Notes |
+|---|---|---|
+| `AuthToken` | Single-use invite / password-reset tokens | `tokenHash` (SHA-256) unique; `usedAt` consumed atomically; TTL 72h invite / 30m reset |
+| `EmailMessage` | Every rendered email with provider and status | `captured` when no provider is configured |
+| `Job` | Durable background job | `idempotencyKey` unique; `lockedAt/lockedBy` lease; `attempts/maxAttempts`; `dead` state |
+| `SalesScript` | Canonical wording, versioned | `(key, version)` unique; `checksum` of `exactText`; `status` draft/approved/retired; `provenance` |
+| `SalesCallScriptSnapshot` | Exact block frozen against a call | `script` relation is `Restrict` — a used script cannot be deleted |
+| `ProofPermission` | Willingness + eight separate proof permissions per client | one per org; `successConfirmedAt` gates any testimonial ask |
+| `WebhookEvent` | Inbound CRM/payment deliveries | `(provider, externalId)` unique; `verified`; `processedAt` |
+
+Extended models:
+
+| Model | Fields |
+|---|---|
+| `Application` | `role`, `typicalDealValue`, `acquisitionToday`, `capacityNote`, `prospectId` |
+| `Prospect` | discovery economics: `econCurrency`, `typicalDealValueMinor`, `grossProfitMinor`, `grossMarginPct`, `ltvMinor`, `qualifiedOppValueMinor`, `cycleLengthDays`, `closeRatePct`, `capacityNote`, `acquisitionCostMinor`, `acquisitionNote`, `urgency`, `economicConsequence`, `economicsUpdatedAt` (all nullable — unknown is an answer) |
+| `PerformanceSnapshot` | `providerRecordId`, `fetchedAt`, `provenance` (JSON field states), `unavailable` (JSON keys); unique `(publishRecordId, source, providerRecordId, capturedAt)` |
+| `CommercialEvent` | rev-share-ready: `cashCollectedMinor`, `attributableRevenueMinor`, `attributionEligibility`, `attributionStatus`, `attributablePercentage`, `exclusionReason`, `collectedAt`, `externalDealId`, `externalPaymentId`, status history |
+| `Idea` | `intendedJob` (discovery/authority/conversion), `requestId` (unique per org — idempotent create) |
+| `ContentItem` | `intendedJob` |
+| `PublishRecord` | `distributionMode` (organic/paid_amplified), `externalId`, `providerStatus`, `providerPayload` |
+| `Asset` | `storageProvider` (local/s3) |
+
+Platforms now include `threads`. Text-led work (`text_post`, `carousel`, or platforms x/threads/newsletter) enters production at `editing`, never `raw`.

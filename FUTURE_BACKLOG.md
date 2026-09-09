@@ -296,3 +296,17 @@ volume, which is the strongest predictor of output quality.
   having one.
 - **Causal claims in proof.** The product will not say Threadline caused a number to move, and no
   configuration will make it.
+
+---
+
+## Status update — 2026-09-09 completion pass
+
+- **#1 LinkedIn publishing/analytics** → connectors built to the mocked boundary for LinkedIn, YouTube, Instagram, TikTok and X; remaining work is credentials and platform review (external gates).
+- **#2 Automatic metric import** → built (`src/lib/analytics`), with a `metrics.refresh` job; live data is an external gate.
+- **#3 Email delivery** → built (capture + Resend); weekly-report delivery is a job away once a provider is configured.
+- **#4 Password reset** → built, plus invitations.
+- **#5 Automated competitor ingestion** → `ResearchProvider` interface built with truthful states; platform adapters plug in when access exists; scraping remains deliberately unbuilt.
+- **#6 Advanced attribution** → superseded by attribution v1.5 (2026-09-06) and rev-share-ready fields (2026-09-09).
+- **Background jobs, object storage, shared rate limit** → built.
+
+Still deliberately open: payments/billing (#10), semantic search (#7), AI Brand Brain interview (#8), real-time script collaboration (#9), server-side PDF export, drag-and-drop, playbook email capture (after email is live), a bulk-row performance run beyond `qa:perf`'s five populated workspaces.

@@ -11,6 +11,7 @@ import { Wordmark } from "@/components/brand/logo";
 import { compactNumber, hours, minutes, money, percent } from "@/lib/utils/format";
 import { formatDate } from "@/lib/utils/dates";
 import { ReportDetailActions } from "../report-actions";
+import { LearningReport } from "./learning-report";
 
 export const metadata: Metadata = { title: "Weekly report" };
 
@@ -266,6 +267,9 @@ export default async function ReportDetailPage({
           )}
         </CardBody>
       </Card>
+
+      {/* ------------------------- Learning (brief §33 / §62) ---------------------- */}
+      <LearningReport learning={p.learning} />
 
       {/* --------------------------------- Next week ------------------------------- */}
       <Card className="print-surface print-break">

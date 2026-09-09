@@ -1,0 +1,93 @@
+{
+  "name": "Threadline public design DNA",
+  "version": "1.0.0",
+  "date": "2026-09-09",
+  "authority": "This file and docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md are the design source of truth for the public site. The Birdhouse analysis under reference-analysis/ is historical input only.",
+  "concept": {
+    "world": "The Threadline Authority Factory — raw expertise enters as crates (EXPERTISE, STORIES, PROOF, OPINIONS, EXPERIENCE); machines transform it along a conveyor; packages leave for the market; a return pipe brings the market's response back; the next batch is better informed.",
+    "thread": "the expertise / idea lineage moving through the system (drawn as a single continuous ember line)",
+    "machinery": "Threadline's processing infrastructure (ink-outlined stations with flat fills)",
+    "weave": "market memory — repeated, relevant exposure shown as thread crossing the same buyers again and again",
+    "intensities": { "public": "expressive, illustrated, narrative, motion with a job", "client": "calm, premium, simple", "admin": "dense, efficient, operational" }
+  },
+  "colours": {
+    "canvas": "#F4EEE3",
+    "canvasDeep": "#EAE1D2",
+    "paper": "#FFFBF4",
+    "paperEdge": "#E4DCCD",
+    "ink": "#1F1D1A",
+    "inkSoft": "#4F4A42",
+    "inkFaint": "#7E776C",
+    "inkGhost": "#A9A297",
+    "accent": "#D9582A",
+    "accentDeep": "#B8461D",
+    "accentSoft": "#FBE4D8",
+    "signal": "#2C7C6A",
+    "signalSoft": "#D8EEE8",
+    "stamp": "#F1C349",
+    "stampSoft": "#FBEFC4",
+    "reject": "#C24A3A",
+    "steel": "#6B7A8C",
+    "steelSoft": "#DCE3EA",
+    "belt": "#3A3631",
+    "roles": {
+      "pageCanvas": "canvas",
+      "alternateCanvas": "canvasDeep",
+      "cardSurface": "paper",
+      "textPrimary": "ink",
+      "textSecondary": "inkSoft",
+      "textFaint": "inkFaint",
+      "border": "ink at 1.5px on paper cards; paperEdge for quiet dividers",
+      "cta": "accent (Apply only)",
+      "highlight": "stamp (APPROVED / SLOP stamps, marker highlights)",
+      "learning": "signal (return pipe, diagnosis, verdicts)",
+      "machineBody": "steel / steelSoft",
+      "conveyor": "belt"
+    },
+    "contrast": "ink on canvas 13.9:1; inkSoft on paper 8.1:1; accent on paper 4.6:1 (large text / button fill with ink text where needed); signal on paper 4.9:1"
+  },
+  "typography": {
+    "display": { "family": "Fraunces", "source": "Google Fonts (OFL), variable, optical sizing", "weights": [500, 600], "settings": "\"opsz\" 144, \"SOFT\" 30, \"WONK\" 0", "scale": { "hero": { "1440": "88px/0.98", "1024": "72px/1.0", "768": "56px/1.02", "390": "42px/1.04" }, "section": { "1440": "56px/1.02", "768": "44px/1.04", "390": "34px/1.08" }, "sub": "28px/1.15" }, "letterSpacing": "-0.02em display, -0.01em section" },
+    "body": { "family": "Inter", "sizes": { "lead": "21px/1.5", "body": "17px/1.6", "small": "14.5px/1.55", "mobile-lead": "18px/1.5" }, "weights": [400, 500, 600] },
+    "label": { "family": "JetBrains Mono", "source": "Google Fonts (OFL)", "size": "12px/1", "tracking": "0.16em", "transform": "uppercase", "use": "eyebrows, station labels, stamps, crate labels" },
+    "maxLineLength": "62ch body, 14ch display",
+    "emphasis": "marker highlight (stampSoft background, 0 -0.2em padding) for the one phrase per section that matters"
+  },
+  "spacing": { "unit": 4, "section": { "1440": 128, "1024": 104, "768": 88, "390": 64 }, "cardPadding": { "desktop": 32, "mobile": 20 }, "gutter": { "desktop": 32, "mobile": 20 } },
+  "containers": { "page": 1200, "prose": 720, "wide": 1360 },
+  "grid": { "columns": 12, "gap": 24, "collapse": { "1024": "8-col feel: two columns become 1fr 1fr", "768": "single column with side-by-side pairs only for stats", "390": "single column" } },
+  "shape": {
+    "radius": { "card": 20, "button": 12, "chip": 8, "stamp": 6, "machine": 10, "crate": 6 },
+    "border": { "card": "1.5px solid ink", "quiet": "1px solid paperEdge", "machine": "2px solid ink" },
+    "shadow": { "card": "6px 6px 0 0 ink", "cardHover": "8px 8px 0 0 ink", "button": "4px 4px 0 0 ink", "buttonActive": "1px 1px 0 0 ink", "none": "flat sections and stations use no shadow" },
+    "imperfection": "stamps sit at -3deg; crates at ±2deg; hand-set label tags; nothing else rotates"
+  },
+  "illustration": {
+    "stroke": { "outline": 2, "detail": 1.5, "thread": 3 },
+    "fills": "flat, from the palette; steelSoft bodies, paper faces, stamp for lights and labels, accent for the thread and one detail per station",
+    "perspective": "flat front-on with a slight isometric cheat on conveyors (no vanishing point)",
+    "characters": { "cast": ["Founder (the expert; open collar, holds a crate)", "Operator (runs the machine; sleeves rolled, clipboard)", "Scanner (a lens on a stand; research)", "Inspector (Judge; magnifier and stamp)", "Builder (editor; headphones, roller)", "Buyer (the market; a small figure who stops walking)", "Signal (a pulse dot that travels the return pipe)"], "proportions": "5.5 heads tall, round heads, dot eyes, single-line mouths, no noses", "poses": "standing, reaching, pointing, stamping, walking, looking back", "backgroundDensity": "one station per scene on mobile, up to three on desktop" },
+    "primitives": ["ThreadSpool", "Crate", "Conveyor", "ScannerStation", "AssemblyStation", "RecordStation", "InspectorStation", "PackagingStation", "DistributionSorter", "SignalPulse", "FeedbackPipe", "Buyer", "Founder", "Operator", "Stamp"]
+  },
+  "iconography": { "ui": "lucide (existing), 1.5px", "factory": "custom SVG primitives above; never emoji" },
+  "motion": {
+    "principle": "Every major animation answers 'what is this teaching?'. Decorative motion is limited to hover feedback and the idle conveyor.",
+    "durations": { "micro": 160, "reveal": 520, "stamp": 380, "conveyor": "12s loop", "thread": "1.4s draw", "pipe": "2.2s travel" },
+    "easings": { "out": "cubic-bezier(0.22, 1, 0.36, 1)", "inOut": "cubic-bezier(0.4, 0, 0.2, 1)", "stamp": "cubic-bezier(0.34, 1.56, 0.64, 1)", "linear": "linear" },
+    "stagger": 70,
+    "triggers": { "reveal": "IntersectionObserver at 18% visibility, once", "conveyor": "always while in view; paused when off-screen", "scrollLinked": "the machine section progresses with scroll via a passive scroll listener writing a CSS variable; no per-frame layout reads" },
+    "technology": "CSS transitions/keyframes, SVG stroke-dashoffset, IntersectionObserver, one rAF-throttled scroll listener; no animation library",
+    "reducedMotion": "prefers-reduced-motion: every reveal is visible immediately, conveyors and pulses are still frames, the scroll-linked machine shows its final state",
+    "mobile": "no parallax; conveyors run at half speed; one animated element per viewport"
+  },
+  "responsive": { "breakpoints": { "sm": 640, "md": 768, "lg": 1024, "xl": 1280 }, "testedWidths": [1920, 1600, 1440, 1366, 1280, 1200, 1024, 900, 820, 768, 760, 720, 640, 600, 500, 460, 430, 390, 375, 320], "rules": ["no horizontal page scroll at any width", "touch targets ≥ 44px on mobile", "factory scenes reflow to a single vertical conveyor below 768", "hero readable before any animation starts"] },
+  "sectionRhythm": ["hero", "problem", "you do four things", "the machine", "most agencies stop here", "one idea many expressions", "market memory", "commercial attention", "how the system learns", "first 12 weeks", "product proof (labelled synthetic)", "fit", "cta"],
+  "cta": { "primary": { "label": "Apply", "colour": "accent", "text": "paper", "shadow": "button", "radius": 12 }, "secondary": { "colour": "paper", "border": "1.5px ink", "text": "ink" }, "rule": "one primary per viewport; the sticky mobile bar carries Apply only" },
+  "nav": { "items": ["How it works", "Who it is for", "Playbook"], "actions": ["Sign in", "Apply"], "sticky": true, "mobile": "logo + Apply, drawer for the three items" },
+  "forms": { "field": "paper, 1.5px ink border, 12px radius, 48px min height", "focus": "3px accentSoft ring + accent border", "error": "reject text under the field, field border reject", "steps": "three steps, progress as a thread filling" },
+  "footer": { "wordmark": "THREADLINE in Fraunces at 96–160px on canvasDeep with the thread passing through", "columns": ["Product", "Company", "Legal"], "line": "A managed content growth system for expert-led businesses." },
+  "publicCards": { "surface": "paper", "border": "1.5px ink", "shadow": "card", "radius": 20 },
+  "clientCards": { "surface": "elevated (existing dark system)", "border": "line", "shadow": "sm", "radius": 12, "note": "unchanged; the public system carries into the app only as type, focus rings and stamp badges" },
+  "adminDensity": "unchanged — tables, chips, filters; no illustration",
+  "claims": "Every factual public statement must be VERIFIED in docs/site/CLAIMS_EVIDENCE_LEDGER.md; synthetic demonstrations are labelled SYNTHETIC / ILLUSTRATIVE in the UI"
+}

@@ -1,5 +1,6 @@
 import "server-only";
 import { z } from "zod";
+import { computeLearningSections, learningSectionsSchema, EMPTY_LEARNING } from "./learning-sections";
 import { prisma } from "@/lib/db/client";
 import { mean } from "@/lib/domain/scoring";
 import {
@@ -106,6 +107,8 @@ export const weeklyReportPayloadSchema = z.object({
       dataQualityNote: z.string(),
     })
     .default({ trackedClicks: 0, claims: [], monetaryAllowed: false, dataQualityNote: "" }),
+  /** Brief §33 / §62: expected vs actual, what we learned, weakest link, what changed, limitations, next tests. */
+  learning: learningSectionsSchema.default(EMPTY_LEARNING),
   generatedAt: z.string(),
   isDemoNarrative: z.boolean().default(false),
 });
@@ -361,6 +364,7 @@ export async function computeWeeklyReport(
       monetaryAllowed: attribution.coverage.monetaryAllowed,
       dataQualityNote: attribution.measurement,
     },
+    learning: await computeLearningSections(orgId, range),
     generatedAt: new Date().toISOString(),
     isDemoNarrative: false,
   });

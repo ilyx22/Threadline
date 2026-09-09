@@ -6,6 +6,8 @@
  * first attempted as a client admin to prove that.
  */
 import { prisma } from "../../src/lib/db/client";
+import { prospectState } from "../../src/lib/domain/sop";
+import { deliveryLoad } from "../../src/lib/data/delivery-load";
 import { actAs, attempt, fd, record, section } from "./context";
 import { buildFixture, teardown, ALPHA, type Fixture } from "./suite-tenancy";
 import * as Acq from "../../src/lib/actions/acquisition";
@@ -45,7 +47,8 @@ export async function runSales(fx: Fixture) {
   const jump = await attempt(() => Acq.advanceProspectAction(pid, null, fd({ to: "won" })));
   record("sales", "illegal jump (new → won) refused", jump.outcome !== "ok" && (await prisma.prospect.findUnique({ where: { id: pid } }))!.state === p0!.state ? "PASS" : "FAIL", `${jump.outcome} ${(jump as { message?: string }).message?.slice(0, 60) ?? ""}`);
   const checks = await prisma.sopCheck.findMany({ where: { prospectId: pid } });
-  record("sales", "SOP checklist attached to the prospect", checks.length > 0 ? "PASS" : "PARTIAL", `${checks.length} checks`);
+  const definition = prospectState((await prisma.prospect.findUniqueOrThrow({ where: { id: pid } })).state);
+  record("sales", "SOP checklist attached to the prospect (state definition + lazily-created rows)", definition.checklist.length > 0 ? "PASS" : "FAIL", `${definition.checklist.length} items defined for "${definition.state}", ${checks.length} rows toggled so far`);
   const nextState = p0!.state === "new" ? "qualified_a" : "contacted";
   const fwdBlocked = await attempt(() => Acq.advanceProspectAction(pid, null, fd({ to: nextState })));
   record("sales", "forward move with required checklist outstanding refused (or none required)", fwdBlocked.outcome !== "ok" || checks.filter((c) => !c.done).length === 0 ? "PASS" : "FAIL", `${fwdBlocked.outcome} ${(fwdBlocked as { message?: string }).message?.slice(0, 70) ?? ""}`);
@@ -120,7 +123,9 @@ export async function runSales(fx: Fixture) {
   record("delivery", "unknown work class refused", badClass.outcome !== "ok" ? "PASS" : "FAIL", `${badClass.outcome}`);
   const negMin = await attempt(() => Attribution.logDeliveryLoadAction(ALPHA, task.id, null, fd({ activeMinutes: -10 })));
   record("delivery", "negative minutes refused", negMin.outcome !== "ok" ? "PASS" : "FAIL", `${negMin.outcome}`);
-  record("delivery", "owner-only / automatable classes and period aggregation", "PARTIAL", "workClass enum exists on Task; no aggregation view by period/client found in the data layer — reported, not tested");
+  const agg = await deliveryLoad({ orgId: fx.alpha.id, sinceDays: 365 });
+  const alphaLoad = agg.clients.find((c) => c.orgId === fx.alpha.id);
+  record("delivery", "owner-only / automatable classes and period aggregation", agg.recordedTasks > 0 && !!alphaLoad && agg.byClass.length > 0 ? "PASS" : "FAIL", `${agg.recordedTasks} tasks · classes=${agg.byClass.map((c) => c.workClass).join(",")} · direction=${alphaLoad?.direction}`);
 
   section("cockpit — honest when the day is empty");
   const c = await cockpit();

@@ -1,0 +1,86 @@
+{
+  "capturedAt": "2026-09-09T00:39:01.577Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "http://localhost:3000/",
+      "width": 1440,
+      "finalUrl": "http://localhost:3000/",
+      "title": "Threadline — you already have the expertise · Threadline",
+      "scrollHeight": 12156,
+      "frames": 41,
+      "fonts": 10,
+      "ms": 4302
+    },
+    {
+      "url": "http://localhost:3000/",
+      "width": 1024,
+      "finalUrl": "http://localhost:3000/",
+      "title": "Threadline — you already have the expertise · Threadline",
+      "scrollHeight": 11005,
+      "frames": 37,
+      "fonts": 10,
+      "ms": 4037
+    },
+    {
+      "url": "http://localhost:3000/",
+      "width": 768,
+      "finalUrl": "http://localhost:3000/",
+      "title": "Threadline — you already have the expertise · Threadline",
+      "scrollHeight": 13388,
+      "frames": 45,
+      "fonts": 10,
+      "ms": 4303
+    },
+    {
+      "url": "http://localhost:3000/",
+      "width": 390,
+      "finalUrl": "http://localhost:3000/",
+      "title": "Threadline — you already have the expertise · Threadline",
+      "scrollHeight": 17174,
+      "frames": 58,
+      "fonts": 10,
+      "ms": 4685
+    },
+    {
+      "url": "http://localhost:3000/playbook/one-thesis-many-expressions",
+      "width": 1440,
+      "finalUrl": "http://localhost:3000/playbook/one-thesis-many-expressions",
+      "title": "One thesis, many expressions — The Founder Authority System · Threadline",
+      "scrollHeight": 2245,
+      "frames": 8,
+      "fonts": 10,
+      "ms": 2860
+    },
+    {
+      "url": "http://localhost:3000/playbook/one-thesis-many-expressions",
+      "width": 1024,
+      "finalUrl": "http://localhost:3000/playbook/one-thesis-many-expressions",
+      "title": "One thesis, many expressions — The Founder Authority System · Threadline",
+      "scrollHeight": 1944,
+      "frames": 7,
+      "fonts": 10,
+      "ms": 2812
+    },
+    {
+      "url": "http://localhost:3000/playbook/one-thesis-many-expressions",
+      "width": 768,
+      "finalUrl": "http://localhost:3000/playbook/one-thesis-many-expressions",
+      "title": "One thesis, many expressions — The Founder Authority System · Threadline",
+      "scrollHeight": 2231,
+      "frames": 8,
+      "fonts": 10,
+      "ms": 2871
+    },
+    {
+      "url": "http://localhost:3000/playbook/one-thesis-many-expressions",
+      "width": 390,
+      "finalUrl": "http://localhost:3000/playbook/one-thesis-many-expressions",
+      "title": "One thesis, many expressions — The Founder Authority System · Threadline",
+      "scrollHeight": 2672,
+      "frames": 9,
+      "fonts": 10,
+      "ms": 2890
+    }
+  ]
+}

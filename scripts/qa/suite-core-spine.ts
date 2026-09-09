@@ -124,11 +124,13 @@ async function producePiece(e: Engagement, opts: { ideaId: string; rootId: strin
   const send = await attempt(() => Scripts.sendToRecordingAction(slug, scriptId));
   const contentItemId = data<{ contentItemId: string }>(send)?.contentItemId ?? "";
   const task = contentItemId ? await prisma.task.findFirst({ where: { entityId: contentItemId, kind: "record" } }) : null;
-  record(area, `${L}: sent to recording → content item raw + founder task`, send.outcome === "ok" && !!task && task.audience === "client" ? "PASS" : "FAIL", `${msg(send)} task=${task?.title ?? "none"}`);
-  if (!contentItemId) throw new Error(`${L}: no content item`);
+  const created = contentItemId ? await prisma.contentItem.findUnique({ where: { id: contentItemId } }) : null;
   if (isText) {
-    record(area, `${L}: text-led piece still routed through the recording queue`, "PARTIAL", `A text post received a "Record:" task (${task?.title}). No camera is involved; wording/skip is a P3.`, "SPINE-TEXT-RECORD-TASK");
+    record(area, `${L}: text piece goes straight to editing — no recording stage, no record task`, send.outcome === "ok" && created?.stage === "editing" && !task ? "PASS" : "FAIL", `${msg(send)} stage=${created?.stage} task=${task?.title ?? "none"}`, task ? "SPINE-TEXT-RECORD-TASK" : undefined);
+  } else {
+    record(area, `${L}: sent to recording → content item raw + founder task`, send.outcome === "ok" && created?.stage === "raw" && !!task && task.audience === "client" ? "PASS" : "FAIL", `${msg(send)} stage=${created?.stage} task=${task?.title ?? "none"}`);
   }
+  if (!contentItemId) throw new Error(`${L}: no content item`);
 
   const att = await attempt(() => Learning.attachToRootAction(slug, { contentItemId, rootId: opts.rootId, lineageRole: opts.lineageRole, derivedFromId: opts.derivedFromId }));
   const exC = await attempt(() => Learning.recordExpectationAction(slug, { subjectType: "content", subjectId: contentItemId, rootId: opts.rootId }));
@@ -136,12 +138,17 @@ async function producePiece(e: Engagement, opts: { ideaId: string; rootId: strin
   record(area, `${L}: attached to ROOT (${opts.lineageRole}) + content expectation frozen`, att.outcome === "ok" && exC.outcome === "ok" && expRow?.calibrated === false && expRow.rootId === opts.rootId ? "PASS" : "FAIL", `${msg(att)} / ${msg(exC)} overall=${expRow?.overall} class=${expRow?.expectedClass} calibrated=${expRow?.calibrated}`);
   const frozen = JSON.stringify(expRow);
 
-  // Founder records; operator edits; founder approves.
+  // Founder records (video) — a text piece is already in editing and refuses the recording step.
   await actAs(e.founderEmail);
-  const rec = await attempt(() => Content.markRecordedAction(slug, contentItemId));
-  const recAgain = await attempt(() => Content.markRecordedAction(slug, contentItemId));
-  const taskAfter = await prisma.task.findFirst({ where: { entityId: contentItemId, kind: "record" } });
-  record(area, `${L}: founder marks recorded → editing, task closed, second click refused`, rec.outcome === "ok" && recAgain.outcome !== "ok" && taskAfter?.status === "done" ? "PASS" : "FAIL", `${msg(rec)} / again=${recAgain.outcome} task=${taskAfter?.status}`);
+  if (isText) {
+    const rec = await attempt(() => Content.markRecordedAction(slug, contentItemId));
+    record(area, `${L}: text piece cannot be "recorded"`, rec.outcome !== "ok" ? "PASS" : "FAIL", msg(rec));
+  } else {
+    const rec = await attempt(() => Content.markRecordedAction(slug, contentItemId));
+    const recAgain = await attempt(() => Content.markRecordedAction(slug, contentItemId));
+    const taskAfter = await prisma.task.findFirst({ where: { entityId: contentItemId, kind: "record" } });
+    record(area, `${L}: founder marks recorded → editing, task closed, second click refused`, rec.outcome === "ok" && recAgain.outcome !== "ok" && taskAfter?.status === "done" ? "PASS" : "FAIL", `${msg(rec)} / again=${recAgain.outcome} task=${taskAfter?.status}`);
+  }
   const founderPublishEarly = await attempt(() => Distribution.createPublishRecordAction(slug, null, fd({ contentItemId, platform: "linkedin" })));
   record(area, `${L}: cannot create a publish record before approval`, founderPublishEarly.outcome !== "ok" ? "PASS" : "FAIL", msg(founderPublishEarly), founderPublishEarly.outcome === "ok" ? "SPINE-PUBLISH-UNAPPROVED" : undefined);
 

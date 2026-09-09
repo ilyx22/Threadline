@@ -1,39 +1,38 @@
 import type { Metadata } from "next";
 import { ApplicationForm } from "./application-form";
 import { publicBookingUrl } from "@/lib/actions/booking";
+import { APPLY } from "@/content/public-site";
+import { Eyebrow } from "@/components/public/primitives";
+import { Founder, Operator } from "@/components/factory/primitives";
 
 export const metadata: Metadata = {
   title: "Apply for a content growth diagnosis",
-  description:
-    "Tell us where demand is actually constrained and how content gets made today. We read every application and reply either way.",
+  description: "Tell us where demand is actually constrained and how content gets made today. Read by a person, replied to either way.",
+  alternates: { canonical: "/apply" },
+  robots: { index: true, follow: true },
 };
 
 export default async function ApplyPage() {
   const bookingUrl = await publicBookingUrl();
 
   return (
-    <div className="relative px-5 py-16 lg:px-8 lg:py-24">
-      <div className="hero-vignette pointer-events-none absolute inset-0" aria-hidden />
-
-      <div className="relative mx-auto max-w-2xl">
-        <header className="mb-10">
-          <p className="text-eyebrow mb-4 text-accent">Founding client programme</p>
-          <h1 className="text-hero">Apply for a content growth diagnosis</h1>
-          <p className="mt-5 text-[16px] leading-relaxed text-muted">
-            This is a diagnostic, not a signup. Your answers are what we use to work out where
-            demand is actually constrained in your business — and on five of the nine dimensions we
-            look at, more content would make the problem more expensive rather than smaller.
-          </p>
-          <p className="mt-4 text-[15px] leading-relaxed text-muted">
-            Answer honestly. If the answer is that we are not the right fit, we would both rather
-            know now, and you keep the finding either way.
-          </p>
-          <p className="mt-5 text-[13.5px] text-faint">
-            Three short steps, about four minutes. Read by a person, replied to either way.
-          </p>
+    <div className="tl-section">
+      <div className="tl-container grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+        <header className="lg:sticky lg:top-24 lg:self-start">
+          <Eyebrow>{APPLY.eyebrow}</Eyebrow>
+          <h1 className="tl-display max-w-[14ch] text-[clamp(2.25rem,4.6vw,3.75rem)]">{APPLY.title}</h1>
+          <p className="tl-lead mt-6 text-[17px]">{APPLY.lead}</p>
+          <p className="tl-body mt-4 text-[15px]">{APPLY.reassurance}</p>
+          <p className="mt-5 text-[13.5px] text-[color:var(--ink-faint)]">{APPLY.meta}</p>
+          <div className="mt-8 hidden items-end gap-3 lg:flex" aria-hidden>
+            <Founder className="w-[64px]" />
+            <Operator className="w-[64px]" />
+          </div>
         </header>
 
-        <ApplicationForm bookingUrl={bookingUrl} />
+        <div className="tl-card p-5 sm:p-8">
+          <ApplicationForm bookingUrl={bookingUrl} />
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,431 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "You already have the expertise.",
+      "rect": {
+        "x": 152,
+        "y": 225,
+        "w": 557,
+        "h": 172
+      },
+      "style": {
+        "fontFamily": "Fraunces, \"Fraunces Fallback\", \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "88px",
+        "fontWeight": "500",
+        "lineHeight": "86.24px",
+        "letterSpacing": "-1.76px",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "The market does not experience enough of what you know.",
+      "rect": {
+        "x": 152,
+        "y": 1036,
+        "w": 548,
+        "h": 175
+      },
+      "style": {
+        "fontFamily": "Fraunces, \"Fraunces Fallback\", \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "56px",
+        "fontWeight": "500",
+        "lineHeight": "58.24px",
+        "letterSpacing": "-0.84px",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "You do four things. Threadline handles the machine.",
+      "rect": {
+        "x": 152,
+        "y": 2079,
+        "w": 610,
+        "h": 175
+      },
+      "style": {
+        "fontFamily": "Fraunces, \"Fraunces Fallback\", \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "56px",
+        "fontWeight": "500",
+        "lineHeight": "58.24px",
+        "letterSpacing": "-0.84px",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Expertise goes in one end. Content worth watching comes out the other.",
+      "rect": {
+        "x": 152,
+        "y": 3177,
+        "w": 610,
+        "h": 175
+      },
+      "style": {
+        "fontFamily": "Fraunces, \"Fraunces Fallback\", \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "56px",
+        "fontWeight": "500",
+        "lineHeight": "58.24px",
+        "letterSpacing": "-0.84px",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Most agencies stop at publish. The machine turns round.",
+      "rect": {
+        "x": 152,
+        "y": 4126,
+        "w": 610,
+        "h": 175
+      },
+      "style": {
+        "fontFamily": "Fraunces, \"Fraunces Fallback\", \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "56px",
+        "fontWeight": "500",
+        "lineHeight": "58.24px",
+        "letterSpacing": "-0.84px",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "One thesis. Many packages. One learning history.",
+      "rect": {
+        "x": 152,
+        "y": 5234,
+        "w": 493,
+        "h": 175
+      },
+      "style": {
+        "fontFamily": "Fraunces, \"Fraunces Fallback\", \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "56px",
+        "fontWeight": "500",
+        "lineHeight": "58.24px",
+        "letterSpacing": "-0.84px",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "We are not trying to make you famous. We are trying to make you familiar to the people who",
+      "rect": {
+        "x": 152,
+        "y": 5838,
+        "w": 746,
+        "h": 175
+      },
+      "style": {
+        "fontFamily": "Fraunces, \"Fraunces Fallback\", \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "56px",
+        "fontWeight": "500",
+        "lineHeight": "58.24px",
+        "letterSpacing": "-0.84px",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [],
+  "p": [
+    {
+      "tag": "p",
+      "text": "FOR EXPERT-LED BUSINESSES",
+      "rect": {
+        "x": 152,
+        "y": 197,
+        "w": 557,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(184, 70, 29)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We turn it into content people actually want to watch — and run the system around it so th",
+      "rect": {
+        "x": 152,
+        "y": 425,
+        "w": 557,
+        "h": 91
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "20.16px",
+        "fontWeight": "400",
+        "lineHeight": "30.24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(79, 74, 66)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "You talk. You record. You approve. You sell. Threadline handles the machine.",
+      "rect": {
+        "x": 152,
+        "y": 536,
+        "w": 557,
+        "h": 54
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "17px",
+        "fontWeight": "500",
+        "lineHeight": "27.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "A small number of clients at a time. Applications are read by a person and answered either",
+      "rect": {
+        "x": 152,
+        "y": 707,
+        "w": 448,
+        "h": 46
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "22.75px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(126, 119, 108)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THE PROBLEM",
+      "rect": {
+        "x": 152,
+        "y": 1008,
+        "w": 548,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(184, 70, 29)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Eleven years of judgement, hundreds of client conversations, opinions you would defend in ",
+      "rect": {
+        "x": 152,
+        "y": 1235,
+        "w": 548,
+        "h": 151
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "20.16px",
+        "fontWeight": "400",
+        "lineHeight": "30.24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(79, 74, 66)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "VALUABLE · UNSEEN · EVERY WEEK",
+      "rect": {
+        "x": 773,
+        "y": 1291,
+        "w": 482,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(126, 119, 108)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Nobody would choose to watch it",
+      "rect": {
+        "x": 185,
+        "y": 1467,
+        "w": 206,
+        "h": 97
+      },
+      "style": {
+        "fontFamily": "Fraunces, \"Fraunces Fallback\", Georgia, serif",
+        "fontSize": "28px",
+        "fontWeight": "500",
+        "lineHeight": "32.2px",
+        "letterSpacing": "-0.28px",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": [
+    {
+      "tag": "p",
+      "text": "FOR EXPERT-LED BUSINESSES",
+      "rect": {
+        "x": 152,
+        "y": 197,
+        "w": 557,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(184, 70, 29)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THE PROBLEM",
+      "rect": {
+        "x": 152,
+        "y": 1008,
+        "w": 548,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(184, 70, 29)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "VALUABLE · UNSEEN · EVERY WEEK",
+      "rect": {
+        "x": 773,
+        "y": 1291,
+        "w": 482,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(126, 119, 108)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THE DIVISION OF LABOUR",
+      "rect": {
+        "x": 152,
+        "y": 2051,
+        "w": 1136,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(184, 70, 29)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "YOU",
+      "rect": {
+        "x": 245,
+        "y": 2371,
+        "w": 27,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THREADLINE",
+      "rect": {
+        "x": 774,
+        "y": 2371,
+        "w": 91,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    }
+  ]
+}

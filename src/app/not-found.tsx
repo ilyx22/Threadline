@@ -1,28 +1,31 @@
+import "@/app/public.css";
 import Link from "next/link";
-import { ButtonLink } from "@/components/ui/button";
-import { Wordmark } from "@/components/brand/logo";
+import { NOT_FOUND } from "@/content/public-site";
+import { ThreadWordmark, InspectorStation } from "@/components/factory/primitives";
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-dvh flex-col items-center justify-center px-4 py-12 text-center">
-      <Wordmark size="md" />
-      <p className="text-eyebrow mt-10 text-accent">404</p>
-      <h1 className="mt-3 text-hero">That page does not exist</h1>
-      <p className="mt-4 max-w-md text-[14px] leading-relaxed text-muted">
-        The link may be out of date, or the record may belong to a workspace you do not have access
-        to.
-      </p>
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-2">
-        <ButtonLink href="/" variant="primary">
-          Go to the homepage
-        </ButtonLink>
-        <ButtonLink href="/app" variant="ghost">
-          Your workspace
-        </ButtonLink>
+    <main className="tl-public flex min-h-dvh flex-col items-center justify-center px-5 py-12 text-center">
+      <Link href="/" aria-label="Threadline home">
+        <ThreadWordmark className="h-7 w-auto" />
+      </Link>
+      <div className="mt-10">
+        <InspectorStation className="mx-auto w-[150px]" stamp="404" reject />
       </div>
-      <p className="mt-10 text-[12px] text-ghost">
+      <p className="tl-label mt-8 text-[color:var(--accent-deep)]">Not found</p>
+      <h1 className="tl-display mt-3 max-w-[14ch] text-[clamp(2rem,5vw,3.5rem)]">{NOT_FOUND.title}</h1>
+      <p className="tl-body mx-auto mt-4 max-w-md text-[15px]">{NOT_FOUND.lead}</p>
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <Link href="/" className="tl-btn tl-btn-primary">
+          Go to the homepage
+        </Link>
+        <Link href="/app" className="tl-btn">
+          Your workspace
+        </Link>
+      </div>
+      <p className="mt-10 text-[13px] text-[color:var(--ink-faint)]">
         Need help?{" "}
-        <Link href="/apply" className="text-accent hover:underline">
+        <Link href="/apply" className="text-[color:var(--accent-deep)] underline underline-offset-4">
           Get in touch
         </Link>
         .

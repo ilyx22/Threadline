@@ -682,3 +682,24 @@ credentials. **No adapter simulates a successful connection.**
   security-critical and logic-critical units: role capability matrix, tenancy scoping, workflow
   transition legality, idea/pattern scoring, report derivation, calculator maths
 - `docs/ACCEPTANCE_TESTS.md` — the manual end-to-end matrix, executed and recorded before release
+
+### ADR-021 — The queue is the database
+Background work (email, metric refresh, maintenance) is a `Job` row with a lease, an attempt budget, exponential backoff and a dead state. Workers claim with a conditional update; a lease older than five minutes is re-claimable. No broker: at this volume a table with an index on (status, runAt) is the whole requirement, and it survives restarts, which the in-process alternative did not. `npm run jobs:worker` runs it; a scheduled `--once` is equally valid.
+
+### ADR-022 — Email is captured until a provider is configured
+`EMAIL_PROVIDER=capture` stores every rendered message in `EmailMessage` and delivers nothing; the UI shows invite/reset links directly in that state. `resend` delivers over HTTP. Every send is logged with its status so delivery questions have an answer in the database. Bodies never contain a secret beyond a single-use, expiring link.
+
+### ADR-023 — Storage keys are tenant-scoped and reads are proxied
+The S3 adapter signs requests itself (SigV4 over `fetch`, no client library), refuses any key that is not `{orgId}/{prefix}/{file}`, and expects a private bucket. Downloads go through `/api/files/[...path]`, which re-checks membership on every request; no bucket URL or pre-signed URL is handed to a browser.
+
+### ADR-024 — Connectors are real to the boundary, and the boundary is mocked
+Each platform connector carries the documented scopes, endpoints, request shapes and error mapping, exercised through an injectable `fetch`. Capability is reported truthfully (`CREDENTIALS_MISSING` → `AUTH_REQUIRED` → connected) and never inferred from configuration. Live credentials and platform review are external gates recorded in `docs/PLATFORM_APPLICATIONS.md`.
+
+### ADR-025 — A metric has five states, not two
+`normalise()` records, per field, whether a provider returned a value, nothing (`unavailable`), does not expose it (`unsupported`), was not asked (`unknown`), or returned something older than the freshness window (`stale`). Only a real number becomes a number in a snapshot; the states are stored beside it. Manual and adapter snapshots coexist and are labelled.
+
+### ADR-026 — Retrieved research is data, never instruction
+Every research provider passes text through `quarantine()`: control characters are stripped and instruction-shaped text is flagged, kept and shown to a person. A flagged item is still evidence; it is never forwarded to a model as an instruction. Login-walled platforms are refused by name; SSRF guards are unchanged.
+
+### ADR-027 — The public site is a scope, not a second design system
+`src/app/public.css` defines the light, illustrated public system under `.tl-public` and remaps the shared colour tokens inside that scope, so every UI primitive renders on paper without a fork. Client and admin surfaces keep the dark system. Values live in `design-system/threadline-design-dna.json`; the Birdhouse analysis under `reference-analysis/` is historical input, never a target.

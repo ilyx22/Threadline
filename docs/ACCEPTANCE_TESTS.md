@@ -680,3 +680,26 @@ expired. Part way through, the browser tab began reporting `document.hidden === 
 returning zero-size layout rectangles, and stopped delivering clicks to the page. **The checklist
 save path and the call outcome form were not confirmed in a browser** as a result. Their rules are
 covered by unit tests, but somebody should tick a box and record a call outcome once.
+
+## Completion pass — 2026-09-09
+
+| ID | Scenario | Expected | Result |
+|---|---|---|---|
+| CP1 | Request a password reset for an unknown address | Same generic message as for a known one; nothing sent | **PASS (auto)** — `account.ts` + `tokens.test.ts` |
+| CP2 | Use a reset link twice | Second use refused as used; other sessions ended on first use | **PASS (auto)** — `tokens.test.ts` |
+| CP3 | Invite a member with no email provider configured | Account + membership created, invite queued/captured, link shown to the inviter | **PASS (auto)** — `email.test.ts`, `jobs.test.ts` |
+| CP4 | Two workers claim the same job | Exactly one holds the lease; a stale lease is recovered | **PASS (auto)** — `jobs.test.ts` |
+| CP5 | Upload with `STORAGE_PROVIDER=s3` half-configured | Refused at start-up, no silent fallback to disk | **PASS (auto)** — `storage.test.ts` / `getStorage()` |
+| CP6 | Redis rate-limit store unreachable | Requests refused (fail closed) unless `RATE_LIMIT_FAIL_OPEN=true` | **PASS (auto)** — `rate-limit.test.ts` |
+| CP7 | Publish to X through the connector with an expired token | `auth_expired` classified; integration marked for reconnect; manual route intact | **PASS (auto)** — `connectors.test.ts` |
+| CP8 | Ingest the same provider reading twice | Second is a no-op duplicate; fields the provider cannot supply stored as unavailable, never 0 | **PASS (auto)** — `normalise.test.ts` + unique key |
+| CP9 | Paste research text containing "ignore all previous instructions" | Kept as evidence, flagged, never executed | **PASS (auto)** — `providers.test.ts` |
+| CP10 | Stripe webhook with a wrong secret | Stored as unverified, no commercial event created | **PASS (auto)** — `webhooks.test.ts` |
+| CP11 | A weak-evidence event marked eligible for rev share | Impossible: eligibility is derived from evidence class | **PASS (auto)** — `attribution-status.test.ts` |
+| CP12 | Send a text post "to recording" | Lands in editing with no record task; "mark recorded" refused | **PASS (auto)** — `qa:spine` text-led |
+| CP13 | Submit the idea form twice quickly | One idea | **PASS (auto)** — `qa:all` hostile:concurrency |
+| CP14 | A discovery piece travels and engages but converts nothing | Read as `none`, not `cta_conversion` | **PASS (auto)** — `intended-job.test.ts` |
+| CP15 | Weekly report for a bad period | Expected-vs-actual table, weakest link, what changed, limitations shown; no softening | **PASS (auto)** — `qa:spine`, `suite-reports` |
+| CP16 | Public site at 320–1920px | No overflow, no console errors, skip link, one h1, no brand leak, no "monthly", no overclaim | **see `qa:public`** |
+| CP17 | Application submitted through the rebuilt form | Persists; confirmation shown | **see `qa:public`** |
+| CP18 | Testimonial request before a confirmed outcome | Refused with the reason | **PASS (code path)** — `requestTestimonialAction` |

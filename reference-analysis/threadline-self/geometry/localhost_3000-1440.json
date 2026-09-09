@@ -1,0 +1,314 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "tl-section relative overflow-hidden pb-10 pt-12 sm:pt-16 lg:pb-16 lg:pt-20",
+      "rect": {
+        "x": 0,
+        "y": 69,
+        "w": 1440,
+        "h": 811
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "You already have\nthe expertise."
+    },
+    {
+      "tag": "section",
+      "id": "problem",
+      "cls": "tl-section tl-band",
+      "rect": {
+        "x": 0,
+        "y": 880,
+        "w": 1440,
+        "h": 1043
+      },
+      "bg": "rgb(234, 225, 210)",
+      "heading": "The market does not experience enough of what you know."
+    },
+    {
+      "tag": "section",
+      "id": "four-things",
+      "cls": "tl-section",
+      "rect": {
+        "x": 0,
+        "y": 1923,
+        "w": 1440,
+        "h": 1099
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "You do four things. Threadline handles the machine."
+    },
+    {
+      "tag": "section",
+      "id": "machine",
+      "cls": "tl-section tl-band",
+      "rect": {
+        "x": 0,
+        "y": 3021,
+        "w": 1440,
+        "h": 948
+      },
+      "bg": "rgb(234, 225, 210)",
+      "heading": "Expertise goes in one end. Content worth watching comes out the other."
+    },
+    {
+      "tag": "section",
+      "id": "return",
+      "cls": "tl-section",
+      "rect": {
+        "x": 0,
+        "y": 3970,
+        "w": 1440,
+        "h": 1108
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Most agencies stop at publish. The machine turns round."
+    },
+    {
+      "tag": "section",
+      "id": "expressions",
+      "cls": "tl-section tl-band",
+      "rect": {
+        "x": 0,
+        "y": 5078,
+        "w": 1440,
+        "h": 604
+      },
+      "bg": "rgb(234, 225, 210)",
+      "heading": "One thesis. Many packages. One learning history."
+    },
+    {
+      "tag": "section",
+      "id": "memory",
+      "cls": "tl-section",
+      "rect": {
+        "x": 0,
+        "y": 5682,
+        "w": 1440,
+        "h": 915
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "We are not trying to make you famous. We are trying to make you familiar to the "
+    },
+    {
+      "tag": "section",
+      "id": "attention",
+      "cls": "tl-section tl-band",
+      "rect": {
+        "x": 0,
+        "y": 6597,
+        "w": 1440,
+        "h": 968
+      },
+      "bg": "rgb(234, 225, 210)",
+      "heading": "Reach is not the result."
+    },
+    {
+      "tag": "section",
+      "id": "learns",
+      "cls": "tl-section",
+      "rect": {
+        "x": 0,
+        "y": 7565,
+        "w": 1440,
+        "h": 803
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Written down before, read against after."
+    },
+    {
+      "tag": "section",
+      "id": "twelve-weeks",
+      "cls": "tl-section tl-band",
+      "rect": {
+        "x": 0,
+        "y": 8368,
+        "w": 1440,
+        "h": 988
+      },
+      "bg": "rgb(234, 225, 210)",
+      "heading": "Three service periods. Real market evidence, not a promise about algorithms."
+    },
+    {
+      "tag": "section",
+      "id": "proof",
+      "cls": "tl-section",
+      "rect": {
+        "x": 0,
+        "y": 9356,
+        "w": 1440,
+        "h": 950
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "No client results to show yet. So here is the system, working."
+    },
+    {
+      "tag": "section",
+      "id": "fit",
+      "cls": "tl-section tl-band",
+      "rect": {
+        "x": 0,
+        "y": 10305,
+        "w": 1440,
+        "h": 807
+      },
+      "bg": "rgb(234, 225, 210)",
+      "heading": "Built for a specific kind of business."
+    },
+    {
+      "tag": "section",
+      "id": "apply-cta",
+      "cls": "tl-section",
+      "rect": {
+        "x": 0,
+        "y": 11113,
+        "w": 1440,
+        "h": 555
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Apply for a content growth diagnosis."
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "tl-band relative overflow-hidden border-t-[1.5px] border-[color:var(--ink)]",
+      "rect": {
+        "x": 0,
+        "y": 11668,
+        "w": 1440,
+        "h": 488
+      },
+      "bg": "rgb(234, 225, 210)",
+      "heading": ""
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Skip to content",
+      "rect": {
+        "x": 16,
+        "y": -100,
+        "w": 156,
+        "h": 51
+      },
+      "style": {
+        "backgroundColor": "rgb(31, 29, 26)",
+        "color": "rgb(255, 251, 244)",
+        "borderRadius": "12px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "padding": "12px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Apply",
+      "rect": {
+        "x": 1218,
+        "y": 14,
+        "w": 70,
+        "h": 40
+      },
+      "style": {
+        "backgroundColor": "rgb(217, 88, 42)",
+        "color": "rgb(255, 251, 244)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 3px 3px 0px 0px",
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "padding": "0px 14px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Apply for a diagnosis",
+      "rect": {
+        "x": 1069,
+        "y": 852,
+        "w": 219,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(217, 88, 42)",
+        "color": "rgb(255, 251, 244)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 4px 4px 0px 0px",
+        "fontSize": "15px",
+        "fontWeight": "600",
+        "padding": "0px 20px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Apply",
+      "rect": {
+        "x": 152,
+        "y": 627,
+        "w": 134,
+        "h": 56
+      },
+      "style": {
+        "backgroundColor": "rgb(217, 88, 42)",
+        "color": "rgb(255, 251, 244)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 4px 4px 0px 0px",
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "padding": "0px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "See how it works",
+      "rect": {
+        "x": 298,
+        "y": 627,
+        "w": 198,
+        "h": 56
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "color": "rgb(31, 29, 26)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 4px 4px 0px 0px",
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "padding": "0px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Apply",
+      "rect": {
+        "x": 1105,
+        "y": 11316,
+        "w": 134,
+        "h": 56
+      },
+      "style": {
+        "backgroundColor": "rgb(217, 88, 42)",
+        "color": "rgb(255, 251, 244)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 4px 4px 0px 0px",
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "padding": "0px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

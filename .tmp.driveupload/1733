@@ -48,8 +48,8 @@ export default async function LoginPage({
             <ArrowLeft className="size-3" aria-hidden />
             Back to threadline.com
           </Link>
-          <Link href="/apply" className="text-accent transition-colors hover:text-accent-bright">
-            Apply for a diagnosis
+          <Link href="/forgot-password" className="text-accent transition-colors hover:text-accent-bright">
+            Forgot your password?
           </Link>
         </div>
 

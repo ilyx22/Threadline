@@ -3,6 +3,7 @@
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
+import { isTextLed } from "@/lib/domain/workflow";
 import { prisma } from "@/lib/db/client";
 import { audit, touchOrg } from "@/lib/auth/audit";
 import { requireOrgAccess, type AuthContext } from "@/lib/auth/guard";
@@ -703,6 +704,8 @@ export async function sendToRecordingAction(
     }
 
     const current = script.versions[0];
+    const format = script.idea?.format ?? "short_form";
+    const textLed = isTextLed({ format, platform: script.platform });
 
     const item = await prisma.contentItem.create({
       data: {
@@ -711,9 +714,11 @@ export async function sendToRecordingAction(
         scriptId: script.id,
         title: script.title,
         selectedHook: current?.hook ?? null,
-        stage: "raw",
+        // Text-led work is written, not recorded: it starts in editing.
+        stage: textLed ? "editing" : "raw",
+        intendedJob: script.idea?.intendedJob ?? "authority",
         platform: script.platform,
-        format: script.idea?.format ?? "short_form",
+        format,
         priority: (script.idea?.priorityScore ?? 0) >= 78 ? "high" : "medium",
         founderId: ctx.user.id,
       },
@@ -724,31 +729,33 @@ export async function sendToRecordingAction(
         orgId: ctx.org.id,
         contentItemId: item.id,
         type: "stage_change",
-        toStage: "raw",
-        note: "Sent to recording from the script engine",
+        toStage: textLed ? "editing" : "raw",
+        note: textLed ? "Text piece sent to production — no recording needed" : "Sent to recording from the script engine",
         actorId: ctx.user.id,
       },
     });
 
-    await prisma.task.create({
-      data: {
-        orgId: ctx.org.id,
-        title: `Record: ${script.title}`,
-        description: current?.hook ?? undefined,
-        kind: "record",
-        audience: "client",
-        priority: item.priority,
-        entityType: "content_item",
-        entityId: item.id,
-        estimateMin: Math.max(4, Math.round((script.estimatedSeconds / 60) * 6)),
-      },
-    });
+    if (!textLed) {
+      await prisma.task.create({
+        data: {
+          orgId: ctx.org.id,
+          title: `Record: ${script.title}`,
+          description: current?.hook ?? undefined,
+          kind: "record",
+          audience: "client",
+          priority: item.priority,
+          entityType: "content_item",
+          entityId: item.id,
+          estimateMin: Math.max(4, Math.round((script.estimatedSeconds / 60) * 6)),
+        },
+      });
+    }
 
     await audit(ctx, {
       action: "script.to_recording",
       entityType: "content_item",
       entityId: item.id,
-      summary: `Sent "${script.title}" to the recording queue`,
+      summary: textLed ? `Sent "${script.title}" to production (text)` : `Sent "${script.title}" to the recording queue`,
     });
     await touchOrg(ctx.org.id);
 
@@ -757,7 +764,7 @@ export async function sendToRecordingAction(
     revalidatePath(`/app/${orgSlug}/create/scripts/${scriptId}`);
     revalidatePath(`/app/${orgSlug}`);
 
-    return ok({ contentItemId: item.id }, "Added to the recording queue.");
+    return ok({ contentItemId: item.id }, textLed ? "Sent to production as a text piece." : "Added to the recording queue.");
   });
 }
 

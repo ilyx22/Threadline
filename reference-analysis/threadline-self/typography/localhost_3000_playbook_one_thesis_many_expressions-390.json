@@ -1,0 +1,310 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "One thesis, many expressions",
+      "rect": {
+        "x": 20,
+        "y": 247,
+        "w": 350,
+        "h": 82
+      },
+      "style": {
+        "fontFamily": "Fraunces, \"Fraunces Fallback\", \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "42px",
+        "fontWeight": "500",
+        "lineHeight": "41.16px",
+        "letterSpacing": "-0.84px",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [],
+  "h3": [],
+  "p": [
+    {
+      "tag": "p",
+      "text": "CHAPTER 04",
+      "rect": {
+        "x": 20,
+        "y": 219,
+        "w": 350,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(184, 70, 29)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Why the unit of content is the argument, not the post.",
+      "rect": {
+        "x": 20,
+        "y": 353,
+        "w": 350,
+        "h": 54
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "18px",
+        "fontWeight": "400",
+        "lineHeight": "27px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(79, 74, 66)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THE IDEA",
+      "rect": {
+        "x": 45,
+        "y": 836,
+        "w": 300,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(184, 70, 29)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "A thesis is an argument the market can react to. One thesis becomes a long piece, several ",
+      "rect": {
+        "x": 45,
+        "y": 864,
+        "w": 300,
+        "h": 205
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "18px",
+        "fontWeight": "400",
+        "lineHeight": "29.25px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "'Sales forecasting' is a topic. 'Your forecast is a feeling, not a number, and the board c",
+      "rect": {
+        "x": 45,
+        "y": 1208,
+        "w": 300,
+        "h": 130
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "26px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Take one topic you post about. Write three theses on it that someone could disagree with.",
+      "rect": {
+        "x": 45,
+        "y": 1311,
+        "w": 300,
+        "h": 82
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "27.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(79, 74, 66)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THREADLINE",
+      "rect": {
+        "x": 20,
+        "y": 1778,
+        "w": 350,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "A managed content growth system for expert-led businesses. Installed and run with you, not",
+      "rect": {
+        "x": 20,
+        "y": 1806,
+        "w": 350,
+        "h": 82
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "27.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(79, 74, 66)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": [
+    {
+      "tag": "span",
+      "text": "4 / 10",
+      "rect": {
+        "x": 315,
+        "y": 109,
+        "w": 55,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(126, 119, 108)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "CHAPTER 04",
+      "rect": {
+        "x": 20,
+        "y": 219,
+        "w": 350,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(184, 70, 29)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THE IDEA",
+      "rect": {
+        "x": 45,
+        "y": 836,
+        "w": 300,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(184, 70, 29)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "TURN THE CARD",
+      "rect": {
+        "x": 45,
+        "y": 1143,
+        "w": 157,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(126, 119, 108)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THREADLINE",
+      "rect": {
+        "x": 20,
+        "y": 1778,
+        "w": 350,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(31, 29, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "PRODUCT",
+      "rect": {
+        "x": 20,
+        "y": 1986,
+        "w": 350,
+        "h": 12
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, \"Cascadia Mono\", Menlo, monospace",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "12px",
+        "letterSpacing": "1.92px",
+        "textTransform": "uppercase",
+        "color": "rgb(126, 119, 108)",
+        "fontStyle": "normal"
+      }
+    }
+  ]
+}

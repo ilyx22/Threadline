@@ -39,9 +39,10 @@ export async function runReports(fx: Fixture) {
   const payload = JSON.stringify(parsed);
   const keys = Object.keys(parsed);
   record("reports", "payload has shipped / performance / wins / misses / learnings / nextWeek", ["shipped", "performance", "wins", "misses", "learnings", "nextWeek"].every((k) => k in parsed) ? "PASS" : "FAIL", keys.join(","));
-  const required = ["what we learned", "expected vs actual", "weakest link", "intervention", "data limitation", "next test"];
-  const present = required.filter((r) => new RegExp(r.replace(/ /g, "[ _]?"), "i").test(payload + JSON.stringify(rep)));
-  record("reports", "brief §33 sections (learned / expected-vs-actual / weakest link / intervention / limitations / next test)", present.length === required.length ? "PASS" : "PARTIAL", `present: ${present.join(", ") || "none"} — missing: ${required.filter((r) => !present.includes(r)).join(", ") || "none"}`);
+  const learning = (parsed.learning ?? {}) as Record<string, unknown>;
+  const required = ["learned", "expectedVsActual", "weakestLink", "whatChanged", "whetherChangeWorked", "dataLimitations", "nextTests", "stillUnknown"];
+  const present = required.filter((r) => r in learning);
+  record("reports", "brief §33 sections (learned / expected-vs-actual / weakest link / what changed / limitations / next test / unknown) frozen in the payload", present.length === required.length ? "PASS" : "FAIL", `present: ${present.join(", ") || "none"} — missing: ${required.filter((r) => !present.includes(r)).join(", ") || "none"}`);
   record("reports", "report does not overclaim commercial results", !/guarantee|will generate|ROI of/i.test(payload) ? "PASS" : "FAIL", "");
   const drafts = await listReports(A);
   const draftRow = drafts.find((r) => r.id === rid);

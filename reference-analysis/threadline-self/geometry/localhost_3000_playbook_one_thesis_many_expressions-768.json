@@ -1,0 +1,155 @@
+{
+  "sections": [
+    {
+      "tag": "article",
+      "id": "",
+      "cls": "",
+      "rect": {
+        "x": 0,
+        "y": 69,
+        "w": 768,
+        "h": 1597
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "One thesis, many expressions"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "tl-section pb-8 pt-10",
+      "rect": {
+        "x": 0,
+        "y": 155,
+        "w": 768,
+        "h": 696
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "One thesis, many expressions"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "tl-section tl-band pt-8",
+      "rect": {
+        "x": 0,
+        "y": 851,
+        "w": 768,
+        "h": 629
+      },
+      "bg": "rgb(234, 225, 210)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "tl-section",
+      "rect": {
+        "x": 0,
+        "y": 1479,
+        "w": 768,
+        "h": 186
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "tl-band relative overflow-hidden border-t-[1.5px] border-[color:var(--ink)]",
+      "rect": {
+        "x": 0,
+        "y": 1666,
+        "w": 768,
+        "h": 566
+      },
+      "bg": "rgb(234, 225, 210)",
+      "heading": ""
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Skip to content",
+      "rect": {
+        "x": 16,
+        "y": -100,
+        "w": 156,
+        "h": 51
+      },
+      "style": {
+        "backgroundColor": "rgb(31, 29, 26)",
+        "color": "rgb(255, 251, 244)",
+        "borderRadius": "12px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "fontSize": "17px",
+        "fontWeight": "600",
+        "padding": "12px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Apply",
+      "rect": {
+        "x": 678,
+        "y": 14,
+        "w": 70,
+        "h": 40
+      },
+      "style": {
+        "backgroundColor": "rgb(217, 88, 42)",
+        "color": "rgb(255, 251, 244)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 3px 3px 0px 0px",
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "padding": "0px 14px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Listen before you speak",
+      "rect": {
+        "x": 20,
+        "y": 1549,
+        "w": 239,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "color": "rgb(31, 29, 26)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 4px 4px 0px 0px",
+        "fontSize": "15px",
+        "fontWeight": "600",
+        "padding": "0px 20px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Distribution is a place, not a blast",
+      "rect": {
+        "x": 443,
+        "y": 1549,
+        "w": 305,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(217, 88, 42)",
+        "color": "rgb(255, 251, 244)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 4px 4px 0px 0px",
+        "fontSize": "15px",
+        "fontWeight": "600",
+        "padding": "0px 20px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

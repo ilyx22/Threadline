@@ -17,6 +17,8 @@ import { missingCallStages } from "@/lib/domain/sop";
 import { parseStringArray } from "@/lib/db/json";
 import { NextActionCard, StatePanel } from "../../_components/state-panel";
 import { CallsPanel, DetailsPanel, ReplyPanel } from "./prospect-detail";
+import { EconomicsPanel } from "./economics-panel";
+import { approvedScripts } from "@/lib/sales/scripts";
 
 export const metadata: Metadata = { title: "Prospect" };
 
@@ -28,7 +30,7 @@ export default async function ProspectPage({ params }: { params: Promise<{ id: s
   await requireInternal("acquisition.view");
   const { id } = await params;
 
-  const [prospect, wedges] = await Promise.all([getProspect(id), listWedges()]);
+  const [prospect, wedges, scripts] = await Promise.all([getProspect(id), listWedges(), approvedScripts()]);
   if (!prospect) notFound();
 
   const state = metaOf(PROSPECT_STATE_META, prospect.state);
@@ -125,8 +127,29 @@ export default async function ProspectPage({ params }: { params: Promise<{ id: s
             <ReplyPanel prospectId={prospect.id} current={prospect.replyClass} />
           ) : null}
 
+          <EconomicsPanel
+            prospectId={prospect.id}
+            economics={{
+              econCurrency: prospect.econCurrency,
+              typicalDealValueMinor: prospect.typicalDealValueMinor,
+              grossProfitMinor: prospect.grossProfitMinor,
+              grossMarginPct: prospect.grossMarginPct,
+              ltvMinor: prospect.ltvMinor,
+              qualifiedOppValueMinor: prospect.qualifiedOppValueMinor,
+              cycleLengthDays: prospect.cycleLengthDays,
+              closeRatePct: prospect.closeRatePct,
+              capacityNote: prospect.capacityNote,
+              acquisitionCostMinor: prospect.acquisitionCostMinor,
+              acquisitionNote: prospect.acquisitionNote,
+              urgency: prospect.urgency,
+              economicConsequence: prospect.economicConsequence,
+              economicsUpdatedAt: prospect.economicsUpdatedAt?.toISOString() ?? null,
+            }}
+          />
+
           <CallsPanel
             prospectId={prospect.id}
+            scripts={scripts.map((s) => ({ id: s.id, key: s.key, version: s.version, context: s.context, stage: s.stage }))}
             calls={prospect.calls.map((call) => ({
               id: call.id,
               scheduledAt: call.scheduledAt.toISOString(),

@@ -1,0 +1,404 @@
+{
+  "url": "http://localhost:3000/",
+  "title": "Threadline — you already have the expertise · Threadline",
+  "viewport": {
+    "w": 1024,
+    "h": 900
+  },
+  "scrollHeight": 11005,
+  "fonts": [
+    "Inter 100 900 normal",
+    "Inter Fallback normal normal",
+    "Instrument Serif 400 italic",
+    "Instrument Serif 400 normal",
+    "Instrument Serif Fallback normal normal",
+    "Fraunces 100 900 normal",
+    "Fraunces Fallback normal normal",
+    "JetBrains Mono 500 normal",
+    "JetBrains Mono 600 normal",
+    "JetBrains Mono Fallback normal normal"
+  ],
+  "families": {
+    "Inter": 286,
+    "JetBrains Mono": 99,
+    "Fraunces": 33
+  },
+  "topColours": [
+    [
+      "rgb(228, 220, 205)",
+      794
+    ],
+    [
+      "rgb(31, 29, 26)",
+      762
+    ],
+    [
+      "rgb(255, 251, 244)",
+      74
+    ],
+    [
+      "rgb(79, 74, 66)",
+      60
+    ],
+    [
+      "rgb(44, 124, 106)",
+      32
+    ],
+    [
+      "rgb(184, 70, 29)",
+      27
+    ],
+    [
+      "rgb(126, 119, 108)",
+      27
+    ],
+    [
+      "rgb(194, 74, 58)",
+      22
+    ],
+    [
+      "rgb(169, 162, 151)",
+      20
+    ],
+    [
+      "rgb(220, 227, 234)",
+      18
+    ],
+    [
+      "rgb(217, 88, 42)",
+      8
+    ],
+    [
+      "rgb(234, 225, 210)",
+      8
+    ],
+    [
+      "rgb(58, 54, 49)",
+      3
+    ],
+    [
+      "rgb(216, 238, 232)",
+      2
+    ],
+    [
+      "rgb(244, 238, 227)",
+      1
+    ],
+    [
+      "rgb(241, 195, 73)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "20px",
+      36
+    ],
+    [
+      "3.35544e+07px",
+      25
+    ],
+    [
+      "8px",
+      25
+    ],
+    [
+      "12px",
+      11
+    ],
+    [
+      "6px",
+      7
+    ],
+    [
+      "999px",
+      3
+    ]
+  ],
+  "shadows": [
+    [
+      "rgb(31, 29, 26) 6px 6px 0px 0px",
+      12
+    ],
+    [
+      "rgb(31, 29, 26) 4px 4px 0px 0px",
+      4
+    ],
+    [
+      "rgb(31, 29, 26) 3px 3px 0px 0px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "1200px",
+      17
+    ],
+    [
+      "664.926px",
+      16
+    ],
+    [
+      "704.039px",
+      11
+    ],
+    [
+      "446.423px",
+      11
+    ],
+    [
+      "672px",
+      2
+    ],
+    [
+      "448px",
+      1
+    ],
+    [
+      "545.628px",
+      1
+    ],
+    [
+      "768px",
+      1
+    ],
+    [
+      "512px",
+      1
+    ],
+    [
+      "384px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "Threadline",
+      "href": "/"
+    },
+    {
+      "text": "How it works",
+      "href": "/how-it-works"
+    },
+    {
+      "text": "Who it is for",
+      "href": "/who-its-for"
+    },
+    {
+      "text": "Playbook",
+      "href": "/playbook"
+    },
+    {
+      "text": "Sign in",
+      "href": "/login"
+    },
+    {
+      "text": "Apply",
+      "href": "/apply"
+    }
+  ],
+  "bodyBg": "rgb(11, 13, 15)",
+  "htmlBg": "rgba(0, 0, 0, 0)",
+  "cards": [
+    {
+      "tag": "div",
+      "text": "EXPERTISE EXPERTISE STORIES PROOF IN: EXPERTISE → OUT: CONTENT PEOPLE WANT TO WATCH → BACK",
+      "rect": {
+        "x": 547,
+        "y": 226,
+        "w": 469,
+        "h": 372
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 6px 6px 0px 0px",
+        "padding": "28px",
+        "maxWidth": "none",
+        "width": "468.891px",
+        "height": "372px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Nobody would choose to watch it The thinking is good; the piece reads a list to camera. Th",
+      "rect": {
+        "x": 32,
+        "y": 1237,
+        "w": 228,
+        "h": 422
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "228px",
+        "height": "421.766px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Topics chosen by mood This week's post comes from Sunday's mood, not from anything known a",
+      "rect": {
+        "x": 276,
+        "y": 1237,
+        "w": 228,
+        "h": 422
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "228px",
+        "height": "421.766px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Output that stops when you get busy Every piece needs you at four separate points. When de",
+      "rect": {
+        "x": 520,
+        "y": 1237,
+        "w": 228,
+        "h": 422
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "228px",
+        "height": "421.766px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "No learning loop Nobody can say why one piece produced three conversations and the next pr",
+      "rect": {
+        "x": 764,
+        "y": 1237,
+        "w": 228,
+        "h": 422
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "228px",
+        "height": "421.766px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "EXPERTISE YOU 1 Talk Answer questions, tell the story, give the opinion. Twenty minutes, n",
+      "rect": {
+        "x": 32,
+        "y": 2046,
+        "w": 425,
+        "h": 596
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 6px 6px 0px 0px",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "425.453px",
+        "height": "595.875px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Talk Answer questions, tell the story, give the opinion. Twenty minutes, not a writing tas",
+      "rect": {
+        "x": 104,
+        "y": 2187,
+        "w": 321,
+        "h": 111
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "320.578px",
+        "height": "110.859px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Record A teleprompter and a checklist. One session covers a week.",
+      "rect": {
+        "x": 115,
+        "y": 2318,
+        "w": 309,
+        "h": 84
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "309.203px",
+        "height": "83.6719px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Approve Every script and every cut passes you before it goes anywhere.",
+      "rect": {
+        "x": 113,
+        "y": 2422,
+        "w": 312,
+        "h": 84
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "311.797px",
+        "height": "83.6719px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Sell Take the conversations the content starts.",
+      "rect": {
+        "x": 116,
+        "y": 2526,
+        "w": 309,
+        "h": 84
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "308.844px",
+        "height": "83.6719px"
+      }
+    }
+  ]
+}

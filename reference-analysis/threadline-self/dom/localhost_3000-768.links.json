@@ -1,0 +1,53 @@
+{
+  "links": [
+    "/",
+    "/how-it-works",
+    "/who-its-for",
+    "/playbook",
+    "/login",
+    "/apply",
+    "/how-it-works",
+    "/who-its-for",
+    "/playbook",
+    "/login",
+    "/apply",
+    "/apply",
+    "/how-it-works",
+    "/apply",
+    "/how-it-works",
+    "/who-its-for",
+    "/calculator",
+    "/playbook",
+    "/apply",
+    "/login",
+    "/playbook/what-we-do-not-promise"
+  ],
+  "meta": {
+    "viewport": "width=device-width, initial-scale=1",
+    "theme-color": "#0B0D0F",
+    "description": "Threadline is a managed content-growth system for expert-led businesses. You talk, record, approve and sell. Threadline runs the machine — research, ideas, scri",
+    "application-name": "Threadline OS",
+    "robots": "index, follow",
+    "og:title": "Threadline — you already have the expertise",
+    "og:description": "You already have the expertise. We turn it into content people actually want to watch.",
+    "og:url": "http://localhost:3000",
+    "og:type": "website",
+    "twitter:card": "summary",
+    "twitter:title": "Threadline — you already have the expertise",
+    "twitter:description": "You already have the expertise. We turn it into content people actually want to watch."
+  },
+  "scripts": [
+    "localhost:3000/_next/static/chunks/4bd1b696-100b9d70ed4e49c1.js",
+    "localhost:3000/_next/static/chunks/1255-623a1bc706ecd6cc.js",
+    "localhost:3000/_next/static/chunks/main-app-f4a8d2eb8216d8ca.js",
+    "localhost:3000/_next/static/chunks/2619-04bc32f026a0d946.js",
+    "localhost:3000/_next/static/chunks/4909-1f5c586e3e84e0a5.js",
+    "localhost:3000/_next/static/chunks/8112-97aa7212759a565b.js",
+    "localhost:3000/_next/static/chunks/app/(marketing)/page-2eaae5979ba3c6ac.js",
+    "localhost:3000/_next/static/chunks/app/layout-5babd57740ba2f79.js",
+    "localhost:3000/_next/static/chunks/app/(marketing)/layout-95d2083d39252b65.js",
+    "localhost:3000/_next/static/chunks/app/global-error-291132a0b6de2344.js",
+    "localhost:3000/_next/static/chunks/polyfills-42372ed130431b0a.js",
+    "localhost:3000/_next/static/chunks/webpack-a022ce4168b7b782.js"
+  ]
+}

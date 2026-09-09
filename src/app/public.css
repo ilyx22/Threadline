@@ -1,0 +1,409 @@
+/* ==========================================================================
+   THREADLINE PUBLIC — the light, illustrated system for the public site.
+   Source of truth: design-system/threadline-design-dna.json.
+   Scoped to `.tl-public`; it remaps the core colour tokens so shared UI
+   primitives (fields, buttons, notices) render on paper without forking them.
+   ========================================================================== */
+
+.tl-public {
+  --canvas: #f4eee3;
+  --canvas-deep: #eae1d2;
+  --paper: #fffbf4;
+  --paper-edge: #e4dccd;
+  --ink: #1f1d1a;
+  --ink-soft: #4f4a42;
+  --ink-faint: #7e776c;
+  --ink-ghost: #a9a297;
+  --accent: #d9582a;
+  --accent-deep: #b8461d;
+  --accent-soft: #fbe4d8;
+  --signal: #2c7c6a;
+  --signal-soft: #d8eee8;
+  --stamp: #f1c349;
+  --stamp-soft: #fbefc4;
+  --reject: #c24a3a;
+  --steel: #6b7a8c;
+  --steel-soft: #dce3ea;
+  --belt: #3a3631;
+
+  /* Remap the shared token set so existing primitives go light. */
+  --color-base: var(--canvas);
+  --color-surface: var(--paper);
+  --color-elevated: var(--paper);
+  --color-raised: var(--canvas-deep);
+  --color-line: var(--paper-edge);
+  --color-line-strong: #cfc6b4;
+  --color-line-soft: #efe8db;
+  --color-ink: var(--ink);
+  --color-muted: var(--ink-soft);
+  --color-faint: var(--ink-faint);
+  --color-ghost: var(--ink-ghost);
+  --color-accent: var(--accent);
+  --color-accent-bright: var(--accent-deep);
+  --color-accent-dim: var(--accent-deep);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-line: rgba(217, 88, 42, 0.35);
+  --color-positive: var(--signal);
+  --color-positive-soft: var(--signal-soft);
+  --color-negative: var(--reject);
+  --color-negative-soft: #f7ddd8;
+  --color-warning: #a9770f;
+  --color-warning-soft: var(--stamp-soft);
+  --color-info: var(--steel);
+  --color-info-soft: var(--steel-soft);
+  --shadow-sm: none;
+  --shadow-md: 6px 6px 0 0 var(--ink);
+  --shadow-lg: 8px 8px 0 0 var(--ink);
+  --shadow-pop: 10px 10px 0 0 var(--ink);
+
+  color-scheme: light;
+  background-color: var(--canvas);
+  color: var(--ink);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.tl-public ::selection {
+  background: var(--stamp-soft);
+  color: var(--ink);
+}
+.tl-public :focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+.tl-public .hero-vignette,
+.tl-public .grid-lines {
+  background-image: none;
+}
+
+/* Type */
+.tl-display {
+  font-family: var(--font-display), "Iowan Old Style", Georgia, serif;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 0.98;
+  font-size: clamp(2.625rem, 6.4vw, 5.5rem);
+  text-wrap: balance;
+}
+.tl-section-title {
+  font-family: var(--font-display), "Iowan Old Style", Georgia, serif;
+  font-variation-settings: "opsz" 96, "SOFT" 30, "WONK" 0;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.04;
+  font-size: clamp(2.125rem, 4vw, 3.5rem);
+  text-wrap: balance;
+}
+.tl-sub-title {
+  font-family: var(--font-display), Georgia, serif;
+  font-variation-settings: "opsz" 48, "SOFT" 30;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+}
+.tl-label {
+  font-family: var(--font-label), ui-monospace, "Cascadia Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.tl-lead {
+  font-size: clamp(1.125rem, 1.4vw, 1.3125rem);
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+.tl-body {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+.tl-mark {
+  background: linear-gradient(transparent 55%, var(--stamp-soft) 55%);
+  padding: 0 0.1em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+/* Paper cards, buttons, stamps, chips */
+.tl-card {
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 6px 6px 0 0 var(--ink);
+  transition: box-shadow 160ms var(--ease-out-quint), transform 160ms var(--ease-out-quint);
+}
+.tl-card-quiet {
+  background: var(--paper);
+  border: 1px solid var(--paper-edge);
+  border-radius: 20px;
+}
+.tl-card-hover:hover {
+  box-shadow: 8px 8px 0 0 var(--ink);
+  transform: translate(-1px, -1px);
+}
+.tl-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 48px;
+  padding: 0 1.25rem;
+  border-radius: 12px;
+  border: 1.5px solid var(--ink);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  line-height: 1;
+  color: var(--ink);
+  background: var(--paper);
+  box-shadow: 4px 4px 0 0 var(--ink);
+  transition: transform 120ms var(--ease-out-quint), box-shadow 120ms var(--ease-out-quint), background-color 160ms;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.tl-btn:hover {
+  background: var(--canvas-deep);
+}
+.tl-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 0 var(--ink);
+}
+.tl-btn-primary {
+  background: var(--accent);
+  color: var(--paper);
+}
+.tl-btn-primary:hover {
+  background: var(--accent-deep);
+}
+.tl-btn-lg {
+  min-height: 56px;
+  padding: 0 1.75rem;
+  font-size: 1.0625rem;
+}
+.tl-btn-sm {
+  min-height: 44px;
+  padding: 0 0.875rem;
+  font-size: 0.875rem;
+  box-shadow: 3px 3px 0 0 var(--ink);
+}
+.tl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 32px;
+  padding: 0 0.625rem;
+  border-radius: 8px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  font-family: var(--font-label), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink);
+}
+.tl-stamp {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  border: 2px solid var(--ink);
+  background: var(--stamp);
+  color: var(--ink);
+  font-family: var(--font-label), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  transform: rotate(-3deg);
+}
+.tl-stamp-reject {
+  background: var(--paper);
+  color: var(--reject);
+  border-color: var(--reject);
+}
+.tl-stamp-signal {
+  background: var(--signal-soft);
+  color: var(--signal);
+  border-color: var(--signal);
+}
+.tl-synthetic {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  border: 1.5px dashed var(--ink-faint);
+  color: var(--ink-faint);
+  font-family: var(--font-label), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Layout */
+.tl-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+@media (min-width: 1024px) {
+  .tl-container {
+    padding-inline: 2rem;
+  }
+}
+.tl-section {
+  padding-block: clamp(4rem, 9vw, 8rem);
+}
+.tl-band {
+  background: var(--canvas-deep);
+}
+.tl-skip {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 12px;
+  font-weight: 600;
+}
+.tl-skip:focus {
+  top: 1rem;
+}
+
+/* Motion with a job */
+@keyframes tl-belt {
+  to {
+    background-position-x: -48px;
+  }
+}
+.tl-belt {
+  height: 14px;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background-color: var(--belt);
+  background-image: repeating-linear-gradient(90deg, transparent 0 18px, rgba(255, 251, 244, 0.55) 18px 24px);
+  background-size: 48px 100%;
+  animation: tl-belt 1.2s linear infinite;
+}
+.tl-belt-slow {
+  animation-duration: 2.4s;
+}
+.tl-paused .tl-belt {
+  animation-play-state: paused;
+}
+@keyframes tl-stamp-in {
+  0% {
+    transform: rotate(-3deg) scale(1.6);
+    opacity: 0;
+  }
+  60% {
+    transform: rotate(-3deg) scale(0.94);
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(-3deg) scale(1);
+    opacity: 1;
+  }
+}
+.tl-stamp-in {
+  animation: tl-stamp-in 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+.tl-draw {
+  stroke-dasharray: var(--len, 600);
+  stroke-dashoffset: var(--len, 600);
+  transition: stroke-dashoffset 1.4s var(--ease-out-quint);
+}
+[data-shown="true"] .tl-draw,
+.tl-drawn .tl-draw {
+  stroke-dashoffset: 0;
+}
+@keyframes tl-pulse-travel {
+  0% {
+    offset-distance: 0%;
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 1;
+  }
+  100% {
+    offset-distance: 100%;
+    opacity: 0;
+  }
+}
+.tl-pulse {
+  offset-rotate: 0deg;
+  animation: tl-pulse-travel 2.2s var(--ease-in-out-soft) infinite;
+}
+@keyframes tl-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+.tl-light {
+  animation: tl-blink 1.6s ease-in-out infinite;
+}
+@keyframes tl-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+.tl-bob {
+  animation: tl-bob 2.6s ease-in-out infinite;
+}
+.tl-station {
+  transition: opacity 400ms var(--ease-out-quint), transform 400ms var(--ease-out-quint);
+}
+.tl-station[data-lit="false"] {
+  opacity: 0.45;
+}
+.tl-station[data-lit="true"] {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-belt,
+  .tl-pulse,
+  .tl-light,
+  .tl-bob,
+  .tl-stamp-in {
+    animation: none !important;
+  }
+  .tl-draw {
+    stroke-dashoffset: 0 !important;
+    transition: none !important;
+  }
+  .tl-station[data-lit="false"] {
+    opacity: 1;
+  }
+}
+
+@media print {
+  .tl-public .tl-belt,
+  .tl-public .tl-sticky {
+    display: none;
+  }
+}

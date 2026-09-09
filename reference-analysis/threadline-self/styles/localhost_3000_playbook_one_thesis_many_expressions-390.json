@@ -1,0 +1,248 @@
+{
+  "url": "http://localhost:3000/playbook/one-thesis-many-expressions",
+  "title": "One thesis, many expressions — The Founder Authority System · Threadline",
+  "viewport": {
+    "w": 390,
+    "h": 900
+  },
+  "scrollHeight": 2672,
+  "fonts": [
+    "Inter 100 900 normal",
+    "Inter Fallback normal normal",
+    "Instrument Serif 400 italic",
+    "Instrument Serif 400 normal",
+    "Instrument Serif Fallback normal normal",
+    "Fraunces 100 900 normal",
+    "Fraunces Fallback normal normal",
+    "JetBrains Mono 500 normal",
+    "JetBrains Mono 600 normal",
+    "JetBrains Mono Fallback normal normal"
+  ],
+  "families": {
+    "Inter": 48,
+    "JetBrains Mono": 9,
+    "Fraunces": 3
+  },
+  "topColours": [
+    [
+      "rgb(228, 220, 205)",
+      89
+    ],
+    [
+      "rgb(31, 29, 26)",
+      82
+    ],
+    [
+      "rgb(79, 74, 66)",
+      13
+    ],
+    [
+      "rgb(255, 251, 244)",
+      12
+    ],
+    [
+      "rgb(126, 119, 108)",
+      9
+    ],
+    [
+      "rgb(217, 88, 42)",
+      3
+    ],
+    [
+      "rgb(184, 70, 29)",
+      2
+    ],
+    [
+      "rgb(234, 225, 210)",
+      2
+    ],
+    [
+      "rgb(244, 238, 227)",
+      1
+    ],
+    [
+      "rgb(241, 195, 73)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "12px",
+      6
+    ],
+    [
+      "20px",
+      4
+    ],
+    [
+      "3.35544e+07px",
+      1
+    ],
+    [
+      "6px",
+      1
+    ]
+  ],
+  "shadows": [
+    [
+      "rgb(31, 29, 26) 6px 6px 0px 0px",
+      3
+    ],
+    [
+      "rgb(31, 29, 26) 4px 4px 0px 0px",
+      2
+    ],
+    [
+      "rgb(31, 29, 26) 3px 3px 0px 0px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "1200px",
+      7
+    ],
+    [
+      "664.926px",
+      2
+    ],
+    [
+      "353.682px",
+      1
+    ],
+    [
+      "704.039px",
+      1
+    ],
+    [
+      "420px",
+      1
+    ],
+    [
+      "384px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "Threadline",
+      "href": "/"
+    },
+    {
+      "text": "Apply",
+      "href": "/apply"
+    },
+    {
+      "text": "Listen before you speak",
+      "href": "/playbook/listen-before-you-speak"
+    },
+    {
+      "text": "Distribution is a place, not a blast",
+      "href": "/playbook/distribution-is-a-place-not-a-blast"
+    }
+  ],
+  "bodyBg": "rgb(11, 13, 15)",
+  "htmlBg": "rgba(0, 0, 0, 0)",
+  "cards": [
+    {
+      "tag": "article",
+      "text": "The Founder Authority System 4 / 10 CHAPTER 04 One thesis, many expressions Why the unit o",
+      "rect": {
+        "x": 0,
+        "y": 69,
+        "w": 390,
+        "h": 1652
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "390px",
+        "height": "1652.41px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "",
+      "rect": {
+        "x": 20,
+        "y": 447,
+        "w": 350,
+        "h": 236
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 6px 6px 0px 0px",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "235.703px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "THE IDEA A thesis is an argument the market can react to. One thesis becomes a long piece,",
+      "rect": {
+        "x": 20,
+        "y": 811,
+        "w": 350,
+        "h": 283
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 6px 6px 0px 0px",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "282.75px"
+      }
+    },
+    {
+      "tag": "details",
+      "text": "TURN THE CARD Thesis or topic?",
+      "rect": {
+        "x": 20,
+        "y": 1118,
+        "w": 350,
+        "h": 95
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 6px 6px 0px 0px",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "95.2969px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "DO THIS Take one topic you post about. Write three theses on it that someone could disagre",
+      "rect": {
+        "x": 20,
+        "y": 1237,
+        "w": 350,
+        "h": 180
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "180.344px"
+      }
+    }
+  ]
+}

@@ -67,7 +67,7 @@ export async function runOnboarding(fx: Fixture) {
   const fill: Record<string, Record<string, unknown>> = {
     customer: { icpName: "Founder-led B2B services, 20-200 staff", icpPains: ["Forecast slips late", "Reps blamed for system faults"], icpDesires: ["A forecast the board trusts"] },
     founder: { founderName: "Kate O'Brien", founderBio: "Eleven years running sales teams." },
-    voice: { voiceTone: "Direct, warm, no jargon", bannedPhrases: ["game-changer", "synergy"] },
+    voice: { voiceTone: "Direct, warm, no jargon", voicePhrasesAvoided: ["game-changer", "synergy"] },
     content: { hoursPerWeek: 2 },
     market: {}, operation: {}, goals: { targetPlatforms: ["linkedin"], targetCadence: 3 }, commercial: { attentionToInquiry: "Profile → site → discovery call" }, integrations: {},
   };
@@ -90,7 +90,7 @@ export async function runOnboarding(fx: Fixture) {
   record("onboarding:effects", "Brand Brain populated from answers", JSON.stringify(brain).includes("feelings") ? "PASS" : "FAIL", `contains onboarding description=${JSON.stringify(brain).includes("feelings")}`);
   record("onboarding:effects", "ICP created with pains as a list", !!icp && JSON.parse(icp.pains ?? "[]").length === 2 ? "PASS" : "FAIL", `icp=${icp?.name} pains=${icp?.pains}`);
   record("onboarding:effects", "Offer created", offer?.name === "Forecast Reset" ? "PASS" : "FAIL", `${offer?.name}`);
-  record("onboarding:effects", "banned phrases reach the Brand Brain voice profile", JSON.stringify(brain).includes("game-changer") ? "PASS" : "PARTIAL", JSON.stringify(brain).includes("game-changer") ? "" : "onboarding voice step does not carry a banned-phrase field into voice.phrasesAvoided");
+  record("onboarding:effects", "banned phrases reach the Brand Brain voice profile", JSON.stringify(brain).includes("game-changer") ? "PASS" : "FAIL", JSON.stringify(brain).includes("game-changer") ? "" : "onboarding voice step does not carry a banned-phrase field into voice.phrasesAvoided");
   record("onboarding:effects", "tasks created for the founder", tasks > 0 ? "PASS" : "PARTIAL", `${tasks} tasks`);
   record("onboarding:effects", "recording readiness row exists, not assessed", readiness?.status === "not_assessed" ? "PASS" : "PARTIAL", `status=${readiness?.status ?? "none"}`);
   record("onboarding:effects", "testimonial-if-successful permission captured", "NA", "no such field exists in the schema — feature not built (brief §23)");

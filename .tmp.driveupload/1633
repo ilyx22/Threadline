@@ -405,6 +405,12 @@ export function DistributionView({
                         ))}
                       </NativeSelect>
                     </Field>
+                    <Field label="Distribution" htmlFor="distributionMode" hint="Paid amplification is recorded so organic and paid reach are never mixed.">
+                      <NativeSelect id="distributionMode" name="distributionMode" defaultValue="organic">
+                        <option value="organic">Organic</option>
+                        <option value="paid_amplified">Paid amplification</option>
+                      </NativeSelect>
+                    </Field>
                     <Field
                       label="Publish date"
                       htmlFor="scheduledFor"

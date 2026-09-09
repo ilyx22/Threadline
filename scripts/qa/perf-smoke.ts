@@ -45,6 +45,29 @@ export async function runPerf() {
     createTimes.push(ms);
   }
   const orgs = await prisma.organization.findMany({ where: { slug: { startsWith: "qa-perf-" } }, select: { id: true, slug: true } });
+
+  // Realistic rows in five workspaces: 60 published pieces each with publish
+  // records, three snapshots and a handful of inquiries — the shape of a
+  // client three periods in. Bulk inserts, labelled by slug, removed on exit.
+  const { ms: seedMs } = await timed(async () => {
+    for (const o of orgs.slice(0, 5)) {
+      const items = await Promise.all(
+        Array.from({ length: 60 }, (_, i) =>
+          prisma.contentItem.create({
+            data: { orgId: o.id, title: `Perf piece ${i}`, stage: "live", platform: i % 3 === 0 ? "youtube" : "linkedin", format: i % 3 === 0 ? "long_form" : "short_form", liveAt: new Date(Date.now() - i * 86_400_000) },
+            select: { id: true, platform: true, liveAt: true },
+          }),
+        ),
+      );
+      for (const item of items) {
+        const pub = await prisma.publishRecord.create({ data: { orgId: o.id, contentItemId: item.id, platform: item.platform, status: "published", publishedAt: item.liveAt, url: `https://example.test/${o.slug}/${item.id}` }, select: { id: true } });
+        await prisma.performanceSnapshot.createMany({ data: [1, 2, 3].map((n) => ({ orgId: o.id, publishRecordId: pub.id, capturedAt: new Date((item.liveAt ?? new Date()).getTime() + n * 3 * 86_400_000), views: 400 * n + Math.floor(Math.random() * 300), likes: 12 * n, comments: 3 * n, shares: 2 * n, saves: 4 * n, retentionPct: 35 + n })) });
+      }
+      await prisma.inquiry.createMany({ data: items.slice(0, 8).map((item, i) => ({ orgId: o.id, name: `Perf buyer ${i}`, stage: i % 4 === 0 ? "call_booked" : "inquiry", contentItemId: item.id })) });
+    }
+  });
+  const seededRows = await prisma.performanceSnapshot.count({ where: { orgId: { in: orgs.slice(0, 5).map((o) => o.id) } } });
+  record("perf", "five workspaces populated with realistic rows (60 pieces, 3 snapshots each, inquiries)", seededRows >= 5 * 60 * 3 ? "PASS" : "FAIL", `${seededRows} snapshots in ${seedMs}ms`);
   const content = await prisma.contentItem.count({ where: { orgId: { in: orgs.map((o) => o.id) } } });
   const maxCreate = Math.max(...createTimes);
   record("perf", `${N} clients created through createClientAction (template seeded)`, orgs.length === N && maxCreate <= BUDGET_MS.create ? "PASS" : orgs.length === N ? "PARTIAL" : "FAIL", `orgs=${orgs.length} content rows=${content} create p50=${createTimes.sort((a, b) => a - b)[Math.floor(N / 2)]}ms max=${maxCreate}ms`);

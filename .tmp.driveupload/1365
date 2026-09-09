@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Instrument_Serif } from "next/font/google";
+import { Inter, Instrument_Serif, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toast";
 
@@ -14,6 +14,21 @@ const editorial = Instrument_Serif({
   weight: "400",
   style: ["normal", "italic"],
   variable: "--font-editorial",
+  display: "swap",
+});
+
+const display = Fraunces({
+  subsets: ["latin"],
+  axes: ["opsz", "SOFT", "WONK"],
+  weight: "variable",
+  variable: "--font-display",
+  display: "swap",
+});
+
+const label = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  variable: "--font-label",
   display: "swap",
 });
 
@@ -43,7 +58,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-GB" className={`${inter.variable} ${editorial.variable}`} suppressHydrationWarning>
+    <html lang="en-GB" className={`${inter.variable} ${editorial.variable} ${display.variable} ${label.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-base text-ink antialiased">
         {children}
         <Toaster />

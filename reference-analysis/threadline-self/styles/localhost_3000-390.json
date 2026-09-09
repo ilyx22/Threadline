@@ -1,0 +1,388 @@
+{
+  "url": "http://localhost:3000/",
+  "title": "Threadline — you already have the expertise · Threadline",
+  "viewport": {
+    "w": 390,
+    "h": 900
+  },
+  "scrollHeight": 17174,
+  "fonts": [
+    "Inter 100 900 normal",
+    "Inter Fallback normal normal",
+    "Instrument Serif 400 italic",
+    "Instrument Serif 400 normal",
+    "Instrument Serif Fallback normal normal",
+    "Fraunces 100 900 normal",
+    "Fraunces Fallback normal normal",
+    "JetBrains Mono 500 normal",
+    "JetBrains Mono 600 normal",
+    "JetBrains Mono Fallback normal normal"
+  ],
+  "families": {
+    "Inter": 286,
+    "JetBrains Mono": 98,
+    "Fraunces": 33
+  },
+  "topColours": [
+    [
+      "rgb(228, 220, 205)",
+      764
+    ],
+    [
+      "rgb(31, 29, 26)",
+      744
+    ],
+    [
+      "rgb(255, 251, 244)",
+      83
+    ],
+    [
+      "rgb(79, 74, 66)",
+      64
+    ],
+    [
+      "rgb(44, 124, 106)",
+      32
+    ],
+    [
+      "rgb(184, 70, 29)",
+      27
+    ],
+    [
+      "rgb(126, 119, 108)",
+      26
+    ],
+    [
+      "rgb(194, 74, 58)",
+      22
+    ],
+    [
+      "rgb(220, 227, 234)",
+      12
+    ],
+    [
+      "rgb(169, 162, 151)",
+      12
+    ],
+    [
+      "rgb(217, 88, 42)",
+      8
+    ],
+    [
+      "rgb(234, 225, 210)",
+      8
+    ],
+    [
+      "rgb(58, 54, 49)",
+      3
+    ],
+    [
+      "rgb(241, 195, 73)",
+      2
+    ],
+    [
+      "rgb(216, 238, 232)",
+      2
+    ],
+    [
+      "rgb(244, 238, 227)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "20px",
+      36
+    ],
+    [
+      "3.35544e+07px",
+      28
+    ],
+    [
+      "8px",
+      25
+    ],
+    [
+      "12px",
+      8
+    ],
+    [
+      "6px",
+      7
+    ],
+    [
+      "999px",
+      2
+    ]
+  ],
+  "shadows": [
+    [
+      "rgb(31, 29, 26) 6px 6px 0px 0px",
+      12
+    ],
+    [
+      "rgb(31, 29, 26) 4px 4px 0px 0px",
+      4
+    ],
+    [
+      "rgb(31, 29, 26) 3px 3px 0px 0px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "1200px",
+      17
+    ],
+    [
+      "664.926px",
+      16
+    ],
+    [
+      "704.039px",
+      11
+    ],
+    [
+      "370.566px",
+      11
+    ],
+    [
+      "672px",
+      2
+    ],
+    [
+      "448px",
+      1
+    ],
+    [
+      "452.914px",
+      1
+    ],
+    [
+      "768px",
+      1
+    ],
+    [
+      "512px",
+      1
+    ],
+    [
+      "384px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "Threadline",
+      "href": "/"
+    },
+    {
+      "text": "Apply",
+      "href": "/apply"
+    }
+  ],
+  "bodyBg": "rgb(11, 13, 15)",
+  "htmlBg": "rgba(0, 0, 0, 0)",
+  "cards": [
+    {
+      "tag": "div",
+      "text": "EXPERTISE EXPERTISE IN: EXPERTISE → OUT: CONTENT PEOPLE WANT TO WATCH → BACK: WHAT THE MAR",
+      "rect": {
+        "x": 20,
+        "y": 663,
+        "w": 368,
+        "h": 346
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 6px 6px 0px 0px",
+        "padding": "20px",
+        "maxWidth": "none",
+        "width": "368px",
+        "height": "346px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Nobody would choose to watch it The thinking is good; the piece reads a list to camera. Th",
+      "rect": {
+        "x": 20,
+        "y": 1884,
+        "w": 350,
+        "h": 245
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "244.531px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Topics chosen by mood This week's post comes from Sunday's mood, not from anything known a",
+      "rect": {
+        "x": 20,
+        "y": 2145,
+        "w": 350,
+        "h": 192
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "192.047px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Output that stops when you get busy Every piece needs you at four separate points. When de",
+      "rect": {
+        "x": 20,
+        "y": 2353,
+        "w": 350,
+        "h": 217
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "217.344px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "No learning loop Nobody can say why one piece produced three conversations and the next pr",
+      "rect": {
+        "x": 20,
+        "y": 2586,
+        "w": 350,
+        "h": 192
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "192.047px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "EXPERTISE YOU 1 Talk Answer questions, tell the story, give the opinion. Twenty minutes, n",
+      "rect": {
+        "x": 20,
+        "y": 3088,
+        "w": 350,
+        "h": 607
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 251, 244)",
+        "borderRadius": "20px",
+        "border": "1px solid rgb(31, 29, 26)",
+        "boxShadow": "rgb(31, 29, 26) 6px 6px 0px 0px",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "607.062px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Talk Answer questions, tell the story, give the opinion. Twenty minutes, not a writing tas",
+      "rect": {
+        "x": 76,
+        "y": 3221,
+        "w": 269,
+        "h": 111
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "269.328px",
+        "height": "110.859px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Record A teleprompter and a checklist. One session covers a week.",
+      "rect": {
+        "x": 83,
+        "y": 3352,
+        "w": 262,
+        "h": 84
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "262.047px",
+        "height": "83.6719px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Approve Every script and every cut passes you before it goes anywhere.",
+      "rect": {
+        "x": 81,
+        "y": 3456,
+        "w": 264,
+        "h": 111
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "263.703px",
+        "height": "110.859px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Sell Take the conversations the content starts.",
+      "rect": {
+        "x": 83,
+        "y": 3587,
+        "w": 262,
+        "h": 84
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgb(228, 220, 205)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "261.812px",
+        "height": "83.6719px"
+      }
+    }
+  ]
+}
