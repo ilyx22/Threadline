@@ -14,10 +14,13 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { launchChrome, evaluate, open, scrollThrough, setViewport, screenshot, sleep } from "../../scripts/qa/cdp";
 
-const [site = "birdhouse", ...urls] = process.argv.slice(2);
+const argv = process.argv.slice(2);
+const flag = (k: string) => argv.find((a) => a.startsWith(`--${k}=`))?.slice(k.length + 3);
+const [site = "birdhouse", ...urls] = argv.filter((a) => !a.startsWith("--"));
 const ROOT = path.resolve("reference-analysis", site);
-const WIDTHS = [1920, 1600, 1440, 1366, 1280, 1200, 1024, 900, 820, 768, 760, 720, 640, 600, 500, 460, 430, 390, 375, 320];
-const DEEP = new Set([1440, 1024, 768, 390]);
+const WIDTHS = (flag("widths") ?? "1920,1600,1440,1366,1280,1200,1024,900,820,768,760,720,640,600,500,460,430,390,375,320").split(",").map(Number);
+const DEEP = new Set(WIDTHS.filter((w) => [1440, 1024, 768, 390].includes(w)));
+const PORT = Number(flag("port") ?? 9333);
 
 const slug = (u: string) => u.replace(/^https?:\/\//, "").replace(/[^a-z0-9]+/gi, "_").replace(/^_|_$/g, "").slice(0, 60) || "root";
 
@@ -68,7 +71,7 @@ const EXTRACT = `(() => {
 
 async function main() {
   if (urls.length === 0) throw new Error("give at least one URL");
-  const { cdp, close } = await launchChrome({ profileDir: path.join(ROOT, "cache", ".chrome-profile") });
+  const { cdp, close } = await launchChrome({ port: PORT, profileDir: path.join(ROOT, "cache", ".chrome-profile") });
   const verify: Record<string, unknown>[] = [];
   try {
     await cdp.send("Page.enable");

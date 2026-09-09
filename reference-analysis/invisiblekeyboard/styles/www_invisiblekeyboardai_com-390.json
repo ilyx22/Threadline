@@ -1,0 +1,290 @@
+{
+  "url": "https://www.invisiblekeyboardai.com/",
+  "title": "Invisible Keyboard | LinkedIn Content Agency for B2B Founders",
+  "viewport": {
+    "w": 390,
+    "h": 900
+  },
+  "scrollHeight": 9803,
+  "fonts": [
+    "Instrument Serif 400 italic",
+    "Instrument Serif 400 normal",
+    "JetBrains Mono 400 normal",
+    "JetBrains Mono 500 normal"
+  ],
+  "families": {
+    "Helvetica Neue": 248,
+    "JetBrains Mono": 21,
+    "Instrument Serif": 11
+  },
+  "topColours": [
+    [
+      "lab(100 0 0 / 0.12)",
+      318
+    ],
+    [
+      "lab(97.68 -0.0000298023 0.0000119209)",
+      173
+    ],
+    [
+      "oklab(0.15 -0.00000148267 0.00000350922 / 0.7)",
+      77
+    ],
+    [
+      "lab(67.52 -0.0000298023 0)",
+      59
+    ],
+    [
+      "lab(3.04863 0 0)",
+      35
+    ],
+    [
+      "lab(24.6 0 0)",
+      19
+    ],
+    [
+      "rgb(97, 96, 97)",
+      17
+    ],
+    [
+      "rgb(29, 28, 29)",
+      11
+    ],
+    [
+      "rgb(255, 255, 255)",
+      8
+    ],
+    [
+      "rgb(224, 224, 224)",
+      6
+    ],
+    [
+      "oklab(0.22 -0.00000219047 0.0000051409 / 0.4)",
+      4
+    ],
+    [
+      "oklab(0.15 -0.00000148267 0.00000350922 / 0.3)",
+      3
+    ],
+    [
+      "oklab(0.979998 -0.00000977516 0.0000229478 / 0.2)",
+      2
+    ],
+    [
+      "oklab(0.15 -0.00000148267 0.00000350922 / 0.6)",
+      2
+    ],
+    [
+      "rgb(227, 231, 247)",
+      2
+    ],
+    [
+      "rgb(63, 62, 152)",
+      2
+    ],
+    [
+      "rgb(248, 248, 248)",
+      2
+    ],
+    [
+      "oklab(0.979998 -0.00000977516 0.0000229478 / 0.6)",
+      1
+    ],
+    [
+      "oklab(0.979998 -0.00000977516 0.0000229478 / 0.3)",
+      1
+    ],
+    [
+      "oklab(0.15 -0.00000148267 0.00000350922 / 0.85)",
+      1
+    ],
+    [
+      "oklab(0.15 -0.00000148267 0.00000350922 / 0.8)",
+      1
+    ],
+    [
+      "oklab(0.719998 -0.00000703335 0.0000168085 / 0.7)",
+      1
+    ],
+    [
+      "rgb(54, 197, 240)",
+      1
+    ],
+    [
+      "rgb(224, 30, 90)",
+      1
+    ],
+    [
+      "rgb(236, 178, 46)",
+      1
+    ],
+    [
+      "rgb(46, 182, 125)",
+      1
+    ],
+    [
+      "rgb(18, 100, 163)",
+      1
+    ],
+    [
+      "rgb(189, 189, 189)",
+      1
+    ],
+    [
+      "oklab(0.15 -0.00000148267 0.00000350922 / 0.15)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "3.35544e+07px",
+      14
+    ],
+    [
+      "16px",
+      12
+    ],
+    [
+      "4px",
+      11
+    ]
+  ],
+  "shadows": [
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px",
+      3
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 25px 50px -12px",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.1) 0px 8px 10px -6px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "1100px",
+      8
+    ],
+    [
+      "672px",
+      5
+    ],
+    [
+      "896px",
+      3
+    ],
+    [
+      "1400px",
+      2
+    ],
+    [
+      "576px",
+      2
+    ],
+    [
+      "512px",
+      1
+    ],
+    [
+      "100%",
+      1
+    ],
+    [
+      "768px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "",
+      "href": "/"
+    }
+  ],
+  "bodyBg": "lab(3.04863 0 0)",
+  "htmlBg": "rgba(0, 0, 0, 0)",
+  "cards": [
+    {
+      "tag": "article",
+      "text": "01 Ideation & strategy We extract your POV, stories, and positioning, then turn them into ",
+      "rect": {
+        "x": 24,
+        "y": 2452,
+        "w": 342,
+        "h": 192
+      },
+      "style": {
+        "backgroundColor": "oklab(0.22 -0.00000219047 0.0000051409 / 0.4)",
+        "borderRadius": "16px",
+        "border": "1px solid lab(24.6 0 0)",
+        "boxShadow": "none",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "342px",
+        "height": "192.25px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "02 Content & creative We write, edit, and design every post, thread, carousel, and video s",
+      "rect": {
+        "x": 24,
+        "y": 2660,
+        "w": 342,
+        "h": 192
+      },
+      "style": {
+        "backgroundColor": "oklab(0.22 -0.00000219047 0.0000051409 / 0.4)",
+        "borderRadius": "16px",
+        "border": "1px solid lab(24.6 0 0)",
+        "boxShadow": "none",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "342px",
+        "height": "192.25px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "03 Distribution & engagement We schedule, publish, reply to comments, manage DMs, and grow",
+      "rect": {
+        "x": 24,
+        "y": 2869,
+        "w": 342,
+        "h": 192
+      },
+      "style": {
+        "backgroundColor": "oklab(0.22 -0.00000219047 0.0000051409 / 0.4)",
+        "borderRadius": "16px",
+        "border": "1px solid lab(24.6 0 0)",
+        "boxShadow": "none",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "342px",
+        "height": "192.25px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "04 Analytics & optimization We track what converts, test new narratives, and reset strateg",
+      "rect": {
+        "x": 24,
+        "y": 3077,
+        "w": 342,
+        "h": 192
+      },
+      "style": {
+        "backgroundColor": "oklab(0.22 -0.00000219047 0.0000051409 / 0.4)",
+        "borderRadius": "16px",
+        "border": "1px solid lab(24.6 0 0)",
+        "boxShadow": "none",
+        "padding": "24px",
+        "maxWidth": "none",
+        "width": "342px",
+        "height": "192.25px"
+      }
+    }
+  ]
+}

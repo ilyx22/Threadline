@@ -1,0 +1,232 @@
+{
+  "keyframes": [],
+  "animated": [
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "4.5s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "5.5s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "1.2s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "5s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "0.6s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "4s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "1.8s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "6s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "0.3s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "4.8s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "2.1s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "5.2s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "0.9s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "4.2s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "1.5s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "5.8s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "2.6s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "4.6s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "1s"
+    },
+    {
+      "tag": "h1",
+      "cls": "animate-rise text-display text-on-dark",
+      "name": "nova-rise",
+      "duration": "0.8s",
+      "timing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "iteration": "1",
+      "delay": "0s"
+    },
+    {
+      "tag": "p",
+      "cls": "animate-rise mt-7 max-w-xl text-lead text-on-dark-muted",
+      "name": "nova-rise",
+      "duration": "0.8s",
+      "timing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "iteration": "1",
+      "delay": "0.12s"
+    },
+    {
+      "tag": "div",
+      "cls": "animate-rise mt-10 flex flex-col gap-3 sm:flex-row sm:items-",
+      "name": "nova-rise",
+      "duration": "0.8s",
+      "timing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "iteration": "1",
+      "delay": "0.22s"
+    },
+    {
+      "tag": "div",
+      "cls": "animate-rise mt-[30px] pt-6",
+      "name": "nova-rise",
+      "duration": "0.8s",
+      "timing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "iteration": "1",
+      "delay": "0.4s"
+    },
+    {
+      "tag": "div",
+      "cls": "animate-rise lg:col-span-5",
+      "name": "nova-rise",
+      "duration": "0.8s",
+      "timing": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "iteration": "1",
+      "delay": "0.2s"
+    },
+    {
+      "tag": "div",
+      "cls": "size-72 animate-halo rounded-full bg-gold-500/15 blur-3xl",
+      "name": "nova-halo",
+      "duration": "5.5s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "span",
+      "cls": "absolute size-12 animate-halo rounded-full bg-gold-500/30 bl",
+      "name": "nova-halo",
+      "duration": "5.5s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "svg",
+      "cls": "[object SVGAnimatedString]",
+      "name": "nova-twinkle",
+      "duration": "4s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "article",
+      "cls": "w-full animate-float rounded-3xl border border-gold-500/30 b",
+      "name": "nova-float",
+      "duration": "7s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "span",
+      "cls": "absolute -right-2 top-10 animate-lift text-gold-400",
+      "name": "nova-lift",
+      "duration": "4.5s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "span",
+      "cls": "absolute right-6 top-6 animate-lift text-gold-300",
+      "name": "nova-lift",
+      "duration": "4.5s",
+      "timing": "cubic-bezier(0.65, 0, 0.35, 1)",
+      "iteration": "infinite",
+      "delay": "1.5s"
+    }
+  ],
+  "easings": [
+    [
+      "cubic-bezier(0.22, 1, 0.36, 1) 0.3s",
+      47
+    ],
+    [
+      "cubic-bezier(0.22, 1, 0.36, 1), cubic-bezier(0.22, 1, 0.36, 1) 0.8s, 0.8s",
+      33
+    ],
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.3s",
+      17
+    ],
+    [
+      "cubic-bezier(0.22, 1, 0.36, 1) 0.5s",
+      12
+    ],
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.15s",
+      12
+    ],
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.5s",
+      4
+    ],
+    [
+      "cubic-bezier(0.22, 1, 0.36, 1) 0.7s",
+      4
+    ],
+    [
+      "cubic-bezier(0.22, 1, 0.36, 1) 0.35s",
+      4
+    ],
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
+      1
+    ]
+  ]
+}

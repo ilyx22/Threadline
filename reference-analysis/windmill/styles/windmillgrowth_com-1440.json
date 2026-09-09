@@ -1,0 +1,589 @@
+{
+  "url": "https://windmillgrowth.com/",
+  "title": "Windmill Growth | LinkedIn Ghostwriting for B2B Founders",
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "scrollHeight": 16213,
+  "fonts": [
+    "Caveat 500 normal",
+    "DM Sans 400 italic",
+    "DM Sans 400 normal",
+    "DM Sans 500 normal",
+    "DM Sans 700 normal",
+    "Newsreader 300 600 italic",
+    "Newsreader 300 600 normal"
+  ],
+  "families": {
+    "DM Sans": 372,
+    "Newsreader": 64,
+    "Caveat": 6
+  },
+  "topColours": [
+    [
+      "rgb(2, 9, 21)",
+      557
+    ],
+    [
+      "rgb(75, 81, 99)",
+      293
+    ],
+    [
+      "rgb(255, 255, 255)",
+      287
+    ],
+    [
+      "rgb(62, 55, 153)",
+      154
+    ],
+    [
+      "rgb(104, 91, 255)",
+      74
+    ],
+    [
+      "rgb(228, 225, 242)",
+      61
+    ],
+    [
+      "rgb(255, 248, 240)",
+      57
+    ],
+    [
+      "rgb(169, 156, 255)",
+      30
+    ],
+    [
+      "rgba(255, 255, 255, 0.62)",
+      28
+    ],
+    [
+      "rgb(168, 36, 36)",
+      24
+    ],
+    [
+      "rgb(207, 203, 219)",
+      24
+    ],
+    [
+      "rgba(255, 255, 255, 0.86)",
+      22
+    ],
+    [
+      "rgba(255, 255, 255, 0.45)",
+      22
+    ],
+    [
+      "rgb(179, 169, 245)",
+      16
+    ],
+    [
+      "rgba(255, 255, 255, 0.5)",
+      16
+    ],
+    [
+      "rgba(255, 255, 255, 0.1)",
+      13
+    ],
+    [
+      "rgb(244, 240, 255)",
+      11
+    ],
+    [
+      "rgba(255, 255, 255, 0.04)",
+      11
+    ],
+    [
+      "rgba(255, 255, 255, 0.09)",
+      11
+    ],
+    [
+      "rgba(255, 248, 240, 0.9)",
+      10
+    ],
+    [
+      "rgb(28, 122, 78)",
+      8
+    ],
+    [
+      "rgb(20, 24, 31)",
+      6
+    ],
+    [
+      "rgba(214, 69, 69, 0.12)",
+      6
+    ],
+    [
+      "rgba(255, 255, 255, 0.72)",
+      6
+    ],
+    [
+      "rgba(255, 255, 255, 0.4)",
+      5
+    ],
+    [
+      "rgb(224, 143, 201)",
+      4
+    ],
+    [
+      "rgb(236, 233, 246)",
+      4
+    ],
+    [
+      "rgb(234, 246, 239)",
+      4
+    ],
+    [
+      "rgb(10, 10, 22)",
+      3
+    ],
+    [
+      "rgba(255, 248, 240, 0.78)",
+      2
+    ],
+    [
+      "rgba(255, 255, 255, 0.65)",
+      2
+    ],
+    [
+      "rgba(255, 255, 255, 0.78)",
+      2
+    ],
+    [
+      "rgba(255, 255, 255, 0.6)",
+      2
+    ],
+    [
+      "rgba(255, 255, 255, 0.52)",
+      2
+    ],
+    [
+      "rgba(255, 255, 255, 0.38)",
+      2
+    ],
+    [
+      "rgba(255, 255, 255, 0.043)",
+      2
+    ],
+    [
+      "rgba(255, 248, 240, 0.08)",
+      1
+    ],
+    [
+      "rgba(255, 248, 240, 0.28)",
+      1
+    ],
+    [
+      "rgba(20, 24, 31, 0.44)",
+      1
+    ],
+    [
+      "rgba(255, 248, 240, 0.16)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "50%",
+      42
+    ],
+    [
+      "14px",
+      22
+    ],
+    [
+      "18px",
+      13
+    ],
+    [
+      "7px",
+      13
+    ],
+    [
+      "999px",
+      10
+    ],
+    [
+      "2px",
+      9
+    ],
+    [
+      "11px",
+      8
+    ],
+    [
+      "3px",
+      6
+    ],
+    [
+      "20px",
+      1
+    ]
+  ],
+  "shadows": [
+    [
+      "rgba(255, 255, 255, 0.18) 0px 0px 0px 1px",
+      11
+    ],
+    [
+      "rgba(2, 9, 21, 0.06) 0px 10px 26px 0px",
+      10
+    ],
+    [
+      "rgb(228, 225, 242) 0px 0px 0px 1px",
+      9
+    ],
+    [
+      "rgba(2, 9, 21, 0.09) 0px 18px 44px 0px",
+      8
+    ],
+    [
+      "rgba(2, 9, 21, 0.07) 0px 0px 0px 1px",
+      4
+    ],
+    [
+      "rgba(2, 9, 21, 0.08) 0px 16px 40px 0px",
+      3
+    ],
+    [
+      "rgba(8, 10, 16, 0.22) 0px 18px 50px 0px",
+      1
+    ],
+    [
+      "rgb(255, 255, 255) 0px 0px 0px 2px, rgb(104, 91, 255) 0px 0px 0px 3.5px",
+      1
+    ],
+    [
+      "rgba(104, 91, 255, 0.05) 0px 0px 0px 4px",
+      1
+    ],
+    [
+      "rgba(255, 255, 255, 0.2) 0px 0px 0px 1px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "100%",
+      78
+    ],
+    [
+      "min(100%, 92px)",
+      8
+    ],
+    [
+      "782px",
+      7
+    ],
+    [
+      "578px",
+      5
+    ],
+    [
+      "374px",
+      2
+    ],
+    [
+      "408px",
+      2
+    ],
+    [
+      "340px",
+      2
+    ],
+    [
+      "646px",
+      1
+    ],
+    [
+      "660.215px",
+      1
+    ],
+    [
+      "681.175px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "Windmill",
+      "href": "/"
+    },
+    {
+      "text": "Pricing",
+      "href": "/#plans"
+    },
+    {
+      "text": "Articles",
+      "href": "/blogseo"
+    },
+    {
+      "text": "Case Studies",
+      "href": "/case-studies"
+    },
+    {
+      "text": "FAQ",
+      "href": "/#faqs"
+    },
+    {
+      "text": "Book a Strategy Call",
+      "href": "/book-a-call"
+    },
+    {
+      "text": "Pricing",
+      "href": "/#plans"
+    },
+    {
+      "text": "Articles",
+      "href": "/blogseo"
+    },
+    {
+      "text": "Case Studies",
+      "href": "/case-studies"
+    },
+    {
+      "text": "Testimonials",
+      "href": "/#testimonials"
+    },
+    {
+      "text": "Contact us",
+      "href": "/book-a-call"
+    },
+    {
+      "text": "FAQ",
+      "href": "/#faqs"
+    },
+    {
+      "text": "Growth",
+      "href": "/growth-plan"
+    },
+    {
+      "text": "Founder Led Content",
+      "href": "/"
+    },
+    {
+      "text": "GTM engine",
+      "href": "/founder-os"
+    },
+    {
+      "text": "AI profile Optimizer",
+      "href": "/optimizer"
+    },
+    {
+      "text": "benb@windmillgrowth.com",
+      "href": "mailto:benb@windmillgrowth.com"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/windmill-growth/"
+    },
+    {
+      "text": "X",
+      "href": "https://x.com/WindmillGrowth"
+    }
+  ],
+  "bodyBg": "rgb(247, 246, 251)",
+  "htmlBg": "rgb(247, 246, 251)",
+  "cards": [
+    {
+      "tag": "li",
+      "text": "Aaron Spivak Founders Club 31K followers on a founder-led account The audience behind Foun",
+      "rect": {
+        "x": 587,
+        "y": 1197,
+        "w": 259,
+        "h": 306
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "14px",
+        "border": "1px solid rgb(228, 225, 242)",
+        "boxShadow": "rgba(2, 9, 21, 0.06) 0px 10px 26px 0px",
+        "padding": "17.85px 19.55px 17px",
+        "maxWidth": "none",
+        "width": "259.188px",
+        "height": "306px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Aaron Spivak Founders Club",
+      "rect": {
+        "x": 608,
+        "y": 1216,
+        "w": 218,
+        "h": 45
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px none rgb(2, 9, 21)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "218.094px",
+        "height": "45.1406px"
+      }
+    },
+    {
+      "tag": "img",
+      "text": "",
+      "rect": {
+        "x": 608,
+        "y": 1220,
+        "w": 36,
+        "h": 36
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "50%",
+        "border": "0px none rgb(2, 9, 21)",
+        "boxShadow": "rgb(228, 225, 242) 0px 0px 0px 1px",
+        "padding": "0px",
+        "maxWidth": "100%",
+        "width": "36px",
+        "height": "36px"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "Aaron Spivak Founders Club",
+      "rect": {
+        "x": 654,
+        "y": 1216,
+        "w": 89,
+        "h": 45
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px none rgb(2, 9, 21)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "89.4375px",
+        "height": "45.1406px"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "Aaron Spivak",
+      "rect": {
+        "x": 654,
+        "y": 1216,
+        "w": 89,
+        "h": 24
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px none rgb(2, 9, 21)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "89.4375px",
+        "height": "24.4688px"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "Founders Club",
+      "rect": {
+        "x": 654,
+        "y": 1240,
+        "w": 89,
+        "h": 21
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px none rgb(75, 81, 99)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "89.4375px",
+        "height": "20.6719px"
+      }
+    },
+    {
+      "tag": "a",
+      "text": "",
+      "rect": {
+        "x": 809,
+        "y": 1230,
+        "w": 17,
+        "h": 17
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px none rgb(75, 81, 99)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "17px",
+        "height": "17px"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "31K",
+      "rect": {
+        "x": 608,
+        "y": 1261,
+        "w": 218,
+        "h": 53
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px none rgb(62, 55, 153)",
+        "boxShadow": "none",
+        "padding": "21.25px 0px 0px",
+        "maxWidth": "none",
+        "width": "218.094px",
+        "height": "52.7188px"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "followers on a founder-led account",
+      "rect": {
+        "x": 608,
+        "y": 1319,
+        "w": 218,
+        "h": 50
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px none rgb(2, 9, 21)",
+        "boxShadow": "none",
+        "padding": "0px 0px 12.75px",
+        "maxWidth": "none",
+        "width": "218.094px",
+        "height": "50.3125px"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "The audience behind Founders Club, a private network for 7–9 figure entrepreneurs.",
+      "rect": {
+        "x": 608,
+        "y": 1377,
+        "w": 218,
+        "h": 71
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "",
+        "boxShadow": "none",
+        "padding": "12.75px 0px 0px",
+        "maxWidth": "none",
+        "width": "218.094px",
+        "height": "71.4531px"
+      }
+    }
+  ]
+}

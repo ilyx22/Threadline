@@ -1,0 +1,552 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "Done-for-you personal branding for founders and CEOs.",
+      "rect": {
+        "x": 28,
+        "y": 188,
+        "w": 334,
+        "h": 141
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "34px",
+        "fontWeight": "800",
+        "lineHeight": "35.36px",
+        "letterSpacing": "-0.68px",
+        "textTransform": "none",
+        "color": "rgb(242, 243, 236)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "We do two things.",
+      "rect": {
+        "x": 84,
+        "y": 784,
+        "w": 222,
+        "h": 29
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "800",
+        "lineHeight": "28.6px",
+        "letterSpacing": "-0.52px",
+        "textTransform": "none",
+        "color": "rgb(242, 243, 236)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Brands behind the people we work with",
+      "rect": {
+        "x": 28,
+        "y": 2436,
+        "w": 334,
+        "h": 23
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "18px",
+        "fontWeight": "600",
+        "lineHeight": "normal",
+        "letterSpacing": "-0.18px",
+        "textTransform": "none",
+        "color": "rgb(201, 202, 190)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "How we can help you.",
+      "rect": {
+        "x": 62,
+        "y": 2628,
+        "w": 265,
+        "h": 29
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "800",
+        "lineHeight": "28.6px",
+        "letterSpacing": "-0.52px",
+        "textTransform": "none",
+        "color": "rgb(242, 243, 236)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "The results.",
+      "rect": {
+        "x": 122,
+        "y": 4328,
+        "w": 145,
+        "h": 29
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "800",
+        "lineHeight": "28.6px",
+        "letterSpacing": "-0.52px",
+        "textTransform": "none",
+        "color": "rgb(242, 243, 236)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Who this is for",
+      "rect": {
+        "x": 98,
+        "y": 6140,
+        "w": 194,
+        "h": 31
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "28px",
+        "fontWeight": "800",
+        "lineHeight": "30.8px",
+        "letterSpacing": "-0.56px",
+        "textTransform": "none",
+        "color": "rgb(242, 243, 236)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Questions we get asked",
+      "rect": {
+        "x": 46,
+        "y": 7157,
+        "w": 299,
+        "h": 29
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "26px",
+        "fontWeight": "800",
+        "lineHeight": "28.6px",
+        "letterSpacing": "-0.52px",
+        "textTransform": "none",
+        "color": "rgb(242, 243, 236)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "Build your authority and attention",
+      "rect": {
+        "x": 53,
+        "y": 902,
+        "w": 284,
+        "h": 56
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "22px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "-0.22px",
+        "textTransform": "none",
+        "color": "rgb(242, 243, 236)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Build the ecosystem around it",
+      "rect": {
+        "x": 53,
+        "y": 1344,
+        "w": 284,
+        "h": 56
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "22px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "-0.22px",
+        "textTransform": "none",
+        "color": "rgb(242, 243, 236)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "What is LeverBrands? ×",
+      "rect": {
+        "x": 28,
+        "y": 7241,
+        "w": 334,
+        "h": 66
+      },
+      "style": {
+        "fontFamily": "sans-serif",
+        "fontSize": "14.04px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "What does a personal branding agency do? +",
+      "rect": {
+        "x": 28,
+        "y": 7474,
+        "w": 334,
+        "h": 88
+      },
+      "style": {
+        "fontFamily": "sans-serif",
+        "fontSize": "14.04px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Who does LeverBrands work with? +",
+      "rect": {
+        "x": 28,
+        "y": 7563,
+        "w": 334,
+        "h": 66
+      },
+      "style": {
+        "fontFamily": "sans-serif",
+        "fontSize": "14.04px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "How is LeverBrands different from a LinkedIn ghostwriter? +",
+      "rect": {
+        "x": 28,
+        "y": 7630,
+        "w": 334,
+        "h": 88
+      },
+      "style": {
+        "fontFamily": "sans-serif",
+        "fontSize": "14.04px",
+        "fontWeight": "700",
+        "lineHeight": "normal",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "THE WORLD'S MOST EXCLUSIVE PERSONAL BRANDING AGENCY",
+      "rect": {
+        "x": 28,
+        "y": 136,
+        "w": 334,
+        "h": 28
+      },
+      "style": {
+        "fontFamily": "\"Geist Mono\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "1.76px",
+        "textTransform": "uppercase",
+        "color": "rgb(239, 255, 68)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We amplify your name across your industry, then turn that attention into revenue and oppor",
+      "rect": {
+        "x": 28,
+        "y": 353,
+        "w": 334,
+        "h": 79
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "26.35px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(201, 202, 190)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We turn your experience, opinions and expertise into content, then distribute it so it rea",
+      "rect": {
+        "x": 53,
+        "y": 1180,
+        "w": 284,
+        "h": 90
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "lineHeight": "22.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(139, 141, 128)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "The personal brand ecosystem is everything underneath your content: the newsletter, lead m",
+      "rect": {
+        "x": 53,
+        "y": 1623,
+        "w": 284,
+        "h": 113
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "lineHeight": "22.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(139, 141, 128)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "In the last three years our clients have achieved:",
+      "rect": {
+        "x": 28,
+        "y": 1880,
+        "w": 334,
+        "h": 50
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "18px",
+        "fontWeight": "400",
+        "lineHeight": "25.2px",
+        "letterSpacing": "-0.18px",
+        "textTransform": "none",
+        "color": "rgb(201, 202, 190)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Everything your personal brand needs, run by one team: strategy, content, distribution, an",
+      "rect": {
+        "x": 28,
+        "y": 2672,
+        "w": 334,
+        "h": 105
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "26.35px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(201, 202, 190)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Deep research into your audience, then your positioning, your pillars, and a plan for what",
+      "rect": {
+        "x": 49,
+        "y": 3120,
+        "w": 292,
+        "h": 65
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "21.7px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(139, 141, 128)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Daily content across multiple platforms, static and video, made to grow your audience and ",
+      "rect": {
+        "x": 49,
+        "y": 3255,
+        "w": 292,
+        "h": 65
+      },
+      "style": {
+        "fontFamily": "Geist, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "21.7px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(139, 141, 128)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": [
+    {
+      "tag": "span",
+      "text": "IMPRESSIONS GENERATED",
+      "rect": {
+        "x": 112,
+        "y": 2034,
+        "w": 166,
+        "h": 14
+      },
+      "style": {
+        "fontFamily": "\"Geist Mono\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "1.32px",
+        "textTransform": "uppercase",
+        "color": "rgb(139, 141, 128)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "CLIENT REVENUE",
+      "rect": {
+        "x": 140,
+        "y": 2162,
+        "w": 111,
+        "h": 14
+      },
+      "style": {
+        "fontFamily": "\"Geist Mono\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "1.32px",
+        "textTransform": "uppercase",
+        "color": "rgb(139, 141, 128)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "FOLLOWERS GROWN",
+      "rect": {
+        "x": 136,
+        "y": 2290,
+        "w": 119,
+        "h": 14
+      },
+      "style": {
+        "fontFamily": "\"Geist Mono\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "1.32px",
+        "textTransform": "uppercase",
+        "color": "rgb(139, 141, 128)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "LINKEDIN",
+      "rect": {
+        "x": 53,
+        "y": 3936,
+        "w": 84,
+        "h": 13
+      },
+      "style": {
+        "fontFamily": "\"Geist Mono\", ui-monospace, monospace",
+        "fontSize": "10px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "1.4px",
+        "textTransform": "uppercase",
+        "color": "rgb(239, 255, 68)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "INSTAGRAM",
+      "rect": {
+        "x": 153,
+        "y": 3936,
+        "w": 84,
+        "h": 13
+      },
+      "style": {
+        "fontFamily": "\"Geist Mono\", ui-monospace, monospace",
+        "fontSize": "10px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "1.4px",
+        "textTransform": "uppercase",
+        "color": "rgb(239, 255, 68)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "FACEBOOK",
+      "rect": {
+        "x": 253,
+        "y": 3936,
+        "w": 84,
+        "h": 13
+      },
+      "style": {
+        "fontFamily": "\"Geist Mono\", ui-monospace, monospace",
+        "fontSize": "10px",
+        "fontWeight": "400",
+        "lineHeight": "normal",
+        "letterSpacing": "1.4px",
+        "textTransform": "uppercase",
+        "color": "rgb(239, 255, 68)",
+        "fontStyle": "normal"
+      }
+    }
+  ]
+}

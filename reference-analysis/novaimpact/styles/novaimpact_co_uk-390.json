@@ -1,0 +1,435 @@
+{
+  "url": "https://novaimpact.co.uk/",
+  "title": "Nova Impact: Technical LinkedIn Ghostwriting for AI Leaders",
+  "viewport": {
+    "w": 390,
+    "h": 900
+  },
+  "scrollHeight": 17029,
+  "fonts": [
+    "Inter 100 900 normal",
+    "Inter Fallback normal normal"
+  ],
+  "families": {
+    "Inter": 255,
+    "Georgia": 67
+  },
+  "topColours": [
+    [
+      "rgba(14, 26, 49, 0.12)",
+      652
+    ],
+    [
+      "rgb(14, 26, 49)",
+      240
+    ],
+    [
+      "rgb(244, 241, 234)",
+      164
+    ],
+    [
+      "rgb(235, 187, 94)",
+      59
+    ],
+    [
+      "rgb(74, 88, 114)",
+      56
+    ],
+    [
+      "rgb(138, 90, 18)",
+      49
+    ],
+    [
+      "rgb(201, 138, 36)",
+      36
+    ],
+    [
+      "rgb(228, 169, 58)",
+      28
+    ],
+    [
+      "rgb(170, 182, 204)",
+      21
+    ],
+    [
+      "rgb(255, 255, 255)",
+      16
+    ],
+    [
+      "lab(95.2345 0.138462 3.76318 / 0.8)",
+      15
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+      12
+    ],
+    [
+      "lab(9.19323 1.48015 -17.2017 / 0.1)",
+      6
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.15)",
+      6
+    ],
+    [
+      "lab(78.9184 10.4121 52.9982 / 0.7)",
+      5
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.05)",
+      5
+    ],
+    [
+      "rgb(250, 248, 243)",
+      5
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.06)",
+      4
+    ],
+    [
+      "lab(95.2345 0.138462 3.76318 / 0.4)",
+      4
+    ],
+    [
+      "rgb(240, 206, 134)",
+      4
+    ],
+    [
+      "rgb(243, 237, 225)",
+      4
+    ],
+    [
+      "rgb(8, 17, 31)",
+      3
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.25)",
+      2
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.03)",
+      2
+    ],
+    [
+      "lab(73.5202 15.0682 62.6431 / 0.3)",
+      2
+    ],
+    [
+      "lab(9.19323 1.48015 -17.2017 / 0.25)",
+      2
+    ],
+    [
+      "lab(73.5202 15.0682 62.6431 / 0.1)",
+      1
+    ],
+    [
+      "lab(73.6356 -0.889182 -12.669 / 0.7)",
+      1
+    ],
+    [
+      "lab(73.5202 15.0682 62.6431 / 0.15)",
+      1
+    ],
+    [
+      "lab(13.5945 1.66617 -20.8737 / 0.9)",
+      1
+    ],
+    [
+      "lab(95.2345 0.138462 3.76318 / 0.85)",
+      1
+    ],
+    [
+      "lab(95.2345 0.138462 3.76318 / 0.3)",
+      1
+    ],
+    [
+      "lab(95.2345 0.138462 3.76318 / 0.25)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "3.35544e+07px",
+      51
+    ],
+    [
+      "32px",
+      16
+    ],
+    [
+      "16px",
+      4
+    ],
+    [
+      "6px",
+      2
+    ],
+    [
+      "24px",
+      1
+    ]
+  ],
+  "shadows": [
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(14, 26, 49, 0.04) 0px 1px 2px 0px, rgba(14, 26, 49, 0.18) 0px 8px 24px -12px",
+      12
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(19, 35, 64) 0px 0px 0px 2px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      3
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(228, 169, 58, 0.18) 0px 0px 0px 1px, rgba(228, 169, 58, 0.45) 0px 18px 60px -22px",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(14, 26, 49, 0.05) 0px 2px 4px 0px, rgba(14, 26, 49, 0.28) 0px 24px 48px -24px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "100%",
+      18
+    ],
+    [
+      "1280px",
+      11
+    ],
+    [
+      "736px",
+      11
+    ],
+    [
+      "576px",
+      2
+    ],
+    [
+      "384px",
+      2
+    ],
+    [
+      "768px",
+      2
+    ],
+    [
+      "672px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Services\n01",
+      "href": "/#services"
+    },
+    {
+      "text": "Case Studies\n02",
+      "href": "/case-studies"
+    },
+    {
+      "text": "About\n03",
+      "href": "/about"
+    },
+    {
+      "text": "Team\n04",
+      "href": "/#team"
+    },
+    {
+      "text": "Contact\n05",
+      "href": "/contact"
+    },
+    {
+      "text": "Book a Call\n→",
+      "href": "https://calendly.com/ama-novaimpact/30min"
+    },
+    {
+      "text": "Services",
+      "href": "/#services"
+    },
+    {
+      "text": "Case Studies",
+      "href": "/case-studies"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "FAQs",
+      "href": "/faq"
+    }
+  ],
+  "bodyBg": "rgb(250, 248, 243)",
+  "htmlBg": "rgba(0, 0, 0, 0)",
+  "cards": [
+    {
+      "tag": "article",
+      "text": "engaged Trending",
+      "rect": {
+        "x": 20,
+        "y": 933,
+        "w": 350,
+        "h": 217
+      },
+      "style": {
+        "backgroundColor": "lab(13.5945 1.66617 -20.8737 / 0.9)",
+        "borderRadius": "24px",
+        "border": "1px solid lab(73.5202 15.0682 62.6431 / 0.3)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(228, 169, 58, 0.18) 0px 0px 0px 1px, rgba(228, 169, 58, 0.45) 0px 18px 60px -22px",
+        "padding": "20px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "217px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "01 01 LinkedIn Thought Leadership Strategy, ghostwriting, and analytics-driven iteration f",
+      "rect": {
+        "x": 20,
+        "y": 1695,
+        "w": 350,
+        "h": 688
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "687.562px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "02 02 Podcast Production From concept to publishing, we help you turn conversations into c",
+      "rect": {
+        "x": 20,
+        "y": 2447,
+        "w": 350,
+        "h": 661
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "660.641px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "03 03 Substack Writing We help you launch and grow a Substack that deepens your authority ",
+      "rect": {
+        "x": 20,
+        "y": 3172,
+        "w": 350,
+        "h": 741
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "0px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "350px",
+        "height": "741.406px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "",
+      "rect": {
+        "x": 20,
+        "y": 9507,
+        "w": 48,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "48px",
+        "height": "48px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "",
+      "rect": {
+        "x": 20,
+        "y": 9723,
+        "w": 48,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "48px",
+        "height": "48px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "",
+      "rect": {
+        "x": 20,
+        "y": 9915,
+        "w": 48,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "48px",
+        "height": "48px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "",
+      "rect": {
+        "x": 20,
+        "y": 10107,
+        "w": 48,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "none",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "48px",
+        "height": "48px"
+      }
+    }
+  ]
+}

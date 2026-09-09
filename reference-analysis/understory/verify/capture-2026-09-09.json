@@ -1,0 +1,26 @@
+{
+  "capturedAt": "2026-09-09T15:36:04.754Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://www.understoryagency.com/linkedin-content",
+      "width": 1440,
+      "finalUrl": "https://www.understoryagency.com/linkedin-content",
+      "title": "LinkedIn Thought Leadership | Understory",
+      "scrollHeight": 9175,
+      "frames": 31,
+      "fonts": 4,
+      "ms": 4142
+    },
+    {
+      "url": "https://www.understoryagency.com/linkedin-content",
+      "width": 390,
+      "finalUrl": "https://www.understoryagency.com/linkedin-content",
+      "title": "LinkedIn Thought Leadership | Understory",
+      "scrollHeight": 13424,
+      "frames": 45,
+      "fonts": 4,
+      "ms": 4700
+    }
+  ]
+}

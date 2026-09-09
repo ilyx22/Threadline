@@ -1,0 +1,26 @@
+{
+  "capturedAt": "2026-09-09T15:34:15.492Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://windmillgrowth.com/",
+      "width": 1440,
+      "finalUrl": "https://windmillgrowth.com/",
+      "title": "Windmill Growth | LinkedIn Ghostwriting for B2B Founders",
+      "scrollHeight": 16213,
+      "frames": 55,
+      "fonts": 7,
+      "ms": 5533
+    },
+    {
+      "url": "https://windmillgrowth.com/",
+      "width": 390,
+      "finalUrl": "https://windmillgrowth.com/",
+      "title": "Windmill Growth | LinkedIn Ghostwriting for B2B Founders",
+      "scrollHeight": 15075,
+      "frames": 51,
+      "fonts": 7,
+      "ms": 4891
+    }
+  ]
+}

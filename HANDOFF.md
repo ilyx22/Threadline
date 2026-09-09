@@ -168,10 +168,16 @@ rev-share-ready attribution; every earlier note that lists those as unbuilt is s
 
 ### Public site direction (2026-09-09)
 
-The public site shipped in the morning rebuild as the light "Authority Factory" system and was
-restrained the same afternoon: same content, sections and order; paper-on-linen hairline surfaces,
-a system drawing instead of a cartoon factory, and three components reconstructed clean-room from
-measured reference skeletons. See §16j and `docs/design/PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md`.
+The public site shipped in the morning rebuild as the light "Authority Factory" system, was
+restrained the same afternoon (same content, sections and order; paper-on-linen hairline surfaces;
+a system drawing instead of a cartoon factory; three components reconstructed clean-room from
+measured reference skeletons) and was re-architected in the evening captivation pass: a new
+twelve-section homepage order told outside-in (problem → outcome → the founder's small part → the
+factory → the commercial path → learning → progression → comparison → fit → ask), filled 2.5D
+objects instead of line diagrams, a verified Starborn comparison skeleton, and every approved
+sentence preserved. Threadline is a managed authority + qualified-demand system; the platform is a
+component, not the category. See §16j, `docs/design/CAPTIVATION_PASS_2026-09-09.md` and
+`docs/design/PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md`.
 
 ---
 
@@ -711,6 +717,14 @@ and that text appears in the published brief.
 22. **Threadline is not a video production company and not a platform buffet.** The platform mix
     is a prescription after diagnosis; LinkedIn is an anchor hypothesis for the expert-led B2B
     wedge, not universal strategy (§16b, "Positioning guardrails").
+23. **The homepage is told outside-in and the platform is a component, not the category**
+    (owner decision, 2026-09-09, DEC-023). Order: hero → commercial problem → desired outcome →
+    founder burden → the Authority Factory → one idea, the right expressions → attention to
+    commercial movement → expected / actual / why / change / retest → the 12-week progression as
+    one continuous visual (never four pricing-like cards) → the honest comparison in capability
+    wording → fit → the ask. No platform in a headline, no exact founder-time promise, every
+    synthetic thesis / score / number labelled illustrative, no price, tier or "starting from".
+    Station detail, the proof ledger and the symptom list live on How it works.
 
 ---
 
@@ -1312,10 +1326,49 @@ interactive system visualisation, 10% playful character**:
 
 Content preservation report, pricing audit and the owner proposals that were **not** implemented
 (FAQ section, calculator link wording, H1 highlight, list rendering) are in
-`docs/design/PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md`. Design source of truth:
-`docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md` and `design-system/threadline-design-dna.json`
-(v2.0.0). The rules that do not move: no pricing (DEC-017), no "monthly", no AI-led positioning,
-no invented proof, every claim in the ledger, one primary CTA per viewport, `forbidden-to-copy.md`
+`docs/design/PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md`.
+
+### The captivation pass (evening, tag `threadline-public-captivation-2026-09-09`)
+
+The owner judged the restraint-pass homepage cleaner but still confusing: explained inside-out
+(station names before tension), dependent on thin-line diagrams, repetitive in composition, less
+intuitive than the Birdhouse reference. The evening pass, planned first in
+`docs/design/CAPTIVATION_PASS_PLAN_2026-09-09.md` and recorded as built in
+`docs/design/CAPTIVATION_PASS_2026-09-09.md`, changed the *order and the graphics* and kept every
+approved sentence:
+
+- **Twelve sections, outside-in** (DEC-023): hero (approved lines + a miniature Authority Machine
+  of objects) → the commercial problem as a WITHOUT / WITH contrast → the desired outcome as a
+  buyer pool with five encounters → the founder's four touchpoints beside the Threadline board →
+  the seven-chamber Authority Factory (the founder badged only at Input / Record / Approve / Sell;
+  an idea card travels the rail with scroll) → one idea MULTIPLYING into five visibly different
+  native expressions (illustrative thesis) → the nine-step route from attention to commercial
+  movement → EXPECTED / ACTUAL / WHY / CHANGE / RETEST as an operable loop → the 12-week
+  progression as one band → the honest comparison (Threadline / Ghostwriter / Content agency /
+  In-house, capability wording only, a verified Starborn skeleton) → fit → the ask with the four
+  outputs. The nine-station line, the gates, the proof ledger and the four symptom points moved
+  to How it works, which also gained the optional diagnostic (Position / Create / Distribute /
+  Convert / Learn) on the Hydra selector skeleton.
+- **Object language** (`src/components/factory/objects.tsx`, `public.css` Objects block,
+  `public-v3.css`): filled 2.5D chips, cards, tokens, tiles, markers, chambers, modules and
+  avatars with a 3px edge and soft ambient depth; no glass, glow, dark SaaS or cartoon cast. The
+  schematic set stays on How it works and in the playbook. Design source of truth:
+  `docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md` (v3) and
+  `design-system/threadline-design-dna.json` (3.0.0).
+- **Copy**: new keys `HOME_V3` and `DIAGNOSTIC` reuse the approved sentences by reference; new
+  claims rows C-COMPARISON, C-LEARNING-ILLUSTRATIVE, C-THESIS-ILLUSTRATIVE, C-FOUNDER-TOUCHPOINTS,
+  C-ROUTE-STEPS. No price, tier, "starting from", guarantee, testimonial, logo, case study or
+  platform headline; no exact founder-time promise.
+- **QA**: `qa:public` brand-leak grep extended to all ten reference sites (and a latent bug fixed:
+  a Python patch had written a literal backspace instead of `\b`, so the Hydra term never
+  matched); `probe.ts` gained `--after`; baselines re-taken, the v2 site kept in
+  `qa-baselines/public-pre-captivation-2026-09-09/`.
+- **Open owner decisions** (`CAPTIVATION_PASS_2026-09-09.md` §10): the retired H1 marker
+  highlight, a slow hero re-run, a homepage FAQ, the diagnostic's home vs How-it-works placement,
+  a fifth "video agency" comparison column, calculator link wording, list rendering.
+
+The rules that do not move: no pricing (DEC-017), no "monthly", no AI-led positioning, no
+invented proof, every claim in the ledger, one primary CTA per viewport, `forbidden-to-copy.md`
 enforced by `qa:public`.
 
 ---
@@ -1466,6 +1519,21 @@ collaboration, server-side PDF, drag-and-drop and playbook email capture stay in
 ---
 
 ## 19. Changelog
+
+### Session 9 — public site: restraint pass and captivation pass (2026-09-09, afternoon and evening)
+
+Afternoon (tag `threadline-public-restraint-2026-09-09`): the visual diagnosis of the morning
+rebuild, component-first clean-room reconstruction of three reference skeletons (Birdhouse hero
+panel, Hydra selector, Hydra offer cards; captured, cloned, verified, frozen, mutated), the v2
+hairline / schematic system, pricing removed from the public surface (DEC-017), price and
+reference-brand greps in `qa:public`, docs reconciled.
+
+Evening (tag `threadline-public-captivation-2026-09-09`): the ten-part plan, eight further
+reference captures, the Starborn comparison clone (verified, frozen), the object language, eleven
+new homepage section components and the How-it-works diagnostic, the twelve-section outside-in
+order (DEC-023), `HOME_V3` / `DIAGNOSTIC` content keys, five claims rows, the design system v3 and
+DNA 3.0.0, `shoot.ts` / `probe.ts` inspection tools, baselines re-taken. No product code, schema
+or migration changed in either pass.
 
 ### Session 8 — documentation reconciliation and owner doctrine (2026-09-09)
 
@@ -1724,11 +1792,12 @@ contravariance, and role denials surfacing as error boundaries instead of explan
 
 ## 20. Last verified state
 
-Measured fresh on **2026-09-09 (afternoon)** on the restraint-pass tree, tag
-`threadline-public-restraint-2026-09-09` (the same battery was also run on `5a08f25` /
-`threadline-public-baseline-2026-09-09` at the start of the pass with identical results). Full
-detail in `docs/QA_REPORT.md` (final section). Every number below comes from that run, not from an
-earlier session.
+Measured fresh on **2026-09-09 (evening)** on the captivation-pass tree, tag
+`threadline-public-captivation-2026-09-09`, production build, after the last change. The identical
+battery had been run earlier the same day on the restraint-pass tree and on `5a08f25` with the same
+in-process and browser numbers. Full detail in `docs/QA_REPORT.md` (final section) and
+`docs/design/CAPTIVATION_PASS_2026-09-09.md` §12. Every number below comes from that run, not from
+an earlier session.
 
 | Gate | Command | Result |
 |---|---|---|
@@ -1736,15 +1805,15 @@ earlier session.
 | Lint | `npm run lint` | **PASS** — 0 errors, 0 warnings |
 | Tests | `npm test` | **PASS** — 625 tests, 154 suites, 0 failures (41 test files) |
 | Production build | `npm run build` | **PASS** — 65 pages + 3 route handlers |
-| Verify | `npm run verify`, `npm run verify:features` | **PASS** |
+| Verify | `npm run verify:features` | **PASS** — 69 PASS · 2 EMPTY · 6 BLOCKED · 0 FAIL (77 checks); `npm run verify` = typecheck + lint + test + build, each run individually above |
 | Migrations | `npx prisma migrate status` | Up to date — 13 migrations; clean-database `migrate deploy` + seed verified on a temporary SQLite file |
 | Adversarial harness | `npm run qa:all` | **494 checks: 485 PASS · 2 PASS WITH EXTERNAL GATE · 4 PARTIAL · 0 FAIL · 3 N/A** |
 | Synthetic engagements | `npm run qa:spine` | Three engagements (happy, bad outcome, text-led): 0 FAIL |
 | Performance | `npm run qa:perf` | 9/9 — 20 clients, five populated with 60 pieces each |
 | Browser (prod build) | `npm run qa:browser` | **122 checks: 101 PASS · 21 PARTIAL · 0 FAIL** — 33 app/admin routes × 1440/1024/768/390; partials are 24px target-size notes in dense tables plus one by-design inner scroller |
-| Public (prod build) | `npm run qa:public` | **62/62 PASS** — 11 public routes × 20 widths (1920 → 320); the sweep now also fails on any price string (DEC-017) and on Hydra/Birdhouse brand terms |
-| Visual baselines | `npm run qa:visual` | 30 captures in `qa-baselines/public/` + `geometry.json` (the restraint-pass site); the pre-pass site is kept in `qa-baselines/public-pre-restraint-2026-09-09/` |
-| Clone verification | `npx tsx reference-analysis/tools/verify-clone.ts <site> <clone>` | three frozen clones verified against their reference measurements (`reference-analysis/clones/*/verify/report.json`) |
+| Public (prod build) | `npm run qa:public` | **62/62 PASS** — 11 public routes × 20 widths (1920 → 320); fails on any price string (DEC-017) and on any of the ten reference brand names; application submits and persists |
+| Visual baselines | `npm run qa:visual` | 30 captures in `qa-baselines/public/` + `geometry.json` (the captivation-pass site); the v2 site is kept in `qa-baselines/public-pre-captivation-2026-09-09/`, the v1 site in `qa-baselines/public-pre-restraint-2026-09-09/` |
+| Clone verification | `npx tsx reference-analysis/tools/verify-clone.ts <site> <clone>` | four frozen clones verified against their reference measurements (`reference-analysis/clones/*/verify/report.json`) |
 
 77 models, 0 DB enums. Schema: `prisma/schema.prisma`. Manual verification is recorded per-test in
 `docs/ACCEPTANCE_TESTS.md` (sections A–AG and CP1–CP18).
@@ -1754,12 +1823,13 @@ visitor is now enforced at write time so the read has nothing to de-duplicate; d
 valid input; print/export is browser print by design; the synthetic bad-week report shows the miss
 but not the learning because the harness stamps the diagnosis after that week (clock artefact).
 
-**Git:** commits on `master` (recent: the restraint pass, `5a08f25` final verification pass,
-`275c562` public experience rebuild, `ab9bc71` completion pass, `8354171` infrastructure, `2be88a9`
-baseline). Three tags: `threadline-pre-public-experience-rebuild-2026-09-09` (rollback to before
-the rebuild), `threadline-public-baseline-2026-09-09` (the morning rebuild; rollback to before the
-restraint pass) and `threadline-public-restraint-2026-09-09` (current). The `main` branch named in
-tooling does not yet exist locally; work is on `master`.
+**Git:** commits on `master` (recent: the captivation pass, `9750b79` restraint pass, `5a08f25`
+final verification pass, `275c562` public experience rebuild, `ab9bc71` completion pass, `8354171`
+infrastructure, `2be88a9` baseline). Four tags: `threadline-pre-public-experience-rebuild-2026-09-09`
+(rollback to before the rebuild), `threadline-public-baseline-2026-09-09` (the morning rebuild),
+`threadline-public-restraint-2026-09-09` (the afternoon site; rollback to before the captivation
+pass) and `threadline-public-captivation-2026-09-09` (current). The `main` branch named in tooling
+does not yet exist locally; work is on `master`.
 
 **Note on `npm run db:reset`:** Prisma refuses this command from an AI agent without explicit
 human consent, which is correct behaviour. Use `npm run seed` instead — it is idempotent and

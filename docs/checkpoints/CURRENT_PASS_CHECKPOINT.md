@@ -56,3 +56,22 @@ Baseline before this pass: tag `threadline-public-baseline-2026-09-09`. After: t
 6. **Pricing removed from the public surface** (DEC-017) + `qa:public` price and Hydra greps.
 7. **Baselines** — pre-pass kept in `qa-baselines/public-pre-restraint-2026-09-09/`; new baseline in `qa-baselines/public/`.
 8. **Design docs** — design system v2, DNA 2.0.0, handover, customisation guide, `PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md` (content preservation, pricing audit, owner proposals).
+
+---
+
+## Captivation pass (9 September 2026, evening) — appended
+
+Baseline before this pass: tag `threadline-public-restraint-2026-09-09`. After: tag `threadline-public-captivation-2026-09-09`.
+
+1. **Plan before code** — `docs/design/CAPTIVATION_PASS_PLAN_2026-09-09.md` (current map, diagnosis, A/B/C classification of ten references, A-class clone plan, new twelve-section map, content preservation matrix, graphics replacement map, motion plan, responsive plan, rejected ideas, implementation order).
+2. **Reference captures** — Starborn, LeverBrands, Invisible Keyboard, Windmill, Demandii, Influent, Nova Impact, Understory under `reference-analysis/<site>/` (images gitignored); Starborn comparison-table component captured, cloned, verified, frozen (`reference-analysis/clones/starborn-comparison-table/`).
+3. **Object language** — `src/components/factory/objects.tsx`, the Objects block in `public.css`, `src/app/public-v3.css`.
+4. **Homepage v3** — twelve sections in the new order (`src/app/(marketing)/page.tsx`), eleven new section components in `src/components/public/`; How it works gained the diagnostic, the nine-station line and the proof ledger.
+5. **Content** — `HOME_V3` and `DIAGNOSTIC` keys reuse every approved sentence; five claims rows; DEC-023; no pricing.
+6. **Tooling** — `scripts/qa/shoot.ts`, `scripts/qa/probe.ts` (`--after`), `capture-reference.ts` `--widths/--port`; `public-qa.ts` brand grep extended and application check hardened.
+7. **Baselines** — v2 site kept in `qa-baselines/public-pre-captivation-2026-09-09/`; new baseline in `qa-baselines/public/`.
+8. **Docs** — design system v3, DNA 3.0.0, handover v3, `COMPONENT_RECONSTRUCTION.md` (harvest 15–22, Starborn results, mutations), `CAPTIVATION_PASS_2026-09-09.md` (as built, preservation matrix, pricing audit, references, open decisions, defects, QA checklist, final user test), HANDOFF §2 / §13.23 / §16j / §19 / §20, QA_REPORT (final section), claims ledger, decisions log.
+9. **Verification on the final build** — typecheck · lint · 625 tests · build · verify:features · migrate status · qa:all 494 (0 FAIL) · qa:spine · qa:perf 9/9 · qa:browser 101/21/0 · qa:public 62/62 · qa:visual re-baselined.
+
+Remaining: external gates and owner inputs only (`docs/site/PLACEHOLDERS.json`), plus the open design decisions in `CAPTIVATION_PASS_2026-09-09.md` §10.
+

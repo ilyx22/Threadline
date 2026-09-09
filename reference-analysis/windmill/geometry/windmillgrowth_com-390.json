@@ -1,0 +1,390 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "hero-cinematic",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 900
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Your LinkedIn brand.\nWithout the AI accent."
+    },
+    {
+      "tag": "section",
+      "id": "work",
+      "cls": "roster",
+      "rect": {
+        "x": 0,
+        "y": 900,
+        "w": 390,
+        "h": 759
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Some profiles we made human."
+    },
+    {
+      "tag": "header",
+      "id": "",
+      "cls": "roster__head",
+      "rect": {
+        "x": 0,
+        "y": 972,
+        "w": 390,
+        "h": 249
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Some profiles we made human."
+    },
+    {
+      "tag": "section",
+      "id": "why",
+      "cls": "chapter chapter--paper chapter--stack is-pinned",
+      "rect": {
+        "x": 0,
+        "y": 1659,
+        "w": 390,
+        "h": 1977
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "You can smell it in one line."
+    },
+    {
+      "tag": "section",
+      "id": "process",
+      "cls": "chapter chapter--plain chapter--stack is-flat is-pinned",
+      "rect": {
+        "x": 0,
+        "y": 3636,
+        "w": 390,
+        "h": 3314
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "We do the homework."
+    },
+    {
+      "tag": "section",
+      "id": "what",
+      "cls": "boot",
+      "rect": {
+        "x": 0,
+        "y": 6950,
+        "w": 390,
+        "h": 1509
+      },
+      "bg": "rgb(10, 10, 22)",
+      "heading": "Founder OS"
+    },
+    {
+      "tag": "header",
+      "id": "",
+      "cls": "boot__head is-on",
+      "rect": {
+        "x": 23,
+        "y": 7270,
+        "w": 343,
+        "h": 142
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Founder OS"
+    },
+    {
+      "tag": "section",
+      "id": "testimonials",
+      "cls": "wall",
+      "rect": {
+        "x": 0,
+        "y": 8459,
+        "w": 390,
+        "h": 1422
+      },
+      "bg": "rgb(10, 10, 22)",
+      "heading": "Nobody here had time to learn LinkedIn."
+    },
+    {
+      "tag": "section",
+      "id": "plans",
+      "cls": "pricing is-in",
+      "rect": {
+        "x": 17,
+        "y": 9881,
+        "w": 356,
+        "h": 2335
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Four ways to grow. Three clients a month."
+    },
+    {
+      "tag": "section",
+      "id": "faqs",
+      "cls": "faq",
+      "rect": {
+        "x": 0,
+        "y": 12216,
+        "w": 390,
+        "h": 1155
+      },
+      "bg": "rgb(247, 246, 251)",
+      "heading": "Everything founders ask before the first call."
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "foot",
+      "rect": {
+        "x": 0,
+        "y": 13372,
+        "w": 390,
+        "h": 1703
+      },
+      "bg": "rgb(10, 10, 22)",
+      "heading": "Your next post can sound like you."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "foot__cta",
+      "rect": {
+        "x": 17,
+        "y": 13453,
+        "w": 356,
+        "h": 356
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Your next post can sound like you."
+    },
+    {
+      "tag": "nav",
+      "id": "",
+      "cls": "foot__nav",
+      "rect": {
+        "x": 17,
+        "y": 14027,
+        "w": 356,
+        "h": 320
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "COMPANY"
+    },
+    {
+      "tag": "nav",
+      "id": "",
+      "cls": "foot__nav",
+      "rect": {
+        "x": 17,
+        "y": 14376,
+        "w": 356,
+        "h": 220
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "SERVICES"
+    },
+    {
+      "tag": "nav",
+      "id": "",
+      "cls": "foot__nav",
+      "rect": {
+        "x": 17,
+        "y": 14626,
+        "w": 356,
+        "h": 170
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "CONTACT"
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Skip to content",
+      "rect": {
+        "x": 17,
+        "y": -68,
+        "w": 151,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(2, 9, 21)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "boxShadow": "none",
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "padding": "10.2px 15.3px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a Strategy Call",
+      "rect": {
+        "x": 98,
+        "y": 468,
+        "w": 194,
+        "h": 55
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 248, 240)",
+        "color": "rgb(20, 24, 31)",
+        "borderRadius": "999px",
+        "border": "0px none rgb(20, 24, 31)",
+        "boxShadow": "none",
+        "fontSize": "17.85px",
+        "fontWeight": "400",
+        "padding": "13.26px 21.25px",
+        "textTransform": "none",
+        "letterSpacing": "0.1785px"
+      }
+    },
+    {
+      "text": "Book a Strategy Call",
+      "rect": {
+        "x": 23,
+        "y": 8346,
+        "w": 343,
+        "h": 63
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 248, 240)",
+        "color": "rgb(20, 24, 31)",
+        "borderRadius": "999px",
+        "border": "0px none rgb(20, 24, 31)",
+        "boxShadow": "rgba(0, 0, 0, 0.45) 0px 14px 34px 0px",
+        "fontSize": "17.85px",
+        "fontWeight": "400",
+        "padding": "17px 34px",
+        "textTransform": "none",
+        "letterSpacing": "0.1785px"
+      }
+    },
+    {
+      "text": "Book a Strategy Call",
+      "rect": {
+        "x": 38,
+        "y": 10554,
+        "w": 315,
+        "h": 57
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "color": "rgb(2, 9, 21)",
+        "borderRadius": "999px",
+        "border": "1px solid rgb(228, 225, 242)",
+        "boxShadow": "none",
+        "fontSize": "17.85px",
+        "fontWeight": "400",
+        "padding": "13.26px 21.25px",
+        "textTransform": "none",
+        "letterSpacing": "0.1785px"
+      }
+    },
+    {
+      "text": "Book a Strategy Call",
+      "rect": {
+        "x": 38,
+        "y": 11080,
+        "w": 315,
+        "h": 57
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "color": "rgb(2, 9, 21)",
+        "borderRadius": "999px",
+        "border": "1px solid rgb(228, 225, 242)",
+        "boxShadow": "none",
+        "fontSize": "17.85px",
+        "fontWeight": "400",
+        "padding": "13.26px 21.25px",
+        "textTransform": "none",
+        "letterSpacing": "0.1785px"
+      }
+    },
+    {
+      "text": "Book a Strategy Call",
+      "rect": {
+        "x": 38,
+        "y": 11599,
+        "w": 315,
+        "h": 55
+      },
+      "style": {
+        "backgroundColor": "rgb(104, 91, 255)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "999px",
+        "border": "0px none rgb(255, 255, 255)",
+        "boxShadow": "none",
+        "fontSize": "17.85px",
+        "fontWeight": "400",
+        "padding": "13.26px 21.25px",
+        "textTransform": "none",
+        "letterSpacing": "0.1785px"
+      }
+    },
+    {
+      "text": "Book a Strategy Call",
+      "rect": {
+        "x": 38,
+        "y": 12063,
+        "w": 315,
+        "h": 57
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "color": "rgb(2, 9, 21)",
+        "borderRadius": "999px",
+        "border": "1px solid rgb(228, 225, 242)",
+        "boxShadow": "none",
+        "fontSize": "17.85px",
+        "fontWeight": "400",
+        "padding": "13.26px 21.25px",
+        "textTransform": "none",
+        "letterSpacing": "0.1785px"
+      }
+    },
+    {
+      "text": "Book a Strategy Call",
+      "rect": {
+        "x": 17,
+        "y": 12487,
+        "w": 356,
+        "h": 55
+      },
+      "style": {
+        "backgroundColor": "rgb(104, 91, 255)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "999px",
+        "border": "0px none rgb(255, 255, 255)",
+        "boxShadow": "none",
+        "fontSize": "17.85px",
+        "fontWeight": "400",
+        "padding": "13.26px 21.25px",
+        "textTransform": "none",
+        "letterSpacing": "0.1785px"
+      }
+    },
+    {
+      "text": "Book a Strategy Call",
+      "rect": {
+        "x": 17,
+        "y": 13648,
+        "w": 194,
+        "h": 55
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 248, 240)",
+        "color": "rgb(20, 24, 31)",
+        "borderRadius": "999px",
+        "border": "0px none rgb(20, 24, 31)",
+        "boxShadow": "none",
+        "fontSize": "17.85px",
+        "fontWeight": "400",
+        "padding": "13.26px 21.25px",
+        "textTransform": "none",
+        "letterSpacing": "0.1785px"
+      }
+    }
+  ]
+}

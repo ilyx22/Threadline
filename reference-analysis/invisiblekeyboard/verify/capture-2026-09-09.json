@@ -1,0 +1,46 @@
+{
+  "capturedAt": "2026-09-09T15:33:45.514Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://www.invisiblekeyboardai.com/",
+      "width": 1440,
+      "finalUrl": "https://www.invisiblekeyboardai.com/",
+      "title": "Invisible Keyboard | LinkedIn Content Agency for B2B Founders",
+      "scrollHeight": 7176,
+      "frames": 24,
+      "fonts": 4,
+      "ms": 4879
+    },
+    {
+      "url": "https://www.invisiblekeyboardai.com/",
+      "width": 1024,
+      "finalUrl": "https://www.invisiblekeyboardai.com/",
+      "title": "Invisible Keyboard | LinkedIn Content Agency for B2B Founders",
+      "scrollHeight": 6761,
+      "frames": 23,
+      "fonts": 4,
+      "ms": 4070
+    },
+    {
+      "url": "https://www.invisiblekeyboardai.com/",
+      "width": 768,
+      "finalUrl": "https://www.invisiblekeyboardai.com/",
+      "title": "Invisible Keyboard | LinkedIn Content Agency for B2B Founders",
+      "scrollHeight": 6889,
+      "frames": 23,
+      "fonts": 4,
+      "ms": 3584
+    },
+    {
+      "url": "https://www.invisiblekeyboardai.com/",
+      "width": 390,
+      "finalUrl": "https://www.invisiblekeyboardai.com/",
+      "title": "Invisible Keyboard | LinkedIn Content Agency for B2B Founders",
+      "scrollHeight": 9803,
+      "frames": 33,
+      "fonts": 4,
+      "ms": 3883
+    }
+  ]
+}

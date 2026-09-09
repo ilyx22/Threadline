@@ -1,0 +1,80 @@
+{
+  "site": "starborn",
+  "url": "https://starbornai.com/",
+  "anchor": "Why not just hire a",
+  "name": "comparison-table",
+  "capturedAt": "2026-09-09T15:38:33.384Z",
+  "method": "headless Chrome via CDP; public page; rendered DOM + computed styles + screenshots only",
+  "widths": [
+    1440,
+    1024,
+    768,
+    390
+  ],
+  "log": [
+    {
+      "width": 1440,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 9822,
+        "w": 1440,
+        "h": 995
+      },
+      "nodes": 117,
+      "states": [
+        {
+          "state": "default"
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 9146,
+        "w": 1024,
+        "h": 988
+      },
+      "nodes": 117,
+      "states": [
+        {
+          "state": "default"
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 10985,
+        "w": 768,
+        "h": 914
+      },
+      "nodes": 117,
+      "states": [
+        {
+          "state": "default"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 10008,
+        "w": 390,
+        "h": 1219
+      },
+      "nodes": 117,
+      "states": [
+        {
+          "state": "default"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,275 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative overflow-hidden bg-navy-950 text-on-dark",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 1362
+      },
+      "bg": "rgb(8, 17, 31)",
+      "heading": "Turn Your AI Expertise into New Business"
+    },
+    {
+      "tag": "section",
+      "id": "services",
+      "cls": "relative scroll-mt-24 py-20 sm:py-28 lg:py-32 bg-cream text-ink",
+      "rect": {
+        "x": 0,
+        "y": 1362,
+        "w": 390,
+        "h": 2631
+      },
+      "bg": "rgb(250, 248, 243)",
+      "heading": "What we do"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative scroll-mt-24 py-20 sm:py-28 lg:py-32 bg-navy-900 text-on-dark",
+      "rect": {
+        "x": 0,
+        "y": 3993,
+        "w": 390,
+        "h": 1260
+      },
+      "bg": "rgb(14, 26, 49)",
+      "heading": "The best thinkers deserve an audience that knows their name and trusts their jud"
+    },
+    {
+      "tag": "section",
+      "id": "impact",
+      "cls": "relative scroll-mt-24 py-20 sm:py-28 lg:py-32 bg-cream text-ink",
+      "rect": {
+        "x": 0,
+        "y": 5253,
+        "w": 390,
+        "h": 3351
+      },
+      "bg": "rgb(250, 248, 243)",
+      "heading": "Results that compound"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative scroll-mt-24 py-20 sm:py-28 lg:py-32 bg-navy-950 text-on-dark text-cent",
+      "rect": {
+        "x": 0,
+        "y": 8604,
+        "w": 390,
+        "h": 551
+      },
+      "bg": "rgb(8, 17, 31)",
+      "heading": "Ready to turn your expertise into new business?"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative scroll-mt-24 py-20 sm:py-28 lg:py-32 bg-white text-ink",
+      "rect": {
+        "x": 0,
+        "y": 9155,
+        "w": 390,
+        "h": 1185
+      },
+      "bg": "rgb(255, 255, 255)",
+      "heading": "Your second brain"
+    },
+    {
+      "tag": "section",
+      "id": "team",
+      "cls": "relative scroll-mt-24 py-20 sm:py-28 lg:py-32 bg-cream text-ink",
+      "rect": {
+        "x": 0,
+        "y": 10339,
+        "w": 390,
+        "h": 3531
+      },
+      "bg": "rgb(250, 248, 243)",
+      "heading": "A small team, by design"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative scroll-mt-24 py-20 sm:py-28 lg:py-32 bg-cream text-ink",
+      "rect": {
+        "x": 0,
+        "y": 13871,
+        "w": 390,
+        "h": 805
+      },
+      "bg": "rgb(250, 248, 243)",
+      "heading": "The questions we hear most"
+    },
+    {
+      "tag": "section",
+      "id": "contact",
+      "cls": "relative scroll-mt-24 py-20 sm:py-28 lg:py-32 bg-navy-900 text-on-dark",
+      "rect": {
+        "x": 0,
+        "y": 14675,
+        "w": 390,
+        "h": 1361
+      },
+      "bg": "rgb(14, 26, 49)",
+      "heading": "Let's build your influence"
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "relative bg-navy-950 text-on-dark",
+      "rect": {
+        "x": 0,
+        "y": 16036,
+        "w": 390,
+        "h": 993
+      },
+      "bg": "rgb(8, 17, 31)",
+      "heading": "EXPLORE"
+    },
+    {
+      "tag": "nav",
+      "id": "",
+      "cls": "lg:col-span-3",
+      "rect": {
+        "x": 20,
+        "y": 16363,
+        "w": 350,
+        "h": 212
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "EXPLORE"
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Book a Call\n→",
+      "rect": {
+        "x": 24,
+        "y": 816,
+        "w": 342,
+        "h": 52
+      },
+      "style": {
+        "backgroundColor": "rgb(228, 169, 58)",
+        "color": "rgb(14, 26, 49)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(14, 26, 49, 0.04) 0px 1px 2px 0px, rgba(14, 26, 49, 0.18) 0px 8px 24px -12px",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "0px 28px",
+        "textTransform": "none",
+        "letterSpacing": "-0.4px"
+      }
+    },
+    {
+      "text": "Book a Call\n→",
+      "rect": {
+        "x": 20,
+        "y": 516,
+        "w": 350,
+        "h": 52
+      },
+      "style": {
+        "backgroundColor": "rgb(228, 169, 58)",
+        "color": "rgb(14, 26, 49)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(14, 26, 49, 0.04) 0px 1px 2px 0px, rgba(14, 26, 49, 0.18) 0px 8px 24px -12px",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "0px 28px",
+        "textTransform": "none",
+        "letterSpacing": "-0.4px"
+      }
+    },
+    {
+      "text": "Book a Call\n→",
+      "rect": {
+        "x": 20,
+        "y": 8959,
+        "w": 350,
+        "h": 52
+      },
+      "style": {
+        "backgroundColor": "rgb(228, 169, 58)",
+        "color": "rgb(14, 26, 49)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(14, 26, 49, 0.04) 0px 1px 2px 0px, rgba(14, 26, 49, 0.18) 0px 8px 24px -12px",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "0px 28px",
+        "textTransform": "none",
+        "letterSpacing": "-0.4px"
+      }
+    },
+    {
+      "text": "Book a Call\n→",
+      "rect": {
+        "x": 20,
+        "y": 15004,
+        "w": 162,
+        "h": 52
+      },
+      "style": {
+        "backgroundColor": "rgb(228, 169, 58)",
+        "color": "rgb(14, 26, 49)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(14, 26, 49, 0.04) 0px 1px 2px 0px, rgba(14, 26, 49, 0.18) 0px 8px 24px -12px",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "0px 28px",
+        "textTransform": "none",
+        "letterSpacing": "-0.4px"
+      }
+    },
+    {
+      "text": "Send message",
+      "rect": {
+        "x": 44,
+        "y": 15844,
+        "w": 302,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(14, 26, 49)",
+        "color": "rgb(244, 241, 234)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "0px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a Call\n→",
+      "rect": {
+        "x": 20,
+        "y": 16732,
+        "w": 133,
+        "h": 44
+      },
+      "style": {
+        "backgroundColor": "rgb(228, 169, 58)",
+        "color": "rgb(14, 26, 49)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgba(14, 26, 49, 0.12)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(14, 26, 49, 0.04) 0px 1px 2px 0px, rgba(14, 26, 49, 0.18) 0px 8px 24px -12px",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "padding": "0px 20px",
+        "textTransform": "none",
+        "letterSpacing": "-0.35px"
+      }
+    }
+  ]
+}

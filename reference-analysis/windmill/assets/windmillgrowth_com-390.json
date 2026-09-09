@@ -1,0 +1,431 @@
+{
+  "media": {
+    "img": 39,
+    "svg": 47,
+    "video": 0,
+    "canvas": 0,
+    "lottie": 0,
+    "imgSrcs": [
+      {
+        "src": "https://windmillgrowth.com/images/hero/windmills-poster-mobile-810.avif",
+        "w": 810,
+        "h": 1620,
+        "alt": "Two distant wind turbines turning on a quiet dusk hillside"
+      },
+      {
+        "src": "https://windmillgrowth.com/images/hero/windmills-mobile-720.webp",
+        "w": 720,
+        "h": 1440,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/logos/founders-club.svg",
+        "w": 176,
+        "h": 64,
+        "alt": "Founders Club"
+      },
+      {
+        "src": "https://windmillgrowth.com/images/logos/platter.svg",
+        "w": 300,
+        "h": 69,
+        "alt": "Platter"
+      },
+      {
+        "src": "https://windmillgrowth.com/images/logos/default.svg",
+        "w": 98,
+        "h": 30,
+        "alt": "Default"
+      },
+      {
+        "src": "https://windmillgrowth.com/images/logos/haven.svg",
+        "w": 300,
+        "h": 84,
+        "alt": "Haven"
+      },
+      {
+        "src": "https://windmillgrowth.com/images/logos/skio.svg",
+        "w": 300,
+        "h": 114,
+        "alt": "Skio"
+      },
+      {
+        "src": "https://windmillgrowth.com/images/logos/pearl-talent.png",
+        "w": 1080,
+        "h": 156,
+        "alt": "Pearl Talent"
+      },
+      {
+        "src": "https://windmillgrowth.com/images/logos/doorspot.svg",
+        "w": 190,
+        "h": 40,
+        "alt": "DoorSpot"
+      },
+      {
+        "src": "https://windmillgrowth.com/images/logos/caspian.svg",
+        "w": 300,
+        "h": 45,
+        "alt": "Caspian"
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/aaron-spivak.jpg",
+        "w": 800,
+        "h": 800,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/ben-sharf.jpg",
+        "w": 800,
+        "h": 800,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/david-johnston.jpg",
+        "w": 800,
+        "h": 800,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/isaac-kassab.png",
+        "w": 512,
+        "h": 430,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/james-van-elswyk.png",
+        "w": 512,
+        "h": 320,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/nana-delray.jpeg",
+        "w": 512,
+        "h": 320,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/frances-hughes.jpeg",
+        "w": 512,
+        "h": 512,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/blaine-davis.png",
+        "w": 512,
+        "h": 442,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/damian-tenuta.jpeg",
+        "w": 356,
+        "h": 512,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/writers/jackie.jpg",
+        "w": 192,
+        "h": 192,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/writers/dylan.jpg",
+        "w": 192,
+        "h": 192,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/writers/thomas.jpg",
+        "w": 192,
+        "h": 192,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/writers/logan.jpg",
+        "w": 192,
+        "h": 192,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/leads/maya.jpg",
+        "w": 192,
+        "h": 192,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/leads/dev.jpg",
+        "w": 192,
+        "h": 192,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/leads/sara.jpg",
+        "w": 192,
+        "h": 192,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/leads/tom.jpg",
+        "w": 192,
+        "h": 192,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/founders/justin-sherlock.jpeg",
+        "w": 512,
+        "h": 341,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/isaac.jpg",
+        "w": 414,
+        "h": 414,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/cyrus.jpg",
+        "w": 512,
+        "h": 512,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/ronak.jpg",
+        "w": 512,
+        "h": 512,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/saptarshi.jpg",
+        "w": 500,
+        "h": 500,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/adrian.jpg",
+        "w": 512,
+        "h": 512,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/nana.jpg",
+        "w": 512,
+        "h": 512,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/elliot.jpg",
+        "w": 512,
+        "h": 512,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/akhil.jpg",
+        "w": 0,
+        "h": 0,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/jai.jpg",
+        "w": 512,
+        "h": 512,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/josh.jpg",
+        "w": 512,
+        "h": 512,
+        "alt": ""
+      },
+      {
+        "src": "https://windmillgrowth.com/images/testimonials/roger.jpg",
+        "w": 512,
+        "h": 512,
+        "alt": ""
+      }
+    ]
+  },
+  "requests": [
+    {
+      "url": "https://fonts.gstatic.com/s/caveat/v23/WnznHAc5bAfYB2QRah7pcpNvOx-pjcB9eIWpYQ.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/dmsans/v17/rP2Hp2ywxg089UriCZOIHQ.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/newsreader/v26/cY9CfjOCX1hbuyalUrK439vCjohC.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/newsreader/v26/cY9AfjOCX1hbuyalUrK4397yjA.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/hero/windmills-poster-mobile-810.avif",
+      "type": "image/avif"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/logos/platter.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/logos/haven.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/logos/doorspot.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/aaron-spivak.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/logos/skio.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/logos/caspian.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/logos/default.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/damian-tenuta.jpeg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/leads/maya.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/blaine-davis.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/ben-sharf.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/logos/pearl-talent.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/nana-delray.jpeg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/writers/thomas.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/david-johnston.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/james-van-elswyk.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/leads/dev.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/justin-sherlock.jpeg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/cyrus.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/writers/logan.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/isaac-kassab.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/writers/jackie.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/nana.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/leads/sara.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/josh.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/founders/frances-hughes.jpeg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/isaac.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/roger.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/elliot.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/jai.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/leads/tom.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/writers/dylan.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/adrian.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/logos/founders-club.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://www.google.co.uk/pagead/1p-user-list/16688967442/?random=1788968050660&cv=11&fst=1788966000000&bg=ffffff&guid=ON&async=1&en=gtag.config&gtm=45be6930v920",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://www.google.co.uk/pagead/1p-user-list/16688967442/?random=1788968050668&cv=11&fst=1788966000000&bg=ffffff&guid=ON&async=1&gtm=45be6930v9203550157z8919575",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://www.google.com/pagead/1p-user-list/16688967442/?random=1788968050668&cv=11&fst=1788966000000&bg=ffffff&guid=ON&async=1&gtm=45be6930v9203550157z891957537",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://www.google.com/pagead/1p-user-list/16688967442/?random=1788968050660&cv=11&fst=1788966000000&bg=ffffff&guid=ON&async=1&en=gtag.config&gtm=45be6930v92035",
+      "type": "image/gif"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/hero/windmills-mobile-720.webp",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/saptarshi.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://windmillgrowth.com/images/testimonials/ronak.jpg",
+      "type": "image/jpeg"
+    }
+  ]
+}

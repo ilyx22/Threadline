@@ -27,7 +27,7 @@ const ONLY = process.argv.find((a) => a.startsWith("--only="))?.slice(7);
 const WIDTH_FILTER = process.argv.find((a) => a.startsWith("--width="))?.slice(8).split(",").map(Number);
 
 /** Words that must never appear in Threadline's public output (reference-analysis/birdhouse/forbidden-to-copy.md). */
-const BRAND_LEAK = /birdhouse|marcos|pesto|sila digital|thebirdhouse|beehiiv|fillout|outlier post method|0 to 10k|workwithhydra|hydra|throughput capped|one constraint/i;
+const BRAND_LEAK = /birdhouse|marcos|pesto|sila digital|thebirdhouse|beehiiv|fillout|outlier post method|0 to 10k|workwithhydra|\bhydra\b|throughput capped|one constraint|starborn|trivellato|leverbrands|lever brands|invisible keyboard|windmill|demandii|\binfluent\b|nova impact|understory/i; // every reference site analysed on 2026-09-09 (reference-analysis/*)
 const PLACEHOLDER = /\bTBD\b|\bTODO\b|lorem ipsum|placeholder|example\.com|dummy|\(555\)|acme corp|your company here|coming soon/i;
 const CADENCE = /\bmonthly (fee|retainer|price)|per month\b|\/month\b/i;
 const PRICE = /£\s?2,?500|£\s?5,?000|£\s?10,?000|2\.5k|starting (from|at) £/i; // DEC-017: exact service pricing is never public
@@ -166,12 +166,18 @@ async function main() {
       await raf(); if (!click('Continue') && !click('Next')) return { ok: false, step: 2, detail: 'no continue button' }; await raf(); await raf(); { const errs = [...document.querySelectorAll('p, span')].map((e) => e.textContent.trim()).filter((t) => /^(Enter |Choose |Tell us |Describe |What is|A little)/.test(t)); if (errs.length) return { ok: false, step: 2, detail: 'validation on step 2: ' + errs.join(' | ') + ' :: fields=' + [...document.querySelectorAll('input,select,textarea')].map((f) => f.name + '=' + String(f.value).slice(0, 12)).join(',') }; }
       set('biggestBottleneck', 'Consistency and topic choice.'); set('successLooksLike', 'Two qualified conversations a month from content.'); set('urgency', firstOption('urgency'));
       await raf(); if (!click('Submit') && !click('Send') && !click('Apply')) return { ok: false, step: 3, detail: 'no submit button; page shows: ' + document.body.innerText.replace(/\s+/g, ' ').slice(0, 220) + ' | buttons: ' + [...document.querySelectorAll('button')].map((b) => b.textContent.trim()).join('/') };
-      for (let i = 0; i < 40; i++) { await raf(); if (/received|thank|arrived|book/i.test(document.body.innerText)) return { ok: true, step: 3, detail: document.body.innerText.slice(0, 120) }; const err = document.querySelector('[role=alert]'); if (err && err.textContent.trim()) return { ok: false, step: 3, detail: err.textContent.trim().slice(0, 160) }; }
+      for (let i = 0; i < 40; i++) { await raf(); const err = document.querySelector('[role=alert]'); if (err && err.textContent.trim()) return { ok: false, step: 3, detail: 'alert: ' + err.textContent.trim().slice(0, 160) }; if (/Application received/.test(document.body.innerText)) return { ok: true, step: 3, detail: 'confirmation shown' }; }
       return { ok: false, step: 3, detail: 'no confirmation within 5s: ' + document.body.innerText.slice(0, 160) };
     })()`);
-    await sleep(500);
-    const row = await prisma.application.findFirst({ where: { email: `${marker}@example.test` } });
-    record("public:apply", "three-step application submits and persists", submitted.ok && !!row ? "PASS" : "FAIL", `${submitted.detail.replace(/\s+/g, " ").slice(0, 400)} · db=${!!row}`, submitted.ok && row ? undefined : "PUBLIC-APPLY");
+    // The confirmation renders as soon as the action resolves; the row is committed by then, but on a
+    // loaded machine the SQLite write can land a beat later than the DOM. Poll instead of assuming 500ms.
+    let row: { id: string } | null = null;
+    for (let i = 0; i < 20 && !row; i++) {
+      await sleep(400);
+      row = await prisma.application.findFirst({ where: { email: `${marker}@example.test` }, select: { id: true } });
+    }
+    const rateLimited = /too many attempts/i.test(submitted.detail);
+    record("public:apply", "three-step application submits and persists", submitted.ok && !!row ? "PASS" : "FAIL", `${submitted.detail.replace(/\s+/g, " ").slice(0, 400)} · db=${!!row}${rateLimited ? " · the public form allows 5 submissions per hour per IP (LIMITS.application) — this run was rate limited by earlier QA submissions; restart `next start` (memory store) or wait, then re-run" : ""}`, submitted.ok && row ? undefined : "PUBLIC-APPLY");
     if (row) await prisma.application.delete({ where: { id: row.id } });
   } finally {
     close();

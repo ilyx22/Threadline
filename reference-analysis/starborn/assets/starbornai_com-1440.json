@@ -1,0 +1,351 @@
+{
+  "media": {
+    "img": 33,
+    "svg": 54,
+    "video": 0,
+    "canvas": 0,
+    "lottie": 0,
+    "imgSrcs": [
+      {
+        "src": "https://starbornai.com/assets/prosp-ai-BlvWfjYu.svg",
+        "w": 246,
+        "h": 75,
+        "alt": "Prosp.ai"
+      },
+      {
+        "src": "https://starbornai.com/assets/william-brown-C6aBxc8f.jpg",
+        "w": 616,
+        "h": 360,
+        "alt": "William Brown"
+      },
+      {
+        "src": "https://starbornai.com/assets/kakiyo-BD7Pp6Fo.png",
+        "w": 1492,
+        "h": 597,
+        "alt": "Kakiyo"
+      },
+      {
+        "src": "https://starbornai.com/assets/gojiberry-BZ-M02V1.png",
+        "w": 1568,
+        "h": 479,
+        "alt": "Gojiberry"
+      },
+      {
+        "src": "https://starbornai.com/assets/agency-operators-DR6f9A9z.png",
+        "w": 500,
+        "h": 266,
+        "alt": "Agency Operators"
+      },
+      {
+        "src": "https://starbornai.com/assets/spacem-CuywUdOK.png",
+        "w": 1024,
+        "h": 632,
+        "alt": "SpaceM"
+      },
+      {
+        "src": "https://starbornai.com/assets/nick-_dCOw5HF.png",
+        "w": 1056,
+        "h": 1074,
+        "alt": "Viral LinkedIn post by Nick Mihailou with 3M+ impressions"
+      },
+      {
+        "src": "https://starbornai.com/assets/calendly-Uoq2a4ZW.png",
+        "w": 512,
+        "h": 441,
+        "alt": "Calendly analytics dashboard showing 672 demos booked"
+      },
+      {
+        "src": "https://starbornai.com/assets/ariel-BAQZiwbK.png",
+        "w": 1074,
+        "h": 1198,
+        "alt": "Ariel Cohen LinkedIn profile growth in 3 months"
+      },
+      {
+        "src": "https://starbornai.com/assets/kyle-mrmG4tyr.png",
+        "w": 1050,
+        "h": 1338,
+        "alt": "Viral LinkedIn post by Kyle Hunt"
+      },
+      {
+        "src": "https://starbornai.com/assets/gojiberry-Dj-BJ5xH.png",
+        "w": 512,
+        "h": 271,
+        "alt": "Gojiberry.ai revenue dashboard showing $47,999.95 from new c"
+      },
+      {
+        "src": "https://starbornai.com/assets/anon-agency-OBCrbqmB.png",
+        "w": 512,
+        "h": 356,
+        "alt": "LinkedIn content performance dashboard showing 2.8M impressi"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-1-BHnnpduB.png",
+        "w": 1070,
+        "h": 1150,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-2-CF7yx9cL.png",
+        "w": 1056,
+        "h": 1080,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-3-pSWv1s0c.png",
+        "w": 1058,
+        "h": 1042,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-4-pzoL26hj.png",
+        "w": 1056,
+        "h": 958,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-5-4HCTPnKK.png",
+        "w": 1042,
+        "h": 1074,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-1-BHnnpduB.png",
+        "w": 1070,
+        "h": 1150,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-2-CF7yx9cL.png",
+        "w": 1056,
+        "h": 1080,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-3-pSWv1s0c.png",
+        "w": 1058,
+        "h": 1042,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-4-pzoL26hj.png",
+        "w": 1056,
+        "h": 958,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-5-4HCTPnKK.png",
+        "w": 1042,
+        "h": 1074,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-6-CxZ3OApw.png",
+        "w": 1054,
+        "h": 1074,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-7-DYIodjrK.png",
+        "w": 1068,
+        "h": 1182,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-8-BuZSx6rb.png",
+        "w": 1058,
+        "h": 1090,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-9-BnqUEf-7.png",
+        "w": 1068,
+        "h": 1204,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-10-Bs5Zzc1R.png",
+        "w": 717,
+        "h": 855,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-6-CxZ3OApw.png",
+        "w": 1054,
+        "h": 1074,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-7-DYIodjrK.png",
+        "w": 1068,
+        "h": 1182,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-8-BuZSx6rb.png",
+        "w": 1058,
+        "h": 1090,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-9-BnqUEf-7.png",
+        "w": 1068,
+        "h": 1204,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/post-10-Bs5Zzc1R.png",
+        "w": 717,
+        "h": 855,
+        "alt": "LinkedIn post crafted by Starborn Studio"
+      },
+      {
+        "src": "https://starbornai.com/assets/founder-editorial-ByBFOWbu.jpg",
+        "w": 800,
+        "h": 800,
+        "alt": "Paolo Trivellato · Founder of Starborn"
+      }
+    ]
+  },
+  "requests": [
+    {
+      "url": "https://starbornai.com/assets/nick-_dCOw5HF.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://starbornai.com/assets/prosp-ai-BlvWfjYu.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://starbornai.com/assets/kakiyo-BD7Pp6Fo.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/gojiberry-BZ-M02V1.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/william-brown-C6aBxc8f.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://starbornai.com/assets/spacem-CuywUdOK.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/agency-operators-DR6f9A9z.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://fast.wistia.com/embed/medias/bz35725cbo/swatch",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "data:application/x-font-woff;charset=utf-8;base64,d09GMk9UVE8AAAaMAAwAAAAACgAAAAZBAAMD1wAAAAAAAAAAAAAAAAAAAAAAAAAADYpwGhQbIBwqBmAAgTIBNgIkAzAEBgWDGgcgGykJEZWkAR",
+      "type": "application/x-font-woff"
+    },
+    {
+      "url": "https://fast.wistia.net/assets/images/blank.gif",
+      "type": "image/gif"
+    },
+    {
+      "url": "data:application/x-font-woff;charset=utf-8;base64,d09GMk9UVE8AACGwAAwAAAAAP8AAACFgAAMEnAAAAAAAAAAAAAAAAAAAAAAAAAAADcVhGigbnTgcjwgGYACCFAE2AiQDg0AEBgWDcAcgG+w+RU",
+      "type": "application/x-font-woff"
+    },
+    {
+      "url": "https://fast.wistia.net/assets/external/fonts/Inter-Extended.woff",
+      "type": "font/woff"
+    },
+    {
+      "url": "https://embed-cloudfront.wistia.com/deliveries/9f2a9d976b40c18c71057b69185f50b16d314565.m3u8/seg-1-v1-a1.ts",
+      "type": "video/mp2t"
+    },
+    {
+      "url": "https://embed-cloudfront.wistia.com/deliveries/42c101bb5758ecc56e2b54194af0c3133ab9174c.m3u8/seg-2-v1-a1.ts",
+      "type": "video/mp2t"
+    },
+    {
+      "url": "https://embed-cloudfront.wistia.com/deliveries/42c101bb5758ecc56e2b54194af0c3133ab9174c.m3u8/seg-3-v1-a1.ts",
+      "type": "video/mp2t"
+    },
+    {
+      "url": "https://embed-cloudfront.wistia.com/deliveries/42c101bb5758ecc56e2b54194af0c3133ab9174c.m3u8/seg-4-v1-a1.ts",
+      "type": "video/mp2t"
+    },
+    {
+      "url": "https://embed-cloudfront.wistia.com/deliveries/9f2a9d976b40c18c71057b69185f50b16d314565.m3u8/seg-1-v1-a1.ts",
+      "type": "video/mp2t"
+    },
+    {
+      "url": "https://starbornai.com/assets/calendly-Uoq2a4ZW.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/ariel-BAQZiwbK.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/kyle-mrmG4tyr.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/gojiberry-Dj-BJ5xH.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/anon-agency-OBCrbqmB.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-4-pzoL26hj.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-6-CxZ3OApw.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-2-CF7yx9cL.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-3-pSWv1s0c.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-10-Bs5Zzc1R.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-7-DYIodjrK.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-5-4HCTPnKK.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-8-BuZSx6rb.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-9-BnqUEf-7.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://starbornai.com/assets/post-1-BHnnpduB.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://embed-cloudfront.wistia.com/deliveries/42c101bb5758ecc56e2b54194af0c3133ab9174c.m3u8/seg-5-v1-a1.ts",
+      "type": "video/mp2t"
+    },
+    {
+      "url": "https://starbornai.com/assets/founder-editorial-ByBFOWbu.jpg",
+      "type": "image/jpeg"
+    }
+  ]
+}

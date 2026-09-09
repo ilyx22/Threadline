@@ -1,0 +1,170 @@
+{
+  "url": "https://www.demandii.com/",
+  "title": "Demandii - A Demand Generation Agency",
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "scrollHeight": 33645,
+  "fonts": [
+    "Montserrat 900 normal",
+    "Montserrat 800 normal",
+    "Shadows Into Light 400 normal",
+    "Montserrat 100 italic",
+    "Montserrat 200 italic",
+    "Montserrat 300 italic",
+    "Montserrat 400 italic",
+    "Montserrat 500 italic",
+    "Montserrat 600 italic",
+    "Montserrat 700 italic",
+    "Montserrat 800 italic",
+    "Montserrat 900 italic",
+    "Montserrat 100 normal",
+    "Montserrat 200 normal",
+    "Montserrat 300 normal",
+    "Montserrat 400 normal",
+    "Montserrat 500 normal",
+    "Montserrat 600 normal",
+    "Montserrat 700 normal",
+    "Font Awesome 5 Free 400 normal",
+    "Font Awesome 5 Free 900 normal",
+    "Font Awesome 5 Brands 400 normal"
+  ],
+  "families": {
+    "Times New Roman": 416,
+    "Montserrat": 843,
+    "Shadows Into Light": 3
+  },
+  "topColours": [
+    [
+      "rgb(0, 0, 0)",
+      2248
+    ],
+    [
+      "rgb(42, 42, 42)",
+      966
+    ],
+    [
+      "rgb(255, 255, 255)",
+      301
+    ],
+    [
+      "rgb(251, 188, 4)",
+      86
+    ],
+    [
+      "rgb(17, 24, 39)",
+      66
+    ],
+    [
+      "rgb(4, 67, 251)",
+      9
+    ],
+    [
+      "rgb(0, 0, 238)",
+      8
+    ],
+    [
+      "rgb(34, 34, 34)",
+      4
+    ],
+    [
+      "rgb(180, 180, 180)",
+      3
+    ],
+    [
+      "rgb(245, 245, 245)",
+      2
+    ],
+    [
+      "rgba(112, 112, 112, 0.5)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "100px",
+      24
+    ],
+    [
+      "10px",
+      23
+    ],
+    [
+      "15px",
+      2
+    ],
+    [
+      "10px 10px 0px 0px",
+      1
+    ],
+    [
+      "0px 0px 10px 10px",
+      1
+    ]
+  ],
+  "shadows": [
+    [
+      "rgba(0, 0, 0, 0.1) 0px 0px 50px 0px",
+      24
+    ],
+    [
+      "rgba(255, 255, 255, 0.475) 0px 0px 4.71825px 1.8873px",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0.16) 0px 0px 50px 0px",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0.1) 0px 0px 60px 0px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "100%",
+      36
+    ],
+    [
+      "1540px",
+      17
+    ],
+    [
+      "1335px",
+      2
+    ],
+    [
+      "980px",
+      2
+    ],
+    [
+      "600px",
+      2
+    ],
+    [
+      "860px",
+      2
+    ],
+    [
+      "20%",
+      2
+    ],
+    [
+      "1720px",
+      1
+    ],
+    [
+      "1200px",
+      1
+    ],
+    [
+      "90%",
+      1
+    ]
+  ],
+  "nav": [],
+  "bodyBg": "rgba(0, 0, 0, 0)",
+  "htmlBg": "rgba(0, 0, 0, 0)",
+  "cards": []
+}

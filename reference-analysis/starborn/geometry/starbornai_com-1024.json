@@ -1,0 +1,161 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "hero",
+      "cls": "relative bg-paper pt-32 lg:pt-36 pb-20",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1024,
+        "h": 1246
+      },
+      "bg": "oklch(0.975 0.008 80)",
+      "heading": "Add $15K–$50K MRR in 90 days using LinkedIn alone."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative bg-paper border-y border-[var(--ink)]/10",
+      "rect": {
+        "x": 0,
+        "y": 1246,
+        "w": 1024,
+        "h": 182
+      },
+      "bg": "oklch(0.975 0.008 80)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-24 lg:py-32 bg-cream",
+      "rect": {
+        "x": 0,
+        "y": 1429,
+        "w": 1024,
+        "h": 841
+      },
+      "bg": "oklch(0.945 0.018 75)",
+      "heading": "If any of this sounds like you, keep reading."
+    },
+    {
+      "tag": "section",
+      "id": "work",
+      "cls": "relative py-24 lg:py-32 bg-paper overflow-hidden",
+      "rect": {
+        "x": 0,
+        "y": 2270,
+        "w": 1024,
+        "h": 5817
+      },
+      "bg": "oklch(0.975 0.008 80)",
+      "heading": "Best Results In The Game."
+    },
+    {
+      "tag": "section",
+      "id": "offer",
+      "cls": "relative py-24 lg:py-32 bg-paper",
+      "rect": {
+        "x": 0,
+        "y": 8087,
+        "w": 1024,
+        "h": 1059
+      },
+      "bg": "oklch(0.975 0.008 80)",
+      "heading": "One complete system. Done for you."
+    },
+    {
+      "tag": "section",
+      "id": "compare",
+      "cls": "relative bg-cream py-24 lg:py-32",
+      "rect": {
+        "x": 0,
+        "y": 9146,
+        "w": 1024,
+        "h": 988
+      },
+      "bg": "oklch(0.945 0.018 75)",
+      "heading": "Why not just hire a ghostwriter?"
+    },
+    {
+      "tag": "section",
+      "id": "method",
+      "cls": "relative py-24 lg:py-32 bg-cream",
+      "rect": {
+        "x": 0,
+        "y": 10134,
+        "w": 1024,
+        "h": 1374
+      },
+      "bg": "oklch(0.945 0.018 75)",
+      "heading": "Five steps. One system. Done for you."
+    },
+    {
+      "tag": "section",
+      "id": "studio",
+      "cls": "relative py-24 lg:py-32 bg-cream",
+      "rect": {
+        "x": 0,
+        "y": 11508,
+        "w": 1024,
+        "h": 846
+      },
+      "bg": "oklch(0.945 0.018 75)",
+      "heading": "Built by a team that's done this before."
+    },
+    {
+      "tag": "section",
+      "id": "fit",
+      "cls": "relative bg-paper py-24 lg:py-32",
+      "rect": {
+        "x": 0,
+        "y": 12354,
+        "w": 1024,
+        "h": 746
+      },
+      "bg": "oklch(0.975 0.008 80)",
+      "heading": "This isn't for everyone. On purpose."
+    },
+    {
+      "tag": "section",
+      "id": "faq",
+      "cls": "relative py-24 lg:py-32 bg-paper",
+      "rect": {
+        "x": 0,
+        "y": 13099,
+        "w": 1024,
+        "h": 1243
+      },
+      "bg": "oklch(0.975 0.008 80)",
+      "heading": "Questions, answered."
+    },
+    {
+      "tag": "section",
+      "id": "booking-section",
+      "cls": "relative bg-cream overflow-hidden",
+      "rect": {
+        "x": 0,
+        "y": 14342,
+        "w": 1024,
+        "h": 1257
+      },
+      "bg": "oklch(0.945 0.018 75)",
+      "heading": "Pick a time. Let's talk."
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "relative bg-ink text-white overflow-hidden",
+      "rect": {
+        "x": 0,
+        "y": 15599,
+        "w": 1024,
+        "h": 905
+      },
+      "bg": "oklch(0.16 0.012 50)",
+      "heading": "The done-for-you LinkedIn engine for serious founders."
+    }
+  ],
+  "ctas": []
+}

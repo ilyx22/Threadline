@@ -1,0 +1,46 @@
+{
+  "capturedAt": "2026-09-09T15:32:36.596Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://starbornai.com/",
+      "width": 1440,
+      "finalUrl": "https://starbornai.com/",
+      "title": "Starborn · Add $15K–$50K MRR in 90 days using LinkedIn",
+      "scrollHeight": 17406,
+      "frames": 59,
+      "fonts": 17,
+      "ms": 7586
+    },
+    {
+      "url": "https://starbornai.com/",
+      "width": 1024,
+      "finalUrl": "https://starbornai.com/",
+      "title": "Starborn · Add $15K–$50K MRR in 90 days using LinkedIn",
+      "scrollHeight": 16504,
+      "frames": 56,
+      "fonts": 17,
+      "ms": 5055
+    },
+    {
+      "url": "https://starbornai.com/",
+      "width": 768,
+      "finalUrl": "https://starbornai.com/",
+      "title": "Starborn · Add $15K–$50K MRR in 90 days using LinkedIn",
+      "scrollHeight": 18691,
+      "frames": 63,
+      "fonts": 17,
+      "ms": 5158
+    },
+    {
+      "url": "https://starbornai.com/",
+      "width": 390,
+      "finalUrl": "https://starbornai.com/",
+      "title": "Starborn · Add $15K–$50K MRR in 90 days using LinkedIn",
+      "scrollHeight": 19449,
+      "frames": 65,
+      "fonts": 17,
+      "ms": 5034
+    }
+  ]
+}

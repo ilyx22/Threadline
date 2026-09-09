@@ -1,0 +1,552 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "Your LinkedIn brand. Without the AI accent.",
+      "rect": {
+        "x": 310,
+        "y": 278,
+        "w": 820,
+        "h": 156
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "73.44px",
+        "fontWeight": "300",
+        "lineHeight": "77.8464px",
+        "letterSpacing": "-2.5704px",
+        "textTransform": "none",
+        "color": "rgb(255, 248, 240)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "Some profiles we made human.",
+      "rect": {
+        "x": 160,
+        "y": 1230,
+        "w": 391,
+        "h": 107
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "51.84px",
+        "fontWeight": "400",
+        "lineHeight": "53.3952px",
+        "letterSpacing": "-1.8144px",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "You can smell it in one line.",
+      "rect": {
+        "x": 160,
+        "y": 3836,
+        "w": 340,
+        "h": 102
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "48.96px",
+        "fontWeight": "400",
+        "lineHeight": "50.9184px",
+        "letterSpacing": "-1.7136px",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "We do the homework.",
+      "rect": {
+        "x": 160,
+        "y": 5576,
+        "w": 340,
+        "h": 102
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "48.96px",
+        "fontWeight": "400",
+        "lineHeight": "50.9184px",
+        "letterSpacing": "-1.7136px",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Founder OS",
+      "rect": {
+        "x": 100,
+        "y": 8772,
+        "w": 422,
+        "h": 81
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "85px",
+        "fontWeight": "400",
+        "lineHeight": "80.75px",
+        "letterSpacing": "-3.4px",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Nobody here had time to learn LinkedIn.",
+      "rect": {
+        "x": 329,
+        "y": 12397,
+        "w": 782,
+        "h": 115
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "54.4px",
+        "fontWeight": "300",
+        "lineHeight": "57.664px",
+        "letterSpacing": "-1.904px",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Four ways to grow. Three clients a month.",
+      "rect": {
+        "x": 160,
+        "y": 13368,
+        "w": 578,
+        "h": 98
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "46.08px",
+        "fontWeight": "300",
+        "lineHeight": "48.8448px",
+        "letterSpacing": "-1.6128px",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "So you try and write it yourself.",
+      "rect": {
+        "x": 620,
+        "y": 4375,
+        "w": 625,
+        "h": 41
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "35.7px",
+        "fontWeight": "400",
+        "lineHeight": "41.055px",
+        "letterSpacing": "-1.071px",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "We learn you first.",
+      "rect": {
+        "x": 620,
+        "y": 5795,
+        "w": 238,
+        "h": 34
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "30.24px",
+        "fontWeight": "400",
+        "lineHeight": "33.8688px",
+        "letterSpacing": "-0.9072px",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Then we map your buyer, by industry.",
+      "rect": {
+        "x": 620,
+        "y": 6347,
+        "w": 238,
+        "h": 68
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "30.24px",
+        "fontWeight": "400",
+        "lineHeight": "33.8688px",
+        "letterSpacing": "-0.9072px",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "You get the writer who knows your industry.",
+      "rect": {
+        "x": 620,
+        "y": 6873,
+        "w": 238,
+        "h": 102
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "30.24px",
+        "fontWeight": "400",
+        "lineHeight": "33.8688px",
+        "letterSpacing": "-0.9072px",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "We lay the outbound rails on traxy.ai.",
+      "rect": {
+        "x": 620,
+        "y": 7403,
+        "w": 238,
+        "h": 102
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "30.24px",
+        "fontWeight": "400",
+        "lineHeight": "33.8688px",
+        "letterSpacing": "-0.9072px",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "The minute the plan is ready and approved, we execute.",
+      "rect": {
+        "x": 620,
+        "y": 7929,
+        "w": 625,
+        "h": 156
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "44.2px",
+        "fontWeight": "400",
+        "lineHeight": "51.272px",
+        "letterSpacing": "-1.326px",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "You talk for 45 minutes. We write it, post it, work your ICP, and fill your calendar.",
+      "rect": {
+        "x": 397,
+        "y": 453,
+        "w": 646,
+        "h": 27
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "17.1px",
+        "fontWeight": "400",
+        "lineHeight": "27.36px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(255, 248, 240, 0.78)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "01 10",
+      "rect": {
+        "x": 160,
+        "y": 1190,
+        "w": 391,
+        "h": 21
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "13.26px",
+        "fontWeight": "400",
+        "lineHeight": "21.216px",
+        "letterSpacing": "1.5912px",
+        "textTransform": "none",
+        "color": "rgb(75, 81, 99)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We take the whole thing off your plate — strategy, writing, posting, the replies. The only",
+      "rect": {
+        "x": 160,
+        "y": 1352,
+        "w": 374,
+        "h": 105
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "17px",
+        "fontWeight": "400",
+        "lineHeight": "26.35px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(75, 81, 99)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "KEEP SCROLLING DOWN",
+      "rect": {
+        "x": 160,
+        "y": 1485,
+        "w": 194,
+        "h": 25
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "12.58px",
+        "fontWeight": "400",
+        "lineHeight": "20.128px",
+        "letterSpacing": "1.7612px",
+        "textTransform": "uppercase",
+        "color": "rgb(75, 81, 99)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "31K",
+      "rect": {
+        "x": 608,
+        "y": 1261,
+        "w": 218,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "33.12px",
+        "fontWeight": "400",
+        "lineHeight": "31.464px",
+        "letterSpacing": "-1.3248px",
+        "textTransform": "none",
+        "color": "rgb(62, 55, 153)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "followers on a founder-led account",
+      "rect": {
+        "x": 608,
+        "y": 1319,
+        "w": 218,
+        "h": 50
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "14.45px",
+        "fontWeight": "400",
+        "lineHeight": "18.785px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "The audience behind Founders Club, a private network for 7–9 figure entrepreneurs.",
+      "rect": {
+        "x": 608,
+        "y": 1377,
+        "w": 218,
+        "h": 71
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "13.26px",
+        "fontWeight": "400",
+        "lineHeight": "19.227px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(75, 81, 99)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "$479K",
+      "rect": {
+        "x": 882,
+        "y": 1261,
+        "w": 218,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Newsreader, \"Iowan Old Style\", Georgia, serif",
+        "fontSize": "33.12px",
+        "fontWeight": "400",
+        "lineHeight": "31.464px",
+        "letterSpacing": "-1.3248px",
+        "textTransform": "none",
+        "color": "rgb(62, 55, 153)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": [
+    {
+      "tag": "p",
+      "text": "followers on a founder-led account",
+      "rect": {
+        "x": 608,
+        "y": 1319,
+        "w": 218,
+        "h": 50
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "14.45px",
+        "fontWeight": "400",
+        "lineHeight": "18.785px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "in revenue traced to LinkedIn",
+      "rect": {
+        "x": 882,
+        "y": 1319,
+        "w": 218,
+        "h": 32
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "14.45px",
+        "fontWeight": "400",
+        "lineHeight": "18.785px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "impressions in twelve months",
+      "rect": {
+        "x": 1157,
+        "y": 1319,
+        "w": 218,
+        "h": 32
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "14.45px",
+        "fontWeight": "400",
+        "lineHeight": "18.785px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "ARR added in six months",
+      "rect": {
+        "x": 1431,
+        "y": 1319,
+        "w": 218,
+        "h": 32
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "14.45px",
+        "fontWeight": "400",
+        "lineHeight": "18.785px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "in SaaS deals, five months",
+      "rect": {
+        "x": 1705,
+        "y": 1319,
+        "w": 218,
+        "h": 32
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "14.45px",
+        "fontWeight": "400",
+        "lineHeight": "18.785px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "impressions, started from zero",
+      "rect": {
+        "x": 1980,
+        "y": 1319,
+        "w": 218,
+        "h": 32
+      },
+      "style": {
+        "fontFamily": "\"DM Sans\", ui-sans-serif, system-ui, -apple-system, sans-serif",
+        "fontSize": "14.45px",
+        "fontWeight": "400",
+        "lineHeight": "18.785px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(2, 9, 21)",
+        "fontStyle": "normal"
+      }
+    }
+  ]
+}

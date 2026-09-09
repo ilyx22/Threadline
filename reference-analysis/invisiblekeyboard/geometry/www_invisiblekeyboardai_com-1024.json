@@ -1,0 +1,296 @@
+{
+  "sections": [
+    {
+      "tag": "div",
+      "id": "",
+      "cls": "min-h-screen bg-paper text-ink",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1024,
+        "h": 6761
+      },
+      "bg": "lab(3.04863 0 0)",
+      "heading": "The state of founder content in 2026."
+    },
+    {
+      "tag": "header",
+      "id": "",
+      "cls": "sticky top-0 z-50 bg-paper/85 backdrop-blur rule-b",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1024,
+        "h": 81
+      },
+      "bg": "oklab(0.15 -0.00000148267 0.00000350922 / 0.85)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative overflow-hidden",
+      "rect": {
+        "x": 0,
+        "y": 81,
+        "w": 1024,
+        "h": 951
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Your content, everywhere it counts."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "rule-t rule-b bg-ink text-paper",
+      "rect": {
+        "x": 0,
+        "y": 1032,
+        "w": 1024,
+        "h": 502
+      },
+      "bg": "lab(97.68 -0.0000298023 0.0000119209)",
+      "heading": "We are not a ghostwriting agency.\nWe’re the content team you don’t have yet."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "rule-b",
+      "rect": {
+        "x": 0,
+        "y": 1534,
+        "w": 1024,
+        "h": 395
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "rule-b",
+      "rect": {
+        "x": 0,
+        "y": 1930,
+        "w": 1024,
+        "h": 949
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "We run the full content machine. You just review."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "rule-b",
+      "rect": {
+        "x": 0,
+        "y": 2879,
+        "w": 1024,
+        "h": 899
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Embedded in your team, via Slack."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "rule-b",
+      "rect": {
+        "x": 0,
+        "y": 3777,
+        "w": 1024,
+        "h": 798
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Live in seven days."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "rule-b",
+      "rect": {
+        "x": 0,
+        "y": 4575,
+        "w": 1024,
+        "h": 783
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "What founder-led trust looks like."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative overflow-hidden rule-b",
+      "rect": {
+        "x": 0,
+        "y": 5358,
+        "w": 1024,
+        "h": 538
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Ship content. Consistently. Without lifting a finger."
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "bg-ink text-paper",
+      "rect": {
+        "x": 0,
+        "y": 5896,
+        "w": 1024,
+        "h": 865
+      },
+      "bg": "lab(97.68 -0.0000298023 0.0000119209)",
+      "heading": ""
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Send it to me →",
+      "rect": {
+        "x": 297,
+        "y": 542,
+        "w": 430,
+        "h": 52
+      },
+      "style": {
+        "backgroundColor": "lab(97.68 -0.0000298023 0.0000119209)",
+        "color": "lab(3.04863 0 0)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid lab(100 0 0 / 0.12)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "14px 24px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a call →",
+      "rect": {
+        "x": 785,
+        "y": 20,
+        "w": 127,
+        "h": 40
+      },
+      "style": {
+        "backgroundColor": "lab(97.68 -0.0000298023 0.0000119209)",
+        "color": "lab(3.04863 0 0)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid lab(100 0 0 / 0.12)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px",
+        "fontSize": "14px",
+        "fontWeight": "500",
+        "padding": "10px 20px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a fit call →",
+      "rect": {
+        "x": 422,
+        "y": 479,
+        "w": 181,
+        "h": 56
+      },
+      "style": {
+        "backgroundColor": "lab(97.68 -0.0000298023 0.0000119209)",
+        "color": "lab(3.04863 0 0)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid lab(100 0 0 / 0.12)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 1px 3px 0px, rgba(0, 0, 0, 0.1) 0px 1px 2px -1px",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "16px 32px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Meet your embedded content lead →",
+      "rect": {
+        "x": 40,
+        "y": 3624,
+        "w": 320,
+        "h": 56
+      },
+      "style": {
+        "backgroundColor": "lab(97.68 -0.0000298023 0.0000119209)",
+        "color": "lab(3.04863 0 0)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid lab(100 0 0 / 0.12)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "16px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Build your scope →",
+      "rect": {
+        "x": 748,
+        "y": 4346,
+        "w": 195,
+        "h": 56
+      },
+      "style": {
+        "backgroundColor": "lab(97.68 -0.0000298023 0.0000119209)",
+        "color": "lab(3.04863 0 0)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid lab(100 0 0 / 0.12)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "16px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a fit call →",
+      "rect": {
+        "x": 252,
+        "y": 5685,
+        "w": 181,
+        "h": 58
+      },
+      "style": {
+        "backgroundColor": "lab(97.68 -0.0000298023 0.0000119209)",
+        "color": "lab(3.04863 0 0)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid lab(100 0 0 / 0.12)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "16px 32px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Is founder content for me? · 60s quiz",
+      "rect": {
+        "x": 444,
+        "y": 5685,
+        "w": 328,
+        "h": 58
+      },
+      "style": {
+        "backgroundColor": "oklab(0.15 -0.00000148267 0.00000350922 / 0.7)",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid oklab(0.979998 -0.00000977516 0.0000229478 / 0.2)",
+        "boxShadow": "none",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "padding": "16px 32px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

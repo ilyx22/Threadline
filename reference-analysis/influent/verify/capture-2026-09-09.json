@@ -1,0 +1,26 @@
+{
+  "capturedAt": "2026-09-09T15:35:14.573Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://influent.co/",
+      "width": 1440,
+      "finalUrl": "https://influent.co/",
+      "title": "LinkedIn Agency for Executive Thought Leadership | Influent",
+      "scrollHeight": 1125,
+      "frames": 4,
+      "fonts": 2,
+      "ms": 5851
+    },
+    {
+      "url": "https://influent.co/",
+      "width": 390,
+      "finalUrl": "https://influent.co/",
+      "title": "LinkedIn Agency for Executive Thought Leadership | Influent",
+      "scrollHeight": 1125,
+      "frames": 4,
+      "fonts": 2,
+      "ms": 5476
+    }
+  ]
+}

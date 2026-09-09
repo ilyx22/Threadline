@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ArrowRight } from "lucide-react";
-import { HOW_IT_WORKS, STATIONS } from "@/content/public-site";
+import { DIAGNOSTIC, HOME, HOME_V3, HOW_IT_WORKS, STATIONS } from "@/content/public-site";
+import { Diagnostic } from "@/components/public/diagnostic";
+import { ProofChain } from "@/components/factory/scenes";
 import { Card, Eyebrow, Lead, PublicButton, Section, Title } from "@/components/public/primitives";
 import { StickyApply } from "@/components/public/sticky-apply";
 import { Reveal } from "@/components/marketing/reveal";
@@ -26,8 +28,17 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
-      <Section band className="pt-8">
-        <div className="tl-card p-5 sm:p-8">
+      <Section id="diagnostic" band className="pt-8">
+        <Eyebrow className="text-[color:var(--accent-deep)]">{DIAGNOSTIC.eyebrow}</Eyebrow>
+        <Title>{DIAGNOSTIC.title}</Title>
+        <Lead>{DIAGNOSTIC.lead}</Lead>
+        <Diagnostic categories={DIAGNOSTIC.categories} chambers={HOME_V3.factory.chambers} stages={c.stages} symptoms={DIAGNOSTIC.symptoms} cta={DIAGNOSTIC.cta} />
+      </Section>
+
+      <Section>
+        <Eyebrow>The line, station by station</Eyebrow>
+        <Title>Nine stations. One job each.</Title>
+        <div className="tl-card mt-10 p-5 sm:p-8">
           <MachineLine stations={STATIONS} />
         </div>
       </Section>
@@ -70,6 +81,15 @@ export default function HowItWorksPage() {
             </Reveal>
           ))}
         </ul>
+      </Section>
+
+      <Section id="proof">
+        <Eyebrow>{HOME.proof.eyebrow}</Eyebrow>
+        <Title>{HOME.proof.title}</Title>
+        <Lead>{HOME.proof.lead}</Lead>
+        <div className="mt-12">
+          <ProofChain chain={HOME.proof.chain} label={HOME.proof.label} />
+        </div>
       </Section>
 
       <Section tight>

@@ -1,102 +1,96 @@
-# Threadline public design system — v2 (9 September 2026, the restraint pass)
+# Threadline public design system — v3 (9 September 2026, the captivation pass)
 
-Source of truth for the public site, with `design-system/threadline-design-dna.json`. Supersedes v1 (the illustrated "sticker" system of the morning of 9 September), whose diagnosis is in `VISUAL_DIAGNOSIS_2026-09-09.md`. The authenticated product (`/app`, `/admin`) keeps its own calmer system and is not affected.
+Source of truth for the public site, with `design-system/threadline-design-dna.json` (3.0.0). Supersedes v2 (the afternoon restraint pass: schematic line drawings, unchanged section order) and v1 (the morning "sticker" system; diagnosis in `VISUAL_DIAGNOSIS_2026-09-09.md`). The authenticated product (`/app`, `/admin`) keeps its own calmer system and is not affected.
 
-Direction: about **70% premium editorial / consultancy, 20% interactive system visualisation, 10% playful illustrated character.** Premium here means proportion, typography, restraint, spacing, composition and implementation quality — not darkness, gradients or glass.
+Direction, unchanged: about **70% premium editorial / consultancy, 20% interactive system visualisation, 10% playful character.** What v3 changes is the *visualisation*: the system is drawn as tangible objects, not lines, and the homepage is ordered outside-in (problem → outcome → the founder's small part → the system → the commercial path → learning → progression → comparison → fit → ask). Threadline is a managed authority + qualified-demand system; the platform is a component, not the category, and no platform is named in a headline.
 
 ## 1. The world
 
-The concept is still **the Authority Factory**: raw expertise goes in one end, content people want to watch comes out the other, and the market's answer travels back along a thread so the next batch is better informed. What changed is how it is drawn. v1 rendered a literal factory (monitors, crates, striped belts, rotated stamps, stick-figure cast everywhere). v2 renders a **system drawing**: one thread, nodes for stations, a spool for raw expertise, a fork for decisions, cut marks for production, a routing fork for distribution, a pulse for the market's answer, a loop for learning, an inspection mark for gates. The two human figures (Founder, Buyer) survive as the 10% of character, used twice on the home page and in two playbook chapters.
+Still **the Authority Factory**: raw expertise goes in, content people want to watch comes out, the market's answer comes back and the next cycle is better informed. v3 renders it as a *miniature machine of objects*: an expertise token, signal chips, a root-thesis card, native content tiles that look different from each other, response markers, and a return module labelled "Expected vs actual". On the homepage the founder appears only where the founder is needed (Input, Record, Approve, Sell). One Founder figure remains (section 04); the Buyer is now an avatar object.
 
 ## 2. Colour
 
-Tokens on `.tl-public` in `src/app/public.css`.
+Unchanged from v2 (tokens on `.tl-public` in `src/app/public.css`): linen canvas `#F4EEE3`, sunk band `#ECE4D6`, paper `#FFFCF7`, ink ladder `#1F1D1A / #4F4A42 / #7E776C / #A9A297`, accent ember `#D9582A` (deep `#B8461D`, soft `#F8E3D9`), signal teal `#2C7C6A` (soft `#DCEBE6`), stamp `#E8B931` (soft `#F7EBC4`), reject `#C24A3A`, hairlines at 14% / 34% ink.
 
-| Token | Value | Role |
-|---|---|---|
-| `--canvas` | #F4EEE3 | page ground (warm linen) |
-| `--canvas-deep` | #ECE4D6 | sunk bands, diagram boxes |
-| `--paper` | #FFFCF7 | panels, cards |
-| `--line` | rgba(31,29,26,.14) | hairlines, quiet card borders |
-| `--line-strong` | rgba(31,29,26,.34) | card borders, section rules |
-| `--ink` / `--ink-soft` / `--ink-faint` / `--ink-ghost` | #1F1D1A / #4F4A42 / #7E776C / #A9A297 | text ladder |
-| `--accent` / `--accent-deep` / `--accent-soft` | #D9582A / #B8461D / #F8E3D9 | the one accent: Apply, the active node, the thread's trunk |
-| `--signal` / `--signal-soft` | #2C7C6A / #DCEBE6 | the market's answer, verdicts, "qualified" |
-| `--stamp` / `--stamp-soft` | #E8B931 / #F7EBC4 | the marker highlight in the H1 and the eyebrow inside dark cards; nothing else |
-| `--reject` | #C24A3A | refusals |
-
-Rules: one accent per section; the illustration palette is ink + accent + signal only; steel and stamp fills are gone from drawings; no gradients; shadows are effectively none (the shared `--shadow-*` tokens remap to none / a 1px hairline / a very soft ambient for the few UI components that need them).
+v3 rules for the tones as *object fills*: paper by default; ember for the founder's tiles and the thesis card's header band; signal for the market's answer (response markers, "qualified", the improvement step); stamp for the commercial event and the enquiry marker; ink for exactly one dark module per scene (the "Expected vs actual" return module, the active chamber, the "what changes here" card). One accent per section still holds; an object scene may use ember + signal + stamp together because each has a fixed meaning.
 
 ## 3. Type
 
-- **Display** — Fraunces (variable; `opsz` 144 / `SOFT` 20 / `WONK` 0), weight **450**, letter-spacing −0.022em, line-height 1.0; size `clamp(2.75rem, 6.2vw, 5.625rem)` (90px at 1440, the reference hero scale).
-- **Section title** — Fraunces, weight 450, `clamp(2rem, 4.2vw, 3.5rem)` (56px at 1440, 43px at 1024, 32px at ≤768 — the measured reference scale), line-height 1.04, max 20ch.
-- **Sub title** — Fraunces 500, `clamp(1.375rem, 2vw, 1.75rem)`.
-- **Numerals** — `.tl-numeral`, Fraunces 400 at opsz 144, tabular.
-- **Lead** — Inter, `clamp(1.0625rem, 1.3vw, 1.25rem)` / 1.55, ink-soft, 42rem measure.
-- **Body** — Inter 17px / 1.6, ink-soft, 62ch measure.
-- **Label / eyebrow** — JetBrains Mono 11px, +0.14em, uppercase, weight 500, **ink-faint by default**; a section may promote its eyebrow to `accent-deep` once.
+Unchanged from v2, with one addition:
 
-The type does the hierarchy; boxes no longer do.
+- **Display sub-line** — `.tl-display-sub`: the second approved hero line, block, 0.5em of the display size, line-height 1.12, ink-soft, Fraunces at opsz 72. It replaces the marker highlight in the H1.
+
+Display Fraunces 450 at `clamp(2.75rem, 6.2vw, 5.625rem)`; section titles `clamp(2rem, 4.2vw, 3.5rem)`; lead Inter `clamp(1.0625rem, 1.3vw, 1.25rem)`; body 17px; labels JetBrains Mono 11px +0.14em uppercase. Labels inside objects may drop to 10px, never below.
 
 ## 4. Shape and surfaces
 
-| Class | What it is |
-|---|---|
-| `.tl-card` | paper, 1px `--line-strong`, radius 16, no shadow; `.tl-card-hover` darkens the border on hover |
-| `.tl-card-quiet` | paper, 1px `--line`, radius 16 |
-| `.tl-rule` / `.tl-rule-strong` / `.tl-ledger` | hairline rules between sections, rows and list items — the default way to separate content |
-| `.tl-dark`, `.tl-detail-dark` | the one ink surface (the "what changes here" card) |
-| `.tl-band` | sunk band (`--canvas-deep`) between hairlines; used for three sections on the home page, not alternating |
-| `.tl-btn` (+ `-primary`, `-lg`, `-sm`, `-ghost`) | pills: 52 / 60 / 44px tall, 1px border, accent fill for Apply only, no shadow, hover inverts |
-| `.tl-textlink` | 15px/600 accent-deep with an arrow that moves 4px on hover |
-| `.tl-chip` | quiet: canvas-deep fill, no border, 28px, mono 11px |
-| `.tl-stamp` | a verdict label: 1px current-colour outline, never rotated, one per moment (`-signal`, `-reject`, `-ink`) |
-| `.tl-synthetic` | dashed hairline label for synthetic demonstrations |
+v2 surfaces remain (`.tl-card`, `.tl-card-quiet`, `.tl-rule*`, `.tl-band`, `.tl-btn*`, `.tl-textlink`, `.tl-chip`, `.tl-stamp`, `.tl-synthetic`). Two changes:
 
-Radii: 48 (hero panel) / 16 (cards) / 12 (selector, detail and period cards) / 8 (diagram boxes) / 999 (buttons, tabs).
+- `.tl-btn` wraps and centres below 640px (no `nowrap` pill may widen a phone page).
+- `.tl-textlink` carries `min-height: 44px` so text links meet the target size.
 
-## 5. Components built from verified reference skeletons
+## 5. Objects (new in v3)
+
+`src/components/factory/objects.tsx`, styled by the **Objects** block at the end of `src/app/public.css`; section-specific systems in `src/app/public-v3.css`.
+
+| Object | Class | Use |
+|---|---|---|
+| `Obj` | `.tl-obj` + `.tl-obj-<tone>` | base surface; 3px bottom edge (`--edge`) + ambient (`--depth`); `--depth-lift` when raised |
+| `Token` | `.tl-token` | a thing that moves ("Your expertise") |
+| `SignalChip` | `.tl-signal` | a market signal (buyer question, objection, competitor gap) |
+| `ThesisCard` | `.tl-thesis*` | root thesis: coloured header band, title, placeholder lines; `compact` for the travelling card |
+| `ContentTile` | `.tl-tile*` | native content: `linkedin`, `video`, `x`, `threads`, `carousel`, `newsletter`, `post` — each with its own frame so the derivatives look different |
+| `ResponseMarker` | `.tl-response*` | reply / profile / enquiry / call |
+| `ScoreCard` | `.tl-score*` | big numeral with a label (route board, learning loop) |
+| `Chamber` | `.tl-chamber*` | a factory station; renders a `button` when pressable; `.tl-chamber-active` lifts |
+| `ModuleTile`, `OutputTile` | `.tl-module`, `.tl-output` | the Threadline job board; the four outputs in the CTA |
+| `BuyerAvatar` | `.tl-buyer*` | recognition levels 0–4 (ring fills, then ember) |
+| `VerdictTile` | `.tl-verdict*` | filled check / cross tiles for fit |
+
+Rules: one focal object cluster per section; overlaps of 8–16px; no glass, glow, gradient or WebGL; depth is one soft ambient plus a 3px edge, never a drop shadow with an offset. Section systems: `.tl-machine` (hero, 900×560 scene, `.tl-mc-*` placements), `.tl-contrast*`, `.tl-pool*`, `.tl-labour*`, `.tl-factory*`, `.tl-multiply*`, `.tl-route*`, `.tl-loop*`, `.tl-progress*`, `.tl-compare*`, `.tl-fit`, `.tl-cta*`, `.tl-diag*`.
+
+## 6. Components built from verified reference skeletons
 
 See `COMPONENT_RECONSTRUCTION.md` for the method, captures, verification reports and frozen clones.
 
 | Component | Skeleton | File |
 |---|---|---|
-| Hero panel | `reference-analysis/clones/birdhouse-hero-panel` | `src/components/public/hero-panel.tsx`, `.tl-hero-*` |
-| Symptom selector | `reference-analysis/clones/hydra-constraint-selector` | `src/components/public/symptom-selector.tsx`, `.tl-tabs`, `.tl-selector-*`, `.tl-detail*`, `.tl-stage` |
-| Period cards | `reference-analysis/clones/hydra-offer-cards` | `src/components/public/period-cards.tsx`, `.tl-offer-*`, `.tl-diagram-box`, `.tl-fact` |
+| Hero panel | `reference-analysis/clones/birdhouse-hero-panel` (reused) | `src/components/public/hero-panel.tsx`, `.tl-hero-*`; the art is `hero-machine.tsx` |
+| Diagnostic (How it works) | `reference-analysis/clones/hydra-constraint-selector` (reused) | `src/components/public/diagnostic.tsx`, `.tl-diag*` |
+| Comparison | `reference-analysis/clones/starborn-comparison-table` (new) | `src/components/public/comparison.tsx`, `.tl-compare*` |
 
-## 6. Illustration
+`period-cards.tsx` (Hydra offer-card skeleton) is retired from the homepage and kept in the tree.
 
-`src/components/factory/schematic.tsx` — glyphs (`Spool`, `Lens`, `Fork`, `Cut`, `Route`, `Pulse`, `Loop`, `InspectionMark`, `Package`, `STAGE_GLYPH`) and diagrams (`LineDiagram`, `HeroLine`, `ReturnThread`, `Branch`, `MemoryThread`, `PeriodTimeline`). Stroke 1.5px ink (`.tl-thread`), accent 2px for the trunk (`.tl-thread-accent`), soft hairline for guides (`.tl-thread-soft`); nodes 7–10px radius, filled with the accent when lit, with a breathing halo when active; labels 10–12px mono.
+## 7. Illustration
 
-`src/components/factory/primitives.tsx` keeps the v1 cast and stations for the record; only `Founder`, `Buyer` and `ThreadWordmark` are used on the public site now.
+`src/components/factory/schematic.tsx` (the v2 drawing set: thread, nodes, glyphs, `LineDiagram`, `ReturnThread`, `Branch`, `MemoryThread`, `PeriodTimeline`) is kept for How it works (nine-station line, gates, proof chain) and the playbook. It is no longer used on the homepage. `primitives.tsx` keeps the cast; `Founder` is used once on the homepage and in the playbook.
 
-## 7. Motion with a job
+## 8. Motion with a job
 
-| Class | Job | Reduced motion |
+| Where | Motion | Reduced motion |
 |---|---|---|
-| `.tl-draw` on a path | draws lineage as a section reveals (1.4s, ease-out-expo) | drawn instantly |
-| `<animateMotion>` inside `ReturnThread` | the market's answer travelling back (2.6s loop, in SVG units so it scales) | a still dot at rest |
-| `.tl-light` | the active node breathes (2s) | still |
-| `.tl-stamp-in` | a verdict lands (320ms scale-in, no rotation) | shown |
-| `.tl-tab` / `.tl-stage` | selector state changes (150ms / 300–500ms, `cubic-bezier(0.16, 1, 0.3, 1)`) | instant |
-| `Reveal` | one quiet rise-and-fade per block (500ms) | shown |
+| Hero | objects enter once, 700ms each, staggered 0.2s → 7s (`tl-mc-in`) | shown |
+| Factory | idea card travels a container-query track with scroll (one rAF-throttled listener, transform only); active chamber lifts; press holds | scroll link disarmed; press to explore |
+| Expressions | MULTIPLY: one card → five tiles, 350ms | end state |
+| Learning loop | tablist state switch, arrow keys | instant |
+| Progression | scroll progress → CSS variable (dots fade, validated lines thicken) | end state |
+| Reveal | one rise per block; route steps and CTA outputs stagger | shown |
+| Comparison, fit | none | — |
 
-The conveyor stripe animation is retired; `.tl-belt` remains as an inert hairline so nothing breaks.
+The reduced-motion block in `public-v3.css` stops every keyframe and transition on the v3 systems. `npm run qa:public` verifies zero running animations under `prefers-reduced-motion` on every public route. No parallax, no ambient float, no auto-carousel, no animation library.
 
-## 8. Layout and responsive
+## 9. Layout and responsive
 
-Container 1200 (`.tl-container`), hero panel up to 1500 inside 30px margins (`.tl-hero-pad`), section padding `clamp(4.5rem, 9vw, 8rem)`. Breakpoints: 640 (tabs → 2-column grid, selector diagram hidden), 768 (period cards 2-up, memory labels shown), 992 (hero stacks below), 1024 (selector cards side by side, machine line horizontal), 1280 (period cards 4-up). Verified at the 20 public QA widths from 1920 to 320 with no horizontal overflow.
+Container 1200; hero panel up to 1500 inside 30px margins with a 640px statement column and, from 1200, the machine absolute right (52%, 50% at ≥1440; panel min-height 680). Breakpoints: 640 (buttons stop wrapping; factory 2-up; pool cards back on the stage; comparison type grows), 768, 992 (hero machine leaves its grid stack for the placed scene), 1024 (pool and labour side by side; factory 4-up), 1200 (hero side by side), 1280 (factory 7-up), 1440. Verified at the 20 public QA widths (1920 → 320) with no horizontal overflow.
 
-## 9. Sections (home, unchanged order)
+## 10. Sections (home, v3 order)
 
-Hero · The problem (selector) · The division of labour · The machine · Where most stop · One idea, many expressions · Market memory · Commercial attention · How the system learns · The first 12 weeks (period cards) · Product proof · Fit · Apply.
+01 Hero · 02 Commercial problem · 03 Desired outcome · 04 Founder burden · 05 Authority Factory · 06 One idea, the right expressions · 07 Attention to commercial movement · 08 How the system learns · 09 Three service periods · 10 The honest comparison · 11 Who it is for · 12 The ask. How it works: diagnostic · stages · nine stations · gates · proof (synthetic) · CTA.
 
-## 10. Copy and claims
+## 11. Copy and claims
 
-No public copy changed in v2 except the removal of the exact service price from the footer and the how-it-works CTA (owner decision DEC-017; `docs/site/CLAIMS_EVIDENCE_LEDGER.md` C-PRICE). `npm run qa:public` now fails on any price disclosure. Interaction labels added: "Symptom 01 of 04", "Where the line fixes it", "↑ addressed here", "See how the line works", "Weeks 1–4 · one 4-week service period", "Published / most stop here".
+Every approved sentence from v2 survives (`CAPTIVATION_PASS_2026-09-09.md` §3). New copy lives under `HOME_V3` and `DIAGNOSTIC` in `src/content/public-site.ts` and reuses the approved sentences by reference. New claims rows: C-COMPARISON, C-LEARNING-ILLUSTRATIVE, C-THESIS-ILLUSTRATIVE, C-FOUNDER-TOUCHPOINTS, C-ROUTE-STEPS. No price, tier, package, "starting from", guarantee, testimonial, logo or case study anywhere; `npm run qa:public` fails on price strings, reference brand names, placeholders, "monthly" and overclaims.
 
-## 11. Where to change things
+## 12. Where to change things
 
-`src/app/public.css` (tokens, surfaces, components, motion) · `src/content/public-site.ts` (every word) · `src/components/factory/schematic.tsx` (drawings) · `src/components/public/*` (components) · `src/app/(marketing)/*` (pages). Reference skeletons live under `reference-analysis/clones/*` and are frozen; edit the Threadline components, not the clones.
+`src/content/public-site.ts` (every word; `HOME_V3` for the homepage, `DIAGNOSTIC` for the diagnostic) · `src/app/public.css` (tokens, surfaces, objects) · `src/app/public-v3.css` (section systems, reduced motion) · `src/components/factory/objects.tsx` (object primitives) · `src/components/public/*` (sections) · `src/app/(marketing)/*` (pages). Reference skeletons under `reference-analysis/clones/*` are frozen; edit the Threadline components, not the clones. Inspect with `node scripts/qa/run.cjs shoot --out=<dir> --widths=1440,390 --routes=/` (full pages) and `node scripts/qa/run.cjs probe --url=/ --width=1280 --wait=8000 --expr=1 --shot=<file>` (a viewport after the hero has settled).

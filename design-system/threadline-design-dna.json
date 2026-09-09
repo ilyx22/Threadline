@@ -1,16 +1,39 @@
 {
   "name": "Threadline public design DNA",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "date": "2026-09-09",
-  "supersedes": "1.0.0 (the illustrated sticker system of the morning of 2026-09-09; diagnosis in docs/design/VISUAL_DIAGNOSIS_2026-09-09.md)",
-  "authority": "This file and docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md are the design source of truth for the public site. reference-analysis/ (Birdhouse, Hydra) is analysed input; the frozen clones under reference-analysis/clones are skeletons, never shipped.",
-  "balance": { "premiumEditorial": 0.7, "interactiveSystemVisualisation": 0.2, "playfulCharacter": 0.1 },
+  "supersedes": "2.0.0 (the restraint pass of the afternoon of 2026-09-09: schematic line drawings, unchanged section order). 1.0.0 was the illustrated sticker system of the morning (docs/design/VISUAL_DIAGNOSIS_2026-09-09.md).",
+  "authority": "This file and docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md (v3) are the design source of truth for the public site. reference-analysis/ (Birdhouse, Hydra, Starborn, LeverBrands, Invisible Keyboard, Windmill, Demandii, Influent, Nova Impact, Understory) is analysed input; the frozen clones under reference-analysis/clones are skeletons, never shipped.",
+  "balance": {
+    "premiumEditorial": 0.7,
+    "interactiveSystemVisualisation": 0.2,
+    "playfulCharacter": 0.1
+  },
   "concept": {
     "world": "The Threadline Authority Factory — raw expertise enters as a spool of thread; stations along one line transform it; packages leave for the market; the market's answer travels back along the thread; the next batch is better informed.",
-    "rendering": "a system drawing, not a cartoon: one thread, nodes, glyphs, hairlines, one accent",
+    "rendering": "a tangible system: filled 2.5D objects (chips, cards, tokens, tiles, markers, chambers, modules) on soft paths — not a cartoon, not a line diagram",
     "thread": "the idea lineage (accent 2px for the trunk, ink 1.5px for branches, soft hairline for guides)",
-    "character": "Founder and Buyer only — twice on the home page, twice in the playbook",
-    "intensities": { "public": "editorial, calm with a few expressive moments, motion that teaches", "client": "calm, premium, simple", "admin": "dense, efficient, operational" }
+    "character": "Founder figure once on the home page (founder burden); Buyer avatars as objects; twice in the playbook",
+    "intensities": {
+      "public": "editorial, calm with a few expressive moments, motion that teaches",
+      "client": "calm, premium, simple",
+      "admin": "dense, efficient, operational"
+    },
+    "categoryRule": "Threadline is a managed authority + qualified-demand system; the platform is a component, not the category — no platform is named in a headline",
+    "homepageOrder": [
+      "01 hero (approved lines + miniature machine)",
+      "02 commercial problem (WITHOUT / WITH contrast)",
+      "03 desired outcome (buyer pool, five encounters)",
+      "04 founder burden (four ember tiles vs the Threadline board)",
+      "05 Authority Factory (seven chambers, travelling idea card)",
+      "06 one idea, the right expressions (MULTIPLY)",
+      "07 attention to commercial movement (route board)",
+      "08 EXPECTED / ACTUAL / WHY / CHANGE / RETEST",
+      "09 12-week progression (one band, never cards)",
+      "10 honest comparison (Starborn skeleton)",
+      "11 fit (verdict tiles)",
+      "12 the ask (outputs)"
+    ]
   },
   "colours": {
     "canvas": "#F4EEE3",
@@ -47,28 +70,125 @@
     "shadows": "none on public surfaces; shared --shadow-* tokens remap to none / hairline / very soft ambient"
   },
   "typography": {
-    "display": { "family": "Fraunces", "settings": "\"opsz\" 144, \"SOFT\" 20, \"WONK\" 0", "weight": 450, "letterSpacing": "-0.022em", "lineHeight": 1.0, "size": "clamp(2.75rem, 6.2vw, 5.625rem) → 90px at 1440" },
-    "sectionTitle": { "family": "Fraunces", "weight": 450, "letterSpacing": "-0.018em", "lineHeight": 1.04, "size": "clamp(2rem, 4.2vw, 3.5rem) → 56 / 43 / 32px at 1440 / 1024 / 768", "measure": "20ch" },
-    "subTitle": { "family": "Fraunces", "weight": 500, "size": "clamp(1.375rem, 2vw, 1.75rem)" },
-    "numeral": { "family": "Fraunces", "weight": 400, "settings": "\"opsz\" 144", "tabular": true },
-    "lead": { "family": "Inter", "size": "clamp(1.0625rem, 1.3vw, 1.25rem)", "lineHeight": 1.55, "colour": "inkSoft", "measure": "42rem" },
-    "body": { "family": "Inter", "size": "17px", "lineHeight": 1.6, "colour": "inkSoft", "measure": "62ch" },
-    "label": { "family": "JetBrains Mono", "size": "11px", "letterSpacing": "0.14em", "transform": "uppercase", "weight": 500, "colour": "inkFaint" }
+    "display": {
+      "family": "Fraunces",
+      "settings": "\"opsz\" 144, \"SOFT\" 20, \"WONK\" 0",
+      "weight": 450,
+      "letterSpacing": "-0.022em",
+      "lineHeight": 1.0,
+      "size": "clamp(2.75rem, 6.2vw, 5.625rem) → 90px at 1440"
+    },
+    "sectionTitle": {
+      "family": "Fraunces",
+      "weight": 450,
+      "letterSpacing": "-0.018em",
+      "lineHeight": 1.04,
+      "size": "clamp(2rem, 4.2vw, 3.5rem) → 56 / 43 / 32px at 1440 / 1024 / 768",
+      "measure": "20ch"
+    },
+    "subTitle": {
+      "family": "Fraunces",
+      "weight": 500,
+      "size": "clamp(1.375rem, 2vw, 1.75rem)"
+    },
+    "numeral": {
+      "family": "Fraunces",
+      "weight": 400,
+      "settings": "\"opsz\" 144",
+      "tabular": true
+    },
+    "lead": {
+      "family": "Inter",
+      "size": "clamp(1.0625rem, 1.3vw, 1.25rem)",
+      "lineHeight": 1.55,
+      "colour": "inkSoft",
+      "measure": "42rem"
+    },
+    "body": {
+      "family": "Inter",
+      "size": "17px",
+      "lineHeight": 1.6,
+      "colour": "inkSoft",
+      "measure": "62ch"
+    },
+    "label": {
+      "family": "JetBrains Mono",
+      "size": "11px",
+      "letterSpacing": "0.14em",
+      "transform": "uppercase",
+      "weight": 500,
+      "colour": "inkFaint"
+    }
   },
   "shape": {
-    "radii": { "heroPanel": 48, "card": 16, "selectorAndPeriodCards": 12, "diagramBox": 8, "buttonsAndTabs": 999 },
+    "radii": {
+      "heroPanel": 48,
+      "card": 16,
+      "selectorAndPeriodCards": 12,
+      "diagramBox": 8,
+      "buttonsAndTabs": 999
+    },
     "borders": "1px only",
-    "buttons": { "height": { "base": 52, "large": 60, "small": 44 }, "shape": "pill", "primary": "accent fill, paper text", "secondary": "paper fill, ink border, inverts on hover" },
+    "buttons": {
+      "height": {
+        "base": 52,
+        "large": 60,
+        "small": 44
+      },
+      "shape": "pill",
+      "primary": "accent fill, paper text",
+      "secondary": "paper fill, ink border, inverts on hover"
+    },
     "chips": "quiet — canvasDeep fill, no border, 28px; used sparingly",
     "stamps": "1px current-colour outline, never rotated, one per moment"
   },
   "illustration": {
     "file": "src/components/factory/schematic.tsx",
-    "stroke": { "ink": 1.5, "accentTrunk": 2, "guide": "hairline" },
-    "glyphs": ["Spool", "Lens", "Fork", "Cut", "Route", "Pulse", "Loop", "InspectionMark", "Package"],
-    "diagrams": ["LineDiagram", "HeroLine", "ReturnThread", "Branch", "MemoryThread", "PeriodTimeline"],
-    "nodes": { "radius": "7 (10 when active)", "lit": "accent fill", "active": "halo + breathe" },
-    "cast": { "used": ["Founder", "Buyer"], "retired": ["Operator (public)", "stations", "crates", "conveyor", "feedback pipe", "wavy thread line"] }
+    "stroke": {
+      "ink": 1.5,
+      "accentTrunk": 2,
+      "guide": "hairline"
+    },
+    "glyphs": [
+      "Spool",
+      "Lens",
+      "Fork",
+      "Cut",
+      "Route",
+      "Pulse",
+      "Loop",
+      "InspectionMark",
+      "Package"
+    ],
+    "diagrams": [
+      "LineDiagram",
+      "HeroLine",
+      "ReturnThread",
+      "Branch",
+      "MemoryThread",
+      "PeriodTimeline"
+    ],
+    "nodes": {
+      "radius": "7 (10 when active)",
+      "lit": "accent fill",
+      "active": "halo + breathe"
+    },
+    "cast": {
+      "used": [
+        "Founder (home 04, playbook)",
+        "Buyer (playbook)",
+        "BuyerAvatar objects (home 03)"
+      ],
+      "retired": [
+        "Operator (public)",
+        "stations",
+        "crates",
+        "conveyor",
+        "feedback pipe",
+        "wavy thread line"
+      ]
+    },
+    "status": "kept for How it works (nine-station line, gates, proof chain) and the playbook; retired from the homepage in favour of the object language"
   },
   "motion": {
     "principle": "motion with a job; every animation has a reduced-motion still",
@@ -77,27 +197,119 @@
     "breathe": "opacity 2s on the active node",
     "stampIn": "scale 1.25→1 over 320ms, no rotation",
     "selector": "150ms colour, 300–500ms stroke, cubic-bezier(0.16,1,0.3,1)",
-    "reveal": "500ms rise-and-fade, once",
-    "retired": ["conveyor stripe", "bob", "blink"]
+    "reveal": "IntersectionObserver Reveal (data-shown), one per block; route steps and CTA outputs stagger",
+    "retired": [
+      "conveyor stripe",
+      "bob",
+      "blink",
+      "return pulse on the homepage",
+      "thread draw on the homepage",
+      "hero loop (play-once instead)"
+    ],
+    "heroMachine": "objects enter once, 700ms each, staggered 0.2s → 7s (tl-mc-in); at rest afterwards",
+    "factory": "one rAF-throttled scroll listener moves the idea card along a container-query track (transform only); the active chamber lifts; press holds a chamber",
+    "multiply": "one root card → five tiles, 350ms, transform + opacity",
+    "learningLoop": "tablist state switch; arrow keys",
+    "progression": "scroll progress → CSS variable; dots fade, validated lines thicken",
+    "reducedMotion": "the reduced-motion block in public-v3.css stops every keyframe and transition; the factory disarms its scroll link; qa:public verifies zero running animations"
   },
   "layout": {
     "container": 1200,
-    "heroPanel": { "max": 1500, "margins": "30px (10px below 768)", "padding": "80 / 30 / 24 → 40 / 10 / 24", "textColumn": 560 },
+    "heroPanel": {
+      "max": 1500,
+      "margins": "30px (10px below 768)",
+      "padding": "80 / 30 / 24 → 40 / 10 / 24",
+      "textColumn": "640 (560 in the frozen skeleton)",
+      "art": "absolute right from 1200; centred under the text (max 880) below; panel min-height 680 at ≥1200"
+    },
     "sectionPadding": "clamp(4.5rem, 9vw, 8rem)",
-    "breakpoints": { "640": "tabs 2-col, selector diagram hidden", "768": "period cards 2-up, memory labels shown", "992": "hero stacks below", "1024": "selector cards side by side, machine line horizontal", "1280": "period cards 4-up" },
-    "verifiedWidths": [1920, 1600, 1440, 1366, 1280, 1200, 1024, 900, 820, 768, 760, 720, 640, 600, 500, 460, 430, 390, 375, 320]
+    "breakpoints": {
+      "640": "pill buttons stop wrapping; factory rail 2-up; buyer-pool cards return to the stage; comparison type grows",
+      "768": "period rows / route board 2-up",
+      "992": "hero machine leaves the grid stack for the placed scene",
+      "1024": "buyer pool and labour split side by side; factory 4-up",
+      "1200": "hero side-by-side (machine 52% right); below it the machine stacks under the statement",
+      "1280": "factory rail 7-up",
+      "1440": "hero machine 50%"
+    },
+    "verifiedWidths": [
+      1920,
+      1600,
+      1440,
+      1366,
+      1280,
+      1200,
+      1024,
+      900,
+      820,
+      768,
+      760,
+      720,
+      640,
+      600,
+      500,
+      460,
+      430,
+      390,
+      375,
+      320
+    ]
   },
   "reconstruction": {
     "method": "docs/design/COMPONENT_RECONSTRUCTION.md",
     "skeletons": {
-      "heroPanel": "reference-analysis/clones/birdhouse-hero-panel",
-      "symptomSelector": "reference-analysis/clones/hydra-constraint-selector",
-      "periodCards": "reference-analysis/clones/hydra-offer-cards"
+      "heroPanel": "reference-analysis/clones/birdhouse-hero-panel (reused)",
+      "diagnostic": "reference-analysis/clones/hydra-constraint-selector (reused on How it works)",
+      "periodCards": "reference-analysis/clones/hydra-offer-cards (retired from the homepage)",
+      "comparison": "reference-analysis/clones/starborn-comparison-table (new, verified, frozen)"
     }
   },
   "claims": {
     "publicPricing": "never disclosed (DEC-017); npm run qa:public fails on any price string",
     "ledger": "docs/site/CLAIMS_EVIDENCE_LEDGER.md",
-    "bannedPublicWords": ["monthly", "guaranteed leads/revenue/results", "go viral", "10x", "cutting-edge", "AI-powered"]
+    "bannedPublicWords": [
+      "monthly",
+      "guaranteed leads/revenue/results",
+      "go viral",
+      "10x",
+      "cutting-edge",
+      "AI-powered"
+    ],
+    "illustrativeLabels": "every synthetic thesis, score, number and asset on the page carries a visible 'illustrative' label (claims ledger C-THESIS-ILLUSTRATIVE, C-LEARNING-ILLUSTRATIVE, C-SYNTHETIC-NUMBERS)",
+    "comparison": "capability wording only — core / built in / when useful / first class vs typically / sometimes / rarely / depends / no; never a measured comparison, never a price row (C-COMPARISON)"
+  },
+  "objects": {
+    "file": "src/components/factory/objects.tsx (+ the Objects block at the end of src/app/public.css; section systems in src/app/public-v3.css)",
+    "depth": {
+      "edge": "--edge: 3px bottom edge in a darker paper tone",
+      "ambient": "--depth: soft ambient shadow",
+      "lift": "--depth-lift: raised / active state",
+      "forbidden": [
+        "glass",
+        "glow",
+        "dark SaaS",
+        "neon",
+        "WebGL / canvas"
+      ]
+    },
+    "primitives": {
+      "Obj": "base surface with tone (paper / ember / signal / stamp / ink / canvas)",
+      "Token": "a pill for a thing that moves (Your expertise)",
+      "SignalChip": "a small mono chip for a market signal",
+      "ThesisCard": "paper card with a coloured header band and placeholder lines",
+      "ContentTile": "native content tiles: linkedin, video, x, threads, carousel, newsletter, post — each visibly different",
+      "ResponseMarker": "reply / profile / enquiry / call markers in signal or stamp tones",
+      "ScoreCard": "a card with a big numeral (route board, learning loop)",
+      "Chamber": "a factory station: label tab, index, body; button when pressable",
+      "ModuleTile / OutputTile": "labelled tiles for the Threadline board and the CTA outputs",
+      "BuyerAvatar": "avatar with recognition levels 0–4",
+      "VerdictTile": "filled check / cross tile"
+    },
+    "rules": [
+      "one focal object cluster per section",
+      "objects overlap by 8–16px, never more",
+      "tones: paper by default; ember for the founder and the thesis; signal for the market's answer; stamp for the commercial event; ink for one dark module",
+      "labels 10–11px mono inside objects, never smaller"
+    ]
   }
 }

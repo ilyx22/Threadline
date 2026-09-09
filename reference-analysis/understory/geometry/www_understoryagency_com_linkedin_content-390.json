@@ -1,0 +1,222 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "min-h-screen",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 13424
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Turn Your LinkedIn Into a Pipeline Machine"
+    },
+    {
+      "tag": "header",
+      "id": "",
+      "cls": "bg-[#171719] text-white sticky top-0 z-50 border-b border-gray-800/50",
+      "rect": {
+        "x": 0,
+        "y": 44,
+        "w": 390,
+        "h": 115
+      },
+      "bg": "rgb(23, 23, 25)",
+      "heading": ""
+    },
+    {
+      "tag": "nav",
+      "id": "",
+      "cls": "flex flex-col px-4 pt-16 pb-8 space-y-1",
+      "rect": {
+        "x": 390,
+        "y": 0,
+        "w": 390,
+        "h": 682
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "cls": "bg-[#171719]",
+      "rect": {
+        "x": 0,
+        "y": 159,
+        "w": 390,
+        "h": 11999
+      },
+      "bg": "rgb(23, 23, 25)",
+      "heading": "Turn Your LinkedIn Into a Pipeline Machine"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative overflow-hidden bg-[#171719] pt-12 pb-8 md:pt-16 md:pb-10",
+      "rect": {
+        "x": 0,
+        "y": 159,
+        "w": 390,
+        "h": 507
+      },
+      "bg": "rgb(23, 23, 25)",
+      "heading": "Turn Your LinkedIn Into a Pipeline Machine"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 !pt-8 md:!pt-14 !pb-4 md:!pb-8",
+      "rect": {
+        "x": 0,
+        "y": 665,
+        "w": 390,
+        "h": 1711
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Ghostwriting that sounds like you and drives pipeline"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 !py-6 md:!py-8",
+      "rect": {
+        "x": 0,
+        "y": 2376,
+        "w": 390,
+        "h": 176
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 ",
+      "rect": {
+        "x": 0,
+        "y": 2552,
+        "w": 390,
+        "h": 2484
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Our 8-Step Process"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 ",
+      "rect": {
+        "x": 0,
+        "y": 5036,
+        "w": 390,
+        "h": 2664
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Premium Features Included"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 ",
+      "rect": {
+        "x": 0,
+        "y": 7700,
+        "w": 390,
+        "h": 698
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "What We're Building Toward"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-20",
+      "rect": {
+        "x": 0,
+        "y": 8398,
+        "w": 390,
+        "h": 1385
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Turn Engagement Into Outreach"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 ",
+      "rect": {
+        "x": 0,
+        "y": 9782,
+        "w": 390,
+        "h": 967
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Who Is Our Ideal Client?"
+    },
+    {
+      "tag": "section",
+      "id": "faq",
+      "cls": "relative py-16 md:py-28",
+      "rect": {
+        "x": 0,
+        "y": 10750,
+        "w": 390,
+        "h": 1047
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "LinkedIn content, answered."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative overflow-hidden py-14 md:py-32",
+      "rect": {
+        "x": 0,
+        "y": 11796,
+        "w": 390,
+        "h": 361
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Ready to Turn Your LinkedIn Into a Growth Engine?"
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "bg-[#1d1e21] text-white",
+      "rect": {
+        "x": 0,
+        "y": 12157,
+        "w": 390,
+        "h": 1267
+      },
+      "bg": "rgb(29, 30, 33)",
+      "heading": "SERVICES"
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Book a Call",
+      "rect": {
+        "x": 406,
+        "y": 560,
+        "w": 358,
+        "h": 52
+      },
+      "style": {
+        "backgroundColor": "rgb(2, 228, 129)",
+        "color": "rgb(7, 16, 24)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgb(7, 16, 24)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(2, 228, 129, 0.25) 0px 0px 20px 0px",
+        "fontSize": "16px",
+        "fontWeight": "700",
+        "padding": "14px 20px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

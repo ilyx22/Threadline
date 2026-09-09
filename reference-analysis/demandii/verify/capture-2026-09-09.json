@@ -1,0 +1,26 @@
+{
+  "capturedAt": "2026-09-09T15:34:48.422Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://www.demandii.com/",
+      "width": 1440,
+      "finalUrl": "https://www.demandii.com/",
+      "title": "Demandii - A Demand Generation Agency",
+      "scrollHeight": 33645,
+      "frames": 113,
+      "fonts": 22,
+      "ms": 8008
+    },
+    {
+      "url": "https://www.demandii.com/",
+      "width": 390,
+      "finalUrl": "https://www.demandii.com/",
+      "title": "Demandii - A Demand Generation Agency",
+      "scrollHeight": 50337,
+      "frames": 168,
+      "fonts": 22,
+      "ms": 8531
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "capturedAt": "2026-09-09T15:33:09.994Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://www.leverbrands.com/",
+      "width": 1440,
+      "finalUrl": "https://www.leverbrands.com/",
+      "title": "Personal Branding Agency for Founders | LeverBrands",
+      "scrollHeight": 7378,
+      "frames": 25,
+      "fonts": 40,
+      "ms": 4000
+    },
+    {
+      "url": "https://www.leverbrands.com/",
+      "width": 1024,
+      "finalUrl": "https://www.leverbrands.com/",
+      "title": "Personal Branding Agency for Founders | LeverBrands",
+      "scrollHeight": 7803,
+      "frames": 27,
+      "fonts": 40,
+      "ms": 3750
+    },
+    {
+      "url": "https://www.leverbrands.com/",
+      "width": 768,
+      "finalUrl": "https://www.leverbrands.com/",
+      "title": "Personal Branding Agency for Founders | LeverBrands",
+      "scrollHeight": 8684,
+      "frames": 29,
+      "fonts": 40,
+      "ms": 3763
+    },
+    {
+      "url": "https://www.leverbrands.com/",
+      "width": 390,
+      "finalUrl": "https://www.leverbrands.com/",
+      "title": "Personal Branding Agency for Founders | LeverBrands",
+      "scrollHeight": 9892,
+      "frames": 33,
+      "fonts": 40,
+      "ms": 3833
+    }
+  ]
+}

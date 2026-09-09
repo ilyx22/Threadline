@@ -1,6 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
-import { Eyebrow, Mark, PublicButton } from "@/components/public/primitives";
+import { Eyebrow, PublicButton } from "@/components/public/primitives";
 
 /**
  * Hero panel — Threadline mutation of the frozen clone
@@ -23,8 +23,7 @@ export function HeroPanel({ eyebrow, title, lead, sub, note, primary, secondary,
             <Eyebrow className="mb-0">{eyebrow}</Eyebrow>
             <h1 className="tl-display">
               {title[0]}
-              <br />
-              <Mark>{title[1]}</Mark>
+              <span className="tl-display-sub">{title[1]}</span>
             </h1>
             <p className="tl-lead">{lead}</p>
             <p className="text-[17px] font-medium text-[color:var(--ink)]">{sub}</p>

@@ -1,0 +1,115 @@
+{
+  "keyframes": [
+    {
+      "name": "marquee-x",
+      "frames": [
+        "0% { transform: translate(0px); }",
+        "100% { transform: translate(-50%); }"
+      ]
+    },
+    {
+      "name": "marquee-x-reverse",
+      "frames": [
+        "0% { transform: translate(-50%); }",
+        "100% { transform: translate(0px); }"
+      ]
+    },
+    {
+      "name": "ping",
+      "frames": [
+        "75%, 100% { opacity: 0; transform: scale(2); }"
+      ]
+    },
+    {
+      "name": "pulse",
+      "frames": [
+        "50% { opacity: 0.5; }"
+      ]
+    },
+    {
+      "name": "enter",
+      "frames": [
+        "0% { opacity: var(--tw-enter-opacity,1); transform: translate3d(var(--tw-enter-translate-x,0),var(--tw-enter-translate-y,0),0)scale3d(var(--tw-enter-scale,1),var(--t }"
+      ]
+    },
+    {
+      "name": "exit",
+      "frames": [
+        "100% { opacity: var(--tw-exit-opacity,1); transform: translate3d(var(--tw-exit-translate-x,0),var(--tw-exit-translate-y,0),0)scale3d(var(--tw-exit-scale,1),var(--tw-ex }"
+      ]
+    },
+    {
+      "name": "accordion-down",
+      "frames": [
+        "0% { height: 0px; }",
+        "100% { height: var(--radix-accordion-content-height,var(--bits-accordion-content-height,var(--reka-accordion-content-height,var(--kb-accordion-content-height,var(--ngp }"
+      ]
+    },
+    {
+      "name": "accordion-up",
+      "frames": [
+        "0% { height: var(--radix-accordion-content-height,var(--bits-accordion-content-height,var(--reka-accordion-content-height,var(--kb-accordion-content-height,var(--ngp }",
+        "100% { height: 0px; }"
+      ]
+    },
+    {
+      "name": "caret-blink",
+      "frames": [
+        "0%, 70%, 100% { opacity: 1; }",
+        "20%, 50% { opacity: 0; }"
+      ]
+    }
+  ],
+  "animated": [
+    {
+      "tag": "span",
+      "cls": "absolute inline-flex h-full w-full rounded-full bg-acid opac",
+      "name": "ping",
+      "duration": "1s",
+      "timing": "cubic-bezier(0, 0, 0.2, 1)",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "div",
+      "cls": "flex gap-5 lg:gap-7 w-max animate-marquee",
+      "name": "marquee-x",
+      "duration": "60s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "div",
+      "cls": "flex gap-5 lg:gap-7 w-max animate-marquee-reverse",
+      "name": "marquee-x-reverse",
+      "duration": "60s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "span",
+      "cls": "absolute inset-0 rounded-full bg-acid opacity-60 animate-pin",
+      "name": "ping",
+      "duration": "1s",
+      "timing": "cubic-bezier(0, 0, 0.2, 1)",
+      "iteration": "infinite",
+      "delay": "0s"
+    }
+  ],
+  "easings": [
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.15s",
+      36
+    ],
+    [
+      "cubic-bezier(0, 0, 0.2, 1) 0.3s",
+      20
+    ],
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.3s",
+      1
+    ]
+  ]
+}

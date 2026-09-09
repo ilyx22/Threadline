@@ -1,0 +1,33 @@
+{
+  "links": [
+    "https://linkedin.com/in/nicholas-mihailou",
+    "https://www.linkedin.com/in/yanndine/",
+    "https://linkedin.com/in/arielcohen-aigrowth",
+    "https://linkedin.com/in/kyle-a-hunt",
+    "https://gojiberry.ai",
+    "/privacy",
+    "/terms",
+    "https://www.linkedin.com/in/leadgenwiz/",
+    "https://x.com/paolo_scales",
+    "https://www.youtube.com/@paolotrivellato"
+  ],
+  "meta": {
+    "viewport": "width=device-width, initial-scale=1",
+    "og:type": "website",
+    "twitter:card": "summary_large_image",
+    "twitter:title": "StarbornAI - LinkedIn Inbound Funnels",
+    "twitter:description": "LinkedIn inbound funnels for B2B SaaS and marketing agencies.",
+    "og:image": "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3b366373-560d-40f0-ac63-0a16000e54ab",
+    "twitter:image": "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/3b366373-560d-40f0-ac63-0a16000e54ab",
+    "description": "Done-for-you LinkedIn for B2B SaaS and agency founders. We write the posts, run the DMs, and book 20+ qualified inbound calls in 90 days.",
+    "og:title": "Starborn · Add $15K–$50K MRR in 90 days using LinkedIn",
+    "og:description": "Done-for-you LinkedIn for B2B SaaS and agency founders. We write the posts, run the DMs, and book 20+ qualified inbound calls in 90 days."
+  },
+  "scripts": [
+    "starbornai.com/~flock.js",
+    "fast.wistia.com/player.js",
+    "fast.wistia.com/embed/bz35725cbo.js",
+    "browser.sentry-cdn.com/9.6.1/bundle.min.js",
+    "assets.calendly.com/assets/external/widget.js"
+  ]
+}

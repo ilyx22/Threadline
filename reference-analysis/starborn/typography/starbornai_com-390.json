@@ -1,0 +1,552 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "Add $15K–$50K MRR in 90 days using LinkedIn alone.",
+      "rect": {
+        "x": 24,
+        "y": 187,
+        "w": 342,
+        "h": 131
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "41.6px",
+        "fontWeight": "600",
+        "lineHeight": "43.264px",
+        "letterSpacing": "-1.664px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "If any of this sounds like you, keep reading.",
+      "rect": {
+        "x": 24,
+        "y": 1646,
+        "w": 342,
+        "h": 75
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "35.2px",
+        "fontWeight": "600",
+        "lineHeight": "36.608px",
+        "letterSpacing": "-1.408px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Best Results In The Game.",
+      "rect": {
+        "x": 24,
+        "y": 2641,
+        "w": 342,
+        "h": 75
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "35.2px",
+        "fontWeight": "600",
+        "lineHeight": "36.608px",
+        "letterSpacing": "-1.408px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "One complete system. Done for you.",
+      "rect": {
+        "x": 24,
+        "y": 8672,
+        "w": 342,
+        "h": 74
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "35.2px",
+        "fontWeight": "600",
+        "lineHeight": "36.608px",
+        "letterSpacing": "-1.408px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Why not just hire a ghostwriter?",
+      "rect": {
+        "x": 24,
+        "y": 10138,
+        "w": 342,
+        "h": 74
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "35.2px",
+        "fontWeight": "600",
+        "lineHeight": "36.608px",
+        "letterSpacing": "-1.408px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Five steps. One system. Done for you.",
+      "rect": {
+        "x": 24,
+        "y": 11357,
+        "w": 342,
+        "h": 74
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "35.2px",
+        "fontWeight": "600",
+        "lineHeight": "36.608px",
+        "letterSpacing": "-1.408px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Built by a team that's done this before.",
+      "rect": {
+        "x": 24,
+        "y": 13367,
+        "w": 342,
+        "h": 68
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "32px",
+        "fontWeight": "600",
+        "lineHeight": "33.28px",
+        "letterSpacing": "-1.28px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "200 meetings booked in 3 weeks.",
+      "rect": {
+        "x": 24,
+        "y": 3002,
+        "w": 270,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "25.6px",
+        "fontWeight": "600",
+        "lineHeight": "26.624px",
+        "letterSpacing": "-1.024px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "672 demos booked in 30 days.",
+      "rect": {
+        "x": 24,
+        "y": 3769,
+        "w": 270,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "25.6px",
+        "fontWeight": "600",
+        "lineHeight": "26.624px",
+        "letterSpacing": "-1.024px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Biggest AI creator on LinkedIn in 3 months.",
+      "rect": {
+        "x": 24,
+        "y": 4482,
+        "w": 270,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "25.6px",
+        "fontWeight": "600",
+        "lineHeight": "26.624px",
+        "letterSpacing": "-1.024px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "$36K MRR added in 16 weeks.",
+      "rect": {
+        "x": 24,
+        "y": 5298,
+        "w": 270,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "25.6px",
+        "fontWeight": "600",
+        "lineHeight": "26.624px",
+        "letterSpacing": "-1.024px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "$35K in monthly revenue added in 30 days.",
+      "rect": {
+        "x": 24,
+        "y": 6156,
+        "w": 270,
+        "h": 80
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "25.6px",
+        "fontWeight": "600",
+        "lineHeight": "26.624px",
+        "letterSpacing": "-1.024px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "72 booked calls and 2.8M impressions in 26 days.",
+      "rect": {
+        "x": 24,
+        "y": 6795,
+        "w": 270,
+        "h": 80
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "25.6px",
+        "fontWeight": "600",
+        "lineHeight": "26.624px",
+        "letterSpacing": "-1.024px",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "We write your posts, run your DMs, and book 20–30 qualified sales calls onto your calendar",
+      "rect": {
+        "x": 24,
+        "y": 346,
+        "w": 342,
+        "h": 112
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "18px",
+        "fontWeight": "400",
+        "lineHeight": "27.9px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "oklch(0.45 0.012 60)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "You're tired of cold outbound campaigns where reply rates are below 1% and your SDR team i",
+      "rect": {
+        "x": 54,
+        "y": 1777,
+        "w": 312,
+        "h": 114
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "19px",
+        "fontWeight": "400",
+        "lineHeight": "28.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Paid ads are 60% more expensive than two years ago and the lead quality keeps dropping.",
+      "rect": {
+        "x": 54,
+        "y": 1915,
+        "w": 312,
+        "h": 86
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "19px",
+        "fontWeight": "400",
+        "lineHeight": "28.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "You know LinkedIn inbound is the answer, but you don't have time to write posts, run DMs, ",
+      "rect": {
+        "x": 54,
+        "y": 2024,
+        "w": 312,
+        "h": 143
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "19px",
+        "fontWeight": "400",
+        "lineHeight": "28.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "You hired an agency before. They sent you generic posts written overseas. Your pipeline st",
+      "rect": {
+        "x": 54,
+        "y": 2191,
+        "w": 312,
+        "h": 114
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "19px",
+        "fontWeight": "400",
+        "lineHeight": "28.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "There's a better way. And it's working for 100+ B2B founders right now.",
+      "rect": {
+        "x": 24,
+        "y": 2361,
+        "w": 342,
+        "h": 54
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "18px",
+        "fontWeight": "600",
+        "lineHeight": "27px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "oklch(0.16 0.012 50)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Receipts pulled straight from client LinkedIn analytics, Calendly dashboards, and viral po",
+      "rect": {
+        "x": 24,
+        "y": 2740,
+        "w": 342,
+        "h": 80
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "16.5px",
+        "fontWeight": "400",
+        "lineHeight": "26.8125px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "oklch(0.45 0.012 60)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Every post written, designed, and shipped by our team.",
+      "rect": {
+        "x": 24,
+        "y": 7601,
+        "w": 342,
+        "h": 47
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "14.5px",
+        "fontWeight": "400",
+        "lineHeight": "23.5625px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "oklch(0.45 0.012 60)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": [
+    {
+      "tag": "div",
+      "text": "SOUND FAMILIAR?",
+      "rect": {
+        "x": 24,
+        "y": 1612,
+        "w": 342,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "18px",
+        "letterSpacing": "1.68px",
+        "textTransform": "uppercase",
+        "color": "oklch(0.66 0.215 32)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "PROOF, NOT PROMISES",
+      "rect": {
+        "x": 24,
+        "y": 2607,
+        "w": 342,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "18px",
+        "letterSpacing": "1.68px",
+        "textTransform": "uppercase",
+        "color": "oklch(0.66 0.215 32)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "CONTENT SHOWCASE",
+      "rect": {
+        "x": 24,
+        "y": 7485,
+        "w": 342,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "18px",
+        "letterSpacing": "1.68px",
+        "textTransform": "uppercase",
+        "color": "oklch(0.66 0.215 32)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "HERE'S WHAT YOU GET",
+      "rect": {
+        "x": 24,
+        "y": 8638,
+        "w": 342,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "18px",
+        "letterSpacing": "1.68px",
+        "textTransform": "uppercase",
+        "color": "oklch(0.66 0.215 32)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "THE HONEST COMPARISON",
+      "rect": {
+        "x": 24,
+        "y": 10104,
+        "w": 342,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "18px",
+        "letterSpacing": "1.68px",
+        "textTransform": "uppercase",
+        "color": "oklch(0.66 0.215 32)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "HOW IT WORKS",
+      "rect": {
+        "x": 24,
+        "y": 11323,
+        "w": 342,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "18px",
+        "letterSpacing": "1.68px",
+        "textTransform": "uppercase",
+        "color": "oklch(0.66 0.215 32)",
+        "fontStyle": "normal"
+      }
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "lb-csec",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 720
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": "Done-for-you personal branding for founders and CEOs."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "lb-csec",
+      "rect": {
+        "x": 0,
+        "y": 720,
+        "w": 390,
+        "h": 1104
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": "We do two things."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "lb-csec",
+      "rect": {
+        "x": 0,
+        "y": 1824,
+        "w": 390,
+        "h": 564
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "lbb",
+      "rect": {
+        "x": 0,
+        "y": 2389,
+        "w": 390,
+        "h": 175
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": "Brands behind the people we work with"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "lb-csec",
+      "rect": {
+        "x": 0,
+        "y": 2564,
+        "w": 390,
+        "h": 1700
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": "How we can help you."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "lb-csec",
+      "rect": {
+        "x": 0,
+        "y": 4264,
+        "w": 390,
+        "h": 278
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": "The results."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "",
+      "rect": {
+        "x": 0,
+        "y": 5994,
+        "w": 390,
+        "h": 82
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "lb-csec",
+      "rect": {
+        "x": 0,
+        "y": 6076,
+        "w": 390,
+        "h": 1017
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": "Who this is for"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "lb-csec",
+      "rect": {
+        "x": 0,
+        "y": 7093,
+        "w": 390,
+        "h": 1328
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": "Questions we get asked"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "lb-csec",
+      "rect": {
+        "x": 0,
+        "y": 8421,
+        "w": 390,
+        "h": 315
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": "Become the best-known name in your industry."
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "",
+      "rect": {
+        "x": 0,
+        "y": 8735,
+        "w": 390,
+        "h": 1157
+      },
+      "bg": "rgb(10, 11, 8)",
+      "heading": "Building Leverage"
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Apply to work with us",
+      "rect": {
+        "x": 99,
+        "y": 443,
+        "w": 193,
+        "h": 44
+      },
+      "style": {
+        "backgroundColor": "rgb(239, 255, 68)",
+        "color": "rgb(16, 18, 10)",
+        "borderRadius": "8px",
+        "border": "0px none rgb(16, 18, 10)",
+        "boxShadow": "rgba(80, 140, 40, 0.22) 0px 8px 24px 0px",
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "padding": "13px 24px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Apply To Work With Us",
+      "rect": {
+        "x": 95,
+        "y": 8280,
+        "w": 199,
+        "h": 44
+      },
+      "style": {
+        "backgroundColor": "rgb(239, 255, 68)",
+        "color": "rgb(16, 18, 10)",
+        "borderRadius": "8px",
+        "border": "0px none rgb(16, 18, 10)",
+        "boxShadow": "rgba(80, 140, 40, 0.22) 0px 8px 24px 0px",
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "padding": "13px 24px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Get in touch",
+      "rect": {
+        "x": 124,
+        "y": 8615,
+        "w": 142,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(239, 255, 68)",
+        "color": "rgb(16, 18, 10)",
+        "borderRadius": "8px",
+        "border": "0px none rgb(16, 18, 10)",
+        "boxShadow": "rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset, rgba(80, 140, 40, 0.28) 0px 10px 30px 0px, rgba(0, 0, 0, 0.4) 0px 2px 6px 0px",
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "padding": "15px 30px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "→",
+      "rect": {
+        "x": 256,
+        "y": 8928,
+        "w": 43,
+        "h": 40
+      },
+      "style": {
+        "backgroundColor": "rgb(239, 255, 68)",
+        "color": "rgb(16, 18, 10)",
+        "borderRadius": "6px",
+        "border": "0px none rgb(16, 18, 10)",
+        "boxShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "padding": "13px 16px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

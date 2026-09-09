@@ -1,0 +1,431 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "The Universe's Most Advanced LinkedIn Content Marketing System",
+      "rect": {
+        "x": 42,
+        "y": 90,
+        "w": 306,
+        "h": 88
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "32px",
+        "fontWeight": "700",
+        "lineHeight": "36.8px",
+        "letterSpacing": "-0.8px",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.95)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "How we maximize the LinkedIn platform",
+      "rect": {
+        "x": 26,
+        "y": 924,
+        "w": 339,
+        "h": 59
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "32px",
+        "fontWeight": "700",
+        "lineHeight": "36.8px",
+        "letterSpacing": "-0.8px",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.95)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "What to expect from our LinkedIn content marketing programs",
+      "rect": {
+        "x": 13,
+        "y": 1691,
+        "w": 364,
+        "h": 60
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "30px",
+        "fontWeight": "700",
+        "lineHeight": "37.5px",
+        "letterSpacing": "-0.75px",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.95)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "What it looks like in practice",
+      "rect": {
+        "x": 0,
+        "y": 3616,
+        "w": 390,
+        "h": 29
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "30px",
+        "fontWeight": "700",
+        "lineHeight": "36px",
+        "letterSpacing": "-0.75px",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.9)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Trusted by category leaders and industry innovators",
+      "rect": {
+        "x": 13,
+        "y": 4305,
+        "w": 364,
+        "h": 58
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "30px",
+        "fontWeight": "700",
+        "lineHeight": "36px",
+        "letterSpacing": "-0.75px",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.9)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "The three forces reshaping B2B marketing and comms.",
+      "rect": {
+        "x": 26,
+        "y": 5291,
+        "w": 339,
+        "h": 44
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "lineHeight": "27.6px",
+        "letterSpacing": "-0.6px",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.95)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Read more about what we believe.",
+      "rect": {
+        "x": 19,
+        "y": 6283,
+        "w": 352,
+        "h": 55
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "30px",
+        "fontWeight": "700",
+        "lineHeight": "34.5px",
+        "letterSpacing": "-0.75px",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.9)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "Lead your category",
+      "rect": {
+        "x": -10,
+        "y": 1856,
+        "w": 313,
+        "h": 30
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "30px",
+        "fontWeight": "700",
+        "lineHeight": "37.5px",
+        "letterSpacing": "-0.75px",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Accelerate your sales motion",
+      "rect": {
+        "x": 86,
+        "y": 2377,
+        "w": 313,
+        "h": 30
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "30px",
+        "fontWeight": "700",
+        "lineHeight": "37.5px",
+        "letterSpacing": "-0.75px",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Influence your pipeline",
+      "rect": {
+        "x": -10,
+        "y": 2915,
+        "w": 313,
+        "h": 30
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "30px",
+        "fontWeight": "700",
+        "lineHeight": "37.5px",
+        "letterSpacing": "-0.75px",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Ready to lead your category on LinkedIn?",
+      "rect": {
+        "x": 19,
+        "y": 4868,
+        "w": 352,
+        "h": 50
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "30px",
+        "fontWeight": "700",
+        "lineHeight": "31.5px",
+        "letterSpacing": "-0.75px",
+        "textTransform": "none",
+        "color": "rgb(224, 228, 235)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Everything you know about the LinkedIn algorithm is wrong",
+      "rect": {
+        "x": 23,
+        "y": 6457,
+        "w": 240,
+        "h": 66
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "lineHeight": "27.6px",
+        "letterSpacing": "-0.6px",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.95)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Why LinkedIn has games: the news strategy behind it",
+      "rect": {
+        "x": 317,
+        "y": 6457,
+        "w": 240,
+        "h": 44
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "lineHeight": "27.6px",
+        "letterSpacing": "-0.6px",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.95)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "TRUSTED BY 100+ B2B BRANDS",
+      "rect": {
+        "x": 13,
+        "y": 663,
+        "w": 364,
+        "h": 13
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "16.5px",
+        "letterSpacing": "3.52px",
+        "textTransform": "uppercase",
+        "color": "rgba(224, 228, 235, 0.45)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "OUR SYSTEM",
+      "rect": {
+        "x": 26,
+        "y": 894,
+        "w": 339,
+        "h": 14
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "12px",
+        "fontWeight": "400",
+        "lineHeight": "18px",
+        "letterSpacing": "3px",
+        "textTransform": "uppercase",
+        "color": "rgba(224, 228, 235, 0.7)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We pull every lever available on LinkedIn inside a cohesive strategy designed to drive max",
+      "rect": {
+        "x": 26,
+        "y": 1002,
+        "w": 339,
+        "h": 62
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "26px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(224, 228, 235, 0.85)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "OUTCOMES",
+      "rect": {
+        "x": 152,
+        "y": 1662,
+        "w": 86,
+        "h": 16
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "16.5px",
+        "letterSpacing": "2.75px",
+        "textTransform": "uppercase",
+        "color": "rgba(224, 228, 235, 0.4)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Your executives become the recognizable voices buyers already trust, so when they start ev",
+      "rect": {
+        "x": -10,
+        "y": 1902,
+        "w": 313,
+        "h": 59
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "lineHeight": "24.375px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgba(255, 255, 255, 0.7)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "20%",
+      "rect": {
+        "x": -10,
+        "y": 2774,
+        "w": 96,
+        "h": 26
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "lineHeight": "32px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(124, 58, 237)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "SHORTER CYCLE",
+      "rect": {
+        "x": -10,
+        "y": 2803,
+        "w": 96,
+        "h": 13
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "16.5px",
+        "letterSpacing": "1.32px",
+        "textTransform": "uppercase",
+        "color": "rgb(136, 136, 136)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "1.4×",
+      "rect": {
+        "x": 99,
+        "y": 2774,
+        "w": 96,
+        "h": 26
+      },
+      "style": {
+        "fontFamily": "ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "fontSize": "24px",
+        "fontWeight": "700",
+        "lineHeight": "32px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(124, 58, 237)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": []
+}

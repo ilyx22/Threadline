@@ -1,0 +1,185 @@
+{
+  "media": {
+    "img": 18,
+    "svg": 66,
+    "video": 0,
+    "canvas": 0,
+    "lottie": 0,
+    "imgSrcs": [
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/nova-impact-wordmark-dark.19udw-htfo3p0.svg",
+        "w": 439,
+        "h": 91,
+        "alt": "Nova Impact"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/ef.0gz76eny404io.png",
+        "w": 1000,
+        "h": 1000,
+        "alt": "Entrepreneur First"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/bain.2n3nvdjbqshyz.svg",
+        "w": 300,
+        "h": 33,
+        "alt": "Bain & Company"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/accenture.2c_-_revwig7z.png",
+        "w": 1280,
+        "h": 337,
+        "alt": "Accenture"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/ucl.03xcy7hvpjx6t.png",
+        "w": 500,
+        "h": 141,
+        "alt": "UCL Innovation and Enterprise"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/oxford.15vtqfdqs4h8x.png",
+        "w": 960,
+        "h": 1208,
+        "alt": "Keble College, University of Oxford"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/barclays.0rujy_y833_l0.png",
+        "w": 2000,
+        "h": 1124,
+        "alt": "Barclays"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/ef.0gz76eny404io.png",
+        "w": 1000,
+        "h": 1000,
+        "alt": "Entrepreneur First"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/bain.2n3nvdjbqshyz.svg",
+        "w": 300,
+        "h": 33,
+        "alt": "Bain & Company"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/accenture.2c_-_revwig7z.png",
+        "w": 1280,
+        "h": 337,
+        "alt": "Accenture"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/ucl.03xcy7hvpjx6t.png",
+        "w": 500,
+        "h": 141,
+        "alt": "UCL Innovation and Enterprise"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/oxford.15vtqfdqs4h8x.png",
+        "w": 960,
+        "h": 1208,
+        "alt": "Keble College, University of Oxford"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/barclays.0rujy_y833_l0.png",
+        "w": 2000,
+        "h": 1124,
+        "alt": "Barclays"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/Ama%20Headshot.3cwvgt56vgebq.jpeg",
+        "w": 4597,
+        "h": 3065,
+        "alt": "Portrait of Ama Owusu-Afriyie"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/Amy%20Headshot.09wk1xdo7w6c2.jpeg",
+        "w": 800,
+        "h": 800,
+        "alt": "Portrait of Amy Brese"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/Bella%20Headshot.30ec9mgy6l4jn.jpg",
+        "w": 1152,
+        "h": 2048,
+        "alt": "Portrait of Bella Everest"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/Lulu%20Headshot.26uzlno6yzbre.jpeg",
+        "w": 800,
+        "h": 800,
+        "alt": "Portrait of Lulu"
+      },
+      {
+        "src": "https://novaimpact.co.uk/_next/static/media/nova-impact-wordmark-dark.19udw-htfo3p0.svg",
+        "w": 439,
+        "h": 91,
+        "alt": "Nova Impact"
+      }
+    ]
+  },
+  "requests": [
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/nova-impact-wordmark-dark.19udw-htfo3p0.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/ef.0gz76eny404io.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/bain.2n3nvdjbqshyz.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/accenture.2c_-_revwig7z.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/ucl.03xcy7hvpjx6t.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/oxford.15vtqfdqs4h8x.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/barclays.0rujy_y833_l0.png",
+      "type": "image/png"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/Ama%20Headshot.3cwvgt56vgebq.jpeg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/Amy%20Headshot.09wk1xdo7w6c2.jpeg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/Bella%20Headshot.30ec9mgy6l4jn.jpg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "https://novaimpact.co.uk/_next/static/media/Lulu%20Headshot.26uzlno6yzbre.jpeg",
+      "type": "image/jpeg"
+    },
+    {
+      "url": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 200'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGa",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGa",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 320'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGa",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 320'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGa",
+      "type": "image/svg+xml"
+    }
+  ]
+}

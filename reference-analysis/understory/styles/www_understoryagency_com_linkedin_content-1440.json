@@ -1,0 +1,501 @@
+{
+  "url": "https://www.understoryagency.com/linkedin-content",
+  "title": "LinkedIn Thought Leadership | Understory",
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "scrollHeight": 9175,
+  "fonts": [
+    "Inter 100 900 normal",
+    "Inter Fallback normal normal",
+    "Instrument Serif 400 normal",
+    "Instrument Serif Fallback normal normal"
+  ],
+  "families": {
+    "Inter": 347,
+    "Instrument Serif": 4
+  },
+  "topColours": [
+    [
+      "rgb(255, 255, 255)",
+      632
+    ],
+    [
+      "rgb(2, 228, 129)",
+      240
+    ],
+    [
+      "lab(85.1236 -0.612259 -3.7138)",
+      130
+    ],
+    [
+      "rgba(255, 255, 255, 0.08)",
+      35
+    ],
+    [
+      "rgb(7, 16, 24)",
+      23
+    ],
+    [
+      "rgba(2, 228, 129, 0.2)",
+      22
+    ],
+    [
+      "rgba(2, 228, 129, 0.1)",
+      21
+    ],
+    [
+      "lab(55.4814 75.0732 48.8528)",
+      18
+    ],
+    [
+      "rgba(255, 255, 255, 0.03)",
+      16
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+      15
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.85)",
+      8
+    ],
+    [
+      "rgba(2, 228, 129, 0.18)",
+      7
+    ],
+    [
+      "lab(4.28254 -1.38357 -5.9333 / 0.6)",
+      6
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.03)",
+      5
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+      5
+    ],
+    [
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+      4
+    ],
+    [
+      "rgb(23, 23, 25)",
+      3
+    ],
+    [
+      "rgba(2, 228, 129, 0.08)",
+      3
+    ],
+    [
+      "rgba(2, 228, 129, 0.4)",
+      3
+    ],
+    [
+      "rgba(2, 228, 129, 0.3)",
+      3
+    ],
+    [
+      "rgb(10, 102, 194)",
+      2
+    ],
+    [
+      "rgb(255, 35, 35)",
+      2
+    ],
+    [
+      "rgb(29, 185, 84)",
+      2
+    ],
+    [
+      "rgb(29, 30, 33)",
+      2
+    ],
+    [
+      "oklab(0.277998 -0.00751148 -0.0321264 / 0.5)",
+      1
+    ],
+    [
+      "rgb(31, 31, 35)",
+      1
+    ],
+    [
+      "oklab(0 0 0 / 0.15)",
+      1
+    ],
+    [
+      "oklab(0.372998 -0.00606386 -0.0334453 / 0.5)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "20px",
+      27
+    ],
+    [
+      "16px",
+      17
+    ],
+    [
+      "3.35544e+07px",
+      16
+    ],
+    [
+      "12px",
+      12
+    ],
+    [
+      "8px",
+      7
+    ],
+    [
+      "3px",
+      6
+    ],
+    [
+      "7px",
+      5
+    ],
+    [
+      "9999px",
+      4
+    ]
+  ],
+  "shadows": [
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+      24
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.35) 0px 1px 0px 0px inset, rgba(2, 228, 129, 0.25) 0px 4px 16px 0px",
+      5
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(2, 228, 129, 0.12) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+      4
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklab(0.999994 0.0000455678 0.0000200868 / 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      2
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.35) 0px 1px 0px 0px inset, rgba(2, 228, 129, 0.25) 0px 0px 20px 0px",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 25px 50px -12px",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.25) 0px 2px 12px 0px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "100%",
+      32
+    ],
+    [
+      "1440px",
+      13
+    ],
+    [
+      "672px",
+      7
+    ],
+    [
+      "768px",
+      4
+    ],
+    [
+      "245.86px",
+      2
+    ],
+    [
+      "896px",
+      1
+    ],
+    [
+      "270px",
+      1
+    ],
+    [
+      "1152px",
+      1
+    ],
+    [
+      "574.082px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "Allbound",
+      "href": "/#allbound"
+    },
+    {
+      "text": "Paid Media",
+      "href": "/paid-media"
+    },
+    {
+      "text": "GTM Engineering",
+      "href": "/gtm-engineering"
+    },
+    {
+      "text": "LinkedIn Content",
+      "href": "/linkedin-content"
+    },
+    {
+      "text": "Creative & Landing Pages",
+      "href": "/creative"
+    },
+    {
+      "text": "RevOps",
+      "href": "/revops"
+    },
+    {
+      "text": "",
+      "href": "https://www.linkedin.com/company/understory-agency/"
+    },
+    {
+      "text": "",
+      "href": "https://www.youtube.com/@UnderstoryAgency"
+    },
+    {
+      "text": "",
+      "href": "https://open.spotify.com/show/3n4Dlre5rE3qIHZnpVvgEY?si=7ad98053895447f8"
+    },
+    {
+      "text": "Book a Call",
+      "href": "/book-a-call"
+    },
+    {
+      "text": "",
+      "href": "/blog"
+    },
+    {
+      "text": "",
+      "href": "https://open.spotify.com/show/3n4Dlre5rE3qIHZnpVvgEY"
+    },
+    {
+      "text": "Call us +1 415 903 7062",
+      "href": "tel:+14159037062"
+    },
+    {
+      "text": "Testimonials",
+      "href": "/#testimonials"
+    }
+  ],
+  "bodyBg": "rgba(0, 0, 0, 0)",
+  "htmlBg": "rgb(24, 24, 25)",
+  "cards": [
+    {
+      "tag": "div",
+      "text": "",
+      "rect": {
+        "x": 744,
+        "y": 212,
+        "w": 664,
+        "h": 374
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "16px",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "664px",
+        "height": "373.5px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "WHAT MAKES US UNIQUE Ghostwriting that sounds like you and drives pipeline We capture how ",
+      "rect": {
+        "x": 32,
+        "y": 682,
+        "w": 1376,
+        "h": 900
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "20px",
+        "border": "1px solid rgba(2, 228, 129, 0.2)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(2, 228, 129, 0.12) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "48px",
+        "maxWidth": "none",
+        "width": "1376px",
+        "height": "899.938px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "01 Detailed Intake Process We start with a comprehensive intake where we ask you about you",
+      "rect": {
+        "x": 32,
+        "y": 2103,
+        "w": 676,
+        "h": 197
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "20px",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "676px",
+        "height": "197px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "02 Voice Interview We conduct an in-depth interview where we develop your brand voice, you",
+      "rect": {
+        "x": 732,
+        "y": 2103,
+        "w": 676,
+        "h": 197
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "20px",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "676px",
+        "height": "197px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "03 Voice Calibration We write 3-4 posts in distinctly different styles. You tell us what f",
+      "rect": {
+        "x": 32,
+        "y": 2324,
+        "w": 676,
+        "h": 243
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "20px",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "676px",
+        "height": "242.5px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "04 Strategic Content Plan Based on your goals, your audience, and what performs on LinkedI",
+      "rect": {
+        "x": 732,
+        "y": 2324,
+        "w": 676,
+        "h": 243
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "20px",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "676px",
+        "height": "242.5px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "05 Content Delivery Every month, you get your posts in advance. Graphics included. You rev",
+      "rect": {
+        "x": 32,
+        "y": 2590,
+        "w": 676,
+        "h": 174
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "20px",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "676px",
+        "height": "174.25px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "06 Optimize and Scale We track what's working. Follower growth within your ICP. Engagement",
+      "rect": {
+        "x": 732,
+        "y": 2590,
+        "w": 676,
+        "h": 174
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "20px",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "676px",
+        "height": "174.25px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "07 Audience Building Posting is only half the game. We identify the right personas in your",
+      "rect": {
+        "x": 32,
+        "y": 2789,
+        "w": 676,
+        "h": 197
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "20px",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "676px",
+        "height": "197px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "08 Engagement Outreach (Add-On) Optional, for clients who want the audience worked harder.",
+      "rect": {
+        "x": 732,
+        "y": 2789,
+        "w": 676,
+        "h": 197
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "20px",
+        "border": "1px solid rgba(255, 255, 255, 0.08)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(255, 255, 255, 0.07) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.25) 0px 1px 2px 0px, rgba(0, 0, 0, 0.5) 0px 12px 32px -14px",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "676px",
+        "height": "197px"
+      }
+    }
+  ]
+}

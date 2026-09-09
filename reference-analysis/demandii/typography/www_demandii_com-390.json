@@ -1,0 +1,411 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "WHY INVEST IN CEO-LED MARKETING ON LINKEDIN?",
+      "rect": {
+        "x": 30,
+        "y": 103,
+        "w": 330,
+        "h": 192
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "40px",
+        "fontWeight": "900",
+        "lineHeight": "48px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h1",
+      "text": "IF YOU ARE A BUSY B2B FOUNDER OR CEO AND ONLY HAVE 20 MINUTES THIS WEEK THEN WATCHING THIS",
+      "rect": {
+        "x": 30,
+        "y": 35878,
+        "w": 330,
+        "h": 768
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "40px",
+        "fontWeight": "900",
+        "lineHeight": "48px",
+        "letterSpacing": "normal",
+        "textTransform": "uppercase",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "DOES THIS CEO-LED MARKETING STUFF WORK?",
+      "rect": {
+        "x": 30,
+        "y": 1150,
+        "w": 330,
+        "h": 108
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "30px",
+        "fontWeight": "900",
+        "lineHeight": "36px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "IF YOU ARE HERE I GUESS THE TESTIMONIALS AND VIDEO WASN'T ENOUGH FOR YOU!",
+      "rect": {
+        "x": 30,
+        "y": 6443,
+        "w": 330,
+        "h": 180
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "30px",
+        "fontWeight": "900",
+        "lineHeight": "36px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "WHAT WOULD YOU DO WITH THAT EXTRA TIME?",
+      "rect": {
+        "x": 87,
+        "y": 8908,
+        "w": 216,
+        "h": 180
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "30px",
+        "fontWeight": "900",
+        "lineHeight": "36px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "IF YOU’VE BEEN STRUGGLING WITH GETTING NEW CLIENTS FOR YOUR B2B BUSINESS I AM HERE TO TELL",
+      "rect": {
+        "x": 30,
+        "y": 13291,
+        "w": 330,
+        "h": 288
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "30px",
+        "fontWeight": "900",
+        "lineHeight": "36px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(251, 188, 4)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "BUT IT'S JUST NOT TRUE!",
+      "rect": {
+        "x": 30,
+        "y": 14469,
+        "w": 330,
+        "h": 72
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "30px",
+        "fontWeight": "900",
+        "lineHeight": "36px",
+        "letterSpacing": "normal",
+        "textTransform": "uppercase",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "IT’S AN INCONVENIENT TRUTH WE ALL KNOW TOO WELL. WE ONLY BUY FROM PEOPLE WE KNOW, LIKE, AN",
+      "rect": {
+        "x": 30,
+        "y": 16699,
+        "w": 330,
+        "h": 288
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "30px",
+        "fontWeight": "900",
+        "lineHeight": "36px",
+        "letterSpacing": "normal",
+        "textTransform": "uppercase",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "YOU KNOW WHAT YOU NEED TO DO",
+      "rect": {
+        "x": 30,
+        "y": 10172,
+        "w": 330,
+        "h": 55
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "23px",
+        "fontWeight": "900",
+        "lineHeight": "27.6px",
+        "letterSpacing": "normal",
+        "textTransform": "uppercase",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "BUT YOUR BIGGEST OBSTACLE IS REALLY TIME.",
+      "rect": {
+        "x": 30,
+        "y": 10228,
+        "w": 330,
+        "h": 83
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "23px",
+        "fontWeight": "900",
+        "lineHeight": "27.6px",
+        "letterSpacing": "normal",
+        "textTransform": "uppercase",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "THE REALITY IS YOU CAN’T DO IT ALL ALONE NOR DO YOU HAVE THE TIME TO HIRE AND TRAIN OTHERS",
+      "rect": {
+        "x": 30,
+        "y": 10370,
+        "w": 330,
+        "h": 221
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "23px",
+        "fontWeight": "900",
+        "lineHeight": "27.6px",
+        "letterSpacing": "normal",
+        "textTransform": "uppercase",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "MATTHEW HUNT",
+      "rect": {
+        "x": 30,
+        "y": 27794,
+        "w": 330,
+        "h": 28
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "23px",
+        "fontWeight": "900",
+        "lineHeight": "27.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "WATCH THIS SHORT 15-MIN VIDEO to discover our simple 6-pillar LinkedIn CEO-led content sys",
+      "rect": {
+        "x": 30,
+        "y": 592,
+        "w": 330,
+        "h": 190
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "27.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Danielle Mckinley",
+      "rect": {
+        "x": 119,
+        "y": 1461,
+        "w": 206,
+        "h": 21
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "20.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Co-Founder",
+      "rect": {
+        "x": 119,
+        "y": 1487,
+        "w": 206,
+        "h": 21
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "20.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Axle",
+      "rect": {
+        "x": 119,
+        "y": 1508,
+        "w": 206,
+        "h": 21
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "20.8px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(0, 0, 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Well, what I’ll say is I wasn’t looking for Demandii — I was looking to save time. I felt ",
+      "rect": {
+        "x": 60,
+        "y": 1569,
+        "w": 270,
+        "h": 163
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "27.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(42, 42, 42)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "",
+      "rect": {
+        "x": 60,
+        "y": 1732,
+        "w": 270,
+        "h": 27
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "27.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(42, 42, 42)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "But after one phone call with Matt, it sealed the deal.",
+      "rect": {
+        "x": 60,
+        "y": 1759,
+        "w": 270,
+        "h": 54
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "27.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(42, 42, 42)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "",
+      "rect": {
+        "x": 60,
+        "y": 1814,
+        "w": 270,
+        "h": 27
+      },
+      "style": {
+        "fontFamily": "Montserrat",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "27.2px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(42, 42, 42)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": []
+}

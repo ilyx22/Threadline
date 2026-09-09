@@ -1,4 +1,5 @@
 import "@/app/public.css";
+import "@/app/public-v3.css";
 import { PublicNav } from "@/components/public/nav";
 import { PublicFooter } from "@/components/public/footer";
 

@@ -41,6 +41,21 @@ Classification: **A** = clone the skeleton first; **B** = take the principle onl
 | 13 | Hydra | Inputs / System / Output three-card row | B | Already expressed by the hero's in/out/back line | — |
 | 14 | Hydra | Section reveal: opacity + translate 0.7s `cubic-bezier(0.16, 1, 0.3, 1)` | B | Threadline's reveal keeps its own 500ms; the easing is adopted for the drawn thread | `public.css` |
 
+### Harvest, evening pass (captivation pass, 9 September 2026)
+
+Captured with `capture-reference.ts` at 1440 + 390 (four widths for the first three) into `reference-analysis/<site>/`; classified in `CAPTIVATION_PASS_PLAN_2026-09-09.md` §3.
+
+| # | Source | Component | Class | Why | Threadline use |
+|---|---|---|---|---|---|
+| 15 | Starborn | "The honest comparison" five-column table with the vendor's own column highlighted | **A** | The exact skeleton for the missing "why not the alternative" section; geometry, type ladder, cell vocabulary and phone behaviour are measurable | Home 10 comparison (`comparison.tsx`) |
+| 16 | Starborn | Numbered five-step list on hairlines | B | Numbering principle for the route board | Home 07 |
+| 17 | Starborn | Case-study receipts, logos, MRR headline, video | C | Proof Threadline cannot make; LinkedIn-only framing | — |
+| 18 | LeverBrands | "We do two things" split; three-stage framing | B | Service simplification; no wording copied | Labour split, factory spine |
+| 19 | Invisible Keyboard | Founder-time banner; four numbered service blocks | B | Founder-is-the-source clarity; no time promise published | Labour split |
+| 20 | Windmill / Demandii / Influent | Productised framing; founder-time objection; buyer-level wording | B | Tangibility, objection handling, response wording | Labour split, route board |
+| 21 | Nova Impact | Editorial service cards with line icons | B (caution) | Confirms restraint; the icons are the thin-line style being left | — |
+| 22 | Understory | Eight-step process cards | C | Documentation density is the problem being solved | — |
+
 ## A-class clone results
 
 Filled in from `reference-analysis/clones/<name>/verify/report.json` after verification. See each clone's `FROZEN.md`.
@@ -50,7 +65,17 @@ Filled in from `reference-analysis/clones/<name>/verify/report.json` after verif
 | `birdhouse-hero-panel` | 1440/1024/768/390, default + CTA hover, 30 nodes | 1440: root Δ0 × Δ0, 13/14 structural nodes within tolerance after allowing for the reference's mid-reveal capture (text column recorded at translateY 20.56px); 1024: Δ0 × Δ0 | panel 60px→30px radius, text column 500px → centred stack below 992, h1 90 → 64 → 48px, CTA 60px pill (30px radius on phone), illustration 85% of the wrapper bottom-right → below the text | CTA `all .3s ease`; reference text reveal noted, clone renders settled state | neutral grey cluster instead of the character/video art; tablet illustration height estimated (560px); placeholder copy line counts | `reference-analysis/clones/birdhouse-hero-panel/` (+ `verify/report.json`, `FROZEN.md`) |
 | `hydra-constraint-selector` | 1440/1024/768/390, default + 3 tab states, 56 nodes | 1440: root Δ0 × Δ0, 24/31 within tolerance (misses are placeholder-text widths); 768: Δ0 × Δ0, 24/31; 1024: Δh −14 (heading wrap); 390: diagram correctly absent, 11/29 | tabs → 2-col grid and diagram hidden < 640; cards stack < 1024; heading `clamp(2rem, 4.2vw, 3.5rem)`, lead 16 → 17.28px ≥ 1280, card title 22 → 28.8px | tab 0.15s `cubic-bezier(.4,0,.2,1)`; strokes 0.5s / 0.3s `cubic-bezier(.16,1,.3,1)`; reveal 0.7s | `9999px` vs `3.35544e+07px` radius (identical rendering); neutral re-drawing of the stage art | `reference-analysis/clones/hydra-constraint-selector/` |
 | `hydra-offer-cards` | 1440/1024/768/390, default + link hover, 92 nodes | 1440: root Δ0 × Δ0, **37/38** within tolerance (worst 30px = placeholder link text); 1024/768: Δh ±22 (body line counts); 390: −176 (reference swaps in a taller mobile SVG) | 3 → 2 → 1 columns at 1024 / 768; section padding 128 → 96 < 640 | reveal 0.7s; arrow `transform .3s` on hover (4px assumed) | single responsive diagram instead of desktop/mobile pair; placeholder copy | `reference-analysis/clones/hydra-offer-cards/` |
+| `starborn-comparison-table` | 1440/1024/768/390, default, 117 nodes | 1440: Δw 0 · Δh −3 (every node 11–16px above the capture, which recorded the reference mid-reveal at translateY 12px; settled structure matches: 1100 container, 1.4fr + 4×1fr grid with 24px gaps, 32×4 pip, five 73px rows, footnote); 1024: Δh +4, 38/56 within tolerance; 768: Δh +60 (heading wrap); 390: Δh −108 (heading wrap, larger reference row padding) | the reference keeps the five-column grid on phones at 13 / 10.5 / 13.5px with 12px gaps — reproduced | reveal not reproduced (clone renders the settled state) | placeholder copy; oklch colours transcribed as observed; italic serif emphasis | `reference-analysis/clones/starborn-comparison-table/` |
 
 ## Threadline mutations
 
 Recorded per component in the same FROZEN.md files under "Mutation", and summarised in `docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md`.
+
+| Skeleton | Mutation | What stayed from the skeleton | What became Threadline's |
+|---|---|---|---|
+| `birdhouse-hero-panel` | `src/components/public/hero-panel.tsx` (+ `hero-machine.tsx` inside the art slot) | panel radius and padding, 560–640px statement column, pill CTAs, art anchored right and allowed to run to the edge, stack below the side-by-side breakpoint (now 1200 so the machine has room) | every word; Fraunces / Inter / mono; the second approved line as a sub-display line; the miniature Authority Machine as the art |
+| `hydra-constraint-selector` | `src/components/public/diagnostic.tsx` (How it works) | tabs → reactive panel → symptom card + dark "what changes here" card; easings; collapse below 640 | five Threadline categories (Position / Create / Distribute / Convert / Learn); the panel lights a factory chamber instead of a stroke; the four existing symptom points as the symptom copy; routes to Apply |
+| `hydra-offer-cards` | retired from the homepage (`period-cards.tsx` kept in the tree, unused) | — | replaced by `progression.tsx`, one continuous band, on the owner's instruction that the periods must not read as four pricing-like cards |
+| `starborn-comparison-table` | `src/components/public/comparison.tsx` | 1.4fr + 4×1fr grid, 24px gaps, header pip, row height and hairlines, cell vocabulary (check / cross / italic qualifier), footnote, five columns kept on phones | Threadline / Ghostwriter / Content agency / In-house; thirteen capability rows; "core", "built in", "when useful", "first class" vs "typically", "sometimes", "rarely", "depends", "no"; `--accent-soft` tint; ember rule as the pip; no prices, no time-to-result claims; `role="table"` semantics |
+
+The object language that replaced the schematic drawing set on the homepage (`src/components/factory/objects.tsx`) is original; no reference component was cloned for it.

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Clone baseline — comparison table (reference: starbornai.com "The honest comparison", captured 2026-09-09)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  /* CLEAN-ROOM CLONE. Geometry, type scale and surfaces transcribed from
+     reference-analysis/starborn/components/comparison-table/<width>.measure.json. Copy is neutral placeholder text. */
+  :root { --cream: oklch(0.945 0.018 75); --ink: oklch(0.16 0.012 50); --dim: oklch(0.45 0.012 60); --mute: oklch(0.62 0.012 60); --acid: oklch(0.66 0.215 32); --line: oklab(0.16 0.0077 0.0092 / 0.1); --tint: oklab(0.66 0.14 0.09 / 0.08); --font: "Inter", system-ui, sans-serif; --serif: "Instrument Serif", Georgia, serif; }
+  * { box-sizing: border-box; }
+  html { background: var(--cream); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  body { margin: 0; }
+  .section { background: var(--cream); padding: 128px 0; }                                       /* [0] */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }                              /* [0/0] */
+  .intro { text-align: center; }
+  .eyebrow { margin: 0; font-size: 12px; font-weight: 600; line-height: 18px; letter-spacing: 1.68px; text-transform: uppercase; color: var(--acid); }
+  h2 { margin: 16px auto 0; max-width: 790px; font-size: 54.4px; font-weight: 600; line-height: 1.04; letter-spacing: -0.04em; }   /* [0/0/0/0/1] 54.4/56.6, -2.176px */
+  h2 em { font-family: var(--serif); font-style: italic; font-weight: 400; color: var(--acid); }
+  .lead { margin: 24px auto 0; max-width: 576px; font-size: 16.5px; line-height: 27px; color: var(--dim); }
+  .table { margin-top: 80px; }                                                                    /* [0/0/1/0] y 390 = intro bottom 310 + 80 */
+  .row { display: grid; grid-template-columns: 1.4fr repeat(4, 1fr); column-gap: 24px; align-items: center; border-bottom: 1px solid var(--line); }
+  .row.head { align-items: end; padding-bottom: 20px; border-bottom-color: var(--line); }
+  .row.body { padding: 24px 0; min-height: 73px; }
+  .col { text-align: center; position: relative; }
+  .col.own { padding-top: 12px; }
+  .col.own .pip { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 32px; height: 4px; border-radius: 9999px; background: var(--acid); }
+  .name { font-size: 15px; font-weight: 700; line-height: 1.25; letter-spacing: -0.375px; }
+  .col:not(.own) .name { color: oklab(0.16 0.0077 0.0092 / 0.55); }
+  .sub { margin-top: 4px; font-size: 11px; line-height: 1.25; letter-spacing: 1.1px; text-transform: uppercase; color: var(--mute); }
+  .label { font-size: 15px; font-weight: 500; line-height: 1.5; color: oklab(0.16 0.0077 0.0092 / 0.8); }
+  .cell { font-size: 14px; line-height: 24px; color: var(--mute); }
+  .cell.own { background: var(--tint); border-radius: 6px; color: var(--ink); font-weight: 600; padding: 0 12px; }
+  .cell .yes { color: var(--acid); font-weight: 700; }
+  .cell .no { color: oklab(0.16 0.0077 0.0092 / 0.35); }
+  .cell .maybe { font-style: italic; }
+  .note { margin: 32px 0 0; text-align: center; font-size: 12.5px; line-height: 19px; color: oklab(0.16 0.0077 0.0092 / 0.5); }
+  @media (max-width: 1023px) { h2 { font-size: clamp(2.2rem, 5vw, 54.4px); } }
+  @media (max-width: 639px) {                                                                 /* reference keeps the five-column grid on phones: 13px names, 10.5px sub-labels, 13.5px labels, 12px gaps */
+    .section { padding: 96px 0; }
+    .container { padding: 0 24px; }
+    .row { column-gap: 12px; }
+    .name { font-size: 13px; }
+    .sub { font-size: 10.5px; }
+    .label { font-size: 13.5px; }
+    .cell { font-size: 12px; }
+    .table { margin-top: 64px; }
+  }
+</style>
+</head>
+<body>
+<section class="section" data-tl-capture="root" data-ref="0">
+  <div class="container" data-ref="0/0">
+    <div data-ref="0/0/0">
+      <div class="intro" data-ref="0/0/0/0">
+        <p class="eyebrow" data-ref="0/0/0/0/0">The honest comparison</p>
+        <h2 data-ref="0/0/0/0/1">Why not just hire a <em data-ref="0/0/0/0/1/0">placeholder?</em></h2>
+        <p class="lead" data-ref="0/0/0/0/2">Two lines of placeholder lead copy of comparable length that set up the comparison table below.</p>
+      </div>
+    </div>
+    <div data-ref="0/0/1">
+      <div class="scroller">
+        <div class="table" data-ref="0/0/1/0">
+          <div class="row head" data-ref="0/0/1/0/0">
+            <div data-ref="0/0/1/0/0/0"></div>
+            <div class="col own" data-ref="0/0/1/0/0/1"><span class="pip" data-ref="0/0/1/0/0/1/0"></span><div class="name" data-ref="0/0/1/0/0/1/1">Own brand</div><div class="sub" data-ref="0/0/1/0/0/1/2">Done-for-you</div></div>
+            <div class="col" data-ref="0/0/1/0/0/2"><div class="name" data-ref="0/0/1/0/0/2/0">Option B</div><div class="sub" data-ref="0/0/1/0/0/2/1">Sub-label</div></div>
+            <div class="col" data-ref="0/0/1/0/0/3"><div class="name" data-ref="0/0/1/0/0/3/0">Option C</div><div class="sub" data-ref="0/0/1/0/0/3/1">Sub-label</div></div>
+            <div class="col" data-ref="0/0/1/0/0/4"><div class="name" data-ref="0/0/1/0/0/4/0">Option D</div><div class="sub" data-ref="0/0/1/0/0/4/1">Sub-label</div></div>
+          </div>
+          <div data-ref="0/0/1/0/1">
+            <div class="row body" data-ref="0/0/1/0/1/0"><div class="label" data-ref="0/0/1/0/1/0/0">Dimension one</div><div class="col cell own" data-ref="0/0/1/0/1/0/1">Own value</div><div class="col cell" data-ref="0/0/1/0/1/0/2">3–5 hrs</div><div class="col cell" data-ref="0/0/1/0/1/0/3">5–10 hrs</div><div class="col cell" data-ref="0/0/1/0/1/0/4">15–20 hrs</div></div>
+            <div class="row body" data-ref="0/0/1/0/1/1"><div class="label" data-ref="0/0/1/0/1/1/0">Dimension two</div><div class="col cell own" data-ref="0/0/1/0/1/1/1"><span class="yes">✓</span></div><div class="col cell" data-ref="0/0/1/0/1/1/2"><span class="no">✕</span></div><div class="col cell" data-ref="0/0/1/0/1/1/3"><span class="maybe">sometimes</span></div><div class="col cell" data-ref="0/0/1/0/1/1/4"><span class="maybe">sometimes</span></div></div>
+            <div class="row body" data-ref="0/0/1/0/1/2"><div class="label" data-ref="0/0/1/0/1/2/0">Dimension three</div><div class="col cell own" data-ref="0/0/1/0/1/2/1"><span class="yes">✓</span></div><div class="col cell" data-ref="0/0/1/0/1/2/2"><span class="no">✕</span></div><div class="col cell" data-ref="0/0/1/0/1/2/3"><span class="no">✕</span></div><div class="col cell" data-ref="0/0/1/0/1/2/4"><span class="no">✕</span></div></div>
+            <div class="row body" data-ref="0/0/1/0/1/3"><div class="label" data-ref="0/0/1/0/1/3/0">Dimension four</div><div class="col cell own" data-ref="0/0/1/0/1/3/1"><span class="yes">✓</span></div><div class="col cell" data-ref="0/0/1/0/1/3/2"><span class="no">✕</span></div><div class="col cell" data-ref="0/0/1/0/1/3/3"><span class="maybe">rarely</span></div><div class="col cell" data-ref="0/0/1/0/1/3/4"><span class="no">✕</span></div></div>
+            <div class="row body" data-ref="0/0/1/0/1/4"><div class="label" data-ref="0/0/1/0/1/4/0">Dimension five</div><div class="col cell own" data-ref="0/0/1/0/1/4/1">~30 days</div><div class="col cell" data-ref="0/0/1/0/1/4/2">60–90 days</div><div class="col cell" data-ref="0/0/1/0/1/4/3">90–120 days</div><div class="col cell" data-ref="0/0/1/0/1/4/4">6+ months</div></div>
+          </div>
+          <p class="note" data-ref="0/0/1/0/2">Placeholder footnote describing where the benchmark values come from.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

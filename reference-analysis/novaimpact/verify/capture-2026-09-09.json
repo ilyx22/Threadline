@@ -1,0 +1,26 @@
+{
+  "capturedAt": "2026-09-09T15:35:39.271Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://novaimpact.co.uk/",
+      "width": 1440,
+      "finalUrl": "https://novaimpact.co.uk/",
+      "title": "Nova Impact: Technical LinkedIn Ghostwriting for AI Leaders",
+      "scrollHeight": 10350,
+      "frames": 35,
+      "fonts": 2,
+      "ms": 4261
+    },
+    {
+      "url": "https://novaimpact.co.uk/",
+      "width": 390,
+      "finalUrl": "https://novaimpact.co.uk/",
+      "title": "Nova Impact: Technical LinkedIn Ghostwriting for AI Leaders",
+      "scrollHeight": 17029,
+      "frames": 57,
+      "fonts": 2,
+      "ms": 4681
+    }
+  ]
+}

@@ -1,0 +1,351 @@
+{
+  "url": "https://www.leverbrands.com/",
+  "title": "Personal Branding Agency for Founders | LeverBrands",
+  "viewport": {
+    "w": 1024,
+    "h": 900
+  },
+  "scrollHeight": 7803,
+  "fonts": [
+    "Albert Sans 300 italic",
+    "Albert Sans 400 italic",
+    "Albert Sans 500 italic",
+    "Albert Sans 600 italic",
+    "Albert Sans 700 italic",
+    "Albert Sans 300 normal",
+    "Albert Sans 400 normal",
+    "Albert Sans 500 normal",
+    "Albert Sans 600 normal",
+    "Albert Sans 700 normal",
+    "Albert Sans 900 italic",
+    "Albert Sans 900 normal",
+    "Fragment Mono 400 normal",
+    "Geist 500 normal",
+    "Geist 800 normal",
+    "Geist 900 normal",
+    "Geist 900 italic",
+    "Geist 800 italic",
+    "Geist 400 normal",
+    "Geist 700 normal",
+    "Geist 700 italic",
+    "Geist 400 italic",
+    "Geist 500 italic",
+    "Geist Mono 500 normal",
+    "Geist Mono 700 normal",
+    "Geist Mono 700 italic",
+    "Geist Mono 500 italic",
+    "Geist 600 normal",
+    "Geist 600 italic",
+    "Geist Mono 400 normal",
+    "Geist Mono 400 italic",
+    "Inter 400 normal",
+    "Inter 900 normal",
+    "Inter 400 italic",
+    "Inter 700 normal",
+    "Inter 700 italic",
+    "Inter 600 normal",
+    "Albert Sans Placeholder normal normal",
+    "Geist Placeholder normal normal",
+    "Inter Placeholder normal normal"
+  ],
+  "families": {
+    "sans-serif": 160,
+    "Geist": 131,
+    "Geist Mono": 27,
+    "Inter": 4,
+    "Albert Sans": 4
+  },
+  "topColours": [
+    [
+      "rgb(0, 0, 0)",
+      623
+    ],
+    [
+      "rgb(242, 243, 236)",
+      99
+    ],
+    [
+      "rgb(0, 0, 238)",
+      98
+    ],
+    [
+      "rgb(239, 255, 68)",
+      91
+    ],
+    [
+      "rgb(139, 141, 128)",
+      66
+    ],
+    [
+      "rgb(201, 202, 190)",
+      66
+    ],
+    [
+      "rgb(35, 37, 26)",
+      37
+    ],
+    [
+      "rgb(16, 17, 9)",
+      35
+    ],
+    [
+      "rgb(10, 11, 8)",
+      11
+    ],
+    [
+      "rgb(255, 255, 255)",
+      10
+    ],
+    [
+      "rgb(16, 18, 10)",
+      8
+    ],
+    [
+      "rgb(21, 23, 13)",
+      3
+    ],
+    [
+      "rgb(13, 13, 13)",
+      2
+    ],
+    [
+      "rgb(166, 166, 166)",
+      2
+    ],
+    [
+      "rgb(21, 20, 16)",
+      2
+    ],
+    [
+      "rgba(16, 17, 9, 0.82)",
+      1
+    ],
+    [
+      "rgb(24, 26, 16)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "50%",
+      16
+    ],
+    [
+      "8px",
+      7
+    ],
+    [
+      "12px",
+      7
+    ],
+    [
+      "16px",
+      7
+    ],
+    [
+      "999px",
+      2
+    ],
+    [
+      "6px",
+      2
+    ],
+    [
+      "14px",
+      1
+    ]
+  ],
+  "shadows": [
+    [
+      "rgba(80, 140, 40, 0.22) 0px 8px 24px 0px",
+      2
+    ],
+    [
+      "rgba(80, 140, 40, 0.35) 0px 8px 30px 0px",
+      1
+    ],
+    [
+      "rgba(255, 255, 255, 0.4) 0px 1px 0px 0px inset, rgba(80, 140, 40, 0.28) 0px 10px 30px 0px, rgba(0, 0, 0, 0.4) 0px 2px 6px 0px",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0.05) 0px 0px 0px 1px inset",
+      1
+    ],
+    [
+      "rgb(171, 164, 46) 0px -1px 2px 0px",
+      1
+    ],
+    [
+      "rgb(53, 158, 94) 0px -1px 2px 0px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "1120px",
+      7
+    ],
+    [
+      "1280px",
+      4
+    ],
+    [
+      "320px",
+      2
+    ],
+    [
+      "640px",
+      2
+    ],
+    [
+      "760px",
+      2
+    ],
+    [
+      "900px",
+      1
+    ],
+    [
+      "600px",
+      1
+    ],
+    [
+      "680px",
+      1
+    ],
+    [
+      "1080px",
+      1
+    ],
+    [
+      "720px",
+      1
+    ]
+  ],
+  "nav": [],
+  "bodyBg": "rgb(13, 13, 13)",
+  "htmlBg": "rgba(0, 0, 0, 0)",
+  "cards": [
+    {
+      "tag": "div",
+      "text": "Build your authority and attention YOU YOUR BUYERS EVERYONE ELSE We turn your experience, ",
+      "rect": {
+        "x": 28,
+        "y": 982,
+        "w": 472,
+        "h": 427
+      },
+      "style": {
+        "backgroundColor": "rgb(16, 17, 9)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(35, 37, 26)",
+        "boxShadow": "none",
+        "padding": "30.72px",
+        "maxWidth": "none",
+        "width": "472px",
+        "height": "427.438px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Build the ecosystem around it ATTENTION NURTURE MONETISE The personal brand ecosystem is e",
+      "rect": {
+        "x": 524,
+        "y": 982,
+        "w": 472,
+        "h": 427
+      },
+      "style": {
+        "backgroundColor": "rgb(16, 17, 9)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(35, 37, 26)",
+        "boxShadow": "none",
+        "padding": "30.72px",
+        "maxWidth": "none",
+        "width": "472px",
+        "height": "427.438px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "01 Founders who want their personal brand generating pipeline: inbound leads, booked calls",
+      "rect": {
+        "x": 28,
+        "y": 5261,
+        "w": 309,
+        "h": 237
+      },
+      "style": {
+        "backgroundColor": "rgb(16, 17, 9)",
+        "borderRadius": "16px",
+        "border": "1px solid rgb(35, 37, 26)",
+        "boxShadow": "none",
+        "padding": "26.624px",
+        "maxWidth": "none",
+        "width": "309.328px",
+        "height": "236.781px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "02 CEOs amplifying the company's message. You want the company's story carried through you",
+      "rect": {
+        "x": 357,
+        "y": 5261,
+        "w": 309,
+        "h": 237
+      },
+      "style": {
+        "backgroundColor": "rgb(16, 17, 9)",
+        "borderRadius": "16px",
+        "border": "1px solid rgb(35, 37, 26)",
+        "boxShadow": "none",
+        "padding": "26.624px",
+        "maxWidth": "none",
+        "width": "309.328px",
+        "height": "236.781px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "03 Exited founders whose reputation stayed behind with the company they sold. The next ven",
+      "rect": {
+        "x": 687,
+        "y": 5261,
+        "w": 309,
+        "h": 237
+      },
+      "style": {
+        "backgroundColor": "rgb(16, 17, 9)",
+        "borderRadius": "16px",
+        "border": "1px solid rgb(35, 37, 26)",
+        "boxShadow": "none",
+        "padding": "26.624px",
+        "maxWidth": "none",
+        "width": "309.344px",
+        "height": "236.781px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Ready to leverage your personal brand? Apply To Work With Us",
+      "rect": {
+        "x": 636,
+        "y": 5879,
+        "w": 360,
+        "h": 320
+      },
+      "style": {
+        "backgroundColor": "rgb(16, 17, 9)",
+        "borderRadius": "16px",
+        "border": "1px solid rgb(35, 37, 26)",
+        "boxShadow": "none",
+        "padding": "40.96px",
+        "maxWidth": "none",
+        "width": "360px",
+        "height": "319.906px"
+      }
+    }
+  ]
+}

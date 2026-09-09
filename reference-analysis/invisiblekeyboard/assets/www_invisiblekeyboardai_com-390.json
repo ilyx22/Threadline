@@ -1,0 +1,39 @@
+{
+  "media": {
+    "img": 1,
+    "svg": 8,
+    "video": 0,
+    "canvas": 0,
+    "lottie": 0,
+    "imgSrcs": [
+      {
+        "src": "data:image/svg+xml,%3csvg%20width='500'%20height='500'%20viewBox='0%200%20500%20500'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3",
+        "w": 500,
+        "h": 500,
+        "alt": "Invisible Keyboard"
+      }
+    ]
+  },
+  "requests": [
+    {
+      "url": "data:image/svg+xml,%3csvg%20width='500'%20height='500'%20viewBox='0%200%20500%20500'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3crect%20x='25.4844'%",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/instrumentserif/v5/jizHRFtNs2ka5fXjeivQ4LroWlx-6zAjjH7M.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/instrumentserif/v5/jizBRFtNs2ka5fXjeivQ4LroWlx-6zUTjg.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/jetbrainsmono/v24/tDbv2o-flEEny0FZhsfKu5WU4zr3E_BX0PnT8RD8yKwBNntkaToggR7BYRbKPxDcwg.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "data:image/svg+xml,%3csvg%20width='500'%20height='500'%20viewBox='0%200%20500%20500'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3crect%20x='25.4844'%",
+      "type": "image/svg+xml"
+    }
+  ]
+}

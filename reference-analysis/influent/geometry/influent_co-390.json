@@ -1,0 +1,194 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative z-[4] -mt-[40vh] overflow-hidden sm:-mt-[34vh] lg:-mt-[36vh]",
+      "rect": {
+        "x": 0,
+        "y": 612,
+        "w": 390,
+        "h": 256
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "approach",
+      "cls": "relative",
+      "rect": {
+        "x": 0,
+        "y": 868,
+        "w": 390,
+        "h": 689
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "How we maximize the LinkedIn platform"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative overflow-hidden",
+      "rect": {
+        "x": 0,
+        "y": 1557,
+        "w": 390,
+        "h": 1956
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "What to expect from our LinkedIn content marketing programs"
+    },
+    {
+      "tag": "section",
+      "id": "case-studies",
+      "cls": "relative py-24 sm:py-32",
+      "rect": {
+        "x": 0,
+        "y": 3513,
+        "w": 390,
+        "h": 663
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "What it looks like in practice"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative overflow-hidden",
+      "rect": {
+        "x": 0,
+        "y": 4176,
+        "w": 390,
+        "h": 611
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Trusted by category leaders and industry innovators"
+    },
+    {
+      "tag": "section",
+      "id": "about",
+      "cls": "relative overflow-hidden",
+      "rect": {
+        "x": 0,
+        "y": 5115,
+        "w": 390,
+        "h": 1062
+      },
+      "bg": "rgb(25, 31, 46)",
+      "heading": "The three forces reshaping B2B marketing and comms."
+    },
+    {
+      "tag": "section",
+      "id": "blog",
+      "cls": "relative overflow-hidden",
+      "rect": {
+        "x": 0,
+        "y": 6177,
+        "w": 390,
+        "h": 788
+      },
+      "bg": "rgb(25, 31, 46)",
+      "heading": "Read more about what we believe."
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "relative overflow-hidden border-t border-foreground/10",
+      "rect": {
+        "x": 0,
+        "y": 6965,
+        "w": 390,
+        "h": 754
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Book a Call",
+      "rect": {
+        "x": 309,
+        "y": -5,
+        "w": 68,
+        "h": 22
+      },
+      "style": {
+        "backgroundColor": "rgb(20, 20, 20)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "9999px",
+        "border": "0px solid rgb(39, 41, 53)",
+        "boxShadow": "none",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "padding": "6px 12px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a Meeting\nGarret Caudle, Founder",
+      "rect": {
+        "x": 94,
+        "y": 295,
+        "w": 202,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(224, 228, 235)",
+        "color": "rgb(11, 11, 15)",
+        "borderRadius": "9999px",
+        "border": "0px solid rgb(39, 41, 53)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(71, 126, 235, 0.35) 0px 10px 40px 0px, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "padding": "8px 24px 8px 8px",
+        "textTransform": "none",
+        "letterSpacing": "0.4px"
+      }
+    },
+    {
+      "text": "Book a Meeting\nGarret Caudle, Founder",
+      "rect": {
+        "x": 94,
+        "y": 4990,
+        "w": 202,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(224, 228, 235)",
+        "color": "rgb(11, 11, 15)",
+        "borderRadius": "9999px",
+        "border": "0px solid rgb(39, 41, 53)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(71, 126, 235, 0.35) 0px 10px 40px 0px, rgba(255, 255, 255, 0.1) 0px 0px 0px 1px",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "padding": "8px 24px 8px 8px",
+        "textTransform": "none",
+        "letterSpacing": "0.4px"
+      }
+    },
+    {
+      "text": "Book a Meeting\nGarret Caudle, Founder",
+      "rect": {
+        "x": 19,
+        "y": 7131,
+        "w": 117,
+        "h": 29
+      },
+      "style": {
+        "backgroundColor": "rgb(224, 228, 235)",
+        "color": "rgb(11, 11, 15)",
+        "borderRadius": "9999px",
+        "border": "0px solid rgb(39, 41, 53)",
+        "boxShadow": "none",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "padding": "4px 16px 4px 4px",
+        "textTransform": "none",
+        "letterSpacing": "0.3px"
+      }
+    }
+  ]
+}

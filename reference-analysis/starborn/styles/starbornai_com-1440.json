@@ -1,0 +1,506 @@
+{
+  "url": "https://starbornai.com/",
+  "title": "Starborn · Add $15K–$50K MRR in 90 days using LinkedIn",
+  "viewport": {
+    "w": 1440,
+    "h": 900
+  },
+  "scrollHeight": 17406,
+  "fonts": [
+    "Inter 400 normal",
+    "Inter 500 normal",
+    "Inter 600 normal",
+    "Inter 700 normal",
+    "Instrument Serif 400 normal",
+    "Instrument Serif 400 italic",
+    "Fraunces 400 italic",
+    "Fraunces 500 italic",
+    "Fraunces 400 normal",
+    "Fraunces 500 normal",
+    "Fraunces 600 normal",
+    "Inter 300 normal",
+    "JetBrains Mono 400 normal",
+    "JetBrains Mono 500 normal",
+    "WistiaPlayerInterNumbersSemiBold normal normal",
+    "WistiaPlayerInter normal normal",
+    "WistiaPlayerInter 400 normal"
+  ],
+  "families": {
+    "Inter": 449,
+    "Instrument Serif": 20
+  },
+  "topColours": [
+    [
+      "oklch(0.16 0.012 50)",
+      901
+    ],
+    [
+      "oklch(0.66 0.215 32)",
+      202
+    ],
+    [
+      "oklch(0.975 0.008 80)",
+      117
+    ],
+    [
+      "oklch(0.62 0.012 60)",
+      64
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+      64
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.6)",
+      50
+    ],
+    [
+      "oklch(0.45 0.012 60)",
+      36
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.25)",
+      36
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.1)",
+      35
+    ],
+    [
+      "rgb(255, 255, 255)",
+      33
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.15)",
+      30
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+      26
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.05)",
+      26
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.75)",
+      25
+    ],
+    [
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.7)",
+      23
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.9)",
+      20
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.4)",
+      20
+    ],
+    [
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.8)",
+      14
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.7)",
+      12
+    ],
+    [
+      "oklch(0.945 0.018 75)",
+      10
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.8)",
+      8
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.4)",
+      8
+    ],
+    [
+      "oklab(0.975 0.00138918 0.00787846 / 0.14)",
+      7
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.45)",
+      6
+    ],
+    [
+      "oklch(0.16 0.012 50 / 0.06)",
+      6
+    ],
+    [
+      "oklab(0.66 0.18233 0.113933 / 0.04)",
+      5
+    ],
+    [
+      "oklab(0.999994 0.0000455677 0.0000200868 / 0.6)",
+      4
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.15)",
+      3
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.5)",
+      2
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.05)",
+      2
+    ],
+    [
+      "oklch(0.66 0.215 32 / 0.5)",
+      2
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.03)",
+      1
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.12)",
+      1
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.3)",
+      1
+    ],
+    [
+      "oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+      1
+    ]
+  ],
+  "radii": [
+    [
+      "3.35544e+07px",
+      47
+    ],
+    [
+      "12px",
+      26
+    ],
+    [
+      "999px",
+      7
+    ],
+    [
+      "14px",
+      6
+    ],
+    [
+      "20px",
+      2
+    ]
+  ],
+  "shadows": [
+    [
+      "oklch(0 0 0 / 0.28) 0px 16px 36px -22px, oklch(0 0 0 / 0.08) 0px 4px 12px -6px",
+      20
+    ],
+    [
+      "oklab(0.975 0.00138918 0.00787846 / 0.17) 0px 1px 0px 0px inset, oklab(0 none none / 0.18) 0px -10px 22px 0px inset, oklab(0 none none / 0.08) 0px 1px 0px 0px, oklab(0.16 0.00771345 0.00919253 / 0.74) 0px 18px 34px -22px, oklab(0.66 0.18233 0.113933 / 0.09) 0px 0px 0px 1px",
+      7
+    ],
+    [
+      "oklab(0.16 0.00771345 0.00919253 / 0.08) 0px 0px 0px 1px inset",
+      7
+    ],
+    [
+      "oklch(0 0 0 / 0.32) 0px 24px 50px -28px, oklch(0 0 0 / 0.12) 0px 6px 18px -10px",
+      6
+    ],
+    [
+      "oklch(0 0 0 / 0.04) 0px 1px 2px 0px, oklch(0 0 0 / 0.08) 0px 8px 24px -12px",
+      6
+    ],
+    [
+      "oklch(0 0 0 / 0.18) 0px 30px 80px -20px",
+      1
+    ],
+    [
+      "oklch(0 0 0 / 0.2) 0px 30px 80px -20px",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, oklch(0.945 0.018 75) 0px 0px 0px 2px, rgba(0, 0, 0, 0) 0px 0px 0px 0px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "100%",
+      34
+    ],
+    [
+      "1200px",
+      9
+    ],
+    [
+      "448px",
+      7
+    ],
+    [
+      "789.491px",
+      6
+    ],
+    [
+      "371.525px",
+      6
+    ],
+    [
+      "572.505px",
+      5
+    ],
+    [
+      "1100px",
+      4
+    ],
+    [
+      "576px",
+      4
+    ],
+    [
+      "672px",
+      3
+    ],
+    [
+      "1000px",
+      2
+    ]
+  ],
+  "nav": [
+    {
+      "text": "Starborn\n.",
+      "href": "#hero"
+    },
+    {
+      "text": "Work",
+      "href": "#work"
+    },
+    {
+      "text": "Process",
+      "href": "#method"
+    },
+    {
+      "text": "Offer",
+      "href": "#offer"
+    },
+    {
+      "text": "Studio",
+      "href": "#studio"
+    },
+    {
+      "text": "FAQ",
+      "href": "#faq"
+    },
+    {
+      "text": "Book a Call",
+      "href": "#booking-section"
+    }
+  ],
+  "bodyBg": "oklch(0.975 0.008 80)",
+  "htmlBg": "oklch(0.975 0.008 80)",
+  "cards": [
+    {
+      "tag": "article",
+      "text": "CASE STUDY / 01 B2B SAAS 200 meetings booked in 3 weeks. 200 MEETINGS BOOKED $60K REVENUE ",
+      "rect": {
+        "x": 160,
+        "y": 2736,
+        "w": 1120,
+        "h": 834
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "",
+        "boxShadow": "none",
+        "padding": "96px 0px",
+        "maxWidth": "none",
+        "width": "1120px",
+        "height": "833.734px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "CASE STUDY / 02 B2B SAAS 672 demos booked in 30 days. $46.6K MRR ADDED 30K+ FOLLOWERS 672 ",
+      "rect": {
+        "x": 160,
+        "y": 3570,
+        "w": 1120,
+        "h": 736
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "",
+        "boxShadow": "none",
+        "padding": "96px 0px",
+        "maxWidth": "none",
+        "width": "1120px",
+        "height": "735.625px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "CASE STUDY / 03 AI CREATOR Biggest AI creator on LinkedIn in 3 months. 3.2M+ IMPRESSIONS 2",
+      "rect": {
+        "x": 160,
+        "y": 4305,
+        "w": 1120,
+        "h": 896
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "",
+        "boxShadow": "none",
+        "padding": "96px 0px",
+        "maxWidth": "none",
+        "width": "1120px",
+        "height": "895.734px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "CASE STUDY / 04 B2B CONSULTING $36K MRR added in 16 weeks. $36K MRR ADDED 2–4K LEADS PER P",
+      "rect": {
+        "x": 160,
+        "y": 5201,
+        "w": 1120,
+        "h": 996
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "",
+        "boxShadow": "none",
+        "padding": "96px 0px",
+        "maxWidth": "none",
+        "width": "1120px",
+        "height": "995.797px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "CASE STUDY / 05 AI SAAS $35K in monthly revenue added in 30 days. $35K MRR ADDED 1,736 NEW",
+      "rect": {
+        "x": 160,
+        "y": 6197,
+        "w": 1120,
+        "h": 526
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "",
+        "boxShadow": "none",
+        "padding": "96px 0px",
+        "maxWidth": "none",
+        "width": "1120px",
+        "height": "526.453px"
+      }
+    },
+    {
+      "tag": "article",
+      "text": "CASE STUDY / 06 CONFIDENTIAL · AGENCY 72 booked calls and 2.8M impressions in 26 days. 72 ",
+      "rect": {
+        "x": 160,
+        "y": 6723,
+        "w": 1120,
+        "h": 631
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "0px",
+        "border": "",
+        "boxShadow": "none",
+        "padding": "96px 0px",
+        "maxWidth": "none",
+        "width": "1120px",
+        "height": "631.047px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "What kind of results can I realistically expect? Outcomes vary by offer and market, but ou",
+      "rect": {
+        "x": 330,
+        "y": 14146,
+        "w": 780,
+        "h": 224
+      },
+      "style": {
+        "backgroundColor": "oklch(0.975 0.008 80)",
+        "borderRadius": "12px",
+        "border": "1px solid oklch(0.16 0.012 50 / 0.06)",
+        "boxShadow": "oklch(0 0 0 / 0.04) 0px 1px 2px 0px, oklch(0 0 0 / 0.08) 0px 8px 24px -12px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "780px",
+        "height": "223.562px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "How long until I start seeing results?",
+      "rect": {
+        "x": 330,
+        "y": 14382,
+        "w": 780,
+        "h": 90
+      },
+      "style": {
+        "backgroundColor": "oklch(0.975 0.008 80)",
+        "borderRadius": "12px",
+        "border": "1px solid oklch(0.16 0.012 50 / 0.06)",
+        "boxShadow": "oklch(0 0 0 / 0.04) 0px 1px 2px 0px, oklch(0 0 0 / 0.08) 0px 8px 24px -12px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "780px",
+        "height": "90px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "What do you actually need from me?",
+      "rect": {
+        "x": 330,
+        "y": 14484,
+        "w": 780,
+        "h": 90
+      },
+      "style": {
+        "backgroundColor": "oklch(0.975 0.008 80)",
+        "borderRadius": "12px",
+        "border": "1px solid oklch(0.16 0.012 50 / 0.06)",
+        "boxShadow": "oklch(0 0 0 / 0.04) 0px 1px 2px 0px, oklch(0 0 0 / 0.08) 0px 8px 24px -12px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "780px",
+        "height": "90px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "What if I already have an in-house marketing team?",
+      "rect": {
+        "x": 330,
+        "y": 14586,
+        "w": 780,
+        "h": 90
+      },
+      "style": {
+        "backgroundColor": "oklch(0.975 0.008 80)",
+        "borderRadius": "12px",
+        "border": "1px solid oklch(0.16 0.012 50 / 0.06)",
+        "boxShadow": "oklch(0 0 0 / 0.04) 0px 1px 2px 0px, oklch(0 0 0 / 0.08) 0px 8px 24px -12px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "780px",
+        "height": "90px"
+      }
+    }
+  ]
+}

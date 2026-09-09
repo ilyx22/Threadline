@@ -1,0 +1,3545 @@
+{
+  "site": "starborn",
+  "name": "starborn-comparison-table",
+  "verifiedAt": "2026-09-09T15:43:33.307Z",
+  "tolerancePx": 4,
+  "widths": [
+    {
+      "width": 1440,
+      "rootDelta": {
+        "dw": 0,
+        "dh": -3
+      },
+      "compared": 56,
+      "pass": 1,
+      "worst": 16,
+      "styleMismatch": 16,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -3
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0",
+          "tag": "p",
+          "text": "The honest comparison",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/1",
+          "tag": "h2",
+          "text": "Why not just hire a",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 1,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/1/0",
+          "tag": "em",
+          "text": "ghostwriter?",
+          "geom": {
+            "dx": 6,
+            "dy": -12,
+            "dw": -12,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "letterSpacing": [
+              "-0.816px",
+              "-2.176px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/0/0/2",
+          "tag": "p",
+          "text": "We've watched founders try eve",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -11,
+            "dw": 0,
+            "dh": -3
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -11,
+            "dw": 0,
+            "dh": -3
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -11,
+            "dw": 0,
+            "dh": -4
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -11,
+            "dw": 0,
+            "dh": -4
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1/0",
+          "tag": "span",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -11,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/1/1",
+          "tag": "div",
+          "text": "Starborn",
+          "geom": {
+            "dx": 0,
+            "dy": -11,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1/2",
+          "tag": "div",
+          "text": "Done-for-you",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -15,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2/0",
+          "tag": "div",
+          "text": "Ghostwriter",
+          "geom": {
+            "dx": 0,
+            "dy": -15,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/2/1",
+          "tag": "div",
+          "text": "$1–3K / mo",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -15,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3/0",
+          "tag": "div",
+          "text": "In-house hire",
+          "geom": {
+            "dx": 0,
+            "dy": -15,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/3/1",
+          "tag": "div",
+          "text": "$8–15K + equity",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -15,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4/0",
+          "tag": "div",
+          "text": "DIY",
+          "geom": {
+            "dx": 0,
+            "dy": -15,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/4/1",
+          "tag": "div",
+          "text": "Founder-led",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/0",
+          "tag": "div",
+          "text": "Time from you / week",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/0",
+          "tag": "div",
+          "text": "Strategy + ICP work",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/0",
+          "tag": "div",
+          "text": "DM / inbound system",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/0",
+          "tag": "div",
+          "text": "Senior writers on the account",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/0",
+          "tag": "div",
+          "text": "Time to first booked calls",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/2",
+          "tag": "p",
+          "text": "Pricing benchmarks pulled from",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.5)",
+              "oklab(0.16 0.0077 0.0092 / 0.5)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "rootDelta": {
+        "dw": 0,
+        "dh": 4
+      },
+      "compared": 56,
+      "pass": 38,
+      "worst": 106,
+      "styleMismatch": 17,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 4
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 8
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 8
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0",
+          "tag": "p",
+          "text": "The honest comparison",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/1",
+          "tag": "h2",
+          "text": "Why not just hire a",
+          "geom": {
+            "dx": -53,
+            "dy": 0,
+            "dw": 106,
+            "dh": 8
+          },
+          "ok": false,
+          "style": {
+            "fontSize": [
+              "47.104px",
+              "54.4px"
+            ],
+            "lineHeight": [
+              "48.9882px",
+              "56.576px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/0/0/1/0",
+          "tag": "em",
+          "text": "ghostwriter?",
+          "geom": {
+            "dx": 22,
+            "dy": -1,
+            "dw": 19,
+            "dh": 9
+          },
+          "ok": false,
+          "style": {
+            "fontSize": [
+              "47.104px",
+              "54.4px"
+            ],
+            "lineHeight": [
+              "48.9882px",
+              "56.576px"
+            ],
+            "letterSpacing": [
+              "-0.70656px",
+              "-2.176px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/0/0/2",
+          "tag": "p",
+          "text": "We've watched founders try eve",
+          "geom": {
+            "dx": 0,
+            "dy": 8,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 9,
+            "dw": 0,
+            "dh": -3
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 9,
+            "dw": 0,
+            "dh": -3
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 9,
+            "dw": 0,
+            "dh": -4
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 9,
+            "dw": 0,
+            "dh": -4
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1/0",
+          "tag": "span",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 9,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/1/1",
+          "tag": "div",
+          "text": "Starborn",
+          "geom": {
+            "dx": 0,
+            "dy": 9,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1/2",
+          "tag": "div",
+          "text": "Done-for-you",
+          "geom": {
+            "dx": 0,
+            "dy": 8,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 5,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2/0",
+          "tag": "div",
+          "text": "Ghostwriter",
+          "geom": {
+            "dx": 0,
+            "dy": 5,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/2/1",
+          "tag": "div",
+          "text": "$1–3K / mo",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 5,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3/0",
+          "tag": "div",
+          "text": "In-house hire",
+          "geom": {
+            "dx": 0,
+            "dy": 5,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/3/1",
+          "tag": "div",
+          "text": "$8–15K + equity",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 5,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4/0",
+          "tag": "div",
+          "text": "DIY",
+          "geom": {
+            "dx": 0,
+            "dy": 5,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/4/1",
+          "tag": "div",
+          "text": "Founder-led",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/0",
+          "tag": "div",
+          "text": "Time from you / week",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/0",
+          "tag": "div",
+          "text": "Strategy + ICP work",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/0",
+          "tag": "div",
+          "text": "DM / inbound system",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/0",
+          "tag": "div",
+          "text": "Senior writers on the account",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/0",
+          "tag": "div",
+          "text": "Time to first booked calls",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/2",
+          "tag": "p",
+          "text": "Pricing benchmarks pulled from",
+          "geom": {
+            "dx": 0,
+            "dy": 4,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.5)",
+              "oklab(0.16 0.0077 0.0092 / 0.5)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "rootDelta": {
+        "dw": 0,
+        "dh": 60
+      },
+      "compared": 56,
+      "pass": 0,
+      "worst": 175,
+      "styleMismatch": 23,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 32,
+            "dw": 0,
+            "dh": -4
+          },
+          "ok": false,
+          "style": {
+            "paddingLeft": [
+              "24px",
+              "40px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 30,
+            "dw": -32,
+            "dh": 5
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 30,
+            "dw": -32,
+            "dh": 5
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0",
+          "tag": "p",
+          "text": "The honest comparison",
+          "geom": {
+            "dx": 16,
+            "dy": 30,
+            "dw": -32,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/1",
+          "tag": "h2",
+          "text": "Why not just hire a",
+          "geom": {
+            "dx": -88,
+            "dy": 30,
+            "dw": 175,
+            "dh": 4
+          },
+          "ok": false,
+          "style": {
+            "fontSize": [
+              "35.328px",
+              "38.4px"
+            ],
+            "lineHeight": [
+              "36.7411px",
+              "39.936px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/0/0/1/0",
+          "tag": "em",
+          "text": "ghostwriter?",
+          "geom": {
+            "dx": 11,
+            "dy": 30,
+            "dw": 4,
+            "dh": 4
+          },
+          "ok": false,
+          "style": {
+            "fontSize": [
+              "35.328px",
+              "38.4px"
+            ],
+            "lineHeight": [
+              "36.7411px",
+              "39.936px"
+            ],
+            "letterSpacing": [
+              "-0.52992px",
+              "-1.536px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/0/0/2",
+          "tag": "p",
+          "text": "We've watched founders try eve",
+          "geom": {
+            "dx": 0,
+            "dy": 34,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 41,
+            "dw": -32,
+            "dh": -24
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 41,
+            "dw": -32,
+            "dh": -24
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 41,
+            "dw": -32,
+            "dh": -4
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 37,
+            "dw": -21,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 7,
+            "dy": 41,
+            "dw": -14,
+            "dh": -4
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1/0",
+          "tag": "span",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 41,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/1/1",
+          "tag": "div",
+          "text": "Starborn",
+          "geom": {
+            "dx": 7,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1/2",
+          "tag": "div",
+          "text": "Done-for-you",
+          "geom": {
+            "dx": 7,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 4,
+            "dy": 37,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2/0",
+          "tag": "div",
+          "text": "Ghostwriter",
+          "geom": {
+            "dx": 4,
+            "dy": 37,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/2/1",
+          "tag": "div",
+          "text": "$1–3K / mo",
+          "geom": {
+            "dx": 4,
+            "dy": 37,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 2,
+            "dy": 37,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3/0",
+          "tag": "div",
+          "text": "In-house hire",
+          "geom": {
+            "dx": 2,
+            "dy": 37,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/3/1",
+          "tag": "div",
+          "text": "$8–15K + equity",
+          "geom": {
+            "dx": 2,
+            "dy": 37,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": -2,
+            "dy": 37,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4/0",
+          "tag": "div",
+          "text": "DIY",
+          "geom": {
+            "dx": -2,
+            "dy": 37,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/4/1",
+          "tag": "div",
+          "text": "Founder-led",
+          "geom": {
+            "dx": -2,
+            "dy": 37,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 37,
+            "dw": -32,
+            "dh": -2
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 37,
+            "dw": -32,
+            "dh": 8
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/0",
+          "tag": "div",
+          "text": "Time from you / week",
+          "geom": {
+            "dx": 16,
+            "dy": 41,
+            "dw": -21,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 7,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 4,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 2,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": -2,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 45,
+            "dw": -32,
+            "dh": 8
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/0",
+          "tag": "div",
+          "text": "Strategy + ICP work",
+          "geom": {
+            "dx": 16,
+            "dy": 49,
+            "dw": -21,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 7,
+            "dy": 49,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 4,
+            "dy": 49,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 2,
+            "dy": 49,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": -2,
+            "dy": 49,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 53,
+            "dw": -32,
+            "dh": 8
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/0",
+          "tag": "div",
+          "text": "DM / inbound system",
+          "geom": {
+            "dx": 16,
+            "dy": 57,
+            "dw": -21,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 7,
+            "dy": 57,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 4,
+            "dy": 57,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 2,
+            "dy": 57,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": -2,
+            "dy": 57,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 61,
+            "dw": -32,
+            "dh": -13
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/0",
+          "tag": "div",
+          "text": "Senior writers on the account",
+          "geom": {
+            "dx": 16,
+            "dy": 66,
+            "dw": -21,
+            "dh": -22
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 7,
+            "dy": 54,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 4,
+            "dy": 54,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 2,
+            "dy": 54,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": -2,
+            "dy": 54,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 16,
+            "dy": 48,
+            "dw": -32,
+            "dh": -13
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/0",
+          "tag": "div",
+          "text": "Time to first booked calls",
+          "geom": {
+            "dx": 16,
+            "dy": 53,
+            "dw": -21,
+            "dh": -22
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 7,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 4,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 2,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": -2,
+            "dy": 41,
+            "dw": -14,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/2",
+          "tag": "p",
+          "text": "Pricing benchmarks pulled from",
+          "geom": {
+            "dx": 16,
+            "dy": 35,
+            "dw": -32,
+            "dh": -19
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.5)",
+              "oklab(0.16 0.0077 0.0092 / 0.5)"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "rootDelta": {
+        "dw": 0,
+        "dh": -108
+      },
+      "compared": 56,
+      "pass": 6,
+      "worst": 110,
+      "styleMismatch": 21,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -108
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0",
+          "tag": "p",
+          "text": "The honest comparison",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/1",
+          "tag": "h2",
+          "text": "Why not just hire a",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/1/0",
+          "tag": "em",
+          "text": "ghostwriter?",
+          "geom": {
+            "dx": 5,
+            "dy": 1,
+            "dw": -8,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "letterSpacing": [
+              "-0.528px",
+              "-1.408px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/0/0/2",
+          "tag": "p",
+          "text": "We've watched founders try eve",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": -110
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": -110
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": -4
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -3,
+            "dw": 17,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 17,
+            "dy": -16,
+            "dw": 1,
+            "dh": 12
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1/0",
+          "tag": "span",
+          "text": "",
+          "geom": {
+            "dx": 17,
+            "dy": -16,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/1/1",
+          "tag": "div",
+          "text": "Starborn",
+          "geom": {
+            "dx": 17,
+            "dy": -16,
+            "dw": 1,
+            "dh": 17
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1/2",
+          "tag": "div",
+          "text": "Done-for-you",
+          "geom": {
+            "dx": 17,
+            "dy": 1,
+            "dw": 1,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 18,
+            "dy": -16,
+            "dw": -18,
+            "dh": 14
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2/0",
+          "tag": "div",
+          "text": "Ghostwriter",
+          "geom": {
+            "dx": 18,
+            "dy": -16,
+            "dw": -18,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/2/1",
+          "tag": "div",
+          "text": "$1–3K / mo",
+          "geom": {
+            "dx": 18,
+            "dy": -16,
+            "dw": -18,
+            "dh": 13
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 43,
+            "dw": 9,
+            "dh": -45
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3/0",
+          "tag": "div",
+          "text": "In-house hire",
+          "geom": {
+            "dx": 0,
+            "dy": 43,
+            "dw": 9,
+            "dh": -33
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/3/1",
+          "tag": "div",
+          "text": "$8–15K + equity",
+          "geom": {
+            "dx": 0,
+            "dy": 10,
+            "dw": 9,
+            "dh": -13
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 10,
+            "dy": -3,
+            "dw": -10,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4/0",
+          "tag": "div",
+          "text": "DIY",
+          "geom": {
+            "dx": 10,
+            "dy": -3,
+            "dw": -10,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.55)",
+              "oklab(0.16 0.0077 0.0092 / 0.55)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/0/4/1",
+          "tag": "div",
+          "text": "Founder-led",
+          "geom": {
+            "dx": 10,
+            "dy": -3,
+            "dw": -10,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -3,
+            "dw": 0,
+            "dh": -86
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -3,
+            "dw": 0,
+            "dh": -5
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/0",
+          "tag": "div",
+          "text": "Time from you / week",
+          "geom": {
+            "dx": 0,
+            "dy": 5,
+            "dw": 2,
+            "dh": -20
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 2,
+            "dy": -6,
+            "dw": 2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 5,
+            "dy": -6,
+            "dw": 1,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 7,
+            "dy": 6,
+            "dw": -9,
+            "dh": -24
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": -1,
+            "dy": 6,
+            "dw": 1,
+            "dh": -24
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -8,
+            "dw": 0,
+            "dh": -12
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/0",
+          "tag": "div",
+          "text": "Strategy + ICP work",
+          "geom": {
+            "dx": 0,
+            "dy": -4,
+            "dw": 2,
+            "dh": -20
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 2,
+            "dy": -15,
+            "dw": 1,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 3,
+            "dy": -15,
+            "dw": 1,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 5,
+            "dy": -15,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/1/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 2,
+            "dy": -15,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -20,
+            "dw": 0,
+            "dh": -12
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/0",
+          "tag": "div",
+          "text": "DM / inbound system",
+          "geom": {
+            "dx": 0,
+            "dy": -16,
+            "dw": 0,
+            "dh": -20
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -26,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/2/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -26,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -26,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/2/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -26,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -33,
+            "dw": 0,
+            "dh": -32
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/0",
+          "tag": "div",
+          "text": "Senior writers on the account",
+          "geom": {
+            "dx": 0,
+            "dy": -29,
+            "dw": 0,
+            "dh": -40
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -49,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/3/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -49,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -49,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/3/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -49,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -65,
+            "dw": 0,
+            "dh": -25
+          },
+          "ok": false,
+          "style": {
+            "paddingTop": [
+              "20px",
+              "24px"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/0",
+          "tag": "div",
+          "text": "Time to first booked calls",
+          "geom": {
+            "dx": 0,
+            "dy": -58,
+            "dw": 0,
+            "dh": -40
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.85)",
+              "oklab(0.16 0.0077 0.0092 / 0.8)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -77,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "0px",
+              "6px"
+            ],
+            "paddingLeft": [
+              "0px",
+              "12px"
+            ],
+            "backgroundColor": [
+              "rgba(0, 0, 0, 0)",
+              "oklab(0.66 0.14 0.09 / 0.08)"
+            ]
+          }
+        },
+        {
+          "ref": "0/0/1/0/1/4/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -77,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -77,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/1/4/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -77,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/2",
+          "tag": "p",
+          "text": "Pricing benchmarks pulled from",
+          "geom": {
+            "dx": 0,
+            "dy": -90,
+            "dw": 0,
+            "dh": -18
+          },
+          "ok": false,
+          "style": {
+            "color": [
+              "oklab(0.16 0.00771345 0.00919253 / 0.5)",
+              "oklab(0.16 0.0077 0.0092 / 0.5)"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

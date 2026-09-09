@@ -1,0 +1,431 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "Turn Your LinkedIn Into a Pipeline Machine",
+      "rect": {
+        "x": 32,
+        "y": 233,
+        "w": 664,
+        "h": 151
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", \"Instrument Serif Fallback\"",
+        "fontSize": "72px",
+        "fontWeight": "400",
+        "lineHeight": "75.6px",
+        "letterSpacing": "-1.8px",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "Ghostwriting that sounds like you and drives pipeline",
+      "rect": {
+        "x": 336,
+        "y": 759,
+        "w": 768,
+        "h": 79
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "36px",
+        "fontWeight": "700",
+        "lineHeight": "39.6px",
+        "letterSpacing": "-0.9px",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Our 8-Step Process",
+      "rect": {
+        "x": 32,
+        "y": 1907,
+        "w": 1376,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "52.8px",
+        "letterSpacing": "-1.2px",
+        "textTransform": "none",
+        "color": "rgb(2, 228, 129)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Premium Features Included",
+      "rect": {
+        "x": 32,
+        "y": 3210,
+        "w": 1376,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "52.8px",
+        "letterSpacing": "-1.2px",
+        "textTransform": "none",
+        "color": "rgb(2, 228, 129)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "What We're Building Toward",
+      "rect": {
+        "x": 336,
+        "y": 4536,
+        "w": 768,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "52.8px",
+        "letterSpacing": "-1.2px",
+        "textTransform": "none",
+        "color": "rgb(2, 228, 129)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Turn Engagement Into Outreach",
+      "rect": {
+        "x": 81,
+        "y": 5417,
+        "w": 1278,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "52.8px",
+        "letterSpacing": "-1.2px",
+        "textTransform": "none",
+        "color": "rgb(2, 228, 129)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Who Is Our Ideal Client?",
+      "rect": {
+        "x": 32,
+        "y": 6300,
+        "w": 1376,
+        "h": 53
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "52.8px",
+        "letterSpacing": "-1.2px",
+        "textTransform": "none",
+        "color": "rgb(2, 228, 129)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "Your voice, captured",
+      "rect": {
+        "x": 154,
+        "y": 979,
+        "w": 160,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "16 to 30 posts a month, done for you",
+      "rect": {
+        "x": 587,
+        "y": 979,
+        "w": 281,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Inspiration, then original ideas",
+      "rect": {
+        "x": 1019,
+        "y": 979,
+        "w": 233,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Audience built in your ICP",
+      "rect": {
+        "x": 154,
+        "y": 1188,
+        "w": 199,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Engagement turned into pipeline",
+      "rect": {
+        "x": 587,
+        "y": 1188,
+        "w": 251,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Thought-leader ads",
+      "rect": {
+        "x": 1019,
+        "y": 1188,
+        "w": 153,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "600",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(255, 255, 255)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "UNDERSTORY RANKS NO. 140 ON INC. 5000 LIST OF FASTEST-GROWING COMPANIES IN U.S. READ MORE",
+      "rect": {
+        "x": 364,
+        "y": 10,
+        "w": 712,
+        "h": 17
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "700",
+        "lineHeight": "16.5px",
+        "letterSpacing": "0.96px",
+        "textTransform": "uppercase",
+        "color": "rgb(7, 16, 24)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "For founders and executives of B2B companies who know they should be posting, but don't ha",
+      "rect": {
+        "x": 32,
+        "y": 408,
+        "w": 664,
+        "h": 65
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "20px",
+        "fontWeight": "400",
+        "lineHeight": "32.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(85.1236 -0.612259 -3.7138)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "WHAT MAKES US UNIQUE",
+      "rect": {
+        "x": 336,
+        "y": 731,
+        "w": 768,
+        "h": 16
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "lineHeight": "16px",
+        "letterSpacing": "3px",
+        "textTransform": "uppercase",
+        "color": "rgb(2, 228, 129)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We capture how you actually think, then build the audience and the outbound around every p",
+      "rect": {
+        "x": 336,
+        "y": 850,
+        "w": 768,
+        "h": 59
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "18px",
+        "fontWeight": "400",
+        "lineHeight": "29.25px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(85.1236 -0.612259 -3.7138)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "One 60 to 90 minute interview and a calibration round, and the posts become indistinguisha",
+      "rect": {
+        "x": 106,
+        "y": 1021,
+        "w": 363,
+        "h": 68
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "22.75px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(85.1236 -0.612259 -3.7138)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Written, designed, scheduled, and posted. You approve; you never have to open LinkedIn unl",
+      "rect": {
+        "x": 539,
+        "y": 1021,
+        "w": 363,
+        "h": 68
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "22.75px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(85.1236 -0.612259 -3.7138)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We monitor the posts landing in your ICP and from the top voices in your space for proven ",
+      "rect": {
+        "x": 971,
+        "y": 1021,
+        "w": 363,
+        "h": 91
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "22.75px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(85.1236 -0.612259 -3.7138)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We grow your network with the exact buyers you want reading every post, so reach compounds",
+      "rect": {
+        "x": 106,
+        "y": 1230,
+        "w": 363,
+        "h": 68
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", Inter, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "22.75px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(85.1236 -0.612259 -3.7138)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": []
+}

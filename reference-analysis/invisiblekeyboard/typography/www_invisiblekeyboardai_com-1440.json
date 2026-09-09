@@ -1,0 +1,532 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "Your content, everywhere it counts.",
+      "rect": {
+        "x": 272,
+        "y": 250,
+        "w": 896,
+        "h": 160
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "80px",
+        "fontWeight": "700",
+        "lineHeight": "76px",
+        "letterSpacing": "-3.2px",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "The state of founder content in 2026.",
+      "rect": {
+        "x": 515,
+        "y": 306,
+        "w": 409,
+        "h": 91
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "48px",
+        "fontWeight": "700",
+        "lineHeight": "48px",
+        "letterSpacing": "-1.44px",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "We are not a ghostwriting agency. We’re the content team you don’t have yet.",
+      "rect": {
+        "x": 272,
+        "y": 1173,
+        "w": 896,
+        "h": 304
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "80px",
+        "fontWeight": "700",
+        "lineHeight": "76px",
+        "letterSpacing": "-3.2px",
+        "textTransform": "none",
+        "color": "lab(3.04863 0 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "We run the full content machine. You just review.",
+      "rect": {
+        "x": 210,
+        "y": 2194,
+        "w": 672,
+        "h": 228
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "80px",
+        "fontWeight": "700",
+        "lineHeight": "76px",
+        "letterSpacing": "-3.2px",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Embedded in your team, via Slack.",
+      "rect": {
+        "x": 210,
+        "y": 3254,
+        "w": 486,
+        "h": 228
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "80px",
+        "fontWeight": "700",
+        "lineHeight": "76px",
+        "letterSpacing": "-3.2px",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Live in seven days.",
+      "rect": {
+        "x": 210,
+        "y": 4226,
+        "w": 536,
+        "h": 76
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "80px",
+        "fontWeight": "700",
+        "lineHeight": "76px",
+        "letterSpacing": "-3.2px",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "What founder-led trust looks like.",
+      "rect": {
+        "x": 210,
+        "y": 5041,
+        "w": 576,
+        "h": 228
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "80px",
+        "fontWeight": "700",
+        "lineHeight": "76px",
+        "letterSpacing": "-3.2px",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "Ideation & strategy",
+      "rect": {
+        "x": 243,
+        "y": 2579,
+        "w": 436,
+        "h": 28
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "20px",
+        "fontWeight": "500",
+        "lineHeight": "27.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Content & creative",
+      "rect": {
+        "x": 761,
+        "y": 2579,
+        "w": 436,
+        "h": 28
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "20px",
+        "fontWeight": "500",
+        "lineHeight": "27.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Distribution & engagement",
+      "rect": {
+        "x": 243,
+        "y": 2781,
+        "w": 436,
+        "h": 28
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "20px",
+        "fontWeight": "500",
+        "lineHeight": "27.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Analytics & optimization",
+      "rect": {
+        "x": 761,
+        "y": 2781,
+        "w": 436,
+        "h": 28
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "20px",
+        "fontWeight": "500",
+        "lineHeight": "27.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Same-day reactions",
+      "rect": {
+        "x": 234,
+        "y": 3622,
+        "w": 462,
+        "h": 22
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "22px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Inside your rhythm",
+      "rect": {
+        "x": 234,
+        "y": 3718,
+        "w": 462,
+        "h": 22
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "22px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(97.68 -0.0000298023 0.0000119209)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "[FREE · WHITE PAPER]",
+      "rect": {
+        "x": 515,
+        "y": 267,
+        "w": 409,
+        "h": 16
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+        "fontSize": "10.88px",
+        "fontWeight": "400",
+        "lineHeight": "16.32px",
+        "letterSpacing": "1.9584px",
+        "textTransform": "uppercase",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "2 years. 50+ founders. 8 countries. What's working, what's dead, and the exact frameworks ",
+      "rect": {
+        "x": 515,
+        "y": 412,
+        "w": 409,
+        "h": 47
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", Georgia, serif",
+        "fontSize": "18px",
+        "fontWeight": "400",
+        "lineHeight": "24.75px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "DISTRIBUTION FOR B2B SOFTWARE BRANDS.",
+      "rect": {
+        "x": 210,
+        "y": 209,
+        "w": 1020,
+        "h": 17
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "11.2px",
+        "fontWeight": "500",
+        "lineHeight": "16.8px",
+        "letterSpacing": "2.464px",
+        "textTransform": "uppercase",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "We write it, post it, and put it in front of the right buyers — week after week.",
+      "rect": {
+        "x": 384,
+        "y": 442,
+        "w": 672,
+        "h": 33
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", Georgia, serif",
+        "fontSize": "20px",
+        "fontWeight": "400",
+        "lineHeight": "32.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "20 minutes · no deck, no pitch · pricing is public before you book",
+      "rect": {
+        "x": 210,
+        "y": 590,
+        "w": 1020,
+        "h": 20
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Verified performance across current B2B client portfolio",
+      "rect": {
+        "x": 272,
+        "y": 887,
+        "w": 896,
+        "h": 16
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "lineHeight": "16px",
+        "letterSpacing": "0.3px",
+        "textTransform": "none",
+        "color": "oklab(0.719998 -0.00000703335 0.0000168085 / 0.7)",
+        "fontStyle": "italic"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "WHAT WE ARE",
+      "rect": {
+        "x": 210,
+        "y": 1136,
+        "w": 1020,
+        "h": 16
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", ui-monospace, SFMono-Regular, Menlo, monospace",
+        "fontSize": "10.88px",
+        "fontWeight": "400",
+        "lineHeight": "16.32px",
+        "letterSpacing": "1.9584px",
+        "textTransform": "uppercase",
+        "color": "oklab(0.15 -0.00000148267 0.00000350922 / 0.6)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Ghostwriters finish a brief and disappear. We stay inside your company — on Slack, in the ",
+      "rect": {
+        "x": 384,
+        "y": 1509,
+        "w": 672,
+        "h": 65
+      },
+      "style": {
+        "fontFamily": "\"Instrument Serif\", Georgia, serif",
+        "fontSize": "20px",
+        "fontWeight": "400",
+        "lineHeight": "32.5px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "oklab(0.15 -0.00000148267 0.00000350922 / 0.7)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": [
+    {
+      "tag": "span",
+      "text": "INVISIBLE KEYBOARD",
+      "rect": {
+        "x": 108,
+        "y": 32,
+        "w": 167,
+        "h": 17
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "11.2px",
+        "fontWeight": "500",
+        "lineHeight": "16.8px",
+        "letterSpacing": "2.464px",
+        "textTransform": "uppercase",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "a",
+      "text": "SOLUTIONS",
+      "rect": {
+        "x": 836,
+        "y": 32,
+        "w": 88,
+        "h": 17
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "11.2px",
+        "fontWeight": "500",
+        "lineHeight": "16.8px",
+        "letterSpacing": "2.464px",
+        "textTransform": "uppercase",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "a",
+      "text": "STORIES",
+      "rect": {
+        "x": 956,
+        "y": 32,
+        "w": 67,
+        "h": 17
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "11.2px",
+        "fontWeight": "500",
+        "lineHeight": "16.8px",
+        "letterSpacing": "2.464px",
+        "textTransform": "uppercase",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "a",
+      "text": "RESOURCES",
+      "rect": {
+        "x": 1056,
+        "y": 32,
+        "w": 93,
+        "h": 17
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "11.2px",
+        "fontWeight": "500",
+        "lineHeight": "16.8px",
+        "letterSpacing": "2.464px",
+        "textTransform": "uppercase",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "DISTRIBUTION FOR B2B SOFTWARE BRANDS.",
+      "rect": {
+        "x": 210,
+        "y": 209,
+        "w": 1020,
+        "h": 17
+      },
+      "style": {
+        "fontFamily": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "fontSize": "11.2px",
+        "fontWeight": "500",
+        "lineHeight": "16.8px",
+        "letterSpacing": "2.464px",
+        "textTransform": "uppercase",
+        "color": "lab(67.52 -0.0000298023 0)",
+        "fontStyle": "normal"
+      }
+    }
+  ]
+}

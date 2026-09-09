@@ -1,0 +1,50 @@
+{
+  "links": [
+    "https://demandii.com/",
+    "https://www.demandii.com/",
+    "https://www.demandii.com/case-studies",
+    "https://www.demandii.com/booking",
+    "javascript:void(0);",
+    "javascript:void(0);",
+    "https://www.demandii.com/booking/",
+    "https://www.demandii.com/booking",
+    "https://www.demandii.com/community",
+    "https://www.demandii.com/privacy-policy",
+    "https://www.demandii.com/terms-of-service"
+  ],
+  "meta": {
+    "viewport": "width=device-width, initial-scale=1",
+    "title": "Demandii - A Demand Generation Agency ",
+    "og:title": "Demandii - A Demand Generation Agency ",
+    "description": "Demandii helps busy B2B CEOs build demand on LinkedIn through CEO-led short-form content from a single monthly 1-hr interview. ",
+    "og:description": "Demandii helps busy B2B CEOs build demand on LinkedIn through CEO-led short-form content from a single monthly 1-hr interview. ",
+    "author": "Matthew Hunt",
+    "og:author": "Matthew Hunt",
+    "image": "https://assets.cdn.filesafe.space/IK5prlrd0qgP26mSBBP6/media/6918ecb7a8777a4f04cc710d.png",
+    "og:image": "https://assets.cdn.filesafe.space/IK5prlrd0qgP26mSBBP6/media/6918ecb7a8777a4f04cc710d.png",
+    "twitter:card": "summary_large_image",
+    "twitter:image": "https://assets.cdn.filesafe.space/IK5prlrd0qgP26mSBBP6/media/6918ecb7a8777a4f04cc710d.png",
+    "keywords": "demand generation ",
+    "og:keywords": "demand generation ",
+    "og:type": "website",
+    "twitter:type": "website"
+  },
+  "scripts": [
+    "analytics.tiktok.com/i18n/pixel/static/identify_2a73ddc0.js",
+    "analytics.tiktok.com/i18n/pixel/static/main.MWRhY2RiNmFkOQ.js",
+    "snap.licdn.com/li.lms-analytics/insight.old.min.js",
+    "connect.facebook.net/signals/config/1783039189811573?v=2.9.396&r=stable&domain=www.demandi",
+    "connect.facebook.net/en_US/fbevents.js",
+    "analytics.tiktok.com/i18n/pixel/events.js?sdkid=D1M069RC77U8FVH5DRE0&lib=ttq",
+    "s3-us-west-2.amazonaws.com/b2bjsstore/b/5EN4M0HP7YOM/reb2b.js.gz",
+    "snap.licdn.com/li.lms-analytics/insight.min.js",
+    "stcdn.leadconnectorhq.com/_preview/BEFHiyN0.js",
+    "www.googletagmanager.com/gtag/js?id=G-3D474KXVPX",
+    "insightcdn.net/js/5e579da6ba6e15ff1246988efef3bdce.js",
+    "insightcdn.net/js/07e12bc56c15c9e28f79e7cc8feacaf9.js",
+    "widgets.leadconnectorhq.com/loader.js",
+    "widgets.leadconnectorhq.com/chat-widget/chat-widget.esm.js?v=1788968074667",
+    "widgets.leadconnectorhq.com/chat-widget/chat-widget.js",
+    "stcdn.leadconnectorhq.com/libphonenumber/1.12.41/libphonenumber-js.min.js"
+  ]
+}

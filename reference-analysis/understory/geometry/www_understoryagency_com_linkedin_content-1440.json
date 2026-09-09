@@ -1,0 +1,356 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "min-h-screen",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 9175
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Turn Your LinkedIn Into a Pipeline Machine"
+    },
+    {
+      "tag": "header",
+      "id": "",
+      "cls": "bg-[#171719] text-white sticky top-0 z-50 border-b border-gray-800/50",
+      "rect": {
+        "x": 0,
+        "y": 37,
+        "w": 1440,
+        "h": 112
+      },
+      "bg": "rgb(23, 23, 25)",
+      "heading": ""
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "cls": "bg-[#171719]",
+      "rect": {
+        "x": 0,
+        "y": 148,
+        "w": 1440,
+        "h": 8510
+      },
+      "bg": "rgb(23, 23, 25)",
+      "heading": "Turn Your LinkedIn Into a Pipeline Machine"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative overflow-hidden bg-[#171719] pt-12 pb-8 md:pt-16 md:pb-10",
+      "rect": {
+        "x": 0,
+        "y": 148,
+        "w": 1440,
+        "h": 478
+      },
+      "bg": "rgb(23, 23, 25)",
+      "heading": "Turn Your LinkedIn Into a Pipeline Machine"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 !pt-8 md:!pt-14 !pb-4 md:!pb-8",
+      "rect": {
+        "x": 0,
+        "y": 626,
+        "w": 1440,
+        "h": 988
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Ghostwriting that sounds like you and drives pipeline"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 !py-6 md:!py-8",
+      "rect": {
+        "x": 0,
+        "y": 1613,
+        "w": 1440,
+        "h": 182
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 ",
+      "rect": {
+        "x": 0,
+        "y": 1795,
+        "w": 1440,
+        "h": 1302
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Our 8-Step Process"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 ",
+      "rect": {
+        "x": 0,
+        "y": 3098,
+        "w": 1440,
+        "h": 1327
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Premium Features Included"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 ",
+      "rect": {
+        "x": 0,
+        "y": 4424,
+        "w": 1440,
+        "h": 809
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "What We're Building Toward"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-20",
+      "rect": {
+        "x": 0,
+        "y": 5234,
+        "w": 1440,
+        "h": 955
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Turn Engagement Into Outreach"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative py-12 md:py-28 ",
+      "rect": {
+        "x": 0,
+        "y": 6188,
+        "w": 1440,
+        "h": 779
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Who Is Our Ideal Client?"
+    },
+    {
+      "tag": "section",
+      "id": "faq",
+      "cls": "relative py-16 md:py-28",
+      "rect": {
+        "x": 0,
+        "y": 6967,
+        "w": 1440,
+        "h": 1170
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "LinkedIn content, answered."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "relative overflow-hidden py-14 md:py-32",
+      "rect": {
+        "x": 0,
+        "y": 8137,
+        "w": 1440,
+        "h": 521
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Ready to Turn Your LinkedIn Into a Growth Engine?"
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "bg-[#1d1e21] text-white",
+      "rect": {
+        "x": 0,
+        "y": 8658,
+        "w": 1440,
+        "h": 517
+      },
+      "bg": "rgb(29, 30, 33)",
+      "heading": "SERVICES"
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Allbound",
+      "rect": {
+        "x": 290,
+        "y": 62,
+        "w": 78,
+        "h": 29
+      },
+      "style": {
+        "backgroundColor": "oklab(0.999994 0.0000455678 0.0000200868 / 0.03)",
+        "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+        "boxShadow": "none",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "padding": "6px 12px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Paid Media",
+      "rect": {
+        "x": 376,
+        "y": 62,
+        "w": 90,
+        "h": 29
+      },
+      "style": {
+        "backgroundColor": "oklab(0.999994 0.0000455678 0.0000200868 / 0.03)",
+        "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+        "boxShadow": "none",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "padding": "6px 12px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "GTM Engineering",
+      "rect": {
+        "x": 474,
+        "y": 62,
+        "w": 126,
+        "h": 29
+      },
+      "style": {
+        "backgroundColor": "oklab(0.999994 0.0000455678 0.0000200868 / 0.03)",
+        "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+        "boxShadow": "none",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "padding": "6px 12px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "LinkedIn Content",
+      "rect": {
+        "x": 608,
+        "y": 62,
+        "w": 124,
+        "h": 29
+      },
+      "style": {
+        "backgroundColor": "rgba(2, 228, 129, 0.08)",
+        "color": "rgb(2, 228, 129)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgba(2, 228, 129, 0.4)",
+        "boxShadow": "none",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "padding": "6px 12px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Creative & Landing Pages",
+      "rect": {
+        "x": 740,
+        "y": 62,
+        "w": 174,
+        "h": 29
+      },
+      "style": {
+        "backgroundColor": "oklab(0.999994 0.0000455678 0.0000200868 / 0.03)",
+        "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+        "boxShadow": "none",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "padding": "6px 12px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "RevOps",
+      "rect": {
+        "x": 922,
+        "y": 62,
+        "w": 71,
+        "h": 29
+      },
+      "style": {
+        "backgroundColor": "oklab(0.999994 0.0000455678 0.0000200868 / 0.03)",
+        "color": "oklab(0.999994 0.0000455678 0.0000200868 / 0.9)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid oklab(0.999994 0.0000455678 0.0000200868 / 0.1)",
+        "boxShadow": "none",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "padding": "6px 12px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Resources",
+      "rect": {
+        "x": 1317,
+        "y": 60,
+        "w": 107,
+        "h": 30
+      },
+      "style": {
+        "backgroundColor": "rgba(2, 228, 129, 0.08)",
+        "color": "rgb(2, 228, 129)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgba(2, 228, 129, 0.4)",
+        "boxShadow": "none",
+        "fontSize": "12px",
+        "fontWeight": "600",
+        "padding": "6px 12px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Testimonials",
+      "rect": {
+        "x": 756,
+        "y": 105,
+        "w": 131,
+        "h": 30
+      },
+      "style": {
+        "backgroundColor": "rgba(2, 228, 129, 0.08)",
+        "color": "rgb(2, 228, 129)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgba(2, 228, 129, 0.4)",
+        "boxShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "600",
+        "padding": "4px 12px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

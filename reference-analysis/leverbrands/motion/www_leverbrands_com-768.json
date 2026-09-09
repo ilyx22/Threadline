@@ -1,0 +1,63 @@
+{
+  "keyframes": [
+    {
+      "name": "__framer-loading-spin",
+      "frames": [
+        "0% { transform: rotate(0deg); }",
+        "100% { transform: rotate(360deg); }"
+      ]
+    },
+    {
+      "name": "lbm",
+      "frames": [
+        "0% { transform: translateX(0px); }",
+        "100% { transform: translateX(-50%); }"
+      ]
+    },
+    {
+      "name": "lbb-scroll",
+      "frames": [
+        "0% { transform: translateX(0px); }",
+        "100% { transform: translateX(-50%); }"
+      ]
+    }
+  ],
+  "animated": [
+    {
+      "tag": "div",
+      "cls": "",
+      "name": "lbm",
+      "duration": "45s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "div",
+      "cls": "lbb-track",
+      "name": "lbb-scroll",
+      "duration": "68s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    }
+  ],
+  "easings": [
+    [
+      "ease, ease 0.3s, 0.3s",
+      50
+    ],
+    [
+      "ease, cubic-bezier(0.2, 0.7, 0.3, 1) 0.3s, 0.3s",
+      6
+    ],
+    [
+      "ease, ease, ease 0.25s, 0.25s, 0.25s",
+      3
+    ],
+    [
+      "ease, ease 0.2s, 0.2s",
+      1
+    ]
+  ]
+}

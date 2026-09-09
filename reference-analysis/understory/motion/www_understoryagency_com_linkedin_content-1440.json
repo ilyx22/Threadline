@@ -1,0 +1,95 @@
+{
+  "keyframes": [
+    {
+      "name": "hear-clients-spin",
+      "frames": [
+        "100% { --hear-clients-angle: 360deg; }"
+      ]
+    },
+    {
+      "name": "hear-clients-breathe",
+      "frames": [
+        "0%, 100% { box-shadow: rgba(2, 228, 129, 0.35) 0px 0px 16px, rgba(2, 228, 129, 0.16) 0px 0px 40px; }",
+        "50% { box-shadow: rgba(2, 228, 129, 0.6) 0px 0px 26px, rgba(2, 228, 129, 0.28) 0px 0px 64px; }"
+      ]
+    },
+    {
+      "name": "spin",
+      "frames": [
+        "100% { transform: rotate(360deg); }"
+      ]
+    },
+    {
+      "name": "swipe-out-left",
+      "frames": [
+        "0% { transform: var(--y) translateX(var(--swipe-amount-x)); opacity: 1; }",
+        "100% { transform: var(--y) translateX(calc(var(--swipe-amount-x) - 100%)); opacity: 0; }"
+      ]
+    },
+    {
+      "name": "swipe-out-right",
+      "frames": [
+        "0% { transform: var(--y) translateX(var(--swipe-amount-x)); opacity: 1; }",
+        "100% { transform: var(--y) translateX(calc(var(--swipe-amount-x) + 100%)); opacity: 0; }"
+      ]
+    },
+    {
+      "name": "swipe-out-up",
+      "frames": [
+        "0% { transform: var(--y) translateY(var(--swipe-amount-y)); opacity: 1; }",
+        "100% { transform: var(--y) translateY(calc(var(--swipe-amount-y) - 100%)); opacity: 0; }"
+      ]
+    },
+    {
+      "name": "swipe-out-down",
+      "frames": [
+        "0% { transform: var(--y) translateY(var(--swipe-amount-y)); opacity: 1; }",
+        "100% { transform: var(--y) translateY(calc(var(--swipe-amount-y) + 100%)); opacity: 0; }"
+      ]
+    },
+    {
+      "name": "sonner-fade-in",
+      "frames": [
+        "0% { opacity: 0; transform: scale(0.8); }",
+        "100% { opacity: 1; transform: scale(1); }"
+      ]
+    },
+    {
+      "name": "sonner-fade-out",
+      "frames": [
+        "0% { opacity: 1; transform: scale(1); }",
+        "100% { opacity: 0; transform: scale(0.8); }"
+      ]
+    },
+    {
+      "name": "sonner-spin",
+      "frames": [
+        "0% { opacity: 1; }",
+        "100% { opacity: 0.15; }"
+      ]
+    }
+  ],
+  "animated": [],
+  "easings": [
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.3s",
+      56
+    ],
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.15s",
+      32
+    ],
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.2s",
+      23
+    ],
+    [
+      "cubic-bezier(0, 0, 0.2, 1) 0.2s",
+      5
+    ],
+    [
+      "ease, ease 0.3s, 0.3s",
+      5
+    ]
+  ]
+}

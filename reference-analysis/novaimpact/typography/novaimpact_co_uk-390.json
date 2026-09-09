@@ -1,0 +1,552 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "Turn Your AI Expertise into New Business",
+      "rect": {
+        "x": 20,
+        "y": 120,
+        "w": 350,
+        "h": 139
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "45.49px",
+        "fontWeight": "400",
+        "lineHeight": "46.3998px",
+        "letterSpacing": "-0.9098px",
+        "textTransform": "none",
+        "color": "rgb(244, 241, 234)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "What we do",
+      "rect": {
+        "x": 20,
+        "y": 1476,
+        "w": 350,
+        "h": 31
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "28.58px",
+        "fontWeight": "400",
+        "lineHeight": "31.438px",
+        "letterSpacing": "-0.40012px",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "The best thinkers deserve an audience that knows their name and trusts their judgement.",
+      "rect": {
+        "x": 20,
+        "y": 4108,
+        "w": 350,
+        "h": 126
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "28.58px",
+        "fontWeight": "400",
+        "lineHeight": "31.438px",
+        "letterSpacing": "-0.40012px",
+        "textTransform": "none",
+        "color": "rgb(244, 241, 234)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Results that compound",
+      "rect": {
+        "x": 20,
+        "y": 5368,
+        "w": 350,
+        "h": 31
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "28.58px",
+        "fontWeight": "400",
+        "lineHeight": "31.438px",
+        "letterSpacing": "-0.40012px",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Ready to turn your expertise into new business?",
+      "rect": {
+        "x": 20,
+        "y": 8732,
+        "w": 350,
+        "h": 63
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "28.58px",
+        "fontWeight": "400",
+        "lineHeight": "31.438px",
+        "letterSpacing": "-0.40012px",
+        "textTransform": "none",
+        "color": "rgb(244, 241, 234)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Your second brain",
+      "rect": {
+        "x": 20,
+        "y": 9269,
+        "w": 350,
+        "h": 31
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "28.58px",
+        "fontWeight": "400",
+        "lineHeight": "31.438px",
+        "letterSpacing": "-0.40012px",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "A small team, by design",
+      "rect": {
+        "x": 20,
+        "y": 10454,
+        "w": 350,
+        "h": 31
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "28.58px",
+        "fontWeight": "400",
+        "lineHeight": "31.438px",
+        "letterSpacing": "-0.40012px",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "LinkedIn Thought Leadership",
+      "rect": {
+        "x": 20,
+        "y": 2043,
+        "w": 350,
+        "h": 25
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "20.8px",
+        "fontWeight": "400",
+        "lineHeight": "24.96px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Podcast Production",
+      "rect": {
+        "x": 20,
+        "y": 2795,
+        "w": 350,
+        "h": 25
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "20.8px",
+        "fontWeight": "400",
+        "lineHeight": "24.96px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Substack Writing",
+      "rect": {
+        "x": 20,
+        "y": 3520,
+        "w": 350,
+        "h": 25
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "20.8px",
+        "fontWeight": "400",
+        "lineHeight": "24.96px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Partner at Bain & Company",
+      "rect": {
+        "x": 49,
+        "y": 6230,
+        "w": 292,
+        "h": 25
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "20.8px",
+        "fontWeight": "400",
+        "lineHeight": "24.96px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "AI Governance Leader & Author",
+      "rect": {
+        "x": 49,
+        "y": 6711,
+        "w": 292,
+        "h": 50
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "20.8px",
+        "fontWeight": "400",
+        "lineHeight": "24.96px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "EWOR-backed Gen Z founder",
+      "rect": {
+        "x": 49,
+        "y": 7241,
+        "w": 292,
+        "h": 25
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "20.8px",
+        "fontWeight": "400",
+        "lineHeight": "24.96px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "We partner with senior executives, AI founders, and authors to articulate their perspectiv",
+      "rect": {
+        "x": 20,
+        "y": 287,
+        "w": 350,
+        "h": 188
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "17.95px",
+        "fontWeight": "400",
+        "lineHeight": "26.925px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(170, 182, 204)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "TRUSTED BY LEADERS AT",
+      "rect": {
+        "x": 20,
+        "y": 686,
+        "w": 350,
+        "h": 16
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "lineHeight": "16px",
+        "letterSpacing": "1.2px",
+        "textTransform": "uppercase",
+        "color": "lab(73.6356 -0.889182 -12.669 / 0.7)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Your Technical LinkedIn Ghostwriter",
+      "rect": {
+        "x": 25,
+        "y": 1162,
+        "w": 257,
+        "h": 20
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "lineHeight": "20px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(170, 182, 204)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Nova Impact is your thought-leadership and ghostwriting partner. We are your second brain,",
+      "rect": {
+        "x": 20,
+        "y": 1524,
+        "w": 350,
+        "h": 108
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "17.95px",
+        "fontWeight": "400",
+        "lineHeight": "26.925px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(74, 88, 114)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "01",
+      "rect": {
+        "x": 20,
+        "y": 2007,
+        "w": 350,
+        "h": 28
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "20px",
+        "fontWeight": "400",
+        "lineHeight": "28px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(138, 90, 18)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Strategy, ghostwriting, and analytics-driven iteration for executive profiles. Build your ",
+      "rect": {
+        "x": 20,
+        "y": 2084,
+        "w": 350,
+        "h": 135
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "17.95px",
+        "fontWeight": "400",
+        "lineHeight": "26.925px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(74, 88, 114)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "From £2,500 per month · LinkedIn only",
+      "rect": {
+        "x": 20,
+        "y": 2239,
+        "w": 350,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "500",
+        "lineHeight": "24px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(14, 26, 49)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "02",
+      "rect": {
+        "x": 20,
+        "y": 2759,
+        "w": 350,
+        "h": 28
+      },
+      "style": {
+        "fontFamily": "Georgia, \"Times New Roman\", \"Iowan Old Style\", Cambria, serif",
+        "fontSize": "20px",
+        "fontWeight": "400",
+        "lineHeight": "28px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(138, 90, 18)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": [
+    {
+      "tag": "span",
+      "text": "OUR SERVICES",
+      "rect": {
+        "x": 20,
+        "y": 1442,
+        "w": 350,
+        "h": 19
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "12.48px",
+        "fontWeight": "600",
+        "lineHeight": "18.72px",
+        "letterSpacing": "1.9968px",
+        "textTransform": "uppercase",
+        "color": "rgb(138, 90, 18)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "OUR DIFFERENCE",
+      "rect": {
+        "x": 20,
+        "y": 4073,
+        "w": 350,
+        "h": 19
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "12.48px",
+        "fontWeight": "600",
+        "lineHeight": "18.72px",
+        "letterSpacing": "1.9968px",
+        "textTransform": "uppercase",
+        "color": "rgb(235, 187, 94)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "OUR IMPACT",
+      "rect": {
+        "x": 20,
+        "y": 5333,
+        "w": 350,
+        "h": 19
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "12.48px",
+        "fontWeight": "600",
+        "lineHeight": "18.72px",
+        "letterSpacing": "1.9968px",
+        "textTransform": "uppercase",
+        "color": "rgb(138, 90, 18)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "LINKEDIN THOUGHT LEADERSHIP",
+      "rect": {
+        "x": 71,
+        "y": 6195,
+        "w": 259,
+        "h": 19
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "12.48px",
+        "fontWeight": "600",
+        "lineHeight": "18.72px",
+        "letterSpacing": "1.9968px",
+        "textTransform": "uppercase",
+        "color": "rgb(74, 88, 114)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "AI GOVERNANCE THOUGHT LEADERSHIP",
+      "rect": {
+        "x": 69,
+        "y": 6658,
+        "w": 272,
+        "h": 37
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "12.48px",
+        "fontWeight": "600",
+        "lineHeight": "18.72px",
+        "letterSpacing": "1.9968px",
+        "textTransform": "uppercase",
+        "color": "rgb(74, 88, 114)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "span",
+      "text": "FOUNDER-LED ENTERPRISE PIPELINE",
+      "rect": {
+        "x": 70,
+        "y": 7188,
+        "w": 271,
+        "h": 37
+      },
+      "style": {
+        "fontFamily": "Inter, \"Inter Fallback\", ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, Helvetica, Arial, sans-serif",
+        "fontSize": "12.48px",
+        "fontWeight": "600",
+        "lineHeight": "18.72px",
+        "letterSpacing": "1.9968px",
+        "textTransform": "uppercase",
+        "color": "rgb(74, 88, 114)",
+        "fontStyle": "normal"
+      }
+    }
+  ]
+}

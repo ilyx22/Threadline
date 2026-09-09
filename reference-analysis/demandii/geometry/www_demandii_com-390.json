@@ -1,0 +1,26 @@
+{
+  "sections": [],
+  "ctas": [
+    {
+      "text": "BOOK A STRATEGY CALL",
+      "rect": {
+        "x": 30,
+        "y": 852,
+        "w": 330,
+        "h": 138
+      },
+      "style": {
+        "backgroundColor": "rgb(4, 67, 251)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "0px",
+        "border": "0px none rgb(255, 255, 255)",
+        "boxShadow": "rgba(255, 255, 255, 0.14) 0px 0px 1.39014px 0.556055px",
+        "fontSize": "16px",
+        "fontWeight": "900",
+        "padding": "20px 30px",
+        "textTransform": "uppercase",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

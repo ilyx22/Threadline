@@ -285,3 +285,53 @@ Teleprompter scroll/full-screen, drag interactions, print output of the weekly r
 ## Rollback
 
 `git checkout threadline-public-baseline-2026-09-09` restores the morning site (illustrated v1); `threadline-pre-public-experience-rebuild-2026-09-09` restores the tree before the rebuild. The database was not changed by this pass.
+
+---
+
+# Captivation pass — fresh verification (9 September 2026, evening)
+
+Run on the captivation-pass tree (tag `threadline-public-captivation-2026-09-09`), production build, after the last CSS change. Nothing in this pass touched the product behind the public site; the homepage was re-ordered and re-drawn (`docs/design/CAPTIVATION_PASS_2026-09-09.md`), the How-it-works page gained the diagnostic, the nine-station line and the proof ledger, and `scripts/qa/public-qa.ts` was hardened.
+
+## Verdict: **MOSTLY — unchanged; technically launch-ready to the external gates**
+
+## Exact verification results
+
+| Check | Result |
+|---|---|
+| `npm run typecheck` | exit 0 |
+| `npm run lint` | exit 0, 0 warnings |
+| `npm test` | 625 tests in 154 suites: 625 pass, 0 fail, 0 skipped |
+| `npm run build` | exit 0 |
+| `npm run verify:features` | 69 PASS · 2 EMPTY · 6 BLOCKED · 0 FAIL (77 checks) |
+| `npx prisma migrate status` | 13 migrations, up to date |
+| `npm run qa:all` | **494 checks: 485 PASS · 2 PASS WITH EXTERNAL GATE · 4 PARTIAL · 0 FAIL · 3 N/A** (the same four assessed, non-material partials: attribution:events, hostile:numbers, reports, spine:bad) |
+| `npm run qa:spine` | three synthetic engagements: 0 FAIL, synthetic tenants removed |
+| `npm run qa:perf` | 9/9 |
+| `npm run qa:browser` (prod build) | **122 checks: 101 PASS · 21 PARTIAL · 0 FAIL** — unchanged |
+| `npm run qa:public` (prod build) | **62/62 PASS** — 11 public routes × 20 widths (1920 → 320): no horizontal overflow, no console/hydration errors, one H1, skip link, 44px targets, metadata, reduced motion honoured (zero running animations), no reference-brand leak (ten names), no placeholder, no "monthly", no overclaim, no price disclosure, application submits and persists |
+| `npm run qa:visual` | 30 captures (5 widths × 6 pages) + `geometry.json` re-baselined; every reveal fired; the v2 site preserved in `qa-baselines/public-pre-captivation-2026-09-09/` |
+| Clone verification | `reference-analysis/clones/starborn-comparison-table/verify/report.json` (new); the three earlier clones unchanged |
+
+## Defects found and fixed during the pass
+
+| Where | What | Fix |
+|---|---|---|
+| Home hero, 1024–1199 | statement and machine overlapped | side by side only from 1200; stacked and centred below |
+| Home hero, 1280 | response marker collided with the carousel tile | marker positions |
+| Home hero, 375 / 320 | the stacked machine grid used `1fr` columns, which cannot shrink below content (page 385px wide) | `minmax(0, 1fr)` + `min-width: 0` |
+| Home factory | travelling card overlapped the first chamber; badges truncated; chips overflowed | own track; badges in the body; chips wrap; 7 columns from 1280 |
+| Home final CTA, 390 | `nowrap` pill widened the page to 401px | pills wrap below 640 |
+| Home buyer pool, 900 / 820 | overhanging piece cards widened the page; on phones they covered the label | cards inside the stage below 1024 (34% wide); stacked beneath on phones |
+| Text links | 24px target | `min-height: 44px` |
+| `public-qa.ts` | application check's confirmation regex matched "Playbook" in the nav; no explanation when the form's 5-per-hour rate limit was hit by repeated QA runs | waits for "Application received", reads `[role=alert]` first, polls for the row, names the limit |
+| `public-qa.ts` | the Hydra brand-leak term contained a literal backspace (a Python `"\b"`), so it never matched | fixed; grep extended to all ten reference names |
+| `probe.ts` | no delay between an evaluated scroll and the screenshot | `--after=<ms>` |
+
+## Manual-only checks (not automatable here)
+
+Unchanged list (teleprompter, drag, print, SOP checklist save, call-outcome form) plus the owner's own read of the new homepage at http://localhost:3000 against the FINAL USER TEST in `docs/design/CAPTIVATION_PASS_2026-09-09.md` §13, and the open decisions in §10.
+
+## Rollback
+
+`git checkout threadline-public-restraint-2026-09-09` restores the afternoon site; `threadline-public-baseline-2026-09-09` the morning site; `threadline-pre-public-experience-rebuild-2026-09-09` the tree before the rebuild. The database was not changed by this pass.
+
