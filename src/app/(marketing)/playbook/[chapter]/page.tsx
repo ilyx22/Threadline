@@ -44,7 +44,7 @@ export default async function ChapterPage({ params }: { params: Promise<{ chapte
             {index + 1} / {PLAYBOOK.chapters.length}
           </span>
         </div>
-        <div className="mt-3 h-[6px] overflow-hidden rounded-full border-[1.5px] border-[color:var(--ink)] bg-[color:var(--paper)]" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100} aria-label="Reading progress">
+        <div className="mt-3 h-[6px] overflow-hidden rounded-full border border-[color:var(--line-strong)] bg-[color:var(--paper)]" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100} aria-label="Reading progress">
           <div className="h-full bg-[color:var(--accent)] transition-[width] duration-700" style={{ width: `${progress}%` }} />
         </div>
       </div>

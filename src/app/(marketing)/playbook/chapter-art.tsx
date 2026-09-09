@@ -1,6 +1,8 @@
-import { AssemblyStation, BranchingThread, Buyer, Crate, DistributionSorter, FeedbackPipe, Founder, InspectorStation, MemoryWeave, ScannerStation, StampMark } from "@/components/factory/primitives";
+import { Buyer, Founder } from "@/components/factory/primitives";
+import { Branch, Cut, InspectionMark, Lens, MemoryThread, ReturnThread, Route, Spool } from "@/components/factory/schematic";
+import { Stamp } from "@/components/public/primitives";
 
-/** One illustration per chapter, drawn from the factory primitives. */
+/** One illustration per chapter, drawn from the schematic set (v2). */
 export function ChapterArt({ scene, className, large }: { scene: string; className?: string; large?: boolean }) {
   return <div className="tl-drawn contents">{art(scene, className, large)}</div>;
 }
@@ -10,42 +12,42 @@ function art(scene: string, className?: string, large?: boolean) {
     case "crates":
       return (
         <div className={className}>
-          <div className="flex items-end gap-2">
-            <Crate label="Expertise" tilt={-2} className="w-[48%]" />
-            <Crate label="Stories" tilt={2} className="w-[48%]" />
+          <div className="flex items-end justify-center gap-4">
+            <Spool accent className={large ? "w-24" : "w-10"} />
+            <Spool className={large ? "w-24" : "w-10"} />
           </div>
         </div>
       );
     case "founder":
       return <Founder className={className} holding={false} />;
     case "scanner":
-      return <ScannerStation className={className} />;
+      return <Lens className={className} />;
     case "branching":
-      return <BranchingThread branches={large ? 5 : 3} className={className} />;
+      return <Branch branches={large ? 5 : 3} className={className} />;
     case "sorter":
-      return <DistributionSorter className={className} />;
+      return <Route className={className} />;
     case "memory":
-      return <MemoryWeave stages={large ? ["Stranger", "Recognise", "Remember", "Trust", "Conversation"] : ["", "", ""]} className={className} />;
+      return <MemoryThread stages={large ? ["Stranger", "Recognise", "Remember", "Trust", "Conversation"] : ["", "", ""]} className={className} />;
     case "attention":
       return (
         <div className={className}>
-          <div className="flex items-end gap-2">
-            <Buyer looking className="w-[48%]" />
-            <Buyer looking={false} className="w-[48%] opacity-40" />
+          <div className="flex items-end justify-center gap-3">
+            <Buyer looking className="w-[40%]" />
+            <Buyer looking={false} className="w-[40%] opacity-40" />
           </div>
         </div>
       );
     case "inspector":
-      return <InspectorStation className={className} stamp="EXPECTED" />;
+      return <InspectionMark className={className} />;
     case "pipe":
-      return <FeedbackPipe className={className} width={320} />;
+      return <ReturnThread className={className} width={320} />;
     case "stamp":
       return (
         <div className={className}>
-          <StampMark label="No promises" reject />
+          <Stamp tone="reject">No promises</Stamp>
         </div>
       );
     default:
-      return <AssemblyStation className={className} />;
+      return <Cut className={className} />;
   }
 }

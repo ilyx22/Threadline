@@ -1,0 +1,361 @@
+{
+  "sections": [
+    {
+      "tag": "nav",
+      "id": "",
+      "cls": "flex min-h-full flex-col justify-center gap-1 px-7 py-24",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 900
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "pt-28 pb-12 sm:pt-32 sm:pb-6",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 390,
+        "h": 1555
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "We scale agencies + B2B service companies with predictable\n client acquisition s"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-y border-line bg-sunk py-14",
+      "rect": {
+        "x": 0,
+        "y": 1555,
+        "w": 390,
+        "h": 1002
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": "Trusted by 300+ client-service businesses"
+    },
+    {
+      "tag": "section",
+      "id": "constraint",
+      "cls": "border-y border-line bg-sunk py-24 sm:py-32 ",
+      "rect": {
+        "x": 0,
+        "y": 2556,
+        "w": 390,
+        "h": 1220
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": "Every service business has exactly one constraint. Most are fixing the wrong one"
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "cls": "mx-auto max-w-[92rem] px-5 sm:px-10",
+      "rect": {
+        "x": 0,
+        "y": 3824,
+        "w": 390,
+        "h": 236
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-t border-line py-20 sm:py-24",
+      "rect": {
+        "x": 0,
+        "y": 4060,
+        "w": 390,
+        "h": 965
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Scale is a game of inputs and outputs."
+    },
+    {
+      "tag": "section",
+      "id": "case-studies",
+      "cls": "relative py-24 sm:py-32",
+      "rect": {
+        "x": 0,
+        "y": 5025,
+        "w": 390,
+        "h": 1524
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Numbers with a client attached to them."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-y border-line",
+      "rect": {
+        "x": 0,
+        "y": 6549,
+        "w": 390,
+        "h": 551
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "py-24 sm:py-32",
+      "rect": {
+        "x": 0,
+        "y": 7100,
+        "w": 390,
+        "h": 1853
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Three hundred operators, and this is what they say when we’re not in the room."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-y border-line bg-sunk py-24 sm:py-32",
+      "rect": {
+        "x": 0,
+        "y": 8953,
+        "w": 390,
+        "h": 2159
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": "Find the constraint. Then we build it for you, or with you."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "py-24 sm:py-32",
+      "rect": {
+        "x": 0,
+        "y": 11112,
+        "w": 390,
+        "h": 690
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Straight answers."
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "cls": "mx-auto max-w-[92rem] px-5 sm:px-10",
+      "rect": {
+        "x": 0,
+        "y": 11802,
+        "w": 390,
+        "h": 304
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "rounded-xl border border-line bg-sunk p-6 ",
+      "rect": {
+        "x": 20,
+        "y": 11802,
+        "w": 350,
+        "h": 304
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-t border-line py-28 sm:py-36",
+      "rect": {
+        "x": 0,
+        "y": 12106,
+        "w": 390,
+        "h": 489
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Bring your pipeline and your P&L. We’ll show you where it breaks\n."
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "border-t border-line bg-sunk",
+      "rect": {
+        "x": 0,
+        "y": 12595,
+        "w": 390,
+        "h": 727
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": ""
+    },
+    {
+      "tag": "nav",
+      "id": "",
+      "cls": "grid grid-cols-2 gap-x-14 gap-y-3 text-sm sm:grid-cols-3",
+      "rect": {
+        "x": 20,
+        "y": 12846,
+        "w": 350,
+        "h": 148
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Book a discovery call",
+      "rect": {
+        "x": 28,
+        "y": 648,
+        "w": 334,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(77, 38, 219)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(77, 38, 219)",
+        "boxShadow": "none",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "padding": "14px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a discovery call",
+      "rect": {
+        "x": 20,
+        "y": 461,
+        "w": 350,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(77, 38, 219)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(77, 38, 219)",
+        "boxShadow": "none",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "padding": "14px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "02Conversion",
+      "rect": {
+        "x": 199,
+        "y": 2988,
+        "w": 171,
+        "h": 42
+      },
+      "style": {
+        "backgroundColor": "rgb(18, 18, 26)",
+        "color": "rgb(244, 243, 240)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "padding": "10px 20px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Find out if this is yours →",
+      "rect": {
+        "x": 53,
+        "y": 3598,
+        "w": 284,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 216, 77)",
+        "color": "rgb(18, 18, 26)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "padding": "14px 24px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Take the constraint quiz",
+      "rect": {
+        "x": 53,
+        "y": 3969,
+        "w": 284,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(77, 38, 219)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(77, 38, 219)",
+        "boxShadow": "none",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "padding": "14px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a discovery call",
+      "rect": {
+        "x": 91,
+        "y": 12429,
+        "w": 208,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(77, 38, 219)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(77, 38, 219)",
+        "boxShadow": "none",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "padding": "14px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Accept",
+      "rect": {
+        "x": 140,
+        "y": 830,
+        "w": 109,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(77, 38, 219)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(77, 38, 219)",
+        "boxShadow": "none",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "padding": "14px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

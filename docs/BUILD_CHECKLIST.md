@@ -271,7 +271,8 @@ parallel models where an existing abstraction fitted.
 - [x] Packaging: working title, final title, thumbnail reference, approval state
 - [x] Approval refused without a final title, thumbnail and description
 - [x] Admin scope panel with an audited enable/disable
-- [x] No automatic upload, deliberately
+- [x] No automatic upload at this phase (the YouTube connector built in Phase 16 can upload, gated
+      on Google OAuth verification; the long-form route stays manual until that passes)
 
 ### Honest access
 
@@ -309,8 +310,9 @@ parallel models where an existing abstraction fitted.
 - [x] `npm run build` — 49 routes
 - [x] Migration applied and seed re-run on a clean database
 - [x] Browser QA at ~1440px: client surface, approvals, recording setup, no console errors
-- [~] Breakpoint QA at 1024 / 768 / 390 — this environment cannot change the viewport (window
-      resize ignored, iframes refused by the app's own clickjacking headers, popups blocked)
+- [x] Breakpoint QA at 1024 / 768 / 390 — closed in Phase 16 by `qa:browser` (4 widths) and
+      `qa:public` (20 widths) on a production build; at this phase the environment could not
+      change the viewport
 
 ---
 
@@ -377,7 +379,8 @@ Built against the full business resource pack, present in the workspace for the 
 - [x] No CRM: no contacts, companies, communications or deal objects — three link columns only
 - [x] No CRM synchronisation
 - [x] No outreach sending, sequences, scraping or list building
-- [x] No analytics platform, UTM builder or attribution provider integration
+- [x] No analytics platform, UTM builder or attribution provider integration (inbound CRM/payment
+      webhooks were added on 2026-09-09; they record evidence, they are not a sync)
 - [x] No delivery, onboarding, renewal or proof workflow automation — client #1 earns that
 
 ### QA
@@ -389,8 +392,10 @@ Built against the full business resource pack, present in the workspace for the 
 - [x] Migration applied and seed re-run on a clean database
 - [x] Browser QA: cockpit, market, wedge detail, prospects, prospect detail, acquisition — no
       console errors; the interview sample gate and the session-loop fix exercised end to end
-- [~] Checklist save and call outcome not confirmed in a browser — the tab began reporting
-      `document.hidden` with zero-size layout part way through and stopped receiving clicks
+- [~] Checklist save and call outcome not confirmed by a human click in a browser — the tab began
+      reporting `document.hidden` part way through; both actions were exercised in-process by the
+      sales block of `qa:all` on 2026-09-09 and the pages render clean in `qa:browser`. One human
+      click each remains on the founder manual QA list
 
 ---
 
@@ -466,7 +471,9 @@ Built against the full business resource pack, present in the workspace for the 
 
 ### Deliberately not built
 
-- [x] No third-party connectors, ad attribution, fingerprinting or identity graph
+- [x] No ad attribution, fingerprinting or identity graph (third-party connectors were "not
+      built" at this phase; platform connectors and CRM/payment webhooks arrived in Phase 16 and
+      feed `CommercialEvent` without raising any evidence class)
 - [x] No ML or weighted attribution, analytics warehouse, BI builder, heatmaps or session replay
 - [x] No lead scoring, public API, SaaS billing, CRM or video editing
 - [x] No Trakyo integration — the boundary it would feed exists; the integration does not
@@ -483,7 +490,7 @@ Built against the full business resource pack, present in the workspace for the 
 - [x] Operator attribution surface verified in a real browser
 - [x] Client role requesting it redirected to no-access, with none of its content in the response
 - [x] Synthetic banner and Delivery Load summary verified in the dry-run workspace
-- [~] Breakpoint QA below 1440px still outstanding from Phase 12
+- [x] Breakpoint QA below 1440px — outstanding from Phase 12 at the time; closed in Phase 16
 
 ---
 
@@ -548,11 +555,31 @@ Built against the full business resource pack, present in the workspace for the 
 - [x] 11,000 views banded `exceptional` against its creator's ~1,400 median; 40,000 views on a
       250k-follower account banded `unknown` for lack of a baseline
 - [x] Calibration refused to conclude on 0 usable pairs and said why
-- [ ] Browser QA of the corpus and calibration surfaces — not run this session
+- [x] Browser QA of the corpus and calibration surfaces — not run in this phase; both render
+      without errors in the Phase 16 production browser sweep
 
 ---
 
 ## Verification record
+
+**Run 2026-09-09** (current), commit `5a08f25`, tag `threadline-public-baseline-2026-09-09`:
+
+- `npm run typecheck` — PASS (0 errors, strict)
+- `npm run lint` — PASS (0 errors, 0 warnings)
+- `npm test` — PASS (625 tests, 154 suites, 0 failures)
+- `npm run build` — PASS (65 pages + 3 route handlers)
+- `npm run verify` and `npm run verify:features` — PASS
+- `npx prisma migrate status` — 13 migrations, up to date; clean-database deploy + seed verified
+- `npm run qa:all` — 494 checks: 485 PASS, 2 PASS WITH EXTERNAL GATE, 4 PARTIAL, 0 FAIL, 3 N/A
+- `npm run qa:spine` — three synthetic engagements, 0 FAIL
+- `npm run qa:perf` — 9/9
+- `npm run qa:browser` (prod build) — 122 checks: 101 PASS, 21 PARTIAL (24px target notes), 0 FAIL
+- `npm run qa:public` (prod build) — 62/62 across 11 routes × 20 widths
+- `npm run qa:visual` — 30 baselines in `qa-baselines/public/`
+
+Outstanding: nothing in code. External gates and founder inputs only (`HANDOFF.md` §18).
+
+HISTORICAL runs:
 
 **Run 2026-09-07**, after the corpus and Judge V0, from a clean re-seed:
 
@@ -574,8 +601,8 @@ Previous runs: 2026-09-06 (337 tests, 54 routes), 2026-09-04 (263 tests, 49 rout
 2026-09-03 (188 tests, 47 routes), 2026-09-02 (74 tests, 43 routes).
 
 Manual acceptance results are recorded per-test in `docs/ACCEPTANCE_TESTS.md`.
-Outstanding: breakpoint QA below 1440px, and a browser confirmation of the checklist save and
-call outcome forms.
+(At the time of those runs the outstanding items were breakpoint QA below 1440px and a browser
+confirmation of the checklist save and call outcome forms; both are addressed above.)
 
 ---
 

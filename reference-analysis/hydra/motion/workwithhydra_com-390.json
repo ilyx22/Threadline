@@ -1,0 +1,205 @@
+{
+  "keyframes": [
+    {
+      "name": "marquee",
+      "frames": [
+        "100% { transform: translate(-50%); }"
+      ]
+    },
+    {
+      "name": "glyph-flow",
+      "frames": [
+        "0% { offset-distance: 0%; opacity: 0; }",
+        "8%, 88% { opacity: 1; }",
+        "100% { offset-distance: 100%; opacity: 0; }"
+      ]
+    },
+    {
+      "name": "glyph-station",
+      "frames": [
+        "0%, 12% { filter: none; }",
+        "4% { filter: brightness(1.14); }"
+      ]
+    },
+    {
+      "name": "glyph-return",
+      "frames": [
+        "100% { stroke-dashoffset: -12px; }"
+      ]
+    },
+    {
+      "name": "glyph-draw",
+      "frames": [
+        "100% { stroke-dashoffset: 0; }"
+      ]
+    },
+    {
+      "name": "glyph-band",
+      "frames": [
+        "100% { opacity: 1; }"
+      ]
+    }
+  ],
+  "animated": [
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "1.13s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "2.26s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "1.13s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "2.26s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "1.13s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "2.26s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "1.13s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "2.26s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    },
+    {
+      "tag": "circle",
+      "cls": "[object SVGAnimatedString]",
+      "name": "glyph-flow",
+      "duration": "3.4s",
+      "timing": "linear",
+      "iteration": "infinite",
+      "delay": "0s"
+    }
+  ],
+  "easings": [
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.3s",
+      41
+    ],
+    [
+      "cubic-bezier(0.16, 1, 0.3, 1), cubic-bezier(0.16, 1, 0.3, 1) 0.7s, 0.7s",
+      27
+    ],
+    [
+      "cubic-bezier(0.16, 1, 0.3, 1) 0.5s",
+      9
+    ],
+    [
+      "ease, ease, cubic-bezier(0.16, 1, 0.3, 1) 0.3s, 0.3s, 0.3s",
+      8
+    ],
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.15s",
+      6
+    ],
+    [
+      "cubic-bezier(0.16, 1, 0.3, 1) 0.3s",
+      3
+    ],
+    [
+      "cubic-bezier(0.16, 1, 0.3, 1) 0.9s",
+      2
+    ],
+    [
+      "cubic-bezier(0.4, 0, 0.2, 1) 0.5s",
+      1
+    ]
+  ]
+}

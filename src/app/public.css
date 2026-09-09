@@ -1,39 +1,49 @@
-/* ==========================================================================
-   THREADLINE PUBLIC — the light, illustrated system for the public site.
-   Source of truth: design-system/threadline-design-dna.json.
-   Scoped to `.tl-public`; it remaps the core colour tokens so shared UI
-   primitives (fields, buttons, notices) render on paper without forking them.
-   ========================================================================== */
+/*
+ * THREADLINE — public surface (v2, 9 September 2026: the restraint pass)
+ *
+ * Scoped to `.tl-public`. Remaps the shared `--color-*` tokens so every existing
+ * primitive renders on paper, then defines the public-only classes.
+ *
+ * Direction: ~70% premium editorial, ~20% system visualisation, ~10% character.
+ * Surfaces are paper on linen with hairlines. No offset shadows, no outlines
+ * thicker than 1px, no rotated stamps, one accent per section. The reference
+ * skeletons behind the hero panel, the symptom selector and the period cards
+ * are documented in docs/design/COMPONENT_RECONSTRUCTION.md.
+ */
 
 .tl-public {
   --canvas: #f4eee3;
-  --canvas-deep: #eae1d2;
-  --paper: #fffbf4;
-  --paper-edge: #e4dccd;
+  --canvas-deep: #ece4d6;
+  --paper: #fffcf7;
+  --line: rgba(31, 29, 26, 0.14);
+  --line-strong: rgba(31, 29, 26, 0.34);
   --ink: #1f1d1a;
   --ink-soft: #4f4a42;
   --ink-faint: #7e776c;
   --ink-ghost: #a9a297;
   --accent: #d9582a;
   --accent-deep: #b8461d;
-  --accent-soft: #fbe4d8;
+  --accent-soft: #f8e3d9;
   --signal: #2c7c6a;
-  --signal-soft: #d8eee8;
-  --stamp: #f1c349;
-  --stamp-soft: #fbefc4;
+  --signal-soft: #dcebe6;
+  --stamp: #e8b931;
+  --stamp-soft: #f7ebc4;
   --reject: #c24a3a;
   --steel: #6b7a8c;
-  --steel-soft: #dce3ea;
+  --steel-soft: #e3e8ee;
   --belt: #3a3631;
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-out-soft: cubic-bezier(0.45, 0, 0.55, 1);
 
-  /* Remap the shared token set so existing primitives go light. */
   --color-base: var(--canvas);
   --color-surface: var(--paper);
   --color-elevated: var(--paper);
   --color-raised: var(--canvas-deep);
-  --color-line: var(--paper-edge);
-  --color-line-strong: #cfc6b4;
-  --color-line-soft: #efe8db;
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-line-soft: rgba(31, 29, 26, 0.08);
   --color-ink: var(--ink);
   --color-muted: var(--ink-soft);
   --color-faint: var(--ink-faint);
@@ -52,16 +62,16 @@
   --color-info: var(--steel);
   --color-info-soft: var(--steel-soft);
   --shadow-sm: none;
-  --shadow-md: 6px 6px 0 0 var(--ink);
-  --shadow-lg: 8px 8px 0 0 var(--ink);
-  --shadow-pop: 10px 10px 0 0 var(--ink);
+  --shadow-md: 0 1px 0 rgba(31, 29, 26, 0.06);
+  --shadow-lg: 0 12px 32px -20px rgba(31, 29, 26, 0.25);
+  --shadow-pop: 0 18px 48px -24px rgba(31, 29, 26, 0.3);
 
-  color-scheme: light;
   background-color: var(--canvas);
   color: var(--ink);
   font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   font-size: 17px;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 .tl-public ::selection {
@@ -69,7 +79,7 @@
   color: var(--ink);
 }
 .tl-public :focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -78,46 +88,47 @@
   background-image: none;
 }
 
-/* Type */
+/* ------------------------------------------------------------------ Type */
 .tl-display {
   font-family: var(--font-display), "Iowan Old Style", Georgia, serif;
-  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 0;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  line-height: 0.98;
-  font-size: clamp(2.625rem, 6.4vw, 5.5rem);
+  font-variation-settings: "opsz" 144, "SOFT" 20, "WONK" 0;
+  font-weight: 450;
+  letter-spacing: -0.022em;
+  line-height: 1;
+  font-size: clamp(2.75rem, 6.2vw, 5.625rem);
   text-wrap: balance;
 }
 .tl-section-title {
   font-family: var(--font-display), "Iowan Old Style", Georgia, serif;
-  font-variation-settings: "opsz" 96, "SOFT" 30, "WONK" 0;
-  font-weight: 500;
-  letter-spacing: -0.015em;
+  font-variation-settings: "opsz" 96, "SOFT" 20, "WONK" 0;
+  font-weight: 450;
+  letter-spacing: -0.018em;
   line-height: 1.04;
-  font-size: clamp(2.125rem, 4vw, 3.5rem);
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
   text-wrap: balance;
 }
 .tl-sub-title {
   font-family: var(--font-display), Georgia, serif;
-  font-variation-settings: "opsz" 48, "SOFT" 30;
+  font-variation-settings: "opsz" 48, "SOFT" 20;
   font-weight: 500;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
   line-height: 1.15;
   font-size: clamp(1.375rem, 2vw, 1.75rem);
 }
 .tl-label {
   font-family: var(--font-label), ui-monospace, "Cascadia Mono", Menlo, monospace;
-  font-size: 0.75rem;
-  line-height: 1;
-  letter-spacing: 0.16em;
+  font-size: 0.6875rem;
+  line-height: 1.6;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 500;
+  color: var(--ink-faint);
 }
 .tl-lead {
-  font-size: clamp(1.125rem, 1.4vw, 1.3125rem);
-  line-height: 1.5;
+  font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+  line-height: 1.55;
   color: var(--ink-soft);
-  max-width: 62ch;
+  max-width: 42rem;
   text-wrap: pretty;
 }
 .tl-body {
@@ -128,126 +139,177 @@
   text-wrap: pretty;
 }
 .tl-mark {
-  background: linear-gradient(transparent 55%, var(--stamp-soft) 55%);
-  padding: 0 0.1em;
+  background: linear-gradient(transparent 58%, var(--stamp-soft) 58%);
+  padding: 0 0.08em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
+.tl-numeral {
+  font-family: var(--font-display), Georgia, serif;
+  font-variation-settings: "opsz" 144, "SOFT" 20;
+  font-weight: 400;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  font-variant-numeric: tabular-nums;
+}
 
-/* Paper cards, buttons, stamps, chips */
+/* --------------------------------------------------------------- Surfaces */
 .tl-card {
   background: var(--paper);
-  border: 1.5px solid var(--ink);
-  border-radius: 20px;
-  box-shadow: 6px 6px 0 0 var(--ink);
-  transition: box-shadow 160ms var(--ease-out-quint), transform 160ms var(--ease-out-quint);
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  transition: border-color 200ms var(--ease-std);
 }
 .tl-card-quiet {
   background: var(--paper);
-  border: 1px solid var(--paper-edge);
-  border-radius: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
 }
 .tl-card-hover:hover {
-  box-shadow: 8px 8px 0 0 var(--ink);
-  transform: translate(-1px, -1px);
+  border-color: var(--ink);
 }
+.tl-dark {
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 12px;
+}
+.tl-dark .tl-label {
+  color: var(--stamp);
+}
+.tl-rule {
+  border-top: 1px solid var(--line);
+}
+.tl-rule-strong {
+  border-top: 1px solid var(--line-strong);
+}
+.tl-ledger > * + * {
+  border-top: 1px solid var(--line);
+}
+
+/* ---------------------------------------------------------------- Buttons */
 .tl-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 48px;
-  padding: 0 1.25rem;
-  border-radius: 12px;
-  border: 1.5px solid var(--ink);
+  min-height: 52px;
+  padding: 0 1.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--ink);
   font-weight: 600;
   font-size: 0.9375rem;
   line-height: 1;
   color: var(--ink);
   background: var(--paper);
-  box-shadow: 4px 4px 0 0 var(--ink);
-  transition: transform 120ms var(--ease-out-quint), box-shadow 120ms var(--ease-out-quint), background-color 160ms;
+  transition: background-color 160ms var(--ease-std), color 160ms var(--ease-std), border-color 160ms var(--ease-std), transform 160ms var(--ease-std);
   text-decoration: none;
   cursor: pointer;
   white-space: nowrap;
 }
 .tl-btn:hover {
-  background: var(--canvas-deep);
+  background: var(--ink);
+  color: var(--paper);
 }
 .tl-btn:active {
-  transform: translate(3px, 3px);
-  box-shadow: 1px 1px 0 0 var(--ink);
+  transform: translateY(1px);
 }
 .tl-btn-primary {
   background: var(--accent);
+  border-color: var(--accent);
   color: var(--paper);
 }
 .tl-btn-primary:hover {
   background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: var(--paper);
 }
 .tl-btn-lg {
-  min-height: 56px;
-  padding: 0 1.75rem;
+  min-height: 60px;
+  padding: 0 2.25rem;
   font-size: 1.0625rem;
 }
 .tl-btn-sm {
   min-height: 44px;
   min-width: 48px;
-  padding: 0 1rem;
+  padding: 0 1.125rem;
   font-size: 0.875rem;
-  box-shadow: 3px 3px 0 0 var(--ink);
 }
+.tl-btn-ghost {
+  background: transparent;
+  border-color: transparent;
+}
+.tl-btn-ghost:hover {
+  background: var(--canvas-deep);
+  color: var(--ink);
+}
+.tl-textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--accent-deep);
+  text-decoration: none;
+}
+.tl-textlink .tl-arrow {
+  display: inline-block;
+  transition: transform 300ms var(--ease-std);
+}
+.tl-textlink:hover .tl-arrow,
+a:hover > .tl-textlink .tl-arrow {
+  transform: translateX(4px);
+}
+
+/* --------------------------------------------------------- Chips & stamps */
 .tl-chip {
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  min-height: 32px;
+  min-height: 28px;
   padding: 0 0.625rem;
-  border-radius: 8px;
-  border: 1.5px solid var(--ink);
-  background: var(--paper);
+  border-radius: 6px;
+  background: var(--canvas-deep);
   font-family: var(--font-label), ui-monospace, monospace;
   font-size: 0.6875rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-weight: 600;
-  color: var(--ink);
+  font-weight: 500;
+  color: var(--ink-soft);
 }
 .tl-stamp {
   display: inline-block;
-  padding: 0.3rem 0.6rem;
-  border-radius: 6px;
-  border: 2px solid var(--ink);
-  background: var(--stamp);
-  color: var(--ink);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid currentColor;
+  color: var(--ink-faint);
+  background: transparent;
   font-family: var(--font-label), ui-monospace, monospace;
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
+  font-size: 0.6875rem;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  font-weight: 600;
-  transform: rotate(-3deg);
+  font-weight: 500;
 }
 .tl-stamp-reject {
-  background: var(--paper);
   color: var(--reject);
-  border-color: var(--reject);
 }
 .tl-stamp-signal {
-  background: var(--signal-soft);
   color: var(--signal);
-  border-color: var(--signal);
+}
+.tl-stamp-ink {
+  color: var(--ink);
 }
 .tl-synthetic {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.35rem 0.6rem;
-  border-radius: 6px;
-  border: 1.5px dashed var(--ink-faint);
+  padding: 0.3rem 0.55rem;
+  border-radius: 4px;
+  border: 1px dashed var(--line-strong);
   color: var(--ink-faint);
   font-family: var(--font-label), ui-monospace, monospace;
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
@@ -258,12 +320,23 @@
   min-height: 44px;
 }
 
-/* Layout */
+/* ----------------------------------------------------------------- Layout */
 .tl-container {
   width: 100%;
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: 1.25rem;
+}
+.tl-container-wide {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: 0.625rem;
+}
+@media (min-width: 768px) {
+  .tl-container-wide {
+    padding-inline: 1.875rem;
+  }
 }
 @media (min-width: 1024px) {
   .tl-container {
@@ -271,10 +344,15 @@
   }
 }
 .tl-section {
-  padding-block: clamp(4rem, 9vw, 8rem);
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+}
+.tl-section-tight {
+  padding-block: clamp(3rem, 6vw, 5rem);
 }
 .tl-band {
   background: var(--canvas-deep);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 .tl-skip {
   position: absolute;
@@ -284,60 +362,368 @@
   padding: 0.75rem 1rem;
   background: var(--ink);
   color: var(--paper);
-  border-radius: 12px;
+  border-radius: 999px;
   font-weight: 600;
 }
 .tl-skip:focus {
   top: 1rem;
 }
 
-/* Motion with a job */
-@keyframes tl-belt {
-  to {
-    background-position-x: -48px;
+/* --------------------------------------------- Hero panel (from clone #1) */
+/* Skeleton: reference-analysis/clones/birdhouse-hero-panel — 80/30/24 section
+   padding, rounded paper wrapper with 64px top padding, 1280 inner container,
+   statement column, illustration bottom-right; stacks below 992px. */
+.tl-hero-pad {
+  padding: 2.5rem 0.625rem 1.5rem;
+}
+.tl-hero-panel {
+  position: relative;
+  overflow: hidden;
+  max-width: 1500px;
+  margin-inline: auto;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  padding: 1.5rem 0 0;
+}
+.tl-hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1280px;
+  margin-inline: auto;
+  padding: 0 1.25rem;
+}
+.tl-hero-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  align-items: center;
+  text-align: center;
+}
+.tl-hero-art {
+  position: relative;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+@media (min-width: 768px) {
+  .tl-hero-pad {
+    padding: 3.5rem 1.875rem 1.5rem;
+  }
+  .tl-hero-panel {
+    border-radius: 40px;
+    padding-top: 1.5rem;
+  }
+  .tl-hero-text {
+    gap: 1.75rem;
   }
 }
-.tl-belt {
-  height: 14px;
-  border: 2px solid var(--ink);
+@media (min-width: 992px) {
+  .tl-hero-pad {
+    padding: 4rem 1.875rem 1.5rem;
+  }
+  .tl-hero-panel {
+    border-radius: 48px;
+    padding-top: 4rem;
+    min-height: 680px;
+  }
+  .tl-hero-text {
+    max-width: 560px;
+    gap: 2rem;
+    align-items: flex-start;
+    text-align: left;
+    padding-bottom: 5rem;
+  }
+  .tl-hero-art {
+    position: absolute;
+    right: 2%;
+    top: 50%;
+    transform: translateY(-46%);
+    width: 54%;
+    margin: 0;
+  }
+}
+@media (min-width: 1280px) {
+  .tl-hero-art {
+    width: 52%;
+    right: 3%;
+  }
+}
+/* motion-only / still-only pairs inside SVG drawings */
+.tl-still-only {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tl-motion-only {
+    display: none;
+  }
+  .tl-still-only {
+    display: initial;
+  }
+}
+
+/* ------------------------------------------- Symptom selector (clone #2) */
+/* Skeleton: reference-analysis/clones/hydra-constraint-selector */
+.tl-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 3rem;
+}
+.tl-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.625rem 1.25rem;
+  border: 1px solid var(--line-strong);
   border-radius: 999px;
-  background-color: var(--belt);
-  background-image: repeating-linear-gradient(90deg, transparent 0 18px, rgba(255, 251, 244, 0.55) 18px 24px);
-  background-size: 48px 100%;
-  animation: tl-belt 1.2s linear infinite;
+  background: var(--paper);
+  cursor: pointer;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  text-align: left;
+  transition: color 150ms var(--ease-std), background-color 150ms var(--ease-std), border-color 150ms var(--ease-std);
 }
-.tl-belt-slow {
-  animation-duration: 2.4s;
+.tl-tab:hover {
+  border-color: var(--ink);
 }
-.tl-paused .tl-belt {
-  animation-play-state: paused;
+.tl-tab .tl-tab-idx {
+  font-family: var(--font-label), ui-monospace, monospace;
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--ink-faint);
 }
-@keyframes tl-stamp-in {
-  0% {
-    transform: rotate(-3deg) scale(1.6);
-    opacity: 0;
+.tl-tab[aria-selected="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.tl-tab[aria-selected="true"] .tl-tab-idx {
+  color: var(--stamp);
+}
+.tl-selector-panel {
+  margin-top: 2.5rem;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  padding: 2rem;
+}
+.tl-selector-cards {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+.tl-detail {
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  padding: 2rem;
+}
+.tl-detail-dark {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 2rem;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--paper);
+}
+.tl-detail-dark .tl-label {
+  color: var(--stamp);
+}
+@media (max-width: 639px) {
+  .tl-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
-  60% {
-    transform: rotate(-3deg) scale(0.94);
-    opacity: 1;
+  .tl-selector-panel {
+    display: none;
   }
-  100% {
-    transform: rotate(-3deg) scale(1);
-    opacity: 1;
+  .tl-selector-cards {
+    margin-top: 2rem;
+  }
+  .tl-detail,
+  .tl-detail-dark {
+    padding: 1.5rem;
   }
 }
-.tl-stamp-in {
-  animation: tl-stamp-in 380ms cubic-bezier(0.34, 1.56, 0.64, 1) both;
+@media (min-width: 1024px) {
+  .tl-selector-cards {
+    grid-template-columns: 1.2fr 1fr;
+  }
 }
+/* stage strokes inside the selector diagram */
+.tl-stage .tl-stage-outer {
+  stroke: var(--ink);
+  stroke-width: 34;
+  stroke-linecap: round;
+  fill: none;
+}
+.tl-stage .tl-stage-inner {
+  stroke: var(--paper);
+  stroke-width: 30;
+  stroke-linecap: round;
+  fill: none;
+  transition: stroke-width 500ms var(--ease-out-expo), stroke 300ms var(--ease-out-expo);
+}
+.tl-stage[data-on="true"] .tl-stage-inner {
+  stroke: var(--accent);
+  stroke-width: 24;
+}
+.tl-stage .tl-stage-lbl {
+  font-family: var(--font-label), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  fill: var(--ink-faint);
+  transition: fill 300ms var(--ease-out-expo);
+}
+.tl-stage[data-on="true"] .tl-stage-lbl {
+  fill: var(--accent-deep);
+}
+.tl-stage .tl-stage-dot {
+  transition: opacity 300ms var(--ease-out-expo);
+}
+.tl-stage[data-on="true"] .tl-stage-dot {
+  opacity: 0;
+}
+
+/* --------------------------------------------- Period cards (clone #3) */
+/* Skeleton: reference-analysis/clones/hydra-offer-cards */
+.tl-offer-grid {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 3.5rem;
+}
+@media (min-width: 768px) {
+  .tl-offer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1280px) {
+  .tl-offer-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.tl-offer-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  padding: 2rem;
+}
+.tl-offer-card[data-future="true"] {
+  border-style: dashed;
+}
+.tl-offer-card .tl-offer-title {
+  margin-top: 0.75rem;
+  font-family: var(--font-display), Georgia, serif;
+  font-variation-settings: "opsz" 48, "SOFT" 20;
+  font-weight: 500;
+  font-size: 1.5rem;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+.tl-offer-card .tl-offer-body {
+  margin-top: 1.25rem;
+  flex: 1;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.tl-diagram-box {
+  margin-top: 1.75rem;
+  background: var(--canvas-deep);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem 1.25rem;
+}
+.tl-diagram-box svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.tl-fact {
+  margin-top: 1.5rem;
+  font-family: var(--font-label), ui-monospace, monospace;
+  font-size: 0.625rem;
+  line-height: 1.6;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+@media (max-width: 639px) {
+  .tl-offer-card {
+    padding: 1.5rem;
+  }
+}
+
+/* ------------------------------------------------------------ Schematics */
+.tl-node {
+  fill: var(--paper);
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  transition: fill 300ms var(--ease-out-expo), stroke 300ms var(--ease-out-expo), r 300ms var(--ease-out-expo);
+}
+.tl-node[data-lit="true"] {
+  fill: var(--accent);
+  stroke: var(--accent);
+}
+.tl-node-halo {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  opacity: 0;
+  transition: opacity 300ms var(--ease-out-expo);
+}
+.tl-node-halo[data-lit="true"] {
+  opacity: 0.35;
+}
+.tl-thread {
+  stroke: var(--ink);
+  stroke-width: 1.5;
+  fill: none;
+}
+.tl-thread-accent {
+  stroke: var(--accent);
+  stroke-width: 2;
+  fill: none;
+}
+.tl-thread-soft {
+  stroke: var(--line-strong);
+  stroke-width: 1.5;
+  fill: none;
+}
+.tl-glyph-lbl {
+  font-family: var(--font-label), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  fill: var(--ink-faint);
+}
+.tl-glyph-lbl[data-lit="true"] {
+  fill: var(--ink);
+}
+
+/* ------------------------------------------------------ Motion with a job */
+/* thread draw: a line is drawn as its section is revealed (lineage) */
 .tl-draw {
   stroke-dasharray: var(--len, 600);
   stroke-dashoffset: var(--len, 600);
-  transition: stroke-dashoffset 1.4s var(--ease-out-quint);
+  transition: stroke-dashoffset 1.4s var(--ease-out-expo);
 }
 [data-shown="true"] .tl-draw,
 .tl-drawn .tl-draw {
   stroke-dashoffset: 0;
 }
+/* pulse travel: the market's answer coming back along the return thread (learning) */
 @keyframes tl-pulse-travel {
   0% {
     offset-distance: 0%;
@@ -356,47 +742,59 @@
 }
 .tl-pulse {
   offset-rotate: 0deg;
-  animation: tl-pulse-travel 2.2s var(--ease-in-out-soft) infinite;
+  animation: tl-pulse-travel 2.6s var(--ease-in-out-soft) infinite;
 }
-@keyframes tl-blink {
+.tl-paused .tl-pulse {
+  animation-play-state: paused;
+}
+/* light: the active node breathes (attention) */
+@keyframes tl-breathe {
   0%,
   100% {
-    opacity: 1;
+    opacity: 0.35;
   }
   50% {
-    opacity: 0.35;
+    opacity: 0.9;
   }
 }
 .tl-light {
-  animation: tl-blink 1.6s ease-in-out infinite;
+  animation: tl-breathe 2s ease-in-out infinite;
 }
-@keyframes tl-bob {
-  0%,
+/* stamp-in: a verdict lands (gate) */
+@keyframes tl-stamp-in {
+  0% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
   100% {
-    transform: translateY(0);
+    transform: scale(1);
+    opacity: 1;
   }
-  50% {
-    transform: translateY(-3px);
-  }
+}
+.tl-stamp-in {
+  animation: tl-stamp-in 320ms var(--ease-out-expo) both;
+}
+/* the old conveyor stripe is retired; the class remains inert so nothing breaks */
+.tl-belt {
+  height: 1px;
+  background: var(--line-strong);
 }
 .tl-bob {
-  animation: tl-bob 2.6s ease-in-out infinite;
+  animation: none;
 }
 .tl-station {
-  transition: opacity 400ms var(--ease-out-quint), transform 400ms var(--ease-out-quint);
+  transition: opacity 400ms var(--ease-out-quint);
 }
 .tl-station[data-lit="false"] {
-  opacity: 0.45;
+  opacity: 0.4;
 }
 .tl-station[data-lit="true"] {
   opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tl-belt,
   .tl-pulse,
   .tl-light,
-  .tl-bob,
   .tl-stamp-in {
     animation: none !important;
   }
@@ -407,10 +805,17 @@
   .tl-station[data-lit="false"] {
     opacity: 1;
   }
+  .tl-node,
+  .tl-node-halo,
+  .tl-stage .tl-stage-inner,
+  .tl-stage .tl-stage-lbl,
+  .tl-tab,
+  .tl-textlink .tl-arrow {
+    transition: none !important;
+  }
 }
 
 @media print {
-  .tl-public .tl-belt,
   .tl-public .tl-sticky {
     display: none;
   }

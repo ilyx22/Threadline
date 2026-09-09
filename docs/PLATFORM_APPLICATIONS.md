@@ -8,6 +8,27 @@ the feature is finished should start now.** A review queue is dead time we do no
 only way to shorten it is to enter it earlier. Manual and provider-based ingestion exist so that
 nothing is blocked while the clocks run — they are the fallback, not the reason to wait.
 
+**State on 2026-09-09.** The connectors these applications unlock are built and tested to a
+mocked HTTP boundary (`src/lib/integrations/connectors/`, `HANDOFF.md` §11). Filing is now the
+whole remaining path to live publishing; no code is waiting on the reviews.
+
+## Platform safety doctrine (locked 2026-09-09)
+
+> Automate publishing through official rails. Do not automate human social behaviour.
+
+Everything applied for here is an **official API with scoped, revocable OAuth permissions**, and
+that is the only kind of access Threadline will ever use. Four action classes: PUBLISH and
+ANALYTICS through official or authorised APIs; RESEARCH from permitted public or provider sources
+with no authenticated scraping or access bypass; ENGAGEMENT (replies, comments, DMs, follows,
+likes, connections) human by default. Never: browser bots or driver-operated accounts, cookie or
+session-token automation, stored client social passwords, auto-like, engagement pods,
+follow/unfollow automation, connection farming, bulk unsolicited replies/DMs/comments,
+recommendation or location manipulation, or evasion of rate limits, app review or restrictions.
+Secrets are encrypted at rest before any real credential exists, and every connector action
+records platform, account, content, provider, action, timestamp, authorisation state, error state
+and rate state. The full doctrine and its enforcement points are `HANDOFF.md` §16i; a rejected
+application is never answered with a workaround.
+
 ---
 
 ## The distinction that governs everything here

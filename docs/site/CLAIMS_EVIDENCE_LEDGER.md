@@ -6,7 +6,7 @@ Statuses: VERIFIED · UNVERIFIED (not publishable) · RESTRICTED (true but not f
 
 | ID | Claim (as published) | Status | Evidence / source | Where used | Reviewed |
 |---|---|---|---|---|---|
-| C-PRICE | £2,500 implementation, then £2,500 every 4 weeks; 12-week initial engagement (three service periods) | VERIFIED | HANDOFF §16b (locked commercial hypothesis); `src/lib/domain/service-period.ts` | footer, how-it-works CTA | 2026-09-09 |
+| C-PRICE | £2,500 implementation, then £2,500 every 4 weeks; 12-week initial engagement (three service periods) | VERIFIED (internal fact) — **PUBLIC USE: NOT PERMITTED — removed from the public site 2026-09-09 (DEC-017)** | HANDOFF §16b (locked commercial hypothesis; "Public visibility"); `src/lib/domain/service-period.ts`. Pricing is discussed in the qualified sales process. No "from £X", discounts, scarcity or urgency may replace it | none — was footer and how-it-works CTA; removal from `src/content/public-site.ts` is being landed by the public-site pass (verify with a grep for `2,500` before publishing) | 2026-09-09 |
 | C-CADENCE | Threadline runs in 4-week service periods; never "monthly" | VERIFIED | HANDOFF §16b; cadence sweep in `scripts/qa/suite-reports.ts` | home §12 weeks, footer | 2026-09-09 |
 | C-DIVISION | "You talk. You record. You approve. You sell. Threadline handles the machine." | VERIFIED (positioning statement, not a metric) | brief §6; product workflow: recording, approvals, publish gates exist in code | hero, footer | 2026-09-09 |
 | C-POSITIONING | "You already have the expertise. We turn it into content people actually want to watch." | VERIFIED (positioning) | brief §6, HANDOFF §16b | hero, OG image | 2026-09-09 |

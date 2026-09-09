@@ -1,0 +1,552 @@
+{
+  "h1": [
+    {
+      "tag": "h1",
+      "text": "We scale agencies + B2B service companies with predictable client acquisition systems.",
+      "rect": {
+        "x": 67,
+        "y": 128,
+        "w": 633,
+        "h": 119
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "39.936px",
+        "fontWeight": "750",
+        "lineHeight": "39.5366px",
+        "letterSpacing": "-1.51757px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h2": [
+    {
+      "tag": "h2",
+      "text": "Trusted by 300+ client-service businesses",
+      "rect": {
+        "x": 40,
+        "y": 849,
+        "w": 688,
+        "h": 22
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "22px",
+        "fontWeight": "750",
+        "lineHeight": "21.78px",
+        "letterSpacing": "-0.836px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Every service business has exactly one constraint. Most are fixing the wrong one.",
+      "rect": {
+        "x": 40,
+        "y": 1774,
+        "w": 433,
+        "h": 96
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "32.256px",
+        "fontWeight": "750",
+        "lineHeight": "31.9334px",
+        "letterSpacing": "-1.22573px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Scale is a game of inputs and outputs.",
+      "rect": {
+        "x": 40,
+        "y": 3219,
+        "w": 472,
+        "h": 64
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "32.256px",
+        "fontWeight": "750",
+        "lineHeight": "31.9334px",
+        "letterSpacing": "-1.22573px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Numbers with a client attached to them.",
+      "rect": {
+        "x": 40,
+        "y": 3936,
+        "w": 354,
+        "h": 64
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "32.256px",
+        "fontWeight": "750",
+        "lineHeight": "31.9334px",
+        "letterSpacing": "-1.22573px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Three hundred operators, and this is what they say when we’re not in the room.",
+      "rect": {
+        "x": 40,
+        "y": 5539,
+        "w": 433,
+        "h": 96
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "32.256px",
+        "fontWeight": "750",
+        "lineHeight": "31.9334px",
+        "letterSpacing": "-1.22573px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h2",
+      "text": "Find the constraint. Then we build it for you, or with you.",
+      "rect": {
+        "x": 40,
+        "y": 7078,
+        "w": 433,
+        "h": 64
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "32.256px",
+        "fontWeight": "750",
+        "lineHeight": "31.9334px",
+        "letterSpacing": "-1.22573px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "h3": [
+    {
+      "tag": "h3",
+      "text": "SOAR With Us",
+      "rect": {
+        "x": 60,
+        "y": 4131,
+        "w": 296,
+        "h": 22
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "22px",
+        "fontWeight": "750",
+        "lineHeight": "21.78px",
+        "letterSpacing": "-0.836px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "ZeroTo1",
+      "rect": {
+        "x": 60,
+        "y": 4337,
+        "w": 276,
+        "h": 22
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "22px",
+        "fontWeight": "750",
+        "lineHeight": "21.78px",
+        "letterSpacing": "-0.836px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Short Form Media",
+      "rect": {
+        "x": 60,
+        "y": 4564,
+        "w": 236,
+        "h": 22
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "22px",
+        "fontWeight": "750",
+        "lineHeight": "21.78px",
+        "letterSpacing": "-0.836px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Fraggell Productions",
+      "rect": {
+        "x": 60,
+        "y": 4798,
+        "w": 222,
+        "h": 22
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "22px",
+        "fontWeight": "750",
+        "lineHeight": "21.78px",
+        "letterSpacing": "-0.836px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Find your constraint",
+      "rect": {
+        "x": 73,
+        "y": 7361,
+        "w": 268,
+        "h": 24
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "24px",
+        "fontWeight": "750",
+        "lineHeight": "23.76px",
+        "letterSpacing": "-0.912px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "h3",
+      "text": "Client Acquisition System Build",
+      "rect": {
+        "x": 427,
+        "y": 7361,
+        "w": 268,
+        "h": 48
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "24px",
+        "fontWeight": "750",
+        "lineHeight": "23.76px",
+        "letterSpacing": "-0.912px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "p": [
+    {
+      "tag": "p",
+      "text": "We build & run it for you, then work alongside you to scale operations to handle the deman",
+      "rect": {
+        "x": 146,
+        "y": 271,
+        "w": 477,
+        "h": 51
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "25.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(95, 95, 107)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THE DIAGNOSIS",
+      "rect": {
+        "x": 40,
+        "y": 1740,
+        "w": 688,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "17.6px",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase",
+        "color": "rgb(99, 99, 111)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Your business runs in series. Throughput is set by the narrowest stage, which means work s",
+      "rect": {
+        "x": 40,
+        "y": 1894,
+        "w": 672,
+        "h": 51
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "25.6px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(95, 95, 107)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "CONSTRAINT 02 / CONVERSION",
+      "rect": {
+        "x": 73,
+        "y": 2309,
+        "w": 622,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "17.6px",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase",
+        "color": "rgb(99, 99, 111)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Enough conversations, too few of them close.",
+      "rect": {
+        "x": 73,
+        "y": 2339,
+        "w": 622,
+        "h": 22
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "22px",
+        "fontWeight": "750",
+        "lineHeight": "21.78px",
+        "letterSpacing": "-0.836px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "WHAT WE CHANGE FIRST",
+      "rect": {
+        "x": 73,
+        "y": 2575,
+        "w": 622,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "17.6px",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase",
+        "color": "rgb(255, 216, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Rebuild the offer and pricing so the same conversation closes higher, then take the call o",
+      "rect": {
+        "x": 73,
+        "y": 2605,
+        "w": 622,
+        "h": 52
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "26px",
+        "letterSpacing": "normal",
+        "textTransform": "none",
+        "color": "rgb(244, 243, 240)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "Not sure which one is yours?",
+      "rect": {
+        "x": 73,
+        "y": 2984,
+        "w": 364,
+        "h": 20
+      },
+      "style": {
+        "fontFamily": "Archivo, \"Archivo Fallback\", ui-sans-serif, system-ui, sans-serif",
+        "fontSize": "20px",
+        "fontWeight": "750",
+        "lineHeight": "19.8px",
+        "letterSpacing": "-0.76px",
+        "textTransform": "none",
+        "color": "rgb(18, 18, 26)",
+        "fontStyle": "normal"
+      }
+    }
+  ],
+  "small": [
+    {
+      "tag": "p",
+      "text": "THE DIAGNOSIS",
+      "rect": {
+        "x": 40,
+        "y": 1740,
+        "w": 688,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "17.6px",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase",
+        "color": "rgb(99, 99, 111)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "CONSTRAINT 02 / CONVERSION",
+      "rect": {
+        "x": 73,
+        "y": 2309,
+        "w": 622,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "17.6px",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase",
+        "color": "rgb(99, 99, 111)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "WHAT WE CHANGE FIRST",
+      "rect": {
+        "x": 73,
+        "y": 2575,
+        "w": 622,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "17.6px",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase",
+        "color": "rgb(255, 216, 77)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THE FORMULA",
+      "rect": {
+        "x": 40,
+        "y": 3185,
+        "w": 688,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "17.6px",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase",
+        "color": "rgb(99, 99, 111)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THE INPUTS",
+      "rect": {
+        "x": 69,
+        "y": 3461,
+        "w": 158,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "17.6px",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase",
+        "color": "rgb(99, 99, 111)",
+        "fontStyle": "normal"
+      }
+    },
+    {
+      "tag": "p",
+      "text": "THE SYSTEM",
+      "rect": {
+        "x": 305,
+        "y": 3461,
+        "w": 158,
+        "h": 18
+      },
+      "style": {
+        "fontFamily": "\"JetBrains Mono\", \"JetBrains Mono Fallback\", ui-monospace, monospace",
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "17.6px",
+        "letterSpacing": "1.65px",
+        "textTransform": "uppercase",
+        "color": "rgb(99, 99, 111)",
+        "fontStyle": "normal"
+      }
+    }
+  ]
+}

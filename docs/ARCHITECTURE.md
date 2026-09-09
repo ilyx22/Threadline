@@ -1,6 +1,7 @@
 # Threadline OS — Architecture
 
-Last updated: 2026-09-02
+Last updated: 2026-09-09 (ADR-001 to ADR-027; sections 3, 8, 9 and 10 brought to the current state
+after the completion pass; the v1 integration description is kept as HISTORICAL)
 
 ---
 
@@ -76,10 +77,11 @@ There is no public REST surface for tenant data, so there is no second path to s
 ### ADR-004 — Local disk storage behind a storage interface
 
 Uploads are written to `storage/{orgId}/...` on local disk via `src/lib/storage/index.ts`, which
-exposes a `StorageAdapter` interface (`put`, `get`, `delete`, `signedUrl`). An S3/Supabase adapter
-can be dropped in without touching call sites. Files are served through
-`/api/files/[...path]/route.ts`, which re-checks org membership on every read — **files are never
-served from a public static path.**
+exposes a `StorageAdapter` interface (`put`, `get`, `delete`, `signedUrl`). Since 2026-09-09 an
+S3-compatible adapter (`src/lib/storage/s3.ts`, selected by `STORAGE_PROVIDER=s3`) and a memory
+adapter sit behind the same interface — see ADR-023 for the key-scoping and proxied-read rules.
+Files are served through `/api/files/[...path]/route.ts`, which re-checks org membership on every
+read — **files are never served from a public static path.**
 
 ### ADR-005 — Lineage is modelled with real foreign keys
 
@@ -478,12 +480,17 @@ prisma/
   seed/                    Demo workspace content, split by module
 src/
   app/
-    (marketing)/           Public site: home, how-it-works, who-its-for, apply, calculator, faq
-    (auth)/login           Sign-in
+    (marketing)/           Public site: home, how-it-works, who-its-for, apply, calculator,
+                           playbook + 10 chapters
+    (auth)/                login, forgot-password, reset-password, invite
     app/[org]/             Client portal (all modules)
     onboarding/[org]/      15-step onboarding
-    admin/                 Internal operator portal
-    api/                   File serving + health only; no tenant CRUD
+    admin/                 Internal operator portal (cockpit, clients, queue, prospects, market,
+                           acquisition, research, scripts, delivery, applications, metrics, ...)
+    api/files/             Authorised file serving; no tenant CRUD
+    api/webhooks/          Signature-verified inbound CRM / payment events
+    t/[slug]/              Tracked redirect
+    sitemap, robots, opengraph-image, icon, not-found
   components/
     ui/                    Design-system primitives (button, card, dialog, table, ...)
     charts/                In-house SVG chart components
@@ -505,11 +512,27 @@ src/
                            + diagnosis.ts     nine dimensions, volume verdict
                            + installation.ts  milestone derivation
                            + proof.ts         comparison and non-causal language
-    integrations/          Integration registry + adapter interfaces
-    storage/               Storage adapter
-    reports/               Weekly report generation
+                           + integration-capability.ts  truthful connection state, assertCanPublish
+                           + content-diagnosis.ts (gap reading, intended job, text-led rules
+                             with workflow.ts), learning-velocity.ts
+                           + corpus.ts, judge.ts, service-period.ts, sop.ts, tracked-link.ts
+    analytics/             Metric normaliser (five field states), ingestion, freshness
+    email/                 Capture + Resend providers, templates, EmailMessage log
+    integrations/          Registry, adapter interface, oauth (PKCE), credentials (encrypted),
+                           connectors/ (linkedin, youtube, meta, tiktok, x), webhooks, fetch-url
+    jobs/                  Durable job queue, handlers, worker
+    research/              ResearchProvider interface and providers (internal, manual, URL)
+    sales/                 Canonical scripts, verbatim import
+    security/              rate-limit (memory / Redis-REST), safe-path, secret-box (AES-256-GCM)
+    storage/               Storage adapters: local, s3, memory
+    reports/               Weekly report generation + learning sections
     utils/                 cn, dates, formatting, ids
-docs/                      Specification, architecture, data model, checklists
+  content/public-site.ts   Every public sentence, tagged with its claims-ledger id
+  components/public/, factory/   Public-site primitives and the Authority Factory illustrations
+docs/                      Specification, architecture, data model, checklists, site/, design/,
+                           audits/, checkpoints/
+qa-baselines/public/       Approved public visual baselines
+scripts/qa/, scripts/jobs/ QA harness and the worker launcher (not imported by the app)
 storage/                   Uploaded files (git-ignored)
 ```
 
@@ -652,10 +675,37 @@ category, capabilities, required credentials, current implementation status
 `IntegrationAdapter` interface: `describe()`, `validateConfig()`, `connect()`, `status()`,
 plus optional `publish()` and `fetchMetrics()`.
 
-v1 status: every social/CRM/booking integration ships as `adapter_only` or `manual_only` with an
-honest, non-clickable-to-nowhere UI state and a working manual workflow. The one genuinely
-functional "integration" is the configurable external booking URL, because it requires no
-credentials. **No adapter simulates a successful connection.**
+**Current state (2026-09-09).** Three layers, each answering a different question:
+
+1. **What the code can do** — the registry. `implementation` still reads `adapter_only` for the
+   five social platforms, which now means "the code path is complete and the gate is external",
+   not "returns unavailable by construction".
+2. **What is true for this workspace right now** — `src/lib/domain/integration-capability.ts`:
+   auth status (`none | connected | expired | revoked | error`), publish / analytics / research
+   capability, review status, granted scopes, restrictions, health
+   (`not_connected | healthy | degraded | blocked | broken`) and a reconnect flag, persisted on
+   `Integration`. The reading is derived from stored state and never inferred from configuration
+   (ADR-024); `assertCanPublish` refuses an unauthorised, expired or unaudited connection rather
+   than letting it publish invisibly.
+3. **How the platform is spoken to** — `src/lib/integrations/connectors/{linkedin,youtube,meta,
+   tiktok,x}.ts`: documented scopes, authorise/token URLs (PKCE where supported), publish, status
+   and metrics request builders and parsers, error and rate-limit mapping, thread posting for X,
+   all through an injectable `fetch`. OAuth state lives in `OAuthState`; tokens and webhook secrets
+   live encrypted in `Credential` (`security/secret-box.ts`, `CREDENTIAL_ENCRYPTION_KEYS`).
+   Inbound CRM and payment events arrive through `webhooks.ts` and `/api/webhooks/[provider]`,
+   signature-verified before parsing and idempotent on `(provider, externalId)`.
+
+The manual and native-delegated access methods remain first-class and are the normal path until
+credentials and platform reviews exist (`docs/PLATFORM_APPLICATIONS.md`). The booking URL is
+still the one integration that needs nothing. **No adapter simulates a successful connection**,
+and every connector is bounded by the platform safety doctrine in `HANDOFF.md` §16i: official
+rails for publish, analytics and research; engagement is human; no browser automation, session
+tokens, engagement automation or evasion of platform controls.
+
+HISTORICAL (v1, 2026-09-02 to 2026-09-08): every social/CRM/booking integration shipped as
+`adapter_only` or `manual_only` with an honest, non-clickable-to-nowhere UI state and a working
+manual workflow; the adapters returned an explicit `unavailable` result. The registry vocabulary
+and the manual workflows survive from that period; the "returns unavailable" behaviour does not.
 
 ---
 
@@ -663,8 +713,14 @@ credentials. **No adapter simulates a successful connection.**
 
 - Server-side authorisation on every page, action and file read (section 4)
 - Zod validation at every trust boundary, including the public application form
-- In-memory sliding-window rate limiting (`src/lib/security/rate-limit.ts`) on login, the public
-  application endpoint and AI generation actions
+- Sliding-window rate limiting (`src/lib/security/rate-limit.ts`) on login, password reset, the
+  public application endpoint, webhooks and AI generation actions; memory store per instance by
+  default, Redis-REST shared store by configuration, failing closed when the shared store is
+  required and unreachable
+- Secrets at rest: OAuth tokens and webhook secrets encrypted with an AES-256-GCM keyring
+  (`security/secret-box.ts`); auth tokens stored as SHA-256 digests and consumed single-use
+- Open-redirect guard (`security/safe-path.ts`) on login `next` and OAuth return paths
+- Retrieved research text is quarantined before it reaches a model (ADR-026)
 - Input sanitisation for any user text rendered as rich content; no `dangerouslySetInnerHTML`
   on user-supplied strings (the report renderer uses a strict, allow-listed markdown subset)
 - Secrets are server-only; no `NEXT_PUBLIC_` variable holds a credential
@@ -678,9 +734,15 @@ credentials. **No adapter simulates a successful connection.**
 
 - `npm run typecheck` — strict TypeScript, zero errors
 - `npm run lint` — ESLint (next/core-web-vitals + TS)
-- `npm test` — Node's built-in test runner via `tsx` over `src/**/*.test.ts`, covering the
-  security-critical and logic-critical units: role capability matrix, tenancy scoping, workflow
-  transition legality, idea/pattern scoring, report derivation, calculator maths
+- `npm test` — Node's built-in test runner via `tsx` over `src/**/*.test.ts` (625 tests in 154
+  suites across 41 files on 2026-09-09), covering the security-critical and logic-critical units:
+  role capability matrix, tenancy scoping, client visibility, workflow transition legality,
+  scoring, attribution models and evidence classes, tokens, email, jobs, storage, rate limit,
+  secret box, OAuth, connectors, webhooks, analytics normalisation, research providers, corpus
+  banding, the Judge, capability reading, calculator maths
+- `scripts/qa/` — the adversarial harness (`qa:all`, 494 checks), synthetic engagements
+  (`qa:spine`), performance smoke (`qa:perf`), and the headless-Chrome sweeps (`qa:browser`,
+  `qa:public`, `qa:visual`); results in `docs/QA_REPORT.md`
 - `docs/ACCEPTANCE_TESTS.md` — the manual end-to-end matrix, executed and recorded before release
 
 ### ADR-021 — The queue is the database

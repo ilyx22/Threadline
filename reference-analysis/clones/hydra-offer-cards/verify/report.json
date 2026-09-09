@@ -1,0 +1,2013 @@
+{
+  "site": "hydra",
+  "name": "hydra-offer-cards",
+  "verifiedAt": "2026-09-09T13:57:47.037Z",
+  "tolerancePx": 4,
+  "widths": [
+    {
+      "width": 1440,
+      "rootDelta": {
+        "dw": 0,
+        "dh": 0
+      },
+      "compared": 38,
+      "pass": 37,
+      "worst": 30,
+      "styleMismatch": 0,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "p",
+          "text": "Where to start",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1",
+          "tag": "h2",
+          "text": "Find the constraint. Then we b",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/0",
+          "tag": "em",
+          "text": "for you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -4
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/1",
+          "tag": "em",
+          "text": "with you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -4
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/2",
+          "tag": "p",
+          "text": "Which one you need follows fro",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/0",
+          "tag": "p",
+          "text": "Start here, free",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1",
+          "tag": "h3",
+          "text": "Find your constraint",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2",
+          "tag": "p",
+          "text": "Four stages run in series, so ",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4",
+          "tag": "p",
+          "text": "Six questions, answer in ninet",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/5",
+          "tag": "span",
+          "text": "Take the diagnostic",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": -30,
+            "dy": 1,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/0",
+          "tag": "p",
+          "text": "Built for you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/1",
+          "tag": "h3",
+          "text": "Client Acquisition System Buil",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/2",
+          "tag": "p",
+          "text": "Hydra builds and runs your pai",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/3/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/4",
+          "tag": "p",
+          "text": "Live pipeline in 8 weeks",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/5",
+          "tag": "span",
+          "text": "See the detail",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/0",
+          "tag": "p",
+          "text": "Built with you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/1",
+          "tag": "h3",
+          "text": "1-1 Consulting Engagement",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/2",
+          "tag": "p",
+          "text": "A named operator inside your b",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/3/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/4",
+          "tag": "p",
+          "text": "Six month engagement",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/5",
+          "tag": "span",
+          "text": "See the detail",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "rootDelta": {
+        "dw": 0,
+        "dh": -22
+      },
+      "compared": 38,
+      "pass": 12,
+      "worst": 30,
+      "styleMismatch": 0,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -22
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "p",
+          "text": "Where to start",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1",
+          "tag": "h2",
+          "text": "Find the constraint. Then we b",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/0",
+          "tag": "em",
+          "text": "for you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -3
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/1",
+          "tag": "em",
+          "text": "with you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -3
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/2",
+          "tag": "p",
+          "text": "Which one you need follows fro",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/0",
+          "tag": "p",
+          "text": "Start here, free",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1",
+          "tag": "h3",
+          "text": "Find your constraint",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2",
+          "tag": "p",
+          "text": "Four stages run in series, so ",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4",
+          "tag": "p",
+          "text": "Six questions, answer in ninet",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/5",
+          "tag": "span",
+          "text": "Take the diagnostic",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": -30,
+            "dy": -22,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/0",
+          "tag": "p",
+          "text": "Built for you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/1",
+          "tag": "h3",
+          "text": "Client Acquisition System Buil",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/2",
+          "tag": "p",
+          "text": "Hydra builds and runs your pai",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/3/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/4",
+          "tag": "p",
+          "text": "Live pipeline in 8 weeks",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/5",
+          "tag": "span",
+          "text": "See the detail",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/0",
+          "tag": "p",
+          "text": "Built with you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/1",
+          "tag": "h3",
+          "text": "1-1 Consulting Engagement",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/2",
+          "tag": "p",
+          "text": "A named operator inside your b",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/3/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/4",
+          "tag": "p",
+          "text": "Six month engagement",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/5",
+          "tag": "span",
+          "text": "See the detail",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "rootDelta": {
+        "dw": 0,
+        "dh": 22
+      },
+      "compared": 38,
+      "pass": 27,
+      "worst": 30,
+      "styleMismatch": 0,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 22
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "p",
+          "text": "Where to start",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1",
+          "tag": "h2",
+          "text": "Find the constraint. Then we b",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/0",
+          "tag": "em",
+          "text": "for you",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": -2
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/1",
+          "tag": "em",
+          "text": "with you",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": -2
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/2",
+          "tag": "p",
+          "text": "Which one you need follows fro",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 23
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/0",
+          "tag": "p",
+          "text": "Start here, free",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1",
+          "tag": "h3",
+          "text": "Find your constraint",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2",
+          "tag": "p",
+          "text": "Four stages run in series, so ",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/4",
+          "tag": "p",
+          "text": "Six questions, answer in ninet",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/5",
+          "tag": "span",
+          "text": "Take the diagnostic",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": -30,
+            "dy": 0,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/0",
+          "tag": "p",
+          "text": "Built for you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/1",
+          "tag": "h3",
+          "text": "Client Acquisition System Buil",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/2",
+          "tag": "p",
+          "text": "Hydra builds and runs your pai",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/3/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/4",
+          "tag": "p",
+          "text": "Live pipeline in 8 weeks",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/5",
+          "tag": "span",
+          "text": "See the detail",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 22
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 22
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/0",
+          "tag": "p",
+          "text": "Built with you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/1",
+          "tag": "h3",
+          "text": "1-1 Consulting Engagement",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/2",
+          "tag": "p",
+          "text": "A named operator inside your b",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 22
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/3/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/4",
+          "tag": "p",
+          "text": "Six month engagement",
+          "geom": {
+            "dx": 0,
+            "dy": 23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/5",
+          "tag": "span",
+          "text": "See the detail",
+          "geom": {
+            "dx": 0,
+            "dy": 23,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": 0,
+            "dy": 23,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "rootDelta": {
+        "dw": 0,
+        "dh": -176
+      },
+      "compared": 35,
+      "pass": 9,
+      "worst": 177,
+      "styleMismatch": 0,
+      "missing": 3,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -176
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "p",
+          "text": "Where to start",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1",
+          "tag": "h2",
+          "text": "Find the constraint. Then we b",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/0",
+          "tag": "em",
+          "text": "for you",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -2
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/1",
+          "tag": "em",
+          "text": "with you",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": -2
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/2",
+          "tag": "p",
+          "text": "Which one you need follows fro",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": -177
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": -58
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": -58
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/0",
+          "tag": "p",
+          "text": "Start here, free",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/1",
+          "tag": "h3",
+          "text": "Find your constraint",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/2",
+          "tag": "p",
+          "text": "Four stages run in series, so ",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -59
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/3/1",
+          "status": "no reference node"
+        },
+        {
+          "ref": "0/0/1/0/0/4",
+          "tag": "p",
+          "text": "Six questions, answer in ninet",
+          "geom": {
+            "dx": 0,
+            "dy": -59,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/5",
+          "tag": "span",
+          "text": "Take the diagnostic",
+          "geom": {
+            "dx": 0,
+            "dy": -59,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/0/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": -30,
+            "dy": -59,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -59,
+            "dw": 0,
+            "dh": -59
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -59,
+            "dw": 0,
+            "dh": -59
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/0",
+          "tag": "p",
+          "text": "Built for you",
+          "geom": {
+            "dx": 0,
+            "dy": -59,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/1",
+          "tag": "h3",
+          "text": "Client Acquisition System Buil",
+          "geom": {
+            "dx": 0,
+            "dy": -58,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/2",
+          "tag": "p",
+          "text": "Hydra builds and runs your pai",
+          "geom": {
+            "dx": 0,
+            "dy": -59,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -58,
+            "dw": 0,
+            "dh": -59
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/3/1",
+          "status": "no reference node"
+        },
+        {
+          "ref": "0/0/1/1/0/4",
+          "tag": "p",
+          "text": "Live pipeline in 8 weeks",
+          "geom": {
+            "dx": 0,
+            "dy": -117,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/5",
+          "tag": "span",
+          "text": "See the detail",
+          "geom": {
+            "dx": 0,
+            "dy": -117,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/1/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": 0,
+            "dy": -117,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -117,
+            "dw": 0,
+            "dh": -58
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -117,
+            "dw": 0,
+            "dh": -58
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/0",
+          "tag": "p",
+          "text": "Built with you",
+          "geom": {
+            "dx": 0,
+            "dy": -117,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/1",
+          "tag": "h3",
+          "text": "1-1 Consulting Engagement",
+          "geom": {
+            "dx": 0,
+            "dy": -117,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/2",
+          "tag": "p",
+          "text": "A named operator inside your b",
+          "geom": {
+            "dx": 0,
+            "dy": -117,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -117,
+            "dw": 0,
+            "dh": -59
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/3/1",
+          "status": "no reference node"
+        },
+        {
+          "ref": "0/0/1/2/0/4",
+          "tag": "p",
+          "text": "Six month engagement",
+          "geom": {
+            "dx": 0,
+            "dy": -176,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/5",
+          "tag": "span",
+          "text": "See the detail",
+          "geom": {
+            "dx": 0,
+            "dy": -176,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/1/2/0/5/0",
+          "tag": "span",
+          "text": "→",
+          "geom": {
+            "dx": 0,
+            "dy": -176,
+            "dw": -2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        }
+      ]
+    }
+  ]
+}

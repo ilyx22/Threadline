@@ -1,0 +1,46 @@
+{
+  "capturedAt": "2026-09-09T13:33:32.611Z",
+  "method": "headless Chrome via CDP, public pages only, no source maps, no authenticated areas",
+  "results": [
+    {
+      "url": "https://workwithhydra.com/",
+      "width": 1440,
+      "finalUrl": "https://workwithhydra.com/",
+      "title": "Hydra: growth systems for agencies and service firms",
+      "scrollHeight": 9424,
+      "frames": 32,
+      "fonts": 5,
+      "ms": 3997
+    },
+    {
+      "url": "https://workwithhydra.com/",
+      "width": 1024,
+      "finalUrl": "https://workwithhydra.com/",
+      "title": "Hydra: growth systems for agencies and service firms",
+      "scrollHeight": 9242,
+      "frames": 31,
+      "fonts": 5,
+      "ms": 3881
+    },
+    {
+      "url": "https://workwithhydra.com/",
+      "width": 768,
+      "finalUrl": "https://workwithhydra.com/",
+      "title": "Hydra: growth systems for agencies and service firms",
+      "scrollHeight": 10354,
+      "frames": 35,
+      "fonts": 5,
+      "ms": 4119
+    },
+    {
+      "url": "https://workwithhydra.com/",
+      "width": 390,
+      "finalUrl": "https://workwithhydra.com/",
+      "title": "Hydra: growth systems for agencies and service firms",
+      "scrollHeight": 13322,
+      "frames": 45,
+      "fonts": 5,
+      "ms": 4269
+    }
+  ]
+}

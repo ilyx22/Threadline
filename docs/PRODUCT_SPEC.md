@@ -1,6 +1,9 @@
 # Threadline OS — Product Specification
 
-Last updated: 2026-09-04 (launch hardening)
+Last updated: 2026-09-09 (§5.5 distribution and §5.6 performance brought to the current state
+after the completion pass; the loop, modules and honesty constraints are unchanged. Owner doctrine
+of 2026-09-09 — public pricing visibility, platform safety, cadence, offer direction — is recorded
+in `HANDOFF.md` §13, §16b, §16f and §16i and applies to every surface described here.)
 
 ---
 
@@ -281,12 +284,19 @@ the monthly strategy review, which appends to the record rather than overwriting
 ### 5.5 DISTRIBUTION
 
 Calendar + list. Publish records per piece per platform with status
-`draft -> ready -> scheduled -> published` (plus `failed`), URL capture, account mapping, manual
-vs integration method. Integration cards show honest connection state; nothing fakes a connection.
+`draft -> ready -> scheduled -> published` (plus `failed`), URL capture, account mapping, access
+method (`manual | native_delegated | api`) and distribution mode (organic / paid amplified).
+Connectors for LinkedIn, YouTube, Instagram, TikTok and X publish through the official APIs once
+credentials and platform review exist; until then the integration card reads "credentials
+missing" or "auth required" and the manual route is the normal path. Integration cards show the
+capability-granular connection state; nothing fakes a connection, and no connector ever automates
+human social behaviour (`HANDOFF.md` §16i).
 
 ### 5.6 PERFORMANCE
 
-Per-asset metric snapshots (manual entry + adapter interface). Derived views: top performers,
+Per-asset metric snapshots: manual entry, or ingestion through the analytics normaliser, which
+records each field as a value, `unavailable`, `unsupported`, `unknown` or `stale`, with provenance
+and freshness, and never turns a missing figure into a zero. Derived views: top performers,
 underperformers, over time, by format / topic / hook / CTA / platform. Auto-derived winners,
 losers, learnings and next tests, which write back into the Signal Engine and Idea Engine.
 
@@ -563,8 +573,9 @@ Full token list and component inventory: `docs/ARCHITECTURE.md`, section "Design
 
 1. No fabricated testimonials, clients, logos, revenue or case studies on marketing surfaces.
    Founding-phase language is used instead.
-2. No integration is presented as connected unless it genuinely is. Unavailable integrations show
-   an explicit unavailable state with a manual fallback.
+2. No integration is presented as connected unless it genuinely is. An integration whose
+   credentials, OAuth grant or platform review are missing shows that specific state with a manual
+   fallback; capability is read from stored state, never inferred from configuration.
 3. No button appears functional and silently does nothing.
 4. AI output is always editable and never presented as verified fact. Factual claims are extracted
    and must be explicitly checked by a human before a script can be approved.

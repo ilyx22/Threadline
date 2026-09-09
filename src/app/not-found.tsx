@@ -1,7 +1,8 @@
 import "@/app/public.css";
 import Link from "next/link";
 import { NOT_FOUND } from "@/content/public-site";
-import { ThreadWordmark, InspectorStation } from "@/components/factory/primitives";
+import { ThreadWordmark } from "@/components/factory/primitives";
+import { InspectionMark } from "@/components/factory/schematic";
 
 export default function NotFound() {
   return (
@@ -10,7 +11,7 @@ export default function NotFound() {
         <ThreadWordmark className="h-7 w-auto" />
       </Link>
       <div className="mt-10">
-        <InspectorStation className="mx-auto w-[150px]" stamp="404" reject />
+        <InspectionMark className="mx-auto w-16" reject />
       </div>
       <p className="tl-label mt-8 text-[color:var(--accent-deep)]">Not found</p>
       <h1 className="tl-display mt-3 max-w-[14ch] text-[clamp(2rem,5vw,3.5rem)]">{NOT_FOUND.title}</h1>

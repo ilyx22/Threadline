@@ -27,9 +27,10 @@ const ONLY = process.argv.find((a) => a.startsWith("--only="))?.slice(7);
 const WIDTH_FILTER = process.argv.find((a) => a.startsWith("--width="))?.slice(8).split(",").map(Number);
 
 /** Words that must never appear in Threadline's public output (reference-analysis/birdhouse/forbidden-to-copy.md). */
-const BRAND_LEAK = /birdhouse|marcos|pesto|sila digital|thebirdhouse|beehiiv|fillout|outlier post method|0 to 10k/i;
+const BRAND_LEAK = /birdhouse|marcos|pesto|sila digital|thebirdhouse|beehiiv|fillout|outlier post method|0 to 10k|workwithhydra|hydra|throughput capped|one constraint/i;
 const PLACEHOLDER = /\bTBD\b|\bTODO\b|lorem ipsum|placeholder|example\.com|dummy|\(555\)|acme corp|your company here|coming soon/i;
 const CADENCE = /\bmonthly (fee|retainer|price)|per month\b|\/month\b/i;
+const PRICE = /£\s?2,?500|£\s?5,?000|£\s?10,?000|2\.5k|starting (from|at) £/i; // DEC-017: exact service pricing is never public
 const OVERCLAIM = /guarantee(d)? (leads|revenue|results)|go viral|10x|supercharge|unlock|game-chang|leverage ai|revolutioni[sz]e|cutting-edge/i;
 
 const AUDIT = `(() => {
@@ -117,6 +118,7 @@ async function main() {
             if (PLACEHOLDER.test(a.text)) problems.push(`placeholder text: ${a.text.match(PLACEHOLDER)?.[0]}`);
             if (CADENCE.test(a.text)) problems.push(`monthly wording: ${a.text.match(CADENCE)?.[0]}`);
             if (OVERCLAIM.test(a.text)) problems.push(`overclaim wording: ${a.text.match(OVERCLAIM)?.[0]}`);
+            if (PRICE.test(a.text)) problems.push(`PRICE DISCLOSURE: ${a.text.match(PRICE)?.[0]}`);
             if (a.bigNumbers > 0 && !a.synthetic && route === "/") problems.push("large numbers shown without a synthetic/illustrative label");
           }
           if (width === 1440 || width === 390 || width === 320) writeFileSync(path.join(OUT, `${width}-${route.replace(/\W+/g, "_") || "home"}.jpg`), await screenshot(cdp, { fullPage: true, format: "jpeg", quality: 70 }));

@@ -2,7 +2,7 @@
 
 Two layers:
 
-- **Automated** — `npm test` (Node test runner). 403 tests, 94 suites. Covers the
+- **Automated** — `npm test` (Node test runner). 625 tests, 154 suites (2026-09-09). Covers the
   security-critical and logic-critical units where a regression would be silent and expensive.
 - **Manual E2E** — the matrix below, executed against the seeded demo database.
 

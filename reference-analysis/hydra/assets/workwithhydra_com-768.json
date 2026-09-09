@@ -1,0 +1,301 @@
+{
+  "media": {
+    "img": 28,
+    "svg": 12,
+    "video": 0,
+    "canvas": 0,
+    "lottie": 0,
+    "imgSrcs": [
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2F_next%2Fstatic%2Fimmutable%2Fmedia%2Fhydra-logo-dark.2c2but8ac1ohc.png&w=96&q=75",
+        "w": 96,
+        "h": 32,
+        "alt": "Hydra"
+      },
+      {
+        "src": "https://workwithhydra.com/logos/soar-with-us.svg",
+        "w": 173,
+        "h": 48,
+        "alt": "SOAR With Us"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2F253-media.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 299,
+        "h": 44,
+        "alt": "253 Media"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2F2urn.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 256,
+        "h": 25,
+        "alt": "2URN"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Faura-creative-agency.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 78,
+        "h": 34,
+        "alt": "Aura Creative Agency"
+      },
+      {
+        "src": "https://workwithhydra.com/logos/behuman.svg",
+        "w": 283,
+        "h": 43,
+        "alt": "BeHuman"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fconversion-engine.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 256,
+        "h": 35,
+        "alt": "Conversion Engine"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fdigital-executive.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 256,
+        "h": 67,
+        "alt": "Digital Executive"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Feasty-marketing-group.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 235,
+        "h": 79,
+        "alt": "Easty Marketing Group"
+      },
+      {
+        "src": "https://workwithhydra.com/logos/fraggell-productions.svg",
+        "w": 300,
+        "h": 65,
+        "alt": "Fraggell Productions"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fground-zero.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 256,
+        "h": 39,
+        "alt": "Ground Zero"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fkynship.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 256,
+        "h": 33,
+        "alt": "Kynship"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fmango-media.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 198,
+        "h": 105,
+        "alt": "Mango Media"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fmaverix-design.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 281,
+        "h": 68,
+        "alt": "Maverix Designs"
+      },
+      {
+        "src": "https://workwithhydra.com/logos/oddduck-marketing-group.svg",
+        "w": 174,
+        "h": 33,
+        "alt": "OddDuck Marketing Group"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fone-10-media.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 157,
+        "h": 166,
+        "alt": "One 10 Media"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fpink-lava-studios.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 280,
+        "h": 117,
+        "alt": "Pink Lava Studios"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Froar-marketing.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 299,
+        "h": 74,
+        "alt": "Roar Marketing"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fshort-form-media.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 256,
+        "h": 23,
+        "alt": "Short Form Media"
+      },
+      {
+        "src": "https://workwithhydra.com/logos/soar-with-us.svg",
+        "w": 173,
+        "h": 48,
+        "alt": "Soar With Us"
+      },
+      {
+        "src": "https://workwithhydra.com/logos/socialtale.svg",
+        "w": 300,
+        "h": 40,
+        "alt": "SocialTale"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Ftvg.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 172,
+        "h": 56,
+        "alt": "TVG"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Funlock-performance.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 284,
+        "h": 90,
+        "alt": "Unlock Performance"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fuptown.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 213,
+        "h": 80,
+        "alt": "Uptown"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fvideo-growth-systems.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 256,
+        "h": 88,
+        "alt": "Video Growth Systems"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fvoth-agency.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+        "w": 256,
+        "h": 71,
+        "alt": "Voth Agency"
+      },
+      {
+        "src": "https://workwithhydra.com/logos/zeroto1.svg",
+        "w": 219,
+        "h": 35,
+        "alt": "ZeroTo1"
+      },
+      {
+        "src": "https://workwithhydra.com/_next/image?url=%2F_next%2Fstatic%2Fimmutable%2Fmedia%2Fhydra-logo-dark.2c2but8ac1ohc.png&w=128&q=75",
+        "w": 128,
+        "h": 43,
+        "alt": "Hydra"
+      }
+    ]
+  },
+  "requests": [
+    {
+      "url": "https://workwithhydra.com/_next/static/immutable/media/21ca8f3f56c22ca2-s.p.14a9xpaqsbppk.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/static/immutable/media/30fd09fbaafebc17-s.p.3go__d1fwqfu8.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/static/immutable/media/70bc3e132a0a741e-s.p.269kn9uafm0ti.woff2",
+      "type": "font/woff2"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2F_next%2Fstatic%2Fimmutable%2Fmedia%2Fhydra-logo-dark.2c2but8ac1ohc.png&w=96&q=75",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2F_next%2Fstatic%2Fimmutable%2Fmedia%2Fhydra-logo-dark.2c2but8ac1ohc.png&w=128&q=75",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/logos/soar-with-us.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://workwithhydra.com/logos/fraggell-productions.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://workwithhydra.com/logos/oddduck-marketing-group.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://workwithhydra.com/logos/behuman.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fmaverix-design.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/png"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Funlock-performance.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/png"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fuptown.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fdigital-executive.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fkynship.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/logos/zeroto1.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2F253-media.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/png"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fvideo-growth-systems.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fvoth-agency.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Faura-creative-agency.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fconversion-engine.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fone-10-media.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fground-zero.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/logos/socialtale.svg",
+      "type": "image/svg+xml"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2F2urn.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Feasty-marketing-group.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Ftvg.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fshort-form-media.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Froar-marketing.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/png"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fpink-lava-studios.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/png"
+    },
+    {
+      "url": "https://workwithhydra.com/_next/image?url=%2Flogos%2Fmango-media.png&w=256&q=75&dpl=dpl_7W1Ad3kAuwE1LdofrFy7h3ZbRvZb",
+      "type": "image/webp"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Clone baseline — card with mini diagram (reference: workwithhydra.com "Where to start", captured 2026-09-09)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,650;0,700;0,750;1,650&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* CLEAN-ROOM CLONE. Geometry, type scale, surfaces, states and easing transcribed from
+     reference-analysis/hydra/components/offer-cards/<width>.measure.json. Copy is neutral placeholder text. */
+  :root {
+    --canvas: #f4f3f0; --sunk: #ecebe6; --line: #e2e1dc; --ink: #12121a; --dim: #5f5f6b; --mute: #63636f; --paper: #fff;
+    --accent: #4d26db; --butter: #ffd84d; --orange: #f58a1e; --ember-ink: #b8560a;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+    --font: "Archivo", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--canvas); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  body { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+
+  .section { background: var(--sunk); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 128px 0; }   /* [0] */
+  .container { max-width: 92rem; margin: 0 auto; padding: 0 40px; }                                                                /* [0/0] */
+  .eyebrow { margin: 0; font-family: var(--mono); font-size: 11px; line-height: 1.6; letter-spacing: 1.65px; text-transform: uppercase; color: var(--mute); font-weight: 400; }
+  .head { margin: 16px 0 0; font-weight: 750; font-size: clamp(2rem, 4.2vw, 3.5rem); line-height: .99; letter-spacing: -.038em; max-width: 22ch; }         /* [0/0/0/1] 56 @1440 → 43.008 @1024 → 32.256 @768 */
+  .head em { font-style: italic; font-weight: 650; text-decoration: underline; text-decoration-color: var(--accent); text-decoration-thickness: 3px; text-underline-offset: 6px; }
+  .lead { margin: 24px 0 0; max-width: 672px; font-size: 16px; line-height: 1.6; color: var(--ink); }                          /* [0/0/0/2] 16px ≤1024, 17.28 @1440 */
+  @media (min-width: 1280px) { .lead { font-size: 17.28px; } }
+
+  .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 56px; }                          /* [0/0/1] y 436 = intro bottom 380 + 56 */
+  .card { display: flex; flex-direction: column; height: 100%; background: var(--paper); border: 1px solid var(--ink); border-radius: 12px; padding: 32px; transition: transform .3s var(--ease-std); }  /* [0/0/1/n/0] */
+  .card h3 { margin: 12px 0 0; font-size: 24px; font-weight: 750; line-height: .99; letter-spacing: -.038em; }                     /* [.../1] */
+  .card .body { margin: 20px 0 0; flex: 1; font-size: 14px; line-height: 1.625; color: var(--dim); }                                /* [.../2] */
+  .diagram { margin-top: 28px; background: var(--sunk); border: 1px solid var(--ink); border-radius: 8px; padding: 24px 20px; }     /* [.../3] */
+  .diagram svg { display: block; width: 100%; height: auto; }
+  .diagram .chip { fill: var(--paper); stroke: var(--ink); stroke-width: 1.2; }
+  .diagram .chip.is-on { fill: var(--orange); }
+  .diagram .chip.is-solid { fill: #6e4ee6; }
+  .diagram .lbl { font-family: var(--mono); font-size: 8px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; fill: var(--ink); }
+  .diagram .lbl.is-on { fill: var(--ember-ink); }
+  .diagram .cap { font-family: var(--mono); font-size: 7px; letter-spacing: .9px; text-transform: uppercase; fill: var(--mute); }
+  .fact { margin: 24px 0 0; font-family: var(--mono); font-size: 10px; line-height: 1.6; letter-spacing: 1.4px; text-transform: uppercase; color: var(--mute); }   /* [.../4] */
+  .link { margin-top: 20px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 700; line-height: 20px; color: var(--accent); }  /* [.../5] */
+  .link .arrow { display: inline-block; transition: transform .3s var(--ease-std); }
+  .card:hover .link .arrow { transform: translateX(4px); }   /* observed: only the arrow moves on hover; 4px assumed (not measurable from the static capture) */
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+  .reveal.is-in { opacity: 1; transform: none; }
+
+  @media (max-width: 1023px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 767px) { .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 639px) { .section { padding: 96px 0; } .container { padding: 0 20px; } }
+  @media (prefers-reduced-motion: reduce) { .reveal, .card, .link .arrow { transition: none; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<section class="section" data-tl-capture="root" data-ref="0">
+  <div class="container" data-ref="0/0">
+    <div class="reveal is-in" data-ref="0/0/0">
+      <p class="eyebrow" data-ref="0/0/0/0">Where to start</p>
+      <h2 class="head" data-ref="0/0/0/1">Find the weak point. Then we build it <em data-ref="0/0/0/1/0">for you</em>, or <em data-ref="0/0/0/1/1">with you</em>.</h2>
+      <p class="lead" data-ref="0/0/0/2">Which one you need follows from what is capping you. If the limit is upstream, we build the machine and run it. If it sits downstream of that, more input makes things worse, and the work is designing the system with your team.</p>
+    </div>
+    <div class="grid" data-ref="0/0/1">
+      <div class="reveal is-in" data-ref="0/0/1/0">
+        <a class="card" href="#" data-ref="0/0/1/0/0">
+          <p class="eyebrow" data-ref="0/0/1/0/0/0">Start here, free</p>
+          <h3 data-ref="0/0/1/0/0/1">Find your weak point</h3>
+          <p class="body" data-ref="0/0/1/0/0/2">Four stages run in series, so one of them sets your ceiling and the rest are noise until it lifts. The short check tells you which one is yours.</p>
+          <div class="diagram" data-ref="0/0/1/0/0/3">
+            <svg viewBox="0 0 400 76" aria-hidden="true" data-ref="0/0/1/0/0/3/1">
+              <rect class="chip" x="8" y="6" width="84" height="28" rx="4"/><rect class="chip is-on" x="104" y="6" width="84" height="28" rx="4"/><rect class="chip" x="200" y="6" width="84" height="28" rx="4"/><rect class="chip" x="296" y="6" width="84" height="28" rx="4"/>
+              <text class="lbl" x="50" y="24" text-anchor="middle">Stage A</text><text class="lbl" x="146" y="24" text-anchor="middle">Stage B</text><text class="lbl" x="242" y="24" text-anchor="middle">Stage C</text><text class="lbl" x="338" y="24" text-anchor="middle">Stage D</text>
+              <line x1="8" y1="48" x2="380" y2="48" stroke="#12121a" stroke-width="1.2"/><line x1="146" y1="42" x2="146" y2="56" stroke="#f58a1e" stroke-width="1.5"/>
+              <text class="cap" x="200" y="70" text-anchor="middle">One stage sets your ceiling</text>
+            </svg>
+          </div>
+          <p class="fact" data-ref="0/0/1/0/0/4">Six questions, answer in ninety seconds</p>
+          <span class="link" data-ref="0/0/1/0/0/5">Take the check <span class="arrow" data-ref="0/0/1/0/0/5/0">→</span></span>
+        </a>
+      </div>
+      <div class="reveal is-in" data-ref="0/0/1/1">
+        <a class="card" href="#" data-ref="0/0/1/1/0">
+          <p class="eyebrow" data-ref="0/0/1/1/0/0">Built for you</p>
+          <h3 data-ref="0/0/1/1/0/1">A system built and run for you</h3>
+          <p class="body" data-ref="0/0/1/1/0/2">Placeholder body of comparable length describing an offer that is built and run end to end: positioning, assets, infrastructure and management, from strategy through to a live result.</p>
+          <div class="diagram" data-ref="0/0/1/1/0/3">
+            <svg viewBox="0 0 400 76" aria-hidden="true" data-ref="0/0/1/1/0/3/1">
+              <rect class="chip is-solid" x="8" y="6" width="66" height="28" rx="4"/><rect class="chip is-solid" x="84" y="6" width="66" height="28" rx="4"/><rect class="chip is-solid" x="160" y="6" width="66" height="28" rx="4"/><rect class="chip is-solid" x="236" y="6" width="66" height="28" rx="4"/><rect class="chip is-solid" x="312" y="6" width="66" height="28" rx="4"/>
+              <text class="lbl" x="41" y="24" text-anchor="middle" fill="#fff">One</text><text class="lbl" x="117" y="24" text-anchor="middle">Two</text><text class="lbl" x="193" y="24" text-anchor="middle">Three</text><text class="lbl" x="269" y="24" text-anchor="middle">Four</text><text class="lbl" x="345" y="24" text-anchor="middle">Five</text>
+              <line x1="8" y1="48" x2="372" y2="48" stroke="#12121a" stroke-width="1.5"/><path d="M366 43 l8 5 l-8 5" fill="none" stroke="#12121a" stroke-width="1.5"/>
+              <text class="cap" x="200" y="70" text-anchor="middle">We run every stage</text>
+            </svg>
+          </div>
+          <p class="fact" data-ref="0/0/1/1/0/4">Live result in eight weeks</p>
+          <span class="link" data-ref="0/0/1/1/0/5">See the detail <span class="arrow" data-ref="0/0/1/1/0/5/0">→</span></span>
+        </a>
+      </div>
+      <div class="reveal is-in" data-ref="0/0/1/2">
+        <a class="card" href="#" data-ref="0/0/1/2/0">
+          <p class="eyebrow" data-ref="0/0/1/2/0/0">Built with you</p>
+          <h3 data-ref="0/0/1/2/0/1">A named operator beside you</h3>
+          <p class="body" data-ref="0/0/1/2/0/2">Placeholder body of comparable length describing a named operator inside the business for a fixed term, working the one thing capping growth: a plan, the systems to execute it, a private channel for decisions, and a weekly session to hold the line.</p>
+          <div class="diagram" data-ref="0/0/1/2/0/3">
+            <svg viewBox="0 0 400 76" aria-hidden="true" data-ref="0/0/1/2/0/3/1">
+              <rect class="chip" x="8" y="6" width="84" height="28" rx="4" fill="#ffd84d"/><rect class="chip" x="104" y="6" width="84" height="28" rx="4" fill="#ffd84d"/><rect class="chip" x="200" y="6" width="84" height="28" rx="4" fill="#ffd84d"/><rect class="chip" x="296" y="6" width="84" height="28" rx="4" fill="#ffd84d"/>
+              <text class="lbl" x="50" y="24" text-anchor="middle">Diagnose</text><text class="lbl" x="146" y="24" text-anchor="middle">Plan</text><text class="lbl" x="242" y="24" text-anchor="middle">30 / 60</text><text class="lbl" x="338" y="24" text-anchor="middle">Reset</text>
+              <line x1="8" y1="48" x2="380" y2="48" stroke="#12121a" stroke-width="1.5" stroke-dasharray="4 4"/><path d="M14 43 l-6 5 l6 5" fill="none" stroke="#12121a" stroke-width="1.5"/>
+              <text class="cap" x="200" y="70" text-anchor="middle">Every ninety days, with your team</text>
+            </svg>
+          </div>
+          <p class="fact" data-ref="0/0/1/2/0/4">Six month engagement</p>
+          <span class="link" data-ref="0/0/1/2/0/5">See the detail <span class="arrow" data-ref="0/0/1/2/0/5/0">→</span></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+</body>
+</html>

@@ -32,7 +32,7 @@ export const FOOTER = {
     { title: "Company", links: [{ href: "/apply", label: "Apply" }, { href: "/login", label: "Client sign in" }] },
     { title: "Fine print", links: [{ href: "/playbook/what-we-do-not-promise", label: "What we do not promise" }] },
   ],
-  small: "Founding client programme. £2,500 implementation, then £2,500 every 4 weeks. 12-week initial engagement.", // claim:C-PRICE
+  small: "Founding client programme. 12-week initial engagement, run in 4-week service periods. Commercial terms are discussed during the qualified sales process.", // claim:C-CADENCE — exact pricing is not published (DEC-017)
 };
 
 export const CRATES = ["Expertise", "Stories", "Proof", "Opinions", "Experience"] as const;

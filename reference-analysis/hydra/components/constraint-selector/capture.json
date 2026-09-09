@@ -1,0 +1,140 @@
+{
+  "site": "hydra",
+  "url": "https://workwithhydra.com/",
+  "anchor": "exactly one constraint",
+  "name": "constraint-selector",
+  "capturedAt": "2026-09-09T13:44:29.773Z",
+  "method": "headless Chrome via CDP; public page; rendered DOM + computed styles + screenshots only",
+  "widths": [
+    1440,
+    1024,
+    768,
+    390
+  ],
+  "log": [
+    {
+      "width": 1440,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 1835,
+        "w": 1440,
+        "h": 983
+      },
+      "nodes": 56,
+      "states": [
+        {
+          "state": "default"
+        },
+        {
+          "state": "click0",
+          "selector": "text=acquisition",
+          "ok": true
+        },
+        {
+          "state": "click1",
+          "selector": "text=delivery",
+          "ok": true
+        },
+        {
+          "state": "click2",
+          "selector": "text=margin",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 1708,
+        "w": 1024,
+        "h": 881
+      },
+      "nodes": 56,
+      "states": [
+        {
+          "state": "default"
+        },
+        {
+          "state": "click0",
+          "selector": "text=acquisition",
+          "ok": true
+        },
+        {
+          "state": "click1",
+          "selector": "text=delivery",
+          "ok": true
+        },
+        {
+          "state": "click2",
+          "selector": "text=margin",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 1740,
+        "w": 768,
+        "h": 1029
+      },
+      "nodes": 56,
+      "states": [
+        {
+          "state": "default"
+        },
+        {
+          "state": "click0",
+          "selector": "text=acquisition",
+          "ok": true
+        },
+        {
+          "state": "click1",
+          "selector": "text=delivery",
+          "ok": true
+        },
+        {
+          "state": "click2",
+          "selector": "text=margin",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 2653,
+        "w": 390,
+        "h": 1026
+      },
+      "nodes": 30,
+      "states": [
+        {
+          "state": "default"
+        },
+        {
+          "state": "click0",
+          "selector": "text=acquisition",
+          "ok": true
+        },
+        {
+          "state": "click1",
+          "selector": "text=delivery",
+          "ok": true
+        },
+        {
+          "state": "click2",
+          "selector": "text=margin",
+          "ok": true
+        }
+      ]
+    }
+  ]
+}

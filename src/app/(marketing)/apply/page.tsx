@@ -3,7 +3,6 @@ import { ApplicationForm } from "./application-form";
 import { publicBookingUrl } from "@/lib/actions/booking";
 import { APPLY } from "@/content/public-site";
 import { Eyebrow } from "@/components/public/primitives";
-import { Founder, Operator } from "@/components/factory/primitives";
 
 export const metadata: Metadata = {
   title: "Apply for a content growth diagnosis",
@@ -24,10 +23,6 @@ export default async function ApplyPage() {
           <p className="tl-lead mt-6 text-[17px]">{APPLY.lead}</p>
           <p className="tl-body mt-4 text-[15px]">{APPLY.reassurance}</p>
           <p className="mt-5 text-[13.5px] text-[color:var(--ink-faint)]">{APPLY.meta}</p>
-          <div className="mt-8 hidden items-end gap-3 lg:flex" aria-hidden>
-            <Founder className="w-[64px]" />
-            <Operator className="w-[64px]" />
-          </div>
         </header>
 
         <div className="tl-card p-5 sm:p-8">

@@ -1,0 +1,100 @@
+{
+  "site": "hydra",
+  "url": "https://workwithhydra.com/",
+  "anchor": "Find the constraint. Then we",
+  "name": "offer-cards",
+  "capturedAt": "2026-09-09T13:45:06.779Z",
+  "method": "headless Chrome via CDP; public page; rendered DOM + computed styles + screenshots only",
+  "widths": [
+    1440,
+    1024,
+    768,
+    390
+  ],
+  "log": [
+    {
+      "width": 1440,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 6439,
+        "w": 1440,
+        "h": 1040
+      },
+      "nodes": 92,
+      "states": [
+        {
+          "state": "default"
+        },
+        {
+          "state": "hover",
+          "selector": "text=take the diagnostic",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 6237,
+        "w": 1024,
+        "h": 1073
+      },
+      "nodes": 92,
+      "states": [
+        {
+          "state": "default"
+        },
+        {
+          "state": "hover",
+          "selector": "text=take the diagnostic",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 6916,
+        "w": 768,
+        "h": 1511
+      },
+      "nodes": 92,
+      "states": [
+        {
+          "state": "default"
+        },
+        {
+          "state": "hover",
+          "selector": "text=take the diagnostic",
+          "ok": true
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "found": true,
+      "root": {
+        "x": 0,
+        "y": 8953,
+        "w": 390,
+        "h": 2159
+      },
+      "nodes": 92,
+      "states": [
+        {
+          "state": "default"
+        },
+        {
+          "state": "hover",
+          "selector": "text=take the diagnostic",
+          "ok": true
+        }
+      ]
+    }
+  ]
+}

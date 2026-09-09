@@ -41,3 +41,18 @@ npm run qa:all && npm run qa:spine && npm run qa:perf
 npm start &   # then
 npm run qa:browser && npm run qa:public && npm run qa:visual:compare
 ```
+
+---
+
+## Restraint pass (9 September 2026, afternoon) — appended
+
+Baseline before this pass: tag `threadline-public-baseline-2026-09-09`. After: tag `threadline-public-restraint-2026-09-09`.
+
+1. **Docs reconciled to one current state** — HANDOFF (§2, §4, §10, §11, §13–§20, new §16i platform safety, §16j public site), FUTURE_BACKLOG, README, ARCHITECTURE, BUILD_CHECKLIST, PRODUCT_SPEC, PLATFORM_APPLICATIONS, ACCEPTANCE_TESTS, docs/site/* (DEC-017…DEC-022).
+2. **Fresh verification** on the current tree before and after the visual work (all green; numbers in HANDOFF §20 / QA_REPORT).
+3. **Visual diagnosis** — `docs/design/VISUAL_DIAGNOSIS_2026-09-09.md`.
+4. **Component harvest, clones, verification, freeze** — `docs/design/COMPONENT_RECONSTRUCTION.md`, `reference-analysis/{hydra,birdhouse}/components/*`, `reference-analysis/clones/*` (+ `FROZEN.md`, `verify/report.json`), tools `capture-component.ts`, `summarise-measure.py`, `verify-clone.ts`.
+5. **Mutations + restraint** — `public.css` v2, `schematic.tsx`, `hero-panel.tsx`, `symptom-selector.tsx`, `period-cards.tsx`, machine/scenes/pages restyled; content, sections and order unchanged.
+6. **Pricing removed from the public surface** (DEC-017) + `qa:public` price and Hydra greps.
+7. **Baselines** — pre-pass kept in `qa-baselines/public-pre-restraint-2026-09-09/`; new baseline in `qa-baselines/public/`.
+8. **Design docs** — design system v2, DNA 2.0.0, handover, customisation guide, `PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md` (content preservation, pricing audit, owner proposals).

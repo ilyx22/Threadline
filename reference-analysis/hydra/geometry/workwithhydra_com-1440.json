@@ -1,0 +1,348 @@
+{
+  "sections": [
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "pt-28 pb-12 sm:pt-32 sm:pb-6",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 1184
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "We scale agencies + B2B service companies with predictable\n client acquisition s"
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-y border-line bg-sunk py-14",
+      "rect": {
+        "x": 0,
+        "y": 1184,
+        "w": 1440,
+        "h": 523
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": "Trusted by 300+ client-service businesses"
+    },
+    {
+      "tag": "section",
+      "id": "constraint",
+      "cls": "border-y border-line bg-sunk py-24 sm:py-32 ",
+      "rect": {
+        "x": 0,
+        "y": 1706,
+        "w": 1440,
+        "h": 1241
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": "Every service business has exactly one constraint. Most are fixing the wrong one"
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "cls": "mx-auto max-w-[92rem] px-5 sm:px-10",
+      "rect": {
+        "x": 0,
+        "y": 2995,
+        "w": 1440,
+        "h": 128
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-t border-line py-20 sm:py-24",
+      "rect": {
+        "x": 0,
+        "y": 3123,
+        "w": 1440,
+        "h": 648
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Scale is a game of inputs and outputs."
+    },
+    {
+      "tag": "section",
+      "id": "case-studies",
+      "cls": "relative py-24 sm:py-32",
+      "rect": {
+        "x": 0,
+        "y": 3771,
+        "w": 1440,
+        "h": 1266
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Numbers with a client attached to them."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-y border-line",
+      "rect": {
+        "x": 0,
+        "y": 5037,
+        "w": 1440,
+        "h": 195
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "py-24 sm:py-32",
+      "rect": {
+        "x": 0,
+        "y": 5232,
+        "w": 1440,
+        "h": 1206
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Three hundred operators, and this is what they say when we’re not in the room."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-y border-line bg-sunk py-24 sm:py-32",
+      "rect": {
+        "x": 0,
+        "y": 6439,
+        "w": 1440,
+        "h": 1040
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": "Find the constraint. Then we build it for you, or with you."
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "py-24 sm:py-32",
+      "rect": {
+        "x": 0,
+        "y": 7478,
+        "w": 1440,
+        "h": 778
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Straight answers."
+    },
+    {
+      "tag": "div",
+      "id": "",
+      "cls": "mx-auto max-w-[92rem] px-5 sm:px-10",
+      "rect": {
+        "x": 0,
+        "y": 8256,
+        "w": 1440,
+        "h": 109
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "rounded-xl border border-line bg-sunk p-6 ",
+      "rect": {
+        "x": 40,
+        "y": 8256,
+        "w": 1360,
+        "h": 109
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": ""
+    },
+    {
+      "tag": "section",
+      "id": "",
+      "cls": "border-t border-line py-28 sm:py-36",
+      "rect": {
+        "x": 0,
+        "y": 8365,
+        "w": 1440,
+        "h": 601
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": "Bring your pipeline and your P&L. We’ll show you where it breaks\n."
+    },
+    {
+      "tag": "footer",
+      "id": "",
+      "cls": "border-t border-line bg-sunk",
+      "rect": {
+        "x": 0,
+        "y": 8966,
+        "w": 1440,
+        "h": 458
+      },
+      "bg": "rgb(236, 235, 230)",
+      "heading": ""
+    },
+    {
+      "tag": "nav",
+      "id": "",
+      "cls": "grid grid-cols-2 gap-x-14 gap-y-3 text-sm sm:grid-cols-3",
+      "rect": {
+        "x": 1043,
+        "y": 9031,
+        "w": 357,
+        "h": 119
+      },
+      "bg": "rgba(0, 0, 0, 0)",
+      "heading": ""
+    }
+  ],
+  "ctas": [
+    {
+      "text": "Book a call →",
+      "rect": {
+        "x": 1253,
+        "y": 15,
+        "w": 147,
+        "h": 42
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 216, 77)",
+        "color": "rgb(18, 18, 26)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "padding": "10px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a discovery call",
+      "rect": {
+        "x": 509,
+        "y": 540,
+        "w": 208,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(77, 38, 219)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(77, 38, 219)",
+        "boxShadow": "none",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "padding": "14px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "02Conversion",
+      "rect": {
+        "x": 186,
+        "y": 2162,
+        "w": 139,
+        "h": 42
+      },
+      "style": {
+        "backgroundColor": "rgb(18, 18, 26)",
+        "color": "rgb(244, 243, 240)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "padding": "10px 20px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Find out if this is yours →",
+      "rect": {
+        "x": 824,
+        "y": 2737,
+        "w": 543,
+        "h": 48
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 216, 77)",
+        "color": "rgb(18, 18, 26)",
+        "borderRadius": "3.35544e+07px",
+        "border": "0px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "fontSize": "14px",
+        "fontWeight": "700",
+        "padding": "14px 24px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Take the constraint quiz",
+      "rect": {
+        "x": 1141,
+        "y": 3032,
+        "w": 226,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(77, 38, 219)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(77, 38, 219)",
+        "boxShadow": "none",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "padding": "14px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Book a discovery call",
+      "rect": {
+        "x": 616,
+        "y": 8768,
+        "w": 208,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(77, 38, 219)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(77, 38, 219)",
+        "boxShadow": "none",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "padding": "14px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    },
+    {
+      "text": "Accept",
+      "rect": {
+        "x": 1123,
+        "y": 822,
+        "w": 109,
+        "h": 54
+      },
+      "style": {
+        "backgroundColor": "rgb(77, 38, 219)",
+        "color": "rgb(255, 255, 255)",
+        "borderRadius": "100px",
+        "border": "1px solid rgb(77, 38, 219)",
+        "boxShadow": "none",
+        "fontSize": "15px",
+        "fontWeight": "700",
+        "padding": "14px 28px",
+        "textTransform": "none",
+        "letterSpacing": "normal"
+      }
+    }
+  ]
+}

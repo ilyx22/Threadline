@@ -3,56 +3,63 @@
 Documented deliberately, and deliberately **not** blocking v1. Each item notes what exists today
 so the next session knows what it is building on rather than starting from nothing.
 
-Last updated: 2026-09-06
+Last updated: 2026-09-09
+
+Items marked **DONE (2026-09-09)** were built in the completion pass (commit `5a08f25`, tag
+`threadline-public-baseline-2026-09-09`) and stay here only so the "Today" line records what now
+exists and what, if anything, still gates it. The full audit is
+`docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md`. Anything a connector or job may do is bounded
+by the platform safety doctrine in `HANDOFF.md` §16i.
 
 ---
 
 ## Tier 1 — Highest value next
 
-### 1. LinkedIn publishing and analytics
-**Today:** `adapter_only`. Configuration UI, adapter interface and manual workflow all exist; the
-adapter returns an explicit `unavailable` result rather than simulating a connection.
-**Needs:** an approved LinkedIn Marketing Developer Platform application, OAuth flow, encrypted
-token storage (a new concern — nothing in v1 stores a secret), and a `publish()` implementation.
-**Effort:** large, mostly waiting on platform approval.
+### 1. LinkedIn publishing and analytics — **DONE (2026-09-09), external gate remains**
+**Today:** connectors for LinkedIn, YouTube, Instagram, TikTok and X in
+`src/lib/integrations/connectors/` with the documented scopes, endpoints, request shapes,
+publish/status/metrics parsing and error mapping, exercised through a mocked HTTP boundary
+(`connectors.test.ts`). OAuth with PKCE, encrypted token storage (`Credential`, AES-256-GCM
+keyring) and capability-granular connection state exist. With no credentials the integrations UI
+reads "credentials missing"; nothing is simulated.
+**Remains:** client credentials per platform and the platform reviews in
+`docs/PLATFORM_APPLICATIONS.md` (LinkedIn member analytics is the long pole). No code is expected.
 
-### 2. Automatic metric import
-**Today:** every metric is entered by hand; `PerformanceSnapshot.source` already distinguishes
-`manual` from `adapter`, and the time-series model supports repeated readings.
-**Needs:** per-provider `fetchMetrics()` implementations plus a scheduled job. The whole
-performance layer already works from snapshots, so this is purely an ingestion problem.
-**Effort:** medium per provider.
+### 2. Automatic metric import — **DONE (2026-09-09), external gate remains**
+**Today:** `src/lib/analytics` normalises provider responses into five per-field states, records
+provenance, refuses duplicate ingestion and reports freshness; the `metrics.refresh` job drives
+it. Manual snapshots remain valid and labelled.
+**Remains:** live provider data, which needs the analytics scopes from item 1's reviews.
 
-### 3. Email delivery
-**Today:** none. Members are created with an operator-set password shared out of band, and the UI
-says so plainly.
-**Needs:** a transactional provider, invitation and password-reset flows, and weekly-report
-delivery. Report content already renders and prints cleanly.
-**Effort:** medium.
+### 3. Email delivery — **DONE (2026-09-09), credential remains**
+**Today:** `src/lib/email` with capture (default) and Resend providers, branded templates and an
+`EmailMessage` log; sends are queued through jobs. Invitations and resets show their link directly
+while `EMAIL_PROVIDER=capture`.
+**Remains:** `RESEND_API_KEY`, `EMAIL_FROM` and a sending domain (founder input). Weekly-report
+delivery by email is a job handler away once a provider is configured; playbook email capture is
+deferred until then.
 
-### 4. Password reset and email verification
-**Today:** not built. Auth is session-based with scrypt hashing; adding reset tokens is
-straightforward once email exists.
-**Effort:** small, blocked on item 3.
+### 4. Password reset and email verification — **DONE (2026-09-09)**
+**Today:** `AuthToken` (hashed, single-use, expiring), `/forgot-password`, `/reset-password`,
+`/invite`; enumeration-safe, rate-limited; a reset ends other sessions (`tokens.test.ts`).
+**Remains:** nothing.
 
 ---
 
 ## Tier 2 — Meaningful product depth
 
-### 5. Automated competitor ingestion
-**Today:** the intelligence run collects from three real paths — internal workspace records, a URL
-a person supplied (fetched and read server-side, SSRF-guarded), and pasted material.
-`ResearchItem.collectedVia` distinguishes `manual` / `url` / `seed` / `adapter` / `run`, and
-deduplication by fingerprint already exists.
-**Needs:** scheduled, unattended collection per source. That requires either approved platform
-API access (the same long pole as publishing) or a decision about scraping that we have
-deliberately not taken. The review queue this item used to ask for now exists as the candidate
-signal gate.
+### 5. Automated competitor ingestion — **DONE as an interface (2026-09-09), external gate remains**
+**Today:** `ResearchProvider` (`src/lib/research/providers.ts`) with internal, manual and URL
+providers, truthful health states, provenance, fingerprints, dedupe and a prompt-injection
+quarantine; an `unavailablePlatformProvider` names the blocker for any platform without access.
+`ResearchItem.collectedVia` distinguishes `manual` / `url` / `seed` / `adapter` / `run`.
+**Remains:** platform adapters, which plug in when approved API access exists (the same reviews as
+item 1). Scraping remains deliberately unbuilt and is forbidden by doctrine, not merely deferred.
 
-### 6. Advanced attribution
-**Today:** single-touch. An inquiry links to one content item and one publish record.
-**Needs:** tracked links, a session/identity model, and multi-touch weighting. Worth doing only
-once clients have enough volume for multi-touch to say anything true.
+### 6. Advanced attribution — **SUPERSEDED**
+Attribution v1.5 (2026-09-06: tracked links, first-party visitor, touchpoints, first / last /
+linear models, evidence classes) and the rev-share-ready fields (2026-09-09) replaced this item.
+See `HANDOFF.md` §16d and items 10a–10d below for what is still deliberately open.
 
 ### 7. Semantic search over the Brand Brain and research
 **Today:** substring search via `contains`, scoped per organisation.
@@ -147,19 +154,21 @@ cannot reconstruct. Never a dependency, never launch-critical.
 **Needs:** enough journeys for a weighting to be derived from Threadline's own data rather than
 imported from someone else's.
 
-### 10d. Automatic platform metric ingestion
-**Today:** manual snapshots; tracking health flags them as stale after fourteen days.
-**Needs:** platform API access, which is the long pole and deliberately not a launch blocker.
+### 10d. Automatic platform metric ingestion — **DONE (2026-09-09), see item 2**
+**Today:** ingestion exists; tracking health still flags manual snapshots as stale after fourteen
+days, and adapter snapshots carry their own freshness state.
+**Remains:** platform API access — the long pole and deliberately not a launch blocker.
 
 ---
 
 ## Deferred from the Living SOP Engine (2026-09-06)
 
-### 9a. Browser confirmation of the checklist save and call outcome
+### 9a. Browser confirmation of the checklist save and call outcome — **mostly closed**
 **Today:** both are covered by unit tests — `resolveCheck` for the toggle rule and
-`assertCallOutcome` for the gates — and both surfaces render correctly.
-**Needs:** somebody to tick a box and record a call outcome in a browser once. The tab stopped
-receiving clicks part way through QA, so this is unconfirmed rather than known good.
+`assertCallOutcome` for the gates — and both actions (`toggleWedgeCheckAction`,
+`recordCallOutcomeAction`) were exercised in-process by the sales block of `qa:all` on
+2026-09-09; the pages render without errors in the production browser sweep.
+**Needs:** one human click on each, on the founder manual QA list in `docs/QA_REPORT.md`.
 
 ### 9b. Delivery, onboarding, renewal and proof workflows as state
 **Today:** the modules exist and work; only acquisition and sales are encoded as a state engine.
@@ -185,10 +194,11 @@ cannot reconstruct. Not launch-critical, and never a dependency.
 
 ## Deferred from launch hardening (2026-09-04)
 
-### 8a. Breakpoint QA at 1024 / 768 / 390
-**Today:** built responsive throughout and verified at roughly 1440px in a real browser, with no
-console errors. Narrower widths are unverified because this environment cannot change the viewport.
-**Needs:** twenty minutes with a browser and a device toolbar. This is the one open QA item.
+### 8a. Breakpoint QA at 1024 / 768 / 390 — **DONE (2026-09-09)**
+Closed by `npm run qa:browser` (33 app/admin routes × 1440/1024/768/390 on a production build:
+101 PASS, 21 PARTIAL target-size notes, 0 FAIL) and `npm run qa:public` (11 public routes × 20
+widths from 1920 to 320: 62/62). Remaining: the 24px target-size polish in dense operator tables
+(P3).
 
 ### 8b. Qualification rate as a recorded metric — **DONE 2026-09-06**
 Closed by not adding the field. `SalesCall.qualified` records whether an attended call was
@@ -207,10 +217,11 @@ carrying the trail.
 These were considered during the P0 work and deliberately left out of scope.
 
 ### 9a. Scheduled intelligence cycles
-**Today:** a cycle is started, collected and published by a person.
-**Needs:** the background job runner in item 17, plus a decision about which sources can be
-collected unattended. The run model already supports it — `status` moves forward on its own once
-something is driving it.
+**Today:** a cycle is started, collected and published by a person. The job runner (item 17) now
+exists, so the infrastructure half of this is done.
+**Needs:** a decision about which sources can be collected unattended — only research providers
+with permitted access qualify (`HANDOFF.md` §16i). The run model already supports it — `status`
+moves forward on its own once something is driving it.
 
 ### 9b. Evidence review queue
 **Today:** collected evidence goes straight into the workspace, which is right at the volumes a
@@ -219,31 +230,40 @@ manual and URL-driven cycle produces (tens of items, not thousands).
 automated ingestion. Adding it now would put a queue in front of work a person already did by hand.
 
 ### 9c. Multi-touch attribution behind the proof view
-**Today:** `ProofPeriod` attributes commercial value only where a buyer named a specific piece,
-and the UI says so in those words.
-**Needs:** item 6. Until then, widening the claim would be exactly the kind of overstatement the
-proof module was built to prevent.
+**Today:** attribution v1.5 exists (item 6, superseded) and the curated client Results view groups
+by evidence class. `ProofPeriod` itself still attributes commercial value only where a buyer named
+a specific piece, and the UI says so in those words.
+**Needs:** enough tracked journeys for the proof view to cite touchpoint evidence without
+widening the claim — exactly the overstatement the proof module was built to prevent.
 
 ### 9d. Brief and proof export
 **Today:** both render and print cleanly from the browser.
-**Needs:** server-side document generation, the same dependency as item 17's report delivery.
+**Needs:** server-side document generation. Email delivery (item 3) is built, so the remaining
+dependency is the PDF renderer alone.
 
 ---
 
 ## Platform and operational
 
-### 15. Shared-store rate limiting
-**Today:** in-memory sliding window, correct for a single instance.
-**Needs:** Redis or equivalent before running multiple instances. Call sites do not change.
+### 15. Shared-store rate limiting — **DONE (2026-09-09)**
+**Today:** `RATE_LIMIT_STORE=memory` (default, per instance) or `redis` (Upstash-compatible REST)
+behind one store interface; fails closed when the shared store is required and unreachable
+(`rate-limit.test.ts`).
+**Remains:** a Redis endpoint before running more than one instance. Configuration only.
 
-### 16. Object storage
-**Today:** local disk behind a `StorageAdapter` interface, served through an authorised route that
-re-checks membership per request.
-**Needs:** an S3 or Supabase adapter. One file to implement.
+### 16. Object storage — **DONE (2026-09-09)**
+**Today:** `STORAGE_PROVIDER=local` or `s3` (SigV4 over `fetch`, tenant-scoped keys, private
+bucket, proxied reads through the membership-checked file route), plus a memory adapter for tests
+(`storage.test.ts`, ADR-023).
+**Remains:** a bucket and the five `S3_*` values before a multi-instance deploy. Configuration
+only.
 
-### 17. Background jobs
-**Today:** everything is request-driven. Reports and pattern detection are triggered by a person.
-**Needs:** a queue for scheduled reports, metric imports and digest emails.
+### 17. Background jobs — **DONE (2026-09-09)**
+**Today:** `Job` table with idempotency keys, leases with stale recovery, backoff and a dead state;
+handlers for email, metric refresh and maintenance; `npm run jobs:worker` (or `--once`)
+(`jobs.test.ts`, ADR-021).
+**Remains:** scheduled report generation and digest emails as additional handlers, once email is
+live and a client wants them.
 
 ### 18. Full-text search on PostgreSQL
 **Today:** `contains`, which is adequate at v1 data volumes.
@@ -273,8 +293,22 @@ volume, which is the strongest predictor of output quality.
 - **Acquisition tooling.** No scraping, no cold-email sending, no platform automation, no
   browser-extension outreach, no ads modules. Acquisition is an operating activity; building
   software for it before there is a client is the most expensive possible form of procrastination.
+- **Automated human social behaviour** (doctrine, `HANDOFF.md` §16i, DEC-018). No browser bots or
+  driver-operated social accounts, no cookie/session-token automation, no stored client social
+  passwords, no auto-like, engagement pods, follow/unfollow, connection farming, bulk unsolicited
+  replies/DMs/comments, no recommendation or location manipulation, no evasion of rate limits,
+  app review or restrictions. Publishing, analytics and research use official rails; engagement
+  is a person.
+- **Geography spoofing.** The earlier SIM/eSIM + VPN idea for influencing organic recommendation
+  geography is retired (DEC-019). Earn a US audience with US buyer problems, terminology and
+  examples, genuine relationships, posting windows, audience-geography measurement and, where
+  justified, legitimate paid geo-targeting.
+- **Public pricing.** Exact service pricing is not published on the website (DEC-017); it is
+  discussed in the qualified sales process. No "from £X", discounts, scarcity or urgency.
 - **Tiered pricing.** One founding offer until repeated demand proves a second is wanted.
-- **Automatic long-form upload.** Needs a verified OAuth consent screen we do not have.
+- **Automatic long-form upload before verification.** The YouTube connector can upload (item 1),
+  but it stays behind Google's OAuth verification of the sensitive scope; until that passes the
+  founder sees a warning screen and the long-form route stays manual by policy.
 - **A CRM.** Contacts, companies, communications, calendar, email and deal objects belong to an
   external CRM. Threadline holds the state machine and links out with three columns. Building a
   worse CRM inside the product is a large amount of work that makes the product worse.
@@ -299,14 +333,11 @@ volume, which is the strongest predictor of output quality.
 
 ---
 
-## Status update — 2026-09-09 completion pass
+## What is genuinely open (2026-09-09)
 
-- **#1 LinkedIn publishing/analytics** → connectors built to the mocked boundary for LinkedIn, YouTube, Instagram, TikTok and X; remaining work is credentials and platform review (external gates).
-- **#2 Automatic metric import** → built (`src/lib/analytics`), with a `metrics.refresh` job; live data is an external gate.
-- **#3 Email delivery** → built (capture + Resend); weekly-report delivery is a job away once a provider is configured.
-- **#4 Password reset** → built, plus invitations.
-- **#5 Automated competitor ingestion** → `ResearchProvider` interface built with truthful states; platform adapters plug in when access exists; scraping remains deliberately unbuilt.
-- **#6 Advanced attribution** → superseded by attribution v1.5 (2026-09-06) and rev-share-ready fields (2026-09-09).
-- **Background jobs, object storage, shared rate limit** → built.
-
-Still deliberately open: payments/billing (#10), semantic search (#7), AI Brand Brain interview (#8), real-time script collaboration (#9), server-side PDF export, drag-and-drop, playbook email capture (after email is live), a bulk-row performance run beyond `qa:perf`'s five populated workspaces.
+Payments/billing (#10), semantic search (#7), the AI Brand Brain interview (#8), real-time script
+collaboration (#9), server-side PDF export (#9d), drag-and-drop on the board, playbook email
+capture (after email delivery is live), a bulk-row performance run beyond `qa:perf`'s five
+populated workspaces, and everything client #1 has to earn (#9b, #9c, #9e, #10a–10c, #8c).
+Everything else in Tier 1 and the platform/operational tier is built and gated on credentials,
+platform reviews or founder inputs listed in `HANDOFF.md` §18.

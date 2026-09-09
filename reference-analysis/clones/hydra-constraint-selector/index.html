@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Clone baseline — stateful selector (reference: workwithhydra.com "The diagnosis", captured 2026-09-09)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,400;0,650;0,700;0,750;1,650&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  /* CLEAN-ROOM CLONE. Geometry, type scale, surfaces, states and easing transcribed from
+     reference-analysis/hydra/components/constraint-selector/<width>.measure.json.
+     Copy is neutral placeholder text. Nothing here ships. */
+  :root {
+    --canvas: #f4f3f0; --ink: #12121a; --dim: #5f5f6b; --mute: #63636f; --paper: #fff;
+    --accent: #4d26db; --accent-soft: rgba(77, 38, 219, .36); --butter: #ffd84d; --orange: #f58a1e; --ember-ink: #b8560a; --mint: #8fd8b0;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
+    --font: "Archivo", system-ui, sans-serif; --mono: "JetBrains Mono", ui-monospace, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { background: var(--canvas); color: var(--ink); font-family: var(--font); -webkit-font-smoothing: antialiased; }
+  body { margin: 0; }
+  button { font: inherit; color: inherit; }
+
+  .section { padding: 128px 0; }
+  .container { max-width: 92rem; margin: 0 auto; padding: 0 40px; }             /* [0] 1472 max, 40px sides */
+  .eyebrow { margin: 0; font-family: var(--mono); font-size: 11px; line-height: 1.6; letter-spacing: 1.65px; text-transform: uppercase; color: var(--mute); font-weight: 400; }
+  .head { margin: 16px 0 0; font-weight: 750; font-size: clamp(2rem, 4.2vw, 3.5rem); line-height: .99; letter-spacing: -.038em; max-width: 22ch; }   /* [0/1] 56/55.44 @1440, 43.008 @1024, 32.256 @768, 32 @390 → clamp(2rem, 4.2vw, 3.5rem) */
+  .head em { font-style: italic; font-weight: 650; color: var(--accent); }
+  .lead { margin: 24px 0 0; max-width: 672px; font-size: 16px; line-height: 1.6; color: var(--dim); }                 /* [0/2] 16px ≤1024, 17.28px @1440 */
+  @media (min-width: 1280px) { .lead { font-size: 17.28px; } }
+
+  .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 48px; }                                                   /* [0/3] y 327 = lead bottom 279 + 48 */
+  .tab { display: inline-flex; align-items: center; min-height: 42px; padding: 10px 20px; border: 1px solid var(--ink); border-radius: 9999px; background: transparent; cursor: pointer;
+         font-size: 14px; font-weight: 700; line-height: 20px; color: var(--ink);
+         transition: color .15s var(--ease-std), background-color .15s var(--ease-std), border-color .15s var(--ease-std); }
+  .tab .idx { margin-right: 8px; font-family: var(--mono); font-size: 10px; font-weight: 700; line-height: 1.43; color: var(--mute); }
+  .tab[aria-selected="true"] { background: var(--ink); color: #f4f3f0; }
+  .tab[aria-selected="true"] .idx { color: var(--butter); }
+  .tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .panel { margin-top: 40px; background: var(--paper); border: 1px solid var(--ink); border-radius: 12px; padding: 32px; }  /* [0/4] y 409 = tabs bottom 369 + 40 */
+  .panel svg { display: block; width: 100%; height: auto; }
+  .m-lbl { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 1.43px; text-transform: uppercase; fill: var(--ink); }
+  .m-lbl.is-on { fill: var(--ember-ink); }
+  .stage .outer { stroke: var(--ink); stroke-width: 40; stroke-linecap: round; fill: none; }
+  .stage .inner { stroke: var(--paper); stroke-width: 34; stroke-linecap: round; fill: none; transition: stroke-width .5s var(--ease-out), stroke .3s var(--ease-out); }
+  .stage.is-on .inner { stroke: var(--orange); stroke-width: 28; }
+  .stage .dot { transition: opacity .3s var(--ease-out); }
+  .stage.is-on .dot { opacity: 0; }
+  .capped { transition: opacity .3s var(--ease-out); }
+
+  .cards { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; margin-top: 24px; }                                 /* [0/5] 730.9 / 609, gap 20, y 730 = panel bottom 706 + 24 */
+  .card { background: var(--paper); border: 1px solid var(--ink); border-radius: 12px; padding: 32px; }                  /* [0/5/0] */
+  .card .title { margin: 12px 0 0; font-size: 22px; font-weight: 750; line-height: .99; letter-spacing: -.038em; }      /* [0/5/0/1] */
+  .card ul { list-style: none; margin: 28px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }          /* [0/5/0/2] mt-7 space-y-3 */
+  .card li { display: flex; gap: 14px; font-size: 16px; line-height: 1.6; color: var(--dim); }
+  .card li .x { color: var(--ember-ink); }
+  @media (min-width: 1280px) { .card .title { font-size: 28.8px; } }   /* 28.8 @1440, 22 ≤1024 */
+  .card.is-dark { background: var(--ink); color: #f4f3f0; display: flex; flex-direction: column; justify-content: space-between; }  /* [0/5/1] */
+  .card.is-dark .eyebrow { color: var(--butter); }
+  .card.is-dark .body { margin: 12px 0 0; font-size: 16px; line-height: 26px; }
+  .card.is-dark .cta { margin-top: 32px; display: block; text-align: center; min-height: 48px; padding: 14px 24px; border-radius: 9999px; background: var(--butter); color: var(--ink); font-size: 14px; font-weight: 700; line-height: 20px; text-decoration: none; }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); }
+  .reveal.is-in { opacity: 1; transform: none; }
+
+  @media (max-width: 1023px) { .cards { grid-template-columns: 1fr; } }
+  @media (max-width: 639px) {
+    .container { padding: 0 20px; }
+    .tabs { display: grid; grid-template-columns: 1fr 1fr; }
+    .tab { justify-content: center; }
+    .panel { display: none; }                                                                                             /* hidden below sm in the reference */
+    .cards { margin-top: 32px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .reveal, .tab, .stage .inner, .stage .dot, .capped { transition: none; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<section class="section">
+  <div class="container" data-tl-capture="root" data-ref="0">
+    <p class="eyebrow" data-ref="0/0">Section eyebrow</p>
+    <h2 class="head" data-ref="0/1">Every operation has exactly <em data-ref="0/1/0">one weak point</em>. Most are fixing the wrong one.</h2>
+    <p class="lead" data-ref="0/2">Placeholder lead of comparable length. Throughput is set by the narrowest stage, which means work spent anywhere else changes nothing. Pick the one that sounds like you.</p>
+
+    <div class="tabs" role="tablist" aria-label="Choose a stage" data-ref="0/3">
+      <button class="tab" role="tab" aria-selected="false" data-i="0" data-ref="0/3/0"><span class="idx" data-ref="0/3/0/0">01</span>Stage one</button>
+      <button class="tab" role="tab" aria-selected="true" data-i="1" data-ref="0/3/1"><span class="idx" data-ref="0/3/1/0">02</span>Stage two</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="2" data-ref="0/3/2"><span class="idx" data-ref="0/3/2/0">03</span>Stage three</button>
+      <button class="tab" role="tab" aria-selected="false" data-i="3" data-ref="0/3/3"><span class="idx" data-ref="0/3/3/0">04</span>Stage four</button>
+    </div>
+
+    <div class="panel" data-ref="0/4">
+      <svg viewBox="0 0 1120 200" aria-hidden="true" data-ref="0/4/0">
+        <!-- four stages, 222 units wide on 262 centres, starting at x=40; label baseline y=42; pill line y=100; capped label y=157 -->
+        <g class="stage" data-i="0" transform="translate(40 0)">
+          <text class="m-lbl" x="111" y="42" text-anchor="middle">Stage one</text>
+          <path class="outer" d="M20 100 H202"/><path class="inner" d="M20 100 H202"/>
+          <circle class="dot" cx="118" cy="100" r="7" fill="#4d26db" opacity=".36"/><circle class="dot" cx="144" cy="100" r="7" fill="#4d26db" opacity=".54"/><circle class="dot" cx="170" cy="100" r="7" fill="#4d26db" opacity=".72"/><circle class="dot" cx="196" cy="100" r="7" fill="#4d26db" opacity=".9"/>
+        </g>
+        <g class="stage is-on" data-i="1" transform="translate(302 0)">
+          <text class="m-lbl is-on" x="111" y="42" text-anchor="middle">Stage two</text>
+          <path class="outer" d="M20 100 H202"/><path class="inner" d="M20 100 H202"/>
+          <circle class="dot" cx="196" cy="100" r="5" fill="#4d26db"/>
+          <text class="m-lbl is-on capped" x="111" y="157" text-anchor="middle">← Throughput capped here</text>
+        </g>
+        <g class="stage" data-i="2" transform="translate(564 0)">
+          <text class="m-lbl" x="111" y="42" text-anchor="middle">Stage three</text>
+          <path class="outer" d="M20 100 H202"/><path class="inner" d="M20 100 H202"/>
+          <circle class="dot" cx="111" cy="100" r="7" fill="#8fd8b0"/>
+        </g>
+        <g class="stage" data-i="3" transform="translate(826 0)">
+          <text class="m-lbl" x="111" y="42" text-anchor="middle">Stage four</text>
+          <path class="outer" d="M20 100 H202"/><path class="inner" d="M20 100 H202"/>
+          <circle class="dot" cx="111" cy="100" r="7" fill="#8fd8b0"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="cards" data-ref="0/5">
+      <div class="card" data-ref="0/5/0">
+        <p class="eyebrow" data-ref="0/5/0/0" id="detail-eyebrow">Stage 02 / Stage two</p>
+        <p class="title" data-ref="0/5/0/1" id="detail-title">Enough of the input, too little of it converts.</p>
+        <ul data-ref="0/5/0/2" id="detail-list">
+          <li data-ref="0/5/0/2/0"><span class="x" data-ref="0/5/0/2/0/0">✕</span>First symptom sentence of ordinary length</li>
+          <li data-ref="0/5/0/2/1"><span class="x" data-ref="0/5/0/2/1/0">✕</span>Second symptom sentence, a little longer than one</li>
+          <li data-ref="0/5/0/2/2"><span class="x" data-ref="0/5/0/2/2/0">✕</span>Third symptom sentence of ordinary length</li>
+        </ul>
+      </div>
+      <div class="card is-dark" data-ref="0/5/1">
+        <div data-ref="0/5/1/0">
+          <p class="eyebrow" data-ref="0/5/1/0/0">What changes first</p>
+          <p class="body" data-ref="0/5/1/0/1" id="detail-change">Placeholder sentence describing the first change made for the selected stage, long enough to wrap onto two lines.</p>
+        </div>
+        <a class="cta" href="#" data-ref="0/5/1/1">Find out if this is yours →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Skeleton behaviour only: tab → diagram state → detail copy. Copy is placeholder.
+  const DATA = [
+    { n: '01', name: 'Stage one', title: 'Not enough comes in at the top.', list: ['Symptom one', 'Symptom two', 'Symptom three'], change: 'Placeholder change for stage one.' },
+    { n: '02', name: 'Stage two', title: 'Enough of the input, too little of it converts.', list: ['First symptom sentence of ordinary length', 'Second symptom sentence, a little longer than one', 'Third symptom sentence of ordinary length'], change: 'Placeholder sentence describing the first change made for the selected stage, long enough to wrap onto two lines.' },
+    { n: '03', name: 'Stage three', title: 'It sells, but it cannot be delivered.', list: ['Symptom one', 'Symptom two', 'Symptom three'], change: 'Placeholder change for stage three.' },
+    { n: '04', name: 'Stage four', title: 'Volume grows and margin does not.', list: ['Symptom one', 'Symptom two', 'Symptom three'], change: 'Placeholder change for stage four.' },
+  ];
+  const tabs = [...document.querySelectorAll('.tab')];
+  const stages = [...document.querySelectorAll('.stage')];
+  const capped = document.querySelector('.capped');
+  function select(i) {
+    tabs.forEach((t, k) => t.setAttribute('aria-selected', String(k === i)));
+    stages.forEach((s, k) => { s.classList.toggle('is-on', k === i); s.querySelector('.m-lbl').classList.toggle('is-on', k === i); });
+    const g = stages[i]; capped.remove(); g.appendChild(capped);
+    const d = DATA[i];
+    document.getElementById('detail-eyebrow').textContent = `Stage ${d.n} / ${d.name}`;
+    document.getElementById('detail-title').textContent = d.title;
+    document.getElementById('detail-list').innerHTML = d.list.map((s) => `<li><span class="x">✕</span>${s}</li>`).join('');
+    document.getElementById('detail-change').textContent = d.change;
+  }
+  tabs.forEach((t) => t.addEventListener('click', () => select(Number(t.dataset.i))));
+  // reveal (reference: 0.7s ease-out on wrappers); the clone marks the root in-view immediately so measurement is of the settled state
+  document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-in'));
+</script>
+</body>
+</html>

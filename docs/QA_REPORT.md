@@ -239,3 +239,49 @@ None that block publishing: every statement on the site is VERIFIED in `docs/sit
 ## Safe rollback
 
 `git checkout threadline-pre-public-experience-rebuild-2026-09-09` (or `git reset --hard` to it) — the tree before this pass. Approved public baseline after it: `threadline-public-baseline-2026-09-09`. The dev database is rebuilt from migrations + seed with `npm run db:reset`.
+
+
+---
+
+# Restraint pass — fresh verification (9 September 2026, afternoon)
+
+Run on the restraint-pass tree (tag `threadline-public-restraint-2026-09-09`), production build, after the public-site visual pass and the documentation reconciliation. The identical battery was run first on `5a08f25` (tag `threadline-public-baseline-2026-09-09`) to establish that nothing was inherited from an older session; both runs produced the same in-process and browser numbers.
+
+## Verdict: **MOSTLY — unchanged; technically launch-ready to the external gates**
+
+Nothing in this pass touched the product behind the public site. The public site changed presentation only (content, sections and order preserved; exact pricing removed by owner decision DEC-017).
+
+## Exact verification results
+
+| Check | Result |
+|---|---|
+| `npm run typecheck` | exit 0 |
+| `npm run lint` | exit 0, 0 warnings |
+| `npm test` | 625 tests in 154 suites: 625 pass, 0 fail, 0 skipped |
+| `npm run build` | exit 0 — 65 pages + 3 route handlers |
+| `npm run verify` / `npm run verify:features` | exit 0 |
+| `npx prisma migrate status` | 13 migrations, up to date; 77 models, 0 DB enums |
+| `npm run qa:all` | **494 checks: 485 PASS · 2 PASS WITH EXTERNAL GATE · 4 PARTIAL · 0 FAIL · 3 N/A** (the four partials are the assessed, non-material ones recorded above) |
+| `npm run qa:spine` | three synthetic engagements: 0 FAIL, synthetic tenants removed |
+| `npm run qa:perf` | 9/9 |
+| `npm run qa:browser` (prod build) | **122 checks: 101 PASS · 21 PARTIAL · 0 FAIL** — 33 app/admin routes × 1440/1024/768/390; partials are 20 dense-table inline links under the 24px WCAG 2.5.8 minimum at 390px and the pipeline table's by-design inner scroller at 1024 |
+| `npm run qa:public` (prod build) | **62/62 PASS** — 11 public routes × 20 widths (1920 → 320): no horizontal overflow, no console/hydration errors, one H1, skip link, 44px targets, metadata, reduced motion honoured, no reference-brand leak (Birdhouse and Hydra terms), no placeholder, no "monthly", no overclaim, **no price disclosure**, application submits and persists |
+| `npm run qa:visual` | 30 captures (5 widths × 6 pages) + `geometry.json` re-baselined for the restraint-pass site; every reveal fired; the pre-pass baseline is preserved in `qa-baselines/public-pre-restraint-2026-09-09/` |
+| Clone verification | `reference-analysis/clones/{birdhouse-hero-panel,hydra-constraint-selector,hydra-offer-cards}/verify/report.json` — structural nodes within 4px of the reference at the primary widths; deviations documented in each `FROZEN.md` |
+
+## Defects found and fixed during the pass
+
+| Where | What | Fix |
+|---|---|---|
+| `FeedbackPipe` / v1 return pipe (home, playbook chapter 9) | The travelling pulse used a CSS `offset-path` in pixel units on a scaled SVG, so at ≤ 768px it travelled past the viewport (document width 935px at 390) | `ReturnThread` moves the pulse with SVG `animateMotion` in viewBox units; reduced motion shows a still dot |
+| Hero art (v2, first cut) | Figure overlapped the first station label | Line start moved right; figure repositioned |
+| `qa:public` | No price grep, no Hydra terms in the brand-leak grep | Both added |
+| Memory thread on phones | SVG labels unreadable below 640px | Labels listed in HTML below the drawing at those widths |
+
+## Manual-only checks (not automatable here)
+
+Teleprompter scroll/full-screen, drag interactions, print output of the weekly report, a human click on the SOP checklist save and the call-outcome form, and — for this pass — the owner's own visual read of the restraint pass at http://localhost:3000 (see `docs/design/PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md` §4 for the decisions left open).
+
+## Rollback
+
+`git checkout threadline-public-baseline-2026-09-09` restores the morning site (illustrated v1); `threadline-pre-public-experience-rebuild-2026-09-09` restores the tree before the rebuild. The database was not changed by this pass.

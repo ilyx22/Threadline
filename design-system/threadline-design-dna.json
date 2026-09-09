@@ -1,93 +1,103 @@
 {
   "name": "Threadline public design DNA",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "date": "2026-09-09",
-  "authority": "This file and docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md are the design source of truth for the public site. The Birdhouse analysis under reference-analysis/ is historical input only.",
+  "supersedes": "1.0.0 (the illustrated sticker system of the morning of 2026-09-09; diagnosis in docs/design/VISUAL_DIAGNOSIS_2026-09-09.md)",
+  "authority": "This file and docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md are the design source of truth for the public site. reference-analysis/ (Birdhouse, Hydra) is analysed input; the frozen clones under reference-analysis/clones are skeletons, never shipped.",
+  "balance": { "premiumEditorial": 0.7, "interactiveSystemVisualisation": 0.2, "playfulCharacter": 0.1 },
   "concept": {
-    "world": "The Threadline Authority Factory — raw expertise enters as crates (EXPERTISE, STORIES, PROOF, OPINIONS, EXPERIENCE); machines transform it along a conveyor; packages leave for the market; a return pipe brings the market's response back; the next batch is better informed.",
-    "thread": "the expertise / idea lineage moving through the system (drawn as a single continuous ember line)",
-    "machinery": "Threadline's processing infrastructure (ink-outlined stations with flat fills)",
-    "weave": "market memory — repeated, relevant exposure shown as thread crossing the same buyers again and again",
-    "intensities": { "public": "expressive, illustrated, narrative, motion with a job", "client": "calm, premium, simple", "admin": "dense, efficient, operational" }
+    "world": "The Threadline Authority Factory — raw expertise enters as a spool of thread; stations along one line transform it; packages leave for the market; the market's answer travels back along the thread; the next batch is better informed.",
+    "rendering": "a system drawing, not a cartoon: one thread, nodes, glyphs, hairlines, one accent",
+    "thread": "the idea lineage (accent 2px for the trunk, ink 1.5px for branches, soft hairline for guides)",
+    "character": "Founder and Buyer only — twice on the home page, twice in the playbook",
+    "intensities": { "public": "editorial, calm with a few expressive moments, motion that teaches", "client": "calm, premium, simple", "admin": "dense, efficient, operational" }
   },
   "colours": {
     "canvas": "#F4EEE3",
-    "canvasDeep": "#EAE1D2",
-    "paper": "#FFFBF4",
-    "paperEdge": "#E4DCCD",
+    "canvasDeep": "#ECE4D6",
+    "paper": "#FFFCF7",
+    "line": "rgba(31,29,26,0.14)",
+    "lineStrong": "rgba(31,29,26,0.34)",
     "ink": "#1F1D1A",
     "inkSoft": "#4F4A42",
     "inkFaint": "#7E776C",
     "inkGhost": "#A9A297",
     "accent": "#D9582A",
     "accentDeep": "#B8461D",
-    "accentSoft": "#FBE4D8",
+    "accentSoft": "#F8E3D9",
     "signal": "#2C7C6A",
-    "signalSoft": "#D8EEE8",
-    "stamp": "#F1C349",
-    "stampSoft": "#FBEFC4",
+    "signalSoft": "#DCEBE6",
+    "stamp": "#E8B931",
+    "stampSoft": "#F7EBC4",
     "reject": "#C24A3A",
-    "steel": "#6B7A8C",
-    "steelSoft": "#DCE3EA",
-    "belt": "#3A3631",
     "roles": {
       "pageCanvas": "canvas",
-      "alternateCanvas": "canvasDeep",
-      "cardSurface": "paper",
+      "sunkBand": "canvasDeep (three sections on the home page, never alternating)",
+      "surface": "paper",
+      "border": "line on quiet cards, lineStrong on cards and section rules; never thicker than 1px",
       "textPrimary": "ink",
       "textSecondary": "inkSoft",
-      "textFaint": "inkFaint",
-      "border": "ink at 1.5px on paper cards; paperEdge for quiet dividers",
+      "eyebrow": "inkFaint (accentDeep at most once per section)",
       "cta": "accent (Apply only)",
-      "highlight": "stamp (APPROVED / SLOP stamps, marker highlights)",
-      "learning": "signal (return pipe, diagnosis, verdicts)",
-      "machineBody": "steel / steelSoft",
-      "conveyor": "belt"
+      "activeNode": "accent with a breathing halo",
+      "marketAnswer": "signal",
+      "highlight": "stampSoft behind the H1 phrase; stamp for the eyebrow inside dark cards",
+      "darkSurface": "ink (one card: what changes here)"
     },
-    "contrast": "ink on canvas 13.9:1; inkSoft on paper 8.1:1; accent on paper 4.6:1 (large text / button fill with ink text where needed); signal on paper 4.9:1"
+    "shadows": "none on public surfaces; shared --shadow-* tokens remap to none / hairline / very soft ambient"
   },
   "typography": {
-    "display": { "family": "Fraunces", "source": "Google Fonts (OFL), variable, optical sizing", "weights": [500, 600], "settings": "\"opsz\" 144, \"SOFT\" 30, \"WONK\" 0", "scale": { "hero": { "1440": "88px/0.98", "1024": "72px/1.0", "768": "56px/1.02", "390": "42px/1.04" }, "section": { "1440": "56px/1.02", "768": "44px/1.04", "390": "34px/1.08" }, "sub": "28px/1.15" }, "letterSpacing": "-0.02em display, -0.01em section" },
-    "body": { "family": "Inter", "sizes": { "lead": "21px/1.5", "body": "17px/1.6", "small": "14.5px/1.55", "mobile-lead": "18px/1.5" }, "weights": [400, 500, 600] },
-    "label": { "family": "JetBrains Mono", "source": "Google Fonts (OFL)", "size": "12px/1", "tracking": "0.16em", "transform": "uppercase", "use": "eyebrows, station labels, stamps, crate labels" },
-    "maxLineLength": "62ch body, 14ch display",
-    "emphasis": "marker highlight (stampSoft background, 0 -0.2em padding) for the one phrase per section that matters"
+    "display": { "family": "Fraunces", "settings": "\"opsz\" 144, \"SOFT\" 20, \"WONK\" 0", "weight": 450, "letterSpacing": "-0.022em", "lineHeight": 1.0, "size": "clamp(2.75rem, 6.2vw, 5.625rem) → 90px at 1440" },
+    "sectionTitle": { "family": "Fraunces", "weight": 450, "letterSpacing": "-0.018em", "lineHeight": 1.04, "size": "clamp(2rem, 4.2vw, 3.5rem) → 56 / 43 / 32px at 1440 / 1024 / 768", "measure": "20ch" },
+    "subTitle": { "family": "Fraunces", "weight": 500, "size": "clamp(1.375rem, 2vw, 1.75rem)" },
+    "numeral": { "family": "Fraunces", "weight": 400, "settings": "\"opsz\" 144", "tabular": true },
+    "lead": { "family": "Inter", "size": "clamp(1.0625rem, 1.3vw, 1.25rem)", "lineHeight": 1.55, "colour": "inkSoft", "measure": "42rem" },
+    "body": { "family": "Inter", "size": "17px", "lineHeight": 1.6, "colour": "inkSoft", "measure": "62ch" },
+    "label": { "family": "JetBrains Mono", "size": "11px", "letterSpacing": "0.14em", "transform": "uppercase", "weight": 500, "colour": "inkFaint" }
   },
-  "spacing": { "unit": 4, "section": { "1440": 128, "1024": 104, "768": 88, "390": 64 }, "cardPadding": { "desktop": 32, "mobile": 20 }, "gutter": { "desktop": 32, "mobile": 20 } },
-  "containers": { "page": 1200, "prose": 720, "wide": 1360 },
-  "grid": { "columns": 12, "gap": 24, "collapse": { "1024": "8-col feel: two columns become 1fr 1fr", "768": "single column with side-by-side pairs only for stats", "390": "single column" } },
   "shape": {
-    "radius": { "card": 20, "button": 12, "chip": 8, "stamp": 6, "machine": 10, "crate": 6 },
-    "border": { "card": "1.5px solid ink", "quiet": "1px solid paperEdge", "machine": "2px solid ink" },
-    "shadow": { "card": "6px 6px 0 0 ink", "cardHover": "8px 8px 0 0 ink", "button": "4px 4px 0 0 ink", "buttonActive": "1px 1px 0 0 ink", "none": "flat sections and stations use no shadow" },
-    "imperfection": "stamps sit at -3deg; crates at ±2deg; hand-set label tags; nothing else rotates"
+    "radii": { "heroPanel": 48, "card": 16, "selectorAndPeriodCards": 12, "diagramBox": 8, "buttonsAndTabs": 999 },
+    "borders": "1px only",
+    "buttons": { "height": { "base": 52, "large": 60, "small": 44 }, "shape": "pill", "primary": "accent fill, paper text", "secondary": "paper fill, ink border, inverts on hover" },
+    "chips": "quiet — canvasDeep fill, no border, 28px; used sparingly",
+    "stamps": "1px current-colour outline, never rotated, one per moment"
   },
   "illustration": {
-    "stroke": { "outline": 2, "detail": 1.5, "thread": 3 },
-    "fills": "flat, from the palette; steelSoft bodies, paper faces, stamp for lights and labels, accent for the thread and one detail per station",
-    "perspective": "flat front-on with a slight isometric cheat on conveyors (no vanishing point)",
-    "characters": { "cast": ["Founder (the expert; open collar, holds a crate)", "Operator (runs the machine; sleeves rolled, clipboard)", "Scanner (a lens on a stand; research)", "Inspector (Judge; magnifier and stamp)", "Builder (editor; headphones, roller)", "Buyer (the market; a small figure who stops walking)", "Signal (a pulse dot that travels the return pipe)"], "proportions": "5.5 heads tall, round heads, dot eyes, single-line mouths, no noses", "poses": "standing, reaching, pointing, stamping, walking, looking back", "backgroundDensity": "one station per scene on mobile, up to three on desktop" },
-    "primitives": ["ThreadSpool", "Crate", "Conveyor", "ScannerStation", "AssemblyStation", "RecordStation", "InspectorStation", "PackagingStation", "DistributionSorter", "SignalPulse", "FeedbackPipe", "Buyer", "Founder", "Operator", "Stamp"]
+    "file": "src/components/factory/schematic.tsx",
+    "stroke": { "ink": 1.5, "accentTrunk": 2, "guide": "hairline" },
+    "glyphs": ["Spool", "Lens", "Fork", "Cut", "Route", "Pulse", "Loop", "InspectionMark", "Package"],
+    "diagrams": ["LineDiagram", "HeroLine", "ReturnThread", "Branch", "MemoryThread", "PeriodTimeline"],
+    "nodes": { "radius": "7 (10 when active)", "lit": "accent fill", "active": "halo + breathe" },
+    "cast": { "used": ["Founder", "Buyer"], "retired": ["Operator (public)", "stations", "crates", "conveyor", "feedback pipe", "wavy thread line"] }
   },
-  "iconography": { "ui": "lucide (existing), 1.5px", "factory": "custom SVG primitives above; never emoji" },
   "motion": {
-    "principle": "Every major animation answers 'what is this teaching?'. Decorative motion is limited to hover feedback and the idle conveyor.",
-    "durations": { "micro": 160, "reveal": 520, "stamp": 380, "conveyor": "12s loop", "thread": "1.4s draw", "pipe": "2.2s travel" },
-    "easings": { "out": "cubic-bezier(0.22, 1, 0.36, 1)", "inOut": "cubic-bezier(0.4, 0, 0.2, 1)", "stamp": "cubic-bezier(0.34, 1.56, 0.64, 1)", "linear": "linear" },
-    "stagger": 70,
-    "triggers": { "reveal": "IntersectionObserver at 18% visibility, once", "conveyor": "always while in view; paused when off-screen", "scrollLinked": "the machine section progresses with scroll via a passive scroll listener writing a CSS variable; no per-frame layout reads" },
-    "technology": "CSS transitions/keyframes, SVG stroke-dashoffset, IntersectionObserver, one rAF-throttled scroll listener; no animation library",
-    "reducedMotion": "prefers-reduced-motion: every reveal is visible immediately, conveyors and pulses are still frames, the scroll-linked machine shows its final state",
-    "mobile": "no parallax; conveyors run at half speed; one animated element per viewport"
+    "principle": "motion with a job; every animation has a reduced-motion still",
+    "draw": "stroke-dashoffset 1.4s cubic-bezier(0.16,1,0.3,1) on reveal",
+    "returnPulse": "SVG animateMotion 2.6s loop in viewBox units (scales; no overflow)",
+    "breathe": "opacity 2s on the active node",
+    "stampIn": "scale 1.25→1 over 320ms, no rotation",
+    "selector": "150ms colour, 300–500ms stroke, cubic-bezier(0.16,1,0.3,1)",
+    "reveal": "500ms rise-and-fade, once",
+    "retired": ["conveyor stripe", "bob", "blink"]
   },
-  "responsive": { "breakpoints": { "sm": 640, "md": 768, "lg": 1024, "xl": 1280 }, "testedWidths": [1920, 1600, 1440, 1366, 1280, 1200, 1024, 900, 820, 768, 760, 720, 640, 600, 500, 460, 430, 390, 375, 320], "rules": ["no horizontal page scroll at any width", "touch targets ≥ 44px on mobile", "factory scenes reflow to a single vertical conveyor below 768", "hero readable before any animation starts"] },
-  "sectionRhythm": ["hero", "problem", "you do four things", "the machine", "most agencies stop here", "one idea many expressions", "market memory", "commercial attention", "how the system learns", "first 12 weeks", "product proof (labelled synthetic)", "fit", "cta"],
-  "cta": { "primary": { "label": "Apply", "colour": "accent", "text": "paper", "shadow": "button", "radius": 12 }, "secondary": { "colour": "paper", "border": "1.5px ink", "text": "ink" }, "rule": "one primary per viewport; the sticky mobile bar carries Apply only" },
-  "nav": { "items": ["How it works", "Who it is for", "Playbook"], "actions": ["Sign in", "Apply"], "sticky": true, "mobile": "logo + Apply, drawer for the three items" },
-  "forms": { "field": "paper, 1.5px ink border, 12px radius, 48px min height", "focus": "3px accentSoft ring + accent border", "error": "reject text under the field, field border reject", "steps": "three steps, progress as a thread filling" },
-  "footer": { "wordmark": "THREADLINE in Fraunces at 96–160px on canvasDeep with the thread passing through", "columns": ["Product", "Company", "Legal"], "line": "A managed content growth system for expert-led businesses." },
-  "publicCards": { "surface": "paper", "border": "1.5px ink", "shadow": "card", "radius": 20 },
-  "clientCards": { "surface": "elevated (existing dark system)", "border": "line", "shadow": "sm", "radius": 12, "note": "unchanged; the public system carries into the app only as type, focus rings and stamp badges" },
-  "adminDensity": "unchanged — tables, chips, filters; no illustration",
-  "claims": "Every factual public statement must be VERIFIED in docs/site/CLAIMS_EVIDENCE_LEDGER.md; synthetic demonstrations are labelled SYNTHETIC / ILLUSTRATIVE in the UI"
+  "layout": {
+    "container": 1200,
+    "heroPanel": { "max": 1500, "margins": "30px (10px below 768)", "padding": "80 / 30 / 24 → 40 / 10 / 24", "textColumn": 560 },
+    "sectionPadding": "clamp(4.5rem, 9vw, 8rem)",
+    "breakpoints": { "640": "tabs 2-col, selector diagram hidden", "768": "period cards 2-up, memory labels shown", "992": "hero stacks below", "1024": "selector cards side by side, machine line horizontal", "1280": "period cards 4-up" },
+    "verifiedWidths": [1920, 1600, 1440, 1366, 1280, 1200, 1024, 900, 820, 768, 760, 720, 640, 600, 500, 460, 430, 390, 375, 320]
+  },
+  "reconstruction": {
+    "method": "docs/design/COMPONENT_RECONSTRUCTION.md",
+    "skeletons": {
+      "heroPanel": "reference-analysis/clones/birdhouse-hero-panel",
+      "symptomSelector": "reference-analysis/clones/hydra-constraint-selector",
+      "periodCards": "reference-analysis/clones/hydra-offer-cards"
+    }
+  },
+  "claims": {
+    "publicPricing": "never disclosed (DEC-017); npm run qa:public fails on any price string",
+    "ledger": "docs/site/CLAIMS_EVIDENCE_LEDGER.md",
+    "bannedPublicWords": ["monthly", "guaranteed leads/revenue/results", "go viral", "10x", "cutting-edge", "AI-powered"]
+  }
 }

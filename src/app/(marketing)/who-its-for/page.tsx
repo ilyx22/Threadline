@@ -4,7 +4,6 @@ import { HOME, WHO_ITS_FOR } from "@/content/public-site";
 import { Card, Eyebrow, Lead, PublicButton, Section, Stamp, Title } from "@/components/public/primitives";
 import { StickyApply } from "@/components/public/sticky-apply";
 import { Reveal } from "@/components/marketing/reveal";
-import { Buyer, Founder } from "@/components/factory/primitives";
 
 export const metadata: Metadata = {
   title: "Who it is for",
@@ -18,27 +17,19 @@ export default function WhoItsForPage() {
     <>
       <StickyApply showAfter={500} />
       <section className="tl-section pb-8">
-        <div className="tl-container grid gap-8 lg:grid-cols-[minmax(0,1fr)_200px] lg:items-end">
-          <div>
-            <Eyebrow>Who it is for</Eyebrow>
-            <h1 className="tl-display max-w-[16ch]">{c.title}</h1>
-            <Lead>{c.lead}</Lead>
-          </div>
-          <div className="flex items-end justify-end gap-3" aria-hidden>
-            <Founder className="w-[64px]" />
-            <Buyer className="w-[52px]" />
-          </div>
+        <div className="tl-container">
+          <Eyebrow className="text-[color:var(--accent-deep)]">Who it is for</Eyebrow>
+          <h1 className="tl-display max-w-[16ch]">{c.title}</h1>
+          <Lead>{c.lead}</Lead>
         </div>
       </section>
 
       <Section band className="pt-8">
-        <dl className="grid gap-4 md:grid-cols-2">
+        <dl className="grid gap-x-12 md:grid-cols-2">
           {c.profile.map((p, i) => (
-            <Reveal key={p.label} delay={(i % 2) * 60}>
-              <Card quiet className="h-full">
-                <dt className="tl-label text-[color:var(--accent-deep)]">{p.label}</dt>
-                <dd className="tl-body mt-3 text-[15px]">{p.body}</dd>
-              </Card>
+            <Reveal key={p.label} delay={(i % 2) * 60} className="border-t border-[color:var(--line)] py-6">
+              <dt className="tl-label text-[color:var(--accent-deep)]">{p.label}</dt>
+              <dd className="tl-body mt-3 text-[15.5px]">{p.body}</dd>
             </Reveal>
           ))}
         </dl>
@@ -48,40 +39,40 @@ export default function WhoItsForPage() {
       <Section>
         <Eyebrow>Plainly</Eyebrow>
         <Title>The fit, in one look.</Title>
-        <div className="mt-10 grid gap-6 md:grid-cols-2">
-          <Card>
+        <div className="tl-rule-strong mt-10 grid gap-10 pt-8 md:grid-cols-2 md:gap-12">
+          <div>
             <div className="flex items-center justify-between gap-3">
-              <p className="tl-label">A good fit</p>
+              <p className="tl-label text-[color:var(--ink)]">A good fit</p>
               <Stamp tone="signal">Yes</Stamp>
             </div>
             <ul className="mt-5 space-y-3">
               {HOME.fit.good.map((g) => (
-                <li key={g} className="flex gap-3 text-[15px] text-[color:var(--ink)]">
+                <li key={g} className="flex gap-3 text-[15.5px] text-[color:var(--ink)]">
                   <Check className="mt-1 size-4 shrink-0 text-[color:var(--signal)]" aria-hidden />
                   {g}
                 </li>
               ))}
             </ul>
-          </Card>
-          <Card quiet>
+          </div>
+          <div className="md:border-l md:border-[color:var(--line)] md:pl-12">
             <div className="flex items-center justify-between gap-3">
-              <p className="tl-label text-[color:var(--ink-faint)]">Not a fit</p>
+              <p className="tl-label">Not a fit</p>
               <Stamp tone="reject">Not yet</Stamp>
             </div>
             <ul className="mt-5 space-y-3">
               {HOME.fit.bad.map((b) => (
-                <li key={b} className="flex gap-3 text-[15px] text-[color:var(--ink-soft)]">
+                <li key={b} className="flex gap-3 text-[15.5px] text-[color:var(--ink-soft)]">
                   <X className="mt-1 size-4 shrink-0 text-[color:var(--reject)]" aria-hidden />
                   {b}
                 </li>
               ))}
             </ul>
-          </Card>
+          </div>
         </div>
       </Section>
 
-      <Section band>
-        <div className="tl-card grid items-center gap-6 p-8 sm:p-12 lg:grid-cols-[minmax(0,1fr)_auto]">
+      <Section band tight>
+        <Card className="grid items-center gap-6 p-8 sm:p-12 lg:grid-cols-[minmax(0,1fr)_auto]">
           <div>
             <Title>Not sure? Apply and find out.</Title>
             <Lead>The application is a diagnostic. If the honest answer is that Threadline is the wrong tool for your business, we will say so — and you keep the finding.</Lead>
@@ -90,7 +81,7 @@ export default function WhoItsForPage() {
             Apply
             <ArrowRight className="size-5" aria-hidden />
           </PublicButton>
-        </div>
+        </Card>
       </Section>
     </>
   );

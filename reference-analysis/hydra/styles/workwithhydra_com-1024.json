@@ -1,0 +1,426 @@
+{
+  "url": "https://workwithhydra.com/",
+  "title": "Hydra: growth systems for agencies and service firms",
+  "viewport": {
+    "w": 1024,
+    "h": 900
+  },
+  "scrollHeight": 9242,
+  "fonts": [
+    "Archivo 100 900 italic",
+    "Archivo 100 900 normal",
+    "Archivo Fallback normal normal",
+    "JetBrains Mono 100 800 normal",
+    "JetBrains Mono Fallback normal normal"
+  ],
+  "families": {
+    "Archivo": 216,
+    "JetBrains Mono": 40
+  },
+  "topColours": [
+    [
+      "rgb(18, 18, 26)",
+      716
+    ],
+    [
+      "rgb(99, 99, 111)",
+      104
+    ],
+    [
+      "rgb(95, 95, 107)",
+      66
+    ],
+    [
+      "rgb(77, 38, 219)",
+      64
+    ],
+    [
+      "rgb(226, 225, 220)",
+      29
+    ],
+    [
+      "rgb(255, 255, 255)",
+      18
+    ],
+    [
+      "rgb(255, 216, 77)",
+      14
+    ],
+    [
+      "rgb(244, 243, 240)",
+      10
+    ],
+    [
+      "rgb(236, 235, 230)",
+      8
+    ],
+    [
+      "rgb(184, 86, 10)",
+      8
+    ]
+  ],
+  "radii": [
+    [
+      "12px",
+      15
+    ],
+    [
+      "100px",
+      8
+    ],
+    [
+      "3.35544e+07px",
+      5
+    ],
+    [
+      "8px",
+      4
+    ]
+  ],
+  "shadows": [
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(18, 18, 26, 0.5) 0px 18px 40px -24px",
+      1
+    ],
+    [
+      "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.1) 0px 4px 6px -4px",
+      1
+    ]
+  ],
+  "containers": [
+    [
+      "160px",
+      25
+    ],
+    [
+      "1472px",
+      13
+    ],
+    [
+      "672px",
+      9
+    ],
+    [
+      "576px",
+      4
+    ],
+    [
+      "100%",
+      3
+    ],
+    [
+      "577.06px",
+      3
+    ],
+    [
+      "1088px",
+      1
+    ],
+    [
+      "844.386px",
+      1
+    ],
+    [
+      "476.736px",
+      1
+    ],
+    [
+      "1248px",
+      1
+    ]
+  ],
+  "nav": [
+    {
+      "text": "",
+      "href": "/"
+    },
+    {
+      "text": "How we work\n▼",
+      "href": "/how-we-work"
+    },
+    {
+      "text": "The diagnostic\n→\nFind which of four cons",
+      "href": "/diagnostic"
+    },
+    {
+      "text": "Client Acquisition System\n→\nWe build you",
+      "href": "/how-we-work/client-acquisition-system"
+    },
+    {
+      "text": "1-1 Consulting\n→\nSix months working the ",
+      "href": "/how-we-work/consulting"
+    },
+    {
+      "text": "Equity Partnership\n→\nWe put our own upsi",
+      "href": "/how-we-work/equity-partnership"
+    },
+    {
+      "text": "Proof",
+      "href": "/proof"
+    },
+    {
+      "text": "Playbook",
+      "href": "/playbook"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "The Brief",
+      "href": "/brief"
+    },
+    {
+      "text": "Client login\n↗",
+      "href": "https://collective.workwithhydra.com"
+    },
+    {
+      "text": "Book a call →",
+      "href": "/book"
+    },
+    {
+      "text": "How we work",
+      "href": "/how-we-work"
+    },
+    {
+      "text": "Diagnostic",
+      "href": "/diagnostic"
+    },
+    {
+      "text": "Proof",
+      "href": "/proof"
+    },
+    {
+      "text": "Playbook",
+      "href": "/playbook"
+    },
+    {
+      "text": "Glossary",
+      "href": "/glossary"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Book a call",
+      "href": "/book"
+    },
+    {
+      "text": "The Brief",
+      "href": "/brief"
+    },
+    {
+      "text": "LinkedIn",
+      "href": "https://www.linkedin.com/company/workwithhydra"
+    },
+    {
+      "text": "X",
+      "href": "https://x.com/kirchnr"
+    }
+  ],
+  "bodyBg": "rgb(244, 243, 240)",
+  "htmlBg": "rgb(244, 243, 240)",
+  "cards": [
+    {
+      "tag": "div",
+      "text": "The diagnostic → Find which of four constraints is capping you Client Acquisition System →",
+      "rect": {
+        "x": 178,
+        "y": 62,
+        "w": 336,
+        "h": 307
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(18, 18, 26, 0.5) 0px 18px 40px -24px",
+        "padding": "0px",
+        "maxWidth": "none",
+        "width": "336px",
+        "height": "307px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "",
+      "rect": {
+        "x": 176,
+        "y": 496,
+        "w": 96,
+        "h": 56
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "8px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "padding": "0px 12px",
+        "maxWidth": "none",
+        "width": "96px",
+        "height": "56px"
+      }
+    },
+    {
+      "tag": "button",
+      "text": "01Acquisition",
+      "rect": {
+        "x": 40,
+        "y": 1992,
+        "w": 138,
+        "h": 42
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "padding": "10px 20px",
+        "maxWidth": "none",
+        "width": "137.891px",
+        "height": "42px"
+      }
+    },
+    {
+      "tag": "button",
+      "text": "03Delivery",
+      "rect": {
+        "x": 333,
+        "y": 1992,
+        "w": 117,
+        "h": 42
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "padding": "10px 20px",
+        "maxWidth": "none",
+        "width": "116.812px",
+        "height": "42px"
+      }
+    },
+    {
+      "tag": "button",
+      "text": "04Margin",
+      "rect": {
+        "x": 458,
+        "y": 1992,
+        "w": 108,
+        "h": 42
+      },
+      "style": {
+        "backgroundColor": "rgba(0, 0, 0, 0)",
+        "borderRadius": "3.35544e+07px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "padding": "10px 20px",
+        "maxWidth": "none",
+        "width": "108.312px",
+        "height": "42px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "ACQUISITION CONVERSION ← THROUGHPUT CAPPED HERE DELIVERY MARGIN",
+      "rect": {
+        "x": 40,
+        "y": 2074,
+        "w": 944,
+        "h": 223
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "944px",
+        "height": "222.781px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "CONSTRAINT 02 / CONVERSION Enough conversations, too few of them close. ✕ Leads go quiet a",
+      "rect": {
+        "x": 40,
+        "y": 2321,
+        "w": 504,
+        "h": 268
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "padding": "32px",
+        "maxWidth": "none",
+        "width": "504px",
+        "height": "267.906px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "Not sure which one is yours? Six questions and about ninety seconds, and you get them rank",
+      "rect": {
+        "x": 40,
+        "y": 2766,
+        "w": 944,
+        "h": 142
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "padding": "36px 32px",
+        "maxWidth": "none",
+        "width": "944px",
+        "height": "141.797px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "THE INPUTS Qualified conversations, delivery capacity, and priced margin, which are the th",
+      "rect": {
+        "x": 40,
+        "y": 3272,
+        "w": 301,
+        "h": 179
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "padding": "28px",
+        "maxWidth": "none",
+        "width": "301.328px",
+        "height": "178.594px"
+      }
+    },
+    {
+      "tag": "div",
+      "text": "THE SYSTEM What converts those inputs into revenue, on a cadence, without you in every dec",
+      "rect": {
+        "x": 361,
+        "y": 3272,
+        "w": 301,
+        "h": 179
+      },
+      "style": {
+        "backgroundColor": "rgb(255, 255, 255)",
+        "borderRadius": "12px",
+        "border": "1px solid rgb(18, 18, 26)",
+        "boxShadow": "none",
+        "padding": "28px",
+        "maxWidth": "none",
+        "width": "301.328px",
+        "height": "178.594px"
+      }
+    }
+  ]
+}

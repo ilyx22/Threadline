@@ -4,7 +4,10 @@ If you are a new session picking this up cold: read this file top to bottom, the
 `docs/BUILD_CHECKLIST.md` for state and `docs/ARCHITECTURE.md` for reasoning. Everything you need
 is on disk; nothing depends on a previous conversation.
 
-Last updated: 2026-09-07 (cadence, validation gate, wedge)
+Last updated: 2026-09-09 (completion pass + public experience rebuild verified on commit `5a08f25`,
+tag `threadline-public-baseline-2026-09-09`; docs reconciled to one current state; 2026-09-09 owner
+doctrine recorded: public pricing visibility, platform safety, cadence, offer direction, public-site
+direction)
 
 ---
 
@@ -107,32 +110,68 @@ proof.
 | AI abstraction + demo provider | Complete |
 | File upload/storage/serving with per-request authorisation | Complete |
 
-### Intentionally mocked, manual or adapter-only
+### Built to an external gate (real code, truthful "not configured" states)
 
-These are **product decisions**, documented in the UI, not hidden gaps:
+Nothing below is simulated. Each feature is implemented and unit-tested to a mocked boundary; what
+stands between it and live operation is a credential, a platform review or a founder decision, and
+the UI says which. `docs/QA_REPORT.md` (final section) lists every gate.
 
-- **Social publishing (LinkedIn, YouTube, Instagram, TikTok, X)** — `adapter_only`. Adapter
-  interface, configuration UI and manual workflow exist. The adapter returns an explicit
-  `unavailable` result. No connection is ever simulated.
-- **Metric import** — manual entry only. `PerformanceSnapshot.source` distinguishes
-  `manual` / `adapter` / `seed` so imported data can be told apart later.
-- **CRM (HubSpot, GoHighLevel) and Stripe** — `adapter_only`, same pattern.
+- **Social publishing (LinkedIn, YouTube, Instagram, TikTok, X)** — connectors in
+  `src/lib/integrations/connectors/` carry the documented scopes, endpoints, request shapes,
+  error and rate-limit mapping, and are exercised through an injectable `fetch`. Capability is
+  read per integration (`src/lib/domain/integration-capability.ts`): with no client credentials
+  the state is *credentials missing*; with credentials but no OAuth grant it is *auth required*;
+  an expired or revoked token reads *reconnect required*; an unaudited TikTok app is refused
+  rather than allowed to publish invisibly. Publishing and analytics are separately capable
+  because the platforms gate them separately (§16h). The manual and native-delegated routes
+  remain first-class and are the normal path until credentials and reviews exist.
+- **Metric ingestion** — `src/lib/analytics` normalises provider responses into five per-field
+  states (value / `unavailable` / `unsupported` / `unknown` / `stale`), records provenance, refuses
+  duplicate ingestion and reports freshness; a `metrics.refresh` job drives it. Live provider data
+  is the external gate. Manual snapshots remain valid and are labelled as such
+  (`PerformanceSnapshot.source`).
+- **CRM and payments** — inbound webhooks for Stripe, HubSpot, Pipedrive, Attio and GoHighLevel
+  (`src/lib/integrations/webhooks.ts`, `/api/webhooks/[provider]`) are signature-verified,
+  idempotent and map to `CommercialEvent` with `crm` / `payment` provenance and no invented
+  attribution. Each workspace's webhook secret is the gate. Threadline still contains no CRM and
+  no billing.
+- **Email** — `EMAIL_PROVIDER=capture` (default) stores every rendered message in `EmailMessage`
+  and shows invite and reset links directly; `resend` delivers. `RESEND_API_KEY` is the gate.
+- **Object storage** — `STORAGE_PROVIDER=local` (default) or `s3`; the S3 adapter refuses to start
+  half-configured. Reads are always proxied through `/api/files`.
+- **Shared rate limit** — `RATE_LIMIT_STORE=memory` (default) or `redis` (Upstash-compatible
+  REST), which fails closed if unreachable.
+- **Research collection** — `ResearchProvider` (`src/lib/research/providers.ts`) with three real
+  providers (internal, manual, URL) and an `unavailablePlatformProvider` that names the blocker
+  for any platform Threadline holds no access to. Internal sources are read directly; a URL a
+  person supplies is genuinely fetched, SSRF-guarded, and passed through an injection quarantine;
+  everything else is pasted in. Login-walled platforms are refused **by name**. There is no
+  background scraping and no simulated platform connection anywhere in a run.
+
+### Intentionally manual
+
 - **Google Drive / Dropbox** — `manual_only`. Threadline stores links, not files.
-- **Booking link** — the one genuinely `available` integration; it needs no credentials.
+- **Booking link** — genuinely `available`; it needs no credentials.
 - **AI in demo mode** — without `ANTHROPIC_API_KEY` a deterministic provider composes output from
   the workspace's own stored context. Every result is visibly labelled as demo output.
-- **Intelligence collection** — three real paths and no fourth that pretends. Internal sources
-  (own content, performance, pipeline) need no credentials and are read directly. A URL supplied
-  by a person is genuinely fetched and read, SSRF-guarded. Everything else is pasted in. Platforms
-  that serve a login wall are refused **by name**, with the manual path offered — there is no
-  background scraping and no simulated platform connection anywhere in the run.
+- **Canonical sales scripts** — imported verbatim and unusable until a person approves them in
+  `/admin/scripts` (founder input).
 
 ### Not built (deliberate — see `FUTURE_BACKLOG.md`)
 
 Payments/billing, semantic search, mobile app, white-labelling, an AI Brand Brain interview,
-real-time script collaboration, server-side PDF export, drag-and-drop on the board. (Email, reset,
-OAuth foundations, background jobs, object storage, multi-touch attribution and competitor
-ingestion via ResearchProvider were built in the 2026-09-08/09 passes — see `docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md`.)
+real-time script collaboration, server-side PDF export, drag-and-drop on the board, scraping of
+any kind. The 2026-09-08/09 passes built email, invitations and reset, durable jobs, object
+storage, the shared rate limit, connectors, metric ingestion, research providers, webhooks and
+rev-share-ready attribution; every earlier note that lists those as unbuilt is superseded (see
+`docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md`, 59 findings, 0 still broken).
+
+### Public site direction (2026-09-09)
+
+The public site shipped in the morning rebuild as the light "Authority Factory" system and was
+restrained the same afternoon: same content, sections and order; paper-on-linen hairline surfaces,
+a system drawing instead of a cartoon factory, and three components reconstructed clean-room from
+measured reference skeletons. See §16j and `docs/design/PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md`.
 
 ---
 
@@ -144,30 +183,42 @@ SQLite (PostgreSQL-ready) · Zod 4 · Radix primitives · first-party auth · in
 ### Directories
 
 ```
-src/app/
-  (marketing)/        Public site: /, how-it-works, who-its-for, apply, calculator
-  (auth)/login        Sign-in
-  app/[org]/          Client portal — every module
-  admin/              Internal operator portal
+src/app/                65 page.tsx files + 3 route.ts handlers (counted 2026-09-09)
+  (marketing)/        Public site: /, how-it-works, who-its-for, apply, calculator,
+                      playbook, playbook/[chapter] (10 chapters)
+  (auth)/             login, forgot-password, reset-password, invite
+  app/[org]/          Client portal — every module (plus /app, the signed-in entry route)
+  admin/              Internal operator portal (cockpit, clients, queue, prospects, market,
+                      acquisition, research + calibration, scripts, delivery, applications,
+                      metrics, support, sops)
   onboarding/[org]/   15-step onboarding
-  api/files/          Authorised file serving (the only tenant-data API route)
+  api/files/          Authorised file serving (the only tenant-data read API)
+  api/webhooks/       POST /api/webhooks/[provider] — signature-verified CRM/payment events
+  t/[slug]/           Tracked redirect
   no-access/          Plain denial explanation
+  not-found, sitemap, robots, opengraph-image, icon
 src/components/
   ui/                 Design system primitives
   charts/             In-house SVG charts
   app/                Sidebar, topbar, command menu, filters, demo tour
   marketing/          Marketing sections and product visualisations
+  public/, factory/   Public-site primitives and the Authority Factory illustration system
   forms/              ActionForm plumbing used by every mutating form
 src/lib/
   actions/            Server Actions — the ONLY mutation path
   ai/                 provider · anthropic · mock · context · prompts · generators
-  auth/               session · password · roles · guard · audit
+  analytics/          Metric normaliser (five field states), ingestion, freshness
+  auth/               session · password · roles · guard · audit · tokens (invite / reset)
   data/               Read repositories, always org-scoped
   domain/             Status unions, scoring, workflow rules, schemas
-  integrations/       Registry + adapter interface
-  reports/            Weekly report computation
-  storage/            StorageAdapter (local disk)
-  security/           Rate limiting
+  email/              Providers (capture, Resend), templates, EmailMessage log
+  integrations/       Registry, adapter interface, OAuth, credentials, connectors/, webhooks
+  jobs/               Durable job queue (Job table), handlers, worker entry
+  reports/            Weekly report computation + learning sections
+  research/           ResearchProvider interface and providers
+  sales/              Canonical scripts, discovery economics
+  security/           Rate limiting (memory / Redis-REST), safe-path, secret-box (AES-256-GCM)
+  storage/            StorageAdapter: local, S3-compatible, memory
 ```
 
 ### Important components
@@ -232,23 +283,34 @@ cheap cookie check for redirect UX only — **it is not the security boundary.**
 
 ### Storage
 
-Local disk under `storage/{orgId}/…` behind a `StorageAdapter`. Files are served only through
-`/api/files/[...path]`, which re-checks membership on every request. Path traversal is rejected.
+`StorageAdapter` with three implementations selected by `STORAGE_PROVIDER`: `local` (default,
+`storage/{orgId}/…`), `s3` (SigV4 over `fetch`, private bucket, tenant-scoped keys, refuses to
+start half-configured — ADR-023) and `memory` (tests). Files are served only through
+`/api/files/[...path]`, which re-checks membership on every request; no bucket or pre-signed URL
+is ever handed to a browser. Path traversal is rejected in every adapter.
 
 ---
 
 ## 4. Database
 
-SQLite by default (`file:./dev.db`), PostgreSQL-ready. 60 models. Six migrations:
+SQLite by default (`file:./dev.db`), PostgreSQL-ready. **77 models, 0 database enums, 13
+migrations** (`prisma migrate status` up to date on 2026-09-09):
 
-- `20260902162730_init`
-- `20260903015829_intelligence_run_diagnosis_installation_proof`
-- `20260904185211_client_surface_readiness_longform_access`
-- `20260905225216_living_sop_engine_acquisition_attribution`
-- `20260906132504_attribution_touchpoints_synthetic_delivery_load`
-- `20260906143000_visitor_token_scoped_per_org` (hand-written; scopes the visitor token per
-  organisation, safe against existing data because the table is introduced by the migration before
-  it)
+| Migration | Purpose |
+|---|---|
+| `20260902162730_init` | v1: the 39 founding models (tenancy, Brand Brain, research, signals, creation, production, distribution, measurement, internal) |
+| `20260903015829_intelligence_run_diagnosis_installation_proof` | `IntelligenceRun`, `RunSource`, `CandidateSignal`, `CandidateEvidence`, `ConstraintDiagnosis`, `ConstraintAssessment`, `InstallationMilestone`, `ProofPeriod` |
+| `20260904185211_client_surface_readiness_longform_access` | `RecordingReadiness`, `ReadinessCheck`; client visibility flag, long-form fields, access method |
+| `20260905225216_living_sop_engine_acquisition_attribution` | `MarketWedge`, `ValidationConversation`, `Prospect`, `SopCheck`, `SalesCall`, `AcquisitionTarget`, `FunnelReview`; attribution class on `Inquiry` |
+| `20260906132504_attribution_touchpoints_synthetic_delivery_load` | `TrackedLink`, `Visitor`, `Touchpoint`, `CommercialEvent`; `Organization.synthetic`; Delivery Load fields on `Task` |
+| `20260906143000_visitor_token_scoped_per_org` | Hand-written: the visitor token becomes unique per organisation (safe against existing data because the table arrives in the migration before it) |
+| `20260907090000_service_period_cadence_problem_theme` | Hand-written: `monthlyFee` renamed `periodFee`, `ProofPeriod.kind` `month` → `period`, `ValidationConversation.problemTheme` |
+| `20260907163425_research_corpus_judge_v0` | `ResearchExample`, `ExampleAnalysis`, `JudgeVerdict`, `JudgeCalibration` (no `orgId`) |
+| `20260907180000_corpus_outlier_v1` | `ResearchExample.format`, `buyerRelevance`, `commercialIntent` — defaults are non-committal, not guesses |
+| `20260908090000_corpus_capture_provenance` | Descriptive and metric provenance tracked separately on corpus rows; enrichment timestamp and note |
+| `20260909090000_content_lineage_learning_loop` | `ContentRoot`, `ContentExpectation`, `ContentDiagnosis`, `CorrectionEntry`; `rootId` / `derivedFromId` / `lineageRole` on content (SCORE → EXPLAIN → DIAGNOSE → PRESCRIBE → RETEST) |
+| `20260909120000_credentials_and_capability_state` | `Credential` (encrypted), `OAuthState`; capability-granular connection state on `Integration` (auth status, publish/analytics/research capability, review status, scopes, restrictions, reconnect flag) |
+| `20260909130000_completion_pass_email_jobs_scripts_permissions_economics` | `AuthToken`, `EmailMessage`, `Job`, `SalesScript`, `SalesCallScriptSnapshot`, `ProofPermission`, `WebhookEvent`; discovery economics on `Prospect`, rev-share fields on `CommercialEvent`, `Idea.requestId`, `intendedJob`, `distributionMode`, `Asset.storageProvider` |
 
 ### Key models
 
@@ -279,8 +341,22 @@ feedback fields
 **Measurement:** `PerformanceSnapshot` (time series), `Inquiry`, `WeeklyReport` (frozen payload),
 `OperatingMetric`
 
-**Internal:** `Integration`, `SupportIssue`, `SopDocument`, `OnboardingSession`, `Application`
-(no orgId by design), `AiGeneration`, `InternalMetric`
+**Attribution v1.5:** `TrackedLink`, `Visitor`, `Touchpoint`, `CommercialEvent` (with rev-share
+eligibility, status and history fields; no billing)
+
+**Learning loop:** `ContentRoot`, `ContentExpectation`, `ContentDiagnosis`, `CorrectionEntry`
+
+**Threadline running Threadline (no `orgId`):** `MarketWedge`, `ValidationConversation`,
+`Prospect`, `SopCheck`, `SalesCall`, `AcquisitionTarget`, `FunnelReview`, `SalesScript`,
+`SalesCallScriptSnapshot`, `ResearchExample`, `ExampleAnalysis`, `JudgeVerdict`,
+`JudgeCalibration`
+
+**Infrastructure (2026-09-09):** `Credential` (AES-256-GCM at rest), `OAuthState`, `AuthToken`
+(hashed, single-use), `EmailMessage`, `Job`, `WebhookEvent`, `ProofPermission`
+
+**Internal:** `Integration` (capability-granular state), `SupportIssue`, `SopDocument`,
+`OnboardingSession`, `Application` (no orgId by design; `prospectId` link), `AiGeneration`,
+`InternalMetric`
 
 ### Lineage relations
 
@@ -336,11 +412,22 @@ for — see `NOTIFICATION_CAPABILITY` in `src/lib/data/workspace.ts`.
 | `ANTHROPIC_API_KEY` | Enables live AI generation | No | console.anthropic.com → Settings → API keys |
 | `ANTHROPIC_MODEL` | Model override (default `claude-sonnet-5`) | No | — |
 | `NEXT_PUBLIC_BOOKING_URL` | External booking URL for the application flow | No | Any scheduling provider |
-| `STORAGE_ROOT` | Upload directory (default `./storage`) | No | — |
+| `STORAGE_ROOT` | Upload directory for the local adapter (default `./storage`) | No | — |
 | `SEED_DEMO_PASSWORD` | Password for seeded demo accounts | No | Set before seeding any shared environment |
+| `CREDENTIAL_ENCRYPTION_KEYS` | `id:base64key` pairs, newest first; encrypts OAuth tokens and webhook secrets at rest. Threadline refuses to store a token it cannot encrypt | Before any real connector or webhook | `node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"` |
+| `EMAIL_PROVIDER`, `RESEND_API_KEY`, `EMAIL_FROM` | `capture` (default, stores mail in `EmailMessage`) or `resend` | For live delivery | resend.com |
+| `JOBS_POLL_MS` | Worker poll interval (default 5000) | No | — |
+| `STORAGE_PROVIDER`, `S3_BUCKET`, `S3_REGION`, `S3_ENDPOINT`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_FORCE_PATH_STYLE` | `local` (default) or `s3`; all five `S3_*` values required for `s3` | Multi-instance deploys | AWS S3, Cloudflare R2, MinIO, Backblaze |
+| `RATE_LIMIT_STORE`, `RATE_LIMIT_REDIS_URL`, `RATE_LIMIT_REDIS_TOKEN`, `RATE_LIMIT_FAIL_OPEN` | `memory` (default) or `redis` (Upstash-compatible REST; fails closed unless `FAIL_OPEN=true`) | Multi-instance deploys | Upstash or compatible |
+| `LINKEDIN_CLIENT_*`, `YOUTUBE_CLIENT_*`, `INSTAGRAM_CLIENT_*`, `TIKTOK_CLIENT_*`, `TIKTOK_APP_AUDITED`, `X_CLIENT_*` | Connector client credentials; absent = "credentials missing" in the integrations UI | Per platform, when access exists | Each developer console (`docs/PLATFORM_APPLICATIONS.md`) |
+| `CHROME_PATH`, `QA_BASE` | Headless QA suites | No | — |
+
+Webhook secrets have no environment variable: each workspace stores its provider secret encrypted
+(`Credential` purpose `webhook_secret`) and registers `POST /api/webhooks/{provider}?org={orgId}`.
 
 `.env.example` documents all of these with no values. `.env` is git-ignored. **No secret is ever
-exposed to the client** — no `NEXT_PUBLIC_` variable holds a credential.
+exposed to the client** — no `NEXT_PUBLIC_` variable holds a credential. Every optional variable
+left unset leaves its feature in a truthful "not configured" state, never a fake.
 
 ---
 
@@ -378,19 +465,20 @@ npm run verify         # all four in sequence
 1. **Database.** Provision PostgreSQL. In `prisma/schema.prisma` set
    `datasource db { provider = "postgresql" }`. The schema is written to be portable — no enums,
    no array columns, no Postgres-only types.
-2. **Environment.** Set `DATABASE_URL`, `SESSION_SECRET`, `NEXT_PUBLIC_APP_URL`. Optionally
-   `ANTHROPIC_API_KEY` and `NEXT_PUBLIC_BOOKING_URL`.
+2. **Environment.** Set `DATABASE_URL`, `SESSION_SECRET`, `NEXT_PUBLIC_APP_URL` and
+   `CREDENTIAL_ENCRYPTION_KEYS`. Optionally `ANTHROPIC_API_KEY`, `NEXT_PUBLIC_BOOKING_URL`,
+   `EMAIL_PROVIDER=resend` + `RESEND_API_KEY` + `EMAIL_FROM`.
 3. **Migrate.** `npx prisma migrate deploy`
 4. **Seed** (first deploy only, and only if you want the demo workspace):
    `SEED_DEMO_PASSWORD=<strong value> npm run seed`
 5. **Build and start.** `npm run build && npm start`
+6. **Worker.** Run `npm run jobs:worker` alongside the app (or a scheduled
+   `npm run jobs:worker -- --once`) so email, metric refresh and maintenance jobs execute.
 
-Before running more than one instance, replace two single-instance pieces:
+Before running more than one instance, switch two adapters by configuration — no code changes:
 
-- `src/lib/storage/index.ts` — implement `StorageAdapter` against object storage
-- `src/lib/security/rate-limit.ts` — back the sliding window with a shared store
-
-Both are single-file changes; call sites do not move.
+- `STORAGE_PROVIDER=s3` with the five `S3_*` values (ADR-023)
+- `RATE_LIMIT_STORE=redis` with an Upstash-compatible REST endpoint (fails closed if unreachable)
 
 ---
 
@@ -443,8 +531,8 @@ JavaScript-disabled browser would, exercising the real Server Action.
 | Intelligence runs | `…/intelligence/runs` | `runs/`, `data/runs.ts`, `actions/runs.ts` | No background collection; see the collection table below |
 | Constraint diagnosis | `…/intelligence/diagnosis` | `diagnosis/`, `domain/diagnosis.ts` | — |
 | Installation | `/app/[org]/install` | `install/`, `domain/installation.ts` | — |
-| Proof | `…/performance/proof` | `performance/proof/`, `data/proof.ts` | Single-touch attribution, stated on the page |
-| Market Radar | `…/intelligence/radar` | `radar/radar-client.tsx`, `data/research.ts` | Manual/URL capture only |
+| Proof | `…/performance/proof` | `performance/proof/`, `data/proof.ts` | Non-causal by design; attributes value only where evidence class supports it |
+| Market Radar | `…/intelligence/radar` | `radar/radar-client.tsx`, `data/research.ts`, `lib/research/providers.ts` | Internal / manual / URL providers; platform providers read `unavailable` until access exists |
 | Signals | `…/intelligence/signals` | `signals/`, `data/patterns.ts` | — |
 | Ideas | `/app/[org]/create` | `create/idea-board.tsx`, `actions/ideas.ts` | — |
 | Scripts | `…/create/scripts` | `scripts/[id]/script-editor.tsx`, `actions/scripts.ts` | — |
@@ -452,46 +540,69 @@ JavaScript-disabled browser would, exercising the real Server Action.
 | Production board | `/app/[org]/production` | `production/production-board.tsx` | Drag-and-drop not implemented; stage moves via menu |
 | Content detail + lineage | `…/production/[id]` | `production/[id]/`, `data/lineage.ts` | — |
 | Packaging | `…/production/packaging` | `production/packaging/`, `actions/content.ts` | — |
-| Distribution | `/app/[org]/distribution` | `distribution/distribution-view.tsx` | Publishing is manual |
-| Performance | `/app/[org]/performance` | `performance/`, `data/metrics.ts` | Manual metric entry |
-| Pipeline | `/app/[org]/pipeline` | `pipeline/`, `data/pipeline.ts` | Single-touch attribution |
-| Library | `/app/[org]/library` | `library/library-client.tsx` | Local disk storage |
-| Tasks | `/app/[org]/tasks` | `tasks/task-client.tsx` | — |
-| Reports | `/app/[org]/reports` | `reports/`, `lib/reports/weekly.ts` | Print/PDF via browser print |
-| Settings | `/app/[org]/settings` | `settings/**` | No email invitations |
+| Distribution | `/app/[org]/distribution` | `distribution/distribution-view.tsx`, `integrations/connectors/**` | Connectors publish through official APIs once credentials and platform review exist; until then manual / native-delegated with URL capture. `distributionMode` records organic vs paid |
+| Performance | `/app/[org]/performance` | `performance/`, `data/metrics.ts`, `lib/analytics/**` | Ingestion normalises to five field states; live provider data is an external gate; manual snapshots labelled |
+| Learning | `/app/[org]/learning` | `learning/`, `data/content-learning.ts`, `domain/content-diagnosis.ts` | Expectation → gap → diagnosis → correction; verdicts write-once |
+| Pipeline | `/app/[org]/pipeline` | `pipeline/`, `data/pipeline.ts` | Attribution v1.5 (first / last / linear over tracked touchpoints); class carried, never raised |
+| Library | `/app/[org]/library` | `library/library-client.tsx`, `lib/storage/**` | Local or S3 storage by `STORAGE_PROVIDER`; reads proxied through `/api/files` |
+| Tasks | `/app/[org]/tasks` | `tasks/task-client.tsx` | Carries Delivery Load fields |
+| Reports | `/app/[org]/reports` | `reports/`, `lib/reports/weekly.ts`, `lib/reports/learning-sections.ts` | Sections 07–12 (learning) frozen into the payload; print/PDF via browser print |
+| Settings | `/app/[org]/settings` | `settings/**`, `actions/account.ts`, `actions/proof-permission.ts` | Email invitations with single-use tokens (link shown directly while `EMAIL_PROVIDER=capture`); proof permissions; integrations with capability-granular state |
 | Onboarding | `/onboarding/[org]` | `onboarding/[org]/onboarding-flow.tsx` | — |
 | Today / cockpit | `/admin` | `admin/page.tsx`, `data/cockpit.ts` | Ordered by commercial urgency |
 | Attribution (operator) | `/app/[org]/performance/attribution` | `performance/attribution/**`, `data/attribution.ts` | `attribution.manage`; no client role holds it |
 | Tracked redirect | `/t/[slug]` | `app/t/[slug]/route.ts` | Public; destination validated on write |
+| Webhooks | `/api/webhooks/[provider]` | `api/webhooks/[provider]/route.ts`, `integrations/webhooks.ts` | Stripe, HubSpot, Pipedrive, Attio, GoHighLevel; signature-verified, idempotent; per-workspace secret is the gate |
 | Market validation | `/admin/market`, `…/[id]` | `admin/market/**`, `actions/validation.ts` | Sample gate has no override |
-| Prospects | `/admin/prospects`, `…/[id]` | `admin/prospects/**`, `actions/acquisition.ts` | Links to an external CRM; is not one |
+| Prospects | `/admin/prospects`, `…/[id]` | `admin/prospects/**`, `actions/acquisition.ts` | Links to an external CRM; is not one. Discovery economics from disclosed figures only |
 | Acquisition | `/admin/acquisition` | `admin/acquisition/**`, `domain/funnel.ts` | Refuses to project on unmeasured rates |
-| Admin (clients, queue, SOPs) | `/admin/clients` etc. | `admin/**`, `data/admin.ts` | — |
-| Marketing | `/`, `/how-it-works`, `/who-its-for` | `(marketing)/**` | — |
+| Canonical scripts | `/admin/scripts` | `admin/scripts/**`, `lib/sales/**` | Verbatim import, checksums, call snapshots; unusable until a person approves a block |
+| Delivery load | `/admin/delivery` | `admin/delivery/**`, `data/delivery-load.ts` | By client × period × work class × owner; synthetic labelled |
+| Applications | `/admin/applications` | `admin/applications/**` | Inbound applications; "Create prospect from this application" sets a next action due in two days |
+| Research corpus + calibration | `/admin/research`, `…/calibration` | `admin/research/**`, `domain/corpus.ts`, `domain/judge.ts` | Banded, never ranked; Judge verdicts stored `calibrated: false` |
+| Admin (clients, queue, SOPs, metrics, support) | `/admin/clients` etc. | `admin/**`, `data/admin.ts` | — |
+| Marketing | `/`, `/how-it-works`, `/who-its-for` | `(marketing)/**`, `content/public-site.ts` | Every factual statement has a row in `docs/site/CLAIMS_EVIDENCE_LEDGER.md` |
+| Playbook | `/playbook`, `/playbook/[chapter]` | `(marketing)/playbook/**` | Ten original chapters, ungated; email capture deferred until delivery is live |
 | Application | `/apply` | `apply/application-form.tsx` | — |
-| Calculator | `/calculator` | `calculator/`, `domain/calculator.ts` | — |
+| Calculator | `/calculator` | `calculator/`, `domain/calculator.ts` | Footer link only; never projects revenue |
+| Auth | `/login`, `/forgot-password`, `/reset-password`, `/invite` | `(auth)/**`, `auth/tokens.ts` | Enumeration-safe, rate-limited; reset ends other sessions |
+| Metadata | `/sitemap.xml`, `/robots.txt`, `/opengraph-image`, `/icon.svg` | `app/sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, `icon.svg` | — |
 
 ---
 
 ## 11. Integrations
 
-Registry: `src/lib/integrations/registry.ts`. Adapter: `src/lib/integrations/adapter.ts`.
+Registry: `src/lib/integrations/registry.ts` (what the code can do). Capability state:
+`src/lib/domain/integration-capability.ts` (what is true for this workspace right now: auth
+status `none | connected | expired | revoked | error`, publish / analytics / research capability,
+review status, health `not_connected | healthy | degraded | blocked | broken`, reconnect flag).
+Connectors: `src/lib/integrations/connectors/{linkedin,youtube,meta,tiktok,x}.ts`. OAuth with
+PKCE and state: `oauth.ts`. Encrypted credentials: `credentials.ts` + `security/secret-box.ts`.
+Webhooks: `webhooks.ts`.
 
-| Provider | State | Needs | Manual fallback |
+The registry's `implementation` field still reads `adapter_only` for the platforms below; that
+word now means "the code path is complete and the gate is external", not "returns unavailable by
+construction". What a person sees is the capability reading, which is never inferred from
+configuration (ADR-024).
+
+| Provider | Code | Gate | Manual fallback (always available) |
 |---|---|---|---|
 | Booking link | **available** | Nothing | n/a |
-| YouTube | adapter_only | Google Cloud project, verified OAuth consent | Upload in Studio, paste the URL |
-| LinkedIn | adapter_only | Approved Marketing Developer Platform app | Post manually, paste the URL |
-| Instagram | adapter_only | Meta app + App Review | Publish in-app, paste the URL |
-| TikTok | adapter_only | Approved Content Posting API | Publish in-app, paste the URL |
-| X | adapter_only | Paid API tier credentials | Post manually, paste the URL |
-| Stripe | adapter_only | Restricted API key | Record closed value manually |
-| HubSpot / GoHighLevel | adapter_only | Private app token / location key | Add pipeline records manually |
-| Google Drive / Dropbox | manual_only | Per-workspace OAuth | Paste shareable links |
-| Web analytics | manual_only | Provider-specific | Tracked links + pipeline records |
+| LinkedIn | Connector: auth, `ugcPosts` publish, status, metrics; thread of posts | Client credentials; member analytics need Community Management review (§16h) | Post manually, paste the URL |
+| YouTube | Connector: auth, upload, status, metrics | Client credentials; OAuth verification for the sensitive scope; quota extension | Upload in Studio, paste the URL |
+| Instagram | Connector (`meta.ts`): auth, publish, status, insights | Meta Business Verification + App Review | Publish in-app, paste the URL |
+| TikTok | Connector: auth, direct post, status, metrics; refuses to publish while `TIKTOK_APP_AUDITED=false` | Content Posting audit | Publish in-app, paste the URL |
+| X | Connector: auth, post and thread, status, metrics | Paid API tier credentials | Post manually, paste the URL |
+| Stripe | Inbound webhook → `CommercialEvent` (payment provenance) | Per-workspace signing secret | Record closed value manually |
+| HubSpot / Pipedrive / Attio / GoHighLevel | Inbound webhook → `CommercialEvent` (crm provenance) | Per-workspace secret | Add pipeline records manually |
+| Google Drive / Dropbox | manual_only | — | Paste shareable links |
+| Web analytics | manual_only | — | Tracked links + pipeline records |
 
-**Next step for any of them:** implement `connect()` / `publish()` / `fetchMetrics()` on a subclass
-of the adapter, and add encrypted credential storage — the product deliberately stores no secrets.
+**What is left for any connector:** obtain the client credentials, complete the platform review
+where one exists (`docs/PLATFORM_APPLICATIONS.md`), set `CREDENTIAL_ENCRYPTION_KEYS`, and run the
+OAuth flow from the workspace's integrations page. No code change is expected; if one is needed
+it belongs in the connector file and its test. The platform safety doctrine in §16i governs what
+a connector may ever do.
 
 ### Intelligence collection
 
@@ -579,14 +690,59 @@ and that text appears in the published brief.
     never implies otherwise.
 17. **More content is not the default answer.** The constraint diagnosis exists so the operator has
     to argue for it. Five of the nine dimensions are made worse by volume, and the product says so.
+18. **Exact pricing is not on the public website** (owner decision, 2026-09-09). The commercial
+    terms in §16b are unchanged and remain the internal source of truth; they are discussed in the
+    qualified sales process, not published. Public copy never uses "starting from £X", fake
+    discounts, scarcity or urgency. Recorded as DEC-017 in `docs/site/DECISIONS_LOG.md`.
+19. **Automate publishing through official rails; never automate human social behaviour.** The
+    full doctrine is §16i. No browser bots, no session-token automation, no engagement
+    automation, no evasion of platform controls — in any connector, script or recommendation.
+20. **Geography is earned, not spoofed** (2026-09-09). Any earlier recommendation to use a stable
+    US SIM/eSIM plus a VPN to influence organic recommendation geography is retired and must not
+    be built or advised. Reach a US audience with US buyer problems, US market terminology and
+    examples, genuine US relationships and collaborations, appropriate posting windows,
+    audience-geography measurement, and legitimate paid geo-targeting later where commercially
+    justified. No Markdown document in this repository carries the retired advice as of
+    2026-09-09; it exists in older external resource documents and must not be reintroduced from
+    them. Recorded as DEC-019.
+21. **Cadence is prescribed, not promised.** Posting frequency is derived from platform, account
+    maturity, quality, audience tolerance, native and API constraints, commercial evidence and
+    founder/delivery load (§16f). No legacy frequency is a customer promise.
+22. **Threadline is not a video production company and not a platform buffet.** The platform mix
+    is a prescription after diagnosis; LinkedIn is an anchor hypothesis for the expert-led B2B
+    wedge, not universal strategy (§16b, "Positioning guardrails").
 
 ---
 
 ## 14. Testing
 
 ```bash
-npm test          # 403 tests, 94 suites
+npm test          # 625 tests, 154 suites, 0 failures (41 *.test.ts files under src/, verified 2026-09-09)
 ```
+
+The suites added in the 2026-09-07 to 2026-09-09 passes:
+
+| Suite | File | Covers |
+|---|---|---|
+| Email | `src/lib/email/email.test.ts` | Capture and Resend providers, templates, `EmailMessage` logging, no secret beyond a single-use link in a body |
+| Tokens | `src/lib/auth/tokens.test.ts` | Hashed single-use tokens, expiry, supersession, enumeration-safe reset and invite flows |
+| Jobs | `src/lib/jobs/jobs.test.ts` | Enqueue idempotency, retry/backoff/dead state, two-worker claim, stale-lease recovery, missing handler |
+| Storage | `src/lib/storage/storage.test.ts` | Local, memory and S3 adapters; tenant-scoped keys; traversal refused; half-configured S3 refused |
+| Rate limit | `src/lib/security/rate-limit.test.ts` | Memory and Redis-REST stores; fails closed when required and unreachable |
+| Safe path / secret box | `src/lib/security/safe-path.test.ts`, `secret-box.test.ts` | Open-redirect guard on login `next` and OAuth return; AES-256-GCM keyring and rotation |
+| OAuth | `src/lib/integrations/oauth.test.ts` | State, PKCE, return-path validation |
+| Connectors | `src/lib/integrations/connectors/connectors.test.ts` | Five platforms through a mocked HTTP boundary: scopes, request shapes, publish/status/metrics parsing, error and rate-limit mapping, TikTok unaudited refusal |
+| Webhooks | `src/lib/integrations/webhooks.test.ts` | Signature verification per provider, idempotency, mapping to `CommercialEvent` with no invented attribution |
+| Analytics normaliser | `src/lib/analytics/normalise.test.ts` | Five field states, provenance, duplicate-ingestion refusal, freshness |
+| Research providers | `src/lib/research/providers.test.ts` | SSRF, login-wall refusal by name, prompt-injection quarantine, truthful provider health |
+| Corpus enrichment | `src/lib/integrations/corpus-enrich.test.ts` | Descriptive vs metric provenance on corpus rows |
+| Attribution status | `src/lib/domain/attribution-status.test.ts` | Rev-share eligibility and status transitions; pool computed only from confirmed + agreed + collected |
+| Intended job | `src/lib/domain/intended-job.test.ts` | Discovery / authority / conversion classification; text-led routing; `readGap` respects the job |
+| Content learning / diagnosis | `src/lib/data/content-learning.test.ts`, `domain/content-diagnosis.test.ts`, `domain/learning-velocity.test.ts` | Expectation freezing, gap reading, cold-start baseline ladder, write-once verdicts |
+| Corpus, Judge, capability | `domain/corpus.test.ts`, `domain/judge.test.ts`, `domain/integration-capability.test.ts` | Banding against own median, gating criteria and `calibrated: false`, capability reading never inferred from configuration |
+| Service period, SOP, tracked link, acquisition | `domain/service-period.test.ts`, `domain/sop.test.ts`, `domain/tracked-link.test.ts`, `data/acquisition.test.ts`, `data/attribution.test.ts`, `domain/attribution.test.ts` | Thirteen periods a year, checklist gates, destination validation, counted funnel, three attribution models that never raise an evidence class |
+
+The founding suites:
 
 | Suite | File | Covers |
 |---|---|---|
@@ -629,18 +785,21 @@ outcome, text-led). Synthetic tenants use `qa-*` slugs and `@example.test` email
 on exit.
 
 ```bash
-npm run qa:all       # 495 checks, master matrix, non-zero exit on FAIL
+npm run qa:all       # 494 checks, master matrix, non-zero exit on FAIL
 npm run qa:spine     # the three synthetic engagements only (--keep to inspect)
-npm run qa:perf      # 20-client performance smoke
+npm run qa:perf      # 20-client performance smoke, five workspaces populated with realistic rows
 npm run build && npm start   # then, in another shell:
-npm run qa:browser   # headless Chrome (CDP, no deps): 33 routes × 1440/1024/768/390, a11y, runtime errors
+npm run qa:browser   # headless Chrome (CDP, no deps): 33 app/admin routes × 1440/1024/768/390, a11y, runtime errors
+npm run qa:public    # 11 public routes × 20 widths (1920 → 320), metadata, reduced motion, claim/brand-leak/cadence greps, application submit
+npm run qa:visual    # 30 baseline captures + geometry into qa-baselines/public/; qa:visual:compare diffs against them
+npm run verify:features   # feature-level assertions against the seeded database
 ```
 
-Run the browser sweep against a production build; the dev server's HMR races produce spurious 500s
-under concurrent navigation.
+Results on 2026-09-09 are in §20. Run the browser, public and visual sweeps against a production
+build; the dev server's HMR races produce spurious 500s under concurrent navigation.
 
-**Still manual**: teleprompter scrolling and full-screen, drag interactions, and print output of the
-weekly report.
+**Still manual**: teleprompter scrolling and full-screen, drag interactions, print output of the
+weekly report, and the founder walkthrough in `docs/QA_REPORT.md` ("Founder manual QA").
 
 ---
 
@@ -652,8 +811,10 @@ weekly report.
 | Low | Weekly report "export" is browser print (print styles are implemented). No server-side PDF. |
 | Low | Rate limiting is per-instance by default (`RATE_LIMIT_STORE=memory`); set `RATE_LIMIT_STORE=redis` with an Upstash-compatible endpoint to share it across instances. It fails closed if the store is unreachable. |
 | Low | Global search is substring-based. Adequate at v1 volume; swap for full-text on Postgres. |
-| Low | Email is captured, not delivered, until `EMAIL_PROVIDER=resend` is configured; invitations show the link directly in that state. |
-| Info | On Windows, the dev server must be stopped before `npm run build` (Prisma engine file lock). |
+| Low | Email is captured, not delivered, until `EMAIL_PROVIDER=resend` is configured; invitations and resets show the link directly in that state. Not a defect; the gate is a credential. |
+| Low | `qa:browser` reports 21 PARTIAL: inline text links inside dense operator tables sit under the 24px WCAG 2.5.8 minimum at 390px on 20 routes (rows stay reachable), and the pipeline table at 1024px scrolls inside its own container by design. Tracked as P3 polish. |
+| Low | The public site's pricing line (`C-PRICE`) is being removed under DEC-017 by the concurrent public-site pass; until that lands, `src/content/public-site.ts` still carries it. Verify with a grep for `2,500` before publishing. |
+| Info | On Windows, the dev server must be stopped before `npm run build` (Prisma engine file lock). Another process holding port 3000 also blocks `npm start` for the browser sweeps. |
 | Info | Seeded library assets have no `storagePath` — they are metadata records, so no download link renders for them. Files uploaded through the UI work normally. |
 | Low | The URL reader extracts text with regex rather than a parser. Adequate for reading article text into evidence a human then reads; it is not a faithful renderer, and a JavaScript-rendered page returns nothing and says so. |
 | Low | Proof observables are recomputed on every page load (a handful of counting queries). Correct by design (ADR-007) and cheap at this volume; memoise if a workspace ever gets large. |
@@ -663,8 +824,12 @@ weekly report.
 
 ## 16. Future backlog
 
-See `FUTURE_BACKLOG.md`. Top items: LinkedIn publishing (needs platform approval), automatic
-metric import, email delivery, password reset, automated competitor ingestion.
+See `FUTURE_BACKLOG.md`. As of 2026-09-09 the top of the old list — LinkedIn publishing, automatic
+metric import, email delivery, password reset, competitor ingestion, background jobs, object
+storage, shared rate limiting — is **built** and sits behind external gates (credentials, platform
+reviews) rather than engineering. What remains genuinely open: payments/billing, semantic search,
+the AI Brand Brain interview, real-time script collaboration, server-side PDF, drag-and-drop,
+playbook email capture (after delivery is live), and the items that only client #1 can earn.
 
 ---
 
@@ -688,6 +853,21 @@ comparison against something genuinely monthly is wanted. Threadline's own book-
 
 `Organization.packageTier` predates this and is internal configuration, not a public price list —
 there is no tiered pricing UI anywhere and none should be added.
+
+**Public visibility (locked 2026-09-09, DEC-017).** The figures above are internal truth and are
+discussed during the qualified sales process. They are **not** published on the public website.
+Public copy must not carry "starting from £X", fake discounts, scarcity or urgency. The claims
+ledger row `C-PRICE` stays VERIFIED as an internal fact and is marked not permitted for public use.
+Change the numbers here first if they ever change; nothing downstream may disagree with this
+section.
+
+**Positioning guardrails (locked 2026-09-09, DEC-021).** Threadline is not a video production
+company and not a platform buffet. It runs a low-friction founder authority and qualified-demand
+system around what the client already knows. Video leads where it adds information or trust;
+otherwise the work is text-native and platform-prescribed. The platform mix is a prescription that
+follows diagnosis, never the headline offer. LinkedIn may be an anchor hypothesis for the
+expert-led B2B wedge; it is not hard-coded as universal strategy, and no channel is doctrine in
+the code (§16c).
 
 **Niche.** "Expert-led B2B" is the **umbrella category, not a validated niche.** The operating
 method is one active wedge and one validated expensive problem at a time.
@@ -810,11 +990,14 @@ qualification. Client delivery and measurement health sit alongside rather than 
 
 ### Results and attribution
 
-Architected, not built out. `Inquiry` gained an attribution class, an evidence basis and an
-evidence source (§5j of DATA_MODEL). `resultsAlerts()` checks whether each client's measurement
-can support any claim at all — baseline present, live URLs recorded, attribution stronger than
-correlation — before anybody interprets a number. There is no analytics platform here and no
-attribution provider integration; both remain backlog behind the Integration Decision Gate.
+HISTORICAL (2026-09-06): at this point attribution was architected, not built out. `Inquiry`
+gained an attribution class, an evidence basis and an evidence source (§5j of DATA_MODEL), and
+`resultsAlerts()` checked whether each client's measurement could support any claim at all —
+baseline present, live URLs recorded, attribution stronger than correlation — before anybody
+interpreted a number. Attribution v1.5 (§16d) built the tracked-link and touchpoint layer the same
+day; CRM and payment webhooks (2026-09-09) added inbound evidence. There is still no analytics
+platform and no third-party attribution provider; both remain behind the Integration Decision
+Gate.
 
 ---
 
@@ -864,11 +1047,18 @@ content asset -> tracked touchpoint -> visitor -> commercial event -> value -> w
 
 ### What was deliberately not built
 
-No third-party connectors, no ad attribution, no fingerprinting or identity graph, no ML or
-weighted attribution, no analytics warehouse or BI builder, no heatmaps or session replay, no lead
-scoring, no public API, no CRM. Trakyo and equivalents remain optional future infrastructure behind
-the Integration Decision Gate — the normalised boundary they would feed is `CommercialEvent`, whose
-`source`, `externalProvider` and `externalRecordId` columns already describe an imported event.
+No ad attribution, no fingerprinting or identity graph, no ML or weighted attribution, no
+analytics warehouse or BI builder, no heatmaps or session replay, no lead scoring, no public API,
+no CRM. Trakyo and equivalents remain optional future infrastructure behind the Integration
+Decision Gate — the normalised boundary they would feed is `CommercialEvent`, whose `source`,
+`externalProvider` and `externalRecordId` columns already describe an imported event.
+
+Since 2026-09-09 that boundary is fed by signature-verified inbound webhooks from Stripe, HubSpot,
+Pipedrive, Attio and GoHighLevel (`src/lib/integrations/webhooks.ts`). They record events with
+`crm` / `payment` provenance and never set an attribution class; the rule that arithmetic cannot
+raise evidence is unchanged. Rev-share-ready fields (`cashCollectedMinor`,
+`attributableRevenueMinor`, eligibility and status with history) exist so performance pricing can
+be computed from confirmed, agreed and collected value only; no billing is built.
 
 ### External CRM
 
@@ -962,6 +1152,17 @@ transformation advisories, US and UK — starts at `immersion` with **zero** con
 for a hypothesis that has none. The cost of changing wedge is exactly this, and a system that
 hides it is not worth having.
 
+### Content cadence doctrine (locked 2026-09-09, DEC-020)
+
+Billing cadence is four weeks; content cadence is a different question and is **prescribed, not
+promised**. Posting frequency for a client is determined by platform, account maturity, quality,
+audience tolerance, native and API constraints, commercial evidence and founder/delivery load. No
+extreme legacy posting frequency from earlier resource documents is a customer promise; those
+figures may survive only as historical or internal hypotheses, labelled as such. One root idea
+(`ContentRoot`) may produce several native expressions; derivatives are not new root ideas and are
+not counted as such. Frequency is increased only where quality, buyer relevance and commercial
+signal remain intact, and the constraint diagnosis (§13.17) still has to argue for it.
+
 ---
 
 ## 16g. The research corpus and Judge V0 (2026-09-07)
@@ -1037,6 +1238,85 @@ order are in `docs/PLATFORM_APPLICATIONS.md`. The three facts that change what g
 
 Manual ingestion stays the permanent fallback rather than a stopgap, because for the first several
 months it is the only path there is.
+
+Since 2026-09-09 the connectors exist for all five platforms and the application clocks are the
+only thing between them and live publishing. Everything a connector does is bounded by §16i.
+
+---
+
+## 16i. Platform safety doctrine (locked 2026-09-09, DEC-018)
+
+> **Automate publishing through official rails. Do not automate human social behaviour.**
+
+Four action classes, and the only ones any connector, job, script or recommendation may belong to:
+
+| Class | What it means | How it is done |
+|---|---|---|
+| **PUBLISH** | Putting approved content on a platform | Official or authorised APIs, or supported providers. OAuth with scoped, revocable permissions. |
+| **ANALYTICS** | Reading how published content performed | Official or authorised APIs only. Where a scope is not granted the metric reads `unavailable`, never an estimate. |
+| **RESEARCH** | Reading the market | Permitted public and provider sources. No authenticated scraping, no access bypass, no login-wall circumvention. Login-walled platforms are refused by name. |
+| **ENGAGEMENT** | Replies, comments, DMs, follows, likes, connection requests | **Human by default.** The product may draft and queue for a person; it does not perform social behaviour on a person's behalf. |
+
+**Never**, in any form, in any client's name or ours: browser bots; Selenium, Playwright or any
+driver operating a social platform; cookie or session-token automation; storing a client's social
+password; auto-like; engagement pods; follow/unfollow automation; connection farming; bulk
+unsolicited replies, DMs or comments; recommendation or location manipulation; evasion of rate
+limits, app review or platform restrictions. The retired SIM/eSIM + VPN idea (§13.20) falls under
+the last two.
+
+**Mechanics that follow from it.** OAuth with scoped, revocable permissions is the only way a
+credential enters the system. Secrets are encrypted at rest (`CREDENTIAL_ENCRYPTION_KEYS`, AES-256-GCM
+keyring) and Threadline refuses to store a token it cannot encrypt; this must be in place before
+any real production credential exists. Every connector action records provenance: platform,
+account, content item, provider, action, timestamp, authorisation state, error state and rate
+state (`Integration` capability fields, `PublishRecord`, `PerformanceSnapshot` provenance,
+`WebhookEvent`). An unaudited or unauthorised connection refuses rather than pretends (§16h.2).
+
+**Where it is enforced today.** `assertCanPublish` in `src/lib/domain/integration-capability.ts`;
+`fetch-url.ts` SSRF and login-wall guards; the research providers' quarantine; the absence of any
+engagement action in `src/lib/actions/`. A test that asserts no channel is hard-coded already
+exists; a change that adds any item from the "never" list is a doctrine breach, not a feature.
+
+Cross-referenced in `docs/PLATFORM_APPLICATIONS.md`, which governs the application clocks.
+
+---
+
+## 16j. Public site direction (2026-09-09, the restraint pass — implemented)
+
+The morning rebuild shipped the light "Authority Factory" system (tag
+`threadline-public-baseline-2026-09-09`). The owner judged it visually tacky: hard offset shadows
+and 1.5px outlines on everything, fourteen stick-figure characters on one page, a literal cartoon
+factory, thirty-plus outlined chips, five accent colours in one drawing, rotated stamps. The
+diagnosis is in `docs/design/VISUAL_DIAGNOSIS_2026-09-09.md`.
+
+The afternoon pass (tag `threadline-public-restraint-2026-09-09`) kept the concept, the copy, the
+sections and their order, and changed the execution toward roughly **70% premium editorial, 20%
+interactive system visualisation, 10% playful character**:
+
+- Paper on linen with 1px hairlines; no offset shadows; pills for buttons; one accent per section;
+  the Fraunces display lighter (weight 450) and the measured reference type scale
+  (`clamp(2rem, 4.2vw, 3.5rem)` for section titles).
+- The factory drawn as a system (`src/components/factory/schematic.tsx`: thread, nodes, spool,
+  fork, cut, route, pulse, loop, inspection mark) instead of monitors, crates and belts. Two figures
+  remain (Founder, Buyer).
+- Three components built by **component-first clean-room reconstruction** — reference component
+  captured and measured → clean-room clone with neutral placeholders → verified against the
+  measurements → frozen → duplicated and mutated into Threadline
+  (`docs/design/COMPONENT_RECONSTRUCTION.md`, `reference-analysis/clones/*`): the hero panel
+  (Birdhouse hero), the symptom selector around the four existing problem points (Hydra "The
+  diagnosis"), and the service-period cards (Hydra "Where to start").
+- Exact pricing removed from the footer and the how-it-works CTA (DEC-017); `qa:public` now fails
+  on any price string and on Hydra/Birdhouse brand terms.
+- Pre-pass baselines preserved in `qa-baselines/public-pre-restraint-2026-09-09/`; the new
+  baseline is `qa-baselines/public/`.
+
+Content preservation report, pricing audit and the owner proposals that were **not** implemented
+(FAQ section, calculator link wording, H1 highlight, list rendering) are in
+`docs/design/PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md`. Design source of truth:
+`docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md` and `design-system/threadline-design-dna.json`
+(v2.0.0). The rules that do not move: no pricing (DEC-017), no "monthly", no AI-led positioning,
+no invented proof, every claim in the ledger, one primary CTA per viewport, `forbidden-to-copy.md`
+enforced by `qa:public`.
 
 ---
 
@@ -1114,6 +1394,15 @@ months it is the only path there is.
     evidenced, revenue-per-asset is withheld with the reason shown.
 31. **Synthetic never becomes proof.** `assertNotSyntheticProof` guards it, portfolio aggregates
     exclude it, and the banner is not decorative.
+33. **No connector, job or script automates human social behaviour.** Publish, analytics and
+    research go through official rails with scoped OAuth; engagement is a person. Nothing from the
+    "never" list in §16i may enter the codebase, and no credential is stored unencrypted.
+34. **Pricing stays off the public site.** `C-PRICE` is internal truth (§16b); `qa:public` and the
+    claims ledger are where a reintroduction would be caught. No "from £X", discounts, scarcity or
+    urgency in public copy.
+35. **Tokens are single-use and hashed; webhooks are verified before they are parsed.** An
+    unverified delivery is stored and never acted on; a reset token is consumed by a conditional
+    update. The tests in `tokens.test.ts` and `webhooks.test.ts` guard both.
 
 ---
 
@@ -1135,32 +1424,84 @@ The engine now exists to make that work legible rather than remembered. Use it:
    conversations to become eligible for a validation decision, with more than five of them
    converging on the same expensive recurring problem. Five is a checkpoint that reports, not a
    gate that opens. The gate will not let commercial testing start before that, which is the point.
-2. **Set the acquisition target and work the quota.** The arithmetic will tell you how much
+3. **Set the acquisition target and work the quota.** The arithmetic will tell you how much
    activity the target implies, and refuse to guess when it cannot.
-3. **Run the Friday review.** Freeze the counts, change one variable, write down what you expect.
-4. **Sell.** Diagnose, do not pitch. A legitimate no-fit is a correct outcome.
-5. **Client #1**, then document what was actually identical and what was configured.
+4. **Run the Friday review.** Freeze the counts, change one variable, write down what you expect.
+5. **Sell.** Diagnose, do not pitch. A legitimate no-fit is a correct outcome.
+6. **Client #1**, then document what was actually identical and what was configured.
 
 Only after that does more building earn its place.
 
-### The short technical list, when building is warranted again
+### The short technical list (2026-09-09)
 
-1. **Breakpoint QA at 1024 / 768 / 390px**, plus a browser confirmation of the checklist save and
-   the call outcome form (see §20). This is the one gap in the verification record.
-2. **Set `SEED_DEMO_PASSWORD`** before the demo is shown anywhere shared.
-3. **Email delivery**, then **password reset** (backlog #3, #4).
-4. **LinkedIn publishing** — the self-serve product needs no approval and can be built now;
-   the Community Management application for member analytics is the long pole and should already
-   be filed (`docs/PLATFORM_APPLICATIONS.md`).
-5. **Encrypted credential storage** — prerequisite for every real integration.
-6. **Background jobs** for scheduled report generation and metric refresh.
-7. **Object storage adapter** before any multi-instance deploy.
+Everything on the previous version of this list — breakpoint QA, email delivery, password reset,
+LinkedIn publishing code, encrypted credential storage, background jobs, the object storage
+adapter — is built and verified (§20). What is left is not engineering:
 
-Everything else stays in `FUTURE_BACKLOG.md` until real use earns it.
+**External gates (someone else's clock)**
+
+1. Client credentials for LinkedIn, YouTube, Instagram, TikTok and X (`*_CLIENT_ID/SECRET`), then
+   the reviews: Meta Business Verification + App Review, TikTok Content Posting audit, Google OAuth
+   verification and quota extension, LinkedIn Community Management (Development then Standard),
+   X API tier. File in the order in `docs/PLATFORM_APPLICATIONS.md`.
+2. Live provider data for analytics; real client outcomes for proof and Judge calibration.
+
+**Founder inputs (this side of the fence)**
+
+3. Production domain in `NEXT_PUBLIC_APP_URL` (also fixes canonical URLs, sitemap and OG).
+4. Legal pages (privacy notice, terms); the footer links the "What we do not promise" chapter
+   until they exist.
+5. Approve or replace the canonical script blocks in `/admin/scripts`.
+6. Email provider (`EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM`) and a sending domain.
+7. Booking URL (`NEXT_PUBLIC_BOOKING_URL`).
+8. `SEED_DEMO_PASSWORD` and `CREDENTIAL_ENCRYPTION_KEYS` before anything is shown or connected
+   anywhere shared.
+9. Twenty minutes on the founder manual QA list in `docs/QA_REPORT.md` (teleprompter, print,
+   checklist tick and call outcome in a real browser).
+
+**Then client #1.** Payments/billing, semantic search, the Brand Brain interview, real-time
+collaboration, server-side PDF, drag-and-drop and playbook email capture stay in
+`FUTURE_BACKLOG.md` until real use earns them.
 
 ---
 
 ## 19. Changelog
+
+### Session 8 — documentation reconciliation and owner doctrine (2026-09-09)
+
+No code. Every Markdown/JSON document was brought to one current state as of commit `5a08f25`:
+stale counts (models, migrations, tests, QA checks), stale "not built" and "adapter_only" claims,
+and the old "next steps" list were rewritten rather than annotated; history that explains a
+decision was kept and labelled HISTORICAL. Six owner decisions recorded (DEC-017 to DEC-022):
+public pricing visibility, platform safety doctrine, retirement of the SIM/eSIM + VPN idea,
+content cadence doctrine, offer direction and the in-progress public-site visual direction.
+
+### Session 7 — completion pass and public experience rebuild (2026-09-08 / 09)
+
+Baseline tag before: `threadline-pre-public-experience-rebuild-2026-09-09`; after:
+`threadline-public-baseline-2026-09-09`. Full disposition of 59 findings in
+`docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md` (28 fixed this pass, 11 already fixed, 2
+superseded, 13 deliberate non-features, 2 pure external gates, 3 founder inputs, 0 still broken).
+
+- **Infrastructure, all tested to a mocked boundary:** email (capture + Resend), invitations and
+  password reset with single-use hashed tokens, durable jobs with a worker, S3-compatible storage,
+  shared rate limit that fails closed, connectors for five platforms, analytics ingestion with
+  five field states, `ResearchProvider` with injection quarantine, signature-verified CRM/payment
+  webhooks, rev-share-ready attribution fields. AES-256-GCM credential keyring and OAuth/PKCE had
+  landed on 2026-09-08 (migration `20260909120000`).
+- **Product gaps:** weekly-report learning sections 07–12, cold-start baselines from the corpus
+  ladder, text-led workflow and the Threads platform, idempotent idea creation, commercial-event
+  dedupe, intended-job classification, organic/paid distribution mode, discovery economics,
+  canonical sales scripts with checksums and approval, proof permissions, the delivery-load view,
+  application → prospect.
+- **Public site:** rebuilt as the light "Authority Factory" system with a 10-chapter playbook,
+  metadata, skip link, 44px targets, claims ledger, brand source of truth, decisions log,
+  placeholders manifest; verified at 20 widths with 30 visual baselines.
+- **Migrations:** `20260909090000_content_lineage_learning_loop`,
+  `20260909120000_credentials_and_capability_state`,
+  `20260909130000_completion_pass_email_jobs_scripts_permissions_economics`.
+
+Counts moved to **77 models / 13 migrations / 65 pages + 3 route handlers / 625 tests**.
 
 ### Session 6 — cadence, the validation gate, the corpus and Judge V0 (2026-09-07)
 
@@ -1383,41 +1724,55 @@ contravariance, and role denials surfacing as error boundaries instead of explan
 
 ## 20. Last verified state
 
-Run on **2026-09-07** (the research corpus and Judge V0), from a clean re-seed.
+Measured fresh on **2026-09-09 (afternoon)** on the restraint-pass tree, tag
+`threadline-public-restraint-2026-09-09` (the same battery was also run on `5a08f25` /
+`threadline-public-baseline-2026-09-09` at the start of the pass with identical results). Full
+detail in `docs/QA_REPORT.md` (final section). Every number below comes from that run, not from an
+earlier session.
 
 | Gate | Command | Result |
 |---|---|---|
 | Typecheck | `npm run typecheck` | **PASS** — 0 errors, strict mode |
 | Lint | `npm run lint` | **PASS** — 0 errors, 0 warnings |
-| Tests | `npm test` | **PASS** — 451 tests, 107 suites, 0 failures |
-| Production build | `npm run build` | **PASS** — 60 routes, including the two research surfaces |
-| Migrations | `prisma migrate` | Valid — eight migrations, applied cleanly |
-| Seed | `npm run seed` | **PASS** — 4 organisations, 7 illustrative corpus rows, no residue from QA runs |
+| Tests | `npm test` | **PASS** — 625 tests, 154 suites, 0 failures (41 test files) |
+| Production build | `npm run build` | **PASS** — 65 pages + 3 route handlers |
+| Verify | `npm run verify`, `npm run verify:features` | **PASS** |
+| Migrations | `npx prisma migrate status` | Up to date — 13 migrations; clean-database `migrate deploy` + seed verified on a temporary SQLite file |
+| Adversarial harness | `npm run qa:all` | **494 checks: 485 PASS · 2 PASS WITH EXTERNAL GATE · 4 PARTIAL · 0 FAIL · 3 N/A** |
+| Synthetic engagements | `npm run qa:spine` | Three engagements (happy, bad outcome, text-led): 0 FAIL |
+| Performance | `npm run qa:perf` | 9/9 — 20 clients, five populated with 60 pieces each |
+| Browser (prod build) | `npm run qa:browser` | **122 checks: 101 PASS · 21 PARTIAL · 0 FAIL** — 33 app/admin routes × 1440/1024/768/390; partials are 24px target-size notes in dense tables plus one by-design inner scroller |
+| Public (prod build) | `npm run qa:public` | **62/62 PASS** — 11 public routes × 20 widths (1920 → 320); the sweep now also fails on any price string (DEC-017) and on Hydra/Birdhouse brand terms |
+| Visual baselines | `npm run qa:visual` | 30 captures in `qa-baselines/public/` + `geometry.json` (the restraint-pass site); the pre-pass site is kept in `qa-baselines/public-pre-restraint-2026-09-09/` |
+| Clone verification | `npx tsx reference-analysis/tools/verify-clone.ts <site> <clone>` | three frozen clones verified against their reference measurements (`reference-analysis/clones/*/verify/report.json`) |
 
-64 models. Manual verification is recorded per-test in `docs/ACCEPTANCE_TESTS.md` sections P–AG.
+77 models, 0 DB enums. Schema: `prisma/schema.prisma`. Manual verification is recorded per-test in
+`docs/ACCEPTANCE_TESTS.md` (sections A–AG and CP1–CP18).
 
-**Browser QA did not run this session.** The corpus and calibration surfaces have been verified by
-typecheck, lint, unit tests, a production build and an end-to-end script against the real database
-— banding, the corpus reading and calibration's refusal on illustrative-only data were all
-confirmed by running them — but nobody has opened either page in a browser. That is acceptance
-test AG23, and it is open.
+The four `qa:all` PARTIALs are assessed and none is material: duplicate-deal dedupe with no
+visitor is now enforced at write time so the read has nothing to de-duplicate; decimal scores are
+valid input; print/export is browser print by design; the synthetic bad-week report shows the miss
+but not the learning because the harness stamps the diagnosis after that week (clock artefact).
 
-Previous run: 2026-09-06 (attribution v1.5) — 403 tests, 94 suites, 55 pages, six migrations. The
-outstanding browser gaps from that session, recorded below, are still outstanding.
-
-**Browser QA in this session was partial, and the gap is specific.** The market, prospects,
-acquisition and cockpit surfaces were opened in real Chrome, signed in through the real form, and
-verified visually with no console errors; the interview sample gate and the session-loop fix were
-exercised end to end. Part way through, the browser tab began reporting `document.hidden === true`
-and returning zero-size layout rectangles — the window was no longer visible to the renderer — and
-from that point neither real nor synthetic clicks reached React. **The checklist save path and the
-call outcome form were therefore not confirmed in a browser.** Their rules are covered by unit
-tests (`resolveCheck`, `assertCallOutcome`), but a person should tick a box and record a call
-outcome once before this is called done.
+**Git:** commits on `master` (recent: the restraint pass, `5a08f25` final verification pass,
+`275c562` public experience rebuild, `ab9bc71` completion pass, `8354171` infrastructure, `2be88a9`
+baseline). Three tags: `threadline-pre-public-experience-rebuild-2026-09-09` (rollback to before
+the rebuild), `threadline-public-baseline-2026-09-09` (the morning rebuild; rollback to before the
+restraint pass) and `threadline-public-restraint-2026-09-09` (current). The `main` branch named in
+tooling does not yet exist locally; work is on `master`.
 
 **Note on `npm run db:reset`:** Prisma refuses this command from an AI agent without explicit
 human consent, which is correct behaviour. Use `npm run seed` instead — it is idempotent and
 rebuilds the demo organisations in place.
 
-Git: repository initialised locally; no commits made (the working tree holds the full
-implementation). Commit hash: n/a.
+### HISTORICAL — earlier verification runs
+
+- **2026-09-07** (corpus and Judge V0): 451 tests / 107 suites, 60 routes, eight migrations,
+  64 models. Browser QA did not run; the corpus and calibration surfaces were verified by script
+  only (acceptance test AG23). Closed on 2026-09-09 by the production browser sweep.
+- **2026-09-06** (attribution v1.5): 403 tests / 94 suites, 55 pages, six migrations. Browser QA
+  was partial — the tab stopped receiving clicks part way through, so the checklist save and call
+  outcome form were not confirmed in a browser. Both were later exercised in-process by the sales
+  block of `qa:all`; a human click on each remains on the founder manual QA list.
+- Earlier: 2026-09-06 (337 tests, 54 routes), 2026-09-04 (263 tests, 49 routes), 2026-09-03
+  (188 tests, 47 routes), 2026-09-02 (74 tests, 43 routes).

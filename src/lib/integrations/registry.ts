@@ -6,9 +6,13 @@
  * `implementation` is the field that matters:
  *   - `available`   the integration genuinely works with the configuration the
  *                   UI collects, and requires no credentials we cannot obtain.
- *   - `adapter_only` the adapter interface and configuration surface exist, but
- *                   completing the connection requires platform credentials or
- *                   API approval we do not have. The UI must say so plainly.
+ *   - `adapter_only` the connector code exists (src/lib/integrations/connectors:
+ *                   auth config, publish/status/metrics, error mapping, tested
+ *                   to a mocked boundary), but completing the connection needs
+ *                   platform credentials and/or app review we do not yet have.
+ *                   The connector reports a truthful capability state
+ *                   (credentials missing / auth required / reconnect) and the
+ *                   UI must say so plainly. Nothing is simulated.
  *   - `manual_only` no API path in v1. A working manual workflow is provided.
  *
  * Rule enforced across the product: nothing renders a "Connect" button that

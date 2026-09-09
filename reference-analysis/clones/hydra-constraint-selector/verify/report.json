@@ -1,0 +1,1778 @@
+{
+  "site": "hydra",
+  "name": "hydra-constraint-selector",
+  "verifiedAt": "2026-09-09T14:00:24.742Z",
+  "tolerancePx": 4,
+  "widths": [
+    {
+      "width": 1440,
+      "rootDelta": {
+        "dw": 0,
+        "dh": 0
+      },
+      "compared": 31,
+      "pass": 24,
+      "worst": 193,
+      "styleMismatch": 6,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "p",
+          "text": "The diagnosis",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/1",
+          "tag": "h2",
+          "text": "Every service business has exa",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/1/0",
+          "tag": "em",
+          "text": "one constraint",
+          "geom": {
+            "dx": -193,
+            "dy": 0,
+            "dw": 16,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/2",
+          "tag": "p",
+          "text": "Your business runs in series. ",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3/0",
+          "tag": "button",
+          "text": "Acquisition",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": -9,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/0/0",
+          "tag": "span",
+          "text": "01",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3/1",
+          "tag": "button",
+          "text": "Conversion",
+          "geom": {
+            "dx": -9,
+            "dy": 0,
+            "dw": -11,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/1/0",
+          "tag": "span",
+          "text": "02",
+          "geom": {
+            "dx": -9,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/3/2",
+          "tag": "button",
+          "text": "Delivery",
+          "geom": {
+            "dx": -20,
+            "dy": 0,
+            "dw": 22,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/2/0",
+          "tag": "span",
+          "text": "03",
+          "geom": {
+            "dx": -20,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/3/3",
+          "tag": "button",
+          "text": "Margin",
+          "geom": {
+            "dx": 2,
+            "dy": 0,
+            "dw": 23,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/3/0",
+          "tag": "span",
+          "text": "04",
+          "geom": {
+            "dx": 2,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/4/0",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/0",
+          "tag": "p",
+          "text": "Constraint 02 / Conversion",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/1",
+          "tag": "p",
+          "text": "Enough conversations, too few ",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2",
+          "tag": "ul",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "gap": [
+              "normal",
+              "12px"
+            ]
+          }
+        },
+        {
+          "ref": "0/5/0/2/0",
+          "tag": "li",
+          "text": "Leads go quiet after the propo",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/0/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/1",
+          "tag": "li",
+          "text": "You discount to close and can'",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/1/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/2",
+          "tag": "li",
+          "text": "Only the founder can run a sal",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/2/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0/0",
+          "tag": "p",
+          "text": "What we change first",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0/1",
+          "tag": "p",
+          "text": "Rebuild the offer and pricing ",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/1",
+          "tag": "a",
+          "text": "Find out if this is yours →",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "rootDelta": {
+        "dw": 0,
+        "dh": -14
+      },
+      "compared": 31,
+      "pass": 12,
+      "worst": 148,
+      "styleMismatch": 6,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "p",
+          "text": "The diagnosis",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/1",
+          "tag": "h2",
+          "text": "Every service business has exa",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/1/0",
+          "tag": "em",
+          "text": "one constraint",
+          "geom": {
+            "dx": -148,
+            "dy": 0,
+            "dw": 12,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/2",
+          "tag": "p",
+          "text": "Your business runs in series. ",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3/0",
+          "tag": "button",
+          "text": "Acquisition",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": -9,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/0/0",
+          "tag": "span",
+          "text": "01",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3/1",
+          "tag": "button",
+          "text": "Conversion",
+          "geom": {
+            "dx": -9,
+            "dy": 1,
+            "dw": -11,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/1/0",
+          "tag": "span",
+          "text": "02",
+          "geom": {
+            "dx": -9,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/3/2",
+          "tag": "button",
+          "text": "Delivery",
+          "geom": {
+            "dx": -20,
+            "dy": 1,
+            "dw": 22,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/2/0",
+          "tag": "span",
+          "text": "03",
+          "geom": {
+            "dx": -20,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/3/3",
+          "tag": "button",
+          "text": "Margin",
+          "geom": {
+            "dx": 2,
+            "dy": 1,
+            "dw": 23,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/3/0",
+          "tag": "span",
+          "text": "04",
+          "geom": {
+            "dx": 2,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/4/0",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -14
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -14
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/0",
+          "tag": "p",
+          "text": "Constraint 02 / Conversion",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/1",
+          "tag": "p",
+          "text": "Enough conversations, too few ",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -22
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2",
+          "tag": "ul",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "gap": [
+              "normal",
+              "12px"
+            ]
+          }
+        },
+        {
+          "ref": "0/5/0/2/0",
+          "tag": "li",
+          "text": "Leads go quiet after the propo",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/0/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/1",
+          "tag": "li",
+          "text": "You discount to close and can'",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/1/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": -22,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/2",
+          "tag": "li",
+          "text": "Only the founder can run a sal",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/2/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -14
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0/0",
+          "tag": "p",
+          "text": "What we change first",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0/1",
+          "tag": "p",
+          "text": "Rebuild the offer and pricing ",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/1",
+          "tag": "a",
+          "text": "Find out if this is yours →",
+          "geom": {
+            "dx": 0,
+            "dy": -14,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "rootDelta": {
+        "dw": 0,
+        "dh": 0
+      },
+      "compared": 31,
+      "pass": 24,
+      "worst": 111,
+      "styleMismatch": 6,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "p",
+          "text": "The diagnosis",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/1",
+          "tag": "h2",
+          "text": "Every service business has exa",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/1/0",
+          "tag": "em",
+          "text": "one constraint",
+          "geom": {
+            "dx": -111,
+            "dy": 0,
+            "dw": 10,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/2",
+          "tag": "p",
+          "text": "Your business runs in series. ",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3/0",
+          "tag": "button",
+          "text": "Acquisition",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": -9,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/0/0",
+          "tag": "span",
+          "text": "01",
+          "geom": {
+            "dx": 0,
+            "dy": -2,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3/1",
+          "tag": "button",
+          "text": "Conversion",
+          "geom": {
+            "dx": -9,
+            "dy": 0,
+            "dw": -11,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/1/0",
+          "tag": "span",
+          "text": "02",
+          "geom": {
+            "dx": -9,
+            "dy": -2,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/3/2",
+          "tag": "button",
+          "text": "Delivery",
+          "geom": {
+            "dx": -20,
+            "dy": 0,
+            "dw": 22,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/2/0",
+          "tag": "span",
+          "text": "03",
+          "geom": {
+            "dx": -20,
+            "dy": -2,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/3/3",
+          "tag": "button",
+          "text": "Margin",
+          "geom": {
+            "dx": 2,
+            "dy": 0,
+            "dw": 23,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/3/0",
+          "tag": "span",
+          "text": "04",
+          "geom": {
+            "dx": 2,
+            "dy": -2,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/4",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/4/0",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/0",
+          "tag": "p",
+          "text": "Constraint 02 / Conversion",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/1",
+          "tag": "p",
+          "text": "Enough conversations, too few ",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2",
+          "tag": "ul",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "gap": [
+              "normal",
+              "12px"
+            ]
+          }
+        },
+        {
+          "ref": "0/5/0/2/0",
+          "tag": "li",
+          "text": "Leads go quiet after the propo",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/0/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/1",
+          "tag": "li",
+          "text": "You discount to close and can'",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/1/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/2",
+          "tag": "li",
+          "text": "Only the founder can run a sal",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/2/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0/0",
+          "tag": "p",
+          "text": "What we change first",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0/1",
+          "tag": "p",
+          "text": "Rebuild the offer and pricing ",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/1",
+          "tag": "a",
+          "text": "Find out if this is yours →",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "rootDelta": {
+        "dw": 0,
+        "dh": 77
+      },
+      "compared": 29,
+      "pass": 11,
+      "worst": 110,
+      "styleMismatch": 6,
+      "missing": 2,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "p",
+          "text": "The diagnosis",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/1",
+          "tag": "h2",
+          "text": "Every service business has exa",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/1/0",
+          "tag": "em",
+          "text": "one constraint",
+          "geom": {
+            "dx": 110,
+            "dy": -1,
+            "dw": -13,
+            "dh": -32
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/2",
+          "tag": "p",
+          "text": "Your business runs in series. ",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3/0",
+          "tag": "button",
+          "text": "Acquisition",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/0/0",
+          "tag": "span",
+          "text": "01",
+          "geom": {
+            "dx": 4,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/3/1",
+          "tag": "button",
+          "text": "Conversion",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/1/0",
+          "tag": "span",
+          "text": "02",
+          "geom": {
+            "dx": 5,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/3/2",
+          "tag": "button",
+          "text": "Delivery",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/2/0",
+          "tag": "span",
+          "text": "03",
+          "geom": {
+            "dx": -11,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/3/3",
+          "tag": "button",
+          "text": "Margin",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        },
+        {
+          "ref": "0/3/3/0",
+          "tag": "span",
+          "text": "04",
+          "geom": {
+            "dx": -11,
+            "dy": -1,
+            "dw": 0,
+            "dh": 1
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/4",
+          "status": "no reference node"
+        },
+        {
+          "ref": "0/4/0",
+          "status": "no reference node"
+        },
+        {
+          "ref": "0/5",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 77
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 51
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/0",
+          "tag": "p",
+          "text": "Constraint 02 / Conversion",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/1",
+          "tag": "p",
+          "text": "Enough conversations, too few ",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2",
+          "tag": "ul",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 52
+          },
+          "ok": false,
+          "style": {
+            "gap": [
+              "normal",
+              "12px"
+            ]
+          }
+        },
+        {
+          "ref": "0/5/0/2/0",
+          "tag": "li",
+          "text": "Leads go quiet after the propo",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 25
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/0/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 25
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/1",
+          "tag": "li",
+          "text": "You discount to close and can'",
+          "geom": {
+            "dx": 0,
+            "dy": 25,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/1/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": 25,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/2",
+          "tag": "li",
+          "text": "Only the founder can run a sal",
+          "geom": {
+            "dx": 0,
+            "dy": 25,
+            "dw": 0,
+            "dh": 25
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/0/2/2/0",
+          "tag": "span",
+          "text": "✕",
+          "geom": {
+            "dx": 0,
+            "dy": 25,
+            "dw": 0,
+            "dh": 25
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 51,
+            "dw": 0,
+            "dh": 26
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 51,
+            "dw": 0,
+            "dh": 26
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0/0",
+          "tag": "p",
+          "text": "What we change first",
+          "geom": {
+            "dx": 0,
+            "dy": 51,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/0/1",
+          "tag": "p",
+          "text": "Rebuild the offer and pricing ",
+          "geom": {
+            "dx": 0,
+            "dy": 51,
+            "dw": 0,
+            "dh": 26
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/5/1/1",
+          "tag": "a",
+          "text": "Find out if this is yours →",
+          "geom": {
+            "dx": 0,
+            "dy": 77,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {
+            "borderRadius": [
+              "3.35544e+07px",
+              "9999px"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

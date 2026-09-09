@@ -1,0 +1,774 @@
+{
+  "site": "birdhouse",
+  "name": "birdhouse-hero-panel",
+  "verifiedAt": "2026-09-09T14:01:05.639Z",
+  "tolerancePx": 4,
+  "widths": [
+    {
+      "width": 1440,
+      "rootDelta": {
+        "dw": 0,
+        "dh": 0
+      },
+      "compared": 14,
+      "pass": 4,
+      "worst": 21,
+      "styleMismatch": 0,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/0",
+          "tag": "p",
+          "text": "Founders, CEOs, Business Owner",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/1/0",
+          "tag": "h1",
+          "text": "We’ll Build Your Personal Bran",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/1",
+          "tag": "p",
+          "text": "Partner with us to build a vir",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0/0",
+          "tag": "span",
+          "text": "Apply",
+          "geom": {
+            "dx": 0,
+            "dy": -21,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -20,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "rootDelta": {
+        "dw": 0,
+        "dh": 0
+      },
+      "compared": 14,
+      "pass": 4,
+      "worst": 19,
+      "styleMismatch": 0,
+      "missing": 0,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/0",
+          "tag": "p",
+          "text": "Founders, CEOs, Business Owner",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/1/0",
+          "tag": "h1",
+          "text": "We’ll Build Your Personal Bran",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/1",
+          "tag": "p",
+          "text": "Partner with us to build a vir",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0/0",
+          "tag": "span",
+          "text": "Apply",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -19,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        }
+      ]
+    },
+    {
+      "width": 768,
+      "rootDelta": {
+        "dw": 0,
+        "dh": -204
+      },
+      "compared": 13,
+      "pass": 1,
+      "worst": 204,
+      "styleMismatch": 0,
+      "missing": 1,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -204
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -204
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -70
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": -70
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": -70
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/0",
+          "tag": "p",
+          "text": "Founders, CEOs, Business Owner",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": true,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": -70
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/1/0",
+          "tag": "h1",
+          "text": "We’ll Build Your Personal Bran",
+          "geom": {
+            "dx": 0,
+            "dy": -1,
+            "dw": 0,
+            "dh": -70
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/1",
+          "tag": "p",
+          "text": "Partner with us to build a vir",
+          "geom": {
+            "dx": -2,
+            "dy": -72,
+            "dw": 2,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -71,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -71,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0/0",
+          "tag": "span",
+          "text": "Apply",
+          "geom": {
+            "dx": 0,
+            "dy": -71,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -72,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/1",
+          "status": "no reference node"
+        }
+      ]
+    },
+    {
+      "width": 390,
+      "rootDelta": {
+        "dw": 0,
+        "dh": -57
+      },
+      "compared": 13,
+      "pass": 0,
+      "worst": 67,
+      "styleMismatch": 0,
+      "missing": 1,
+      "rows": [
+        {
+          "ref": "0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -57
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -57
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": 0,
+            "dw": 0,
+            "dh": -45
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": -45
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": -55
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/0",
+          "tag": "p",
+          "text": "Founders, CEOs, Business Owner",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/1",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": -55
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/0/1/0",
+          "tag": "h1",
+          "text": "We’ll Build Your Personal Bran",
+          "geom": {
+            "dx": 0,
+            "dy": -12,
+            "dw": 0,
+            "dh": -55
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/1",
+          "tag": "p",
+          "text": "Partner with us to build a vir",
+          "geom": {
+            "dx": -12,
+            "dy": -67,
+            "dw": 24,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2",
+          "tag": "div",
+          "text": "",
+          "geom": {
+            "dx": 27,
+            "dy": -66,
+            "dw": -55,
+            "dh": 10
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0",
+          "tag": "a",
+          "text": "",
+          "geom": {
+            "dx": 27,
+            "dy": -66,
+            "dw": -55,
+            "dh": 10
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0/0",
+          "tag": "span",
+          "text": "Apply",
+          "geom": {
+            "dx": 27,
+            "dy": -61,
+            "dw": -55,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/0/0/2/0/1",
+          "tag": "svg",
+          "text": "",
+          "geom": {
+            "dx": -28,
+            "dy": -62,
+            "dw": 0,
+            "dh": 0
+          },
+          "ok": false,
+          "style": {}
+        },
+        {
+          "ref": "0/0/0/1/1",
+          "status": "no reference node"
+        }
+      ]
+    }
+  ]
+}
