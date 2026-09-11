@@ -75,3 +75,16 @@ Baseline before this pass: tag `threadline-public-restraint-2026-09-09`. After: 
 
 Remaining: external gates and owner inputs only (`docs/site/PLACEHOLDERS.json`), plus the open design decisions in `CAPTIVATION_PASS_2026-09-09.md` §10.
 
+---
+
+## Frontend integration pass (11 September 2026) — appended
+
+Baseline before: tag `threadline-public-captivation-2026-09-09`. After: tag `threadline-frontend-integration-2026-09-11` (local; no remote configured).
+
+1. **Reference build quarantined** — `thebirdhouse/` (Birdhouse reconstruction with copied media and an imported third-party playbook) kept on disk, git-ignored, excluded from `tsconfig.json`; notes read for principles only. Nothing from it ships (`docs/design/THREADLINE_PUBLIC_EXPERIENCE_HANDOVER.md` §7).
+2. **Public surface finished in the object language** — How it works stage rows and gates as objects (founder touchpoints badged), nine-station nodes as filled discs; Who it is for fit as verdict tiles.
+3. **Product brand pass, conservative** — Fraunces for `text-hero` / `text-section` (54 titles across portal and admin), `shadow-sm` on `Card`; palette, density, workflows untouched (§8 of the handover).
+4. **Docs** — handover v3.1 (§7 reference handling, §8 portal/admin, §9 limitations and risks), design system class list, HANDOFF §16j / §19 / §20, QA_REPORT, DEC-024.
+5. **Verification on the final build** — typecheck · lint · 625 tests · build · verify:features 69/0 · migrate status · qa:all 494 (0 FAIL) · qa:spine · qa:perf 9/9 · qa:browser 101/21/0 · qa:public 62/62 · qa:visual re-baselined.
+6. **Push** — blocked: no git remote and no `gh`; exact commands in HANDOFF §20.
+

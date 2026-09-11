@@ -335,3 +335,42 @@ Unchanged list (teleprompter, drag, print, SOP checklist save, call-outcome form
 
 `git checkout threadline-public-restraint-2026-09-09` restores the afternoon site; `threadline-public-baseline-2026-09-09` the morning site; `threadline-pre-public-experience-rebuild-2026-09-09` the tree before the rebuild. The database was not changed by this pass.
 
+---
+
+# Frontend integration pass — fresh verification (11 September 2026)
+
+Run on the integration-pass tree (commit after `0cfc551`), production build, after the last change. Scope of the pass: quarantine of the copied Birdhouse-derived reference build (`thebirdhouse/` — git-ignored and excluded from the TypeScript project; nothing from it ships), How it works stages and gates as objects, Who it is for verdict tiles, filled discs on the nine-station line, Fraunces for portal/admin page titles, `shadow-sm` on the product `Card`. No product logic, schema or migration changed.
+
+## Verdict: **MOSTLY — unchanged; technically launch-ready to the external gates**
+
+## Exact verification results
+
+| Check | Result |
+|---|---|
+| `npm run typecheck` | exit 0 (with `thebirdhouse` excluded in `tsconfig.json`; before the exclusion the copied build's own files failed the root typecheck and `next build`) |
+| `npm run lint` | exit 0, 0 warnings |
+| `npm test` | 625 tests in 154 suites: 625 pass, 0 fail |
+| `npm run build` | exit 0 |
+| `npm run verify:features` | 69 PASS · 2 EMPTY · 6 BLOCKED · 0 FAIL (77 checks) |
+| `npx prisma migrate status` | 13 migrations, up to date |
+| `npm run qa:all` | **494 checks: 485 PASS · 2 PASS WITH EXTERNAL GATE · 4 PARTIAL · 0 FAIL · 3 N/A** (the same four assessed partials) |
+| `npm run qa:spine` | 0 FAIL; synthetic tenants removed |
+| `npm run qa:perf` | 9/9 |
+| `npm run qa:browser` (prod build) | **122 checks: 101 PASS · 21 PARTIAL · 0 FAIL** — 33 app/admin routes × 1440/1024/768/390 with the serif titles and card depth in place; partials unchanged (dense-table target notes, one by-design inner scroller) |
+| `npm run qa:public` (prod build) | **62/62 PASS** — 11 public routes × 20 widths; no overflow, one H1, targets, metadata, reduced motion, no brand leak (ten reference names), no placeholder, no "monthly", no overclaim, no price, application submits and persists |
+| `npm run qa:visual` | 30 captures + `geometry.json` re-baselined |
+
+## Defects found and fixed
+
+| Where | What | Fix |
+|---|---|---|
+| Root `tsconfig.json` | the copied `thebirdhouse/` project was included in the root TypeScript project; `npm run typecheck` and `next build` failed on its files | `"exclude": ["node_modules", "thebirdhouse"]`; folder also git-ignored |
+
+## Git
+
+Final state committed on `master`. **The repository has no git remote configured** (`git remote -v` is empty) and the GitHub CLI is not installed, so the push could not be performed; see HANDOFF §20 for the exact commands once a remote exists.
+
+## Rollback
+
+`git checkout threadline-public-captivation-2026-09-09` restores the tree before this pass. The database was not changed.
+

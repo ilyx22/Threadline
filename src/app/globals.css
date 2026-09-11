@@ -189,18 +189,24 @@
   font-weight: 560;
 }
 
+/* Page and section titles share the public site's editorial serif (Fraunces, weight 450) so the
+   product reads as the same brand at a calmer intensity. Body, tables, forms and metrics stay Inter. */
 @utility text-hero {
+  font-family: var(--font-display), var(--font-serif);
+  font-variation-settings: "opsz" 72, "SOFT" 20, "WONK" 0;
   font-size: clamp(2rem, 4.4vw, 3.25rem);
-  line-height: 1.08;
-  letter-spacing: -0.03em;
-  font-weight: 560;
+  line-height: 1.06;
+  letter-spacing: -0.022em;
+  font-weight: 450;
 }
 
 @utility text-section {
+  font-family: var(--font-display), var(--font-serif);
+  font-variation-settings: "opsz" 72, "SOFT" 20, "WONK" 0;
   font-size: clamp(1.6rem, 2.6vw, 2.25rem);
-  line-height: 1.15;
-  letter-spacing: -0.025em;
-  font-weight: 560;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  font-weight: 450;
 }
 
 /** Small uppercase label used for section eyebrows and table headers. */

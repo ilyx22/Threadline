@@ -1371,6 +1371,18 @@ The rules that do not move: no pricing (DEC-017), no "monthly", no AI-led positi
 invented proof, every claim in the ledger, one primary CTA per viewport, `forbidden-to-copy.md`
 enforced by `qa:public`.
 
+### Integration pass (11 September 2026)
+
+A standalone Birdhouse reconstruction (`thebirdhouse/`) was copied into the repository root as
+the design reference for the overhaul. It is **not** integrated, committed or built: it carries
+copied media, a third-party playbook and its own `.git`, so it is listed in `.gitignore` and
+excluded in `tsconfig.json` (both reversible), and its notes were read for principles only. The
+pass then finished the public surface with the object language (How it works stages and gates as
+objects, Who it is for verdict tiles, filled discs on the nine-station line) and applied the brand
+to the product conservatively (Fraunces for portal/admin titles, subtle card depth; palette,
+density and workflows unchanged). Full record: `docs/design/THREADLINE_PUBLIC_EXPERIENCE_HANDOVER.md`
+§7–§9. No product logic, schema or migration changed.
+
 ---
 
 ## 17. DO NOT BREAK
@@ -1519,6 +1531,15 @@ collaboration, server-side PDF, drag-and-drop and playbook email capture stay in
 ---
 
 ## 19. Changelog
+
+### Session 10 — frontend integration and handoff (2026-09-11)
+
+The Birdhouse-derived reference build copied into the repo root was assessed and quarantined
+(`.gitignore`, `tsconfig.json` exclude; nothing from it ships). How it works: stage rows and gates
+rendered as objects with the founder's touchpoints badged; nine-station nodes as filled discs. Who
+it is for: fit as verdict tiles. Product: Fraunces for `text-hero` / `text-section`, `shadow-sm` on
+`Card`. Handover doc consolidated (§7–§9). Fresh verification battery on the final build. The
+repository has no git remote configured, so the final commit is local (see §20).
 
 ### Session 9 — public site: restraint pass and captivation pass (2026-09-09, afternoon and evening)
 
@@ -1792,12 +1813,11 @@ contravariance, and role denials surfacing as error boundaries instead of explan
 
 ## 20. Last verified state
 
-Measured fresh on **2026-09-09 (evening)** on the captivation-pass tree, tag
-`threadline-public-captivation-2026-09-09`, production build, after the last change. The identical
-battery had been run earlier the same day on the restraint-pass tree and on `5a08f25` with the same
-in-process and browser numbers. Full detail in `docs/QA_REPORT.md` (final section) and
-`docs/design/CAPTIVATION_PASS_2026-09-09.md` §12. Every number below comes from that run, not from
-an earlier session.
+Measured fresh on **2026-09-11** on the integration-pass tree (the commit after `0cfc551`),
+production build, after the last change. The identical battery had been run on the captivation-pass
+tree (`threadline-public-captivation-2026-09-09`) two days earlier with the same numbers. Full
+detail in `docs/QA_REPORT.md` (final section). Every number below comes from that run, not from an
+earlier session.
 
 | Gate | Command | Result |
 |---|---|---|
@@ -1823,13 +1843,24 @@ visitor is now enforced at write time so the read has nothing to de-duplicate; d
 valid input; print/export is browser print by design; the synthetic bad-week report shows the miss
 but not the learning because the harness stamps the diagnosis after that week (clock artefact).
 
-**Git:** commits on `master` (recent: the captivation pass, `9750b79` restraint pass, `5a08f25`
-final verification pass, `275c562` public experience rebuild, `ab9bc71` completion pass, `8354171`
-infrastructure, `2be88a9` baseline). Four tags: `threadline-pre-public-experience-rebuild-2026-09-09`
-(rollback to before the rebuild), `threadline-public-baseline-2026-09-09` (the morning rebuild),
-`threadline-public-restraint-2026-09-09` (the afternoon site; rollback to before the captivation
-pass) and `threadline-public-captivation-2026-09-09` (current). The `main` branch named in tooling
-does not yet exist locally; work is on `master`.
+**Git:** commits on `master` (recent: the integration pass, `0cfc551` captivation pass, `9750b79`
+restraint pass, `5a08f25` final verification pass, `275c562` public experience rebuild, `ab9bc71`
+completion pass, `8354171` infrastructure, `2be88a9` baseline). Tags:
+`threadline-pre-public-experience-rebuild-2026-09-09`, `threadline-public-baseline-2026-09-09`,
+`threadline-public-restraint-2026-09-09`, `threadline-public-captivation-2026-09-09` and
+`threadline-frontend-integration-2026-09-11` (current). The `main` branch named in tooling does not
+exist locally; work is on `master`.
+
+**Remote:** none is configured (`git remote -v` is empty) and the GitHub CLI is not installed on
+this machine, so the finished state is committed locally and **not pushed**. Once the intended
+GitHub repository exists, from the repository root:
+
+```
+git remote add origin <https://github.com/<owner>/<repo>.git>
+git push -u origin master --tags
+```
+
+`thebirdhouse/` (the copied reference build) is git-ignored and must stay out of the push.
 
 **Note on `npm run db:reset`:** Prisma refuses this command from an AI agent without explicit
 human consent, which is correct behaviour. Use `npm run seed` instead — it is idempotent and

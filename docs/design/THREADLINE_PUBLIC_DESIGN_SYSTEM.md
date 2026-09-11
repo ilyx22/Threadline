@@ -47,7 +47,7 @@ v2 surfaces remain (`.tl-card`, `.tl-card-quiet`, `.tl-rule*`, `.tl-band`, `.tl-
 | `BuyerAvatar` | `.tl-buyer*` | recognition levels 0–4 (ring fills, then ember) |
 | `VerdictTile` | `.tl-verdict*` | filled check / cross tiles for fit |
 
-Rules: one focal object cluster per section; overlaps of 8–16px; no glass, glow, gradient or WebGL; depth is one soft ambient plus a 3px edge, never a drop shadow with an offset. Section systems: `.tl-machine` (hero, 900×560 scene, `.tl-mc-*` placements), `.tl-contrast*`, `.tl-pool*`, `.tl-labour*`, `.tl-factory*`, `.tl-multiply*`, `.tl-route*`, `.tl-loop*`, `.tl-progress*`, `.tl-compare*`, `.tl-fit`, `.tl-cta*`, `.tl-diag*`.
+Rules: one focal object cluster per section; overlaps of 8–16px; no glass, glow, gradient or WebGL; depth is one soft ambient plus a 3px edge, never a drop shadow with an offset. Section systems: `.tl-machine` (hero, 900×560 scene, `.tl-mc-*` placements), `.tl-contrast*`, `.tl-pool*`, `.tl-labour*`, `.tl-factory*`, `.tl-multiply*`, `.tl-route*`, `.tl-loop*`, `.tl-prog*`, `.tl-compare*`, `.tl-fit`, `.tl-final*`, `.tl-diag*`; on How it works `.tl-stages` / `.tl-stage-tile` (stage rows with the founder's touchpoints badged in ember) and `.tl-gates` / `.tl-gate` (refusal tiles). Who it is for reuses `.tl-fit` and `VerdictTile`.
 
 ## 6. Components built from verified reference skeletons
 

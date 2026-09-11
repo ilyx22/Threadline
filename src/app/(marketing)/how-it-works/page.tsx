@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { DIAGNOSTIC, HOME, HOME_V3, HOW_IT_WORKS, STATIONS } from "@/content/public-site";
 import { Diagnostic } from "@/components/public/diagnostic";
 import { ProofChain } from "@/components/factory/scenes";
@@ -7,7 +7,10 @@ import { Card, Eyebrow, Lead, PublicButton, Section, Title } from "@/components/
 import { StickyApply } from "@/components/public/sticky-apply";
 import { Reveal } from "@/components/marketing/reveal";
 import { MachineLine } from "@/components/factory/machine";
-import { InspectionMark, STAGE_GLYPH } from "@/components/factory/schematic";
+import { Obj } from "@/components/factory/objects";
+
+/** Which stage the founder is needed at, and as what — the same four touchpoints as the homepage factory. */
+const FOUNDER_AT: Record<string, string> = { raw: "Input", produce: "Record", response: "Sell" };
 
 export const metadata: Metadata = {
   title: "How it works",
@@ -44,16 +47,18 @@ export default function HowItWorksPage() {
       </Section>
 
       <Section>
-        <ol className="tl-ledger">
+        <Eyebrow>Stage by stage</Eyebrow>
+        <Title>What happens at each stage.</Title>
+        <ol className="tl-stages mt-10">
           {c.stages.map((s, i) => {
-            const Glyph = STAGE_GLYPH[s.key];
+            const founder = FOUNDER_AT[s.key];
             return (
-              <Reveal key={s.key} as="li">
-                <div id={s.key} className="grid scroll-mt-28 gap-5 py-8 md:grid-cols-[6rem_minmax(0,1fr)] md:items-start">
-                  <div className="flex items-center gap-4 md:flex-col md:items-start md:gap-3">
-                    <span className="tl-label text-[color:var(--accent-deep)]">{String(i + 1).padStart(2, "0")}</span>
-                    {Glyph ? Glyph({ className: "w-10" }) : null}
-                  </div>
+              <Reveal key={s.key} as="li" delay={i * 40}>
+                <div id={s.key} className="tl-stage-row scroll-mt-28">
+                  <Obj tone={founder ? "ember" : "paper"} className="tl-stage-tile" aria-hidden>
+                    <span className="tl-label">{String(i + 1).padStart(2, "0")}</span>
+                    {founder ? <span className="tl-stage-you">You · {founder}</span> : <span className="tl-stage-us">Threadline</span>}
+                  </Obj>
                   <div>
                     <h2 className="tl-sub-title">{s.title}</h2>
                     <p className="tl-body mt-3">{s.body}</p>
@@ -69,15 +74,17 @@ export default function HowItWorksPage() {
         <Eyebrow>Gates</Eyebrow>
         <Title>Four things the machine refuses to do.</Title>
         <Lead>Each gate is a rule in the software, not a policy in a document. They exist so that a fast operation cannot become a careless one.</Lead>
-        <ul className="tl-rule-strong mt-10 grid gap-8 pt-8 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="tl-gates mt-10">
           {c.gates.map((g, i) => (
             <Reveal key={g.label} delay={i * 60} as="li">
-              <div className="flex items-center gap-3">
-                <InspectionMark className="w-8" reject />
-                <p className="tl-label text-[color:var(--ink)]">Gate {String(i + 1).padStart(2, "0")}</p>
-              </div>
-              <p className="tl-sub-title mt-4 text-[1.25rem]">{g.label}</p>
-              <p className="tl-body mt-2 text-[14.5px]">{g.body}</p>
+              <Obj className="tl-gate">
+                <span className="tl-gate-mark" aria-hidden>
+                  <X className="size-4" strokeWidth={2.5} />
+                </span>
+                <p className="tl-label mt-4 text-[color:var(--ink-faint)]">Gate {String(i + 1).padStart(2, "0")}</p>
+                <p className="tl-sub-title mt-1 text-[1.25rem]">{g.label}</p>
+                <p className="tl-body mt-2 text-[14.5px]">{g.body}</p>
+              </Obj>
             </Reveal>
           ))}
         </ul>

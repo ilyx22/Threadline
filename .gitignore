@@ -31,3 +31,6 @@ qa-baselines/**/.candidate/
 
 # OneDrive upload cache
 .tmp.driveupload/
+
+# Birdhouse-derived reference build copied in on 2026-09-11 — design reference only, never committed (copied media, imported third-party playbook, nested .git)
+thebirdhouse/

@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import { ArrowRight, Check, X } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { HOME, WHO_ITS_FOR } from "@/content/public-site";
-import { Card, Eyebrow, Lead, PublicButton, Section, Stamp, Title } from "@/components/public/primitives";
+import { Card, Eyebrow, Lead, PublicButton, Section, Title } from "@/components/public/primitives";
+import { VerdictTile } from "@/components/factory/objects";
 import { StickyApply } from "@/components/public/sticky-apply";
 import { Reveal } from "@/components/marketing/reveal";
 
@@ -39,32 +40,24 @@ export default function WhoItsForPage() {
       <Section>
         <Eyebrow>Plainly</Eyebrow>
         <Title>The fit, in one look.</Title>
-        <div className="tl-rule-strong mt-10 grid gap-10 pt-8 md:grid-cols-2 md:gap-12">
+        <div className="tl-fit mt-10">
           <div>
-            <div className="flex items-center justify-between gap-3">
-              <p className="tl-label text-[color:var(--ink)]">A good fit</p>
-              <Stamp tone="signal">Yes</Stamp>
-            </div>
-            <ul className="mt-5 space-y-3">
+            <p className="tl-label text-[color:var(--signal)]">A good fit</p>
+            <ul>
               {HOME.fit.good.map((g) => (
-                <li key={g} className="flex gap-3 text-[15.5px] text-[color:var(--ink)]">
-                  <Check className="mt-1 size-4 shrink-0 text-[color:var(--signal)]" aria-hidden />
+                <VerdictTile key={g} yes>
                   {g}
-                </li>
+                </VerdictTile>
               ))}
             </ul>
           </div>
-          <div className="md:border-l md:border-[color:var(--line)] md:pl-12">
-            <div className="flex items-center justify-between gap-3">
-              <p className="tl-label">Not a fit</p>
-              <Stamp tone="reject">Not yet</Stamp>
-            </div>
-            <ul className="mt-5 space-y-3">
+          <div>
+            <p className="tl-label text-[color:var(--reject)]">Not a fit</p>
+            <ul>
               {HOME.fit.bad.map((b) => (
-                <li key={b} className="flex gap-3 text-[15.5px] text-[color:var(--ink-soft)]">
-                  <X className="mt-1 size-4 shrink-0 text-[color:var(--reject)]" aria-hidden />
+                <VerdictTile key={b} yes={false}>
                   {b}
-                </li>
+                </VerdictTile>
               ))}
             </ul>
           </div>

@@ -698,8 +698,8 @@ a:hover > .tl-textlink .tl-arrow {
 
 /* ------------------------------------------------------------ Schematics */
 .tl-node {
-  fill: var(--paper);
-  stroke: var(--ink);
+  fill: var(--canvas-deep);
+  stroke: var(--line-strong);
   stroke-width: 1.5;
   transition: fill 300ms var(--ease-out-expo), stroke 300ms var(--ease-out-expo), r 300ms var(--ease-out-expo);
 }

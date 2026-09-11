@@ -1,4 +1,4 @@
-# Threadline public experience — handover (v3, 9 September 2026)
+# Threadline public experience — handover (v3.1, 11 September 2026)
 
 What the public site is, where everything lives, and how to work on it without breaking the product behind it. Read with `THREADLINE_PUBLIC_DESIGN_SYSTEM.md` (the system, v3), `COMPONENT_RECONSTRUCTION.md` (how the reference-derived components were made), `CAPTIVATION_PASS_2026-09-09.md` (what changed in the evening pass, the content preservation matrix, the pricing audit, the QA record and the open owner decisions) and `PUBLIC_SITE_RESTRAINT_PASS_2026-09-09.md` (the afternoon pass).
 
@@ -63,6 +63,37 @@ In Git Bash prefix `MSYS_NO_PATHCONV=1` so `--url=/` is not rewritten. Reference
 - No promise of leads, revenue, followers, views, virality, algorithmic favour or ROI. Do not lead with AI. No platform in a headline.
 - Content changes only with the owner's decision; presentation and order changed in this pass by owner instruction (DEC-023).
 
-## 7. External gates and owner inputs
+## 7. The Birdhouse-derived reference build (11 September 2026) — what was retained, replaced and left out
+
+A standalone Next.js reconstruction of thebirdhouse.co (`thebirdhouse/`, 826 MB, its own `.git`, `node_modules`, `.next`, Lottie/Rive artwork, 17 videos, over a thousand PNGs, an imported third-party "LinkedIn Playbook" route) was copied into this repository root on 11 September as the design reference for the overhaul.
+
+| | Decision |
+|---|---|
+| **Retained** | The folder stays on disk, untouched, for the owner's reference. Its analysis notes (`thebirdhouse/reference-analysis/*.md`, `HANDOVER.md`) were read for principles only: viewport-sized reveals that reverse on exit, one focal picture per section, momentum and hover polish. Nothing from it is imported, built or served. |
+| **Replaced** | Every composition principle it demonstrates is already expressed in Threadline's own object language (design system v3): the hero panel came from a measured clone in the afternoon pass, the rest of the homepage is original (`CAPTIVATION_PASS_2026-09-09.md`). |
+| **Left out, deliberately** | Its logo, birds, houses, illustrations, videos, testimonials, customer logos, wording, colour identity and the imported playbook (third-party copy: "viral", "$3M+ in DM revenue"). None of it may ship (`reference-analysis/*/forbidden-to-copy.md`; `npm run qa:public` greps every reference brand name). |
+| **Repository hygiene** | `thebirdhouse/` is listed in `.gitignore` (never committed: copied media, third-party content, nested `.git`) and in `tsconfig.json` `exclude` (its files were breaking the root typecheck and build). Both are reversible one-line entries. |
+
+**Original Threadline work** on the public surface: everything under `src/components/public/`, `src/components/factory/`, `src/app/public.css`, `src/app/public-v3.css`, `src/content/public-site.ts` and `src/app/(marketing)/**`. The only reference-derived skeletons are the four frozen clones under `reference-analysis/clones/` (Birdhouse hero panel, Hydra selector, Hydra offer cards — retired, Starborn comparison table), each measured, verified and stripped of identity before mutation (`COMPONENT_RECONSTRUCTION.md`).
+
+## 8. Client portal and admin adaptation (11 September 2026)
+
+The authenticated product keeps its own dark, calm, dense system (DEC-004: one brand, three intensities). Applied from the public system, conservatively and in one place each:
+
+- **Editorial serif for page and section titles** — the `text-hero` and `text-section` utilities in `src/app/globals.css` now use Fraunces (weight 450, opsz 72) so every portal and admin title reads as the same brand; body, tables, forms, metrics and labels stay Inter / mono.
+- **Subtle depth on cards** — `src/components/ui/card.tsx` adds the existing `shadow-sm` token (low-contrast, no colour).
+- Unchanged by design: the champagne accent (contrast-verified on dark surfaces; the public ember does not pass on ink at small sizes), radii, chips, status language, focus rings, tables, queues and forms. Marketing layouts are not pasted into the portal or admin.
+
+Verified by `npm run qa:browser` (33 app/admin routes × 4 widths) after the change; see `docs/QA_REPORT.md`.
+
+## 9. Known limitations and integration risks
+
+- The reference build is inside the repository root; if it is ever removed from `.gitignore` or `tsconfig.json`'s `exclude`, the build breaks and third-party content would be staged. Move it outside the repo when convenient.
+- The hero machine's entrance objects appear over ~7 s; full-page screenshot tools that capture at load show the scene mid-entrance (documented; use `probe --wait=8000`).
+- The public application form is rate limited to five submissions per hour per IP in a memory store; repeated QA runs within an hour need a `next start` restart.
+- The playbook is Threadline's own ten chapters (the Founder Authority System) and is finished; no LinkedIn-specific or third-party playbook was imported. Platform-safety doctrine (DEC-018) applies to every chapter.
+- Remaining manual visual QA: the owner's own read of the homepage against the FINAL USER TEST (`CAPTIVATION_PASS_2026-09-09.md` §13), the portal titles in Fraunces on a real screen, and the open decisions in that document's §10.
+
+## 10. External gates and owner inputs
 
 `docs/site/PLACEHOLDERS.json`: production domain, email provider, booking URL, legal pages. Platform credentials and reviews: `docs/PLATFORM_APPLICATIONS.md`. Open design decisions: `CAPTIVATION_PASS_2026-09-09.md` §10.

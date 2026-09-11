@@ -10,7 +10,7 @@ export function Card({
   return (
     <div
       className={cn(
-        "rounded-lg border border-line bg-elevated",
+        "rounded-lg border border-line bg-elevated shadow-sm",
         interactive &&
           "transition-colors duration-150 hover:border-line-strong hover:bg-[#181d23]",
         accent && "border-accent-line",
