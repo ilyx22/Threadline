@@ -1371,6 +1371,19 @@ The rules that do not move: no pricing (DEC-017), no "monthly", no AI-led positi
 invented proof, every claim in the ledger, one primary CTA per viewport, `forbidden-to-copy.md`
 enforced by `qa:public`.
 
+### The marketing prototype in `thebirdhouse/` (11 September 2026, later the same day)
+
+Strategy change by the owner: the reconstruction in `thebirdhouse/` became the **primary visual
+workspace** and was transformed in place into the new Threadline marketing experience — the
+reference's composition mechanics kept, every piece of its identity removed, an original
+"Authority Workshop" object world built in CSS/SVG, twelve sections in the commercial order, an
+original Expert Firm LinkedIn Playbook, its own QA (functional, 20-width responsive, links,
+tokens). It is a separate git repository (its own history and tags) and stays git-ignored here.
+Its documents: `thebirdhouse/THREADLINE_FRONTEND_HANDOFF.md`, `THREADLINE_VISUAL_SYSTEM.md`,
+`THREADLINE_COMPONENT_MAP.md`, `THREADLINE_MOTION_SYSTEM.md`. **Nothing from it has been ported
+into this repository yet**; the port plan (tokens → primitives → sections → motion → QA → portal)
+is in its handoff §8 and waits for the owner's visual approval.
+
 ### Integration pass (11 September 2026)
 
 A standalone Birdhouse reconstruction (`thebirdhouse/`) was copied into the repository root as
