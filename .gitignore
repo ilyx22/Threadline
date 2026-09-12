@@ -10,7 +10,7 @@ dist/
 *.db-journal
 prisma/dev.db
 prisma/dev.db-journal
-storage/
+/storage/
 .DS_Store
 Thumbs.db
 *.tsbuildinfo
