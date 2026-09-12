@@ -1,6 +1,7 @@
 import "server-only";
 import { createHash, randomBytes } from "node:crypto";
 import { prisma } from "@/lib/db/client";
+import { appUrl } from "@/lib/app-url";
 
 /**
  * Single-use, expiring tokens for invitations and password resets.
@@ -60,7 +61,7 @@ export async function consumeToken(raw: string, kind: TokenKind): Promise<Consum
 }
 
 export function tokenLink(kind: TokenKind, raw: string) {
-  const base = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
+  const base = appUrl();
   return kind === "invite" ? `${base}/invite?token=${raw}` : `${base}/reset-password?token=${raw}`;
 }
 

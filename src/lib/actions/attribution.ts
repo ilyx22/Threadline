@@ -27,6 +27,7 @@ import {
   type ActionResult,
 } from "./shared";
 import { assertEvidenceSupportable } from "@/lib/domain/attribution";
+import { appUrl } from "@/lib/app-url";
 
 /**
  * Attribution writes.
@@ -73,7 +74,7 @@ export async function createTrackedLinkAction(
     // Validated here rather than trusted from the form. An unvalidated
     // destination stored against a public slug on Threadline's own domain is an
     // open redirect, and one wearing a company's domain is a phishing hop.
-    const destination = validateDestination(input.destinationUrl, process.env.NEXT_PUBLIC_APP_URL);
+    const destination = validateDestination(input.destinationUrl, appUrl());
 
     // Attribution must point at content in THIS workspace.
     if (input.contentItemId) {

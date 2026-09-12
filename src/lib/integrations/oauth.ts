@@ -5,6 +5,7 @@ import { parseJson, stringify } from "@/lib/db/json";
 import { credentialAad, open, safeEqual, seal, type SealedSecret } from "@/lib/security/secret-box";
 import { putCredential } from "./credentials";
 import { safePath } from "@/lib/security/safe-path";
+import { appUrl } from "@/lib/app-url";
 
 /**
  * One OAuth implementation, not five.
@@ -60,7 +61,7 @@ function pkcePair(): { verifier: string; challenge: string } {
  * built from `NEXT_PUBLIC_APP_URL` and nothing else.
  */
 export function redirectUriFor(provider: string): string {
-  const base = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/+$/, "");
+  const base = appUrl();
   return `${base}/api/oauth/${provider}/callback`;
 }
 

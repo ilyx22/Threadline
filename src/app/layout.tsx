@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Instrument_Serif, Fraunces, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toast";
+import { appUrl } from "@/lib/app-url";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -34,7 +35,7 @@ const label = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(appUrl()),
   title: {
     default: "Threadline — a managed authority system for expert-led firms",
     template: "%s · Threadline",

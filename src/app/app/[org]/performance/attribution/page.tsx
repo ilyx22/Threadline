@@ -31,6 +31,7 @@ import { SYNTHETIC_EXPLANATION } from "@/lib/domain/synthetic";
 import { money, percent } from "@/lib/utils/format";
 import { formatDate, formatDateTime } from "@/lib/utils/dates";
 import { LinkRow, ModelSwitch, NewLinkButton, RecordEventButton } from "./attribution-client";
+import { appUrl } from "@/lib/app-url";
 
 export const metadata: Metadata = { title: "Attribution" };
 
@@ -78,7 +79,7 @@ export default async function AttributionPage({
     }),
   ]);
 
-  const origin = process.env.NEXT_PUBLIC_APP_URL ?? "";
+  const origin = appUrl();
   const modelMeta = metaOf(ATTRIBUTION_MODEL_META, model);
   const totalCredited = attribution.assets.reduce((sum, a) => sum + a.valueMinor, 0);
 

@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { PLAYBOOK } from "@/content/public-site";
+import { appUrl } from "@/lib/app-url";
 
-const BASE = (process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000").replace(/\/$/, "");
+const BASE = appUrl();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
