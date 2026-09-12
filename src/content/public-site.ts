@@ -12,10 +12,10 @@
 export const SITE = {
   name: "Threadline",
   domain: "threadline.com",
-  tagline: "You already have the expertise. We turn it into content people actually want to watch.",
+  tagline: "Make the expertise that wins the work visible before the sales call.",
   description:
-    "Threadline is a managed content-growth system for expert-led businesses. You talk, record, approve and sell. Threadline runs the machine — research, ideas, scripts, production, distribution and learning — so content compounds into authority and qualified demand.",
-  primaryCta: { label: "Apply", href: "/apply" },
+    "Threadline is a managed authority system for expert-led B2B firms. It turns the expertise inside the firm into authority, qualified demand and a system that learns what actually moves buyers. You talk, record, approve and sell. Threadline runs the machine.",
+  primaryCta: { label: "See if Threadline fits", href: "/apply" },
   secondaryCta: { label: "See how it works", href: "/how-it-works" },
 };
 
@@ -26,7 +26,7 @@ export const NAV = [
 ] as const;
 
 export const FOOTER = {
-  line: "A managed content growth system for expert-led businesses. Installed and run with you, not sold self-serve.",
+  line: "A managed authority system for expert-led firms. Installed and run with you, not sold self-serve.",
   columns: [
     { title: "Product", links: [{ href: "/how-it-works", label: "How it works" }, { href: "/who-its-for", label: "Who it is for" }, { href: "/calculator", label: "Cost of the status quo" }, { href: "/playbook", label: "The Founder Authority System" }] },
     { title: "Company", links: [{ href: "/apply", label: "Apply" }, { href: "/login", label: "Client sign in" }] },
@@ -57,6 +57,7 @@ export const RETURN_PATH = [
   { label: "Retest", detail: "The same thesis goes out again with the change. That is how we learn." },
 ] as const;
 
+/** @deprecated Earlier homepages. Kept only for the sentences other pages still draw on (`HOME.problem.points`, `HOME.proof`, `HOME_V3.factory.chambers`) and for ledger traceability. Nothing else here renders. */
 export const HOME = {
   hero: {
     eyebrow: "For expert-led businesses",
@@ -221,7 +222,7 @@ export const WHO_ITS_FOR = {
     { label: "Economics", body: "Meaningful value per client. If one additional good customer is worth four figures or more, content that starts one conversation a month pays for itself. If it is worth forty pounds, this is the wrong tool." },
     { label: "The founder's role", body: "Twenty minutes of recording and one approval pass a week. If that is not available, no system can manufacture your voice." },
     { label: "Expectations", body: "Three 4-week periods before anyone can say what works for your market. No promised leads, views or revenue. A report every week that shows what shipped, what we expected, what happened and what we are testing next." },
-    { label: "What Threadline is", body: "A managed content-growth system: research, strategy, scripting, production, distribution and learning, run for you, with you keeping the four things only you can do." },
+    { label: "What Threadline is", body: "A managed authority system: market intelligence, expertise extraction, the right expressions, distribution, commercial signal, diagnosis and learning, run for you, with you keeping the four things only you can do." },
     { label: "What it is not", body: "Not a tool you learn. Not a ghostwriting retainer. Not an audience-growth hack. Not an agency that stops at publish." },
   ],
   wedgeNote: "Our current research focus is senior founder- and partner-led AI and digital transformation advisory firms in the US and UK. That is a hypothesis we are testing in conversations, not a rule about who we work with.", // claim:C-WEDGE
@@ -229,7 +230,7 @@ export const WHO_ITS_FOR = {
 
 export const APPLY = {
   eyebrow: "Founding client programme",
-  title: "Apply for a content growth diagnosis.",
+  title: "Apply for a diagnosis, not a pitch.",
   lead: "This is a diagnostic, not a signup. Your answers tell us where demand is actually constrained — and on several of the dimensions we look at, more content would make the problem more expensive rather than smaller.",
   reassurance: "Answer honestly. If the answer is that we are not the right fit, we would both rather know now, and you keep the finding either way.",
   meta: "Three short steps, about four minutes. Read by a person. Replied to either way.",
@@ -259,6 +260,32 @@ export const PLAYBOOK = {
   ],
   closing: { title: "Want us to run the machine?", lead: "Threadline runs this system for a small number of expert-led businesses at a time. Apply and we will tell you honestly whether it fits.", cta: { label: "Apply", href: "/apply" } },
 };
+
+/**
+ * The Playbook's tools. The model is arithmetic over the visitor's own
+ * assumptions and says so on the page; it never projects revenue (C-CALC) and
+ * never promises a result (C-NO-PROMISES).
+ */
+export const PLAYBOOK_TOOLS = {
+  eyebrow: "Use it, not only read it",
+  title: "Two things to do before you apply.",
+  lead: "The Playbook is an operating model, so the useful parts are the ones you can put your own situation into.",
+  diagnose: {
+    eyebrow: "Diagnose",
+    title: "Where is your authority system breaking?",
+    lead: "Pick the description that sounds most like you. Each one maps to a station on the line.",
+  },
+  model: {
+    eyebrow: "Model",
+    title: "How much of the right attention does your target actually need?",
+    lead: "Start from the engagements you want to win and read the funnel backwards. Change one rate and watch which stage moves.",
+    targetNote: "Your target for the period.",
+    leverLine: "is the rate to work on: ten points there and the same target needs about",
+    leverTail: "first touches instead. Everything else being equal, which it never quite is.",
+    leverNone: "Every rate is already high; the lever is the target itself.",
+    note: "A model of your assumptions, not a forecast. It shows what your own numbers imply; it does not know your market, and it cannot promise any of these conversions will hold.",
+  },
+} as const;
 
 export const NOT_FOUND = {
   title: "That page is not on the line.",

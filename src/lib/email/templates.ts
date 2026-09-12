@@ -18,7 +18,7 @@ export type TemplateInput<K extends EmailTemplateKey> = TemplateMap[K];
 
 const escape = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
-function shell(title: string, paragraphs: string[], cta?: { label: string; href: string }, footer = "Threadline · a managed content growth system for expert-led businesses.") {
+function shell(title: string, paragraphs: string[], cta?: { label: string; href: string }, footer = "Threadline · a managed authority system for expert-led firms.") {
   const body = paragraphs.map((p) => `<p style="margin:0 0 14px;font:15px/1.6 -apple-system,Segoe UI,Inter,Arial,sans-serif;color:#1f1d1a">${escape(p)}</p>`).join("");
   const button = cta
     ? `<p style="margin:22px 0"><a href="${escape(cta.href)}" style="display:inline-block;background:#1f1d1a;color:#fbf7ef;text-decoration:none;font:600 14px -apple-system,Segoe UI,Inter,Arial,sans-serif;padding:12px 18px;border-radius:10px">${escape(cta.label)}</a></p><p style="margin:0 0 14px;font:12px/1.5 -apple-system,Segoe UI,Inter,Arial,sans-serif;color:#6f6a62">If the button does not work, paste this into your browser:<br>${escape(cta.href)}</p>`

@@ -250,7 +250,7 @@ export function CalculatorClient() {
         </Notice>
 
         <ButtonLink href="/apply" variant="accent" size="lg" iconRight={ArrowRight} fullWidth>
-          Apply for a content growth diagnosis
+          See if Threadline fits
         </ButtonLink>
       </div>
     </div>

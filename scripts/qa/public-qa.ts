@@ -36,7 +36,7 @@ const OVERCLAIM = /guarantee(d)? (leads|revenue|results)|go viral|10x|supercharg
 const AUDIT = `(() => {
   const d = document, w = innerWidth, de = d.documentElement;
   const vis = (e) => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; };
-  const inScroller = (e) => { for (let p = e.parentElement; p && p !== d.body; p = p.parentElement) { const o = getComputedStyle(p).overflowX; if (o === 'auto' || o === 'scroll') return true; } return false; };
+  const inScroller = (e) => { for (let p = e.parentElement; p && p !== d.body; p = p.parentElement) { const o = getComputedStyle(p).overflowX; if (o === 'auto' || o === 'scroll' || o === 'hidden' || o === 'clip') return true; } return false; };
   const name = (e) => e.tagName.toLowerCase() + (e.id ? '#' + e.id : '') + '.' + (typeof e.className === 'string' ? e.className : e.getAttribute('class') || '').split(' ').slice(0, 3).join('.') + ' in ' + (e.closest('section,header,footer')?.id || e.closest('section,header,footer')?.tagName.toLowerCase() || '?') + ' right=' + Math.round(e.getBoundingClientRect().right);
   const wide = [...d.querySelectorAll('body *')].filter((e) => vis(e) && e.getBoundingClientRect().right > w + 2 && !inScroller(e)).filter((e, i, arr) => !arr.includes(e.parentElement)).slice(0, 3).map(name);
   const headings = [...d.querySelectorAll('h1,h2,h3,h4')].filter(vis).map((h) => Number(h.tagName[1]));

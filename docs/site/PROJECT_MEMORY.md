@@ -3,7 +3,7 @@
 Read this first in any new session. It states what is true now; history is in `docs/site/DECISIONS_LOG.md` and `docs/checkpoints/`.
 
 ## Identity
-Threadline: a managed content-growth / authority system for expert-led businesses. Managed outcome; the software (Threadline OS) is the mechanism and the proof. Founding-client programme, one offer, £2,500 implementation + £2,500 every 4 weeks, 12-week initial engagement — **internal figures, not published on the site (DEC-017, 2026-09-09)**. Not a video production company, not a platform buffet: a low-friction founder authority + qualified-demand system, video-led where it adds information or trust, text-native and platform-prescribed otherwise (DEC-021). Publishing through official rails; engagement human; no automated social behaviour (DEC-018).
+Threadline: a managed authority system for expert-led (B2B) firms — the expertise that wins the work, made visible before the sales call. Managed outcome; the software is the mechanism and the proof. Public copy never says "content growth", "content agency", "ghostwriting" or a platform name as the category (DEC-025). Founding-client programme, one offer, £2,500 implementation + £2,500 every 4 weeks, 12-week initial engagement — **internal figures, not published on the site (DEC-017, 2026-09-09)**. Not a video production company, not a platform buffet: a low-friction founder authority + qualified-demand system, video-led where it adds information or trust, text-native and platform-prescribed otherwise (DEC-021). Publishing through official rails; engagement human; no automated social behaviour (DEC-018).
 
 ## Current architecture (2026-09-09)
 Next.js 15 App Router · React 19 · Prisma 6 (SQLite dev, Postgres-ready) · Zod 4 · server actions only for mutations · first-party auth · 77 models (13 migrations) · AES-256-GCM credential keyring · OAuth state/PKCE · durable jobs table · captured/Resend email · local/S3 storage · memory/Redis-REST rate limit · connectors for LinkedIn, YouTube, Instagram, TikTok, X · analytics normaliser with five field states · research providers (internal, manual, URL) · webhooks for Stripe/HubSpot/Pipedrive/Attio/GoHighLevel with signature verification.
@@ -15,7 +15,10 @@ Next.js 15 App Router · React 19 · Prisma 6 (SQLite dev, Postgres-ready) · Zo
 - Reference analysis (historical input only): `reference-analysis/birdhouse/`.
 - QA: `docs/QA_REPORT.md`, `scripts/qa/*`, `docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md`.
 
-## Current design direction
+## Current design direction (v4, 2026-09-12)
+Public: the marketing experience ported from the `thebirdhouse/` workspace — bone `#F3F0E8` ground, ink `#121316`, cobalt `#1F3BD6` system colour, one vermilion `#E2432A` signal, steel/mist neutrals, night `#0E1330` bands; Fraunces + Inter + JetBrains Mono; the Authority Workshop object language; four signature scenes (hero machine, expertise vault, memory formation, diagnostic instrument). Documented in `docs/design/marketing-v4/`. The paragraphs below describe the superseded v3 direction.
+
+## Previous design direction (v3, 2026-09-09)
 Public: warm linen canvas, paper cards with ink outlines and hard offset shadows, Fraunces display + Inter + JetBrains Mono labels, the Authority Factory (thread + conveyor + original cast). Client portal calm/dark; admin dense/dark; auth screens on paper.
 
 In progress (2026-09-09, DEC-022, separate process): a visual pass toward ~70% premium editorial / 20% interactive product visualisation / 10% playful illustrated character, component-first clean-room reconstruction of selected reference components (Birdhouse for composition, Hydra for interaction); content, sections and section order preserved; the Authority Factory expressed as system visualisation rather than a literal cartoon factory. Re-baseline `qa-baselines/public/` when it lands.

@@ -1398,6 +1398,26 @@ density and workflows unchanged). Full record: `docs/design/THREADLINE_PUBLIC_EX
 
 ---
 
+## 16k. Public site v4 — the final website pass (2026-09-12)
+
+**Decision (DEC-025).** The marketing experience the owner drove through three passes in the `thebirdhouse/` workspace (tags `threadline-marketing-v1`, `v2`, `v3`) is now the public site. It was integrated by a generated port, not by hand-copying and not by integrating the reference reconstruction: the workspace's stylesheets are flattened under the production `.tl-public` scope into `src/styles/marketing/marketing.css` (every selector prefixed; `.container` → `.mk-container`, `.gap-N` → `.stack-N` to avoid Tailwind utility collisions; fonts mapped onto the `next/font` variables; the element resets Tailwind's preflight already provides dropped); the twelve section components, `HeroScene`, `Frame`, `Icons`, `Reveal`, `Marquee` live in `src/components/marketing-v4/`; the copy in `src/content/marketing-site.ts`; the motion tokens in `src/content/marketing-tokens.ts`. The production-only additions are hand-authored in `src/styles/marketing/marketing-extra.css`. `thebirdhouse/` stays git-ignored; the source of truth for the ported files is that repository at `threadline-marketing-v3` and the four design documents copied to `docs/design/marketing-v4/`.
+
+**What the homepage is now** (`src/app/(marketing)/page.tsx`): hero (the authority machine, a six-beat timeline with replay) → the expertise vault → market memory → the six-cell system summary (new, data-driven: `grid.cells`) → founder burden (night band, the pile swept into the machinery) → the Authority Workshop (six workstations with micro-stories) → one idea, the right expressions (why-sentences) → attention → commercial movement (the travelling signal) → expected → actual (three illustrative cases, a lever, retest) → the twelve-week accumulator → the work table → the sorting → the closing (the machine one layer taller). The material ticker was dropped as repetition of the vault. The sticky apply bar was dropped: the nav carries the one CTA.
+
+**Category.** Everything public now says "a managed authority system for expert-led (B2B) firms": root metadata, the share card, the footer line, the application email footer, Who it is for. "Content growth", "operating system behind founder-led content" and "Apply for a content growth diagnosis" are gone; the apply headline is "Apply for a diagnosis, not a pitch."
+
+**Navigation.** How it works · Who it is for · Playbook · Sign in · See if Threadline fits; a drawer below 992px. The inner pages keep their components and take the v4 palette through the `.tl-public` tokens (`src/app/public.css`).
+
+**Playbook as a product.** The ten chapters stay. The hub gains "Two things to do before you apply": the five-category diagnostic (existing component) and the acquisition model — `required first touches = target wins ÷ (booking × show × qualification × close)`, built on `src/lib/domain/funnel.ts` in `src/lib/domain/acquisition-model.ts` (9 unit tests): the funnel read backwards, every stage rounded up, a refusal on any zero rate, the lowest rate named as the lever (a ten-point move there saves the most touches), and the page says it is a model of the visitor's assumptions, not a forecast. The cost-of-the-status-quo calculator stays at `/calculator` (footer).
+
+**Removed.** `src/components/marketing/product-views.tsx`, `sections.tsx`, `sticky-cta.tsx` — unreferenced since the captivation pass and the only source files carrying £ figures.
+
+**Interaction model (all input modes).** Hover starts a workstation, stamp note or why-sentence on pointer devices and a click keeps it; keyboard (`Enter`/`Space`) and touch toggle; focus counts only when it is keyboard focus (`:focus-visible`). Timelines start from an `IntersectionObserver` and play once; loops pause off screen; reduced motion renders every scene's final composition.
+
+**Verification (production build).** On the final production build (`npm run build`, 12 September 2026): `tsc --noEmit` 0 errors · `eslint src` clean · `npm test` **634 / 634** (the acquisition model adds 9) · `qa:public` **54 pass · 8 partial · 0 fail** over 11 public routes at 20 widths, including the live three-step application submit (the 8 partials are tap-target notes at 390px: the memory stamps measure 36px before their timeline has played because they rest at `scale(.6)`; the instrument's case chips are 42px tall; "Apply" buttons round to 43.x px on inner pages) · `qa:visual` baselines re-taken at 1440 / 1024 / 768 / 390 / 320 for the six public routes (`qa-baselines/public/`) · `qa:browser` **101 pass · 21 partial · 0 fail** · the marketing functional suite run against this server (`thebirdhouse/scripts/qa-functional.mjs` with `QA_TARGET=production`) **78 / 78** — hero choreography, vault, memory timeline and stamp notes, workstations (mouse, keyboard, emulated touch), expressions why-sentences, staircase token, instrument states and keyboard, closing stack, reduced motion at load and after scrolling, the Playbook tools (the model reacts, clamps a zero rate, labels itself), no exact pricing on any page. Two QA-tool changes were needed and are deliberate: `public-qa.ts` now treats `overflow: hidden|clip` ancestors as clipping when it lists wide elements (the document-level scrollWidth check still catches real overflow), and the prototype's functional suite gained a production target.
+
+**Owner inputs still open.** No git remote is configured and the GitHub CLI is not installed, so the final commit is local (see §20). A privacy notice does not exist as a route (the application form collects an email; the prototype's draft with bracketed owner inputs was not ported because the placeholder register would reject it). `PH-DOMAIN` and the booking URL remain as before.
+
 ## 17. DO NOT BREAK
 
 1. **Tenant isolation.** No repository or action may obtain an `orgId` from anywhere except an
@@ -1825,6 +1845,8 @@ contravariance, and role denials surfacing as error boundaries instead of explan
 ---
 
 ## 20. Last verified state
+
+**2026-09-12 — public site v4 (the final website pass, §16k, DEC-025).** Verified on the production build as recorded in §16k: 634 tests, qa:public 54/8/0, qa:browser 101/21/0, marketing functional 78/78, visual baselines re-taken. Committed locally; still no remote (below).
 
 Measured fresh on **2026-09-11** on the integration-pass tree (the commit after `0cfc551`),
 production build, after the last change. The identical battery had been run on the captivation-pass

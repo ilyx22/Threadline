@@ -5,7 +5,7 @@ import { APPLY } from "@/content/public-site";
 import { Eyebrow } from "@/components/public/primitives";
 
 export const metadata: Metadata = {
-  title: "Apply for a content growth diagnosis",
+  title: "Apply for a diagnosis, not a pitch",
   description: "Tell us where demand is actually constrained and how content gets made today. Read by a person, replied to either way.",
   alternates: { canonical: "/apply" },
   robots: { index: true, follow: true },

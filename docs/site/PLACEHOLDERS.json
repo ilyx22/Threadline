@@ -1,15 +1,71 @@
 {
   "version": 1,
-  "updated": "2026-09-09",
+  "updated": "2026-09-12",
   "note": "Unresolved public-site inputs with stable ids. Autofilled from the repository wherever the source of truth already knows the answer; only genuinely unknown owner inputs are listed as OPEN. Machine-checked by scripts/qa/public-qa.ts (placeholder regex) and reviewed by hand here.",
   "items": [
-    { "id": "PH-DOMAIN", "kind": "metadata", "status": "OPEN", "where": "NEXT_PUBLIC_APP_URL (.env) → canonical URLs, sitemap, OG", "needs": "The production domain. The site refers to itself as Threadline; the footer wordmark carries no domain until this is set.", "owner": "founder" },
-    { "id": "PH-EMAIL-PROVIDER", "kind": "integration", "status": "OPEN", "where": "EMAIL_PROVIDER / RESEND_API_KEY / EMAIL_FROM", "needs": "A sending domain and API key. Until then invitations and resets are captured, not delivered, and the UI says so.", "owner": "founder" },
-    { "id": "PH-BOOKING-URL", "kind": "link", "status": "OPEN", "where": "NEXT_PUBLIC_BOOKING_URL", "needs": "The scheduling link shown after a successful application. Without it the confirmation step shows no booking button (handled, not broken).", "owner": "founder" },
-    { "id": "PH-LEGAL", "kind": "legal", "status": "OPEN", "where": "footer 'Fine print' column", "needs": "Privacy notice and terms pages. Not fabricated; the footer links to the playbook's 'What we do not promise' chapter until real documents exist.", "owner": "founder / legal" },
-    { "id": "PH-CANONICAL-SCRIPTS", "kind": "copy", "status": "OPEN", "where": "/admin/scripts", "needs": "Approve the imported draft script blocks (or replace their wording) so calls can use canonical text. Internal, not public.", "owner": "founder" },
-    { "id": "PH-PROOF", "kind": "claims", "status": "DELIBERATELY_EMPTY", "where": "home §proof", "needs": "Nothing until a client confirms a positive outcome and grants ProofPermission. The section shows a labelled synthetic chain by design.", "owner": "—" },
-    { "id": "PH-OG-IMAGE", "kind": "asset", "status": "RESOLVED", "where": "src/app/opengraph-image.tsx", "needs": "Generated at build from the brand palette; replace with a designed image if wanted.", "owner": "—" },
-    { "id": "PH-FAVICON", "kind": "asset", "status": "RESOLVED", "where": "src/app/icon.svg", "needs": "Ink T with the ember thread.", "owner": "—" }
+    {
+      "id": "PH-DOMAIN",
+      "kind": "metadata",
+      "status": "OPEN",
+      "where": "NEXT_PUBLIC_APP_URL (.env) → canonical URLs, sitemap, OG",
+      "needs": "The production domain. The site refers to itself as Threadline; the footer wordmark carries no domain until this is set.",
+      "owner": "founder"
+    },
+    {
+      "id": "PH-EMAIL-PROVIDER",
+      "kind": "integration",
+      "status": "OPEN",
+      "where": "EMAIL_PROVIDER / RESEND_API_KEY / EMAIL_FROM",
+      "needs": "A sending domain and API key. Until then invitations and resets are captured, not delivered, and the UI says so.",
+      "owner": "founder"
+    },
+    {
+      "id": "PH-BOOKING-URL",
+      "kind": "link",
+      "status": "OPEN",
+      "where": "NEXT_PUBLIC_BOOKING_URL",
+      "needs": "The scheduling link shown after a successful application. Without it the confirmation step shows no booking button (handled, not broken).",
+      "owner": "founder"
+    },
+    {
+      "id": "PH-LEGAL",
+      "kind": "legal",
+      "status": "OPEN",
+      "where": "footer 'Fine print' column",
+      "needs": "Privacy notice and terms pages. Not fabricated; the footer links to the playbook's 'What we do not promise' chapter until real documents exist. The application form collects an email, so the privacy notice is the first of these to write.",
+      "owner": "founder / legal"
+    },
+    {
+      "id": "PH-CANONICAL-SCRIPTS",
+      "kind": "copy",
+      "status": "OPEN",
+      "where": "/admin/scripts",
+      "needs": "Approve the imported draft script blocks (or replace their wording) so calls can use canonical text. Internal, not public.",
+      "owner": "founder"
+    },
+    {
+      "id": "PH-PROOF",
+      "kind": "claims",
+      "status": "DELIBERATELY_EMPTY",
+      "where": "home §proof",
+      "needs": "Nothing until a client confirms a positive outcome and grants ProofPermission. The section shows a labelled synthetic chain by design.",
+      "owner": "—"
+    },
+    {
+      "id": "PH-OG-IMAGE",
+      "kind": "asset",
+      "status": "RESOLVED",
+      "where": "src/app/opengraph-image.tsx",
+      "needs": "Generated at build from the v4 palette with the hero headline; replace with a designed image if wanted.",
+      "owner": "—"
+    },
+    {
+      "id": "PH-FAVICON",
+      "kind": "asset",
+      "status": "RESOLVED",
+      "where": "src/app/icon.svg",
+      "needs": "Ink T with the cobalt thread (v4 palette).",
+      "owner": "—"
+    }
   ]
 }

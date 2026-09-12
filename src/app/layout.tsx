@@ -21,6 +21,7 @@ const display = Fraunces({
   subsets: ["latin"],
   axes: ["opsz", "SOFT", "WONK"],
   weight: "variable",
+  style: ["normal", "italic"],
   variable: "--font-display",
   display: "swap",
 });
@@ -35,16 +36,16 @@ const label = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"),
   title: {
-    default: "Threadline — the operating system behind founder-led content",
+    default: "Threadline — a managed authority system for expert-led firms",
     template: "%s · Threadline",
   },
   description:
-    "Threadline installs the operating system behind founder-led content: research, ideas, scripts, production, distribution and learning in one place.",
-  applicationName: "Threadline OS",
+    "Threadline is a managed authority system for expert-led B2B firms: it makes the expertise that wins the work visible before the sales call, and learns what actually moves buyers.",
+  applicationName: "Threadline",
   openGraph: {
     title: "Threadline",
     description:
-      "Your content operation, without the content chaos. Threadline installs the operating system behind founder-led content.",
+      "Make the expertise that wins the work visible before the sales call. A managed authority system for expert-led B2B firms.",
     type: "website",
   },
   robots: { index: true, follow: true },
