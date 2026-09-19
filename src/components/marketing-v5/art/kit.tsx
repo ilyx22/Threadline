@@ -4,12 +4,12 @@
  * Every public scene is drawn from these parts, in code, by hand: people with
  * faces, paper, crates, machines and the one continuous thread. The grammar:
  *
- *   · filled shapes, a 3-unit ink outline with round joins, flat pastel fills;
+ *   · restrained fills, a fine architectural outline and square-ended detail;
  *   · limbs are a thick ink stroke with a coloured stroke on top, so they read
  *     as outlined at any angle;
  *   · the thread is always two strokes — ink underneath, marigold on top — so
  *     it survives every background;
- *   · labels are set in the mono label face, ≥ 15 units, and only where a
+ *   · labels are set in the site sans face and only where a
  *     visitor needs a word to read the object.
  *
  * All artwork here is original to Threadline. Nothing is traced, imported or
@@ -42,7 +42,7 @@ export const C = {
 export const SKIN = ["#F3CDAE", "#D8A47F", "#A8744F", "#F7DCC6", "#8A5A3C"] as const;
 
 type G = React.SVGProps<SVGGElement>;
-const O = { stroke: C.ink, strokeWidth: 3, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
+const O = { stroke: C.ink, strokeWidth: 2.15, strokeLinejoin: "round" as const, strokeLinecap: "round" as const };
 
 /** Place a group: translate, optional scale, flip and rotation. */
 export function At({ x = 0, y = 0, s = 1, flip = false, r = 0, children, ...rest }: { x?: number; y?: number; s?: number; flip?: boolean; r?: number } & G) {
@@ -57,10 +57,10 @@ export function At({ x = 0, y = 0, s = 1, flip = false, r = 0, children, ...rest
 
 /** The Threadline: an outlined marigold cord. `draw` lets motion.css draw it once in view. */
 export function Thread({ d, draw = false, thin = false, className = "", dashed = false }: { d: string; draw?: boolean; thin?: boolean; className?: string; dashed?: boolean }) {
-  const w = thin ? 3 : 5;
+  const w = thin ? 2.4 : 3.6;
   return (
     <g className={`v5-thread${draw ? " is-draw" : ""} ${className}`} fill="none" strokeLinecap="round" strokeLinejoin="round">
-      <path d={d} stroke={C.ink} strokeWidth={w + 5} pathLength={1} />
+      <path d={d} stroke={C.ink} strokeWidth={w + 3.2} pathLength={1} />
       <path d={d} stroke={C.gold} strokeWidth={w} pathLength={1} strokeDasharray={dashed ? "0.012 0.02" : undefined} />
     </g>
   );
@@ -127,14 +127,14 @@ function Limb({ from, to, bend = 10, tone }: { from: [number, number]; to: [numb
   const d = `M${from[0]} ${from[1]} Q${ex} ${ey} ${to[0]} ${to[1]}`;
   return (
     <g fill="none" strokeLinecap="round">
-      <path d={d} stroke={C.ink} strokeWidth={15} />
-      <path d={d} stroke={tone} strokeWidth={9} />
+      <path d={d} stroke={C.ink} strokeWidth={10.5} />
+      <path d={d} stroke={tone} strokeWidth={6.5} />
     </g>
   );
 }
 
 /** One figure, ~160 units tall at s=1, origin at the feet. */
-export function Person({ x, y, s = 1, flip, shirt = C.coral, legs = C.navy, skin = SKIN[0], hair = C.ink, hairStyle = "short", glasses, armL = [-30, -62], armR = [30, -62], sit, look = 0, mood = "smile", apron, className }: PersonProps) {
+export function Person({ x, y, s = 1, flip, shirt = C.coral, legs = C.navy, skin = SKIN[0], hair = C.ink, hairStyle = "short", glasses, armL = [-30, -62], armR = [30, -62], sit, look = 0, apron, className }: PersonProps) {
   const e = look * 2.2;
   return (
     <At x={x} y={y} s={s} flip={flip} className={className}>
@@ -145,62 +145,56 @@ export function Person({ x, y, s = 1, flip, shirt = C.coral, legs = C.navy, skin
           <Limb from={[26, -50]} to={[30, -6]} bend={0} tone={legs} />
           <Limb from={[9, -58]} to={[40, -52]} bend={0} tone={legs} />
           <Limb from={[40, -52]} to={[44, -6]} bend={0} tone={legs} />
-          <ellipse cx={36} cy={-3} rx={11} ry={6} fill={C.ink} />
-          <ellipse cx={50} cy={-3} rx={11} ry={6} fill={C.ink} />
+          <ellipse cx={36} cy={-3} rx={9} ry={4} fill={C.ink} />
+          <ellipse cx={50} cy={-3} rx={9} ry={4} fill={C.ink} />
         </g>
       ) : (
         <g>
           <Limb from={[-10, -58]} to={[-11, -8]} bend={0} tone={legs} />
           <Limb from={[10, -58]} to={[11, -8]} bend={0} tone={legs} />
-          <ellipse cx={-14} cy={-3} rx={12} ry={6} fill={C.ink} />
-          <ellipse cx={14} cy={-3} rx={12} ry={6} fill={C.ink} />
+          <ellipse cx={-14} cy={-3} rx={9} ry={4} fill={C.ink} />
+          <ellipse cx={14} cy={-3} rx={9} ry={4} fill={C.ink} />
         </g>
       )}
       {/* far arm behind the torso */}
       <Limb from={[-19, -106]} to={armL} bend={-9} tone={shirt} />
       {/* torso */}
-      <path d="M-21 -110 Q-22 -118 -13 -118 L13 -118 Q22 -118 21 -110 L25 -58 Q25 -52 19 -52 L-19 -52 Q-25 -52 -25 -58 Z" fill={shirt} {...O} />
+      <path d="M-19 -112 Q-20 -119 -12 -119 L12 -119 Q20 -119 19 -112 L22 -55 Q22 -50 17 -50 L-17 -50 Q-22 -50 -22 -55 Z" fill={shirt} {...O} />
       {apron ? <path d="M-13 -100 L13 -100 L17 -54 L-17 -54 Z" fill={apron} {...O} /> : null}
       {/* neck + head */}
-      <rect x={-6} y={-126} width={12} height={12} fill={skin} {...O} />
-      <circle cx={0} cy={-140} r={18} fill={skin} {...O} />
+      <rect x={-5} y={-126} width={10} height={12} fill={skin} {...O} />
+      <ellipse cx={0} cy={-140} rx={14} ry={17} fill={skin} {...O} />
       {/* hair */}
-      {hairStyle === "short" && <path d="M-18 -142 A18 18 0 0 1 18 -142 Q9 -150 -2 -147 Q-11 -145 -18 -142 Z" fill={hair} {...O} />}
-      {hairStyle === "side" && <path d="M-18 -140 A18 18 0 0 1 18 -144 Q4 -146 -4 -156 Q-6 -146 -18 -140 Z" fill={hair} {...O} />}
-      {hairStyle === "bob" && <path d="M-19 -124 Q-23 -150 -8 -157 Q10 -162 19 -146 Q22 -134 19 -124 L13 -126 Q15 -144 0 -147 Q-13 -146 -13 -126 Z" fill={hair} {...O} />}
+      {hairStyle === "short" && <path d="M-14 -142 A14 17 0 0 1 14 -142 Q7 -150 -2 -147 Q-9 -145 -14 -142 Z" fill={hair} {...O} />}
+      {hairStyle === "side" && <path d="M-14 -140 A14 17 0 0 1 14 -144 Q3 -146 -3 -154 Q-5 -146 -14 -140 Z" fill={hair} {...O} />}
+      {hairStyle === "bob" && <path d="M-15 -125 Q-18 -150 -7 -156 Q9 -159 15 -146 Q18 -134 15 -125 L10 -127 Q12 -144 0 -147 Q-11 -146 -10 -127 Z" fill={hair} {...O} />}
       {hairStyle === "bun" && (
         <g>
-          <circle cx={0} cy={-163} r={8} fill={hair} {...O} />
-          <path d="M-18 -142 A18 18 0 0 1 18 -142 Q8 -152 0 -151 Q-8 -152 -18 -142 Z" fill={hair} {...O} />
+          <circle cx={0} cy={-160} r={6} fill={hair} {...O} />
+          <path d="M-14 -142 A14 17 0 0 1 14 -142 Q7 -151 0 -149 Q-7 -151 -14 -142 Z" fill={hair} {...O} />
         </g>
       )}
       {hairStyle === "curly" && (
         <g fill={hair} {...O}>
-          <circle cx={-13} cy={-151} r={8} />
-          <circle cx={0} cy={-157} r={9} />
-          <circle cx={13} cy={-151} r={8} />
-          <circle cx={-18} cy={-141} r={6} />
-          <circle cx={18} cy={-141} r={6} />
+          <circle cx={-10} cy={-150} r={6} />
+          <circle cx={0} cy={-155} r={7} />
+          <circle cx={10} cy={-150} r={6} />
+          <circle cx={-14} cy={-141} r={5} />
+          <circle cx={14} cy={-141} r={5} />
         </g>
       )}
-      {/* face */}
-      <circle cx={-6 + e} cy={-140} r={2.4} fill={C.ink} />
-      <circle cx={6 + e} cy={-140} r={2.4} fill={C.ink} />
+      {/* restrained editorial figures stay deliberately faceless */}
       {glasses ? (
-        <g fill="none" stroke={C.ink} strokeWidth={2}>
-          <circle cx={-6 + e} cy={-140} r={6} />
-          <circle cx={6 + e} cy={-140} r={6} />
-          <path d={`M${0 + e - 0.5} -140 h1`} />
+        <g fill="none" stroke={C.ink} strokeWidth={1.5} opacity={0.72}>
+          <circle cx={-5 + e} cy={-140} r={4.5} />
+          <circle cx={5 + e} cy={-140} r={4.5} />
+          <path d={`M${-0.5 + e} -140 h1`} />
         </g>
       ) : null}
-      {mood === "smile" && <path d={`M${-5 + e} -131 Q${e} -126 ${5 + e} -131`} fill="none" stroke={C.ink} strokeWidth={2.2} strokeLinecap="round" />}
-      {mood === "grin" && <path d={`M${-6 + e} -132 Q${e} -123 ${6 + e} -132 Z`} fill={C.white} stroke={C.ink} strokeWidth={2.2} strokeLinejoin="round" />}
-      {mood === "flat" && <path d={`M${-4 + e} -130 H${4 + e}`} stroke={C.ink} strokeWidth={2.2} strokeLinecap="round" />}
-      {mood === "oh" && <circle cx={e} cy={-130} r={3} fill={C.ink} />}
       {/* near arm + hands */}
       <Limb from={[19, -106]} to={armR} bend={9} tone={shirt} />
-      <circle cx={armL[0]} cy={armL[1]} r={7} fill={skin} {...O} />
-      <circle cx={armR[0]} cy={armR[1]} r={7} fill={skin} {...O} />
+      <circle cx={armL[0]} cy={armL[1]} r={5.5} fill={skin} {...O} />
+      <circle cx={armR[0]} cy={armR[1]} r={5.5} fill={skin} {...O} />
     </At>
   );
 }
@@ -304,7 +298,7 @@ export function Crate({ x, y, w = 110, h = 64, label, fill = C.wood, s = 1, r = 
       <rect x={-w / 2} y={-h} width={w} height={h} rx={6} fill={fill} {...O} />
       <path d={`M${-w / 2} ${-h + 14} H${w / 2}`} stroke={C.ink} strokeWidth={2.4} opacity={0.5} />
       {label ? (
-        <text x={0} y={-h / 2 + 12} textAnchor="middle" className="v5-label">
+        <text x={0} y={-h / 2 + 12} textAnchor="middle" className="v5-label" textLength={Math.min(w - 16, label.length * 8)} lengthAdjust="spacingAndGlyphs">
           {label}
         </text>
       ) : null}
@@ -328,7 +322,7 @@ export function Folder({ x, y, fill = C.mint, label, s = 1, r = 0 }: { x: number
       <path d="M-52 -58 H-14 L-4 -48 H52 V0 H-52 Z" fill={fill} {...O} />
       <path d="M-52 -40 H52" stroke={C.ink} strokeWidth={2.4} opacity={0.5} />
       {label ? (
-        <text x={0} y={-14} textAnchor="middle" className="v5-label is-xs">
+        <text x={0} y={-14} textAnchor="middle" className="v5-label is-xs" textLength={Math.min(86, label.length * 7)} lengthAdjust="spacingAndGlyphs">
           {label}
         </text>
       ) : null}
@@ -400,8 +394,9 @@ export function Armchair({ x, y, s = 1, fill = C.lilac }: { x: number; y: number
 export function Spark({ x, y, s = 1, tone = C.gold }: { x: number; y: number; s?: number; tone?: string }) {
   return (
     <At x={x} y={y} s={s}>
-      <g className="v5-twinkle">
-        <path d="M0 -14 L4 -4 L14 0 L4 4 L0 14 L-4 4 L-14 0 L-4 -4 Z" fill={tone} {...O} strokeWidth={2.4} />
+      <g>
+        <circle r={4.5} fill={tone} stroke={C.ink} strokeWidth={1.8} />
+        <path d="M0 -15 V-9 M0 9 V15 M-15 0 H-9 M9 0 H15" stroke={C.ink} strokeWidth={1.8} strokeLinecap="square" />
       </g>
     </At>
   );

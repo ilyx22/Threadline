@@ -91,7 +91,7 @@ export function MemoryArt({ layout = "wide" }: { layout?: "wide" | "tall" }) {
   }
   const xs = [150, 440, 730, 1020, 1300];
   return (
-    <svg viewBox="0 0 1440 420" className="v5-art" role="img" aria-label="The same buyer, five times, left to right: scrolling past a company update on the train; a useful post landing at her desk; quoting the judgement behind it over coffee; a proof asset answering her question in a meeting; picking up the phone when the problem arrives. A thread runs behind the strip and ties a knot at every useful encounter.">
+    <svg viewBox="0 100 1440 320" className="v5-art" role="img" aria-label="The same buyer, five times, left to right: scrolling past a company update on the train; a useful post landing at her desk; quoting the judgement behind it over coffee; a proof asset answering her question in a meeting; picking up the phone when the problem arrives. A thread runs behind the strip and ties a knot at every useful encounter.">
       <path d="M0 340 H1440" stroke={C.ink} strokeWidth={3} />
       <Thread draw d="M-10 372 Q300 372 440 372 T880 372 T1450 372" />
       {xs.map((x, i) => (

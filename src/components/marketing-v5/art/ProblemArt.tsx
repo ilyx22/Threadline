@@ -48,12 +48,7 @@ export function Vault() {
         <path d="M-22 -10 H22 M-22 0 H22 M-22 10 H6" stroke={C.ink} strokeWidth={2.4} strokeLinecap="round" opacity={0.7} />
       </At>
       <Person x={826} y={556} s={0.98} flip shirt={C.lilac} skin={SKIN[0]} hairStyle="bob" glasses armL={[-30, -74]} armR={[30, -100]} look={-1} mood="grin" />
-      <g className="v5-talk">
-        <path d="M770 372 Q770 350 792 350 H830 Q852 350 852 372 Q852 394 830 394 H802 L788 406 L790 394 Q770 392 770 372 Z" fill={C.butter} {...O} strokeWidth={2.4} />
-        <circle cx={796} cy={372} r={3.2} fill={C.ink} />
-        <circle cx={811} cy={372} r={3.2} fill={C.ink} />
-        <circle cx={826} cy={372} r={3.2} fill={C.ink} />
-      </g>
+      <path d="M770 372 H846" stroke={C.gold} strokeWidth={2.2} strokeDasharray="5 7" opacity={0.8} />
       <Plate x={120} y={32} tone={C.paper}>
         INSIDE THE FIRM
       </Plate>
@@ -83,7 +78,7 @@ export function Outside({ tall = false }: { tall?: boolean }) {
       <Person x={330} y={556} s={1.02} shirt={C.coral} skin={SKIN[1]} hairStyle="bun" armL={[-40, -100]} armR={[36, -102]} mood="flat" look={-1} />
       <At x={290} y={452} r={-8}>
         <rect x={-26} y={-18} width={52} height={36} rx={4} fill={C.butter} {...O} strokeWidth={2.4} />
-        <text x={0} y={5} textAnchor="middle" className="v5-label is-sm">
+        <text x={0} y={4} textAnchor="middle" className="v5-label is-xs" textLength={40} lengthAdjust="spacingAndGlyphs">
           REFERRAL
         </text>
       </At>
@@ -110,7 +105,7 @@ export function ProblemArt({ layout = "wide" }: { layout?: "wide" | "tall" }) {
         <Grain id="g-problem-t" />
         <rect x={0} y={0} width={400} height={560} fill={C.navy} />
         <g clipPath="url(#pr-tall-clip)">
-          <At x={-30} y={50} s={0.6}>
+          <At x={24} y={50} s={0.6}>
             <Vault />
           </At>
         </g>
@@ -125,7 +120,7 @@ export function ProblemArt({ layout = "wide" }: { layout?: "wide" | "tall" }) {
         <Thread draw thin d="M200 470 Q200 520 200 566 Q200 640 236 700 Q300 760 240 860" />
         <path d="M0 1010 H400" stroke={C.ink} strokeWidth={3} />
         <rect x={0} y={1010} width={400} height={30} fill={C.paper} />
-        <At x={-20} y={454} s={0.98}>
+        <At x={-8} y={454} s={0.94}>
           <Outside tall />
         </At>
         <rect width={400} height={1040} filter="url(#g-problem-t)" opacity={0.45} pointerEvents="none" />

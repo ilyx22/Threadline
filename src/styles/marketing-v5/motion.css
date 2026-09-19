@@ -10,11 +10,10 @@
 @media (prefers-reduced-motion: no-preference) {
   .tl-public [data-scene][data-inview="true"] .v5-thread.is-draw path { stroke-dasharray: 1; animation: v5-draw 1.7s var(--v5-ease) both; }
   .tl-public [data-scene][data-inview="true"] .v5-thread.is-draw path:last-child { animation-delay: 60ms; }
-  .tl-public [data-scene][data-inview="true"] > .v5-hero-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-problem-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-memory-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-movement-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-cycle-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-closing-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-burden-calm .v5-art, .tl-public [data-scene][data-inview="true"] .v5-burden-machine .v5-art { animation: v5-settle 900ms var(--v5-ease) both; }
-  .tl-public [data-scene][data-inview="true"] .v5-tagline { animation: v5-hang 700ms var(--v5-ease) both; animation-delay: calc(var(--i, 0) * 70ms); }
-  .tl-public .v5-belt { animation: v5-belt 1.4s linear infinite; }
-  .tl-public .v5-conveyed { animation: v5-conveyed 6s linear infinite; }
-  .tl-public .v5-shuttle { animation: v5-shuttle 1.6s ease-in-out infinite alternate; }
+  .tl-public [data-scene][data-inview="true"] > .v5-hero-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-problem-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-memory-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-engagement-sheet .v5-art, .tl-public [data-scene][data-inview="true"] .v5-closing-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-burden-calm .v5-art, .tl-public [data-scene][data-inview="true"] .v5-burden-machine .v5-art { animation: v5-settle 900ms var(--v5-ease) both; }
+  .tl-public .v5-belt { animation: v5-belt 5s linear infinite; }
+  .tl-public .v5-conveyed { animation: v5-conveyed 14s linear infinite; }
+  .tl-public .v5-shuttle { animation: v5-shuttle 4s ease-in-out infinite alternate; }
   .tl-public .v5-newpart { animation: v5-slide-in 700ms var(--v5-ease) both; }
   .tl-public [data-inview="false"] .v5-belt, .tl-public [data-inview="false"] .v5-conveyed, .tl-public [data-inview="false"] .v5-shuttle { animation-play-state: paused; }
 }

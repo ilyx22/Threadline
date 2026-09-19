@@ -8,7 +8,7 @@
  */
 import path from "node:path";
 import { record, section, summary } from "./context";
-import { evaluate, launchChrome, setViewport, sleep } from "./cdp";
+import { evaluate, launchChrome, open, setViewport, sleep } from "./cdp";
 
 const BASE = (process.env.QA_BASE ?? "http://localhost:3000").replace(/\/$/, "");
 const OUT = path.resolve("scripts/qa/.shots/web-vitals");
@@ -26,13 +26,13 @@ async function main() {
     section("web vitals — homepage");
     for (const [w, h] of [[1440, 900], [390, 844]] as const) {
       await setViewport(cdp, w, h);
+      await cdp.send("Page.enable");
       await cdp.send("Page.addScriptToEvaluateOnNewDocument", { source: OBSERVE });
-      await cdp.send("Page.navigate", { url: `${BASE}/?vitals=${w}` });
-      await sleep(4500);
+      await open(cdp, `${BASE}/?vitals=${w}`, 4500);
       // scroll a little so late layout shifts (fonts, images) would register
       await evaluate(cdp, `window.scrollTo(0, 400); true`);
       await sleep(800);
-      const v = await evaluate<{ lcp: number; cls: number }>(cdp, `window.__vitals`);
+      const v = (await evaluate<{ lcp: number; cls: number } | null>(cdp, `window.__vitals || null`)) ?? { lcp: 0, cls: 0 };
       record("vitals", `LCP at ${w}px`, v.lcp > 0 && v.lcp <= BUDGET.lcp ? "PASS" : v.lcp > 0 ? "PARTIAL" : "FAIL", `${Math.round(v.lcp)} ms (budget ${BUDGET.lcp})`);
       record("vitals", `CLS at ${w}px`, v.cls <= BUDGET.cls ? "PASS" : "FAIL", `${v.cls.toFixed(3)} (budget ${BUDGET.cls})`, v.cls > BUDGET.cls ? "CLS" : undefined);
     }

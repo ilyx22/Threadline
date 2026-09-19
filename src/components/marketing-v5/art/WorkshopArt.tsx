@@ -10,6 +10,7 @@ import { Artefact, At, C, Gear, Grain, Person, Plate, SKIN, Signal, Spool, Threa
  * component moves it. Local box 1800 × 640, bench top at y=430.
  */
 export const STATION_X = [150, 450, 750, 1050, 1350, 1650];
+export const WORKSHOP_W = 1800;
 
 function Bench() {
   return (
@@ -109,9 +110,10 @@ function SignalTray() {
 function TestBench() {
   return (
     <g>
-      <rect x={1560} y={360} width={200} height={70} rx={10} fill={C.sky} {...O} />
+      <rect x={1540} y={330} width={240} height={10} rx={4} fill={C.wood} {...O} />
+      <rect x={1560} y={262} width={200} height={68} rx={10} fill={C.sky} {...O} />
       {[0, 1, 2].map((i) => (
-        <g key={i} transform={`translate(${1590 + i * 60} 395)`}>
+        <g key={i} transform={`translate(${1590 + i * 60} 296)`}>
           <rect x={-18} y={-26} width={36} height={52} rx={6} fill={C.white} {...O} strokeWidth={2.4} />
           <rect x={-14} y={[-6, 14, -14][i]} width={28} height={[30, 10, 38][i]} rx={3} fill={[C.mintDeep, C.coralDeep, C.mintDeep][i]} />
           <path d="M-22 -12 H22" stroke={C.ink} strokeWidth={2} strokeDasharray="4 3" />
@@ -140,7 +142,12 @@ function Carrier({ state }: { state: number }) {
           ))}
         </g>
       )}
-      {state === 1 && <Spool x={0} y={-30} s={0.9} label="ROOT THESIS" />}
+      {state === 1 && (
+        <g>
+          <Spool x={0} y={-30} s={0.9} />
+          <Plate x={0} y={-86}>ROOT THESIS</Plate>
+        </g>
+      )}
       {state === 2 && (
         <g>
           <Artefact kind="post" x={-70} y={-50} s={0.72} r={-8} />
@@ -168,7 +175,8 @@ function Carrier({ state }: { state: number }) {
       )}
       {state === 5 && (
         <g>
-          <Spool x={0} y={-30} s={0.9} label="ROOT THESIS · V2" />
+          <Spool x={0} y={-30} s={0.9} />
+          <Plate x={0} y={-86}>ROOT THESIS · V2</Plate>
           <rect x={-46} y={-64} width={20} height={34} rx={4} fill={C.mint} {...O} strokeWidth={2.4} className="v5-newpart" />
         </g>
       )}
@@ -190,7 +198,7 @@ export function WorkshopArt({ station = 0, interactive = true }: { station?: num
       <SignalTray />
       <TestBench />
       {/* station plates */}
-      {["01 · INTELLIGENCE", "02 · ROOT THESIS", "03 · EXPRESSION", "04 · DISTRIBUTION", "05 · SIGNAL", "06 · DIAGNOSIS"].map((t, i) => (
+      {["01 · LISTEN", "02 · DECIDE THE IDEA", "03 · MAKE IT", "04 · PUT IT IN THE ROOM", "05 · READ WHAT CAME BACK", "06 · CHANGE ONE THING"].map((t, i) => (
         <g key={t} className={interactive ? (station === i ? "v5-station is-on" : "v5-station") : "v5-station is-on"}>
           <Plate x={STATION_X[i]} y={150} tone={C.paper}>{t}</Plate>
         </g>

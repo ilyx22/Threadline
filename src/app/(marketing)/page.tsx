@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SITE } from "@/content/public-site";
 import { hero } from "@/content/marketing-v5";
 import Motion from "@/components/marketing-v5/Motion";
-import { Burden, Closing, Comparison, Cycle, Diagnosis, ExpressionsSection, Fit, Hero, Memory, Movement, Problem, Strip, Workshop } from "@/components/marketing-v5/Sections";
+import { Burden, Closing, Diagnosis, Engagement, Fit, Hero, Problem, Workshop } from "@/components/marketing-v5/Sections";
 
 export const metadata: Metadata = {
   title: { absolute: `Threadline — ${hero.headline}` },
@@ -12,12 +12,12 @@ export const metadata: Metadata = {
 };
 
 /**
- * v5 (19 September 2026): the illustrated Threadline world. One continuous
- * thread runs the page: drawn from the firm's archive in the hero, trapped in
- * the vault, tied in knots as a buyer remembers, wound and cut in the
- * workshop, fanned into expressions, followed down the street to a
- * conversation, tested on the bench, woven over twelve weeks, and back at the
- * archive, now visible, in the closing scene. Every sentence comes from
+ * v5 (19 September 2026, review pass): the illustrated Threadline world in
+ * eight scenes. The hero; the problem and the outcome it is solved for; one
+ * illustrative engagement, so the purchase is tangible before the mechanism;
+ * the founder's four jobs beside the busy workshop; the workshop bench; the
+ * testing bench; the fit, with the comparison; the closing callback. One
+ * continuous thread runs the page. Every sentence comes from
  * `src/content/marketing-v5.ts`; illustrative content is labelled on the page.
  */
 export default function HomePage() {
@@ -25,16 +25,11 @@ export default function HomePage() {
     <>
       <Motion />
       <Hero />
-      <Strip />
       <Problem />
-      <Memory />
+      <Engagement />
       <Burden />
       <Workshop />
-      <ExpressionsSection />
-      <Movement />
       <Diagnosis />
-      <Cycle />
-      <Comparison />
       <Fit />
       <Closing />
     </>

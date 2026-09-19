@@ -14,6 +14,21 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { launchChrome, evaluate, open, screenshot, scrollThrough, setViewport } from "./cdp";
 
+/** OneDrive briefly locks a file it is syncing; a capture must not die on that. */
+async function writeWithRetry(file: string, data: Buffer | string, tries = 6) {
+  for (let i = 0; ; i++) {
+    try {
+      writeFileSync(file, data);
+      return;
+    } catch (e) {
+      const code = (e as NodeJS.ErrnoException).code;
+      if (i >= tries - 1 || !(code === "UNKNOWN" || code === "EBUSY" || code === "EPERM")) throw e;
+      await new Promise((r) => setTimeout(r, 500 * (i + 1)));
+    }
+  }
+}
+
+
 const BASE = (process.env.QA_BASE ?? "http://localhost:3000").replace(/\/$/, "");
 const compare = process.argv.includes("--compare");
 const DIR = path.resolve("qa-baselines/public");
@@ -46,11 +61,11 @@ async function main() {
         await evaluate(cdp, "new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))");
         const geo = await evaluate<Geo>(cdp, GEOMETRY);
         geometry[`${width}-${name}`] = geo;
-        writeFileSync(path.join(NEW, `${width}-${name}.jpg`), await screenshot(cdp, { fullPage: true, format: "jpeg", quality: 72 }));
+        await writeWithRetry(path.join(NEW, `${width}-${name}.jpg`), await screenshot(cdp, { fullPage: true, format: "jpeg", quality: 72 }));
         console.log(`${width} ${route}: h=${geo.docHeight} reveals ${geo.revealsFired}/${geo.revealsExpected}${geo.revealsFired !== geo.revealsExpected ? "  <-- not all reveals fired; do not trust a diff" : ""}`);
       }
     }
-    writeFileSync(path.join(NEW, "geometry.json"), JSON.stringify({ capturedAt: new Date().toISOString(), base: BASE, geometry }, null, 2));
+    await writeWithRetry(path.join(NEW, "geometry.json"), JSON.stringify({ capturedAt: new Date().toISOString(), base: BASE, geometry }, null, 2));
 
     if (compare) {
       const basePath = path.join(DIR, "geometry.json");

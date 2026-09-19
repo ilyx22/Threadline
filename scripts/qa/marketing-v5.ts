@@ -40,12 +40,21 @@ async function main() {
     await setViewport(cdp, 1440, 900);
     await open(cdp, `${BASE}/`, 1500);
     await hydrated(cdp);
-    const scenes = await evaluate<number>(cdp, `document.querySelectorAll('section[data-scene]').length`);
-    ok("v5:scenes", "thirteen scenes present", scenes === 13, `${scenes}`);
+    let scenes = await evaluate<number>(cdp, `document.querySelectorAll('section[data-scene]').length`);
+    if (scenes === 0) {
+      // a cold server can answer the very first request late; one retry before judging
+      await open(cdp, `${BASE}/`, 3000);
+      await hydrated(cdp);
+      scenes = await evaluate<number>(cdp, `document.querySelectorAll('section[data-scene]').length`);
+    }
+    ok("v5:scenes", "eight scenes present", scenes === 8, `${scenes}`);
+    if (scenes === 0) throw new Error(`the homepage did not render (title: ${await evaluate<string>(cdp, "document.title")})`);
+    const engagement = await evaluate<{ rows: number; labelled: boolean; sheet: number }>(cdp, `({ rows: document.querySelectorAll('.v5-engagement-steps li').length, labelled: /illustrative/i.test(${q("#engagement")}.innerText), sheet: document.querySelectorAll('.v5-engagement-sheet svg[role=img]').length })`);
+    ok("v5:scenes", "the engagement example has five steps, a sheet, and is labelled illustrative", engagement.rows === 5 && engagement.sheet === 1 && engagement.labelled, JSON.stringify(engagement));
     const hidden = await evaluate<number>(cdp, `[...document.querySelectorAll('section[data-scene] svg, section[data-scene] h2, .v5-tagline')].filter(e => parseFloat(getComputedStyle(e).opacity) < 0.99).length`);
     ok("v5:scenes", "nothing starts hidden", hidden === 0, `${hidden} elements below opacity 1 before scrolling`);
     const arts = await evaluate<number>(cdp, `document.querySelectorAll('svg[role=img][aria-label]').length`);
-    ok("v5:scenes", "every scene illustration carries a description", arts >= 12, `${arts} labelled illustrations`);
+    ok("v5:scenes", "every scene illustration carries a description", arts >= 9, `${arts} labelled illustrations`);
     const h1 = await evaluate<string>(cdp, `document.querySelector('h1')?.textContent`);
     ok("v5:scenes", "hero headline is the approved line", /visible before the sales call/.test(h1 ?? ""), h1 ?? "");
 
@@ -53,16 +62,20 @@ async function main() {
     await evaluate(cdp, `${q("#workshop")}.scrollIntoView({block:'start', behavior:'instant'}); true`);
     await sleep(700);
     ok("v5:workshop", "starts at station 1", (await evaluate<string>(cdp, attr(".v5-stage", "data-station"))) === "0");
+    const captions = await evaluate<number>(cdp, `[...document.querySelectorAll('.v5-stations li')].filter(li => li.getBoundingClientRect().height > 0).length`);
+    ok("v5:workshop", "all six station captions are readable on desktop without interacting", captions === 6, `${captions} visible`);
     await evaluate(cdp, click(".v5-stage-dots li:nth-child(4) .v5-dot"));
     await sleep(600);
-    ok("v5:workshop", "dot moves the carrier to station 4", (await evaluate<string>(cdp, attr(".v5-stage", "data-station"))) === "3");
-    ok("v5:workshop", "caption follows", /distribution/i.test(await evaluate<string>(cdp, `${q(".v5-stage-caption h3")}.textContent`)));
-    await evaluate(cdp, `${q(".v5-stage-art")}.focus(); ${q(".v5-stage-art")}.dispatchEvent(new KeyboardEvent('keydown', {key:'ArrowRight', bubbles:true})); true`);
+    ok("v5:workshop", "a station button moves the carrier to station 4", (await evaluate<string>(cdp, attr(".v5-stage", "data-station"))) === "3");
+    ok("v5:workshop", "the caption is marked as the open one", (await evaluate<string>(cdp, attr(".v5-stations li:nth-child(4)", "data-on"))) === "true");
+    await evaluate(cdp, `const b=${q(".v5-stage-dots li:nth-child(4) .v5-dot")}; b.focus(); b.dispatchEvent(new KeyboardEvent('keydown', {key:'ArrowRight', bubbles:true})); true`);
     await sleep(500);
-    ok("v5:workshop", "arrow key advances", (await evaluate<string>(cdp, attr(".v5-stage", "data-station"))) === "4");
-    await evaluate(cdp, `${q(".v5-stage-track li[data-i='1']")}.scrollIntoView({block:'center', behavior:'instant'}); true`);
-    await sleep(900);
-    ok("v5:workshop", "scrolling the track sets the station", (await evaluate<string>(cdp, attr(".v5-stage", "data-station"))) === "1");
+    ok("v5:workshop", "arrow key on a focused station button advances and moves focus", (await evaluate<string>(cdp, attr(".v5-stage", "data-station"))) === "4" && (await evaluate<boolean>(cdp, `document.activeElement === ${q(".v5-stage-dots li:nth-child(5) .v5-dot")}`)));
+    await evaluate(cdp, `${q(".v5-stage-dots li:nth-child(5) .v5-dot")}.dispatchEvent(new KeyboardEvent('keydown', {key:'End', bubbles:true})); true`);
+    await sleep(400);
+    ok("v5:workshop", "End reaches the last station", (await evaluate<string>(cdp, attr(".v5-stage", "data-station"))) === "5");
+    const artFocusable = await evaluate<boolean>(cdp, `${q(".v5-stage-art")}.hasAttribute('tabindex')`);
+    ok("v5:workshop", "no keyboard handler on a non-focusable art element", artFocusable === false);
     const carrierStates = await evaluate<number>(cdp, `document.querySelectorAll('.v5-carrier > g > g').length`);
     ok("v5:workshop", "carrier shows one object state", carrierStates === 1, `${carrierStates}`);
 
@@ -96,23 +109,11 @@ async function main() {
     const illustrative = await evaluate<boolean>(cdp, `/illustrative/i.test(${q("#diagnosis")}.innerText)`);
     ok("v5:bench", "labelled illustrative on the page", illustrative);
 
-    section("marketing v5 — expressions");
-    await evaluate(cdp, `${q("#expressions")}.scrollIntoView({block:'start', behavior:'instant'}); true`);
-    await sleep(400);
-    await evaluate(cdp, `const b=${q(".v5-expr-btn")}; b.focus(); b.dispatchEvent(new FocusEvent("focusin", {bubbles:true})); true`);
-    await sleep(300);
-    ok("v5:expressions", "focus shows the sentence", /easy to encounter/i.test(await evaluate<string>(cdp, `${q(".v5-expr-why")}.textContent`)));
-    ok("v5:expressions", "the artefact lifts", (await evaluate<number>(cdp, `document.querySelectorAll('.v5-expr.is-on').length`)) === 1);
-    await evaluate(cdp, `const b=${q(".v5-expr-btn")}; b.dispatchEvent(new FocusEvent("focusout", {bubbles:true})); b.blur(); true`);
-    await evaluate(cdp, click(".v5-expr-list li:nth-child(2) .v5-expr-btn"));
-    await sleep(300);
-    ok("v5:expressions", "a press pins the sentence", /judgement behind it/i.test(await evaluate<string>(cdp, `${q(".v5-expr-why")}.textContent`)));
-
     section("marketing v5 — navigation and widths");
     for (const w of [1440, 1024, 768, 390, 320]) {
       await setViewport(cdp, w, 900);
       await open(cdp, `${BASE}/`, 900);
-      const o = await evaluate<{ sw: number; iw: number; wide: string[] }>(cdp, `(() => { const vis = e => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; }; const clipped = e => { for (let p = e.parentElement; p && p !== document.body; p = p.parentElement) { const o = getComputedStyle(p).overflowX; if (o !== 'visible') return true; } return false; }; const wide = [...document.querySelectorAll('body *')].filter(e => vis(e) && e.getBoundingClientRect().right > innerWidth + 2 && !clipped(e)).slice(0,3).map(e => e.tagName + '.' + [...e.classList].join('.')); return { sw: document.documentElement.scrollWidth, iw: innerWidth, wide }; })()`);
+      const o = await evaluate<{ sw: number; iw: number; wide: string[] }>(cdp, `(() => { const vis = e => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; }; const clipped = e => { if (e.namespaceURI === 'http://www.w3.org/2000/svg' && e.tagName.toLowerCase() !== 'svg') return true; for (let p = e.parentElement; p && p !== document.body; p = p.parentElement) { const o = getComputedStyle(p).overflowX; if (o !== 'visible') return true; } return false; }; const wide = [...document.querySelectorAll('body *')].filter(e => vis(e) && e.getBoundingClientRect().right > innerWidth + 2 && !clipped(e)).slice(0,3).map(e => e.tagName + '.' + [...e.classList].join('.')); return { sw: document.documentElement.scrollWidth, iw: innerWidth, wide }; })()`);
       ok("v5:widths", `no horizontal overflow at ${w}`, o.sw <= o.iw + 1 && o.wide.length === 0, `scrollW=${o.sw} inner=${o.iw} ${o.wide.join(",")}`);
       const tiny = await evaluate<string[]>(cdp, `[...document.querySelectorAll('a[href],button,input[type=range]')].filter(x => { const b = x.getBoundingClientRect(); return b.width > 0 && b.height > 0 && (b.width < 44 || b.height < 44); }).slice(0,5).map(x => (x.textContent.trim() || x.getAttribute('aria-label') || x.tagName).slice(0,20) + ':' + Math.round(x.getBoundingClientRect().width) + 'x' + Math.round(x.getBoundingClientRect().height))`);
       if (w <= 390) ok("v5:widths", `tap targets ≥ 44px at ${w}`, tiny.length === 0, tiny.join(", "));
@@ -132,12 +133,24 @@ async function main() {
     await sleep(1200);
     const pan = await evaluate<string>(cdp, `getComputedStyle(${q(".v5-stage-art svg")}).transform`);
     ok("v5:nav", "phone workshop pans the camera", (await evaluate<string>(cdp, attr(".v5-stage", "data-station"))) === "1" && pan !== "none", pan);
+    const controls = await evaluate<{ sw: number; iw: number; nextRight: number; nextW: number; nextH: number }>(cdp, `(() => { const n = ${q(".v5-stage-controls .v5-btn:last-child")}.getBoundingClientRect(); return { sw: document.documentElement.scrollWidth, iw: innerWidth, nextRight: Math.round(n.right), nextW: Math.round(n.width), nextH: Math.round(n.height) }; })()`);
+    ok("v5:nav", "phone workshop controls stay inside the viewport at 44px", controls.sw <= controls.iw + 1 && controls.nextRight <= controls.iw && controls.nextW >= 44 && controls.nextH >= 44, JSON.stringify(controls));
+    for (let i = 0; i < 6; i++) {
+      await evaluate(cdp, click(`.v5-stage-dots li:nth-child(${i + 1}) .v5-dot`));
+      await sleep(900);
+      const frame = await evaluate<{ svgW: number; frameW: number; tx: number; stationX: number }>(cdp, `(() => { const svg = ${q(".v5-stage-art svg")}; const el = ${q(".v5-stage-art")}; const frame = el.getBoundingClientRect(); const r = svg.getBoundingClientRect(); const m = new DOMMatrixReadOnly(getComputedStyle(svg).transform); const plate = svg.querySelectorAll('.v5-station')[${i}].getBoundingClientRect(); return { svgW: Math.round(r.width), frameW: el.clientWidth, tx: Math.round(m.m41), stationX: Math.round(plate.left + plate.width / 2 - frame.left) }; })()`);
+      const inside = frame.stationX >= 0 && frame.stationX <= frame.frameW;
+      const notPast = -frame.tx <= frame.svgW - frame.frameW + 2 && frame.tx <= 0;
+      ok("v5:nav", `phone station ${i + 1} is framed inside the artwork bounds`, inside && notPast, JSON.stringify(frame));
+    }
+    const afterPan = await evaluate<{ sw: number; iw: number }>(cdp, `({ sw: document.documentElement.scrollWidth, iw: innerWidth })`);
+    ok("v5:nav", "no horizontal overflow after panning to the last station", afterPan.sw <= afterPan.iw + 1, JSON.stringify(afterPan));
 
     section("marketing v5 — reduced motion");
     await cdp.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
     await setViewport(cdp, 1440, 900);
     await open(cdp, `${BASE}/`, 1200);
-    for (const sel of ["#memory", "#workshop", "#diagnosis", "#closing"]) {
+    for (const sel of ["#memory", "#engagement", "#workshop", "#diagnosis", "#closing"]) {
       await evaluate(cdp, `${q(sel)}.scrollIntoView({block:'center', behavior:'instant'}); true`);
       await sleep(400);
     }
@@ -146,6 +159,13 @@ async function main() {
     const invisible = await evaluate<number>(cdp, `[...document.querySelectorAll('section[data-scene] svg')].filter(e => parseFloat(getComputedStyle(e).opacity) < 0.99).length`);
     ok("v5:motion", "every scene visible in its final state", invisible === 0, `${invisible} hidden`);
     await cdp.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "" }] });
+
+    section("marketing v5 — readable without JavaScript");
+    const html = await evaluate<string>(cdp, `fetch('/').then(r => r.text())`);
+    ok("v5:nojs", "all six workshop captions are in the server HTML", (html.match(/class="v5-stations"/g) || []).length === 1 && (html.match(/v5-station-plain/g) || []).length === 6);
+    ok("v5:nojs", "the bench renders its Expected readout in the server HTML", /v5-readout-verdict">Expected</.test(html));
+    ok("v5:nojs", "the engagement steps are in the server HTML", /class="v5-engagement-steps"/.test(html) && (html.match(/v5-engagement-steps/g) || []).length >= 1);
+    ok("v5:nojs", "no opacity-zero starting states in the served CSS-bound markup", !/style="opacity:\s*0/.test(html));
 
     section("marketing v5 — copy rules");
     await open(cdp, `${BASE}/`, 800);

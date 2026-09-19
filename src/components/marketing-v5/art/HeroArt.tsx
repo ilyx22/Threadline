@@ -44,14 +44,7 @@ export function Archive({ calm = false, tidy = false }: { calm?: boolean; tidy?:
       {/* the founder, talking */}
       <Armchair x={298} y={400} fill={C.coral} s={0.95} />
       <Person x={290} y={384} s={0.95} sit shirt={C.paper} legs={C.navySoft} skin={SKIN[1]} hairStyle="side" armL={[-28, -70]} armR={[44, -118]} mood="grin" look={1} />
-      {!calm ? (
-        <g className="v5-talk">
-          <path d="M352 226 Q352 200 380 200 H418 Q446 200 446 226 Q446 252 418 252 H386 L366 266 L370 252 Q352 250 352 226 Z" fill={C.butter} {...O} strokeWidth={2.4} />
-          <circle cx={382} cy={226} r={3.5} fill={C.ink} />
-          <circle cx={399} cy={226} r={3.5} fill={C.ink} />
-          <circle cx={416} cy={226} r={3.5} fill={C.ink} />
-        </g>
-      ) : null}
+      {!calm ? <path d="M354 226 H438" stroke={C.gold} strokeWidth={2.2} strokeDasharray="5 7" opacity={0.8} /> : null}
       <Lamp x={232} y={400} s={0.9} />
       {/* the porthole to the outside */}
       <circle cx={500} cy={262} r={30} fill={C.sky} {...O} strokeWidth={4} />
