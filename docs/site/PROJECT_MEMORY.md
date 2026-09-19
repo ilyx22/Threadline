@@ -15,7 +15,10 @@ Next.js 15 App Router · React 19 · Prisma 6 (SQLite dev, Postgres-ready) · Zo
 - Reference analysis (historical input only): `reference-analysis/birdhouse/`.
 - QA: `docs/QA_REPORT.md`, `scripts/qa/*`, `docs/audits/LATEST_HANDOFF_FINDINGS_DISPOSITION.md`.
 
-## Current design direction (v4, 2026-09-12)
+## Current design direction (v5, 2026-09-19)
+Public: an illustrated Threadline world — an editorial authority workshop connected by one continuous thread, drawn in code (`src/components/marketing-v5/art/`). Palette: ink-navy `#18213a`, parchment `#fbf6ec`, powder sky `#cfe3f2`, mint / coral / lilac / butter pastels for objects, one marigold `#f6a723` accent (the thread, signals, actions). Fraunces (SOFT 100 / WONK 1) + Inter + JetBrains Mono. Twelve scenes, each with a phone recomposition; sticky workshop stage; the testing bench; nothing hidden before it enters; reduced motion renders authored final states. Docs: `docs/design/V5_*.md`, handoff `THREADLINE_FRONTEND_V5_HANDOFF.md`. The paragraphs below describe superseded directions.
+
+## Previous design direction (v4, 2026-09-12)
 Public: the marketing experience ported from the `thebirdhouse/` workspace — bone `#F3F0E8` ground, ink `#121316`, cobalt `#1F3BD6` system colour, one vermilion `#E2432A` signal, steel/mist neutrals, night `#0E1330` bands; Fraunces + Inter + JetBrains Mono; the Authority Workshop object language; four signature scenes (hero machine, expertise vault, memory formation, diagnostic instrument). Documented in `docs/design/marketing-v4/`. The paragraphs below describe the superseded v3 direction.
 
 ## Previous design direction (v3, 2026-09-09)

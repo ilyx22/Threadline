@@ -1,30 +1,26 @@
 import "@/app/public.css";
 import "@/app/public-v3.css";
-import "@/styles/marketing/marketing.css";
-import "@/styles/marketing/marketing-extra.css";
-import { MarketingNav } from "@/components/marketing-v4/Navbar";
-import { MarketingFooter } from "@/components/marketing-v4/Footer";
+import "@/styles/marketing-v5/index.css";
+import Nav from "@/components/marketing-v5/Nav";
+import Footer from "@/components/marketing-v5/Footer";
 
 /**
- * The public site (v4, 12 September 2026). The homepage is the signature
- * marketing experience ported from the `thebirdhouse/` workspace (tag
- * threadline-marketing-v3); the inner pages keep their components and take the
- * same palette through the `.tl-public` tokens. `marketing.css` is generated
- * from that workspace's stylesheets and scoped here; `marketing-extra.css`
- * holds the production-only additions (navigation drawer, value grid,
- * playbook tools).
+ * The public site (v5, 19 September 2026): the illustrated Threadline world.
+ * `src/styles/marketing-v5/` is the hand-authored design system; `public.css`
+ * keeps the shared primitives the inner pages use, retokened to the same
+ * palette through the `.tl-public` variables.
  */
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="tl-public flex min-h-dvh flex-col">
-      <a href="#main" className="skip-link">
+    <div className="tl-public v5 flex min-h-dvh flex-col">
+      <a href="#main" className="v5-skip">
         Skip to content
       </a>
-      <MarketingNav />
+      <Nav />
       <main id="main" className="flex-1" tabIndex={-1}>
         {children}
       </main>
-      <MarketingFooter />
+      <Footer />
     </div>
   );
 }

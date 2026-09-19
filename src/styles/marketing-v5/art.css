@@ -1,0 +1,30 @@
+/* THREADLINE v5 — artwork: label faces and the small, looping motions inside scenes. */
+.tl-public .v5-art { display: block; width: 100%; height: auto; overflow: hidden; }
+.tl-public .v5-label { font-family: var(--font-label), ui-monospace, monospace; font-size: 15px; font-weight: 600; letter-spacing: 0.08em; fill: var(--v5-ink); text-transform: uppercase; }
+.tl-public .v5-label.is-sm { font-size: 13px; }
+.tl-public .v5-label.is-xs { font-size: 10.5px; letter-spacing: 0.06em; }
+.tl-public .v5-label.is-lg { font-size: 19px; }
+.tl-public .v5-label.is-paper { fill: var(--v5-paper); }
+.tl-public .v5-label.is-ink { fill: var(--v5-ink); }
+.tl-public .v5-hand { font-family: var(--font-display), Georgia, serif; font-style: italic; font-size: 24px; fill: var(--v5-ink); font-variation-settings: "opsz" 48, "SOFT" 100, "WONK" 1; }
+.tl-public .v5-hand.is-paper { fill: var(--v5-paper); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .tl-public .v5-spin { transform-box: fill-box; transform-origin: center; animation: v5-spin 14s linear infinite; }
+  .tl-public .v5-spin.is-slow { animation-duration: 9s; }
+  .tl-public .v5-spin.is-rev { animation-direction: reverse; }
+  .tl-public .v5-sway { transform-box: fill-box; transform-origin: 50% 0; animation: v5-sway 5.5s ease-in-out infinite alternate; }
+  .tl-public g:nth-of-type(2n) > .v5-sway { animation-delay: -2.2s; }
+  .tl-public .v5-twinkle { transform-box: fill-box; transform-origin: center; animation: v5-twinkle 3.2s ease-in-out infinite; }
+  .tl-public .v5-talk circle { animation: v5-talk 1.6s ease-in-out infinite; }
+  .tl-public .v5-talk circle:nth-of-type(2) { animation-delay: .25s; }
+  .tl-public .v5-talk circle:nth-of-type(3) { animation-delay: .5s; }
+  .tl-public .v5-return { animation: v5-return 7s var(--v5-ease) infinite; }
+  .tl-public .v5-return.is-late { animation-delay: -3.5s; }
+  .tl-public [data-inview="false"] .v5-spin, .tl-public [data-inview="false"] .v5-sway, .tl-public [data-inview="false"] .v5-twinkle, .tl-public [data-inview="false"] .v5-return, .tl-public [data-inview="false"] .v5-talk circle { animation-play-state: paused; }
+}
+@keyframes v5-spin { to { transform: rotate(360deg); } }
+@keyframes v5-sway { from { transform: rotate(-2.2deg); } to { transform: rotate(2.2deg); } }
+@keyframes v5-twinkle { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.18) rotate(12deg); } }
+@keyframes v5-talk { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+@keyframes v5-return { 0%, 12% { transform: translate(150px, -30px); opacity: 0; } 22% { opacity: 1; } 78% { opacity: 1; } 90%, 100% { transform: translate(-150px, -50px); opacity: 0; } }

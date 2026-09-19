@@ -1,0 +1,45 @@
+/*
+ * THREADLINE v5 — tokens. Hand-authored; the one source for the public world.
+ * Ink-navy line and type, parchment reading surfaces, a powder-sky environment,
+ * four controlled pastels for scene objects and states, and one marigold
+ * accent: the thread, the commercial signal, the action.
+ */
+.tl-public {
+  --v5-ink: #18213a;
+  --v5-ink-soft: #3b4560;
+  --v5-ink-faint: #5d6782;
+  --v5-navy: #1f2a4a;
+  --v5-navy-soft: #33416b;
+  --v5-night: #141b33;
+  --v5-paper: #fbf6ec;
+  --v5-paper-deep: #f2e9d8;
+  --v5-white: #fffdf8;
+  --v5-sky: #cfe3f2;
+  --v5-sky-deep: #9fc6e4;
+  --v5-mint: #bfe5d1;
+  --v5-mint-deep: #7cc4a2;
+  --v5-coral: #f6a791;
+  --v5-coral-deep: #e2735a;
+  --v5-lilac: #d3c6ee;
+  --v5-lilac-deep: #a892dc;
+  --v5-butter: #f7e3a3;
+  --v5-gold: #f6a723;
+  --v5-gold-deep: #c97f08;
+  --v5-wood: #e3b98a;
+  --v5-wood-deep: #b98652;
+
+  --v5-max: 1240px;
+  --v5-gutter: clamp(20px, 4vw, 48px);
+  --v5-r-lg: 36px;
+  --v5-r-md: 20px;
+  --v5-r-sm: 10px;
+
+  --v5-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --v5-ease-fast: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --v5-h1: clamp(2.6rem, 6.1vw, 5.6rem);
+  --v5-h2: clamp(2.1rem, 4.4vw, 4rem);
+  --v5-mega: clamp(2.5rem, 7.2vw, 7rem);
+  --v5-h3: clamp(1.35rem, 1.9vw, 1.75rem);
+  --v5-lead: clamp(1.0625rem, 1.35vw, 1.3125rem);
+}

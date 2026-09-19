@@ -12,28 +12,27 @@
  */
 
 .tl-public {
-  /* v4 (12 Sept 2026): the marketing palette — bone ground, ink type, cobalt
-     system colour, one vermilion signal, steel/mist neutrals, night bands. */
-  --canvas: #f3f0e8;
-  --canvas-deep: #e6e6e0;
-  --paper: #fbfaf6;
-  --line: rgba(18, 19, 22, 0.14);
-  --line-strong: rgba(18, 19, 22, 0.34);
-  --ink: #121316;
-  --ink-soft: #3d4046;
-  --ink-faint: #6f747c;
-  --ink-ghost: #a2a6ad;
-  --accent: #1f3bd6;
-  --accent-deep: #152a9e;
-  --accent-soft: #dee3f8;
-  --signal: #1f3bd6;
-  --signal-soft: #dee3f8;
-  --stamp: #e2432a;
-  --stamp-soft: #fae1db;
-  --reject: #e2432a;
-  --steel: #66717f;
-  --steel-soft: #d6dbe0;
-  --belt: #0e1330;
+  /* v5 (19 Sept 2026): the illustrated world — ink-navy, parchment, sky, marigold. */
+  --canvas: #fbf6ec;
+  --canvas-deep: #f2e9d8;
+  --paper: #fffdf8;
+  --line: rgba(24, 33, 58, 0.16);
+  --line-strong: rgba(24, 33, 58, 0.5);
+  --ink: #18213a;
+  --ink-soft: #3b4560;
+  --ink-faint: #5d6782;
+  --ink-ghost: #98a0b5;
+  --accent: #18213a;
+  --accent-deep: #18213a;
+  --accent-soft: #f7e3a3;
+  --signal: #2f7a58;
+  --signal-soft: #bfe5d1;
+  --stamp: #f6a723;
+  --stamp-soft: #f7e3a3;
+  --reject: #c9563d;
+  --steel: #5d6782;
+  --steel-soft: #cfe3f2;
+  --belt: #141b33;
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-std: cubic-bezier(0.4, 0, 0.2, 1);
@@ -54,7 +53,7 @@
   --color-accent-bright: var(--accent-deep);
   --color-accent-dim: var(--accent-deep);
   --color-accent-soft: var(--accent-soft);
-  --color-accent-line: rgba(31, 59, 214, 0.35);
+  --color-accent-line: rgba(24, 33, 58, 0.35);
   --color-positive: var(--signal);
   --color-positive-soft: var(--signal-soft);
   --color-negative: var(--reject);

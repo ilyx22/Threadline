@@ -1418,6 +1418,18 @@ density and workflows unchanged). Full record: `docs/design/THREADLINE_PUBLIC_EX
 
 **Owner inputs still open.** No git remote is configured and the GitHub CLI is not installed, so the final commit is local (see §20). A privacy notice does not exist as a route (the application form collects an email; the prototype's draft with bracketed owner inputs was not ported because the placeholder register would reject it). `PH-DOMAIN` and the booking URL remain as before.
 
+## 16l. Public site v5 — the illustrated world (2026-09-19)
+
+**Decision (DEC-026).** The owner rejected v4's rendered result and directed a full visual rebuild to the reference's calibre without copying it. v5 replaces the v4 port with an original illustrated world: an editorial authority workshop connected by one continuous thread, drawn in code. Branch `frontend/visual-rebuild-v5`; checkpoint tag `threadline-pre-v5-rebuild-2026-09-19`.
+
+**What the homepage is now** (`src/app/(marketing)/page.tsx`): the hero (archive → press → a line of pegged artefacts over the buyers, a reply travelling back) → six tags hung on the line → the expertise vault (full-bleed night/sky split, one strand through a hatch) → market memory (a quiet mega statement, then a frieze of one buyer across five encounters, knots accumulating) → founder burden (calm founder beside the busy workshop) → the Authority Workshop (a sticky panorama; one root object travels six stations; the camera pans on phones) → one idea, the right expressions (a spool and seven objects on an arc) → attention to commercial movement (a stepped street from a glance to a handshake, with evidence stamps) → expected → actual (the testing bench: jars with expected marks, a tipped block, the hook, the retest) → the twelve-week loom → the honest comparison as an abacus → the fit as a gate → the closing (the opening world, changed).
+
+**Engineering.** `src/components/marketing-v5/` (art kit + scenes + three client pieces), `src/content/marketing-v5.ts`, `src/styles/marketing-v5/`. No animation library; CSS + two observers. Nothing is hidden before it enters the viewport; entrances are transform-only; reduced motion is an authored static state. Inner pages keep their components and take the palette through `public.css`. v4 components, content and generated CSS removed; the acquisition calculator moved to marketing-v5. Dev-only `/design-lab` (`notFound()` in production; disallowed in robots) shows the kit and the three hero explorations.
+
+**Verification.** VERIFICATION_V5
+
+**Open.** The branch needs a push and a merge to `main` for Vercel; PH-LEGAL and the production `DATABASE_URL` remain as before.
+
 ## 17. DO NOT BREAK
 
 1. **Tenant isolation.** No repository or action may obtain an `orgId` from anywhere except an
@@ -1845,6 +1857,8 @@ contravariance, and role denials surfacing as error boundaries instead of explan
 ---
 
 ## 20. Last verified state
+
+**2026-09-19 — public site v5 (§16l, DEC-026).** LASTSTATE_V5
 
 **2026-09-12 — public site v4 (the final website pass, §16k, DEC-025).** Verified on the production build as recorded in §16k: 634 tests, qa:public 54/8/0, qa:browser 101/21/0, marketing functional 78/78, visual baselines re-taken. Committed locally; still no remote (below).
 

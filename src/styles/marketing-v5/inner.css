@@ -1,0 +1,35 @@
+/*
+ * THREADLINE v5 — the inner pages (How it works, Who it is for, Playbook,
+ * Apply, calculator) keep their components and take the v5 palette through
+ * the `.tl-public` variables in public.css. What is here is the Playbook's
+ * tools and the few primitives that needed the v5 line weight.
+ */
+.tl-public .tl-btn-primary { border-radius: 999px; }
+.tl-public .tl-card { border-width: 2px; }
+
+/* the Playbook's tools */
+.tl-public .pb-tools { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.tl-public .pb-tool { padding: 28px; border-radius: 24px; border: 2.5px solid var(--v5-ink); background: var(--v5-white); }
+.tl-public .pb-tool-head { display: flex; flex-flow: column; gap: 8px; margin-bottom: 22px; }
+.tl-public .acq { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 32px; align-items: start; }
+.tl-public .acq-inputs { display: flex; flex-flow: column; gap: 14px; }
+.tl-public .acq-field { display: grid; grid-template-columns: minmax(0, 1fr) 96px; grid-template-areas: "label input" "help input" "range range"; gap: 4px 14px; align-items: center; padding: 14px 16px; border-radius: 14px; background: var(--v5-paper); border: 2px solid var(--v5-paper-deep); }
+.tl-public .acq-field label { grid-area: label; font-weight: 600; font-size: 1rem; }
+.tl-public .acq-field .acq-help { grid-area: help; font-size: 0.875rem; color: var(--v5-ink-faint); }
+.tl-public .acq-field input[type="number"] { grid-area: input; width: 100%; min-height: 44px; padding: 0 12px; border: 2px solid var(--v5-ink); border-radius: 10px; background: var(--v5-white); color: var(--v5-ink); font: inherit; font-variant-numeric: tabular-nums; text-align: right; }
+.tl-public .acq-field input[type="range"] { grid-area: range; width: 100%; margin: 8px 0 0; accent-color: var(--v5-gold); height: 28px; }
+.tl-public .acq-field.is-lever { border-color: var(--v5-ink); box-shadow: 4px 4px 0 var(--v5-butter); }
+.tl-public .acq-field.is-lever label::after { content: " · biggest lever"; font-family: var(--font-label), monospace; font-size: 0.625rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v5-gold-deep); }
+.tl-public .acq-out { display: flex; flex-flow: column; gap: 10px; }
+.tl-public .acq-stage { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 14px 18px; border-radius: 14px; background: var(--v5-paper); border: 2px solid var(--v5-paper-deep); }
+.tl-public .acq-stage.is-top { background: var(--v5-night); border-color: var(--v5-night); color: var(--v5-paper); }
+.tl-public .acq-stage.is-win { background: var(--v5-gold); border-color: var(--v5-ink); color: var(--v5-ink); }
+.tl-public .acq-stage-label { font-size: 0.9375rem; }
+.tl-public .acq-stage-label small { display: block; font-size: 0.8125rem; opacity: 0.7; }
+.tl-public .acq-stage-value { font-family: var(--font-display), Georgia, serif; font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1; font-size: 2.25rem; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.tl-public .acq-verdict { margin-top: 6px; padding: 16px 18px; border-radius: 14px; border: 2px solid var(--v5-ink); font-size: 0.9375rem; line-height: 1.5; }
+.tl-public .acq-verdict strong { color: var(--v5-gold-deep); }
+.tl-public .acq-note { font-size: 0.8125rem; line-height: 1.5; color: var(--v5-ink-faint); }
+.tl-public .acq-refusal { padding: 16px 18px; border-radius: 14px; background: var(--v5-coral); color: var(--v5-ink); font-size: 0.9375rem; }
+@media (max-width: 991px) { .tl-public .acq { grid-template-columns: 1fr; } }
+@media (max-width: 479px) { .tl-public .pb-tool { padding: 20px 16px; } .tl-public .acq-field { grid-template-columns: minmax(0, 1fr) 84px; } .tl-public .acq-stage-value { font-size: 1.75rem; } }

@@ -5,7 +5,7 @@ import { DIAGNOSTIC, HOME_V3, HOW_IT_WORKS, PLAYBOOK, PLAYBOOK_TOOLS } from "@/c
 import { Eyebrow, Lead, PublicButton, Section, Title } from "@/components/public/primitives";
 import { Reveal } from "@/components/marketing/reveal";
 import { Diagnostic } from "@/components/public/diagnostic";
-import { AcquisitionCalculator } from "@/components/marketing-v4/AcquisitionCalculator";
+import { AcquisitionCalculator } from "@/components/marketing-v5/AcquisitionCalculator";
 import { ChapterArt } from "./chapter-art";
 
 export const metadata: Metadata = {
