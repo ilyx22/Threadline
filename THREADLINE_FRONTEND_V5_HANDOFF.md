@@ -4,7 +4,47 @@ The public site was rebuilt as an illustrated Threadline world: an editorial aut
 
 Companion documents: `docs/design/V5_CURRENT_FAILURE_AUDIT.md`, `V5_REFERENCE_SKELETON.md`, `V5_THREADLINE_VISUAL_SYSTEM.md`, `V5_COMPONENT_MAP.md`, `V5_MOTION_SYSTEM.md`, `V5_VISUAL_QA_REPORT.md`; captures in `docs/design/v5/`.
 
-## Owner review: visual-quality correction (latest)
+## Visual-quality upgrade (21 September 2026, latest)
+
+The owner kept the concepts, copy and sequence and asked for the execution to move from children's-animation cues to a refined editorial / product-studio system. This pass changed the actual shapes, proportions, colour use, labels, motion and crops. The direction below supersedes the correction pass under it; its non-regression rules still hold.
+
+### What changed
+
+- **Figures.** `Person` is now a faceless architectural scale figure: a 10.5-unit paper head, a tapered one-tone body, limbs as single 3.2-unit ink lines, no hands, no hair, no expressions, no skin tones. `sit` and `apron` (the gold operator band) are the only variants. The props `skin`, `hairStyle`, `glasses`, `look` and `mood` no longer exist; every scene and the design lab were updated.
+- **Line and corners.** One line weight, `LINE` = 1.6 units (was 2.15 outlines, 10.5-unit limbs, 7–11-unit poles). Structural members are 3–6 units. Rectangles carry 1–4-unit radii instead of 6–30; plates and signals are square-cornered tags sized to their text (`labelWidth`); the bench, readout, abacus, chips and frames in `page.css` lost their pill radii and 2–2.5px borders (now 1px, 4–6px radius).
+- **Thread.** 2.6 gold over a 4.4 ink hairline (was 3.6 over 6.8); knots are gold beads with an ink centre. Every thread now ends deliberately: the vault's escaping strand ends on a knot on the ground (wide and tall), the engagement sheet's thread runs knot to knot, the hero and gate threads end on poles or the frame edge.
+- **Colour.** Each scene uses paper, `sky`, `paper-deep`, wood and one lilac. The candy spread in the archive and vault (coral / mint / butter binders, folders and crates) is gone; mint and coral appear only as states (met / short, the swapped part); gold only as the thread, signals and the operator apron. Figures wear lilac, sky, wood or parchment.
+- **Removed.** Speech bubbles (the coffee moment now shows the short video between the two figures), the buyer's hand-drawn "?", the dashed "talking" lines, the sparkle marks over the buyers (`Spark` is now a plain ring, unused on the page), the coral carrier cart (now wood), the toy rollers on the conveyor.
+- **Motion.** Every perpetual loop is gone: gear spin, roller spin, peg sway, twinkle, talking dots, the conveyor belt rollers, the loom shuttle. What remains is functional and runs once per entry: the thread draw, the scene settle, the carrier moving to the chosen station, the reply signal travelling back, one conveyor pass in the busy workshop, the replacement block sliding in. `V5_MOTION_SYSTEM.md` lists them.
+- **Labels.** `.v5-label` is Inter 11-unit tracked capitals (`is-sm` 10, `is-xs` 9, `is-lg` 18 for the bench numbers). `Plate`, `Signal`, `Crate`, `Folder`, the bench blocks and the signal-tray pills size or compress their text (`textLength` / `lengthAdjust`), so no label escapes its object.
+- **Crops.** `.v5-art` stays `overflow: visible`. The wide vault's folder row moved inside the canvas (its first folder used to lose "CLIE" off the left edge); the tall vault renders `Vault compact`, which drops the folder and lamp a phone frame would cut in half, and sits 8 units in so its first label is whole. The closing scene's extra book no longer overlaps the post.
+- **Composition.** Frames (burden, workshop stage, bench stage, closing band) share one 6px radius and a 1px ink or paper hairline; the engagement sheet has a paper edge plus a soft 14px shadow instead of a blurred drop; heading tracking eased from −0.028em to −0.02em.
+
+### Checks performed
+
+On the production build of 21 September 2026 (`NEXT_DIST_DIR=.next-qa`, one server on :3000):
+
+| Check | Command | Result |
+|---|---|---|
+| Types | `npx tsc --noEmit` | 0 errors (the removed figure props surfaced every stale call site, all updated) |
+| Lint | `npm run lint` | 0 errors, 0 warnings |
+| Unit | `npm run test` | 634 / 634 |
+| Production build | `next build` | ok; `/` 9.54 kB, 115 kB first load (was 10.3 kB) |
+| Marketing visual QA | `npm run qa:marketing` | 53 / 53 — eight scenes, nothing hidden before reveal, ten labelled illustrations, workshop by click and keyboard, phone controls inside a 390 viewport at 44px, every station framed with the pan clamped at 390 and 320, no horizontal overflow at 1440 / 1024 / 768 / 390 / 320, no-JS HTML, reduced motion |
+| Public routes | `npm run qa:public` | 62 / 62 across eleven routes and twenty widths (320–1440) |
+| Visual baselines | `npm run qa:visual` | re-taken; homepage 12,101 px at 1440, 15,850 px at 390 |
+| Web vitals | `npm run qa:vitals` | LCP 232 ms at 1440, 88 ms at 390; CLS 0 at both |
+| Product browser sweep | `npm run qa:browser` | 101 pass · 21 partial · 0 fail (the partials are the pre-existing empty-state screens) |
+| Eye pass | full pages and detail crops at 1440, 390 and 320, three rounds | `docs/design/v5/after/*-full.jpg` and the per-scene captures; findings and fixes in `V5_VISUAL_QA_REPORT.md` |
+
+### Remaining limitations
+
+- The testing bench is still dense at 320–390 (five block labels at 9 units, jar labels at 9); the readout panel under it carries the reading.
+- The workshop panorama at 1440 is a wide, quiet strip; the station captions under it do the explaining. On phones the panorama is 400% wide and shows one station per frame with its plate; a neighbouring station's tag can be cut at the frame edge, which is the pan, not a clipped label.
+- The frieze's paper-headed figures sit on parchment; they read by their 1.6 outline, which is intentional but low-contrast at 320.
+- Instrument Serif headings at the mega size are set tight; if the owner wants more air, `--v5-mega` and the −0.02em tracking in `page.css` are the two knobs.
+
+## Owner review: visual-quality correction (previous pass)
 
 The owner approves the ideas, structure, and storytelling, but rejected the original visual execution as too close to children's animation. The specific problems were thick toy-like outlines, sugary pastel colour, wide monospaced labels, cute facial expressions, speech bubbles, sparkly stars, overly rounded machinery, excessive looping movement, disconnected decorative curves between sections, and text or linework being clipped inside illustrations.
 
@@ -97,7 +137,7 @@ All artwork is authored in code in this repository (`src/components/marketing-v5
 
 The product surfaces keep their own dark palette and were not touched. What can transfer later: the `--v5-*` tokens as accent and state colours (marigold for signal/action, mint/coral for pass/fail states, sky/lilac for environment fields), the Instrument Serif / Inter pairing for headings and labels, the artefact silhouettes as icons for content kinds, and the 44px control rule. What must not transfer: the marketing layouts, the panoramas, the grain.
 
-## Tests run and results
+## Tests run and results (19 September review pass; the 21 September checks are above)
 
 | Check | Result |
 | --- | --- |

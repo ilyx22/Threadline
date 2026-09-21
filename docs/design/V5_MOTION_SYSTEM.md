@@ -18,21 +18,21 @@ Motion tells the same story as the static drawing: the thread is drawn as a scen
 
 `Thread` renders two paths with `pathLength={1}`. When the scene is in view, `stroke-dasharray: 1` and `@keyframes v5-draw` run `stroke-dashoffset` 1 → 0. Before entry the paths carry no dash rule, so the thread is fully drawn in a capture, a print, or a browser without JavaScript.
 
-### In-scene loops (`art.css`, `motion.css`)
+### In-scene motion (`art.css`, `motion.css`)
 
-| Class | What it does | Period |
-|---|---|---|
-| `.v5-spin` (`is-slow`, `is-rev`) | Gears and roller crosses rotate | 14s / 9s |
-| `.v5-sway` | A pegged artefact swings ±2.2° from its peg; every second one is offset −2.2s | 5.5s alternate |
-| `.v5-twinkle` | A spark scales 1 → 1.18 and rotates 12° | 3.2s |
-| `.v5-talk circle` | The three dots of a speech bubble blink in turn | 1.6s, 0.25s apart |
-| `.v5-return` (`is-late`) | A signal pill travels back along the dashed thread and fades at each end | 7s, the late one −3.5s |
-| `.v5-belt` | Conveyor rollers advance one roller pitch | 1.4s linear |
-| `.v5-conveyed` | Artefacts ride the belt −140px → +140px | 6s linear |
-| `.v5-shuttle` | The workshop loom's shuttle bar rises and falls | 1.6s alternate |
-| `.v5-newpart` / `.v5-block.is-new` | The replacement block slides in from the left | 700ms |
+Motion is functional only. After the visual-quality pass of 21 September 2026 there are no perpetual decorative loops: no spinning gears, swaying pegs, twinkling sparks, blinking speech dots, rolling belt or bouncing shuttle. What remains, and why:
 
-All loops are wrapped in `@media (prefers-reduced-motion: no-preference)` and are `animation-play-state: paused` under any `[data-inview="false"]` ancestor. Transform-driven loops sit on an inner `<g>` so the CSS transform never fights the SVG `transform` attribute on the placing group (`At`).
+| Class | What it does | Why it exists | Period |
+|---|---|---|---|
+| `.v5-thread.is-draw` | The thread draws itself as a scene enters | The continuous line is the argument | 1.7s, once |
+| `v5-settle` | A scene's artwork settles 12px into place | Arrival | 900ms, once |
+| `.v5-carrier` | The root object moves to the chosen workshop station | Progression through the system | 1.1s transition |
+| `.v5-return` (`is-late`) | A signal tag travels back along the dashed thread and fades at each end | Movement through the system, back to the firm | 9s, once |
+| `.v5-conveyed` | The busy workshop's artefacts advance one pass along the conveyor | Movement through the system | 12s, once |
+| `.v5-newpart` / `.v5-block.is-new` | The replacement block slides in on the testing bench | Causality: the change | 700ms |
+| `.v5-fill` (bench) | Jar levels move between expected, actual and retest | Causality: the reading | transition |
+
+Everything is wrapped in `@media (prefers-reduced-motion: no-preference)`; the once-only pieces use `animation-fill-mode: both` so they end in the authored state, and the return is `animation-play-state: paused` under any `[data-inview="false"]` ancestor.
 
 ## 2. The observer contract (`Motion.tsx`)
 

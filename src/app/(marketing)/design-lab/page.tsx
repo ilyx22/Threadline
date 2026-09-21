@@ -5,7 +5,7 @@ import { HeroArt } from "@/components/marketing-v5/art/HeroArt";
 import { HeroCutaway, HeroTypographic } from "@/components/marketing-v5/art/HeroExplorations";
 import { ProblemArt } from "@/components/marketing-v5/art/ProblemArt";
 import { WorkshopArt } from "@/components/marketing-v5/art/WorkshopArt";
-import { Artefact, Crate, Folder, Knot, Person, Plate, SKIN, Signal, Spool, Thread, C } from "@/components/marketing-v5/art/kit";
+import { Artefact, Crate, Folder, Knot, Person, Plate, Signal, Spool, Thread, C } from "@/components/marketing-v5/art/kit";
 
 export const metadata: Metadata = { title: "Design lab", robots: { index: false, follow: false } };
 
@@ -40,11 +40,11 @@ export default function DesignLab() {
 
       <H>People</H>
       <svg viewBox="0 0 1200 200" className="v5-art" style={{ background: "var(--v5-sky)", borderRadius: 20 }}>
-        {(["short", "bob", "bun", "curly", "side", "bald"] as const).map((h, i) => (
-          <Person key={h} x={100 + i * 150} y={190} shirt={[C.coral, C.mint, C.lilac, C.butter, C.sky, C.paper][i]} skin={SKIN[i % 5]} hairStyle={h} glasses={i === 1} mood={(["smile", "grin", "flat", "oh", "smile", "grin"] as const)[i]} armR={[30, -60 - i * 16]} />
+        {[C.lilac, C.sky, C.wood, C.paperDeep, C.paper, C.lilac].map((tone, i) => (
+          <Person key={i} x={100 + i * 150} y={190} shirt={tone} armR={[30, -60 - i * 16]} />
         ))}
-        <Person x={1020} y={190} sit shirt={C.paper} skin={SKIN[1]} hairStyle="side" />
-        <Person x={1140} y={190} shirt={C.sky} apron={C.gold} skin={SKIN[3]} hairStyle="bun" armR={[36, -120]} />
+        <Person x={1020} y={190} sit shirt={C.paper} />
+        <Person x={1140} y={190} shirt={C.sky} apron={C.gold} armR={[36, -120]} />
       </svg>
 
       <H>Artefacts, props, the thread</H>

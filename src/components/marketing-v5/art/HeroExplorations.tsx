@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Archive, Press } from "./HeroArt";
-import { At, C, Grain, Pegged, Person, Plate, SKIN, Spool, Thread, outline as O } from "./kit";
+import { At, C, Grain, Pegged, Person, Plate, Spool, Thread, outline as O } from "./kit";
 
 /**
  * Phase D — two alternative hero compositions built on the same message, kept
@@ -23,7 +23,7 @@ export function HeroCutaway() {
       <rect x={0} y={456} width={640} height={16} fill={C.paper} />
       <path d="M0 456 H640 M0 472 H640" stroke={C.ink} strokeWidth={3} />
       <At x={60} y={430} s={0.78}>
-        <Archive calm />
+        <Archive />
       </At>
       <Spool x={470} y={730} s={0.9} />
       <rect x={520} y={446} width={40} height={30} rx={6} fill={C.paper} {...O} />
@@ -32,12 +32,12 @@ export function HeroCutaway() {
       <path d="M480 456 V200" stroke={C.wood} strokeWidth={5} strokeLinecap="round" />
       <path d="M300 208 H600" stroke={C.ink} strokeWidth={9} strokeLinecap="round" />
       <Thread draw d="M300 210 Q450 300 600 210" />
-      <Pegged kind="post" x={360} y={240} r={6} s={0.8} sway />
-      <Pegged kind="video" x={450} y={256} s={0.8} sway />
-      <Pegged kind="doc" x={540} y={240} r={-6} s={0.8} sway />
-      <Person x={120} y={452} s={0.82} shirt={C.lilac} skin={SKIN[2]} hairStyle="curly" armR={[30, -150]} look={1} mood="grin" />
-      <Person x={230} y={452} s={0.82} shirt={C.mint} skin={SKIN[0]} hairStyle="bob" glasses armL={[-22, -84]} armR={[20, -88]} look={1} />
-      <Person x={600} y={452} s={0.82} flip shirt={C.butter} skin={SKIN[3]} hairStyle="short" armR={[28, -96]} look={1} />
+      <Pegged kind="post" x={360} y={240} r={6} s={0.8} />
+      <Pegged kind="video" x={450} y={256} s={0.8} />
+      <Pegged kind="doc" x={540} y={240} r={-6} s={0.8} />
+      <Person x={120} y={452} s={0.82} shirt={C.lilac} armR={[30, -150]} />
+      <Person x={230} y={452} s={0.82} shirt={C.sky} armL={[-22, -84]} armR={[20, -88]} />
+      <Person x={600} y={452} s={0.82} flip shirt={C.wood} armR={[28, -96]} />
       <Plate x={150} y={60} tone={C.white}>
         WHAT THE MARKET SEES
       </Plate>
@@ -69,9 +69,9 @@ export function HeroTypographic({ headline }: { headline: string }) {
           <Press />
         </At>
         <Spool x={820} y={170} s={0.7} />
-        <Person x={140} y={186} s={0.9} shirt={C.lilac} skin={SKIN[2]} hairStyle="curly" armR={[30, -150]} look={1} mood="grin" />
-        <Person x={260} y={186} s={0.9} shirt={C.mint} skin={SKIN[0]} hairStyle="bob" glasses armL={[-22, -84]} armR={[20, -88]} />
-        <Person x={1100} y={186} s={0.9} flip shirt={C.butter} skin={SKIN[3]} hairStyle="short" armR={[28, -96]} look={1} />
+        <Person x={140} y={186} s={0.9} shirt={C.lilac} armR={[30, -150]} />
+        <Person x={260} y={186} s={0.9} shirt={C.sky} armL={[-22, -84]} armR={[20, -88]} />
+        <Person x={1100} y={186} s={0.9} flip shirt={C.wood} armR={[28, -96]} />
       </svg>
     </div>
   );

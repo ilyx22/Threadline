@@ -1,21 +1,18 @@
-/* THREADLINE v5 — artwork: label faces and the small, looping motions inside scenes. */
+/* THREADLINE v5 — artwork: label faces and the few functional motions inside scenes. */
 .tl-public .v5-art { display: block; width: 100%; height: auto; overflow: visible; }
-.tl-public .v5-label { font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif; font-size: 14px; font-weight: 650; letter-spacing: 0.025em; fill: var(--v5-ink); }
-.tl-public .v5-label.is-sm { font-size: 12px; }
-.tl-public .v5-label.is-xs { font-size: 9.5px; letter-spacing: 0.02em; }
-.tl-public .v5-label.is-lg { font-size: 19px; }
+.tl-public .v5-label { font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; fill: var(--v5-ink); }
+.tl-public .v5-label.is-sm { font-size: 10px; letter-spacing: 0.07em; }
+.tl-public .v5-label.is-xs { font-size: 9px; letter-spacing: 0.05em; }
+.tl-public .v5-label.is-lg { font-size: 18px; font-weight: 500; letter-spacing: 0; }
 .tl-public .v5-label.is-paper { fill: var(--v5-paper); }
 .tl-public .v5-label.is-ink { fill: var(--v5-ink); }
 .tl-public .v5-hand { font-family: var(--font-editorial), Georgia, serif; font-style: italic; font-size: 24px; fill: var(--v5-ink); }
 .tl-public .v5-hand.is-paper { fill: var(--v5-paper); }
 
+/* The one motion inside a scene that is not the thread: a signal travelling back, once. */
 @media (prefers-reduced-motion: no-preference) {
-  .tl-public .v5-spin { transform-box: fill-box; transform-origin: center; animation: v5-spin 28s linear infinite; }
-  .tl-public .v5-spin.is-slow { animation-duration: 20s; }
-  .tl-public .v5-spin.is-rev { animation-direction: reverse; }
-  .tl-public .v5-return { animation: v5-return 10s var(--v5-ease) 1 both; }
-  .tl-public .v5-return.is-late { animation-delay: 1.2s; }
-  .tl-public [data-inview="false"] .v5-spin, .tl-public [data-inview="false"] .v5-return { animation-play-state: paused; }
+  .tl-public .v5-return { animation: v5-return 9s var(--v5-ease) 1 both; }
+  .tl-public .v5-return.is-late { animation-delay: 1.4s; }
+  .tl-public [data-inview="false"] .v5-return { animation-play-state: paused; }
 }
-@keyframes v5-spin { to { transform: rotate(360deg); } }
-@keyframes v5-return { 0%, 12% { transform: translate(150px, -30px); opacity: 0; } 22% { opacity: 1; } 78% { opacity: 1; } 90%, 100% { transform: translate(-150px, -50px); opacity: 0; } }
+@keyframes v5-return { 0%, 10% { transform: translate(140px, -26px); opacity: 0; } 20% { opacity: 1; } 80% { opacity: 1; } 92%, 100% { transform: translate(-150px, -48px); opacity: 0; } }

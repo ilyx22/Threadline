@@ -1,28 +1,24 @@
 /*
- * THREADLINE v5 — motion grammar.
- *   place  cubic-bezier(0.22, 1, 0.36, 1)   objects settling
- *   draw   1.6s                              the thread being drawn as a scene arrives
- *   loops  9–14s                             gears, sway, the belt — only while the scene is in view
+ * THREADLINE v5 — motion grammar. Motion is functional only:
+ *   draw     1.7s   the thread being drawn as a scene arrives (the continuous line)
+ *   settle   0.9s   a scene's artwork settling into place
+ *   carry    1.1s   the root object moving to the chosen station (progression)
+ *   convey   one pass of artefacts through the busy workshop (movement through the system)
+ *   swap     the replaced part sliding in on the testing bench (causality)
  * Nothing is hidden before it enters; entrance is a settle, never a fade-up.
- * Reduced motion: every animation and transition off; the composition is the
- * authored final state.
+ * No perpetual decorative loops. Reduced motion: every animation and
+ * transition off; the composition is the authored final state.
  */
 @media (prefers-reduced-motion: no-preference) {
   .tl-public [data-scene][data-inview="true"] .v5-thread.is-draw path { stroke-dasharray: 1; animation: v5-draw 1.7s var(--v5-ease) both; }
   .tl-public [data-scene][data-inview="true"] .v5-thread.is-draw path:last-child { animation-delay: 60ms; }
   .tl-public [data-scene][data-inview="true"] > .v5-hero-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-problem-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-memory-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-engagement-sheet .v5-art, .tl-public [data-scene][data-inview="true"] .v5-closing-art .v5-art, .tl-public [data-scene][data-inview="true"] .v5-burden-calm .v5-art, .tl-public [data-scene][data-inview="true"] .v5-burden-machine .v5-art { animation: v5-settle 900ms var(--v5-ease) both; }
-  .tl-public .v5-belt { animation: v5-belt 5s linear infinite; }
-  .tl-public .v5-conveyed { animation: v5-conveyed 14s linear infinite; }
-  .tl-public .v5-shuttle { animation: v5-shuttle 4s ease-in-out infinite alternate; }
+  .tl-public [data-scene][data-inview="true"] .v5-conveyed { animation: v5-conveyed 12s linear 1 both; }
   .tl-public .v5-newpart { animation: v5-slide-in 700ms var(--v5-ease) both; }
-  .tl-public [data-inview="false"] .v5-belt, .tl-public [data-inview="false"] .v5-conveyed, .tl-public [data-inview="false"] .v5-shuttle { animation-play-state: paused; }
 }
 @keyframes v5-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
-@keyframes v5-settle { from { transform: translateY(14px); } to { transform: translateY(0); } }
-@keyframes v5-hang { from { transform: translateY(-10px) rotate(-3deg); } to { transform: none; } }
-@keyframes v5-belt { from { transform: translateX(0); } to { transform: translateX(84px); } }
-@keyframes v5-conveyed { from { transform: translateX(-140px); } to { transform: translateX(140px); } }
-@keyframes v5-shuttle { from { transform: translateY(0); } to { transform: translateY(96px); } }
+@keyframes v5-settle { from { transform: translateY(12px); } to { transform: translateY(0); } }
+@keyframes v5-conveyed { from { transform: translateX(-120px); } to { transform: translateX(0); } }
 @keyframes v5-slide-in { from { transform: translateX(-60px); opacity: 0; } to { transform: none; opacity: 1; } }
 
 @media (prefers-reduced-motion: reduce) {

@@ -26,7 +26,7 @@ Every scene section carries `data-scene`; `Motion` marks it `data-inview` for th
 | `Motion` | `Motion.tsx` (client) | The single IntersectionObserver; sets `data-js` on `<html>`. Renders nothing. |
 | `Seam` | `Sections.tsx` | The thread crossing between sections; `from`/`to` are percentages of width. |
 | `Head` | `Sections.tsx` | Eyebrow + h2 (+ lead); `on="dark"` for night bands; `mega` for a full-width statement. |
-| The kit | `art/kit.tsx` | `C`, `SKIN`, `At`, `Thread`, `Knot`, `Spool`, `Person`, `Artefact`, `Pegged`, `Crate`, `PaperStack`, `Folder`, `Binder`, `Gear`, `Lamp`, `Desk`, `Armchair`, `Spark`, `Signal`, `Plate`, `Grain`, `outline`. |
+| The kit | `art/kit.tsx` | `C`, `LINE`, `CH`, `labelWidth`, `At`, `Thread`, `Knot`, `Spool`, `Person` (faceless scale figure), `Artefact`, `Pegged`, `Crate`, `PaperStack`, `Folder`, `Binder`, `Gear` (still), `Lamp`, `Desk`, `Armchair`, `Spark`, `Signal`, `Plate`, `Grain`, `outline`; `SKIN` remains exported but unused. |
 | `AcquisitionCalculator` | `AcquisitionCalculator.tsx` (client) | Moved from `marketing-v4/` unchanged; used by the Playbook hub; styled by `inner.css`. |
 | Hero explorations | `art/HeroExplorations.tsx` | `HeroCutaway` (B) and `HeroTypographic` (C), design-lab only. |
 
