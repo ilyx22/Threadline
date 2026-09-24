@@ -66,3 +66,13 @@ Driving notes: the prompt box drops typed text if the page has not finished moun
 | `memory-sheet.jpg` | The five vignettes as a 1:1 sheet, three over two, no thread | `app/7c0daaa94271d896` | split by cell into `public/marketing/memory/encounter-1..5.jpg` |
 
 Rule learnt: when a scene must be shown wider than about 700 px, render it in parts from the same chat and compose the parts in HTML; the thread and any labels are then drawn in SVG/HTML.
+
+## Third pass
+
+| File | What | Chat |
+| --- | --- | --- |
+| `howitworks-line-left.jpg`, `howitworks-line-right.jpg` | Stations 1 to 3 and 4 to 6, each half at twice the scale | `app/70b50fc03731b3c5` |
+| `big/{spool,magnifier,press,peg,ledger,stamp}.jpg` | The six station objects alone at 1024 square (edit follow-ups on sheet A) | `app/f1f572bb9881b7d6` |
+| `bench-pieces.jpg` | Jar, wooden block, mint block, marker clip, sheet on easel, for the interactive bench | same |
+
+Rejected: `playbook-reading-desk.jpg` as the Playbook hero (replaced by a map of the ten chapter objects).

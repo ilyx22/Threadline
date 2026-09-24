@@ -2,7 +2,7 @@ import { Reveal } from "@/components/marketing/reveal";
 import { PeriodTimeline } from "@/components/factory/schematic";
 
 /**
- * Period cards — Threadline mutation of the frozen clone
+ * Period cards: Threadline mutation of the frozen clone
  * `reference-analysis/clones/hydra-offer-cards` (see its FROZEN.md).
  *
  * Kept from the skeleton: the card column (eyebrow → title → body → sunk

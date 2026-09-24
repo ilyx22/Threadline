@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { Eyebrow, PublicButton } from "@/components/public/primitives";
 
 /**
- * Hero panel — Threadline mutation of the frozen clone
+ * Hero panel: Threadline mutation of the frozen clone
  * `reference-analysis/clones/birdhouse-hero-panel` (see its FROZEN.md).
  *
  * Kept from the skeleton: one rounded paper panel on the canvas, 80/30/24

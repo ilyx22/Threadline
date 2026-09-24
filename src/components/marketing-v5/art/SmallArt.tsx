@@ -2,7 +2,7 @@ import * as React from "react";
 import { At, C, LINE, Person, Thread, outline as O } from "./kit";
 
 /**
- * SCENE 7 — the gate. A garden gate in a low wall with a small brass plate.
+ * SCENE 7: the gate. A garden gate in a low wall with a small brass plate.
  * The strong-fit traits stand in a line on the left, going through; the
  * poor-fit ones are turned away kindly on the right. The lists are
  * typographic; the gate is the object.

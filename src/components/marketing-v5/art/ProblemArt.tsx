@@ -2,7 +2,7 @@ import * as React from "react";
 import { At, Binder, C, Crate, Folder, Grain, Knot, Lamp, LINE, PaperStack, Person, Plate, Thread, outline as O } from "./kit";
 
 /**
- * SCENE 2 — the expertise vault. A full-bleed cutaway: inside the firm, a
+ * SCENE 2: the expertise vault. A full-bleed cutaway: inside the firm, a
  * workroom overflowing with everything the firm knows (dense, warm, lit).
  * A single strand escapes through a small hatch in the wall into the outside,
  * where one buyer stands in a lot of sky with a brochure and a referral note.

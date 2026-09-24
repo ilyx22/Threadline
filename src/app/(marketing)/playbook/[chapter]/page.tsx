@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ chapter: 
   const { chapter } = await params;
   const ch = PLAYBOOK.chapters.find((c) => c.slug === chapter);
   if (!ch) return { title: "Playbook" };
-  return { title: `${ch.title} — The Founder Authority System`, description: ch.summary, alternates: { canonical: `/playbook/${ch.slug}` } };
+  return { title: `${ch.title}: The Founder Authority System`, description: ch.summary, alternates: { canonical: `/playbook/${ch.slug}` } };
 }
 
 /** One chapter on its own: the same object as on /playbook, with the way back and the way on. */

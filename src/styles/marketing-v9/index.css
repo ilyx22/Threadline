@@ -753,3 +753,38 @@
 .v9-room .v9-band-plate.is-left { left: 18px; }
 .v9-room .v9-band-plate.is-right { right: 18px; }
 @media (max-width: 991px) { .v9-room .v9-band-plate.is-left { left: 12px; } .v9-room .v9-band-plate.is-right { right: 12px; } }
+
+/* ------------------------------------------------- third review pass */
+/* the two rooms match the other sections' width */
+.v9-band.is-photo.is-contained { max-width: var(--v9-max); padding: 0 20px 150px; }
+/* the six-station line as two half-renders */
+.hw-stage-halves { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.hw-stage-halves img { display: block; width: 100%; height: auto; border-radius: 18px; }
+/* the playbook hero: the ten chapters as a map of objects */
+.pb-hero-map { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; align-self: center; }
+.pb-map-tile { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 14px 8px 12px; border-radius: 20px; background: var(--v9-canvas); text-decoration: none; color: var(--v9-ink); text-align: center; transition: background 200ms var(--v9-ease), transform 300ms var(--v9-ease); }
+.pb-map-tile:hover { background: var(--v9-sky); transform: translateY(-3px); }
+.pb-map-tile strong { font-family: var(--v9-serif); font-weight: 400; font-size: 0.95rem; line-height: 1.15; }
+.pb-map-tile .v9-obj { --s: 76px; }
+[data-js] [data-scene]:not([data-seen]) .pb-hero-map li { opacity: 0; transform: translateY(12px); }
+.pb-hero-map li { transition: opacity 500ms var(--v9-ease) calc(200ms + var(--i) * 60ms), transform 500ms var(--v9-ease) calc(200ms + var(--i) * 60ms); }
+/* who it is for: the profile rows pop */
+.wf-row.v9-tile { position: relative; overflow: hidden; padding: 26px 150px 28px 28px; min-height: 160px; background-color: var(--v9-sky); }
+.wf-row.v9-tile.is-peach { background-color: var(--v9-peach); } .wf-row.v9-tile.is-mint { background-color: var(--v9-mint); } .wf-row.v9-tile.is-lilac { background-color: var(--v9-lilac); } .wf-row.v9-tile.is-butter { background-color: var(--v9-butter); }
+.wf-row.v9-tile dt strong { font-size: 1.7rem; }
+.wf-row.v9-tile dd { color: var(--v9-ink); font-size: 15.5px; }
+.wf-row-obj { position: absolute; right: 22px; top: 50%; transform: translateY(-50%); }
+/* the bench labels at a legible size now that the bench spans the panel */
+.tl-public.v9 .v5-bench .v5-label.is-xs { font-size: 10.5px; }
+@media (max-width: 991px) {
+  .hw-stage-halves { grid-template-columns: 1fr 1fr; min-width: 1100px; }
+  .pb-hero-map { grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 28px; }
+  .wf-row.v9-tile { padding-right: 130px; }
+}
+@media (max-width: 599px) {
+  .pb-hero-map { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pb-map-tile strong { font-size: 0.85rem; }
+  .wf-row.v9-tile { padding: 22px 20px 24px; min-height: 0; }
+  .wf-row-obj { position: static; transform: none; margin-bottom: 6px; }
+  .wf-row-obj .v9-obj { --s: 72px; }
+}

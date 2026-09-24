@@ -2,7 +2,7 @@ import * as React from "react";
 import { Armchair, At, Binder, C, Crate, Folder, Gear, Grain, Knot, Lamp, LINE, PaperStack, Pegged, Person, Plate, Signal, Spool, Thread, outline as O } from "./kit";
 
 /**
- * SCENE 1 — the opening illustration. Private expertise on the left, inside the
+ * SCENE 1: the opening illustration. Private expertise on the left, inside the
  * firm's archive; the Threadline is drawn off a spool, through the workshop
  * press, and out over the market as a line of pegged, native artefacts that
  * the right buyers look up and meet. One reply is already travelling back.

@@ -1,5 +1,5 @@
 /**
- * Threadline public site — v5 copy (review pass, 19 September 2026). One
+ * Threadline public site: v5 copy (review pass, 19 September 2026). One
  * place for every sentence on the homepage. Every factual statement here is
  * governed by docs/site/CLAIMS_EVIDENCE_LEDGER.md (ids in comments). Rules,
  * unchanged: no pricing, no proof, illustrative content labelled, no platform
@@ -35,7 +35,7 @@ export const problem = {
   },
 } as const;
 
-/** Scene 3: what you receive — one illustrative root idea through one engagement. */
+/** Scene 3: what you receive: one illustrative root idea through one engagement. */
 export const engagement = {
   eyebrow: "What you receive",
   headline: "One idea, worked into visible expertise, distributed, measured and improved.",
@@ -65,7 +65,7 @@ export const engagement = {
       key: "signals",
       week: "Weeks 3–4",
       title: "What came back",
-      text: "Illustrative: 14 profile visits from firms of the right kind, 2 replies, 1 request for the document, 1 named enquiry. Each recorded as what it was — observed, inferred or confirmed — never upgraded by arithmetic.", // claim:C-EVIDENCE-CLASSES, C-SYNTHETIC-NUMBERS
+      text: "Illustrative: 14 profile visits from firms of the right kind, 2 replies, 1 request for the document, 1 named enquiry. Each recorded as what it was, observed, inferred or confirmed, never upgraded by arithmetic.", // claim:C-EVIDENCE-CLASSES, C-SYNTHETIC-NUMBERS
     },
     {
       key: "decision",
@@ -80,7 +80,7 @@ export const engagement = {
 export const burden = {
   eyebrow: "Founder burden",
   headline: "The part we need from you is the part nobody else can do.",
-  body: "Four things. Everything around them — research, positioning, scripting, editing, packaging, distribution, measurement, diagnosis — is Threadline’s job.",
+  body: "Four things. Everything around them, research, positioning, scripting, editing, packaging, distribution, measurement, diagnosis, is Threadline’s job.",
   you: [
     { verb: "Talk", note: "Your judgement, in conversation. That is the raw material." },
     { verb: "Record", note: "When being on camera adds trust. Not otherwise." },
@@ -98,9 +98,9 @@ export const workshop = {
   stations: [
     { key: "intel", title: "Listen", plain: "What your buyers are asking, objecting to and searching for, in their words.", object: "Loose fragments, sorted." },
     { key: "thesis", title: "Decide the idea", plain: "The fragments become one argument worth testing. One root idea at a time.", object: "One spool, wound tight." },
-    { key: "express", title: "Make it", plain: "The idea becomes the formats it deserves — written, spoken or shown — in your voice, checked and approved.", object: "The same idea, cut three ways." },
+    { key: "express", title: "Make it", plain: "The idea becomes the formats it deserves, written, spoken or shown, in your voice, checked and approved.", object: "The same idea, cut three ways." },
     { key: "distribute", title: "Put it in the room", plain: "Published where your buyer actually is, with a link we can measure.", object: "Dispatched to two rooms." },
-    { key: "signal", title: "Read what came back", plain: "Visits, replies, requests, named enquiries — recorded with how sure we can be.", object: "Signals, labelled." },
+    { key: "signal", title: "Read what came back", plain: "Visits, replies, requests, named enquiries: recorded with how sure we can be.", object: "Signals, labelled." },
     { key: "learn", title: "Change one thing", plain: "Expected is read against actual. The weak part is named, replaced, and the same idea is sent again.", object: "The same spool, one part new." },
   ],
   loop: "What the last station learns feeds the first.",

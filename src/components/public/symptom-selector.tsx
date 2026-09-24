@@ -5,7 +5,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils/cn";
 
 /**
- * Symptom selector — Threadline mutation of the frozen clone
+ * Symptom selector: Threadline mutation of the frozen clone
  * `reference-analysis/clones/hydra-constraint-selector` (see its FROZEN.md).
  *
  * Kept from the skeleton: pill tabs → a diagram panel whose stage strokes
@@ -16,7 +16,7 @@ import { cn } from "@/lib/utils/cn";
  * Threadline's: the four symptoms are the existing "problem" points, word for
  * word; the diagram is Threadline's seven-stage line; the dark card shows the
  * existing how-it-works stage copy for the station where that symptom is
- * addressed. No new narrative copy — only interaction labels.
+ * addressed. No new narrative copy: only interaction labels.
  */
 export type Symptom = { title: string; body: string };
 export type Stage = { key: string; title: string; body: string };

@@ -7,7 +7,7 @@ import { ContentTile, ThesisCard, type TileKind } from "@/components/factory/obj
  * ONE IDEA. THE RIGHT EXPRESSIONS. One root thesis becomes native expressions
  * that visibly differ. Rendered expanded on the server so it reads without
  * JavaScript; the button replays the multiplication. Nothing implies every
- * platform every time — the caveat is part of the component.
+ * platform every time: the caveat is part of the component.
  */
 export function Expressions({ thesis, outputs, action, reset, caveat }: { thesis: { label: string; text: string }; outputs: readonly { kind: string; label: string; excerpt: string }[]; action: string; reset: string; caveat: string }) {
   const [state, setState] = React.useState<"one" | "many">("many");

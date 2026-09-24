@@ -2,10 +2,10 @@ import * as React from "react";
 import { Armchair, At, C, Gear, Grain, Lamp, LINE, Person, Plate, Spool, Thread, Artefact, outline as O } from "./kit";
 
 /**
- * SCENE 4 — calm founder, busy machine. Left: the founder in an armchair
+ * SCENE 4: calm founder, busy machine. Left: the founder in an armchair
  * with a coffee, a small microphone on a stand and a stamp on the side
  * table: the four things only they do. Right, behind a window: the workshop
- * at work — operators, a conveyor, gears, a spool being wound.
+ * at work: operators, a conveyor, gears, a spool being wound.
  */
 export function CalmFounder() {
   return (

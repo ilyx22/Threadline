@@ -1,5 +1,5 @@
 /**
- * Public site content — one place for the copy, navigation and CTAs of the
+ * Public site content: one place for the copy, navigation and CTAs of the
  * pre-client experience. Every factual statement here is a claim that must
  * be VERIFIED in docs/site/CLAIMS_EVIDENCE_LEDGER.md; the ledger ids are
  * referenced beside the statements they govern (`claim:`).
@@ -32,7 +32,7 @@ export const FOOTER = {
     { title: "Company", links: [{ href: "/apply", label: "Apply" }, { href: "/login", label: "Client sign in" }] },
     { title: "Fine print", links: [{ href: "/playbook/what-we-do-not-promise", label: "What we do not promise" }] },
   ],
-  small: "Founding client programme. 12-week initial engagement, run in 4-week service periods. Commercial terms are discussed during the qualified sales process.", // claim:C-CADENCE — exact pricing is not published (DEC-017)
+  small: "Founding client programme. 12-week initial engagement, run in 4-week service periods. Commercial terms are discussed during the qualified sales process.", // claim:C-CADENCE: exact pricing is not published (DEC-017)
 };
 
 export const CRATES = ["Expertise", "Stories", "Proof", "Opinions", "Experience"] as const;
@@ -44,16 +44,16 @@ export const STATIONS = [
   { key: "ideas", label: "Ideas", detail: "Each one tied to a thesis it will test." },
   { key: "script", label: "Script", detail: "Written in your voice, every factual claim checked before it is recorded." },
   { key: "record", label: "Record", detail: "You talk. A teleprompter, a checklist, twenty minutes." },
-  { key: "produce", label: "Produce", detail: "Cut, packaged, titled — one idea into the formats that fit it." },
+  { key: "produce", label: "Produce", detail: "Cut, packaged, titled: one idea into the formats that fit it." },
   { key: "approve", label: "Approve", detail: "Nothing goes out that you have not seen." },
   { key: "distribute", label: "Distribute", detail: "Published where the buyer is, with a link we can measure." },
 ] as const;
 
 export const RETURN_PATH = [
-  { label: "Measure", detail: "Views, retention, saves — and who got in touch." },
+  { label: "Measure", detail: "Views, retention, saves, and who got in touch." },
   { label: "Expected vs actual", detail: "We wrote down what we expected before it went out. Now we compare." },
   { label: "Diagnose", detail: "If it missed, we name the most likely reason. If we cannot, we say so." },
-  { label: "Change one thing", detail: "The opening, the proof, the format — one lever, not a rewrite." },
+  { label: "Change one thing", detail: "The opening, the proof, the format: one lever, not a rewrite." },
   { label: "Retest", detail: "The same thesis goes out again with the change. That is how we learn." },
 ] as const;
 
@@ -62,19 +62,19 @@ export const HOME = {
   hero: {
     eyebrow: "For expert-led businesses",
     title: ["You already have", "the expertise."],
-    lead: "We turn it into content people actually want to watch — and run the system around it so that content compounds into authority and qualified demand.",
+    lead: "We turn it into content people actually want to watch, and run the system around it so that content compounds into authority and qualified demand.",
     sub: "You talk. You record. You approve. You sell. Threadline handles the machine.",
     note: "A small number of clients at a time. Applications are read by a person and answered either way.",
   },
   problem: {
     eyebrow: "The problem",
     title: "The market does not experience enough of what you know.",
-    lead: "Eleven years of judgement, hundreds of client conversations, opinions you would defend in a room — and most of it never leaves your head. Not because it is not valuable. Because turning it into something worth watching, every week, is a second job.",
+    lead: "Eleven years of judgement, hundreds of client conversations, opinions you would defend in a room, and most of it never leaves your head. Not because it is not valuable. Because turning it into something worth watching, every week, is a second job.",
     crates: CRATES,
     points: [
       { title: "Nobody would choose to watch it", body: "The thinking is good; the piece reads a list to camera. The people who would have hired you never reach the part where you say something only you could say." },
       { title: "Topics chosen by mood", body: "This week's post comes from Sunday's mood, not from anything known about what your market is trying to solve." },
-      { title: "Output that stops when you get busy", body: "Every piece needs you at four separate points. When delivery gets heavy, publishing goes quiet — exactly when pipeline matters." },
+      { title: "Output that stops when you get busy", body: "Every piece needs you at four separate points. When delivery gets heavy, publishing goes quiet: exactly when pipeline matters." },
       { title: "No learning loop", body: "Nobody can say why one piece produced three conversations and the next produced none, so the same guesses repeat for quarters." },
     ],
   },
@@ -88,7 +88,7 @@ export const HOME = {
       { label: "Sell", body: "Take the conversations the content starts." },
     ],
     machine: ["Understand", "Research", "Signals", "Ideas", "Script", "Produce", "Package", "Distribute", "Measure", "Diagnose", "Learn"],
-    relief: "Everything else — the research, the choosing, the writing, the cutting, the packaging, the publishing, the measuring, the learning — is the machine's job.",
+    relief: "Everything else, the research, the choosing, the writing, the cutting, the packaging, the publishing, the measuring, the learning, is the machine's job.",
   },
   machine: {
     eyebrow: "The machine",
@@ -105,7 +105,7 @@ export const HOME = {
   branching: {
     eyebrow: "One idea, many expressions",
     title: "One thesis. Many packages. One learning history.",
-    lead: "A single argument becomes a long-form piece, three shorts, a LinkedIn post, a thread and a newsletter section — each measured on its own, all read together as one idea being tested.",
+    lead: "A single argument becomes a long-form piece, three shorts, a LinkedIn post, a thread and a newsletter section, each measured on its own, all read together as one idea being tested.",
     packages: ["Long-form", "Short", "Short", "LinkedIn", "Thread", "Newsletter"],
   },
   memory: {
@@ -130,7 +130,7 @@ export const HOME = {
     card: {
       expected: "A typical result for this format; the opening was the strongest part.",
       actual: "Reach at a fifth of usual; the people who watched stayed to the end.",
-      failure: "Hook and packaging — the argument was fine, the first line did not earn the click.",
+      failure: "Hook and packaging: the argument was fine, the first line did not earn the click.",
       next: "Retest the same thesis with the opening rewritten around the buyer's moment.",
       verdict: "Retest read: it worked.",
     },
@@ -141,7 +141,7 @@ export const HOME = {
     title: "Three service periods. Real market evidence, not a promise about algorithms.",
     lead: "Threadline runs in 4-week service periods. The initial engagement is three of them.", // claim:C-CADENCE
     periods: [
-      { label: "Period 1", title: "Establish and calibrate", body: "Brand Brain, research, first signals, first pieces out. We learn what your market responds to — and record what we expected first." },
+      { label: "Period 1", title: "Establish and calibrate", body: "Brand Brain, research, first signals, first pieces out. We learn what your market responds to, and record what we expected first." },
       { label: "Period 2", title: "Refine and correct", body: "Diagnoses become corrections. The weakest link gets pressed on. Output settles into a rhythm you can keep." },
       { label: "Period 3", title: "Concentrate and compound", body: "The theses that earned attention get more of it. Derivatives multiply the winners. The learning history starts paying." },
       { label: "Period 4+", title: "Compound harder", body: "By now the system knows things about your market that nobody else has written down." },
@@ -152,9 +152,9 @@ export const HOME = {
     eyebrow: "Product proof",
     title: "No client results to show yet. So here is the system, working.",
     lead: "Threadline is a founding-client programme. Until real results exist and a client has agreed to share them, the only honest proof is the mechanism itself. Everything below is a synthetic demonstration.", // claim:C-NO-CASE-STUDIES
-    label: "Synthetic demonstration — illustrative, not a client result",
+    label: "Synthetic demonstration: illustrative, not a client result",
     chain: [
-      { label: "Evidence", body: "'The forecast is a feeling' — said by three founders on discovery calls." },
+      { label: "Evidence", body: "'The forecast is a feeling': said by three founders on discovery calls." },
       { label: "Idea", body: "Why your forecast is a feeling, not a number." },
       { label: "Expectation", body: "Typical reach for the format; strongest dimension: relevance." },
       { label: "Published", body: "LinkedIn, Tuesday, with a tracked link." },
@@ -189,21 +189,21 @@ export const HOME = {
   },
   cta: {
     title: "Apply for a content growth diagnosis.",
-    lead: "Three short steps. Read by a person. Answered either way — including when the answer is that we are not the right fit.",
+    lead: "Three short steps. Read by a person. Answered either way, including when the answer is that we are not the right fit.",
   },
 };
 
 export const HOW_IT_WORKS = {
   title: "How the machine works.",
-  lead: "Raw expertise in. Market intelligence, content decisions, production, distribution, commercial response and learning — in that order, every service period.",
+  lead: "Raw expertise in. Market intelligence, content decisions, production, distribution, commercial response and learning: in that order, every service period.",
   stages: [
     { key: "raw", title: "Raw expertise", body: "You bring what only you have: what you know, what you have seen, what you would argue. It arrives as conversation, not as homework.", station: "founder" },
-    { key: "intel", title: "Market intelligence", body: "The Scanner reads what your market says — its questions, objections and language — from your own records, from public sources and from what you paste in. Every source is kept with its provenance. Login-walled platforms are refused by name, never scraped in the dark.", station: "scanner" },
-    { key: "decide", title: "Content decisions", body: "Signals become theses; theses become ideas; ideas become scripts in your voice. Every factual claim is checked before it can be recorded. A person approves each step — the machine proposes, it does not decide.", station: "assembly" },
+    { key: "intel", title: "Market intelligence", body: "The Scanner reads what your market says, its questions, objections and language, from your own records, from public sources and from what you paste in. Every source is kept with its provenance. Login-walled platforms are refused by name, never scraped in the dark.", station: "scanner" },
+    { key: "decide", title: "Content decisions", body: "Signals become theses; theses become ideas; ideas become scripts in your voice. Every factual claim is checked before it can be recorded. A person approves each step: the machine proposes, it does not decide.", station: "assembly" },
     { key: "produce", title: "Production", body: "You record against a teleprompter. The Builder cuts and packages. One source piece becomes the formats that fit it, each with its own title, thumbnail and caption, all sharing one lineage.", station: "builder" },
     { key: "distribute", title: "Distribution", body: "Published where the buyer is, with a tracked link so that a click, a form and a booked call can be joined up later. Paid amplification is recorded separately from organic reach so the two are never confused.", station: "sorter" },
     { key: "response", title: "Commercial response", body: "Enquiries, booked calls and named mentions are recorded with their evidence class. A buyer saying 'I saw the post' is stronger evidence than a like, and the system never upgrades weak evidence into strong.", station: "buyer" },
-    { key: "learn", title: "Learning", body: "Expected vs actual. Diagnosis. One correction. Retest. Verdict. The trajectory is shown as it happened — improving, flat or declining — and a bad period reads as a bad period.", station: "pipe" },
+    { key: "learn", title: "Learning", body: "Expected vs actual. Diagnosis. One correction. Retest. Verdict. The trajectory is shown as it happened, improving, flat or declining, and a bad period reads as a bad period.", station: "pipe" },
   ],
   gates: [
     { label: "Fact-check gate", body: "A script with an unverified factual claim cannot be marked ready to record." },
@@ -217,7 +217,7 @@ export const WHO_ITS_FOR = {
   title: "Expert-led B2B businesses with something proven to sell.",
   lead: "Threadline works when there is real expertise, a real offer and enough value per customer that one good conversation matters. It does not work as a shortcut to fame.",
   profile: [
-    { label: "Buyer profile", body: "Founders, partners and senior operators of expert-led firms — advisory, consulting, professional services, specialist B2B — where the founder's judgement is the product." },
+    { label: "Buyer profile", body: "Founders, partners and senior operators of expert-led firms, advisory, consulting, professional services, specialist B2B, where the founder's judgement is the product." },
     { label: "Offer maturity", body: "An offer that has been sold more than once, with a price, a scope and a customer who can describe what they got." },
     { label: "Economics", body: "Meaningful value per client. If one additional good customer is worth four figures or more, content that starts one conversation a month pays for itself. If it is worth forty pounds, this is the wrong tool." },
     { label: "The founder's role", body: "Twenty minutes of recording and one approval pass a week. If that is not available, no system can manufacture your voice." },
@@ -231,7 +231,7 @@ export const WHO_ITS_FOR = {
 export const APPLY = {
   eyebrow: "Founding client programme",
   title: "Apply for a diagnosis, not a pitch.",
-  lead: "This is a diagnostic, not a signup. Your answers tell us where demand is actually constrained — and on several of the dimensions we look at, more content would make the problem more expensive rather than smaller.",
+  lead: "This is a diagnostic, not a signup. Your answers tell us where demand is actually constrained, and on several of the dimensions we look at, more content would make the problem more expensive rather than smaller.",
   reassurance: "Answer honestly. If the answer is that we are not the right fit, we would both rather know now, and you keep the finding either way.",
   meta: "Three short steps, about four minutes. Read by a person. Replied to either way.",
 };
@@ -239,7 +239,7 @@ export const APPLY = {
 export const CALCULATOR = {
   eyebrow: "The cost of the status quo",
   title: "What does your content operation cost today?",
-  lead: "Most founders have never costed it, because the largest line — their own time — never appears on an invoice. Put your real numbers in. This is a scenario built from your inputs: it computes what the current operation costs and what a different workflow would release. It never projects revenue, and organic content is not paid media — nothing here is a deterministic attribution model.",
+  lead: "Most founders have never costed it, because the largest line, their own time, never appears on an invoice. Put your real numbers in. This is a scenario built from your inputs: it computes what the current operation costs and what a different workflow would release. It never projects revenue, and organic content is not paid media, nothing here is a deterministic attribution model.",
 };
 
 export const PLAYBOOK = {
@@ -248,15 +248,15 @@ export const PLAYBOOK = {
   lead: "How expert-led businesses turn what they know into content the market wants, keep learning from what comes back, and become the obvious person to call. Read it in twenty minutes. Use it without us.",
   chapters: [
     { slug: "expertise-is-the-raw-material", title: "Expertise is the raw material", summary: "Why the best content in your category is already in your head, and why it does not leave on its own.", scene: "crates", keyIdea: "Content is not created. It is extracted, then shaped. If the extraction step is 'the founder sits down to write', it will not happen at the cadence the market needs.", reveal: { prompt: "What counts as raw material?", answer: "Opinions you would defend. Stories with a number in them. Mistakes you have paid for. Questions clients ask twice. Frameworks you use without naming. The thing you say on every second call." }, practice: "Record a 20-minute conversation answering: what do clients keep getting wrong before they reach you? That recording is a month of material." },
-    { slug: "positioning-is-a-decision", title: "Positioning is a decision, not a discovery", summary: "One problem, one buyer, one argument — before a single piece is made.", scene: "founder", keyIdea: "Content amplifies whatever position it is given. If the position is 'we do lots of things for lots of people', the content will be watched by nobody in particular.", reveal: { prompt: "The one-sentence test", answer: "'We help [a specific buyer] solve [an expensive problem] by [a mechanism they do not have].' If the sentence needs a comma-list, the position is not decided yet." }, practice: "Write the sentence. Show it to the last three people who bought. Ask which word they would change." },
-    { slug: "listen-before-you-speak", title: "Listen before you speak", summary: "Market intelligence is the difference between content that is about you and content that is for them.", scene: "scanner", keyIdea: "Your market is already telling you what it wants to watch — in the questions it asks on calls, the objections it raises before price, the words it uses for the problem. Write those down before choosing a topic.", reveal: { prompt: "Where the language lives", answer: "Discovery call notes. Support emails. The comment under a competitor's post that got more replies than the post. The thing a buyer said that made you wince because it was true." }, practice: "Collect ten exact quotes from buyers in a week. Underline the words you would never have chosen yourself." },
-    { slug: "one-thesis-many-expressions", title: "One thesis, many expressions", summary: "Why the unit of content is the argument, not the post.", scene: "branching", keyIdea: "A thesis is an argument the market can react to. One thesis becomes a long piece, several shorts, a post and a thread — different expressions, one learning history. Cross-posting the same words everywhere is not the same thing.", reveal: { prompt: "Thesis or topic?", answer: "'Sales forecasting' is a topic. 'Your forecast is a feeling, not a number, and the board can tell' is a thesis. Only the second can be wrong — which is exactly why it can be tested." }, practice: "Take one topic you post about. Write three theses on it that someone could disagree with." },
-    { slug: "distribution-is-a-place-not-a-blast", title: "Distribution is a place, not a blast", summary: "Publish where the buyer is; make the path from the piece to a conversation measurable.", scene: "sorter", keyIdea: "The buyer for a £20,000 engagement is not on every platform, and does not need to be. Distribution is choosing the two rooms they are in and being there consistently — with a link that lets you see who came through.", reveal: { prompt: "The measurement rule", answer: "If a piece has no tracked link and no call to action, its commercial result cannot be observed later. It can still be worth publishing — but say so at the time, not afterwards." }, practice: "For your last five pieces, write down how a buyer could have got in touch from each. Count the pieces where the answer is 'they couldn't'." },
-    { slug: "repeated-exposure-builds-memory", title: "Repeated exposure builds memory", summary: "Familiarity earns attention; repeated valuable attention builds authority.", scene: "memory", keyIdea: "Nobody hires the person they saw once. They hire the person who kept being right in front of them until it was obvious who to call. There is no magic number of exposures — there is consistency of argument over months.", reveal: { prompt: "Famous vs familiar", answer: "Famous is many people knowing your name. Familiar is the right forty people knowing your position. The second is worth more and costs less." }, practice: "Name the forty people who matter for your next year. Would they recognise your argument from a single line?" },
+    { slug: "positioning-is-a-decision", title: "Positioning is a decision, not a discovery", summary: "One problem, one buyer, one argument: before a single piece is made.", scene: "founder", keyIdea: "Content amplifies whatever position it is given. If the position is 'we do lots of things for lots of people', the content will be watched by nobody in particular.", reveal: { prompt: "The one-sentence test", answer: "'We help [a specific buyer] solve [an expensive problem] by [a mechanism they do not have].' If the sentence needs a comma-list, the position is not decided yet." }, practice: "Write the sentence. Show it to the last three people who bought. Ask which word they would change." },
+    { slug: "listen-before-you-speak", title: "Listen before you speak", summary: "Market intelligence is the difference between content that is about you and content that is for them.", scene: "scanner", keyIdea: "Your market is already telling you what it wants to watch: in the questions it asks on calls, the objections it raises before price, the words it uses for the problem. Write those down before choosing a topic.", reveal: { prompt: "Where the language lives", answer: "Discovery call notes. Support emails. The comment under a competitor's post that got more replies than the post. The thing a buyer said that made you wince because it was true." }, practice: "Collect ten exact quotes from buyers in a week. Underline the words you would never have chosen yourself." },
+    { slug: "one-thesis-many-expressions", title: "One thesis, many expressions", summary: "Why the unit of content is the argument, not the post.", scene: "branching", keyIdea: "A thesis is an argument the market can react to. One thesis becomes a long piece, several shorts, a post and a thread, different expressions, one learning history. Cross-posting the same words everywhere is not the same thing.", reveal: { prompt: "Thesis or topic?", answer: "'Sales forecasting' is a topic. 'Your forecast is a feeling, not a number, and the board can tell' is a thesis. Only the second can be wrong, which is exactly why it can be tested." }, practice: "Take one topic you post about. Write three theses on it that someone could disagree with." },
+    { slug: "distribution-is-a-place-not-a-blast", title: "Distribution is a place, not a blast", summary: "Publish where the buyer is; make the path from the piece to a conversation measurable.", scene: "sorter", keyIdea: "The buyer for a £20,000 engagement is not on every platform, and does not need to be. Distribution is choosing the two rooms they are in and being there consistently, with a link that lets you see who came through.", reveal: { prompt: "The measurement rule", answer: "If a piece has no tracked link and no call to action, its commercial result cannot be observed later. It can still be worth publishing, but say so at the time, not afterwards." }, practice: "For your last five pieces, write down how a buyer could have got in touch from each. Count the pieces where the answer is 'they couldn't'." },
+    { slug: "repeated-exposure-builds-memory", title: "Repeated exposure builds memory", summary: "Familiarity earns attention; repeated valuable attention builds authority.", scene: "memory", keyIdea: "Nobody hires the person they saw once. They hire the person who kept being right in front of them until it was obvious who to call. There is no magic number of exposures: there is consistency of argument over months.", reveal: { prompt: "Famous vs familiar", answer: "Famous is many people knowing your name. Familiar is the right forty people knowing your position. The second is worth more and costs less." }, practice: "Name the forty people who matter for your next year. Would they recognise your argument from a single line?" },
     { slug: "measure-what-the-buyer-did", title: "Measure what the buyer did", summary: "Reach is a proxy. A named enquiry is a result.", scene: "attention", keyIdea: "Views tell you a piece travelled. They do not tell you where. The signals that matter are the ones with a buyer attached: a tracked click, a form, a booked call, a person saying 'I saw your post'. Weak evidence should never be counted as strong.", reveal: { prompt: "Evidence classes, in order", answer: "Directly tracked → buyer named the piece → multi-touch → associated in time → qualitative only. A report that sums these into one number is hiding the difference." }, practice: "Next time someone gets in touch, ask what they saw. Write the answer down with the date." },
-    { slug: "write-down-what-you-expect", title: "Write down what you expect", summary: "The learning loop starts before the piece goes out.", scene: "inspector", keyIdea: "If you do not record what you expected, every result looks like what you expected. Write it down first — a sentence and a rough band — and read the result against it after two weeks.", reveal: { prompt: "What a diagnosis is", answer: "A named, checkable hypothesis about why the gap exists: idea, targeting, hook, delivery, retention, proof, distribution, call-to-action. Or 'too early to read'. Never 'the algorithm'." }, practice: "For your next piece, write one line: 'I expect this to do about X because Y.' Read it in 14 days." },
-    { slug: "change-one-thing-and-retest", title: "Change one thing, then retest", summary: "Corrections are how a content operation gets smarter instead of busier.", scene: "pipe", keyIdea: "A piece that missed is not a failed thesis; it is a thesis with one wrong component. Change the component — the opening, the proof, the format — and run it again. Record whether the change worked. That record is the asset.", reveal: { prompt: "Why one lever", answer: "Change three things and you learn nothing, because you cannot tell which one mattered. Change one and you learn something you can use on every future piece." }, practice: "Pick your best-argued piece that underperformed. Rewrite only the first line. Post it again." },
-    { slug: "what-we-do-not-promise", title: "What we do not promise", summary: "The honest limits of any content system, including this one.", scene: "stamp", keyIdea: "No system can promise leads, revenue, followers, views or virality, because the market decides and the market is not a machine. What can be promised is the process: evidence before ideas, expectations before publishing, diagnosis before the next batch, and a report that shows a bad week as a bad week.", reveal: { prompt: "So what is the guarantee?", answer: "Controllable things: the research is done, the pieces ship, every claim is checked, every result is read against an expectation, and you are never shown a number that flatters. Everything else is evidence, collected honestly." }, practice: "Ask any provider — including us — to show you a report from a bad month. If they cannot, they are not measuring." },
+    { slug: "write-down-what-you-expect", title: "Write down what you expect", summary: "The learning loop starts before the piece goes out.", scene: "inspector", keyIdea: "If you do not record what you expected, every result looks like what you expected. Write it down first, a sentence and a rough band, and read the result against it after two weeks.", reveal: { prompt: "What a diagnosis is", answer: "A named, checkable hypothesis about why the gap exists: idea, targeting, hook, delivery, retention, proof, distribution, call-to-action. Or 'too early to read'. Never 'the algorithm'." }, practice: "For your next piece, write one line: 'I expect this to do about X because Y.' Read it in 14 days." },
+    { slug: "change-one-thing-and-retest", title: "Change one thing, then retest", summary: "Corrections are how a content operation gets smarter instead of busier.", scene: "pipe", keyIdea: "A piece that missed is not a failed thesis; it is a thesis with one wrong component. Change the component, the opening, the proof, the format, and run it again. Record whether the change worked. That record is the asset.", reveal: { prompt: "Why one lever", answer: "Change three things and you learn nothing, because you cannot tell which one mattered. Change one and you learn something you can use on every future piece." }, practice: "Pick your best-argued piece that underperformed. Rewrite only the first line. Post it again." },
+    { slug: "what-we-do-not-promise", title: "What we do not promise", summary: "The honest limits of any content system, including this one.", scene: "stamp", keyIdea: "No system can promise leads, revenue, followers, views or virality, because the market decides and the market is not a machine. What can be promised is the process: evidence before ideas, expectations before publishing, diagnosis before the next batch, and a report that shows a bad week as a bad week.", reveal: { prompt: "So what is the guarantee?", answer: "Controllable things: the research is done, the pieces ship, every claim is checked, every result is read against an expectation, and you are never shown a number that flatters. Everything else is evidence, collected honestly." }, practice: "Ask any provider, including us, to show you a report from a bad month. If they cannot, they are not measuring." },
   ],
   closing: { title: "Want us to run the machine?", lead: "Threadline runs this system for a small number of expert-led businesses at a time. Apply and we will tell you honestly whether it fits.", cta: { label: "Apply", href: "/apply" } },
 };
@@ -294,7 +294,7 @@ export const NOT_FOUND = {
 
 
 /* ------------------------------------------------------------------------ */
-/* HOME v3 — the captivation pass (9 September 2026, evening).               */
+/* HOME v3: the captivation pass (9 September 2026, evening).               */
 /* Narrative order: hero → commercial problem → market memory → founder      */
 /* burden → Authority Factory → one idea, the right expressions → attention  */
 /* to commercial movement → learning loop → 12-week progression →            */
@@ -394,7 +394,7 @@ export const HOME_V3 = {
     left: { ...HOME.attention.left, number: "1,204,000", reading: "A viral piece in the wrong room. High reach, no buyer, nothing to learn from commercially." },
     right: { ...HOME.attention.right, number: "1,900", reading: "A modest piece in the right room. One named enquiry that says which post they saw. That is the result the route is built for." },
     honesty: "No leads are promised. Threadline improves the route from expertise to commercial movement and records each step with its evidence class.",
-    illustrative: "Numbers illustrative — no client figures are shown on this site.",
+    illustrative: "Numbers illustrative: no client figures are shown on this site.",
   },
   learning: {
     eyebrow: "How the system learns",
@@ -465,7 +465,7 @@ export const HOME_V3 = {
 export const DIAGNOSTIC = {
   eyebrow: "Where is your authority system breaking?",
   title: "Pick the description that sounds most like you.",
-  lead: "Five places an authority system can break. Each one maps to a station on the line — and to the symptoms we hear most often on discovery calls.",
+  lead: "Five places an authority system can break. Each one maps to a station on the line, and to the symptoms we hear most often on discovery calls.",
   categories: [
     { key: "position", label: "Position", body: "The market sees you but does not know what you should be known for.", chamber: "intel", stage: "intel" },
     { key: "create", label: "Create", body: "The expertise exists but rarely becomes strong content.", chamber: "create", stage: "decide" },

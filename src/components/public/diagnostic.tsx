@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Chamber } from "@/components/factory/objects";
 
 /**
- * "Where is your authority system breaking?" — Threadline's own diagnostic,
+ * "Where is your authority system breaking?": Threadline's own diagnostic,
  * built on the frozen selector skeleton (reference-analysis/clones/
  * hydra-constraint-selector): tabs → the seven stations react → a symptom
  * card beside a dark "what Threadline changes" card. Categories are original

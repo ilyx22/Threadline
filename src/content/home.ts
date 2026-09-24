@@ -1,5 +1,5 @@
 /**
- * Threadline homepage copy — the 24 September 2026 rebuild. One place for
+ * Threadline homepage copy: the 24 September 2026 rebuild. One place for
  * every sentence on the front page. Governed by docs/site/CLAIMS_EVIDENCE_LEDGER.md
  * (ids in comments) and docs/site/FOUNDER_FEEDBACK_DESIGN_BRIEF.md. Rules:
  * no pricing, no proof that does not exist, illustrative material labelled,

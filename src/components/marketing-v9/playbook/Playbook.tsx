@@ -5,7 +5,8 @@ import { MAXIMS, PERIODS, PERIODS_NOTE, PLAYBOOK_HERO } from "@/content/playbook
 import Motion from "@/components/marketing-v5/Motion";
 import { Diagnostic } from "@/components/public/diagnostic";
 import { AcquisitionCalculator } from "@/components/marketing-v5/AcquisitionCalculator";
-import Image from "next/image";
+import { Obj } from "../Obj";
+import { CHAPTER_OBJECTS } from "./Chapter";
 import { ProgressRail } from "./Progress";
 import { Chapter } from "./Chapter";
 
@@ -53,9 +54,17 @@ export default function Playbook() {
               ))}
             </dl>
           </div>
-          <div className="v9-hero-scene is-photo pb-hero-scene">
-            <Image src="/marketing/playbook-scene.jpg" alt="A reading desk with an open ledger, ten blank index cards fanned beside it, a spool of marigold thread, a desk lamp, a magnifying glass and a stamp. One reader in a lilac coat leans over the ledger." width={1276} height={604} priority sizes="(max-width: 991px) 100vw, 56vw" />
-          </div>
+          <ol className="pb-hero-map v9-reveal" aria-label="The ten chapters" style={{ ["--d" as string]: "200ms" }}>
+            {PLAYBOOK.chapters.map((ch, i) => (
+              <li key={ch.slug} style={{ ["--i" as string]: i }}>
+                <a href={`#chapter-${i + 1}`} className="pb-map-tile">
+                  <Obj name={CHAPTER_OBJECTS[i]} size={96} />
+                  <span className="v9-tag">{String(i + 1).padStart(2, "0")}</span>
+                  <strong>{ch.title}</strong>
+                </a>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 

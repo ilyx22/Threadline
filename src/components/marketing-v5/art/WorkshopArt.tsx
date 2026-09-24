@@ -2,7 +2,7 @@ import * as React from "react";
 import { Artefact, At, C, Gear, Grain, LINE, Person, Plate, Signal, Spool, Thread, outline as O } from "./kit";
 
 /**
- * SCENE 5 — the Authority Workshop, one panorama, six stations. The root
+ * SCENE 5: the Authority Workshop, one panorama, six stations. The root
  * object travels the bench from left to right and is changed at every
  * station: loose fragments → a wound spool → three native cuts → dispatched
  * parcels → a tray of labelled signals → the same spool with one part
@@ -24,7 +24,7 @@ function Bench() {
   );
 }
 
-/** Station 1: the intelligence table — bins of what buyers ask, a lens on an arm. */
+/** Station 1: the intelligence table: bins of what buyers ask, a lens on an arm. */
 function Intel() {
   return (
     <g>
@@ -45,7 +45,7 @@ function Intel() {
   );
 }
 
-/** Station 2: the binding press — fragments wound into one spool. */
+/** Station 2: the binding press: fragments wound into one spool. */
 function Binding() {
   return (
     <g>
@@ -60,7 +60,7 @@ function Binding() {
   );
 }
 
-/** Station 3: the cutting loom — one thread, three native shapes. */
+/** Station 3: the cutting loom: one thread, three native shapes. */
 function Loom() {
   return (
     <g>
@@ -75,7 +75,7 @@ function Loom() {
   );
 }
 
-/** Station 4: dispatch — the hatch to the two rooms the buyer is in. */
+/** Station 4: dispatch: the hatch to the two rooms the buyer is in. */
 function Dispatch() {
   return (
     <g>
@@ -97,7 +97,7 @@ function Dispatch() {
   );
 }
 
-/** Station 5: the signal tray — what came back, with its evidence class. */
+/** Station 5: the signal tray: what came back, with its evidence class. */
 function SignalTray() {
   return (
     <g>
@@ -117,7 +117,7 @@ function SignalTray() {
   );
 }
 
-/** Station 6: the test bench — expected against actual, one part swapped. */
+/** Station 6: the test bench: expected against actual, one part swapped. */
 function TestBench() {
   return (
     <g>

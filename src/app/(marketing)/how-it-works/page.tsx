@@ -3,7 +3,7 @@ import HowItWorks from "@/components/marketing-v9/HowItWorks";
 
 export const metadata: Metadata = {
   title: "How it works",
-  description: "Raw expertise in. Market intelligence, content decisions, production, distribution, commercial response and learning — in that order, every service period.",
+  description: "Raw expertise in. Market intelligence, content decisions, production, distribution, commercial response and learning: in that order, every service period.",
   alternates: { canonical: "/how-it-works" },
 };
 

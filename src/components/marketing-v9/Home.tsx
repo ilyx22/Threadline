@@ -249,7 +249,7 @@ function Workshop() {
           {workshop.stations.map((s, i) => (
             <li key={s.key} className={`v9-tile v9-mosaic-tile ${TONES[i]}${[0, 3, 4].includes(i) ? " is-wide-tile" : ""} v9-reveal`} style={{ ["--i" as string]: i % 2 }}>
               <div className="v9-mosaic-art is-obj">
-                <Obj name={STATION_OBJECTS[i]} size={240} />
+                <Obj name={STATION_OBJECTS[i]} size={260} big />
               </div>
               <div className="v9-mosaic-text">
                 <span className="v9-tag">Station {String(i + 1).padStart(2, "0")}</span>

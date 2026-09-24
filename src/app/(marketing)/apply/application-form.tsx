@@ -96,7 +96,7 @@ export function ApplicationForm({ bookingUrl }: { bookingUrl: string | null }) {
           <h2 className="text-[19px] font-medium text-ink">Application received</h2>
           <p className="mx-auto mt-3 max-w-md text-[14px] leading-relaxed text-muted">
             A person reads every application, usually within one working day. You will get a reply
-            either way — including if we do not think we are the right fit, and why.
+            either way, including if we do not think we are the right fit, and why.
           </p>
 
           {bookingUrl ? (

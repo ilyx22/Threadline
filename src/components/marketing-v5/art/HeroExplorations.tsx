@@ -3,14 +3,14 @@ import { Archive, Press } from "./HeroArt";
 import { At, C, Grain, Pegged, Person, Plate, Spool, Thread, outline as O } from "./kit";
 
 /**
- * Phase D — two alternative hero compositions built on the same message, kept
+ * Phase D: two alternative hero compositions built on the same message, kept
  * in the design lab beside the chosen one (HeroArt, "the pegged line"). They
  * differ in composition, not colour.
  *
- * B — "the cutaway": a tall drawing. The archive is underground; the thread
+ * B: "the cutaway": a tall drawing. The archive is underground; the thread
  *     rises through a hatch into the sky, where the artefacts hang from a
  *     mast beside the buyers. Copy sits to the left.
- * C — "the line through the words": the headline is the scene. The thread is
+ * C: "the line through the words": the headline is the scene. The thread is
  *     drawn through the lines of type and three buyers stand on the baseline
  *     of the last line, reading what hangs from it.
  */

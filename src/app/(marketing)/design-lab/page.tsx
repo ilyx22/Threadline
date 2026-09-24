@@ -12,7 +12,7 @@ export const metadata: Metadata = { title: "Design lab", robots: { index: false,
 const KINDS = ["post", "video", "doc", "proof", "deep", "diagnostic", "nurture", "update"] as const;
 
 /**
- * Internal only — the object families and three representative scenes, plus
+ * Internal only: the object families and three representative scenes, plus
  * the three hero explorations from Phase D. Never served in production
  * (`notFound()` below) and disallowed in robots.ts.
  */
@@ -62,11 +62,11 @@ export default function DesignLab() {
         <Plate x={140} y={200} tone={C.white}>A PLATE</Plate>
       </svg>
 
-      <H>Hero A — the pegged line (chosen)</H>
+      <H>Hero A: the pegged line (chosen)</H>
       <div style={{ background: "var(--v5-sky)", borderRadius: 24, padding: "24px 0 0" }}>
         <HeroArt />
       </div>
-      <H>Hero B — the cutaway</H>
+      <H>Hero B: the cutaway</H>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 40, alignItems: "center", background: "var(--v5-sky)", borderRadius: 24, padding: 32 }}>
         <div>
           <p className="v5-eyebrow">{hero.eyebrow}</p>
@@ -76,14 +76,14 @@ export default function DesignLab() {
           <HeroCutaway />
         </div>
       </div>
-      <H>Hero C — the line through the words</H>
+      <H>Hero C: the line through the words</H>
       <div style={{ background: "var(--v5-paper)", border: "2px solid var(--v5-ink)", borderRadius: 24, padding: 32 }}>
         <HeroTypographic headline={hero.headline} />
       </div>
 
-      <H>Scene — the vault</H>
+      <H>Scene: the vault</H>
       <ProblemArt />
-      <H>Scene — the workshop, station 3</H>
+      <H>Scene: the workshop, station 3</H>
       <WorkshopArt station={2} interactive={false} />
       <H>Phone layouts</H>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 400px)", gap: 40 }}>

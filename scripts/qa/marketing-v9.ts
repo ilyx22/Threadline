@@ -121,7 +121,7 @@ async function main() {
 
     section("homepage v9 — without scripting, reduced motion, claims");
     const html = await (await fetch(`${BASE}/`)).text();
-    ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects\//g) || []).length >= 22 && /hero-scene\.jpg/.test(html) && /gap-left\.jpg/.test(html) && /gap-right\.jpg/.test(html) && (html.match(/memory\/encounter-/g) || []).length >= 5 && /closing-scene\.jpg/.test(html));
+    ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects(-big)?\//g) || []).length >= 22 && /hero-scene\.jpg/.test(html) && /gap-left\.jpg/.test(html) && /gap-right\.jpg/.test(html) && (html.match(/memory\/encounter-/g) || []).length >= 5 && /closing-scene\.jpg/.test(html));
     ok("v9:nojs", "the bench's Expected readout is in the server HTML", /v5-readout-verdict">Expected</.test(html));
     ok("v9:nojs", "the ticker's items are in the server HTML as a list", (html.match(/v9-chip/g) || []).length >= 10);
     await setViewport(cdp, 1440, 900);

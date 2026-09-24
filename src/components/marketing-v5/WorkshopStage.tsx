@@ -5,7 +5,7 @@ import { workshop } from "@/content/marketing-v5";
 import { STATION_X, WORKSHOP_W, WorkshopArt } from "./art/WorkshopArt";
 
 /**
- * SCENE 5 — the stage around the workshop panorama. The whole bench is
+ * SCENE 5: the stage around the workshop panorama. The whole bench is
  * visible at once with every station named, so the mechanism reads at a
  * glance and without JavaScript. Choosing a station (the numbered buttons,
  * or ← → while one of them has focus) moves the root object there and opens

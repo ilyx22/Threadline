@@ -1,5 +1,5 @@
 /**
- * The interactive Playbook — the things to do inside each chapter of The
+ * The interactive Playbook: the things to do inside each chapter of The
  * Founder Authority System. The chapter text itself (title, summary, key
  * idea, the card to turn, the practice) stays in PLAYBOOK in public-site.ts;
  * this file holds the objects a reader can tap, sort, build, pick and drag.
@@ -23,7 +23,7 @@ export const PLAYBOOK_HERO = {
 
 export const MAXIMS = ["Evidence before ideas", "Expected before published", "Change one thing, then retest", "Familiar, not famous", "A bad week reads as a bad week", "Platforms are components, not the strategy"] as const;
 
-/** Chapter 01 — what counts as raw material. Tap a crate. */
+/** Chapter 01: what counts as raw material. Tap a crate. */
 export const RAW_MATERIAL = [
   { front: "Opinions", back: "Opinions you would defend in a room of peers. The ones you soften in proposals." },
   { front: "Stories with a number", back: "A client situation with a figure in it: the budget, the delay, the saving, the thing that nearly went wrong." },
@@ -33,7 +33,7 @@ export const RAW_MATERIAL = [
   { front: "The second-call sentence", back: "The thing you say on every second call to explain why the obvious approach fails. That is a thesis." },
 ] as const;
 
-/** Chapter 02 — the one-sentence test. */
+/** Chapter 02: the one-sentence test. */
 export const SENTENCE = {
   frame: ["We help", "solve", "by"],
   buyers: ["boards about to buy a transformation programme", "founders of specialist consultancies", "operations directors in mid-market manufacturers", "in-house legal teams at growth-stage companies"],
@@ -46,7 +46,7 @@ export const SENTENCE = {
   },
 } as const;
 
-/** Chapter 03 — where the language lives. Open each drawer. */
+/** Chapter 03: where the language lives. Open each drawer. */
 export const LANGUAGE_SOURCES = [
   { title: "Discovery-call notes", body: "The first ten minutes, before you start explaining. Write down the words they used for the problem, not yours." },
   { title: "Support and delivery emails", body: "What clients ask after they have bought. That is what the next buyer is worried about before they buy." },
@@ -55,7 +55,7 @@ export const LANGUAGE_SOURCES = [
   { title: "The objection before the price", body: "Whatever they say just before they ask what it costs. That is the real question." },
 ] as const;
 
-/** Chapter 04 — thesis or topic? Sort the cards. */
+/** Chapter 04: thesis or topic? Sort the cards. */
 export const SORT_CARDS = [
   { text: "Sales forecasting", kind: "topic", why: "A subject. Nobody can disagree with it, so nobody can react to it." },
   { text: "Your forecast is a feeling, not a number, and the board can tell.", kind: "thesis", why: "An argument a buyer could disagree with. That is why it can be tested." },
@@ -65,7 +65,7 @@ export const SORT_CARDS = [
   { text: "Most firms measure content by reach because reach is the only number they can see.", kind: "thesis", why: "A diagnosis with a reason. A reader can say 'not us' and mean it." },
 ] as const;
 
-/** Chapter 05 — choose the rooms, then make the route measurable. */
+/** Chapter 05: choose the rooms, then make the route measurable. */
 export const ROOMS = ["Where they read on the commute", "Where their peers argue in public", "The newsletter they forward", "The conference they never miss", "The document they ask for", "The call, when it comes"] as const;
 export const ROUTE_RULE = {
   observable: "Observable later. A tracked link and a way to get in touch mean the commercial result can be read against what you expected.",
@@ -73,7 +73,7 @@ export const ROUTE_RULE = {
   blind: "Not observable. It can still be worth publishing, but write down now that its result will be an anecdote, not evidence.",
 } as const;
 
-/** Chapter 06 — famous versus familiar. Scrub the encounters. */
+/** Chapter 06: famous versus familiar. Scrub the encounters. */
 export const ENCOUNTERS = [
   { state: "Stranger", piece: "A post", note: "Read on the train, half-remembered. Nothing to hire yet." },
   { state: "Recognised", piece: "A note", note: "Kept at the desk for the argument in it. The name means something now." },
@@ -82,7 +82,7 @@ export const ENCOUNTERS = [
   { state: "Conversation", piece: "A call", note: "When the problem finally arrived, it was obvious who to call." },
 ] as const;
 
-/** Chapter 07 — evidence classes, in order. */
+/** Chapter 07: evidence classes, in order. */
 export const EVIDENCE = [
   { name: "Directly tracked", strength: 100, example: "A click on the measured link, then a form, then a booked call." },
   { name: "Buyer named the piece", strength: 82, example: "“I saw your post about the decision process.” Written down, with the date." },
@@ -92,14 +92,14 @@ export const EVIDENCE = [
 ] as const;
 export const EVIDENCE_NOTE = "A report that adds these into one number is hiding the difference. Threadline records each signal with its class and never rounds up.";
 
-/** Chapter 08 — the expectation card. */
+/** Chapter 08: the expectation card. */
 export const EXPECTATION = {
   measures: ["replies from buyers", "requests for the document", "profile visits from the right firms", "saves and forwards", "a named enquiry"],
   reasons: ["the opening line names the buyer's problem", "it argues something a buyer could disagree with", "it is going to the room where this buyer reads", "it carries a proof the buyer can check", "honestly, I am not sure"],
   note: "Read it in fourteen days, against what actually happened. Not before.",
 } as const;
 
-/** Chapter 10 — what can and cannot be promised. Flip each card. */
+/** Chapter 10: what can and cannot be promised. Flip each card. */
 export const PROMISES = [
   { front: "Leads?", back: "Not promised. The market decides, and the market is not a machine." },
   { front: "Views?", back: "Not promised. Reach is a proxy; a named enquiry is a result." },

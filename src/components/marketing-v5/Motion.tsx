@@ -5,7 +5,7 @@ import * as React from "react";
 /**
  * The one observer for the page. Every `[data-scene]` gets `data-inview`
  * as it enters and leaves the viewport: entering draws its thread and lets
- * its loops run; leaving pauses them. Nothing is hidden before it enters —
+ * its loops run; leaving pauses them. Nothing is hidden before it enters , 
  * the HTML is complete and readable without this component.
  */
 export default function Motion() {

@@ -7,7 +7,7 @@ import { AutoRead, MarkRead } from "./Progress";
 import { Obj, type ObjName } from "../Obj";
 
 /** One object per chapter, the same set as the homepage, so the chapters read as stations of the same workshop. */
-const CHAPTER_OBJECTS: ObjName[] = ["crate", "spool", "magnifier", "press", "peg", "ledger", "sheet-tick", "stamp", "bench", "folder"];
+export const CHAPTER_OBJECTS: ObjName[] = ["crate", "spool", "magnifier", "press", "peg", "ledger", "sheet-tick", "stamp", "bench", "folder"];
 
 const TONES = ["is-sky", "is-peach", "is-mint", "is-lilac", "is-butter", "is-sky", "is-peach", "is-mint", "is-lilac", "is-butter"];
 

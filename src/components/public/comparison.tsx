@@ -1,5 +1,5 @@
 /**
- * The honest comparison — Threadline mutation of the frozen clone
+ * The honest comparison: Threadline mutation of the frozen clone
  * `reference-analysis/clones/starborn-comparison-table` (see its FROZEN.md).
  * Kept: 1100px container, 1.4fr + four equal columns, the accent pip over the
  * own column, 73px hairline rows, the check / cross / italic-word vocabulary,

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Artefact, At, C, Knot, Plate, Signal, Spool, Thread, outline as O } from "./kit";
 
 /**
- * SCENE 3 — the engagement, drawn as one sheet. The thread runs down the
+ * SCENE 3: the engagement, drawn as one sheet. The thread runs down the
  * left margin and ties a knot at each step: the spool (the root idea), three
  * artefacts (the outputs), two rooms (distribution), four signals (what came
  * back), and the bench verdict (the decision). Every figure on it is

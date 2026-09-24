@@ -11,7 +11,7 @@ import { workshop } from "@/content/marketing-v5";
  * wider than the screen and scrolls so the chosen station sits centred. All
  * six captions are in the HTML, so the line reads without scripting.
  */
-const STATION_X = [0.1, 0.24, 0.42, 0.58, 0.73, 0.9]; // station centres as a share of the panorama width
+const STATION_X = [0.09, 0.24, 0.4, 0.6, 0.76, 0.92]; // station centres as a share of the two-panel line
 
 export default function StationLine() {
   const w = workshop;
@@ -41,7 +41,10 @@ export default function StationLine() {
     <div className="hw-line-stage" data-station={station}>
       <div ref={scroller} className="hw-stage-scroll">
         <div className="hw-stage-art" style={{ ["--x" as string]: `${STATION_X[station] * 100}%` }}>
-          <Image src="/marketing/howitworks-line.jpg" alt="Six stations on one long bench, joined by a single marigold thread: a lamp over sorted note cards, a spool being wound, a press with three formats coming out, two doorways with a pegged line running in, a reading desk with three measuring jars, and a low bench where one block is lifted out and a fresh one waits." width={1376} height={768} sizes="(max-width: 991px) 1100px, 1240px" loading="eager" />
+          <div className="hw-stage-halves">
+            <Image src="/marketing/howitworks-line-left.jpg" alt="Stations one to three: a lamp over sorted note cards, a spool being wound on a hand winder, and a press with a written sheet, a small screen and a stapled document coming out of it, with the operator behind it." width={1376} height={768} sizes="(max-width: 991px) 700px, 620px" loading="eager" />
+            <Image src="/marketing/howitworks-line-right.jpg" alt="Stations four to six: two doorways with a pegged line running in, a reading desk with three measuring jars and signal cards, and a low bench where one block is lifted out and a mint block waits." width={1376} height={768} sizes="(max-width: 991px) 700px, 620px" loading="eager" />
+          </div>
           <span className="hw-stage-marker" aria-hidden="true">
             <span>{String(station + 1).padStart(2, "0")}</span>
           </span>

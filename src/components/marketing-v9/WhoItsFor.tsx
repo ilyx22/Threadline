@@ -4,6 +4,10 @@ import { WHO_ITS_FOR } from "@/content/public-site";
 import { fit } from "@/content/home";
 import Motion from "@/components/marketing-v5/Motion";
 import Image from "next/image";
+import { Obj, type ObjName } from "./Obj";
+
+const PROFILE_OBJECTS: ObjName[] = ["folder", "sheet-tick", "ledger", "microphone", "stamp", "press", "crate"];
+const PROFILE_TONES = ["is-sky", "is-peach", "is-mint", "is-lilac", "is-butter", "is-sky", "is-peach"];
 
 /**
  * Who it is for, in the homepage's system: a statement panel with the gate,
@@ -57,7 +61,10 @@ export default function WhoItsFor() {
           </header>
           <dl className="wf-ledger">
             {c.profile.map((p, i) => (
-              <div key={p.label} className="wf-row v9-reveal" style={{ ["--d" as string]: `${(i % 2) * 90}ms` }}>
+              <div key={p.label} className={`wf-row v9-tile ${PROFILE_TONES[i]} v9-reveal`} style={{ ["--d" as string]: `${(i % 2) * 90}ms` }}>
+                <div className="wf-row-obj">
+                  <Obj name={PROFILE_OBJECTS[i]} size={104} />
+                </div>
                 <dt>
                   <span className="v9-tag">{String(i + 1).padStart(2, "0")}</span>
                   <strong>{p.label}</strong>

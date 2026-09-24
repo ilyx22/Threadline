@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils/cn";
 import { Chamber, ThesisCard } from "@/components/factory/objects";
 
 /**
- * THE AUTHORITY FACTORY — the site's centrepiece.
+ * THE AUTHORITY FACTORY: the site's centrepiece.
  *
  * Seven chambers on one rail. An idea card travels along the rail as the
  * reader scrolls (one rAF-throttled listener, transform only); the chamber it

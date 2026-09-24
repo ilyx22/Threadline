@@ -2,7 +2,7 @@ import * as React from "react";
 import { Artefact, At, C, Knot, LINE, Person, Thread, outline as O } from "./kit";
 
 /**
- * SCENE 3 — market memory as a frieze. One identifiable buyer (the lilac
+ * SCENE 3: market memory as a frieze. One identifiable buyer (the lilac
  * figure) five times, left to right, in five ordinary moments. The thread runs
  * under the whole strip; every useful encounter ties a knot and the knots
  * accumulate. No counter, no funnel.

@@ -42,7 +42,7 @@ export function CalculatorClient() {
         <CardBody className="space-y-6 pt-0">
           <SliderField
             label="What is an hour of your time worth?"
-            hint="Not your salary — what the business loses when you spend an hour on something else."
+            hint="Not your salary: what the business loses when you spend an hour on something else."
             id="founderHourlyValue"
             value={inputs.founderHourlyValue}
             min={0}
@@ -101,7 +101,7 @@ export function CalculatorClient() {
           <div className="border-t border-line pt-5">
             <p className="text-[13px] font-medium text-ink">Commercial context</p>
             <p className="mt-1 text-[12px] leading-relaxed text-muted">
-              Optional. Only fill these in if you genuinely know the numbers — a guess here makes
+              Optional. Only fill these in if you genuinely know the numbers: a guess here makes
               the output worse, not better.
             </p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -155,7 +155,7 @@ export function CalculatorClient() {
             <CardBody className="pt-5">
               <p className="text-eyebrow text-faint">Cost per shipped piece</p>
               <p className="mt-2 text-[24px] font-medium leading-none tabular text-ink">
-                {result.annualPieces > 0 ? money(result.costPerPiece * 100, "GBP") : "—"}
+                {result.annualPieces > 0 ? money(result.costPerPiece * 100, "GBP") : ", "}
               </p>
               <p className="mt-2 text-[12px] text-muted">
                 {result.annualPieces > 0
@@ -207,7 +207,7 @@ export function CalculatorClient() {
                 <span className="text-ink">The assumption, stated openly: </span>
                 this scenario models the founder spending about{" "}
                 {TARGET_MINUTES_PER_PIECE} minutes per published piece on recording, plus{" "}
-                {TARGET_WEEKLY_OVERHEAD_MINUTES} minutes a week on approvals. Not zero — you never
+                {TARGET_WEEKLY_OVERHEAD_MINUTES} minutes a week on approvals. Not zero: you never
                 leave the loop entirely, and any calculator that shows zero is selling you
                 something.
               </p>
@@ -231,7 +231,7 @@ export function CalculatorClient() {
                   <p className="mt-2 text-[22px] font-medium leading-none tabular text-ink">
                     {result.revenuePerPiece != null
                       ? money(result.revenuePerPiece * 100, "GBP")
-                      : "—"}
+                      : ", "}
                   </p>
                 </div>
               </div>

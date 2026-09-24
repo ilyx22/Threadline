@@ -57,6 +57,17 @@ The owner reviewed the first artwork pass and listed what was wrong. Every point
 - **Still low resolution (graphics 2 and 3).** The Flash tier tops out at 1376 px, so the two widest scenes were re-rendered in pieces from their own chats: the gap band as two half-renders (`gap-left.jpg`, the workroom ending at the wall and hatch; `gap-right.jpg`, the empty room starting at the wall) shown side by side at about 610 px each, so each is drawn at more than twice its display size; and the five encounters as a square sheet of five large vignettes (`memory-sheet.jpg`) split into five tiles (`public/marketing/memory/encounter-1..5.jpg`, ~320–420 px each shown at 230 px) laid out in five columns over a real SVG thread that draws itself with five knots on reveal. The captions sit under each tile in HTML.
 - **Motion.** A pixel trace of the marigold thread was attempted for a drawn-on overlay and rejected: the oak bench reads as the same colour and the traces wandered. Motion is applied where it is honest: the band plates slide in from each side, the frieze captions and the tool objects rise in sequence, the station marker glides, the bench blocks lift out and drop in, the expressions line still draws. Reduced motion turns all of it off.
 
+### Third review pass (24 September 2026, night)
+
+- **No em dashes anywhere on the public site.** 115 replaced across the copy sources, the marketing components and the public pages (a pair became commas; a single one became a colon before an explanation or a comma before a conjunction). The rule is now part of the copy doctrine: none in `src/content`, none in component strings.
+- **The bench ("Illustrative cases. Not client results.") is drawn from the same generated pieces as everything else.** A generated sheet (`bench-pieces.jpg`: jar, wooden block, mint block, marigold marker clip, sheet on an easel) was cut into `public/marketing/bench/*.png`; `Bench.tsx` places them as SVG images and keeps the mechanics: the jar level and the expected marker are drawn, the failed block is tinted and lifts out, the mint block drops in. The inspector figure and the hook are gone. Chapter nine of the Playbook is the same component.
+- **The six-station line as two half-renders** (`howitworks-line-left/right.jpg`), each drawn at twice the scale, side by side in the stage; the marker's station positions were re-mapped.
+- **The two rooms match the other sections' width** (the container, 1280 with 20px padding).
+- **The six station objects at 1024 px** (`objects-big/`), so the mosaic tiles are crisp on retina; `Obj` has a `big` flag.
+- **How it works no longer says "No client results to show yet".** The step-by-step section is headed "How one idea moves through a service period" and keeps the Illustrative stamp.
+- **The Playbook hero is a map of the ten chapters**: ten object tiles that link to their chapters, replacing the reading-desk scene the owner did not like.
+- **Who it is for profile rows** are pastel tiles with an object each and a larger title.
+
 ### Checks
 
 On the production build of 24 September 2026 (`NEXT_DIST_DIR=.next-qa npx next build`, served with `npx next start -p 3001`):

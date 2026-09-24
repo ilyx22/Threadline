@@ -123,11 +123,11 @@ export default function HowItWorks() {
       <section id="proof" className="hw-proof" data-scene aria-labelledby="hw-proof-title">
         <div className="v9-wrap">
           <header className="v9-head v9-reveal">
-            <p className="v9-eyebrow">{HOME.proof.eyebrow}</p>
+            <p className="v9-eyebrow">Step by step</p>
             <h2 id="hw-proof-title" className="v9-h2">
-              {HOME.proof.title}
+              How one idea moves through a service period.
             </h2>
-            <p className="v9-body">{HOME.proof.lead}</p>
+            <p className="v9-body">Ten steps, in the order they happen. The idea, the rooms, the numbers and the decision are invented to show the shape of the work.</p>
           </header>
           <div className="hw-chain-wrap v9-reveal">
             <p className="hw-synthetic">

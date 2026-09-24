@@ -15,7 +15,7 @@ const FIELDS: { key: Key; label: string; help: string; unit: string }[] = [
 ];
 
 /**
- * Model the commercial maths — the funnel read backwards. The visitor types
+ * Model the commercial maths: the funnel read backwards. The visitor types
  * the rates; the model says how many first touches with the right buyers the
  * target implies, which stage loses the most people, and which rate a
  * ten-point improvement would move the answer most. Every number is the

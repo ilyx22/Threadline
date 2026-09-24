@@ -4,7 +4,7 @@ import { CALCULATOR } from "@/content/public-site";
 
 export const metadata: Metadata = {
   title: "The cost of the status quo",
-  description: "Work out what your current content operation costs, using your own figures. A scenario, not a projection — and never a revenue forecast.",
+  description: "Work out what your current content operation costs, using your own figures. A scenario, not a projection, and never a revenue forecast.",
   alternates: { canonical: "/calculator" },
 };
 

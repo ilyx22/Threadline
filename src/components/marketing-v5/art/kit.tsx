@@ -1,14 +1,14 @@
 /**
- * THREADLINE v5 — the illustration kit.
+ * THREADLINE v5: the illustration kit.
  *
  * Every public scene is drawn from these parts, in code, by hand. The grammar
  * is editorial rather than animated:
  *
  *   · one fine ink line (1.6 units) with square-ish corners; fills are flat
- *     and few — paper, a cool grey-blue, a warm parchment, one muted lilac;
+ *     and few: paper, a cool grey-blue, a warm parchment, one muted lilac;
  *   · people are faceless scale figures: a small head, a tapered body, single
  *     line limbs, no hands, no hair, no expressions;
- *   · the thread is two strokes — a hairline of ink under a marigold line — so
+ *   · the thread is two strokes, a hairline of ink under a marigold line, so
  *     it survives every background and stays the one warm accent;
  *   · labels are the site sans face, small and tracked, and only where a
  *     visitor needs a word to read the object. Every label is sized to fit
