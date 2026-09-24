@@ -3,9 +3,8 @@ import Link from "next/link";
 import { HOME, HOW_IT_WORKS } from "@/content/public-site";
 import { workshop } from "@/content/marketing-v5";
 import Motion from "@/components/marketing-v5/Motion";
-import WorkshopStage from "@/components/marketing-v5/WorkshopStage";
-import { HeroArt } from "@/components/marketing-v5/art/HeroArt";
-import { BusyMachine } from "@/components/marketing-v5/art/BurdenArt";
+import Image from "next/image";
+import StationLine from "./StationLine";
 
 /**
  * How it works, in the homepage's system: a statement panel with the busy
@@ -47,8 +46,8 @@ export default function HowItWorks() {
               </Link>
             </div>
           </div>
-          <div className="hw-hero-scene v9-tile is-night v9-reveal" style={{ ["--d" as string]: "200ms" }}>
-            <BusyMachine labels={["research", "positioning", "scripting", "editing", "packaging", "distribution", "measurement", "diagnosis"]} />
+          <div className="hw-hero-scene v9-tile is-night is-photo v9-reveal" style={{ ["--d" as string]: "200ms" }}>
+            <Image src="/marketing/howitworks-hero.jpg" alt="A long work bench with eight tools laid out in a row: a magnifying glass, an open ledger, a written sheet, a paper press, a crate, a peg on a short thread, a ticked sheet and a stack of paper. One operator stands behind the bench reaching for the press." width={1376} height={768} priority sizes="(max-width: 991px) 100vw, 640px" />
           </div>
         </div>
       </section>
@@ -62,8 +61,8 @@ export default function HowItWorks() {
             </h2>
             <p className="v9-body">{workshop.body}</p>
           </header>
-          <div className="v5-workshop hw-line v9-reveal">
-            <WorkshopStage />
+          <div className="hw-line v9-reveal">
+            <StationLine />
           </div>
         </div>
       </section>
@@ -151,7 +150,7 @@ export default function HowItWorks() {
       </section>
 
       <section className="v9-closing hw-closing" data-scene aria-labelledby="hw-closing-title">
-        <div className="v9-panel v9-closing-panel">
+        <div className="v9-panel v9-closing-panel is-photo">
           <div className="v9-closing-copy">
             <h2 id="hw-closing-title" className="v9-h2 is-light v9-reveal">
               See it run <span className="is-soft">on your business.</span>
@@ -169,11 +168,8 @@ export default function HowItWorks() {
               </Link>
             </div>
           </div>
-          <div className="v9-closing-scene is-wide">
-            <HeroArt evolved />
-          </div>
-          <div className="v9-closing-scene is-tall">
-            <HeroArt layout="tall" evolved />
+          <div className="v9-closing-scene is-photo">
+            <Image src="/marketing/closing-scene.jpg" alt="At night, six finished pieces hang on a marigold line between two poles; the thread returns underneath to a spool on the ground." width={1376} height={768} sizes="(max-width: 991px) 100vw, 54vw" loading="eager" />
           </div>
         </div>
       </section>

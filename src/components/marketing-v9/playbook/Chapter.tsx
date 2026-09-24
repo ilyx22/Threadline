@@ -3,7 +3,11 @@ import { PLAYBOOK } from "@/content/public-site";
 import { LANGUAGE_SOURCES, PROMISES, RAW_MATERIAL } from "@/content/playbook";
 import Bench from "@/components/marketing-v5/Bench";
 import { Drawers, EvidenceLadder, ExpectationCard, FlipGrid, MemoryScrubber, RoomPicker, SentenceBuilder, Sorter } from "./Widgets";
-import { MarkRead } from "./Progress";
+import { AutoRead, MarkRead } from "./Progress";
+import { Obj, type ObjName } from "../Obj";
+
+/** One object per chapter, the same set as the homepage, so the chapters read as stations of the same workshop. */
+const CHAPTER_OBJECTS: ObjName[] = ["crate", "spool", "magnifier", "press", "peg", "ledger", "sheet-tick", "stamp", "bench", "folder"];
 
 const TONES = ["is-sky", "is-peach", "is-mint", "is-lilac", "is-butter", "is-sky", "is-peach", "is-mint", "is-lilac", "is-butter"];
 
@@ -46,8 +50,12 @@ export function Chapter({ index, standalone = false }: { index: number; standalo
   const wide = ch.slug === "change-one-thing-and-retest";
   return (
     <section id={`chapter-${index + 1}`} className={`pb-chapter${wide ? " is-wide" : ""}`} data-scene aria-labelledby={`pb-h-${index + 1}`}>
+      {standalone ? null : <AutoRead slug={ch.slug} target={`chapter-${index + 1}`} />}
       <div className="v9-wrap">
         <header className="pb-chapter-head v9-reveal">
+          <div className="pb-chapter-obj">
+            <Obj name={CHAPTER_OBJECTS[index]} size={112} />
+          </div>
           <p className="v9-eyebrow">
             Chapter {n} of {PLAYBOOK.chapters.length}
           </p>

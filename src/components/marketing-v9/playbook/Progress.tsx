@@ -68,6 +68,40 @@ export function ProgressRail() {
   );
 }
 
+/**
+ * Marks a chapter read once its object has been in view for a while, the way
+ * a reader would expect progress to move as they scroll. The manual control
+ * still works and can un-mark.
+ */
+export function AutoRead({ slug, target }: { slug: string; target: string }) {
+  React.useEffect(() => {
+    const el = document.getElementById(target);
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    let timer: number | null = null;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const seen = entries.some((e) => e.isIntersecting);
+        if (seen && timer === null) {
+          timer = window.setTimeout(() => {
+            const done = read();
+            if (!done.includes(slug)) write([...done, slug]);
+          }, 2500);
+        } else if (!seen && timer !== null) {
+          window.clearTimeout(timer);
+          timer = null;
+        }
+      },
+      { threshold: 0.45 },
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      if (timer !== null) window.clearTimeout(timer);
+    };
+  }, [slug, target]);
+  return null;
+}
+
 export function MarkRead({ slug }: { slug: string }) {
   const done = useRead();
   const on = done.includes(slug);

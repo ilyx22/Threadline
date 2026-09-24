@@ -43,3 +43,16 @@ The object set (18 vector objects for the station tiles, capsules and diagrams) 
 ## The object set (`generated/objects/`, 17 transparent PNGs, ~200–290 px each)
 
 Recraft needs a sign-in, so the set was produced in Nano Banana as two 3 × 3 sheets on pure white (`objects-sheet-a.jpg`, chat `app/f1f572bb9881b7d6`; `objects-sheet-b.jpg`, chat `app/fb4a30f6a153534f`), then split locally: the white exterior is flood-filled to alpha, so paper-white fills inside the ink outline survive. Sheet A's folder came out navy and was replaced by sheet B's manila folder. Objects: spool, press, peg, sheet-written, screen-video, document-stack, sheet-tick, crate, folder, paper-stack, lamp, bench, magnifier, ledger, microphone, camera, stamp. At 1024 px per sheet they are ~250 px each: enough for capsule icons and small tile objects at 1×, not for a hero. The returning-thread arrow stays drawn in code. `viewer/objects-contact.jpg` shows all seventeen on the sky pastel.
+
+## Second pass (late on 24 September)
+
+| File | Scene | Gemini chat | Review |
+| --- | --- | --- | --- |
+| `memory-five-encounters.jpg` | The same buyer five times, thread with five knots under | `app/7c0daaa94271d896` | Accepted first pass (first attempt lost the prompt to a non-ASCII character; retyped). |
+| `learning-bench.jpg` | Inspector lifts the failed block out, the fresh block waits, three jars with markers | `app/33d76831fb2aee5e` | Accepted first pass. |
+| `howitworks-eight-tools.jpg` | Eight tools on a long bench, night, one operator | `app/99b00c5f9cb45723` | Accepted first pass. |
+| `howitworks-station-line.jpg` | Six stations on one bench, night, thread through all six | `app/70b50fc03731b3c5` | Accepted first pass. |
+| `whoitsfor-gate.jpg` | Low wall, open gate, operator, one through, one turned away | `app/615a9e8bf0e2e208` | Accepted first pass. |
+| `playbook-reading-desk.jpg` | Reading desk, open ledger, ten blank cards, spool, lamp | `app/ce3dd895683ebd84` | Accepted first pass. |
+
+Driving notes: the prompt box drops typed text if the page has not finished mounting (wait, `find` the box, then click and type, and check with a screenshot before sending); non-ASCII characters in a prompt break the typing; the aspect menu sometimes needs opening twice; Enter does not always submit, the arrow button does. `threads.json` and `viewer/trace-*.jpg` are the rejected thread-trace experiment.

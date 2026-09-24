@@ -631,3 +631,91 @@
   .v9-tools.is-eight { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .v9-bench-tile { padding: 22px 20px 20px; }
 }
+
+/* ------------------------------------------ second artwork pass: owner notes of 24 Sept, late */
+/* hero: the whole scene, bleeding only to the panel edge */
+.v9-hero-panel { grid-template-columns: minmax(0, 42%) minmax(0, 58%); }
+.v9-hero-scene.is-photo { aspect-ratio: auto; }
+.v9-hero-scene.is-photo img { height: auto; object-fit: fill; }
+/* the gap band sits inside the container at the render's own size */
+.v9-band.is-photo.is-contained { max-width: calc(var(--v9-max) + 60px); margin: 28px auto 0; padding: 0 30px 150px; }
+.v9-band.is-photo.is-contained img { border-radius: 28px; }
+.v9-band.is-photo.is-contained .v9-band-plate.is-left { left: 54px; }
+.v9-band.is-photo.is-contained .v9-band-plate.is-right { right: 54px; }
+[data-js] [data-scene]:not([data-seen]) .v9-band-plate { opacity: 0; transform: translateX(var(--from, -24px)); }
+.v9-band-plate { transition: opacity 640ms var(--v9-ease) 200ms, transform 640ms var(--v9-ease) 200ms; }
+.v9-band-plate.is-right { --from: 24px; }
+/* memory: the five encounters as one scene with captions under each */
+.v9-frieze.is-photo { margin: 40px auto 0; }
+.v9-frieze-scroll { display: block; }
+.v9-frieze-scroll img { display: block; width: 100%; height: auto; }
+.v9-frieze-captions { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.v9-frieze-captions li { display: flex; flex-direction: column; gap: 3px; padding: 0 6px; text-align: center; align-items: center; }
+.v9-frieze-captions li strong { font-family: var(--v9-serif); font-weight: 400; font-size: 1.25rem; line-height: 1.1; }
+.v9-frieze-captions li span:not(.v9-tag) { font-size: 13px; line-height: 1.4; color: var(--v9-ink-soft); }
+[data-js] [data-scene]:not([data-seen]) .v9-frieze-captions li { opacity: 0; transform: translateY(14px); }
+.v9-frieze-captions li { transition: opacity 560ms var(--v9-ease) calc(300ms + var(--i) * 120ms), transform 560ms var(--v9-ease) calc(300ms + var(--i) * 120ms); }
+/* burden tiles: the objects centred in the tile */
+.v9-bench-tile { justify-content: space-between; }
+.v9-bench-tile .v9-tools { flex: 1; align-content: center; justify-items: center; width: 100%; max-width: 560px; margin: 0 auto; }
+.v9-tools li { transition: opacity 520ms var(--v9-ease) calc(200ms + var(--i) * 70ms), transform 520ms var(--v9-ease) calc(200ms + var(--i) * 70ms); }
+[data-js] [data-scene]:not([data-seen]) .v9-tools li { opacity: 0; transform: translateY(16px); }
+/* learning: the scene beside the head, the bench full width under both */
+.v9-learning-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 32px 56px; align-items: center; }
+.v9-learning-scene img { display: block; width: 100%; height: auto; border-radius: 24px; }
+.v9-learning-bench { margin-top: 40px; }
+/* the bench's change step: the failed block lifts out, the new block drops in; no hook */
+.tl-public.v9 .v5-hook { display: none; }
+.tl-public.v9 .v5-block { transition: transform 700ms var(--v9-ease), opacity 500ms var(--v9-ease); }
+.tl-public.v9 .v5-block.is-failed { transform: translateY(-70px) rotate(-6deg); opacity: 0; }
+.tl-public.v9 .v5-block.is-new { animation: v9-drop-in 700ms var(--v9-ease) both; }
+@keyframes v9-drop-in { from { transform: translateY(-90px); opacity: 0; } 70% { transform: translateY(6px); opacity: 1; } to { transform: none; opacity: 1; } }
+/* how it works: hero tile and the station line */
+.hw-hero-scene.is-photo { min-height: 0; padding: 0; }
+.hw-hero-scene.is-photo img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.hw-line-stage { display: grid; gap: 22px; margin-top: 36px; }
+.hw-stage-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 24px; scrollbar-width: none; }
+.hw-stage-scroll::-webkit-scrollbar { display: none; }
+.hw-stage-art { position: relative; min-width: 100%; }
+.hw-stage-art img { display: block; width: 100%; height: auto; }
+.hw-stage-marker { position: absolute; left: var(--x); top: 38%; width: 44px; height: 44px; margin-left: -22px; border-radius: 50%; display: grid; place-items: center; background: var(--v5-gold); color: var(--v9-ink); font-size: 13px; font-weight: 700; border: 2px solid var(--v9-ink); box-shadow: 0 0 0 6px rgba(242, 165, 31, 0.28); transition: left 700ms var(--v9-ease); }
+.hw-stage-controls { display: flex; align-items: center; justify-content: center; gap: 14px; }
+.hw-dots { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; }
+.tl-public.v9 .hw-dot, .tl-public.v9 .hw-arrow { width: 44px; height: 44px; padding: 0; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.22); background: transparent; color: #fff; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+.tl-public.v9 .hw-arrow { border-radius: 999px; }
+.tl-public.v9 .hw-dot[aria-pressed="true"] { background: var(--v5-gold); border-color: var(--v5-gold); color: var(--v9-ink); }
+.tl-public.v9 .hw-arrow:disabled { opacity: 0.35; cursor: default; }
+.hw-captions { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px; }
+.hw-captions li { display: flex; flex-direction: column; gap: 4px; padding-top: 14px; border-top: 2px solid rgba(255, 255, 255, 0.18); color: rgba(255, 255, 255, 0.72); transition: border-color 400ms var(--v9-ease), color 400ms var(--v9-ease); }
+.hw-captions li.is-on { border-top-color: var(--v5-gold); color: #fff; }
+.hw-captions .v9-tag { color: var(--v5-gold); }
+.hw-captions strong { font-family: var(--v9-serif); font-weight: 400; font-size: 1.25rem; line-height: 1.1; color: #fff; }
+.hw-captions em { font-family: var(--v9-serif); font-style: italic; font-size: 14px; color: var(--v5-butter); }
+.hw-captions p { margin: 4px 0 0; font-size: 13.5px; line-height: 1.45; }
+/* who it is for: the gate scene */
+.wf-gate.is-photo { max-width: none; justify-self: stretch; margin: 0 calc(-1 * clamp(24px, 5vw, 70px)) 0 0; }
+.wf-gate.is-photo img { display: block; width: 100%; height: auto; }
+/* playbook: the chapter object and the hero scene */
+.pb-hero-scene.is-photo { align-self: center; }
+.pb-chapter-head { position: relative; padding-left: 132px; min-height: 112px; }
+.pb-chapter-obj { position: absolute; left: 0; top: 0; }
+@media (max-width: 991px) {
+  .v9-hero-panel { grid-template-columns: 1fr; }
+  .v9-band.is-photo.is-contained { padding: 0 12px 60px; }
+  .v9-band.is-photo.is-contained .v9-band-plate.is-left { left: 24px; }
+  .v9-band.is-photo.is-contained .v9-band-plate.is-right { right: 24px; }
+  .v9-frieze.is-photo { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+  .v9-frieze-scroll { min-width: 900px; }
+  .v9-learning-grid { grid-template-columns: 1fr; }
+  .hw-stage-art { min-width: 1100px; }
+  .hw-captions { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .wf-gate.is-photo { margin: 24px calc(-1 * clamp(12px, 5vw, 70px)) 0; }
+  .pb-chapter-head { padding-left: 0; min-height: 0; }
+  .pb-chapter-obj { position: static; margin-bottom: 8px; }
+  .pb-chapter-obj .v9-obj { --s: 88px; }
+}
+@media (max-width: 599px) {
+  .hw-captions { grid-template-columns: 1fr; }
+}
+.tl-public.v9 .v5-bench-stage svg > path:nth-of-type(2) { display: none; } /* the hook's feed line; the hook itself is hidden above */
+.hw-captions li { color: rgba(255, 255, 255, 0.82); }

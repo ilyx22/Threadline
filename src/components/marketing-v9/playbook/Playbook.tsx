@@ -5,7 +5,7 @@ import { MAXIMS, PERIODS, PERIODS_NOTE, PLAYBOOK_HERO } from "@/content/playbook
 import Motion from "@/components/marketing-v5/Motion";
 import { Diagnostic } from "@/components/public/diagnostic";
 import { AcquisitionCalculator } from "@/components/marketing-v5/AcquisitionCalculator";
-import { ExpressionsArt } from "../ExpressionsArt";
+import Image from "next/image";
 import { ProgressRail } from "./Progress";
 import { Chapter } from "./Chapter";
 
@@ -53,11 +53,8 @@ export default function Playbook() {
               ))}
             </dl>
           </div>
-          <div className="v9-hero-scene is-wide pb-hero-scene">
-            <ExpressionsArt />
-          </div>
-          <div className="v9-hero-scene is-tall pb-hero-scene">
-            <ExpressionsArt />
+          <div className="v9-hero-scene is-photo pb-hero-scene">
+            <Image src="/marketing/playbook-scene.jpg" alt="A reading desk with an open ledger, ten blank index cards fanned beside it, a spool of marigold thread, a desk lamp, a magnifying glass and a stamp. One reader in a lilac coat leans over the ledger." width={1276} height={604} priority sizes="(max-width: 991px) 100vw, 56vw" />
           </div>
         </div>
       </section>

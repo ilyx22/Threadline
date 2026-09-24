@@ -5,7 +5,7 @@ import { workshop } from "@/content/marketing-v5";
 import Image from "next/image";
 import Motion from "@/components/marketing-v5/Motion";
 import Bench from "@/components/marketing-v5/Bench";
-import { MemoryArt } from "@/components/marketing-v5/art/MemoryArt";
+import { Obj, type ObjName } from "./Obj";
 import { ExpressionsArt } from "./ExpressionsArt";
 
 /**
@@ -23,15 +23,6 @@ const Arrow = () => (
   </svg>
 );
 
-/** The object set (docs/design/nano-banana-reference/generated/objects): one flat object per idea, labels always in HTML. */
-type ObjName = "spool" | "press" | "peg" | "sheet-written" | "screen-video" | "document-stack" | "sheet-tick" | "crate" | "folder" | "paper-stack" | "lamp" | "bench" | "magnifier" | "ledger" | "microphone" | "camera" | "stamp";
-function Obj({ name, size = 160 }: { name: ObjName; size?: number }) {
-  return (
-    <span className="v9-obj" style={{ ["--s" as string]: `${size}px` }} aria-hidden="true">
-      <Image src={`/marketing/objects/${name}.png`} alt="" fill sizes={`${size}px`} loading="eager" />
-    </span>
-  );
-}
 const YOU: { verb: string; obj: ObjName }[] = [
   { verb: "Talk", obj: "microphone" },
   { verb: "Record", obj: "camera" },
@@ -127,7 +118,7 @@ function GapAndMemory() {
         <div className="v9-wrap">
           <Head eyebrow={gap.eyebrow} title={gap.headline} body={gap.body} id="gap-title" />
         </div>
-        <div className="v9-band is-photo">
+        <div className="v9-band is-photo is-contained">
           <p className="v9-band-plate is-left">
             <span className="v9-tag">{gap.inside.label}</span>
             <span>{gap.inside.note}</span>
@@ -151,11 +142,21 @@ function GapAndMemory() {
             }
             id="memory-title"
           />
-          <div className="v9-frieze is-wide v9-reveal">
-            <MemoryArt />
-          </div>
-          <div className="v9-frieze is-tall v9-reveal">
-            <MemoryArt layout="tall" />
+          <div className="v9-frieze is-photo v9-reveal">
+            <div className="v9-frieze-scroll">
+              <Image src="/marketing/memory-scene.jpg" alt="The same buyer five times over a few months: on a train with a phone, at a desk reading a sheet, at a coffee table with a colleague, at a boardroom table holding up a ticked document, and on a call at a window. One thread runs under all five with a knot under each." width={1376} height={307} sizes="(max-width: 991px) 900px, 1240px" loading="eager" />
+              <ol className="v9-frieze-captions">
+                {memory.encounters.map((e, i) => (
+                  <li key={e.n} style={{ ["--i" as string]: i }}>
+                    <span className="v9-tag">
+                      {e.n} · {e.state}
+                    </span>
+                    <strong>{e.piece}</strong>
+                    <span>{e.where}</span>
+                  </li>
+                ))}
+              </ol>
+            </div>
           </div>
           <p className="v9-body is-center v9-reveal">{memory.body}</p>
         </div>
@@ -188,8 +189,8 @@ function Burden() {
         <div className="v9-burden-tiles">
           <div className="v9-tile is-sky v9-bench-tile v9-reveal">
             <ul className="v9-tools is-four" aria-label="What you do">
-              {YOU.map((y) => (
-                <li key={y.verb}>
+              {YOU.map((y, i) => (
+                <li key={y.verb} style={{ ["--i" as string]: i }}>
                   <Obj name={y.obj} size={120} />
                   <span>{y.verb}</span>
                 </li>
@@ -202,8 +203,8 @@ function Burden() {
           </div>
           <div className="v9-tile is-night v9-bench-tile v9-reveal" style={{ ["--d" as string]: "120ms" }}>
             <ul className="v9-tools is-eight is-light" aria-label="What Threadline does">
-              {THREADLINE_JOBS.map((j) => (
-                <li key={j.job}>
+              {THREADLINE_JOBS.map((j, i) => (
+                <li key={j.job} style={{ ["--i" as string]: i }}>
                   <Obj name={j.obj} size={96} />
                   <span>{j.job}</span>
                 </li>
@@ -288,9 +289,12 @@ function Learning() {
       <div className="v9-panel v9-learning-panel">
         <div className="v9-learning-grid">
           <Head eyebrow={learning.eyebrow} title={learning.headline} body={learning.body} id="learning-title" />
-          <div className="v9-reveal">
-            <Bench />
+          <div className="v9-learning-scene v9-reveal" style={{ ["--d" as string]: "120ms" }}>
+            <Image src="/marketing/learning-scene.jpg" alt="A work bench. A printed sheet stands on an easel above a row of five wooden blocks; an inspector has lifted one block out and a fresh mint-green block waits beside the gap. Three measuring jars stand to the right, each with a marigold marker clipped at a different height." width={1310} height={453} sizes="(max-width: 991px) 100vw, 560px" loading="eager" />
           </div>
+        </div>
+        <div className="v9-learning-bench v9-reveal">
+          <Bench />
         </div>
         <p className="v9-more">
           <Link href={learning.more.href} className="v9-link">

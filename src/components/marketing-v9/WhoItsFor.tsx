@@ -3,8 +3,7 @@ import Link from "next/link";
 import { WHO_ITS_FOR } from "@/content/public-site";
 import { fit } from "@/content/home";
 import Motion from "@/components/marketing-v5/Motion";
-import { GateArt } from "@/components/marketing-v5/art/SmallArt";
-import { HeroArt } from "@/components/marketing-v5/art/HeroArt";
+import Image from "next/image";
 
 /**
  * Who it is for, in the homepage's system: a statement panel with the gate,
@@ -42,8 +41,8 @@ export default function WhoItsFor() {
               </Link>
             </div>
           </div>
-          <div className="wf-gate v9-reveal" style={{ ["--d" as string]: "200ms" }}>
-            <GateArt />
+          <div className="wf-gate is-photo v9-reveal" style={{ ["--d" as string]: "200ms" }}>
+            <Image src="/marketing/whoitsfor-scene.jpg" alt="A low garden wall with a wooden gate held open by an operator in an apron. One founder walks through carrying a folder; another figure is turned toward a different path. A marigold thread runs along the ground through the gate." width={1376} height={440} priority sizes="(max-width: 991px) 100vw, 60vw" />
           </div>
         </div>
       </section>
@@ -101,10 +100,10 @@ export default function WhoItsFor() {
       </section>
 
       <section className="v9-closing" data-scene aria-labelledby="wf-closing-title">
-        <div className="v9-panel v9-closing-panel">
+        <div className="v9-panel v9-closing-panel is-photo">
           <div className="v9-closing-copy">
             <h2 id="wf-closing-title" className="v9-h2 is-light v9-reveal">
-              Not sure? <span className="is-soft">Apply and find out.</span>
+              Not sure it fits? <span className="is-soft">The application will tell you.</span>
             </h2>
             <p className="v9-body is-light v9-reveal" style={{ ["--d" as string]: "80ms" }}>
               The application is a diagnostic. If the honest answer is that Threadline is the wrong tool for your business, we will say so, and you keep the finding.
@@ -119,11 +118,8 @@ export default function WhoItsFor() {
               </Link>
             </div>
           </div>
-          <div className="v9-closing-scene is-wide">
-            <HeroArt evolved />
-          </div>
-          <div className="v9-closing-scene is-tall">
-            <HeroArt layout="tall" evolved />
+          <div className="v9-closing-scene is-photo">
+            <Image src="/marketing/closing-scene.jpg" alt="At night, six finished pieces hang on a marigold line between two poles; the thread returns underneath to a spool on the ground." width={1376} height={768} sizes="(max-width: 991px) 100vw, 54vw" loading="eager" />
           </div>
         </div>
       </section>

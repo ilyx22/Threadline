@@ -65,7 +65,7 @@ async function main() {
       await open(cdp, `${BASE}/`, 1200);
       const w = await evaluate<{ sw: number; iw: number; wide: string[]; clipped: string[] }>(cdp, `(() => {
         const iw = innerWidth;
-        const wide = [...document.querySelectorAll('.v9-home *')].filter(e => { if (e.namespaceURI === 'http://www.w3.org/2000/svg') return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.right > iw + 1 && !e.closest('.v9-marquee, .v9-wordmark-marquee'); }).slice(0, 4).map(e => e.tagName.toLowerCase() + '.' + [...e.classList].slice(0, 2).join('.'));
+        const wide = [...document.querySelectorAll('.v9-home *')].filter(e => { if (e.namespaceURI === 'http://www.w3.org/2000/svg') return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.right > iw + 1 && !e.closest('.v9-marquee, .v9-wordmark-marquee, .v9-frieze.is-photo'); }).slice(0, 4).map(e => e.tagName.toLowerCase() + '.' + [...e.classList].slice(0, 2).join('.'));
         const clipped = [...document.querySelectorAll('.v9-h1, .v9-h2, .v9-h3, .v9-eyebrow, .v9-tag, .v9-capsule-text strong, .v9-forms strong, .v9-tile-caption strong')].filter(e => e.scrollWidth > e.clientWidth + 1 && getComputedStyle(e).overflow !== 'visible').slice(0, 4).map(e => e.textContent.trim().slice(0, 30));
         return { sw: document.documentElement.scrollWidth, iw, wide, clipped };
       })()`);
@@ -83,11 +83,11 @@ async function main() {
     const wf = await evaluate<{ system: number; rows: number; fit: number; h1: string }>(cdp, `({ system: document.querySelectorAll('.wf-page .v9-panel').length, rows: document.querySelectorAll('.wf-row').length, fit: document.querySelectorAll('.wf-fit-col').length, h1: document.querySelector('h1')?.textContent || '' })`);
     ok("v9:who", "who it is for is in the homepage system", wf.system >= 3 && wf.rows === 7 && wf.fit === 2, JSON.stringify(wf));
     await open(cdp, `${BASE}/how-it-works`, 2000);
-    const hw = await evaluate<{ stage: number; stations: number; stages: number; gates: number; chain: number; synthetic: boolean }>(cdp, `({ stage: document.querySelectorAll('.hw-line .v5-stage').length, stations: document.querySelectorAll('.hw-line .v5-dot').length, stages: document.querySelectorAll('.hw-stage').length, gates: document.querySelectorAll('.hw-gate').length, chain: document.querySelectorAll('.hw-link').length, synthetic: /illustrative/i.test(document.querySelector('.hw-synthetic')?.textContent || '') })`);
+    const hw = await evaluate<{ stage: number; stations: number; stages: number; gates: number; chain: number; synthetic: boolean }>(cdp, `({ stage: document.querySelectorAll('.hw-line .hw-line-stage').length, stations: document.querySelectorAll('.hw-line .hw-dot').length, stages: document.querySelectorAll('.hw-stage').length, gates: document.querySelectorAll('.hw-gate').length, chain: document.querySelectorAll('.hw-link').length, synthetic: /illustrative/i.test(document.querySelector('.hw-synthetic')?.textContent || '') })`);
     ok("v9:how", "how it works: the stage with six stations, seven stages, four gates, a labelled ten-step chain", hw.stage === 1 && hw.stations === 6 && hw.stages === 7 && hw.gates === 4 && hw.chain === 10 && hw.synthetic, JSON.stringify(hw));
-    await evaluate(cdp, `${q(".hw-line .v5-dot:nth-child(3)")}?.click?.(); document.querySelectorAll('.hw-line .v5-dot')[2].click(); true`);
+    await evaluate(cdp, `document.querySelectorAll('.hw-line .hw-dot')[2].click(); true`);
     await sleep(200);
-    ok("v9:how", "the line's stations respond", (await evaluate<string>(cdp, `${q(".hw-line .v5-stage")}.dataset.station`)) === "2");
+    ok("v9:how", "the line's stations respond", (await evaluate<string>(cdp, `${q(".hw-line .hw-line-stage")}.dataset.station + ':' + document.querySelectorAll('.hw-captions li.is-on').length`)) === "2:1");
     await open(cdp, `${BASE}/apply`, 1500);
     ok("v9:apply", "the application sits in the system with its form intact", await evaluate<boolean>(cdp, `!!document.querySelector('.ap-panel form') && document.querySelectorAll('.ap-panel input, .ap-panel select, .ap-panel textarea').length >= 3`));
     await open(cdp, `${BASE}/calculator`, 1500);
