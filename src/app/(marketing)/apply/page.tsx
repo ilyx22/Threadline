@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { ApplicationForm } from "./application-form";
 import { publicBookingUrl } from "@/lib/actions/booking";
 import { APPLY } from "@/content/public-site";
-import { Eyebrow } from "@/components/public/primitives";
 
 export const metadata: Metadata = {
   title: "Apply for a diagnosis, not a pitch",
@@ -11,24 +10,27 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+/** The application, in the homepage's system: the statement beside the form, inside one white panel. The form itself is unchanged. */
 export default async function ApplyPage() {
   const bookingUrl = await publicBookingUrl();
-
   return (
-    <div className="tl-section">
-      <div className="tl-container grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
-        <header className="lg:sticky lg:top-24 lg:self-start">
-          <Eyebrow>{APPLY.eyebrow}</Eyebrow>
-          <h1 className="tl-display max-w-[14ch] text-[clamp(2.25rem,4.6vw,3.75rem)]">{APPLY.title}</h1>
-          <p className="tl-lead mt-6 text-[17px]">{APPLY.lead}</p>
-          <p className="tl-body mt-4 text-[15px]">{APPLY.reassurance}</p>
-          <p className="mt-5 text-[13.5px] text-[color:var(--ink-faint)]">{APPLY.meta}</p>
-        </header>
-
-        <div className="tl-card p-5 sm:p-8">
-          <ApplicationForm bookingUrl={bookingUrl} />
+    <div className="v9-home ap-page">
+      <section className="v9-hero" aria-labelledby="ap-title">
+        <div className="v9-panel ap-panel">
+          <header className="ap-head">
+            <p className="v9-eyebrow">{APPLY.eyebrow}</p>
+            <h1 id="ap-title" className="v9-h1">
+              {APPLY.title}
+            </h1>
+            <p className="v9-lead">{APPLY.lead}</p>
+            <p className="v9-body">{APPLY.reassurance}</p>
+            <p className="v9-note">{APPLY.meta}</p>
+          </header>
+          <div className="ap-form v9-tile is-paper">
+            <ApplicationForm bookingUrl={bookingUrl} />
+          </div>
         </div>
-      </div>
+      </section>
     </div>
   );
 }

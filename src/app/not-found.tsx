@@ -1,36 +1,33 @@
 import "@/app/public.css";
+import "@/styles/marketing-v5/index.css";
+import "@/styles/marketing-v9/index.css";
 import Link from "next/link";
 import { NOT_FOUND } from "@/content/public-site";
-import { ThreadWordmark } from "@/components/factory/primitives";
-import { InspectionMark } from "@/components/factory/schematic";
+import { Wordmark } from "@/components/marketing-v5/Nav";
 
+/** Not found, in the homepage's system: one white panel on the canvas. */
 export default function NotFound() {
   return (
-    <main className="tl-public flex min-h-dvh flex-col items-center justify-center px-5 py-12 text-center">
-      <Link href="/" aria-label="Threadline home">
-        <ThreadWordmark className="h-7 w-auto" />
-      </Link>
-      <div className="mt-10">
-        <InspectionMark className="mx-auto w-16" reject />
+    <main className="tl-public v5 v9 nf-page">
+      <div className="v9-panel nf-panel">
+        <Link href="/" aria-label="Threadline home" className="v5-brand">
+          <Wordmark />
+        </Link>
+        <p className="v9-eyebrow">Not found</p>
+        <h1 className="v9-h1">{NOT_FOUND.title}</h1>
+        <p className="v9-lead">{NOT_FOUND.lead}</p>
+        <div className="v9-actions">
+          <Link href="/" className="v9-btn">
+            Go to the homepage
+          </Link>
+          <Link href="/app" className="v9-btn is-ghost">
+            Your workspace
+          </Link>
+        </div>
+        <p className="v9-note">
+          Need help? <Link href="/apply" className="v9-link">Get in touch</Link>
+        </p>
       </div>
-      <p className="tl-label mt-8 text-[color:var(--accent-deep)]">Not found</p>
-      <h1 className="tl-display mt-3 max-w-[14ch] text-[clamp(2rem,5vw,3.5rem)]">{NOT_FOUND.title}</h1>
-      <p className="tl-body mx-auto mt-4 max-w-md text-[15px]">{NOT_FOUND.lead}</p>
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-        <Link href="/" className="tl-btn tl-btn-primary">
-          Go to the homepage
-        </Link>
-        <Link href="/app" className="tl-btn">
-          Your workspace
-        </Link>
-      </div>
-      <p className="mt-10 text-[13px] text-[color:var(--ink-faint)]">
-        Need help?{" "}
-        <Link href="/apply" className="text-[color:var(--accent-deep)] underline underline-offset-4">
-          Get in touch
-        </Link>
-        .
-      </p>
     </main>
   );
 }

@@ -80,6 +80,19 @@ async function main() {
     await open(cdp, `${BASE}/who-its-for`, 1500);
     const wf = await evaluate<{ system: number; rows: number; fit: number; h1: string }>(cdp, `({ system: document.querySelectorAll('.wf-page .v9-panel').length, rows: document.querySelectorAll('.wf-row').length, fit: document.querySelectorAll('.wf-fit-col').length, h1: document.querySelector('h1')?.textContent || '' })`);
     ok("v9:who", "who it is for is in the homepage system", wf.system >= 3 && wf.rows === 7 && wf.fit === 2, JSON.stringify(wf));
+    await open(cdp, `${BASE}/how-it-works`, 2000);
+    const hw = await evaluate<{ stage: number; stations: number; stages: number; gates: number; chain: number; synthetic: boolean }>(cdp, `({ stage: document.querySelectorAll('.hw-line .v5-stage').length, stations: document.querySelectorAll('.hw-line .v5-dot').length, stages: document.querySelectorAll('.hw-stage').length, gates: document.querySelectorAll('.hw-gate').length, chain: document.querySelectorAll('.hw-link').length, synthetic: /illustrative/i.test(document.querySelector('.hw-synthetic')?.textContent || '') })`);
+    ok("v9:how", "how it works: the stage with six stations, seven stages, four gates, a labelled ten-step chain", hw.stage === 1 && hw.stations === 6 && hw.stages === 7 && hw.gates === 4 && hw.chain === 10 && hw.synthetic, JSON.stringify(hw));
+    await evaluate(cdp, `${q(".hw-line .v5-dot:nth-child(3)")}?.click?.(); document.querySelectorAll('.hw-line .v5-dot')[2].click(); true`);
+    await sleep(200);
+    ok("v9:how", "the line's stations respond", (await evaluate<string>(cdp, `${q(".hw-line .v5-stage")}.dataset.station`)) === "2");
+    await open(cdp, `${BASE}/apply`, 1500);
+    ok("v9:apply", "the application sits in the system with its form intact", await evaluate<boolean>(cdp, `!!document.querySelector('.ap-panel form') && document.querySelectorAll('.ap-panel input, .ap-panel select, .ap-panel textarea').length >= 3`));
+    await open(cdp, `${BASE}/calculator`, 1500);
+    ok("v9:calc", "the calculator sits in the system", await evaluate<boolean>(cdp, `!!document.querySelector('.ap-panel.is-single') && document.querySelectorAll('.ap-form [role=\"slider\"]').length >= 5 && document.querySelectorAll('.ap-form input').length >= 2`));
+    await open(cdp, `${BASE}/playbook`, 2000);
+    // the QA profile persists between runs; start from an unread playbook
+    await evaluate(cdp, "localStorage.removeItem('tl-playbook-read'); true");
     await open(cdp, `${BASE}/playbook`, 2000);
     const pb = await evaluate<{ chapters: number; marks: number; widgets: number; flips: number; tools: number; periods: number; text: string }>(cdp, `({ chapters: document.querySelectorAll('.pb-chapter').length, marks: document.querySelectorAll('.pb-rail-mark').length, widgets: document.querySelectorAll('.pb-chapter-tool').length, flips: document.querySelectorAll('.pb-flip').length, tools: document.querySelectorAll('.pb-tool').length, periods: document.querySelectorAll('.pb-period-line li').length, text: document.body.innerText })`);
     ok("v9:playbook", "ten chapters, ten marks, ten things to do, two tools, three periods", pb.chapters === 10 && pb.marks === 10 && pb.widgets === 10 && pb.tools === 2 && pb.periods === 3, JSON.stringify({ chapters: pb.chapters, marks: pb.marks, widgets: pb.widgets, tools: pb.tools, periods: pb.periods }));
@@ -96,7 +109,7 @@ async function main() {
     await sleep(150);
     ok("v9:playbook", "marking a chapter read lights its mark", (await evaluate<string>(cdp, `${q(".pb-rail-mark")}.className + ' ' + ${q(".pb-rail-count")}.textContent`)).includes("is-done") && /1 of 10/.test(await evaluate<string>(cdp, `${q(".pb-rail-count")}.textContent`)));
     for (const width of [1024, 390, 320]) {
-      for (const route of ["/who-its-for", "/playbook", "/playbook/measure-what-the-buyer-did"]) {
+      for (const route of ["/who-its-for", "/playbook", "/playbook/measure-what-the-buyer-did", "/how-it-works", "/apply", "/calculator"]) {
         await setViewport(cdp, width, 900);
         await open(cdp, `${BASE}${route}`, 1200);
         const w = await evaluate<{ sw: number; iw: number }>(cdp, `({ sw: document.documentElement.scrollWidth, iw: innerWidth })`);
