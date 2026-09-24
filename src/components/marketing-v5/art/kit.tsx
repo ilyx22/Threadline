@@ -125,7 +125,7 @@ export type PersonProps = {
  * figure from an architectural drawing: a small head, a tapered body, limbs as
  * single lines. No hands, no hair, no face.
  */
-export function Person({ x, y, s = 1, flip, shirt = C.lilac, armL = [-26, -64], armR = [26, -64], sit, apron, className }: PersonProps) {
+export function Person({ x, y, s = 1, flip, shirt = C.lilac, armL = [-26, -64], armR = [26, -64], sit, apron, className = "v5-person" }: PersonProps) {
   const limb = { fill: "none", stroke: C.ink, strokeWidth: 3.2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const };
   return (
     <At x={x} y={y} s={s} flip={flip} className={className}>

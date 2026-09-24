@@ -231,3 +231,32 @@ export function WorkshopArt({ station = 0, interactive = true }: { station?: num
     </svg>
   );
 }
+
+/** One station on its own, for the workshop mosaic: the bench, the station's machine, its plate and the root object as it is at that station. Cropped windows along the panorama. */
+const WINDOWS: [number, number][] = [
+  [0, 330],
+  [340, 320],
+  [640, 300],
+  [920, 300],
+  [1220, 300],
+  [1490, 310],
+];
+const STATION_PARTS = [Intel, Binding, Loom, Dispatch, SignalTray, TestBench];
+const STATION_NAMES = ["01 · LISTEN", "02 · DECIDE THE IDEA", "03 · MAKE IT", "04 · PUT IT IN THE ROOM", "05 · READ WHAT CAME BACK", "06 · CHANGE ONE THING"];
+export function StationScene({ i, label }: { i: number; label?: string }) {
+  const [x0, w] = WINDOWS[i];
+  const Part = STATION_PARTS[i];
+  return (
+    <svg viewBox={`${x0} 168 ${w} 302`} className="v5-art v5-station-scene" preserveAspectRatio="xMidYMax meet" role="img" aria-label={label ?? STATION_NAMES[i]}>
+      <Thread d="M0 300 Q120 310 250 300 Q380 292 450 330 Q540 350 700 340 Q900 330 1050 330 Q1200 330 1250 330 Q1400 330 1500 300 Q1650 280 1800 300" />
+      <Bench />
+      <Part />
+      <g transform={`translate(${STATION_X[i]} 430)`}>
+        <rect x={-70} y={0} width={140} height={12} rx={1} fill={C.wood} {...O} />
+        <circle cx={-46} cy={18} r={8} fill={C.paper} {...O} />
+        <circle cx={46} cy={18} r={8} fill={C.paper} {...O} />
+        <Carrier state={i} />
+      </g>
+    </svg>
+  );
+}

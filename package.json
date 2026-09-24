@@ -24,7 +24,7 @@
     "qa:browser": "node scripts/qa/run.cjs browser-qa",
     "qa:perf": "node scripts/qa/run.cjs perf-smoke",
     "qa:public": "node scripts/qa/run.cjs public-qa",
-    "qa:marketing": "node scripts/qa/run.cjs marketing-home",
+    "qa:marketing": "node scripts/qa/run.cjs marketing-v9",
     "qa:vitals": "node scripts/qa/run.cjs web-vitals",
     "qa:visual": "node scripts/qa/run.cjs visual-capture",
     "qa:visual:compare": "node scripts/qa/run.cjs visual-capture --compare",
