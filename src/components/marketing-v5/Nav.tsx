@@ -11,8 +11,8 @@ export function Wordmark({ light = false }: { light?: boolean }) {
     <span className={`v5-wordmark${light ? " is-light" : ""}`}>
       <span>Threadline</span>
       <svg viewBox="0 0 64 18" aria-hidden="true">
-        <path d="M2 12 C14 -2 22 20 34 8 S54 4 62 12" fill="none" stroke="var(--v5-ink)" strokeWidth={6} strokeLinecap="round" />
-        <path d="M2 12 C14 -2 22 20 34 8 S54 4 62 12" fill="none" stroke="var(--v5-gold)" strokeWidth={3} strokeLinecap="round" />
+        <path d="M2 11 C17 11 18 6 31 6 S46 11 62 7" fill="none" stroke="var(--v5-ink)" strokeWidth={5} strokeLinecap="round" />
+        <path d="M2 11 C17 11 18 6 31 6 S46 11 62 7" fill="none" stroke="var(--v5-gold)" strokeWidth={2} strokeLinecap="round" />
       </svg>
     </span>
   );

@@ -7,6 +7,22 @@
  */
 const Module = require("node:module");
 const path = require("node:path");
+const os = require("node:os");
+const readUserInfo = os.userInfo;
+os.userInfo = (...args) => {
+  try {
+    return readUserInfo(...args);
+  } catch (error) {
+    if (error?.code !== "ERR_SYSTEM_ERROR") throw error;
+    return {
+      uid: -1,
+      gid: -1,
+      username: process.env.USERNAME || "codex",
+      homedir: process.env.USERPROFILE || process.cwd(),
+      shell: null,
+    };
+  }
+};
 const SHIMS = {
   "next/headers": path.join(__dirname, "shims", "next-headers.cjs"),
   "next/navigation": path.join(__dirname, "shims", "next-navigation.cjs"),

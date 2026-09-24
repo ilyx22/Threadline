@@ -4,7 +4,41 @@ The public site was rebuilt as an illustrated Threadline world: an editorial aut
 
 Companion documents: `docs/design/V5_CURRENT_FAILURE_AUDIT.md`, `V5_REFERENCE_SKELETON.md`, `V5_THREADLINE_VISUAL_SYSTEM.md`, `V5_COMPONENT_MAP.md`, `V5_MOTION_SYSTEM.md`, `V5_VISUAL_QA_REPORT.md`; captures in `docs/design/v5/`.
 
-## Visual-quality upgrade (21 September 2026, latest)
+## Homepage rebuild (24 September 2026, latest)
+
+The owner rejected the interim homepage (the `marketing-v7` experiment: oversized editorial type, empty layouts, a generic trace diagram, coloured bands) and asked for a premium, restrained, editorial front page in the manner of a serious San Francisco B2B strategy studio, keeping the product strategy and copy ideas. The source of truth for the direction is `docs/site/FOUNDER_FEEDBACK_DESIGN_BRIEF.md`; the audit is `docs/site/SITE_REVAMP_AUDIT_2026-09-24.md`. Decision DEC-029.
+
+### What ships
+
+- **Files.** `src/components/home/{Home,Workshop,Loop}.tsx`, `src/content/home.ts`, `src/styles/home/home.css`, `scripts/qa/marketing-home.ts` (`npm run qa:marketing`). `src/app/(marketing)/page.tsx` renders `Home`; the marketing layout imports `home.css` and carries the `v8` class, which restyles the shared v5 nav and footer to the same paper-and-ink system. `marketing-v7` (components, styles, QA) was removed. The v5 illustrated components remain in the repository for `/design-lab` and the inner pages' primitives but are no longer on the homepage.
+- **Structure.** Nine sections: proposition and fit (hero), the visibility gap, market memory, the working relationship, the Authority Workshop, one idea and the right expressions, commercial learning, fit, and a closing band with the application call. Homepage height about 8,400 px at 1440 (the illustrated v5 was 12,100; the v7 interim 10,800).
+- **Visual system.** Warm neutral ground (`#f4f2ed`), paper sheets (`.h-sheet`: 1px hairline, 2px radius, a soft shadow), deep ink type, one accent (terracotta `#b4472a`) used for indices, marks, stamps and the active state only. Instrument Serif for headings at a measured size (h1 up to 3.9rem, h2 up to 2.55rem), Inter for everything else, 11px tracked capitals for labels. No coloured panels, gradients, illustrations, characters or dashboards. Every section head is an editorial two-column: index and eyebrow, heading left, body right.
+- **Objects.** Hero: a stack of three labelled sheets (point of view, short video, working document) with a three-line ledger, stamped illustrative. Gap: a dense twelve-item index sheet beside a sparse four-item sheet, joined by one strand. Memory: five encounter tickets on a hairline timeline, marks accumulating to the call. Roles: two ledgers with "Approve" as the only handoff. Workshop: a six-station rail with a moving marker and, per station, what happens, who decides and the object on a sheet (fragments, root idea v1, expressions, placements, signals, root idea v2). Expressions: a root-idea sheet feeding four form sheets down a spine, then the route to conversation. Learning: three illustrative cases, five states, a ledger with expected marks and actual levels as thin rules. Fit: two hairline lists.
+- **Interaction.** Two client components only. The workshop rail and the learning loop are `role="tablist"` with Arrow, Home and End keys carrying focus; every station's sheet and the Expected ledger are in the server HTML, so both read in full without scripting. Motion is a settle on entry (transform only, staggered by index) and the rail marker moving; nothing loops; `prefers-reduced-motion` switches every animation and transition off.
+- **Copy.** Protected ideas kept verbatim or near-verbatim: the hero proposition, inside the firm and what the market sees, famous versus familiar, talk, record when useful, approve and sell, the Authority Workshop, one idea and the right expressions, expected, actual, why, change, retest. Operating detail on the Threadline side names only capabilities the application has (research runs and sourced signals, root ideas and claims checks, approval queue and audit record, publishing records and measured links, evidence classes, attribution, expected-versus-actual diagnosis, the weekly report). Illustrative numbers and theses are stamped and captioned as illustrative; no pricing, proof, promises or AI framing.
+
+### Checks
+
+On the production build of 24 September 2026 (`NEXT_DIST_DIR=.next-qa npx next build`, served with `npx next start -p 3001`):
+
+| Check | Command | Result |
+|---|---|---|
+| Types | `npx tsc --noEmit` | 0 errors |
+| Lint | `npm run lint` | 0 errors, 0 warnings |
+| Production build | `next build` | ok; `/` 4.78 kB, 111 kB first load (the v5 homepage was 9.5 kB / 115 kB) |
+| Homepage acceptance | `npm run qa:marketing` (`marketing-home`) | 37 / 37: nine sections; the protected copy; six stations, five states, three cases; workshop and ledger by click and by Arrow / Home / End with focus; no horizontal overflow and no clipped heading or label at 1440 / 1024 / 768 / 390 / 320; tap targets ≥ 40px on phones; all station sheets, the Expected ledger and the five encounters in the server HTML; reduced motion runs no animation and hides nothing; no pricing, no promised outcomes, illustrative material labelled, no AI framing |
+| Public routes | `npm run qa:public` | 54 pass · 8 partial · 0 fail (the partials are the pre-existing inner-page notes) |
+| Web vitals | `npm run qa:vitals` | LCP 156 ms at 1440, 40 ms at 390; CLS 0.018 / 0.000 |
+| Eye pass | full pages at 1440, 1024, 390 and 320, plus hero crops, two rounds | one fix from the first round: the hero stack rebuilt as a labelled cascade and the headline measure widened |
+
+### Remaining limitations
+
+- The inner pages (`/how-it-works`, `/who-its-for`, `/playbook`, `/apply`) keep their earlier layouts under the restyled nav and footer; they need the same design pass once the homepage direction is approved.
+- The hero stack and the ledger are HTML objects with no image weight, but they are also the page's only visual moments; the brief's 10% tactile allowance is largely unused and could take one signature object later.
+- The learning ledger's rules are proportional to invented values; the illustrative stamp is the only guard against reading them as data.
+- Real client proof, the privacy notice and production database configuration remain open, as before.
+
+## Visual-quality upgrade (21 September 2026)
 
 The owner kept the concepts, copy and sequence and asked for the execution to move from children's-animation cues to a refined editorial / product-studio system. This pass changed the actual shapes, proportions, colour use, labels, motion and crops. The direction below supersedes the correction pass under it; its non-regression rules still hold.
 
