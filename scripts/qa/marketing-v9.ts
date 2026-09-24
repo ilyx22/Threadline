@@ -75,6 +75,35 @@ async function main() {
       }
     }
 
+    section("inner pages v9 — who it is for and the playbook");
+    await setViewport(cdp, 1440, 900);
+    await open(cdp, `${BASE}/who-its-for`, 1500);
+    const wf = await evaluate<{ system: number; rows: number; fit: number; h1: string }>(cdp, `({ system: document.querySelectorAll('.wf-page .v9-panel').length, rows: document.querySelectorAll('.wf-row').length, fit: document.querySelectorAll('.wf-fit-col').length, h1: document.querySelector('h1')?.textContent || '' })`);
+    ok("v9:who", "who it is for is in the homepage system", wf.system >= 3 && wf.rows === 7 && wf.fit === 2, JSON.stringify(wf));
+    await open(cdp, `${BASE}/playbook`, 2000);
+    const pb = await evaluate<{ chapters: number; marks: number; widgets: number; flips: number; tools: number; periods: number; text: string }>(cdp, `({ chapters: document.querySelectorAll('.pb-chapter').length, marks: document.querySelectorAll('.pb-rail-mark').length, widgets: document.querySelectorAll('.pb-chapter-tool').length, flips: document.querySelectorAll('.pb-flip').length, tools: document.querySelectorAll('.pb-tool').length, periods: document.querySelectorAll('.pb-period-line li').length, text: document.body.innerText })`);
+    ok("v9:playbook", "ten chapters, ten marks, ten things to do, two tools, three periods", pb.chapters === 10 && pb.marks === 10 && pb.widgets === 10 && pb.tools === 2 && pb.periods === 3, JSON.stringify({ chapters: pb.chapters, marks: pb.marks, widgets: pb.widgets, tools: pb.tools, periods: pb.periods }));
+    ok("v9:playbook", "the start button promises a time, not a result", /fully interactive/i.test(pb.text) && !/guarantee[ds]? (leads|calls|revenue|results)/i.test(pb.text));
+    const flipH = await evaluate<number>(cdp, `Math.round(${q(".pb-flip")}.getBoundingClientRect().height)`);
+    ok("v9:playbook", "flip cards have room for their faces", flipH >= 120, `${flipH}px`);
+    await evaluate(cdp, `${q(".pb-flip")}.click(); true`);
+    await sleep(150);
+    ok("v9:playbook", "a crate opens and the count follows", (await evaluate<string>(cdp, `${q(".pb-flip")}.getAttribute('aria-pressed') + ':' + ${q(".pb-count")}.textContent.trim()`)) === "true:1 / 6");
+    await evaluate(cdp, `(() => { const b = [...document.querySelectorAll('.pb-card-actions button')]; b[0].click(); return true; })()`);
+    await sleep(150);
+    ok("v9:playbook", "the sorter answers a card", /topic|thesis/i.test(await evaluate<string>(cdp, `${q(".pb-card-feedback")}?.textContent || ''`)));
+    await evaluate(cdp, `${q(".pb-mark")}.click(); true`);
+    await sleep(150);
+    ok("v9:playbook", "marking a chapter read lights its mark", (await evaluate<string>(cdp, `${q(".pb-rail-mark")}.className + ' ' + ${q(".pb-rail-count")}.textContent`)).includes("is-done") && /1 of 10/.test(await evaluate<string>(cdp, `${q(".pb-rail-count")}.textContent`)));
+    for (const width of [1024, 390, 320]) {
+      for (const route of ["/who-its-for", "/playbook", "/playbook/measure-what-the-buyer-did"]) {
+        await setViewport(cdp, width, 900);
+        await open(cdp, `${BASE}${route}`, 1200);
+        const w = await evaluate<{ sw: number; iw: number }>(cdp, `({ sw: document.documentElement.scrollWidth, iw: innerWidth })`);
+        ok("v9:pages", `no horizontal overflow on ${route} at ${width}px`, w.sw <= w.iw + 1, JSON.stringify(w));
+      }
+    }
+
     section("homepage v9 — without scripting, reduced motion, claims");
     const html = await (await fetch(`${BASE}/`)).text();
     ok("v9:nojs", "the six station scenes are in the server HTML", (html.match(/v5-station-scene/g) || []).length >= 6);
