@@ -56,3 +56,13 @@ Recraft needs a sign-in, so the set was produced in Nano Banana as two 3 × 3 sh
 | `playbook-reading-desk.jpg` | Reading desk, open ledger, ten blank cards, spool, lamp | `app/ce3dd895683ebd84` | Accepted first pass. |
 
 Driving notes: the prompt box drops typed text if the page has not finished mounting (wait, `find` the box, then click and type, and check with a screenshot before sending); non-ASCII characters in a prompt break the typing; the aspect menu sometimes needs opening twice; Enter does not always submit, the arrow button does. `threads.json` and `viewer/trace-*.jpg` are the rejected thread-trace experiment.
+
+## Resolution fixes (owner: "some things are low resolution still, namely graphic 2 and 3")
+
+| File | What | Chat | Use |
+| --- | --- | --- | --- |
+| `gap-left-room.jpg` | The workroom alone, wall and hatch at the right edge (edit follow-up in the gap chat) | `app/807d639a078f989f` | `public/marketing/gap-left.jpg` |
+| `gap-right-room.jpg` | The empty room alone, wall and hatch at the left edge | same | `public/marketing/gap-right.jpg` |
+| `memory-sheet.jpg` | The five vignettes as a 1:1 sheet, three over two, no thread | `app/7c0daaa94271d896` | split by cell into `public/marketing/memory/encounter-1..5.jpg` |
+
+Rule learnt: when a scene must be shown wider than about 700 px, render it in parts from the same chat and compose the parts in HTML; the thread and any labels are then drawn in SVG/HTML.

@@ -41,6 +41,8 @@ const THREADLINE_JOBS: { job: string; obj: ObjName }[] = [
 ];
 const STATION_OBJECTS: ObjName[] = ["magnifier", "spool", "press", "peg", "ledger", "stamp"];
 
+const ENCOUNTER_ALT = ["Seated on a train, reading a post on a phone.", "At a desk, reading a printed note.", "At a coffee table with a colleague, a short video on a small screen between them.", "At a boardroom table, holding up a document with a circled tick.", "Standing at a window, on a call."];
+
 const TICKER = ["proposal decks", "delivery notes", "Slack threads", "partners’ heads", "pricing conversations", "post-mortems", "board memos", "private advice", "client calls", "the method nobody wrote down"];
 
 function Head({ eyebrow, title, body, id, center = false, light = false }: { eyebrow: string; title: React.ReactNode; body?: string; id: string; center?: boolean; light?: boolean }) {
@@ -119,15 +121,22 @@ function GapAndMemory() {
           <Head eyebrow={gap.eyebrow} title={gap.headline} body={gap.body} id="gap-title" />
         </div>
         <div className="v9-band is-photo is-contained">
-          <p className="v9-band-plate is-left">
-            <span className="v9-tag">{gap.inside.label}</span>
-            <span>{gap.inside.note}</span>
-          </p>
-          <p className="v9-band-plate is-right">
-            <span className="v9-tag">{gap.outside.label}</span>
-            <span>{gap.outside.note}</span>
-          </p>
-          <Image src="/marketing/gap-scene.jpg" alt="Two rooms divided by a wall. Inside the firm: shelves crammed with binders and papers and two partners at a table. Outside: an almost empty room where one buyer holds two thin sheets. One thread passes through a hatch in the wall." width={1262} height={590} sizes="(max-width: 1440px) 100vw, 1440px" loading="eager" />
+          <div className="v9-band-rooms">
+            <figure className="v9-room">
+              <Image src="/marketing/gap-left.jpg" alt="Inside the firm: a navy workroom with three tiers of shelves crammed with binders, folders and paper stacks, crates on the floor, and four partners working at two tables under lamps. A hatch in the wall on the right lets one thread out." width={1376} height={768} sizes="(max-width: 991px) 100vw, 620px" loading="eager" />
+              <figcaption className="v9-band-plate is-left">
+                <span className="v9-tag">{gap.inside.label}</span>
+                <span>{gap.inside.note}</span>
+              </figcaption>
+            </figure>
+            <figure className="v9-room">
+              <Image src="/marketing/gap-right.jpg" alt="What the market sees: an almost empty pale room where one buyer holds two thin sheets beside a single framed board on a stand. The thread enters through the hatch on the left and reaches the buyer." width={1376} height={768} sizes="(max-width: 991px) 100vw, 620px" loading="eager" />
+              <figcaption className="v9-band-plate is-right">
+                <span className="v9-tag">{gap.outside.label}</span>
+                <span>{gap.outside.note}</span>
+              </figcaption>
+            </figure>
+          </div>
         </div>
       </section>
       <section id="memory" className="v9-memory" data-scene aria-labelledby="memory-title">
@@ -142,12 +151,14 @@ function GapAndMemory() {
             }
             id="memory-title"
           />
-          <div className="v9-frieze is-photo v9-reveal">
+          <div className="v9-frieze is-tiles v9-reveal">
             <div className="v9-frieze-scroll">
-              <Image src="/marketing/memory-scene.jpg" alt="The same buyer five times over a few months: on a train with a phone, at a desk reading a sheet, at a coffee table with a colleague, at a boardroom table holding up a ticked document, and on a call at a window. One thread runs under all five with a knot under each." width={1376} height={307} sizes="(max-width: 991px) 900px, 1240px" loading="eager" />
-              <ol className="v9-frieze-captions">
+              <ol className="v9-encounters" aria-label="Five encounters">
                 {memory.encounters.map((e, i) => (
                   <li key={e.n} style={{ ["--i" as string]: i }}>
+                    <span className="v9-encounter-art">
+                      <Image src={`/marketing/memory/encounter-${i + 1}.jpg`} alt={ENCOUNTER_ALT[i]} width={420} height={420} sizes="(max-width: 991px) 180px, 230px" loading="eager" />
+                    </span>
                     <span className="v9-tag">
                       {e.n} · {e.state}
                     </span>
@@ -156,6 +167,12 @@ function GapAndMemory() {
                   </li>
                 ))}
               </ol>
+              <svg className="v9-thread-line" viewBox="0 0 1000 40" preserveAspectRatio="none" aria-hidden="true">
+                <path className="v9-thread-path" d="M0 20 H1000" fill="none" stroke="var(--v5-gold)" strokeWidth="2.4" />
+                {[100, 300, 500, 700, 900].map((x) => (
+                  <circle key={x} className="v9-thread-knot" cx={x} cy={20} r={6} fill="var(--v5-gold)" stroke="var(--v9-ink)" strokeWidth="1.6" />
+                ))}
+              </svg>
             </div>
           </div>
           <p className="v9-body is-center v9-reveal">{memory.body}</p>

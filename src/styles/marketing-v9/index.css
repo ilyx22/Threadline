@@ -719,3 +719,37 @@
 }
 .tl-public.v9 .v5-bench-stage svg > path:nth-of-type(2) { display: none; } /* the hook's feed line; the hook itself is hidden above */
 .hw-captions li { color: rgba(255, 255, 255, 0.82); }
+/* ---------------------------------- native-resolution band and encounters (owner: "still low resolution") */
+.v9-band-rooms { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.v9-band-rooms img { display: block; width: 100%; height: auto; border-radius: 24px; }
+.v9-frieze.is-tiles { margin: 40px auto 0; }
+.v9-encounters { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+.v9-encounters li { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.v9-encounter-art { display: block; width: 100%; max-width: 230px; aspect-ratio: 1; margin-bottom: 8px; border-radius: 20px; overflow: hidden; background: #fff; }
+.v9-encounter-art img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.v9-encounters li strong { font-family: var(--v9-serif); font-weight: 400; font-size: 1.25rem; line-height: 1.1; }
+.v9-encounters li span:not(.v9-tag) { font-size: 13px; line-height: 1.4; color: var(--v9-ink-soft); max-width: 22ch; }
+[data-js] [data-scene]:not([data-seen]) .v9-encounters li { opacity: 0; transform: translateY(14px); }
+.v9-encounters li { transition: opacity 560ms var(--v9-ease) calc(200ms + var(--i) * 120ms), transform 560ms var(--v9-ease) calc(200ms + var(--i) * 120ms); }
+.v9-thread-line { display: block; width: 100%; height: 40px; margin-top: 18px; overflow: visible; }
+.v9-thread-path { stroke-dasharray: 1000; stroke-dashoffset: 0; }
+[data-js] [data-scene]:not([data-seen]) .v9-thread-path { stroke-dashoffset: 1000; }
+[data-js] [data-scene][data-seen] .v9-thread-path { animation: v9-draw 1400ms var(--v9-ease) 200ms both; }
+@keyframes v9-draw { from { stroke-dashoffset: 1000; } to { stroke-dashoffset: 0; } }
+[data-js] [data-scene]:not([data-seen]) .v9-thread-knot { opacity: 0; }
+[data-js] [data-scene][data-seen] .v9-thread-knot { animation: v9-knot 400ms var(--v9-ease) both; }
+.v9-thread-knot:nth-child(2) { animation-delay: 500ms !important; } .v9-thread-knot:nth-child(3) { animation-delay: 750ms !important; } .v9-thread-knot:nth-child(4) { animation-delay: 1000ms !important; } .v9-thread-knot:nth-child(5) { animation-delay: 1250ms !important; } .v9-thread-knot:nth-child(6) { animation-delay: 1500ms !important; }
+@keyframes v9-knot { from { opacity: 0; transform: scale(0.4); transform-box: fill-box; transform-origin: center; } to { opacity: 1; transform: none; } }
+@media (max-width: 991px) {
+  .v9-band-rooms { grid-template-columns: 1fr; }
+  .v9-frieze.is-tiles { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+  .v9-frieze.is-tiles .v9-frieze-scroll { min-width: 900px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v9-thread-path, .v9-thread-knot { animation: none !important; opacity: 1; stroke-dashoffset: 0; }
+}
+.v9-room { position: relative; margin: 0; }
+.v9-room .v9-band-plate { top: 18px; }
+.v9-room .v9-band-plate.is-left { left: 18px; }
+.v9-room .v9-band-plate.is-right { right: 18px; }
+@media (max-width: 991px) { .v9-room .v9-band-plate.is-left { left: 12px; } .v9-room .v9-band-plate.is-right { right: 12px; } }
