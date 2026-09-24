@@ -156,7 +156,7 @@ function Carrier({ state }: { state: number }) {
       {state === 1 && (
         <g>
           <Spool x={0} y={-30} s={0.9} />
-          <Plate x={0} y={-86}>ROOT THESIS</Plate>
+          <Plate x={0} y={-86}>ROOT IDEA</Plate>
         </g>
       )}
       {state === 2 && (
@@ -187,7 +187,7 @@ function Carrier({ state }: { state: number }) {
       {state === 5 && (
         <g>
           <Spool x={0} y={-30} s={0.9} />
-          <Plate x={0} y={-86}>ROOT THESIS · V2</Plate>
+          <Plate x={0} y={-86}>ROOT IDEA · V2</Plate>
           <rect x={-44} y={-64} width={18} height={34} rx={1} fill={C.mint} {...O} className="v5-newpart" />
         </g>
       )}

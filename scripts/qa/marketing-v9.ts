@@ -20,12 +20,13 @@ async function main() {
     section("homepage v9 — story and copy");
     await setViewport(cdp, 1440, 900);
     await open(cdp, `${BASE}/`, 1800);
-    const s = await evaluate<{ sections: number; h1: string; text: string; tiles: number; scenes: number; tabs: number; cases: number; js: string; hidden: number }>(cdp, `({
+    const s = await evaluate<{ sections: number; h1: string; text: string; tiles: number; scenes: number; objects: number; tabs: number; cases: number; js: string; hidden: number }>(cdp, `({
       sections: document.querySelectorAll('.v9-home > section').length,
       h1: document.querySelector('h1')?.textContent || '',
       text: document.body.innerText,
       tiles: document.querySelectorAll('.v9-mosaic-tile').length,
-      scenes: document.querySelectorAll('.v9-home svg[role=img][aria-label]').length,
+      scenes: document.querySelectorAll('.v9-home svg[role=img][aria-label], .v9-home img[alt]:not([alt=""])').length,
+      objects: [...document.querySelectorAll('.v9-home .v9-obj img')].filter(i => i.complete && i.naturalWidth > 0).length,
       tabs: document.querySelectorAll('.v5-tabs [role=tab]').length,
       cases: document.querySelectorAll('.v5-cases .v5-chip').length,
       js: document.documentElement.dataset.js || '',
@@ -39,7 +40,8 @@ async function main() {
     ok("v9:copy", "the workshop and the loop", /six stations/i.test(s.text) && /Expected\. Actual\.\s+Why\. Change\. Retest\./.test(s.text));
     ok("v9:copy", "one idea, the right expressions", /One idea, the right expressions/.test(s.text));
     ok("v9:design", "six mosaic tiles, five bench states, three cases", s.tiles === 6 && s.tabs === 5 && s.cases === 3, JSON.stringify({ tiles: s.tiles, tabs: s.tabs, cases: s.cases }));
-    ok("v9:design", "every scene is a labelled illustration", s.scenes >= 14, `${s.scenes}`);
+    ok("v9:design", "every scene is a labelled illustration (three generated scenes, the frieze, the line, the bench)", s.scenes >= 6, `${s.scenes}`);
+    ok("v9:design", "the object set is loaded: four capsules, twelve tools, six stations", s.objects >= 22, `${s.objects}`);
     ok("v9:design", "scripting flag set by the observer", s.js === "1");
     ok("v9:design", "nothing in a seen scene is hidden", s.hidden === 0, `${s.hidden}`);
 
@@ -119,7 +121,7 @@ async function main() {
 
     section("homepage v9 — without scripting, reduced motion, claims");
     const html = await (await fetch(`${BASE}/`)).text();
-    ok("v9:nojs", "the six station scenes are in the server HTML", (html.match(/v5-station-scene/g) || []).length >= 6);
+    ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects\//g) || []).length >= 22 && /hero-scene\.jpg/.test(html) && /gap-scene\.jpg/.test(html) && /closing-scene\.jpg/.test(html));
     ok("v9:nojs", "the bench's Expected readout is in the server HTML", /v5-readout-verdict">Expected</.test(html));
     ok("v9:nojs", "the ticker's items are in the server HTML as a list", (html.match(/v9-chip/g) || []).length >= 10);
     await setViewport(cdp, 1440, 900);

@@ -2,14 +2,10 @@ import * as React from "react";
 import Link from "next/link";
 import { closing, expressions, fit, gap, hero, learning, memory, roles } from "@/content/home";
 import { workshop } from "@/content/marketing-v5";
+import Image from "next/image";
 import Motion from "@/components/marketing-v5/Motion";
 import Bench from "@/components/marketing-v5/Bench";
-import { HeroArt } from "@/components/marketing-v5/art/HeroArt";
-import { ProblemArt } from "@/components/marketing-v5/art/ProblemArt";
 import { MemoryArt } from "@/components/marketing-v5/art/MemoryArt";
-import { BusyMachine, CalmFounder } from "@/components/marketing-v5/art/BurdenArt";
-import { StationScene } from "@/components/marketing-v5/art/WorkshopArt";
-import { GateArt } from "@/components/marketing-v5/art/SmallArt";
 import { ExpressionsArt } from "./ExpressionsArt";
 
 /**
@@ -27,14 +23,34 @@ const Arrow = () => (
   </svg>
 );
 
-const TICKER = ["proposal decks", "delivery notes", "Slack threads", "partners’ heads", "pricing conversations", "post-mortems", "board memos", "private advice", "client calls", "the method nobody wrote down"];
+/** The object set (docs/design/nano-banana-reference/generated/objects): one flat object per idea, labels always in HTML. */
+type ObjName = "spool" | "press" | "peg" | "sheet-written" | "screen-video" | "document-stack" | "sheet-tick" | "crate" | "folder" | "paper-stack" | "lamp" | "bench" | "magnifier" | "ledger" | "microphone" | "camera" | "stamp";
+function Obj({ name, size = 160 }: { name: ObjName; size?: number }) {
+  return (
+    <span className="v9-obj" style={{ ["--s" as string]: `${size}px` }} aria-hidden="true">
+      <Image src={`/marketing/objects/${name}.png`} alt="" fill sizes={`${size}px`} loading="eager" />
+    </span>
+  );
+}
+const YOU: { verb: string; obj: ObjName }[] = [
+  { verb: "Talk", obj: "microphone" },
+  { verb: "Record", obj: "camera" },
+  { verb: "Approve", obj: "stamp" },
+  { verb: "Sell", obj: "folder" },
+];
+const THREADLINE_JOBS: { job: string; obj: ObjName }[] = [
+  { job: "Research", obj: "magnifier" },
+  { job: "Positioning", obj: "ledger" },
+  { job: "Scripting", obj: "sheet-written" },
+  { job: "Editing", obj: "press" },
+  { job: "Packaging", obj: "crate" },
+  { job: "Distribution", obj: "peg" },
+  { job: "Measurement", obj: "sheet-tick" },
+  { job: "Diagnosis", obj: "paper-stack" },
+];
+const STATION_OBJECTS: ObjName[] = ["magnifier", "spool", "press", "peg", "ledger", "stamp"];
 
-const MARKS: Record<string, React.ReactNode> = {
-  Talk: <path d="M12 3a4 4 0 0 0-4 4v5a4 4 0 0 0 8 0V7a4 4 0 0 0-4-4Zm-7 9a7 7 0 0 0 14 0M12 19v3" />,
-  Record: <path d="M3 8h5l2-3h4l2 3h5v11H3Zm9 3a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z" />,
-  Approve: <path d="M6 20h12M8 20v-4h8v4M10 16V6h4v10M9 6h6" />,
-  Sell: <path d="M7 3h10v18H7ZM10 18h4" />,
-};
+const TICKER = ["proposal decks", "delivery notes", "Slack threads", "partners’ heads", "pricing conversations", "post-mortems", "board memos", "private advice", "client calls", "the method nobody wrote down"];
 
 function Head({ eyebrow, title, body, id, center = false, light = false }: { eyebrow: string; title: React.ReactNode; body?: string; id: string; center?: boolean; light?: boolean }) {
   return (
@@ -71,11 +87,8 @@ function Hero() {
             </Link>
           </div>
         </div>
-        <div className="v9-hero-scene is-wide">
-          <HeroArt />
-        </div>
-        <div className="v9-hero-scene is-tall">
-          <HeroArt layout="tall" />
+        <div className="v9-hero-scene is-photo">
+          <Image src="/marketing/hero-scene.jpg" alt="The firm's private archive on the left; one thread leaves it, passes through a small press and hangs four finished pieces on a line where four buyers stand looking up at them." width={1282} height={474} priority sizes="(max-width: 991px) 100vw, 58vw" />
         </div>
       </div>
     </section>
@@ -114,11 +127,16 @@ function GapAndMemory() {
         <div className="v9-wrap">
           <Head eyebrow={gap.eyebrow} title={gap.headline} body={gap.body} id="gap-title" />
         </div>
-        <div className="v9-band is-wide">
-          <ProblemArt />
-        </div>
-        <div className="v9-band is-tall">
-          <ProblemArt layout="tall" />
+        <div className="v9-band is-photo">
+          <p className="v9-band-plate is-left">
+            <span className="v9-tag">{gap.inside.label}</span>
+            <span>{gap.inside.note}</span>
+          </p>
+          <p className="v9-band-plate is-right">
+            <span className="v9-tag">{gap.outside.label}</span>
+            <span>{gap.outside.note}</span>
+          </p>
+          <Image src="/marketing/gap-scene.jpg" alt="Two rooms divided by a wall. Inside the firm: shelves crammed with binders and papers and two partners at a table. Outside: an almost empty room where one buyer holds two thin sheets. One thread passes through a hatch in the wall." width={1262} height={590} sizes="(max-width: 1440px) 100vw, 1440px" loading="eager" />
         </div>
       </section>
       <section id="memory" className="v9-memory" data-scene aria-labelledby="memory-title">
@@ -156,10 +174,8 @@ function Burden() {
           <ol className="v9-capsules v9-reveal" aria-label="What we need from you">
             {roles.you.rows.map((r, i) => (
               <li key={r.verb} className="v9-capsule" style={{ ["--i" as string]: i }}>
-                <span className="v9-capsule-mark" aria-hidden="true">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                    {MARKS[r.verb]}
-                  </svg>
+                <span className="v9-capsule-mark is-obj">
+                  <Obj name={YOU.find((y) => y.verb === r.verb)?.obj ?? "folder"} size={44} />
                 </span>
                 <span className="v9-capsule-text">
                   <strong>{r.verb}</strong>
@@ -170,15 +186,29 @@ function Burden() {
           </ol>
         </div>
         <div className="v9-burden-tiles">
-          <div className="v9-tile is-paper v9-reveal">
-            <CalmFounder />
+          <div className="v9-tile is-sky v9-bench-tile v9-reveal">
+            <ul className="v9-tools is-four" aria-label="What you do">
+              {YOU.map((y) => (
+                <li key={y.verb}>
+                  <Obj name={y.obj} size={120} />
+                  <span>{y.verb}</span>
+                </li>
+              ))}
+            </ul>
             <p className="v9-tile-caption">
               <strong>What you do</strong>
               <span>Talk, record when useful, approve, sell.</span>
             </p>
           </div>
-          <div className="v9-tile is-night v9-reveal" style={{ ["--d" as string]: "120ms" }}>
-            <BusyMachine labels={["research", "positioning", "scripting", "editing", "packaging", "distribution", "measurement", "diagnosis"]} />
+          <div className="v9-tile is-night v9-bench-tile v9-reveal" style={{ ["--d" as string]: "120ms" }}>
+            <ul className="v9-tools is-eight is-light" aria-label="What Threadline does">
+              {THREADLINE_JOBS.map((j) => (
+                <li key={j.job}>
+                  <Obj name={j.obj} size={96} />
+                  <span>{j.job}</span>
+                </li>
+              ))}
+            </ul>
             <p className="v9-tile-caption is-light">
               <strong>What Threadline does</strong>
               <span>{roles.handoff}</span>
@@ -200,8 +230,8 @@ function Workshop() {
         <ol className="v9-mosaic" aria-label="The six stations">
           {workshop.stations.map((s, i) => (
             <li key={s.key} className={`v9-tile v9-mosaic-tile ${TONES[i]}${[0, 3, 4].includes(i) ? " is-wide-tile" : ""} v9-reveal`} style={{ ["--i" as string]: i % 2 }}>
-              <div className="v9-mosaic-art" aria-hidden="true">
-                <StationScene i={i} />
+              <div className="v9-mosaic-art is-obj">
+                <Obj name={STATION_OBJECTS[i]} size={240} />
               </div>
               <div className="v9-mosaic-text">
                 <span className="v9-tag">Station {String(i + 1).padStart(2, "0")}</span>
@@ -279,7 +309,7 @@ function Fit() {
     <section id="fit" className="v9-fit" data-scene aria-labelledby="fit-title">
       <div className="v9-wrap">
         <Head center eyebrow={fit.eyebrow} title={fit.headline} body={fit.body} id="fit-title" />
-        <div className="v9-fit-grid v9-reveal">
+        <div className="v9-fit-grid is-two v9-reveal">
           <div className="v9-fit-col">
             <p className="v9-tag">{fit.good.label}</p>
             <ul className="v9-fit-list is-good">
@@ -287,9 +317,6 @@ function Fit() {
                 <li key={g}>{g}</li>
               ))}
             </ul>
-          </div>
-          <div className="v9-fit-gate" aria-hidden="true">
-            <GateArt />
           </div>
           <div className="v9-fit-col">
             <p className="v9-tag">{fit.bad.label}</p>
@@ -315,7 +342,7 @@ function Fit() {
 function Closing() {
   return (
     <section id="closing" className="v9-closing" data-scene aria-labelledby="closing-title">
-      <div className="v9-panel v9-closing-panel">
+      <div className="v9-panel v9-closing-panel is-photo">
         <div className="v9-closing-copy">
           <h2 id="closing-title" className="v9-h2 is-light v9-reveal">
             {closing.headline[0]} <span className="is-soft">{closing.headline[1]}</span>
@@ -333,11 +360,8 @@ function Closing() {
             </Link>
           </div>
         </div>
-        <div className="v9-closing-scene is-wide">
-          <HeroArt evolved />
-        </div>
-        <div className="v9-closing-scene is-tall">
-          <HeroArt layout="tall" evolved />
+        <div className="v9-closing-scene is-photo">
+          <Image src="/marketing/closing-scene.jpg" alt="At night, six finished pieces hang on a marigold line between two poles; the thread returns underneath to a spool on the ground." width={1376} height={768} sizes="(max-width: 991px) 100vw, 54vw" loading="eager" />
         </div>
       </div>
       <div className="v9-wordmark-marquee" aria-hidden="true">
