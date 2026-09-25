@@ -61,9 +61,9 @@
 /* --------------------------------------------------------- nav and footer */
 .tl-public.v9 .v5-nav { position: sticky; background: rgba(232, 241, 248, 0.88); border-bottom: 0; backdrop-filter: blur(10px); }
 .tl-public.v9 .v5-nav-row { min-height: 80px; }
-.tl-public.v9 .v5-wordmark { font-family: var(--v9-serif); font-size: 1.9rem; color: var(--v9-ink); }
-.tl-public.v9 .v5-wordmark svg { display: inline-block; }
-.tl-public.v9 .v5-wordmark svg path:last-child { stroke: var(--v9-action); }
+.tl-public.v9 .v5-wordmark { color: var(--v9-ink); }
+.tl-public.v9 .v5-wordmark .v5-wordmark-mark { color: var(--v5-gold); }
+.tl-public.v9 .v5-wordmark.is-light { color: var(--v5-paper); }
 .tl-public.v9 .v5-nav-link { font-size: 16px; color: var(--v9-ink); }
 .tl-public.v9 .v5-nav-link:hover { background: rgba(255, 255, 255, 0.7); }
 .tl-public.v9 .v5-nav-link[aria-current="page"] { text-decoration-color: var(--v9-action); }
@@ -310,7 +310,6 @@
 }
 @media (max-width: 479px) {
   .tl-public.v9 .v5-nav .v5-btn { min-height: 42px; padding: 0 14px; font-size: 14px; box-shadow: none; }
-  .tl-public.v9 .v5-wordmark { font-size: 1.5rem; }
   .tl-public.v9 .v5-nav-row { gap: 10px; }
 }
 @media (max-width: 379px) {

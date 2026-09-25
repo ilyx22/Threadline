@@ -4,16 +4,17 @@ import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { nav } from "@/content/marketing-v5";
+import { ThreadMark } from "@/components/brand/logo";
 
-/** The wordmark with its short thread. */
+/**
+ * The Threadline identity, shared with the product: the thread mark (one line
+ * through the stages, resolving at the second node) beside the tracked wordmark.
+ */
 export function Wordmark({ light = false }: { light?: boolean }) {
   return (
     <span className={`v5-wordmark${light ? " is-light" : ""}`}>
+      <ThreadMark size={24} className="v5-wordmark-mark" />
       <span>Threadline</span>
-      <svg viewBox="0 0 64 18" aria-hidden="true">
-        <path d="M2 11 C17 11 18 6 31 6 S46 11 62 7" fill="none" stroke="var(--v5-ink)" strokeWidth={5} strokeLinecap="round" />
-        <path d="M2 11 C17 11 18 6 31 6 S46 11 62 7" fill="none" stroke="var(--v5-gold)" strokeWidth={2} strokeLinecap="round" />
-      </svg>
     </span>
   );
 }
