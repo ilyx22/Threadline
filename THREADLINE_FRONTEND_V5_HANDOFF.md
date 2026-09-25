@@ -68,6 +68,22 @@ The owner reviewed the first artwork pass and listed what was wrong. Every point
 - **The Playbook hero is a map of the ten chapters**: ten object tiles that link to their chapters, replacing the reading-desk scene the owner did not like.
 - **Who it is for profile rows** are pastel tiles with an object each and a larger title.
 
+### Launch-readiness pass and frontend freeze (25 September 2026)
+
+The owner accepted the site as good enough to sell from, froze the visual direction (the editorial-workshop proposal in `docs/design/ART_DIRECTION_2026-09-25.md` is kept as a future brief; the revert point is `checkpoint/before-art-direction-2026-09-25`) and asked for one scoped launch-readiness pass before backend work. An audit script (`scripts/qa/launch-audit.ts`, run with `QA_BASE=http://localhost:3001 node scripts/qa/run.cjs launch-audit`) checked every public route at 1440, 1024, 768, 390 and 320 for console errors, failed requests, overflow, clipped text, content left at low opacity, duplicate ids, heading order, broken or alt-less images, unnamed controls, keyboard focus, the mobile drawer, anchors under the sticky nav, the apply form's empty submit, reduced motion and no-JS. Defects found and fixed:
+
+- **Reduced motion hid content.** The reveal rules added on 24 September (band plates, tool objects, encounter tiles, chapter map, thread) had no reduced-motion exception, so 17 elements on the homepage and 10 on the Playbook stayed at zero opacity for those users. `Motion` now marks every scene seen at once under reduced motion (and when `IntersectionObserver` is missing), and the stylesheet resolves all reveal rules to their finished state under the media query.
+- **Reveal safety net.** If the observer is late or fails, scenes near the viewport are revealed within a second and everything within ten seconds, so no copy or call to action can stay invisible.
+- **Phone overflow on How it works:** the station arrows plus six buttons ran 62px past a 390 viewport. Arrows hide under 600px; the six 44px buttons fit at 320.
+- **Phone overflow on the Playbook:** the ten-mark rail ran 36px past the viewport. Under 600px it is a 5 × 2 grid of 44px marks.
+- **Chapter 8 pushed the page wide** at 1024, 768 and 390 (the expectation card's select and the copy column at their intrinsic width). The chapter grid uses `minmax(0, 1fr)`, the card's controls are 100% wide, and the card's form is one column under 1200px.
+- **Calculator heading truncated mid-sentence** ("Scenario: a workflow where you…") at 1024 and below: the shared card's `truncate` is overridden for the public calculator so the line wraps.
+- **Hero image dimensions** were declared 1282 × 474 for a 1262 × 468 file; corrected.
+- **Sign-in link prefetch** requested `/login` on every page and was aborted; `prefetch={false}` on the nav and drawer links.
+- **Tap targets:** the nav pill was 42px tall and the phone rail marks 36px; both are 44px now.
+
+Verified and left alone: keyboard order and visible focus on every control; the mobile drawer opens, closes on Escape and toggles; anchor targets clear the sticky nav and rail; the application form blocks an empty submit with five field errors and an alert, has a "received" state and a general error state, and its only disabled button is Back on step one; no console errors, duplicate ids, heading jumps, broken images, alt-less images or unnamed controls on any route at any width; no-JS renders every page complete; `/design-lab` is a 404 in production and disallowed in robots; no fabricated proof, pricing, guarantees or placeholder copy in the content sources; engagement wording is consistent (12-week initial engagement, 4-week periods).
+
 ### Checks
 
 On the production build of 24 September 2026 (`NEXT_DIST_DIR=.next-qa npx next build`, served with `npx next start -p 3001`):

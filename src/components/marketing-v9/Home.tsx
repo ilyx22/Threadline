@@ -81,7 +81,7 @@ function Hero() {
           </div>
         </div>
         <div className="v9-hero-scene is-photo">
-          <Image src="/marketing/hero-scene.jpg" alt="The firm's private archive on the left; one thread leaves it, passes through a small press and hangs four finished pieces on a line where four buyers stand looking up at them." width={1282} height={474} priority sizes="(max-width: 991px) 100vw, 58vw" />
+          <Image src="/marketing/hero-scene.jpg" alt="The firm's private archive on the left; one thread leaves it, passes through a small press and hangs four finished pieces on a line where four buyers stand looking up at them." width={1262} height={468} priority sizes="(max-width: 991px) 100vw, 58vw" />
         </div>
       </div>
     </section>

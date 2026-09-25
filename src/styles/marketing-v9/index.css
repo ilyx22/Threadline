@@ -788,3 +788,33 @@
   .wf-row-obj { position: static; transform: none; margin-bottom: 6px; }
   .wf-row-obj .v9-obj { --s: 72px; }
 }
+
+/* ------------------------------------------------ launch-readiness fixes (25 September 2026) */
+/* reduced motion: the later reveal rules resolve to their finished state, like the original ones */
+@media (prefers-reduced-motion: reduce) {
+  [data-js] [data-scene]:not([data-seen]) :is(.v9-band-plate, .v9-tools li, .v9-encounters li, .v9-frieze-captions li, .pb-hero-map li, .v9-reveal, .v9-capsule) { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .v9-thread-path { stroke-dashoffset: 0 !important; }
+  .v9-thread-knot { opacity: 1 !important; }
+}
+/* playbook: the chapter grid never lets a wide control push the page (chapter 8's select did at 1024, 768 and 390) */
+.pb-chapter-copy, .pb-chapter-tool { min-width: 0; }
+.pb-expect-form select, .pb-expect-form input { width: 100%; max-width: 100%; min-width: 0; box-sizing: border-box; }
+@media (max-width: 1199px) { .pb-expect-form { grid-template-columns: 1fr; } }
+@media (max-width: 991px) { .pb-chapter-grid { grid-template-columns: minmax(0, 1fr); } }
+/* phones: the station controls and the chapter rail fit the viewport */
+@media (max-width: 599px) {
+  .hw-arrow { display: none; }
+  .hw-dots { gap: 4px; }
+  .tl-public.v9 .hw-dot { width: 44px; height: 44px; }
+  .pb-rail { flex-wrap: wrap; gap: 10px 16px; padding: 10px 12px; }
+  .pb-rail-marks { display: grid; grid-template-columns: repeat(5, 36px); gap: 6px; justify-content: center; }
+  .pb-rail-mark { width: 36px; height: 36px; font-size: 12px; }
+}
+/* the calculator's scenario heading wraps instead of truncating mid-sentence (shared Card truncates by default) */
+.tl-public.v9 .ap-form .truncate { white-space: normal; overflow: visible; text-overflow: clip; }
+/* tap targets: the nav pill and the phone chapter marks reach 44px */
+.tl-public.v9 .v5-nav .v5-btn.is-sm { min-height: 44px; }
+@media (max-width: 599px) {
+  .pb-rail-marks { grid-template-columns: repeat(5, 44px); }
+  .pb-rail-mark { width: 44px; height: 44px; font-size: 13px; }
+}

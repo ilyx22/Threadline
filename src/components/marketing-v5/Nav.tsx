@@ -43,7 +43,7 @@ export default function Nav() {
               </Link>
             );
           })}
-          <Link href={nav.signIn.href} className="v5-nav-link is-quiet">
+          <Link href={nav.signIn.href} className="v5-nav-link is-quiet" prefetch={false}>
             {nav.signIn.label}
           </Link>
         </nav>
@@ -65,7 +65,7 @@ export default function Nav() {
               {l.label}
             </Link>
           ))}
-          <Link href={nav.signIn.href} className="v5-drawer-link is-quiet">
+          <Link href={nav.signIn.href} className="v5-drawer-link is-quiet" prefetch={false}>
             Client sign in
           </Link>
         </nav>
