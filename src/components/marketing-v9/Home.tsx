@@ -324,7 +324,7 @@ function Fit() {
     <section id="fit" className="v9-fit" data-scene aria-labelledby="fit-title">
       <div className="v9-wrap">
         <Head center eyebrow={fit.eyebrow} title={fit.headline} body={fit.body} id="fit-title" />
-        <FitTable good={fit.good} bad={fit.bad} />
+        <FitTable good={fit.good} bad={fit.bad} tinted />
         <p className="v9-more is-center">
           <Link href={fit.more.href} className="v9-link">
             {fit.more.label}

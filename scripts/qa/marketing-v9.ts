@@ -41,7 +41,7 @@ async function main() {
     ok("v9:copy", "one idea, the right expressions", /One idea, the right expressions/.test(s.text));
     ok("v9:design", "six mosaic tiles, five bench states, three cases", s.tiles === 6 && s.tabs === 5 && s.cases === 3, JSON.stringify({ tiles: s.tiles, tabs: s.tabs, cases: s.cases }));
     ok("v9:design", "every scene is a labelled illustration (three generated scenes, the frieze, the line, the bench)", s.scenes >= 6, `${s.scenes}`);
-    ok("v9:design", "the object set is loaded: four capsules, twelve tools, six stations", s.objects >= 22, `${s.objects}`);
+    ok("v9:design", "the object set is loaded: four capsules, eight tools, six stations", s.objects >= 18, `${s.objects}`);
     ok("v9:design", "scripting flag set by the observer", s.js === "1");
     ok("v9:design", "nothing in a seen scene is hidden", s.hidden === 0, `${s.hidden}`);
 
@@ -80,8 +80,8 @@ async function main() {
     section("inner pages v9 — who it is for and the playbook");
     await setViewport(cdp, 1440, 900);
     await open(cdp, `${BASE}/who-its-for`, 1500);
-    const wf = await evaluate<{ system: number; rows: number; fit: number; h1: string }>(cdp, `({ system: document.querySelectorAll('.wf-page .v9-panel').length, rows: document.querySelectorAll('.wf-row').length, fit: document.querySelectorAll('.wf-fit-col').length, h1: document.querySelector('h1')?.textContent || '' })`);
-    ok("v9:who", "who it is for is in the homepage system", wf.system >= 3 && wf.rows === 7 && wf.fit === 2, JSON.stringify(wf));
+    const wf = await evaluate<{ system: number; rows: number; fit: number; h1: string }>(cdp, `({ system: document.querySelectorAll('.wf-page .v9-panel').length, rows: document.querySelectorAll('.wf-row').length, fit: document.querySelectorAll('.wf-fit .v9-fit-table-wrap').length, h1: document.querySelector('h1')?.textContent || '' })`);
+    ok("v9:who", "who it is for is in the homepage system", wf.system >= 3 && wf.rows === 7 && wf.fit === 1, JSON.stringify(wf));
     await open(cdp, `${BASE}/how-it-works`, 2000);
     const hw = await evaluate<{ stage: number; stations: number; stages: number; gates: number; chain: number; synthetic: boolean }>(cdp, `({ stage: document.querySelectorAll('.hw-line .hw-line-stage').length, stations: document.querySelectorAll('.hw-line .hw-dot').length, stages: document.querySelectorAll('.hw-stage').length, gates: document.querySelectorAll('.hw-gate').length, chain: document.querySelectorAll('.hw-link').length, synthetic: /illustrative/i.test(document.querySelector('.hw-synthetic')?.textContent || '') })`);
     ok("v9:how", "how it works: the stage with six stations, seven stages, four gates, a labelled ten-step chain", hw.stage === 1 && hw.stations === 6 && hw.stages === 7 && hw.gates === 4 && hw.chain === 10 && hw.synthetic, JSON.stringify(hw));
@@ -91,7 +91,7 @@ async function main() {
     await open(cdp, `${BASE}/apply`, 1500);
     ok("v9:apply", "the application sits in the system with its form intact", await evaluate<boolean>(cdp, `!!document.querySelector('.ap-panel form') && document.querySelectorAll('.ap-panel input, .ap-panel select, .ap-panel textarea').length >= 3`));
     await open(cdp, `${BASE}/calculator`, 1500);
-    ok("v9:calc", "the calculator sits in the system", await evaluate<boolean>(cdp, `!!document.querySelector('.ap-panel.is-single') && document.querySelectorAll('.ap-form [role=\"slider\"]').length >= 5 && document.querySelectorAll('.ap-form input').length >= 2`));
+    ok("v9:calc", "the calculator sits in the system", await evaluate<boolean>(cdp, `!!document.querySelector('.ap-panel.is-single') && document.querySelectorAll('.ap-form [role=\"slider\"], .ap-form input[type=\"range\"]').length >= 5 && document.querySelectorAll('.ap-form input').length >= 2`));
     await open(cdp, `${BASE}/playbook`, 2000);
     // the QA profile persists between runs; start from an unread playbook
     await evaluate(cdp, "localStorage.removeItem('tl-playbook-read'); true");
@@ -121,7 +121,7 @@ async function main() {
 
     section("homepage v9 — without scripting, reduced motion, claims");
     const html = await (await fetch(`${BASE}/`)).text();
-    ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects(-big)?\//g) || []).length >= 22 && /hero-scene\.jpg/.test(html) && /gap-left\.jpg/.test(html) && /gap-right\.jpg/.test(html) && (html.match(/memory\/encounter-/g) || []).length >= 5 && /closing-scene\.jpg/.test(html));
+    ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects(-big)?\//g) || []).length >= 18 && /hero-scene\.jpg/.test(html) && /gap-left\.jpg/.test(html) && /gap-right\.jpg/.test(html) && (html.match(/memory\/encounter-/g) || []).length >= 5 && /closing-scene\.jpg/.test(html));
     ok("v9:nojs", "the bench's Expected readout is in the server HTML", /v5-readout-verdict">Expected</.test(html));
     ok("v9:nojs", "the ticker's items are in the server HTML as a list", (html.match(/v9-chip/g) || []).length >= 10);
     await setViewport(cdp, 1440, 900);

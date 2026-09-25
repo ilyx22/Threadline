@@ -38,9 +38,9 @@ export default function StationLine() {
   };
 
   return (
-    <div className="hw-line-stage" data-station={station}>
+    <div className="hw-line-stage" data-station={station} data-half={station < 3 ? 0 : 1}>
       <div ref={scroller} className="hw-stage-scroll">
-        <div className="hw-stage-art" style={{ ["--x" as string]: `${STATION_X[station] * 100}%` }}>
+        <div className="hw-stage-art" style={{ ["--x" as string]: `${STATION_X[station] * 100}%`, ["--hx" as string]: `${(STATION_X[station] * 2 - (station < 3 ? 0 : 1)) * 100}%` }}>
           <div className="hw-stage-halves">
             <Image src="/marketing/howitworks-line-left.jpg" alt="Stations one to three: a lamp over sorted note cards, a spool being wound on a hand winder, and a press with a written sheet, a small screen and a stapled document coming out of it, with the operator behind it." width={1376} height={768} sizes="(max-width: 991px) 700px, 620px" loading="eager" />
             <Image src="/marketing/howitworks-line-right.jpg" alt="Stations four to six: two doorways with a pegged line running in, a reading desk with three measuring jars and signal cards, and a low bench where one block is lifted out and a mint block waits." width={1376} height={768} sizes="(max-width: 991px) 700px, 620px" loading="eager" />
@@ -79,7 +79,10 @@ export default function StationLine() {
       <ol className="hw-captions">
         {w.stations.map((s, i) => (
           <li key={s.key} className={i === station ? "is-on" : undefined} aria-current={i === station ? "step" : undefined}>
-            <span className="v9-tag">{String(i + 1).padStart(2, "0")}</span>
+            <span className="v9-tag">
+              {String(i + 1).padStart(2, "0")}
+              <span className="hw-caption-of"> of 06</span>
+            </span>
             <strong>{s.title}</strong>
             <em>{s.object}</em>
             <p>{s.plain}</p>

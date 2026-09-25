@@ -25,7 +25,7 @@ export default function CalculatorPage() {
             </h1>
             <p className="v9-lead">{CALCULATOR.lead}</p>
           </header>
-          <div className="ap-form v9-tile is-paper">
+          <div className="ap-form calc-wrap">
             <h2 className="v9-visually-hidden">Your figures and what they cost</h2>
             <CalculatorClient />
           </div>

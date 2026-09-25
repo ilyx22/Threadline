@@ -117,3 +117,14 @@ Uses the same panel and wordmark rules; inherits the width change.
 | "The menu in the top right clips the left side of the phone and looks crappy" | phone | The menu is a full-width white sheet under the bar: three numbered serif links (the current page in blue), Client sign in, and the blue button, with 20px gutters. The nav row itself has 16px gutters and the wordmark does not wrap, so nothing is pushed off the left edge at 360 or 390px. Checked open at both widths on the production build |
 | "Increase the logo and boldness by 20% on PC too" | desktop | Wordmark 21.5px at weight 700, mark 35px with a 2.2 stroke (the phone keeps 15.5px / 24px, weight 600) |
 | Live hydration error on the Playbook (found by the launch audit) | everywhere | The expectation card's "Read on" date was computed at render, so the server in UTC and a phone near midnight disagreed on the day. The date is now set after mount |
+
+## Third pass (26 September 2026): the next notes
+
+| Note | Where it applies | What changed |
+| --- | --- | --- |
+| "The fit table on the main page isn't colour coded like the rest" | everywhere | The homepage table now uses the same sky and peach column tints as Who it is for |
+| "Make the 1 to 6 work on How it works (it doesn't work on phone)" | phone | The two half-renders were stacked, so the dots scrolled nothing. Now one half shows at a time (stations 1 to 3 on the left half, 4 to 6 on the right), the numbered marker sits on the chosen station, the dots sit above the picture, and only the chosen caption shows with "0N of 06". All six captions stay in the HTML without JavaScript |
+| "Number 10 touches the bottom of its box in the chapter picker" | everywhere | The rail marks use line-height 1 with a 1px bottom nudge, so every number is centred |
+| "Size-optimise How it works, Who it is for and the Playbook for phone" | phone | Section gaps 48px instead of 72 to 110; stage, gate and chain tiles tighter; the seven profile rows are object-left rows (64px object, copy beside it); the chapter map tiles smaller (52px objects); chapter heads, idea and do-today cards, tool panels and crate tiles tighter. Page heights at 390px: How it works 8,961 to 7,588, Who it is for 6,222 to 4,809, Playbook 24,279 to 21,938 |
+| "Cost of the status quo: same fonts and styles as the rest, and optimise for phone" | everywhere | The calculator is rebuilt in the site's system: a paper tile of range inputs with serif values, a night tile with the total in butter and two gold bars, sky and peach tiles for the two figures, a mint tile for the scenario, the assumption and the notice as plain notes, the blue button. Two columns on desktop, one on phones with 18px tile padding. Same arithmetic and copy |
+| Overflow at 320px (found by the suite) | phone | The bleeding hero and gate scenes use 16px negative margins under 380px to match the panel padding |
