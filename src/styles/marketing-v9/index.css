@@ -817,3 +817,94 @@
   .pb-rail-marks { grid-template-columns: repeat(5, 44px); }
   .pb-rail-mark { width: 44px; height: 44px; font-size: 13px; }
 }
+
+/* ================================================================ phone pass (25 September 2026, DEC-036)
+   Owner: "the phone is too narrow, some stuff hard to read". Phones only (759px and under); desktop and
+   tablet are untouched. Four moves: wider content (panels lose their side inset, gutters and paddings
+   shrink), larger and darker small type, tall object tiles become rows, and the three panoramas stop
+   being sideways scrollers (encounters stack, station halves stack, the hero is cropped to a taller frame). */
+@media (max-width: 759px) {
+  /* 1. width: 310px of copy becomes 350px inside panels and 358px outside them */
+  .tl-public.v9 { --v9-inset: 0px; --v9-r: 28px; }
+  .v9-wrap { padding: 0 16px; }
+  .v9-panel { padding: 40px 20px; border-radius: var(--v9-r); }
+  .v9-hero-panel { padding-bottom: 0; }
+  .v9-hero-copy { max-width: none; }
+  .v9-head { max-width: none; }
+  .v9-band.is-photo.is-contained { padding: 0 16px 120px; }
+  .v9-bench-tile { padding: 20px 18px 18px; }
+  .v9-capsule { padding: 12px 14px; }
+  .wf-row.v9-tile { padding: 20px 18px 22px; }
+
+  /* 2. type: body a touch smaller and looser so lines carry about 40 characters; labels larger and darker */
+  .v9-h1 { font-size: 2.55rem; line-height: 1; }
+  .v9-h2 { font-size: 2rem; line-height: 1.06; }
+  .v9-h3 { font-size: 1.4rem; }
+  .v9-lead { font-size: 17.5px; line-height: 1.6; margin-top: 20px; }
+  .v9-body { font-size: 17px; line-height: 1.6; }
+  .v9-eyebrow { font-size: 1.15rem; margin-bottom: 12px; }
+  .v9-tag { font-size: 12.5px; color: var(--v9-ink-soft); }
+  .hw-captions .v9-tag, .v9-head.is-light .v9-tag, .v9-tile.is-night .v9-tag, .v9-panel.is-night .v9-tag { color: var(--v5-gold); }
+  .v9-tools li span { font-size: 13px; }
+  .v9-encounters li span:not(.v9-tag):not(.v9-encounter-art), .v9-frieze-captions li span:not(.v9-tag) { font-size: 14.5px; max-width: none; }
+  .v9-mosaic-text p { font-size: 15px; }
+  .v9-capsule-text span { font-size: 14.5px; }
+  .v9-fit-list li { font-size: 16.5px; }
+  .hw-captions p { font-size: 14.5px; }
+  .hw-captions em { font-size: 15px; }
+  .hw-who { font-size: 12.5px; }
+  .pb-stamp { font-size: 12.5px; }
+  .pb-encounter-piece { font-size: 12.5px; }
+  .tl-public.v9 .tl-tab-idx, .tl-public.v9 .tl-chamber-index { font-size: 11.5px; }
+  .tl-public .v5-tag { font-size: 12px; }
+  .tl-public .v5-footer-small { font-size: 14px; color: rgba(251, 246, 236, 0.62); }
+  .tl-public .v5-footer-line { font-size: 17px; }
+
+  /* 3. the hero scene: a taller crop that keeps the press, the line and the buyers at a readable size */
+  .v9-hero-scene.is-photo { aspect-ratio: 4 / 3; margin: 24px -20px -6px; overflow: hidden; border-radius: 0; }
+  .v9-hero-scene.is-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 62% 100%; }
+  .wf-gate.is-photo { aspect-ratio: 2 / 1; margin: 24px -20px 0; overflow: hidden; }
+  .wf-gate.is-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+
+  /* 4. the five encounters: five rows instead of a sideways strip that showed two */
+  .v9-frieze.is-tiles { overflow: visible; padding-bottom: 0; }
+  .v9-frieze.is-tiles .v9-frieze-scroll { min-width: 0; }
+  .v9-encounters { grid-template-columns: 1fr; gap: 10px; }
+  .v9-encounters li { display: grid; grid-template-columns: 88px minmax(0, 1fr); grid-template-rows: auto auto auto; column-gap: 14px; row-gap: 2px; align-items: center; text-align: left; padding: 10px 14px 10px 10px; background: #eef4fa; border-radius: 18px; }
+  .v9-encounters li span.v9-encounter-art { grid-row: 1 / 4; grid-column: 1; width: 88px; max-width: none; margin: 0; border-radius: 14px; }
+  .v9-encounters li .v9-tag { grid-column: 2; grid-row: 1; align-self: end; }
+  .v9-encounters li strong { grid-column: 2; grid-row: 2; }
+  .v9-encounters li span:not(.v9-tag):not(.v9-encounter-art) { grid-column: 2; grid-row: 3; align-self: start; }
+  .v9-thread-line { display: none; }
+
+  /* 5. the six stations: object beside the copy, six short rows instead of six tall tiles */
+  .v9-mosaic { gap: 10px; margin-top: 32px; }
+  .v9-mosaic-tile, .v9-mosaic-tile:nth-child(2n), .v9-mosaic-tile:nth-child(3), .v9-mosaic-tile:nth-child(4) { grid-column: span 12; min-height: 0; display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; align-items: center; padding: 16px 18px 16px 14px; }
+  .v9-mosaic-art, .v9-mosaic-art.is-obj, .v9-mosaic-tile.is-wide-tile .v9-mosaic-art { position: static; inset: auto; width: 96px; height: 96px; }
+  .v9-mosaic-art.is-obj .v9-obj { width: 96px; }
+  .v9-mosaic-text, .v9-mosaic-tile.is-wide-tile .v9-mosaic-text { position: static; width: auto; gap: 4px; }
+
+  /* 6. the two tool tiles: smaller objects so the tiles are half as tall */
+  .v9-burden-tiles { gap: 14px; margin-top: 32px; }
+  .v9-burden-tiles .v9-tile { min-height: 0; }
+  .v9-tools { gap: 12px 8px; }
+  .v9-tools li .v9-obj { width: 84px; }
+
+  /* 7. lists that were two 143px columns */
+  .v9-fit-grid.is-two { grid-template-columns: 1fr; gap: 20px; }
+
+  /* 8. the station line: both halves stacked at full width, no marker (the lit caption and the pressed dot carry the state) */
+  .hw-stage-scroll { overflow: visible; border-radius: 0; }
+  .hw-stage-art { min-width: 0; }
+  .hw-stage-halves { grid-template-columns: 1fr; min-width: 0; gap: 10px; }
+  .hw-stage-marker { display: none; }
+  .hw-line-stage { gap: 18px; margin-top: 28px; }
+}
+@media (max-width: 599px) {
+  /* the interactive bench: the drawn labels are 4px tall at this width, so they go and the panel text carries them */
+  .v5-bench-stage svg text { display: none; }
+}
+@media (max-width: 379px) {
+  .v9-panel { padding: 36px 16px; }
+  .v9-h1 { font-size: 2.3rem; }
+}

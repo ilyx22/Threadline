@@ -223,6 +223,8 @@ Removed in the review pass: `Expressions.tsx`, `art/ExpressionsArt.tsx`, `art/Mo
 - The comparison abacus turns its column headings vertical below 600px.
 - Nav links move into a drawer below 900px; every control is at least 44px.
 
+**Phone pass (25 September 2026, DEC-036).** After the freeze, the owner reopened the phone experience ("too narrow, some stuff hard to read"). The audit and every fix are in `docs/site/PHONE_AUDIT_2026-09-25.md`; the rules sit at the end of `src/styles/marketing-v9/index.css` under `max-width: 759px` (plus one rule under 599px for the bench labels). Desktop and tablet are untouched. The public wordmark is now the product identity from `src/components/brand/logo.tsx` (thread mark plus tracked uppercase name), 20% larger and heavier than the product default; the old serif wordmark with the drawn thread is gone.
+
 ## Motion dependencies
 
 None added. CSS keyframes and transitions plus one `IntersectionObserver` component (`Motion.tsx`) and one in the workshop stage that pauses its loops off screen. No animation library; no raster assets; no video.
