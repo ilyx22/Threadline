@@ -274,7 +274,11 @@ export function ExpectationCard() {
   const [measure, setMeasure] = React.useState<string>(EXPECTATION.measures[0]);
   const [band, setBand] = React.useState(3);
   const [reason, setReason] = React.useState<string>(EXPECTATION.reasons[0]);
-  const due = new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-GB", { day: "numeric", month: "long" });
+  /* the read date is the reader's, so it is set after mount: the server (UTC) and a phone near midnight disagree on the day, which showed as a hydration error on the live site */
+  const [due, setDue] = React.useState("");
+  React.useEffect(() => {
+    setDue(new Date(Date.now() + 14 * 86400000).toLocaleDateString("en-GB", { day: "numeric", month: "long" }));
+  }, []);
   return (
     <div className="pb-widget pb-expect">
       <p className="pb-hint">Write the card before the piece goes out.</p>
@@ -313,7 +317,7 @@ export function ExpectationCard() {
         <p>
           <strong>{piece.trim() || "This piece"}</strong> should earn {band === 0 ? "no" : band === 1 ? "one" : band === 2 ? "a few" : band === 3 ? "several" : band === 4 ? "many" : "a lot of"} {measure}, because {reason}.
         </p>
-        <span className="pb-stamp">Read on {due}</span>
+        <span className="pb-stamp">{due ? `Read on ${due}` : "Read in 14 days"}</span>
       </div>
       <p className="v9-note">{EXPECTATION.note}</p>
     </div>
