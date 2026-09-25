@@ -7,6 +7,7 @@ import Motion from "@/components/marketing-v5/Motion";
 import Bench from "@/components/marketing-v5/Bench";
 import { Obj, type ObjName } from "./Obj";
 import { ExpressionsArt } from "./ExpressionsArt";
+import { FitTable } from "./FitTable";
 
 /**
  * The homepage, 24 September 2026 (second pass). The composition the owner
@@ -204,21 +205,7 @@ function Burden() {
           </ol>
         </div>
         <div className="v9-burden-tiles">
-          <div className="v9-tile is-sky v9-bench-tile v9-reveal">
-            <ul className="v9-tools is-four" aria-label="What you do">
-              {YOU.map((y, i) => (
-                <li key={y.verb} style={{ ["--i" as string]: i }}>
-                  <Obj name={y.obj} size={120} />
-                  <span>{y.verb}</span>
-                </li>
-              ))}
-            </ul>
-            <p className="v9-tile-caption">
-              <strong>What you do</strong>
-              <span>Talk, record when useful, approve, sell.</span>
-            </p>
-          </div>
-          <div className="v9-tile is-night v9-bench-tile v9-reveal" style={{ ["--d" as string]: "120ms" }}>
+          <div className="v9-tile is-night v9-bench-tile is-alone v9-reveal">
             <ul className="v9-tools is-eight is-light" aria-label="What Threadline does">
               {THREADLINE_JOBS.map((j, i) => (
                 <li key={j.job} style={{ ["--i" as string]: i }}>
@@ -306,6 +293,13 @@ function Learning() {
       <div className="v9-panel v9-learning-panel">
         <div className="v9-learning-grid">
           <Head eyebrow={learning.eyebrow} title={learning.headline} body={learning.body} id="learning-title" />
+          <ol className="v9-learning-steps v9-reveal" aria-label="The five steps">
+            {learning.steps.map((st, i) => (
+              <li key={st.step} style={{ ["--i" as string]: i }}>
+                <strong>{st.step}</strong> {st.note}
+              </li>
+            ))}
+          </ol>
           <div className="v9-learning-scene v9-reveal" style={{ ["--d" as string]: "120ms" }}>
             <Image src="/marketing/learning-scene.jpg" alt="A work bench. A printed sheet stands on an easel above a row of five wooden blocks; an inspector has lifted one block out and a fresh mint-green block waits beside the gap. Three measuring jars stand to the right, each with a marigold marker clipped at a different height." width={1310} height={453} sizes="(max-width: 991px) 100vw, 560px" loading="eager" />
           </div>
@@ -330,24 +324,7 @@ function Fit() {
     <section id="fit" className="v9-fit" data-scene aria-labelledby="fit-title">
       <div className="v9-wrap">
         <Head center eyebrow={fit.eyebrow} title={fit.headline} body={fit.body} id="fit-title" />
-        <div className="v9-fit-grid is-two v9-reveal">
-          <div className="v9-fit-col">
-            <p className="v9-tag">{fit.good.label}</p>
-            <ul className="v9-fit-list is-good">
-              {fit.good.items.map((g) => (
-                <li key={g}>{g}</li>
-              ))}
-            </ul>
-          </div>
-          <div className="v9-fit-col">
-            <p className="v9-tag">{fit.bad.label}</p>
-            <ul className="v9-fit-list is-bad">
-              {fit.bad.items.map((b) => (
-                <li key={b}>{b}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <FitTable good={fit.good} bad={fit.bad} />
         <p className="v9-more is-center">
           <Link href={fit.more.href} className="v9-link">
             {fit.more.label}

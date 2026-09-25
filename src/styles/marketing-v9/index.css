@@ -908,3 +908,76 @@
   .v9-panel { padding: 36px 16px; }
   .v9-h1 { font-size: 2.3rem; }
 }
+
+/* ============================================================ second phone pass (26 September 2026, DEC-036 amended)
+   Owner's itemised notes on the phone build; three of them apply everywhere (the duplicate "What you do" tile is gone,
+   the fit is one table, the site has an intro). */
+/* the eight jobs stand alone in one wide tile */
+.v9-burden-tiles { grid-template-columns: 1fr; }
+.v9-burden-tiles .v9-tile.is-alone { min-height: 0; }
+.v9-bench-tile.is-alone .v9-tools { max-width: none; }
+@media (min-width: 992px) { .v9-bench-tile.is-alone .v9-tools.is-eight { grid-template-columns: repeat(8, minmax(0, 1fr)); } }
+/* the fit table */
+.v9-fit-table-wrap { margin: 40px auto 0; max-width: 960px; background: #fff; border-radius: 24px; overflow: hidden; border: 1px solid var(--v9-line); }
+.v9-fit-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.v9-fit-table th { padding: 18px 22px 14px; text-align: left; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--v9-ink-soft); border-bottom: 1px solid var(--v9-line); vertical-align: middle; }
+.v9-fit-table th + th, .v9-fit-table td + td { border-left: 1px solid var(--v9-line); }
+.v9-fit-table td { padding: 14px 22px; font-size: 16px; line-height: 1.45; color: var(--v9-ink); border-top: 1px solid var(--v9-line); vertical-align: top; }
+.v9-fit-table tbody tr:first-child td { border-top: 0; }
+.v9-fit-table th.is-good { color: var(--v9-action); }
+.v9-fit-table th.is-bad { color: var(--v5-coral-deep, #c2543a); }
+.v9-fit-mark { display: inline-block; width: 12px; height: 12px; margin: 0 8px 1px 0; border-radius: 50%; vertical-align: middle; }
+.v9-fit-mark.is-good { background: var(--v9-action); }
+.v9-fit-mark.is-bad { border: 2px solid var(--v5-coral-deep, #c2543a); }
+.v9-fit-table-wrap.is-tinted th.is-good, .v9-fit-table-wrap.is-tinted td.is-good { background: var(--v9-sky); }
+.v9-fit-table-wrap.is-tinted th.is-bad, .v9-fit-table-wrap.is-tinted td.is-bad { background: var(--v9-peach); }
+.v9-fit-table-wrap.is-tinted { border: 0; }
+.v9-fit-table-wrap.is-tinted th, .v9-fit-table-wrap.is-tinted td { border-color: rgba(23, 35, 58, 0.12); }
+/* the learning digest lives only on phones */
+.v9-learning-steps { display: none; }
+/* the intro */
+.tl-intro { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; background: var(--v9-canvas); pointer-events: none; animation: tl-intro-out 420ms ease 1150ms both; }
+.tl-intro-lockup { display: grid; justify-items: center; gap: 14px; color: var(--v9-ink); }
+.tl-intro-mark { color: var(--v5-gold); }
+.tl-intro-mark path { stroke-dasharray: 44; stroke-dashoffset: 44; animation: tl-intro-draw 700ms cubic-bezier(0.2, 0.7, 0.2, 1) 120ms forwards; }
+.tl-intro-mark circle { opacity: 0; animation: tl-intro-pop 260ms ease forwards; }
+.tl-intro-mark circle:first-of-type { animation-delay: 420ms; }
+.tl-intro-mark circle:last-of-type { animation-delay: 760ms; }
+.tl-intro-word { font-family: var(--v9-sans); font-size: 18px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; opacity: 0; transform: translateY(6px); animation: tl-intro-word 420ms ease 560ms forwards; }
+@keyframes tl-intro-draw { to { stroke-dashoffset: 0; } }
+@keyframes tl-intro-pop { from { opacity: 0; transform: scale(0.4); transform-box: fill-box; transform-origin: center; } to { opacity: 1; transform: none; } }
+@keyframes tl-intro-word { to { opacity: 1; transform: none; } }
+@keyframes tl-intro-out { to { opacity: 0; visibility: hidden; } }
+[data-intro-seen] .tl-intro { display: none; }
+@media (prefers-reduced-motion: reduce) { .tl-intro { display: none; } }
+/* phone notes */
+@media (max-width: 759px) {
+  /* the hero: less zoom than the first pass, most of the scene kept */
+  .v9-hero-scene.is-photo { aspect-ratio: 16 / 9; }
+  .v9-hero-scene.is-photo img { object-position: 66% 100%; }
+  /* the space under the two rooms matches the other sections */
+  .v9-band.is-photo.is-contained { padding-bottom: 28px; }
+  .v9-memory { margin-top: 0; }
+  /* the route reads as one line that wraps, with its arrows */
+  .v9-route { flex-direction: row; flex-wrap: wrap; align-items: baseline; gap: 4px 0; font-size: 1.2rem; margin-top: 28px; }
+  .v9-route i { display: inline; margin: 0 8px; }
+  /* the learning copy as five lines */
+  .v9-learning-panel .v9-head .v9-body { display: none; }
+  .v9-learning-steps { display: grid; gap: 8px; margin: 18px 0 0; padding: 0 0 0 18px; font-size: 16.5px; line-height: 1.45; color: var(--v9-ink-soft); }
+  .v9-learning-steps li { padding-left: 4px; }
+  .v9-learning-steps strong { color: var(--v9-ink); font-weight: 600; }
+  /* the closing panel: the buttons sit close to the line */
+  .v9-closing-copy { padding-bottom: 0; }
+  .v9-closing-scene.is-photo { margin-top: 6px; }
+  .v9-closing-panel.is-photo { padding-bottom: 0; }
+  /* the fit table on a phone */
+  .v9-fit-table-wrap { margin-top: 28px; border-radius: 18px; }
+  .v9-fit-table th { padding: 14px 14px 10px; font-size: 11px; }
+  .v9-fit-table td { padding: 11px 14px; font-size: 15px; line-height: 1.4; }
+}
+@media (max-width: 599px) {
+  /* the bench drawing at 1.7 times: the stage slides to the jars or the blocks with each step */
+  .v5-bench-stage { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; border-radius: 18px; }
+  .v5-bench-stage::-webkit-scrollbar { display: none; }
+  .v5-bench-stage svg.v5-art { width: 170%; min-width: 170%; height: auto; }
+}

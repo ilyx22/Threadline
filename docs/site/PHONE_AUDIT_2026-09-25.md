@@ -100,3 +100,18 @@ Uses the same panel and wordmark rules; inherits the width change.
 - Full-page shots at 390px after the change, in `scripts/qa/.shots/phone-after/`.
 - `qa:marketing` and the launch audit at 390 and 430: no horizontal overflow, no clipped text, no unnamed controls.
 - Desktop (1440) and tablet (1024) shots unchanged, since every rule sits under `max-width: 759px`.
+
+## Second pass (26 September 2026): the owner's notes on the first pass
+
+| Note | Where it applies | What changed |
+| --- | --- | --- |
+| "You didn't need to zoom the hero so much" | phone | The crop is 16:9 instead of 4:3, anchored a little further right, so the archive wall, the press, the line and the buyers are all in frame |
+| "Under what the market sees, decrease the blank space" | phone | The band's bottom padding drops from 120px to 28px, and the memory panel no longer pulls up by 40px, so the gap matches the other sections |
+| "What you do is repeated twice; remove the second" | everywhere | The four-object "What you do" tile is gone (the four capsules above already say it). The eight Threadline jobs stand alone in one wide tile: one row of eight on desktop, two columns on phones |
+| "Useful encounter, recognised, remembered… is five separate lines" | phone | The route is one wrapping line with its arrows again (three lines at 390px) |
+| "Expected, actual, why, change, retest: the copy is long, bullet it" | phone | Under 760px the paragraph is replaced by five numbered lines (`learning.steps` in `src/content/home.ts`); desktop keeps the paragraph |
+| "The animated tool is too small on the phone, zoom in" | phone (under 600px) | The bench drawing renders at 170% width inside a stage that slides: to the jars for Expected, Actual and Retest, to the blocks for Why and Change. The drawn labels stay hidden; the panel text carries them |
+| "A good fit vs not a fit: a neater table" | everywhere | Both lists are one table (`FitTable`), one pair per row, with the blue dot and the coral ring in the header. Who it is for uses the same table with the sky and peach column tints it had before |
+| "Too much space between the buttons and the clothing-line picture" | phone | The closing copy's bottom padding is removed on phones and the scene sits 6px under the buttons |
+| "Add a Threadline intro animation on loading the site" | everywhere | `src/components/marketing-v9/Intro.tsx`: the thread mark draws (0.7s), the two nodes pop, the wordmark settles, then the canvas lifts at 1.15s; gone by 1.6s. Plays once per browser session (an inline script marks the document before first paint on later pages), never captures the pointer, is skipped under reduced motion, and is removed from the DOM after its exit animation or at 2.6s, whichever is first. With no JavaScript the CSS still animates it out |
+

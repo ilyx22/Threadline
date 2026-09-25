@@ -180,6 +180,14 @@ export const learning = {
   illustrative: "Illustrative cases. Not client results.", // claim:C-LEARNING-ILLUSTRATIVE
   note: "Inference is labelled as inference. A bad week reads as a bad week. No leads, views or revenue are promised.", // claim:C-NO-PROMISES
   more: { label: "Read how a service period runs", href: links.how },
+  /** The phone digest of `body`: one line per step, shown under 760px in place of the paragraph. */
+  steps: [
+    { step: "Expected.", note: "Written down before the piece goes out." },
+    { step: "Actual.", note: "What happened, read against it." },
+    { step: "Why.", note: "The most likely reason for the gap." },
+    { step: "Change.", note: "One thing, not everything." },
+    { step: "Retest.", note: "The same idea, sent again. A calendar posts; this gets smarter." },
+  ],
 } as const;
 
 export const fit = {

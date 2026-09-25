@@ -59,6 +59,16 @@ export default function Bench() {
     setRunning(true);
   };
 
+  /* phones: the drawing is wider than the screen, so the stage slides to the part each step talks about (jars for the readings, blocks for the fault and the fix) */
+  const stage = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    const el = stage.current;
+    if (!el || el.scrollWidth <= el.clientWidth + 8) return;
+    const blocks = state === 2 || state === 3;
+    const left = blocks ? Math.max(0, el.scrollWidth * 0.34 - el.clientWidth / 2) : el.scrollWidth - el.clientWidth;
+    el.scrollTo({ left, behavior: "smooth" });
+  }, [state]);
+
   const showActual = state >= 1;
   const showWhy = state >= 2;
   const changing = state === 3;
@@ -87,7 +97,7 @@ export default function Bench() {
         </div>
       </div>
 
-      <div className="v5-bench-stage">
+      <div className="v5-bench-stage" ref={stage}>
         <svg viewBox="0 0 900 520" className="v5-art" role="img" aria-label={`The testing bench. The piece sits on five blocks: idea, hook, distribution, audience, destination. Three measuring jars, ${c.gauges.join(", ")}, each with an expected mark. ${state >= 1 ? "The actual level is shown." : ""} ${state >= 2 ? `The ${c.failing} block has tipped.` : ""} ${state >= 3 && applied ? `The ${c.failing} block has been replaced.` : ""} ${retest ? "The jars have been read again." : ""}`}>
           <rect x={0} y={0} width={900} height={520} rx={8} fill={C.mint} />
           {/* the bench */}

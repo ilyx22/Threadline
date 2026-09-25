@@ -4,6 +4,7 @@ import { WHO_ITS_FOR } from "@/content/public-site";
 import { fit } from "@/content/home";
 import Motion from "@/components/marketing-v5/Motion";
 import Image from "next/image";
+import { FitTable } from "./FitTable";
 import { Obj, type ObjName } from "./Obj";
 
 const PROFILE_OBJECTS: ObjName[] = ["folder", "sheet-tick", "ledger", "microphone", "stamp", "press", "crate"];
@@ -85,24 +86,7 @@ export default function WhoItsFor() {
               The fit, in one look.
             </h2>
           </header>
-          <div className="wf-fit-grid">
-            <div className="v9-tile is-sky wf-fit-col v9-reveal">
-              <p className="v9-tag">{fit.good.label}</p>
-              <ul className="v9-fit-list is-good">
-                {fit.good.items.map((g) => (
-                  <li key={g}>{g}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="v9-tile is-peach wf-fit-col v9-reveal" style={{ ["--d" as string]: "120ms" }}>
-              <p className="v9-tag">{fit.bad.label}</p>
-              <ul className="v9-fit-list is-bad">
-                {fit.bad.items.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
+          <FitTable good={fit.good} bad={fit.bad} tinted />
         </div>
       </section>
 
