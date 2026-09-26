@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CheckCircle2, Clock, FileText, LifeBuoy, Mic, Radar, RotateCcw } from "lucide-react";
 import { requireInternal } from "@/lib/auth/guard";
 import { operatorQueue } from "@/lib/data/admin";
+import { unifiedQueue } from "@/lib/ops/queue";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
@@ -13,9 +14,9 @@ export const metadata: Metadata = { title: "Operator queue" };
 
 export default async function QueuePage() {
   await requireInternal("admin.view");
-  const queue = await operatorQueue();
+  const [queue, all] = await Promise.all([operatorQueue(), unifiedQueue()]);
 
-  if (queue.total === 0) {
+  if (queue.total === 0 && all.length === 0) {
     return (
       <div className="space-y-6">
         <header className="max-w-2xl">
@@ -42,6 +43,28 @@ export default async function QueuePage() {
           been waiting.
         </p>
       </header>
+
+      <Card>
+        <CardHeader title="Everything, in order" eyebrow={`${all.length}`} description="Every source of work that needs a person, most urgent first: what it is, why it is here, who owns it and the next action." />
+        <CardBody className="pt-0">
+          <ul className="divide-y divide-line text-[12.5px]">
+            {all.slice(0, 60).map((i, n) => (
+              <li key={`${i.kind}-${n}`} className="flex flex-wrap items-baseline gap-x-3 gap-y-0.5 py-2">
+                <Badge tone={i.severity === 3 ? "negative" : i.severity === 2 ? "warning" : "outline"}>{i.kind}</Badge>
+                <Link href={i.href} className="font-medium text-ink hover:text-accent">
+                  {i.title}
+                </Link>
+                {i.org ? <span className="text-muted">{i.org}</span> : null}
+                <span className="text-ghost">{i.cause}</span>
+                <span className="text-muted">Next: {i.next}</span>
+                <span className="ml-auto text-ghost">
+                  {i.owner ?? "unowned"} · {relativeTime(i.since)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </CardBody>
+      </Card>
 
       <div className="grid gap-6 xl:grid-cols-2">
         {/* Overdue approvals */}
