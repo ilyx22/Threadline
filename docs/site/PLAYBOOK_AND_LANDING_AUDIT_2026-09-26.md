@@ -97,3 +97,16 @@ Done the same day:
 - Landing: the ticker strip, the four capsules, the route line and the learning section's "read more" link are removed; the six stations are one row of six small tiles (three on tablets, two on phones). The apply link under the engagement stays, because it converts. Eleven sections.
 - Playbook: the card to turn now sits inside the idea, so each chapter is three things: the idea (with its question), do this today, and the interactive object.
 - Left alone, on purpose: rebuilding six of the interactive objects as one pattern, and merging chapters 6 and 7, because both mean rewriting content blind. The track record's attribution and the meaning of "conversions", and the two commercial FAQ answers, still need the owner's word.
+
+## 7. After reading the reference playbook (26 September, later)
+
+What the reference does that ours did not: every section is one claim as the title, one line under it, and exactly one interaction with an imperative in the copy. No chapter numbering competing with the content, no idea box, no card, no separate "do today" box. Scrolling carries the reader; the interactions are the buttons.
+
+Applied to ours the same day, in our own words and our own objects:
+
+- Each chapter is now: the object, a small number, the title as the claim, the key idea as one lead line, the interactive object at full width, and one "Do this today" line under it. The idea box, the card to turn and the "do today" box are gone from the page (the card answers stay in the content file).
+- The long scroll is back and the stepper is removed: with one thing per chapter the page reads as a rhythm, and hiding chapters broke it.
+- The hero's four figures count up when seen: 100m+ views, 10,000+ conversions, 10 chapters, 0 vanity metrics. "15 minutes, fully interactive."
+- Two lines the owner suggested were the reference site's own words. The site's clean-room rule (composition and behaviour only, never copy) means they are used in our own words: "Slow on day one. Inevitable by day ninety." on the homepage engagement, and the playbook closing "This playbook is the fifth of the system we can give away. If you run a 7, 8 or 9-figure firm and want the other four-fifths run for you, book a call."
+- The diagnose tool's seven station chips are removed; the panel already names the station.
+- The track record is two figures on one line under the hero. It stays under the hero rather than above it: proof after the promise reads as evidence; proof before the headline reads as a banner and pushes the headline below the fold on phones.

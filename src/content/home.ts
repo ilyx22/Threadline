@@ -211,8 +211,8 @@ export const closing = {
 export const engagement = {
   index: "09",
   eyebrow: "What the engagement looks like",
-  headline: "Twelve weeks. Quiet at first, then it compounds.",
-  body: "Threadline runs in four-week service periods, and the first engagement is three of them. The first is quiet by design. By the third, the system is running on evidence from your own market.", // claim:C-CADENCE
+  headline: "Slow on day one. Inevitable by day ninety.",
+  body: "Three four-week periods. The first is quiet by design. By the third, the system runs on evidence from your own market.", // claim:C-CADENCE
   more: { label: "See if Threadline fits", href: links.apply },
 } as const;
 
@@ -220,10 +220,9 @@ export const engagement = {
 export const proof = {
   eyebrow: "Built by someone who has done it",
   figures: [
-    { n: "100m+", label: "views", note: "reach we know how to get" },
-    { n: "10,000+", label: "conversions", note: "what that reach was for" },
+    { n: "100m+", label: "views" },
+    { n: "10,000+", label: "conversions" },
   ],
-  line: "The founder's own numbers, across his own and client work. Not Threadline client results, which we will show when a client agrees.",
 } as const;
 
 /** The questions a buyer asks before the call. Answers drawn from the site; two are commercial terms the owner must confirm (cost, ownership). */

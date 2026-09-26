@@ -261,14 +261,11 @@ function Proof() {
           <dl className="v9-proof-figures">
             {proof.figures.map((f) => (
               <div key={f.label}>
-                <dt>
-                  <strong>{f.n}</strong> {f.label}
-                </dt>
-                <dd>{f.note}</dd>
+                <dt>{f.n}</dt>
+                <dd>{f.label}</dd>
               </div>
             ))}
           </dl>
-          <p className="v9-proof-line">{proof.line}</p>
         </div>
       </div>
     </section>

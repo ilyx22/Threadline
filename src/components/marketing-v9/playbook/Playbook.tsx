@@ -1,12 +1,12 @@
 import * as React from "react";
 import Link from "next/link";
-import { DIAGNOSTIC, HOME_V3, HOW_IT_WORKS, PLAYBOOK, PLAYBOOK_TOOLS } from "@/content/public-site";
+import { DIAGNOSTIC, HOW_IT_WORKS, PLAYBOOK, PLAYBOOK_TOOLS } from "@/content/public-site";
 import { PLAYBOOK_HERO } from "@/content/playbook";
 import Motion from "@/components/marketing-v5/Motion";
 import { Diagnostic } from "@/components/public/diagnostic";
 import { AcquisitionCalculator } from "@/components/marketing-v5/AcquisitionCalculator";
 import { Obj } from "../Obj";
-import { Stepper } from "./Stepper";
+import { CountUp } from "./CountUp";
 import { CHAPTER_OBJECTS } from "./Chapter";
 import { ProgressRail } from "./Progress";
 import { Chapter } from "./Chapter";
@@ -50,7 +50,9 @@ export default function Playbook() {
             <dl className="pb-facts v9-reveal" style={{ ["--d" as string]: "320ms" }}>
               {h.facts.map(([n, label]) => (
                 <div key={label}>
-                  <dt>{n}</dt>
+                  <dt>
+                    <CountUp value={n} />
+                  </dt>
                   <dd>{label}</dd>
                 </div>
               ))}
@@ -72,11 +74,9 @@ export default function Playbook() {
 
       <ProgressRail />
 
-      <Stepper titles={PLAYBOOK.chapters.map((c) => c.title)}>
-        {PLAYBOOK.chapters.map((_, i) => (
-          <Chapter key={i} index={i} />
-        ))}
-      </Stepper>
+      {PLAYBOOK.chapters.map((_, i) => (
+        <Chapter key={i} index={i} />
+      ))}
 
       <section id="tools" className="pb-tools" data-scene aria-labelledby="tools-title">
         <div className="v9-panel">
@@ -93,7 +93,7 @@ export default function Playbook() {
               <h3 className="v9-h3">{PLAYBOOK_TOOLS.diagnose.title}</h3>
               <p className="v9-body">{PLAYBOOK_TOOLS.diagnose.lead}</p>
             </div>
-            <Diagnostic categories={DIAGNOSTIC.categories} chambers={HOME_V3.factory.chambers} stages={HOW_IT_WORKS.stages} symptoms={DIAGNOSTIC.symptoms} cta={DIAGNOSTIC.cta} />
+            <Diagnostic categories={DIAGNOSTIC.categories} stages={HOW_IT_WORKS.stages} symptoms={DIAGNOSTIC.symptoms} cta={DIAGNOSTIC.cta} />
           </div>
           <div className="pb-tool v9-reveal">
             <div className="pb-tool-head">

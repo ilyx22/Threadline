@@ -2,7 +2,6 @@
 
 import * as React from "react";
 import Link from "next/link";
-import { Chamber } from "@/components/factory/objects";
 
 /**
  * "Where is your authority system breaking?": Threadline's own diagnostic,
@@ -14,12 +13,11 @@ import { Chamber } from "@/components/factory/objects";
  */
 type Category = { key: string; label: string; body: string; chamber: string; stage: string };
 type Stage = { key: string; title: string; body: string };
-type Chamb = { key: string; label: string; founder?: string };
 type Symptom = { title: string; body: string };
 
 const SYMPTOM_FOR: Record<string, number | undefined> = { position: 1, create: 0, distribute: 2, convert: undefined, learn: 3 };
 
-export function Diagnostic({ categories, chambers, stages, symptoms, cta }: { categories: readonly Category[]; chambers: readonly Chamb[]; stages: readonly Stage[]; symptoms: readonly Symptom[]; cta: { label: string; href: string } }) {
+export function Diagnostic({ categories, stages, symptoms, cta }: { categories: readonly Category[]; stages: readonly Stage[]; symptoms: readonly Symptom[]; cta: { label: string; href: string } }) {
   const [sel, setSel] = React.useState(0);
   const cat = categories[sel];
   const stage = stages.find((s) => s.key === cat.stage) ?? stages[0];
@@ -43,11 +41,6 @@ export function Diagnostic({ categories, chambers, stages, symptoms, cta }: { ca
             </span>
             {c.label}
           </button>
-        ))}
-      </div>
-      <div className="tl-diag-rail" aria-hidden>
-        {chambers.map((ch, i) => (
-          <Chamber key={ch.key} index={String(i + 1).padStart(2, "0")} label={ch.label} active={ch.key === cat.chamber} />
         ))}
       </div>
       <div id="diag-panel" role="tabpanel" aria-labelledby={tabId(sel)} className="tl-selector-cards">

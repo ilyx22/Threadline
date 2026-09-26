@@ -47,18 +47,15 @@ function Widget({ slug }: { slug: string }) {
 export function Chapter({ index, standalone = false }: { index: number; standalone?: boolean }) {
   const ch = PLAYBOOK.chapters[index];
   const n = String(index + 1).padStart(2, "0");
-  const wide = ch.slug === "change-one-thing-and-retest";
   return (
-    <section id={`chapter-${index + 1}`} className={`pb-chapter${wide ? " is-wide" : ""}`} data-scene aria-labelledby={`pb-h-${index + 1}`}>
+    <section id={`chapter-${index + 1}`} className="pb-chapter" data-scene aria-labelledby={`pb-h-${index + 1}`}>
       {standalone ? null : <AutoRead slug={ch.slug} target={`chapter-${index + 1}`} />}
       <div className="v9-wrap">
         <header className="pb-chapter-head v9-reveal">
           <div className="pb-chapter-obj">
             <Obj name={CHAPTER_OBJECTS[index]} size={112} />
           </div>
-          <p className="v9-eyebrow">
-            Chapter {n} of {PLAYBOOK.chapters.length}
-          </p>
+          <p className="v9-tag pb-chapter-n">{n}</p>
           {standalone ? (
             <h1 id={`pb-h-${index + 1}`} className="v9-h1">
               {ch.title}
@@ -68,29 +65,15 @@ export function Chapter({ index, standalone = false }: { index: number; standalo
               {ch.title}
             </h2>
           )}
+          <p className="v9-lead">{ch.keyIdea}</p>
         </header>
-        <div className="pb-chapter-grid">
-          <div className="pb-chapter-copy v9-reveal">
-            <div className="pb-idea">
-              <p className="v9-tag">The idea</p>
-              <p>{ch.keyIdea}</p>
-              <details className="pb-turn is-inline">
-                <summary>
-                  <strong>{ch.reveal.prompt}</strong>
-                  <i aria-hidden="true">+</i>
-                </summary>
-                <p>{ch.reveal.answer}</p>
-              </details>
-            </div>
-            <div className="pb-do">
-              <p className="v9-tag">Do this today</p>
-              <p>{ch.practice}</p>
-            </div>
-          </div>
-          <div className={`pb-chapter-tool v9-tile ${TONES[index]} v9-reveal`} style={{ ["--d" as string]: "120ms" }}>
-            <Widget slug={ch.slug} />
-          </div>
+        <div className={`pb-chapter-tool v9-tile ${TONES[index]} v9-reveal`} style={{ ["--d" as string]: "120ms" }}>
+          <Widget slug={ch.slug} />
         </div>
+        <p className="pb-today v9-reveal">
+          <span className="v9-tag">Do this today</span>
+          {ch.practice}
+        </p>
       </div>
     </section>
   );
