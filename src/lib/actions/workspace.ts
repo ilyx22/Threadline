@@ -30,6 +30,7 @@ import {
 } from "@/lib/domain/brand-brain";
 import { parseWith } from "@/lib/db/json";
 import { getStorage, storageProviderName } from "@/lib/storage";
+import { queueProcessingFor } from "@/lib/processing";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import {
   cleanText,
@@ -825,6 +826,7 @@ export async function uploadLibraryAssetAction(
         uploadedById: ctx.user.id,
       },
     });
+    await queueProcessingFor(asset);
 
     await audit(ctx, {
       action: "asset.upload",

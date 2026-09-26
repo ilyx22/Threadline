@@ -22,9 +22,20 @@ export function appEnv(env: Env = process.env): AppEnv {
   return v === "production" || v === "preview" || v === "test" ? v : "development";
 }
 
+/**
+ * Which deployment this is when more than one Vercel project builds the same
+ * branch (INF-05). Exactly one project is the primary: it runs the scheduled
+ * job runner and may cause side effects. Any other project is a mirror: it
+ * serves pages but never runs jobs, writes to the CRM, sends or charges.
+ * Unset means primary, so a single-project setup needs nothing.
+ */
+export function deploymentRole(env: Env = process.env): "primary" | "mirror" {
+  return (env.DEPLOYMENT_ROLE ?? "").trim() === "mirror" ? "mirror" : "primary";
+}
+
 /** True when production-only side effects (email, publishing, CRM writes, billing) may run. */
 export function sideEffectsAllowed(env: Env = process.env): boolean {
-  return appEnv(env) === "production";
+  return appEnv(env) === "production" && deploymentRole(env) === "primary";
 }
 
 export function configReport(env: Env = process.env): { env: AppEnv; issues: ConfigIssue[] } {
@@ -41,6 +52,10 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   else if (deployed && /@(localhost|127\.0\.0\.1|\[::1\])[:/]/.test(db)) add("error", "DATABASE_URL", "Points at a local database on a deployed environment.");
   if (!set(env, "DIRECT_URL")) add(deployed ? "error" : "warning", "DIRECT_URL", "Not set. Migrations need the direct (unpooled) URL.");
   if (e === "preview" && db && db === env.PRODUCTION_DATABASE_URL) add("error", "DATABASE_URL", "Preview shares the production database.");
+  const role = (env.DEPLOYMENT_ROLE ?? "").trim();
+  if (role && role !== "primary" && role !== "mirror") add("error", "DEPLOYMENT_ROLE", 'Must be "primary" or "mirror".');
+  if (role === "mirror" && db && db === env.PRODUCTION_DATABASE_URL) add("error", "DATABASE_URL", "A mirror deployment shares the primary's production database.");
+  if (e === "production" && onVercel && !role) add("warning", "DEPLOYMENT_ROLE", 'Not set. If a second Vercel project builds the same branch, set "primary" on the canonical project and "mirror" on the other, or both run the scheduled jobs.');
 
   // Origin
   if (deployed && !set(env, "NEXT_PUBLIC_APP_URL") && !onVercel) add("error", "NEXT_PUBLIC_APP_URL", "Not set; links in emails and OAuth callbacks would be wrong.");
@@ -64,6 +79,13 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
     for (const k of ["S3_BUCKET", "S3_REGION", "S3_ENDPOINT", "S3_ACCESS_KEY_ID", "S3_SECRET_ACCESS_KEY"]) if (!set(env, k)) add("error", k, "STORAGE_PROVIDER=s3 but this is missing.");
   } else if (onVercel && deployed) {
     add("error", "STORAGE_PROVIDER", "Is local on Vercel, whose filesystem is read-only and not shared: uploads would fail. Use s3 (Cloudflare R2 or S3).");
+  }
+
+  // Media processing (FILE-05)
+  if ((env.PROCESSING_PROVIDER ?? "none") === "webhook") {
+    if (!/^https:\/\//.test(env.PROCESSING_ENDPOINT ?? "")) add("error", "PROCESSING_ENDPOINT", "PROCESSING_PROVIDER=webhook but no https endpoint.");
+    if ((env.PROCESSING_WEBHOOK_SECRET ?? "").length < 16) add("error", "PROCESSING_WEBHOOK_SECRET", "PROCESSING_PROVIDER=webhook but the shared secret is missing or shorter than 16 characters.");
+    if (storage !== "s3") add("error", "PROCESSING_PROVIDER", "Needs STORAGE_PROVIDER=s3: the worker fetches files with a signed storage URL.");
   }
 
   // Rate limiting and client IP

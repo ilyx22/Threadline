@@ -59,6 +59,8 @@ export class MockProvider implements AiProvider {
         return buildBrief(ctx);
       case "report.narrative":
         return buildNarrative(ctx);
+      case "lead.reply":
+        return buildLeadReply(ctx);
       case "corpus.analyse":
         return JSON.stringify(buildExampleAnalysis(ctx));
       case "judge.evaluate":
@@ -125,6 +127,9 @@ type DemoContext = {
   inquiries?: number;
   calls?: number;
   bottleneck?: string;
+  /** Lead reply (AI-06). */
+  leadName?: string;
+  leadMessage?: string;
 };
 
 function pick<T>(list: T[] | undefined, index: number, fallback: T): T {
@@ -789,4 +794,12 @@ function buildJudgeScores(ctx: DemoContext) {
     score: 3,
     reason: "Demo output from the offline provider. No model was called, so this is not an assessment.",
   }));
+}
+
+function buildLeadReply(ctx: DemoContext) {
+  const first = (ctx.leadName ?? "there").split(" ")[0];
+  const asked = ctx.leadMessage ? " about what you described" : "";
+  return `Hi ${first}, thanks for getting in touch${asked}. Would a 20-minute call next week work to see whether this is a fit? If so, tell me two times that suit you.
+
+${ctx.founderName ?? ""}`.trim();
 }

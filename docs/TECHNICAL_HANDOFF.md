@@ -90,10 +90,11 @@ Leases are five minutes; completion and failure are conditional on the lease hol
 
 ## 8. Deployment and rollback
 
-- `main` deploys to both Vercel projects (`threadline` → threadline-fawn.vercel.app, `threadlinex` → threadlinex.vercel.app). Branch pushes build previews.
+- `main` deploys to both Vercel projects (`threadline` → threadline-fawn.vercel.app, `threadlinex` → threadlinex.vercel.app). **`threadline` is canonical** (`DEPLOYMENT_ROLE=primary`); `threadlinex` must be `DEPLOYMENT_ROLE=mirror` with its own database or none, and a mirror never runs the queue or causes side effects. The separation table (database, cron, keys per environment) is in `docs/implementation/DEPLOYMENT_INVESTIGATION.md`. Branch pushes build previews; `master` does not build (`vercel.json`).
+- The Hobby plan allows 100 deployments a day across both projects. On 26 September pushes stopped deploying for seven hours because of it. Push work branches once, not per commit.
 - Before promoting: `npm test` and `node scripts/qa/run.cjs run-all` against a local PostgreSQL; `npx next build`; the public regression suite `node scripts/qa/run.cjs marketing-v9` against a production build.
 - Roll back application code with Vercel's "Promote" on the previous production deployment. Migrations are additive, so older code runs against a newer schema; never roll a migration back by hand. If a migration must be undone, write a new forward migration.
-- If `threadlinex` does not pick up a push to `main`, redeploy it from the Vercel dashboard (this has happened twice).
+- If a push to `main` shows no deployment, check the deployment count for the past 24 hours before anything else (see the investigation).
 
 ## 9. Backup, incidents and retention
 

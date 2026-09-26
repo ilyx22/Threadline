@@ -4,6 +4,19 @@ Only the things the owner has to provide or decide. Nothing here contains a secr
 
 Legend for "Blocks": **First client** means the first real client cannot be onboarded safely without it. **Feature** means only that feature waits.
 
+## 0. Which project is production (do this first)
+
+Evidence and reasoning: `docs/implementation/DEPLOYMENT_INVESTIGATION.md`. The canonical production project is **`threadline`** (https://threadline-fawn.vercel.app). `threadlinex` builds the same branch.
+
+| What | Exact setting | Where | Verify | Blocks |
+| --- | --- | --- | --- | --- |
+| Mark the canonical project | `DEPLOYMENT_ROLE` = `primary` (Production) | Vercel → `threadline` → Settings → Environment Variables | `/api/health` shows no DEPLOYMENT_ROLE warning | First client |
+| Either make `threadlinex` a mirror … | `DEPLOYMENT_ROLE` = `mirror` (Production). Give it its own Neon branch or no database; set `PRODUCTION_DATABASE_URL` to the main branch's pooled URL so a pasted production URL is refused | Vercel → `threadlinex` → Settings → Environment Variables | `GET /api/cron/jobs` with its cron secret answers `{"skipped":"mirror deployment"}` | First client |
+| … or retire it | Disconnect Git (then it stops building and stops counting against the deployment quota) | Vercel → `threadlinex` → Settings → Git | No new `threadlinex` deployments after the next push | — |
+| Deployment quota | Hobby allows 100 deployments a day; the 26 September pushes exceeded it. Pro lifts it to 6,000 | Vercel → Settings → Billing | Every `main` push shows a production deployment | Decision |
+
+Every database, cron and key setting below goes on **`threadline`**. `threadlinex` gets different values, or none.
+
 ## 1. Database (blocks everything)
 
 | What | Why | Exact setting | Where | Verify | Cost / gate | Blocks |

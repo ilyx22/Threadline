@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import "@/lib/jobs/handlers";
 import { drainFor, enqueue, jobSummary } from "@/lib/jobs";
 import { log, reportError } from "@/lib/log";
+import { deploymentRole } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -22,6 +23,9 @@ export async function GET(req: NextRequest) {
   const expected = `Bearer ${secret}`;
   const ok = secret.length >= 16 && given.length === expected.length && timingSafeEqual(Buffer.from(given), Buffer.from(expected));
   if (!ok) return NextResponse.json({ error: secret ? "unauthorised" : "CRON_SECRET is not configured" }, { status: secret ? 401 : 503 });
+
+  // A mirror project (INF-05) answers the schedule but never runs the queue.
+  if (deploymentRole() === "mirror") return NextResponse.json({ skipped: "mirror deployment" }, { headers: { "cache-control": "no-store" } });
 
   const workerId = `cron-${crypto.randomUUID().slice(0, 8)}`;
   try {

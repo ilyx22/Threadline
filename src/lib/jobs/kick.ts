@@ -2,6 +2,7 @@ import "server-only";
 import "./handlers";
 import { registeredTypes, runOnce } from "./index";
 import { reportError } from "@/lib/log";
+import { deploymentRole } from "@/lib/env";
 
 /**
  * Run a few runnable jobs right after the current response (JOB-01), so an
@@ -10,6 +11,7 @@ import { reportError } from "@/lib/log";
  * the cron runner remains the backstop for anything left over.
  */
 export async function runSoon(limit = 5) {
+  if (deploymentRole() === "mirror") return;
   const types = registeredTypes();
   const workerId = `after-${crypto.randomUUID().slice(0, 8)}`;
   try {

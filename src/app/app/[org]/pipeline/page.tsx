@@ -17,6 +17,7 @@ import { StatCard } from "@/components/ui/data";
 import { EmptyState, Notice } from "@/components/ui/feedback";
 import { StageFunnel } from "@/components/charts";
 import { money } from "@/lib/utils/format";
+import { speedToLead } from "@/lib/leads";
 import { PipelineTable, NewInquiryButton } from "./pipeline-client";
 import { AttributionTable } from "./attribution-table";
 
@@ -47,6 +48,7 @@ export default async function PipelinePage({
     ctaPerformance(ctx.org.id),
     attributableContent(ctx.org.id),
   ]);
+  const speed = await speedToLead(ctx.org.id, new Date(Date.now() - 28 * 86_400_000));
 
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
   const canEdit = ctx.can("pipeline.edit");
@@ -65,12 +67,37 @@ export default async function PipelinePage({
       </header>
 
       <Notice tone="neutral">
-        Records are entered manually. CRM adapters exist but need credentials — see{" "}
-        <a href={`/app/${slug}/settings/integrations`} className="text-accent hover:underline">
-          Settings, Integrations
-        </a>
-        .
+        Leads arrive from your{" "}
+        <a href={`/app/${slug}/pipeline/inbound`} className="text-accent hover:underline">
+          inbound sources
+        </a>{" "}
+        (website form, Zapier, import) or are entered by hand for DMs. Replies are drafted for you to check and send yourself; nothing is sent automatically.
       </Notice>
+
+      {speed.leads > 0 ? (
+        <section className="flex flex-wrap items-baseline gap-x-6 gap-y-1 border-y border-line py-2.5 text-[12.5px] text-muted" aria-label="Speed to lead">
+          <span>
+            Speed to lead (28 days):{" "}
+            <span className="tabular text-ink">
+              {speed.medianMinutes === null ? "no replies recorded" : speed.medianMinutes < 120 ? `${speed.medianMinutes} min median` : `${Math.round(speed.medianMinutes / 60)} h median`}
+            </span>
+          </span>
+          <span>
+            Replied: <span className="tabular text-ink">{speed.responded}</span> of <span className="tabular text-ink">{speed.leads}</span>
+          </span>
+          {speed.waitingOver24h.length ? (
+            <span className="text-negative">
+              Waiting over a day:{" "}
+              {speed.waitingOver24h.slice(0, 5).map((w, i) => (
+                <a key={w.id} href={`/app/${slug}/pipeline/${w.id}`} className="underline">
+                  {i ? ", " : ""}
+                  {w.name}
+                </a>
+              ))}
+            </span>
+          ) : null}
+        </section>
+      ) : null}
 
       {total === 0 ? (
         <EmptyState

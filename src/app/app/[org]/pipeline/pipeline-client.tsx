@@ -124,7 +124,9 @@ export function PipelineTable({
             <TR key={inquiry.id}>
               <TD>
                 <CellTitle secondary={inquiry.company ?? inquiry.email ?? undefined}>
-                  {inquiry.name}
+                  <Link href={`/app/${slug}/pipeline/${inquiry.id}`} className="hover:text-accent">
+                    {inquiry.name}
+                  </Link>
                 </CellTitle>
               </TD>
               <TD>

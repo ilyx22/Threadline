@@ -1,4 +1,5 @@
 import {
+  Clock,
   BarChart3,
   Boxes,
   Brain,
@@ -168,6 +169,13 @@ export function operatorNav(slug: string): NavItem[] {
       capability: "library.view",
     },
     {
+      key: "effort",
+      label: "Time",
+      href: `${base}/effort`,
+      icon: Clock,
+      capability: "workspace.view",
+    },
+    {
       key: "settings",
       label: "Settings",
       href: `${base}/settings`,
@@ -230,6 +238,13 @@ export function clientNav(slug: string): NavItem[] {
       label: "Approvals",
       href: `${base}/approvals`,
       icon: BadgeCheck,
+      capability: "workspace.view",
+    },
+    {
+      key: "effort",
+      label: "Your time",
+      href: `${base}/effort`,
+      icon: Clock,
       capability: "workspace.view",
     },
     {

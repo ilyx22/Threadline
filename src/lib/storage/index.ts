@@ -36,6 +36,27 @@ export interface StorageAdapter {
 
 const MAX_BYTES = 512 * 1024 * 1024; // 512MB — raw video is the largest realistic upload
 
+/**
+ * Multipart upload (FILE-02). S3 hands the browser pre-signed part URLs
+ * (`partUrl`); the local and memory adapters take parts through the app
+ * (`writePart`) so the same flow runs in development and tests.
+ */
+export interface MultipartStorage {
+  createMultipart(key: string, mimeType: string): Promise<string>;
+  partUrl?(key: string, uploadId: string, partNumber: number, expiresSeconds?: number): string;
+  writePart?(key: string, uploadId: string, partNumber: number, body: Buffer): Promise<string>;
+  completeMultipart(key: string, uploadId: string, parts: { partNumber: number; etag: string }[]): Promise<void>;
+  abortMultipart(key: string, uploadId: string): Promise<void>;
+  size(key: string): Promise<number | null>;
+  head(key: string, bytes?: number): Promise<Uint8Array>;
+}
+
+export function supportsMultipart(a: StorageAdapter): a is StorageAdapter & MultipartStorage {
+  return typeof (a as Partial<MultipartStorage>).createMultipart === "function";
+}
+
+const etagOf = (b: Buffer) => `"${createHash("md5").update(b).digest("hex")}"`;
+
 
 export class StorageError extends Error {
   constructor(message: string) {
@@ -91,6 +112,41 @@ export class MemoryStorageAdapter implements StorageAdapter {
   }
   async exists(storagePath: string) {
     return this.files.has(storagePath);
+  }
+
+  parts = new Map<string, Map<number, Buffer>>();
+  async createMultipart(key: string) {
+    const id = randomUUID();
+    this.parts.set(`${key}#${id}`, new Map());
+    return id;
+  }
+  async writePart(key: string, uploadId: string, partNumber: number, body: Buffer) {
+    const p = this.parts.get(`${key}#${uploadId}`);
+    if (!p) throw new StorageError("That upload is no longer open.");
+    p.set(partNumber, body);
+    return etagOf(body);
+  }
+  async completeMultipart(key: string, uploadId: string, parts: { partNumber: number; etag: string }[]) {
+    const p = this.parts.get(`${key}#${uploadId}`);
+    if (!p) throw new StorageError("That upload is no longer open.");
+    const chunks = parts.map((x) => {
+      const b = p.get(x.partNumber);
+      if (!b || etagOf(b) !== x.etag) throw new StorageError(`Part ${x.partNumber} is missing or changed.`);
+      return b;
+    });
+    this.files.set(key, { buffer: Buffer.concat(chunks), mimeType: "" });
+    this.parts.delete(`${key}#${uploadId}`);
+  }
+  async abortMultipart(key: string, uploadId: string) {
+    this.parts.delete(`${key}#${uploadId}`);
+  }
+  async size(key: string) {
+    return this.files.get(key)?.buffer.byteLength ?? null;
+  }
+  async head(key: string, bytes = 4096) {
+    const f = this.files.get(key);
+    if (!f) throw new StorageError("Not found.");
+    return new Uint8Array(f.buffer.subarray(0, bytes));
   }
 }
 
@@ -152,6 +208,53 @@ export class LocalStorageAdapter implements StorageAdapter {
       return true;
     } catch {
       return false;
+    }
+  }
+
+  private partDir(key: string, uploadId: string) {
+    if (!/^[0-9a-f-]{36}$/.test(uploadId)) throw new StorageError("Invalid upload.");
+    return path.join(this.resolve(path.posix.dirname(key)), ".parts", uploadId);
+  }
+  async createMultipart(key: string) {
+    const id = randomUUID();
+    await fs.mkdir(this.partDir(key, id), { recursive: true });
+    return id;
+  }
+  async writePart(key: string, uploadId: string, partNumber: number, body: Buffer) {
+    const dir = this.partDir(key, uploadId);
+    await fs.access(dir).catch(() => {
+      throw new StorageError("That upload is no longer open.");
+    });
+    await fs.writeFile(path.join(dir, String(partNumber)), body);
+    return etagOf(body);
+  }
+  async completeMultipart(key: string, uploadId: string, parts: { partNumber: number; etag: string }[]) {
+    const dir = this.partDir(key, uploadId);
+    const full = this.resolve(key);
+    const chunks: Buffer[] = [];
+    for (const x of parts) {
+      const b = await fs.readFile(path.join(dir, String(x.partNumber))).catch(() => null);
+      if (!b || etagOf(b) !== x.etag) throw new StorageError(`Part ${x.partNumber} is missing or changed.`);
+      chunks.push(b);
+    }
+    await fs.mkdir(path.dirname(full), { recursive: true });
+    await fs.writeFile(full, Buffer.concat(chunks));
+    await fs.rm(dir, { recursive: true, force: true });
+  }
+  async abortMultipart(key: string, uploadId: string) {
+    await fs.rm(this.partDir(key, uploadId), { recursive: true, force: true });
+  }
+  async size(key: string) {
+    return fs.stat(this.resolve(key)).then((st) => st.size, () => null);
+  }
+  async head(key: string, bytes = 4096) {
+    const fh = await fs.open(this.resolve(key), "r");
+    try {
+      const buf = Buffer.alloc(bytes);
+      const { bytesRead } = await fh.read(buf, 0, bytes, 0);
+      return new Uint8Array(buf.subarray(0, bytesRead));
+    } finally {
+      await fh.close();
     }
   }
 }

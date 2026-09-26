@@ -14,6 +14,7 @@ import { assertPackageApprovable } from "@/lib/domain/longform";
 import { recordDecision, supersedeApprovals } from "@/lib/delivery/approvals";
 import { notify } from "@/lib/notify";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
+import { queueProcessingFor } from "@/lib/processing";
 import { getStorage, storageProviderName } from "@/lib/storage";
 import {
   cleanText,
@@ -408,6 +409,7 @@ export async function uploadContentAssetAction(
         uploadedById: ctx.user.id,
       },
     });
+    await queueProcessingFor(asset);
 
     await recordEvent(ctx, contentItemId, {
       type: "asset_added",

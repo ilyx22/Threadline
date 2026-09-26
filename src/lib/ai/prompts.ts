@@ -617,3 +617,34 @@ export function judgePrompt(input: {
     temperature: 0.3,
   };
 }
+
+/* ------------------------------ Lead reply (AI-06) ------------------------- */
+
+export function leadReplyPrompt(input: { context: string; leadName: string; channel: string; thread: string }): PromptTemplate {
+  return {
+    key: "lead.reply",
+    system: `${HOUSE_RULES}
+
+You draft a first reply to an inbound lead, for the founder to check, edit and send themselves.
+Write as the founder, in their voice. Be brief: three to five sentences. Answer what they asked
+if the thread says it; otherwise ask one qualifying question. Propose one next step. Never invent
+prices, availability, results, clients or guarantees that are not in the context. No flattery.
+
+Return plain text only.`,
+    user: `
+${input.context}
+
+## THE LEAD
+Name: ${input.leadName}
+Channel: ${input.channel}
+
+## THREAD (oldest first)
+${input.thread}
+
+## TASK
+Draft the reply.
+`.trim(),
+    maxTokens: 400,
+    temperature: 0.5,
+  };
+}

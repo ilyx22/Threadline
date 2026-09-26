@@ -9,9 +9,10 @@ import { StorageError, assertContent, checkFile } from "./index";
  *
  * Every object key is tenant-scoped (`{orgId}/…`), the bucket is expected to be
  * private, and reads are proxied through `/api/files/[...path]`, which
- * re-checks organisation membership on every request — no public bucket, no
- * pre-signed URL handed to a browser. `signedGetUrl()` exists for a future
- * direct-download path and is short-lived when used.
+ * re-checks organisation membership on every request; the bucket is never
+ * public. The only pre-signed URLs are short-lived part PUTs for a direct
+ * upload the server has already authorised (FILE-02), and short-lived GETs for
+ * a processing worker (FILE-05).
  */
 
 export type S3Config = {
@@ -75,8 +76,9 @@ export class S3StorageAdapter implements StorageAdapter {
       : new URL(`${this.config.endpoint}/${this.config.bucket}/${encoded}`);
   }
 
-  private async request(method: string, key: string, body: Buffer | string = "", extra: Record<string, string> = {}) {
+  private async request(method: string, key: string, body: Buffer | string = "", extra: Record<string, string> = {}, query: Record<string, string> = {}) {
     const url = this.objectUrl(key);
+    for (const [k, v] of Object.entries(query)) url.searchParams.set(k, v);
     const headers = signV4({ method, url, headers: extra, body, config: this.config });
     return this.fetchImpl(url, { method, headers, body: body.length ? (typeof body === "string" ? body : new Uint8Array(body)) : undefined });
   }
@@ -110,10 +112,63 @@ export class S3StorageAdapter implements StorageAdapter {
     return res.ok;
   }
 
-  /** Short-lived pre-signed GET (query-string auth). Not used by the file route; kept for a future direct path. */
+  /* ---------------- Direct multipart upload (FILE-02) ---------------- */
+
+  /** Start a multipart upload; returns the provider's upload id. */
+  async createMultipart(key: string, mimeType: string) {
+    assertScopedKey(key);
+    const res = await this.request("POST", key, "", { "content-type": mimeType }, { uploads: "" });
+    const text = await res.text();
+    const id = /<UploadId>([^<]+)<\/UploadId>/.exec(text)?.[1];
+    if (!res.ok || !id) throw new StorageError(`Storage refused to start the upload (${res.status}).`);
+    return id;
+  }
+
+  /** A pre-signed PUT for one part; the browser sends the bytes straight to the bucket. */
+  partUrl(key: string, uploadId: string, partNumber: number, expiresSeconds = 900) {
+    return this.presign("PUT", key, { partNumber: String(partNumber), uploadId }, expiresSeconds);
+  }
+
+  async completeMultipart(key: string, uploadId: string, parts: { partNumber: number; etag: string }[]) {
+    assertScopedKey(key);
+    const esc = (v: string) => v.replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" })[c]!);
+    const body = `<CompleteMultipartUpload>${parts.map((p) => `<Part><PartNumber>${p.partNumber}</PartNumber><ETag>${esc(p.etag)}</ETag></Part>`).join("")}</CompleteMultipartUpload>`;
+    const res = await this.request("POST", key, body, { "content-type": "application/xml" }, { uploadId });
+    const text = await res.text();
+    // S3 can answer 200 with an <Error> body when assembly fails late.
+    if (!res.ok || /<Error>/.test(text)) throw new StorageError(`Storage could not assemble the upload (${res.status}).`);
+  }
+
+  async abortMultipart(key: string, uploadId: string) {
+    assertScopedKey(key);
+    await this.request("DELETE", key, "", {}, { uploadId });
+  }
+
+  /** Size of a stored object, or null when it does not exist. */
+  async size(key: string) {
+    assertScopedKey(key);
+    const res = await this.request("HEAD", key);
+    if (!res.ok) return null;
+    return Number(res.headers.get("content-length") ?? "0");
+  }
+
+  /** The first bytes of an object, for the content check after assembly. */
+  async head(key: string, bytes = 4096) {
+    assertScopedKey(key);
+    const res = await this.request("GET", key, "", { range: `bytes=0-${bytes - 1}` });
+    if (!res.ok) throw new StorageError(`Storage read failed (${res.status}).`);
+    return new Uint8Array(await res.arrayBuffer());
+  }
+
+  /** Short-lived pre-signed GET (query-string auth), e.g. for a processing worker to fetch a source file. */
   signedGetUrl(storagePath: string, expiresSeconds = 120, now = new Date()) {
+    return this.presign("GET", storagePath, {}, expiresSeconds, now);
+  }
+
+  private presign(method: string, storagePath: string, query: Record<string, string>, expiresSeconds: number, now = new Date()) {
     assertScopedKey(storagePath);
     const url = this.objectUrl(storagePath);
+    for (const [k, v] of Object.entries(query)) url.searchParams.set(k, v);
     const { amz, short } = amzDate(now);
     const scope = `${short}/${this.config.region}/s3/aws4_request`;
     url.searchParams.set("X-Amz-Algorithm", "AWS4-HMAC-SHA256");
@@ -122,7 +177,7 @@ export class S3StorageAdapter implements StorageAdapter {
     url.searchParams.set("X-Amz-Expires", String(Math.min(expiresSeconds, 900)));
     url.searchParams.set("X-Amz-SignedHeaders", "host");
     const canonicalQuery = [...url.searchParams.entries()].sort().map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`).join("&");
-    const canonicalRequest = ["GET", url.pathname, canonicalQuery, `host:${url.host}\n`, "host", "UNSIGNED-PAYLOAD"].join("\n");
+    const canonicalRequest = [method, url.pathname, canonicalQuery, `host:${url.host}\n`, "host", "UNSIGNED-PAYLOAD"].join("\n");
     const stringToSign = ["AWS4-HMAC-SHA256", amz, scope, sha256(canonicalRequest)].join("\n");
     const kSigning = hmac(hmac(hmac(hmac(`AWS4${this.config.secretAccessKey}`, short), this.config.region), "s3"), "aws4_request");
     url.searchParams.set("X-Amz-Signature", createHmac("sha256", kSigning).update(stringToSign).digest("hex"));
@@ -130,9 +185,9 @@ export class S3StorageAdapter implements StorageAdapter {
   }
 }
 
-/** Object keys are always `{orgId}/{prefix}/{file}`; anything else is refused before it reaches the network. */
+/** Object keys are always `{orgId}/{prefix}[/{sub}]/{file}`; anything else is refused before it reaches the network. */
 export function assertScopedKey(key: string) {
-  if (!/^[a-z0-9]+\/[a-z0-9_-]+\/[A-Za-z0-9._-]+$/i.test(key) || key.includes("..")) {
+  if (!/^[a-z0-9]+(\/[a-z0-9_-]+){1,3}\/[A-Za-z0-9._-]+$/i.test(key) || key.includes("..")) {
     throw new StorageError("Invalid storage path.");
   }
 }

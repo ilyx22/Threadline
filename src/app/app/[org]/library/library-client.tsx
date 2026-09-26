@@ -29,6 +29,9 @@ import {
   linkLibraryAssetAction,
   uploadLibraryAssetAction,
 } from "@/lib/actions/workspace";
+import { DIRECT_THRESHOLD, directUpload } from "@/lib/storage/direct-client";
+
+const PROCESSING_LABEL: Record<string, string> = { queued: "Processing queued", processing: "Processing", ready: "Processed", failed: "Processing failed" };
 
 type AssetView = {
   id: string;
@@ -46,6 +49,7 @@ type AssetView = {
   contentItemId: string | null;
   contentTitle: string | null;
   createdAt: string;
+  processingState?: string;
 };
 
 function iconFor(mimeType: string | null, externalUrl: string | null) {
@@ -91,6 +95,7 @@ export function LibraryGrid({
                       {category.label}
                       {asset.sizeBytes ? ` · ${bytes(asset.sizeBytes)}` : ""}
                       {asset.version > 1 ? ` · v${asset.version}` : ""}
+                      {asset.processingState && PROCESSING_LABEL[asset.processingState] ? ` · ${PROCESSING_LABEL[asset.processingState]}` : ""}
                     </p>
                   </div>
                 </div>
@@ -169,6 +174,31 @@ export function LibraryUploadButtons({
   content: { id: string; title: string }[];
 }) {
   const [uploadOpen, setUploadOpen] = React.useState(false);
+  const [picked, setPicked] = React.useState<File | null>(null);
+  const [progress, setProgress] = React.useState<number | null>(null);
+  const [directError, setDirectError] = React.useState<string | null>(null);
+  const large = Boolean(picked && picked.size > DIRECT_THRESHOLD);
+
+  async function sendDirect(form: HTMLFormElement | null) {
+    if (!picked || !form) return;
+    const data = new FormData(form);
+    setDirectError(null);
+    setProgress(0);
+    try {
+      await directUpload(slug, picked, {
+        category: String(data.get("category") || "raw_media"),
+        title: String(data.get("title") || "") || undefined,
+        contentItemId: String(data.get("contentItemId") || "") || undefined,
+      }, setProgress);
+      setUploadOpen(false);
+      setPicked(null);
+      router.refresh();
+    } catch (e) {
+      setDirectError(e instanceof Error ? e.message : "The upload failed.");
+    } finally {
+      setProgress(null);
+    }
+  }
   const [linkOpen, setLinkOpen] = React.useState(false);
   const router = useRouter();
 
@@ -198,13 +228,14 @@ export function LibraryUploadButtons({
             {({ error }) => (
               <>
                 <DialogBody className="space-y-4">
-                  <FormError error={error} />
-                  <Field label="File" htmlFor="libraryFile">
+                  <FormError error={error ?? directError} />
+                  <Field label="File" htmlFor="libraryFile" hint={large ? "Large file: it goes straight to private storage in parts." : undefined}>
                     <input
                       id="libraryFile"
                       name="file"
                       type="file"
                       required
+                      onChange={(e) => setPicked(e.currentTarget.files?.[0] ?? null)}
                       className="block w-full text-[13px] text-muted file:mr-3 file:rounded-md file:border file:border-line-strong file:bg-raised file:px-3 file:py-1.5 file:text-[12.5px] file:text-ink hover:file:bg-[#242b32]"
                     />
                   </Field>
@@ -243,9 +274,15 @@ export function LibraryUploadButtons({
                   <Button variant="ghost" onClick={() => setUploadOpen(false)}>
                     Cancel
                   </Button>
-                  <SubmitButton variant="primary" icon={Upload} pendingLabel="Uploading…">
-                    Upload
-                  </SubmitButton>
+                  {large ? (
+                    <Button variant="primary" icon={Upload} disabled={progress !== null} onClick={(e) => sendDirect(e.currentTarget.closest("form"))}>
+                      {progress !== null ? `Uploading ${Math.round(progress * 100)}%` : "Upload"}
+                    </Button>
+                  ) : (
+                    <SubmitButton variant="primary" icon={Upload} pendingLabel="Uploading…">
+                      Upload
+                    </SubmitButton>
+                  )}
                 </DialogFooter>
               </>
             )}

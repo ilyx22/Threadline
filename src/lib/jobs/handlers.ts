@@ -45,6 +45,11 @@ registerHandler<{ outboxId: string }>("crm.sync", async (payload) => {
   await sendOutboxRow(payload.outboxId);
 });
 
+registerHandler<{ taskId: string }>("processing.submit", async (payload) => {
+  const { submitTask } = await import("@/lib/processing");
+  await submitTask(payload.taskId);
+});
+
 /**
  * The daily housekeeping run (queued once per day by the cron runner): keep
  * every active engagement's service periods current, lapse old invitations,
@@ -75,6 +80,14 @@ registerHandler("daily.tick", async () => {
   const { escalateStaleApprovals, sendDigests } = await import("@/lib/notify");
   await escalateStaleApprovals();
   await sendDigests();
+  // FILE-02/FILE-05: abort abandoned direct uploads; submit processing that waited for a provider.
+  const { expireStaleUploads } = await import("@/lib/storage/direct");
+  await expireStaleUploads();
+  const { submitWaitingTasks } = await import("@/lib/processing");
+  await submitWaitingTasks();
+  // AI-06: remind lead owners of follow-ups that are due.
+  const { remindDueFollowUps } = await import("@/lib/leads");
+  await remindDueFollowUps();
   const held = await prisma.crmOutbox.findMany({ where: { state: { in: ["pending", "failed"] } }, select: { id: true }, take: 200 });
   await kickCrm(held.map((h) => h.id));
   const { pruneTokens } = await import("@/lib/auth/tokens");
@@ -83,4 +96,4 @@ registerHandler("daily.tick", async () => {
   await pruneExpiredSessions();
 });
 
-export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune", "crm.sync", "daily.tick"] as const;
+export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune", "crm.sync", "daily.tick", "processing.submit"] as const;

@@ -183,6 +183,10 @@ model Organization {
   proofPeriods         ProofPeriod[]
   recordingReadiness   RecordingReadiness?
   trackedLinks         TrackedLink[]
+  uploadSessions       UploadSession[]
+  processingTasks      ProcessingTask[]
+  effortEntries        EffortEntry[]
+  inboundSources       InboundSource[]
   visitors             Visitor[]
   touchpoints          Touchpoint[]
   commercialEvents     CommercialEvent[]
@@ -759,6 +763,9 @@ model Asset {
   uploadedBy  User?        @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
 
   storageProvider String @default("local") // local | s3
+  /// Media processing (FILE-05): none | queued | processing | ready | failed. Aggregated from ProcessingTask rows.
+  processingState String @default("none")
+  processingTasks ProcessingTask[]
 
   @@index([orgId, category])
   @@index([contentItemId])
@@ -949,6 +956,18 @@ model Inquiry {
   /// The anonymous journey this person arrived through, when one is known.
   visitorId String?
 
+  /// Lead inbox (AI-06): where the lead came in, the key used to merge repeats,
+  /// who owns the response, and when a person first replied.
+  channel         String    @default("manual") // manual | email | website_form | linkedin_dm | x_dm | instagram_dm | phone | referral | other
+  dedupeKey       String?
+  ownerId         String?
+  firstResponseAt DateTime?
+  followUpAt      DateTime?
+  /// JSON [{ criterion, note, by, at }]: what was actually established. Location alone never qualifies.
+  qualification   String?
+  messages        LeadMessage[]
+  replyDrafts     ReplyDraft[]
+
   org           Organization      @relation(fields: [orgId], references: [id], onDelete: Cascade)
   contentItem   ContentItem?      @relation(fields: [contentItemId], references: [id], onDelete: SetNull)
   publishRecord PublishRecord?    @relation(fields: [publishRecordId], references: [id], onDelete: SetNull)
@@ -957,6 +976,7 @@ model Inquiry {
 
   @@index([orgId, stage])
   @@index([orgId, occurredAt])
+  @@index([orgId, dedupeKey])
 }
 
 // ---------------------------------------------------------------------------
@@ -3151,3 +3171,153 @@ model ProofPlacement {
   @@index([orgId, permission])
 }
 
+
+/// A direct-to-storage upload in progress (FILE-02). The browser sends parts
+/// straight to the bucket with short-lived signed URLs; the server verifies the
+/// assembled object (size and content signature) before any Asset exists.
+model UploadSession {
+  id              String    @id @default(cuid())
+  orgId           String
+  userId          String
+  storagePath     String    @unique
+  storageProvider String
+  /// The storage provider's multipart upload id.
+  uploadId        String?
+  fileName        String
+  mimeType        String
+  sizeBytes       Int
+  partSize        Int
+  partCount       Int
+  status          String    @default("uploading") // uploading | complete | failed | aborted | expired
+  category        String
+  title           String?
+  contentItemId   String?
+  assetId         String?
+  error           String?
+  expiresAt       DateTime
+  createdAt       DateTime  @default(now())
+  completedAt     DateTime?
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([status, expiresAt])
+  @@index([orgId, userId])
+}
+
+/// One processing step for a stored file (FILE-05): transcoding, transcription
+/// or a thumbnail, done by an external worker that reports back through a
+/// signed callback. States only move forward; a late or repeated callback
+/// never undoes a finished task.
+model ProcessingTask {
+  id            String    @id @default(cuid())
+  orgId         String
+  assetId       String
+  kind          String // transcode | transcribe | thumbnail
+  provider      String // webhook | none
+  status        String    @default("queued") // queued | submitted | processing | succeeded | failed | cancelled
+  externalId    String?
+  attempts      Int       @default(0)
+  /// JSON: what the worker returned (duration, renditions, transcript asset id).
+  result        String?
+  outputAssetId String?
+  error         String?
+  submittedAt   DateTime?
+  lastEventAt   DateTime?
+  completedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  org   Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  asset Asset        @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([assetId, kind])
+  @@index([status])
+}
+
+/// Minutes a person spent on a step of the work (CX-08, CAP-01). Founder
+/// minutes are the product's promise ("under an hour a week"), operator minutes
+/// are the capacity model's input. Entered by hand or from a timer; never
+/// inferred.
+model EffortEntry {
+  id            String   @id @default(cuid())
+  orgId         String
+  userId        String
+  /// founder | client_team | operator | editor
+  actorKind     String
+  /// The step: onboarding | recording | review | approval | call | scripting | editing | packaging | reporting | publishing | other
+  step          String
+  minutes       Int
+  /// The day the work happened (calendar date, workspace timezone).
+  workDate      DateTime @db.Date
+  contentItemId String?
+  note          String?
+  source        String   @default("manual") // manual | timer
+  createdAt     DateTime @default(now())
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId, workDate])
+  @@index([orgId, actorKind, workDate])
+}
+
+/// One message in a lead's thread (AI-06). Inbound messages arrive through an
+/// authorised source or are entered by a person; outbound ones are recorded
+/// when a person marks an approved reply as sent. Never sent by the system.
+model LeadMessage {
+  id          String   @id @default(cuid())
+  orgId       String
+  inquiryId   String
+  direction   String // in | out
+  channel     String
+  body        String
+  /// The provider's message id; a repeat delivery is ignored.
+  externalRef String?
+  occurredAt  DateTime @default(now())
+  createdById String?
+  createdAt   DateTime @default(now())
+
+  inquiry Inquiry @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, channel, externalRef])
+  @@index([inquiryId, occurredAt])
+}
+
+/// A reply drafted for a person to check and send themselves (AI-06).
+model ReplyDraft {
+  id           String    @id @default(cuid())
+  orgId        String
+  inquiryId    String
+  body         String
+  status       String    @default("draft") // draft | approved | sent | discarded
+  generatedBy  String    @default("human") // ai | human
+  isDemo       Boolean   @default(false)
+  createdById  String?
+  approvedById String?
+  approvedAt   DateTime?
+  sentById     String?
+  sentAt       DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  inquiry Inquiry @relation(fields: [inquiryId], references: [id], onDelete: Cascade)
+
+  @@index([inquiryId, status])
+}
+
+/// An authorised inbound lead source for a workspace (a website form, a
+/// Zapier step, an import). The token is shown once and stored only as a hash.
+model InboundSource {
+  id         String    @id @default(cuid())
+  orgId      String
+  label      String
+  channel    String    @default("website_form")
+  tokenHash  String    @unique
+  createdById String?
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+}
