@@ -3477,3 +3477,27 @@ model ResearchSchedule {
   @@index([active, nextRunAt])
   @@index([orgId])
 }
+
+/// A held-out evaluation of the Judge's variants (LRN-03): the results per
+/// variant on the same held-out share, frozen when run.
+model JudgeEvaluation {
+  id          String   @id @default(cuid())
+  fraction    Float
+  /// JSON VariantResult[]
+  results     String
+  runById     String?
+  createdAt   DateTime @default(now())
+}
+
+/// Which Judge variant a person has promoted (LRN-03). The newest row that is
+/// not retired is in force; retiring it puts the previous one back.
+model JudgePromotion {
+  id           String    @id @default(cuid())
+  variant      String
+  evaluationId String?
+  note         String?
+  promotedById String
+  promotedAt   DateTime  @default(now())
+  retiredAt    DateTime?
+  retiredById  String?
+}

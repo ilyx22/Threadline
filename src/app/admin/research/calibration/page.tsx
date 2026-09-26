@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { requireInternal } from "@/lib/auth/guard";
+import { EvaluationPanel } from "./evaluation-panel";
+import { prisma } from "@/lib/db/client";
+import { currentPromotion } from "@/lib/learning/evaluation";
 import { calibrationHistory, currentCalibration, listExamples } from "@/lib/data/corpus";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader, SectionHeading } from "@/components/ui/card";
@@ -28,6 +31,7 @@ export const metadata: Metadata = { title: "Judge calibration" };
  */
 export default async function CalibrationPage() {
   await requireInternal("corpus.manage");
+  const latestEval = await prisma.judgeEvaluation.findFirst({ orderBy: { createdAt: "desc" } });
 
   const [reading, history, examples] = await Promise.all([
     currentCalibration(),
@@ -184,6 +188,10 @@ export default async function CalibrationPage() {
           </p>
         </CardBody>
       </Card>
+      <EvaluationPanel
+        latest={latestEval ? { id: latestEval.id, createdAt: latestEval.createdAt.toISOString(), results: JSON.parse(latestEval.results) } : null}
+        promoted={(await currentPromotion())?.variant ?? null}
+      />
     </div>
   );
 }

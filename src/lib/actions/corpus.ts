@@ -10,6 +10,7 @@ import { analyseExamplePrompt, judgePrompt } from "@/lib/ai/prompts";
 import { stringify } from "@/lib/db/json";
 import { calibrationPairs } from "@/lib/data/corpus";
 import { calibrationReading, judgeVerdict, RUBRIC, RUBRIC_VERSION } from "@/lib/domain/judge";
+import { leakage } from "@/lib/domain/evaluation";
 import {
   BULK_CAPTURE_LIMIT,
   BUYER_RELEVANCE,
@@ -530,6 +531,10 @@ export async function judgeExampleAction(exampleId: string): Promise<ActionResul
     ]
       .filter(Boolean)
       .join("\n");
+
+    // LRN-03: the Judge must not see the outcome it will be checked against.
+    const leaked = leakage(subject, { views: example.views, likes: example.likes, comments: example.comments });
+    if (leaked.length) return err(`The text contains the outcome (${leaked.join(", ")}). Remove it from the notes or transcript before judging, or the verdict is graded on its own answer.`, "validation");
 
     const { result, meta } = await runJudge({
       userId: admin.user.id,
