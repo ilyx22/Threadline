@@ -103,6 +103,9 @@ registerHandler("daily.tick", async () => {
   // FILE-06: delete export files past their download window.
   const { expireExports } = await import("@/lib/exports");
   await expireExports();
+  // INT-02: refresh platform tokens that expire within a day.
+  const { refreshExpiringTokens } = await import("@/lib/publishing");
+  await refreshExpiringTokens();
   // INT-03: queue any due scheduled publish whose job was lost.
   const { queueDuePublishes } = await import("@/lib/publishing");
   await queueDuePublishes();

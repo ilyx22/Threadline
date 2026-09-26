@@ -33,10 +33,10 @@ export class PublishBlocked extends Error {}
  * refresh runs under a per-integration advisory lock, so two jobs never spend
  * the same refresh token (some providers rotate it on use).
  */
-export async function accessTokenFor(orgId: string, provider: string, now = new Date()) {
+export async function accessTokenFor(orgId: string, provider: string, now = new Date(), marginMs = REFRESH_MARGIN_MS) {
   const integration = await prisma.integration.findUnique({ where: { orgId_provider: { orgId, provider } } });
   if (!integration || integration.authStatus !== "connected") throw new PublishBlocked(`${provider} is not connected for this workspace.`);
-  const fresh = !integration.tokenExpiresAt || integration.tokenExpiresAt.getTime() - now.getTime() > REFRESH_MARGIN_MS;
+  const fresh = !integration.tokenExpiresAt || integration.tokenExpiresAt.getTime() - now.getTime() > marginMs;
   if (fresh) {
     const token = await readCredential(orgId, provider, "oauth_access");
     if (!token) throw new PublishBlocked("No usable access token; reconnect the account.");
@@ -50,7 +50,7 @@ export async function accessTokenFor(orgId: string, provider: string, now = new 
       await tx.$executeRaw`SELECT pg_advisory_xact_lock(hashtext(${`refresh:${orgId}:${provider}`}))`;
       // Another job may have refreshed while this one waited for the lock.
       const again = await tx.integration.findUniqueOrThrow({ where: { id: integration.id } });
-      if (again.tokenExpiresAt && again.tokenExpiresAt.getTime() - Date.now() > REFRESH_MARGIN_MS) {
+      if (again.tokenExpiresAt && again.tokenExpiresAt.getTime() - Date.now() > marginMs) {
         const token = await readCredential(orgId, provider, "oauth_access");
         if (token) return { token, externalAccountId: again.externalAccountId };
       }
@@ -73,6 +73,26 @@ export async function accessTokenFor(orgId: string, provider: string, now = new 
     throw new PublishBlocked(result.blocked);
   }
   return result;
+}
+
+/**
+ * Daily (INT-02): refresh tokens that expire within a day, so a scheduled
+ * publish or metrics read never meets an expired token; a refusal marks the
+ * integration for reconnection, which the workspace sees as a prompt.
+ */
+export async function refreshExpiringTokens(now = new Date()) {
+  const soon = await prisma.integration.findMany({ where: { authStatus: "connected", tokenExpiresAt: { lte: new Date(now.getTime() + 86_400_000) } }, select: { orgId: true, provider: true } });
+  const out = { refreshed: 0, reconnect: 0, failed: 0 };
+  for (const i of soon) {
+    try {
+      await accessTokenFor(i.orgId, i.provider, now, 86_400_000);
+      out.refreshed++;
+    } catch (e) {
+      if (e instanceof PublishBlocked) out.reconnect++;
+      else out.failed++;
+    }
+  }
+  return out;
 }
 
 /** Queue the publish job for a scheduled integration record, at its time. */

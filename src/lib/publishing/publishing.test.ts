@@ -6,7 +6,7 @@ import type { AuthContext } from "@/lib/auth/guard";
 import { recordDecision } from "@/lib/delivery/approvals";
 import { putCredential } from "@/lib/integrations/credentials";
 import { __setConnectorFetch } from "@/lib/integrations/connectors";
-import { accessTokenFor, pollPublish, queueDuePublishes, resolveUncertain, runPublish, schedulePublish } from "./index";
+import { accessTokenFor, pollPublish, queueDuePublishes, refreshExpiringTokens, resolveUncertain, runPublish, schedulePublish } from "./index";
 
 const stamp = Date.now();
 const saved = { keys: process.env.CREDENTIAL_ENCRYPTION_KEYS, env: process.env.APP_ENV, id: process.env.LINKEDIN_CLIENT_ID, secret: process.env.LINKEDIN_CLIENT_SECRET };
@@ -138,5 +138,10 @@ describe("scheduled publishing (INT-03, INT-02, JOB-02)", () => {
     await assert.rejects(accessTokenFor(orgId, "linkedin"), /reconnect/i, "no refresh token stored");
     const row = await prisma.integration.findUniqueOrThrow({ where: { orgId_provider: { orgId, provider: "linkedin" } } });
     assert.deepEqual([row.authStatus, row.reconnectRequired], ["expired", true]);
+    // INT-02: the daily sweep finds tokens expiring within a day and reports what needs a reconnect.
+    await prisma.integration.update({ where: { orgId_provider: { orgId, provider: "linkedin" } }, data: { authStatus: "connected", reconnectRequired: false, tokenExpiresAt: new Date(Date.now() + 3_600_000) } });
+    const swept = await refreshExpiringTokens();
+    assert.ok(swept.reconnect >= 1);
+    assert.equal((await prisma.integration.findUniqueOrThrow({ where: { orgId_provider: { orgId, provider: "linkedin" } } })).reconnectRequired, true);
   });
 });
