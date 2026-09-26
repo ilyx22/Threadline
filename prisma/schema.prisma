@@ -3452,3 +3452,28 @@ model QaReview {
 
   @@index([orgId, contentItemId, createdAt])
 }
+
+/// A recurring research run (AI-02). The scheduler opens a run on the cadence,
+/// collects what can be collected without credentials (workspace records and
+/// public URLs), and explains every source it could not read. The run then
+/// waits for a person; nothing it finds is published or acted on by itself.
+model ResearchSchedule {
+  id          String    @id @default(cuid())
+  orgId       String
+  label       String
+  focus       String?
+  cadenceDays Int       @default(7)
+  /// JSON [{ kind, label, url? }] using the run source kinds.
+  sources     String    @default("[]")
+  active      Boolean   @default(true)
+  nextRunAt   DateTime
+  lastRunAt   DateTime?
+  lastRunId   String?
+  /// JSON summary of the last attempt: collected, duplicates, unavailable reasons, or why it was skipped.
+  lastOutcome String?
+  createdById String?
+  createdAt   DateTime  @default(now())
+
+  @@index([active, nextRunAt])
+  @@index([orgId])
+}

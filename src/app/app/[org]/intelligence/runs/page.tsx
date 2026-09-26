@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Telescope } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { SchedulesPanel } from "./schedules-panel";
+import { prisma } from "@/lib/db/client";
 import { listRuns, rankedTests, runCounts } from "@/lib/data/runs";
 import { RUN_STATUS_META, RUN_STATUS_OPTIONS, type RunStatus } from "@/lib/domain/enums";
 import { readFilter, readSingle, type RawSearchParams } from "@/lib/utils/search-params";
@@ -184,6 +186,12 @@ export default async function RunsPage({
           })}
         </ul>
       )}
+      {ctx.can("runs.manage") ? (
+        <SchedulesPanel
+          slug={slug}
+          rows={(await prisma.researchSchedule.findMany({ where: { orgId: ctx.org.id }, orderBy: { createdAt: "desc" }, take: 20 })).map((r) => ({ id: r.id, label: r.label, cadenceDays: r.cadenceDays, active: r.active, nextRunAt: r.nextRunAt.toISOString(), lastOutcome: r.lastOutcome }))}
+        />
+      ) : null}
     </div>
   );
 }

@@ -117,6 +117,9 @@ registerHandler("daily.tick", async () => {
   // INT-03: queue any due scheduled publish whose job was lost.
   const { queueDuePublishes } = await import("@/lib/publishing");
   await queueDuePublishes();
+  // AI-02: scheduled research runs that are due.
+  const { runDueSchedules } = await import("@/lib/research/schedules");
+  await runDueSchedules();
   // COM-07: Threadline's own prospect follow-ups and unread applications.
   const { remindProspectFollowUps } = await import("@/lib/sales/follow-ups");
   await remindProspectFollowUps();
