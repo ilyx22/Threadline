@@ -1,7 +1,7 @@
 import { createHash, createHmac, randomUUID } from "node:crypto";
 import path from "node:path";
 import type { StorageAdapter, StoredFile } from "./index";
-import { StorageError, checkFile } from "./index";
+import { StorageError, assertContent, checkFile } from "./index";
 
 /**
  * S3-compatible private storage. Plain `fetch` + AWS Signature V4, so it works
@@ -85,6 +85,7 @@ export class S3StorageAdapter implements StorageAdapter {
     const { mimeType, safeName } = checkFile(file);
     const key = path.posix.join(orgId, prefix ?? "assets", `${randomUUID()}${path.extname(safeName)}`);
     const buffer = Buffer.from(await file.arrayBuffer());
+    assertContent(mimeType, buffer);
     const res = await this.request("PUT", key, buffer, { "content-type": mimeType, "content-length": String(buffer.byteLength) });
     if (!res.ok) throw new StorageError(`Storage refused the upload (${res.status}).`);
     return { storagePath: key, fileName: safeName, mimeType, sizeBytes: buffer.byteLength };

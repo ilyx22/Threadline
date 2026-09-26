@@ -2,6 +2,7 @@ import "server-only";
 import { createHash, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { ACCEPTED, contentProblem } from "./sniff";
 
 /**
  * Storage adapter.
@@ -35,16 +36,6 @@ export interface StorageAdapter {
 
 const MAX_BYTES = 512 * 1024 * 1024; // 512MB — raw video is the largest realistic upload
 
-const ALLOWED_MIME_PREFIXES = ["video/", "image/", "audio/"];
-const ALLOWED_MIME_EXACT = new Set([
-  "application/pdf",
-  "text/plain",
-  "text/csv",
-  "text/markdown",
-  "application/json",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-]);
 
 export class StorageError extends Error {
   constructor(message: string) {
@@ -62,10 +53,19 @@ export function checkFile(file: File): { mimeType: string; safeName: string } {
   if (file.size > MAX_BYTES) {
     throw new StorageError(`Files must be smaller than ${Math.floor(MAX_BYTES / 1024 / 1024)}MB.`);
   }
-  const mimeType = file.type || "application/octet-stream";
-  const allowed = ALLOWED_MIME_PREFIXES.some((p) => mimeType.startsWith(p)) || ALLOWED_MIME_EXACT.has(mimeType);
-  if (!allowed) throw new StorageError(`Files of type "${mimeType}" are not accepted.`);
+  const mimeType = (file.type || "application/octet-stream").toLowerCase().split(";")[0].trim();
+  // SEC-02: the declared type is client input. It must be on the allowlist
+  // here, and the bytes are checked against it in assertContent before storing.
+  if (!ACCEPTED[mimeType] || mimeType === "image/svg+xml") {
+    throw new StorageError(contentProblem(mimeType, new Uint8Array()) ?? `Files of type "${mimeType}" are not accepted.`);
+  }
   return { mimeType, safeName: sanitiseFileName(file.name || "upload") };
+}
+
+/** Refuse a file whose first bytes do not match its declared type (SEC-02). */
+export function assertContent(mimeType: string, buffer: Uint8Array) {
+  const problem = contentProblem(mimeType, buffer.subarray(0, 4096));
+  if (problem) throw new StorageError(problem);
 }
 
 /** In-memory adapter for tests and for the S3 boundary to be exercised without credentials. */
@@ -76,6 +76,7 @@ export class MemoryStorageAdapter implements StorageAdapter {
     const { mimeType, safeName } = checkFile(file);
     const key = path.posix.join(orgId, prefix ?? "assets", `${randomUUID()}${path.extname(safeName)}`);
     const buffer = Buffer.from(await file.arrayBuffer());
+    assertContent(mimeType, buffer);
     this.files.set(key, { buffer, mimeType });
     return { storagePath: key, fileName: safeName, mimeType, sizeBytes: buffer.byteLength };
   }
@@ -124,8 +125,9 @@ export class LocalStorageAdapter implements StorageAdapter {
     const relative = path.posix.join(orgId, prefix ?? "assets", key);
     const full = this.resolve(relative);
 
-    await fs.mkdir(path.dirname(full), { recursive: true });
     const buffer = Buffer.from(await file.arrayBuffer());
+    assertContent(mimeType, buffer);
+    await fs.mkdir(path.dirname(full), { recursive: true });
     await fs.writeFile(full, buffer);
 
     return {
