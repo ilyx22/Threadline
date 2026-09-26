@@ -1,4 +1,5 @@
 import "server-only";
+import { contentMix } from "@/lib/content/mix";
 import { prisma } from "@/lib/db/client";
 import { parseStringArray, parseWith } from "@/lib/db/json";
 import {
@@ -260,6 +261,16 @@ export async function loadWorkspaceContext(
         bullets(
           "Validated learnings and patterns",
           patterns.map((p) => `[${p.kind}] ${p.title}${p.description ? ` — ${truncateWords(p.description, 28)}` : ""}`),
+        ) ?? "",
+      );
+    }
+    // AI-04: the measured mix by PESTO category and funnel role.
+    const mix = await contentMix(orgId, new Date(Date.now() - 180 * 86_400_000));
+    if (mix.length) {
+      lines.push(
+        bullets(
+          "Content mix, measured (last six months)",
+          mix.map((m) => `${m.key.replace(":", " ")}: ${m.pieces} pieces, ${m.viewsPerPiece.toLocaleString("en-GB")} views and ${m.inquiriesPerPiece} inquiries per piece${m.tooFew ? " (too few to judge)" : ""}`),
         ) ?? "",
       );
     }

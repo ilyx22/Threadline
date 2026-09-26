@@ -64,6 +64,7 @@ Rules for this task:
   a piece of customer language, a competitor observation, a founder belief, or a performance learning.
 - Do not repeat angles listed under "Recently covered".
 - Vary the shape: beliefs, mechanisms, objection handling, stories, teardowns, frameworks.
+- Balance the mix across PESTO and funnel roles, leaning towards what the performance context shows works.
 - Prefer angles only THIS founder could credibly publish.
 ${input.platforms.length ? `- Target platforms: ${input.platforms.join(", ")}.` : ""}
 ${input.pillars.length ? `- Assign each idea to one of these pillars: ${input.pillars.join(", ")}.` : ""}
@@ -92,10 +93,16 @@ Return JSON:
       "relevanceScore": number,
       "proofStrength": number,
       "formatFit": number,
-      "rationale": string
+      "rationale": string,
+      "pesto": "personal" | "expertise" | "social_proof" | "trending" | "opinion",
+      "funnelRole": "awareness" | "consideration" | "conversion" | "retention"
     }
   ]
 }
+
+"pesto" says what kind of piece it is (a personal story from the context, expertise, social proof
+the context actually contains, a timely development, or an opinion). Never label an idea
+social_proof or personal unless the context contains that proof or story; do not invent one.
 `.trim(),
     maxTokens: 6000,
     temperature: 0.85,

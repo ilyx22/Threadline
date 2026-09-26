@@ -306,6 +306,8 @@ export async function generateIdeasAction(
             formatFit: Math.round(idea.formatFit),
             priorityScore: ideaPriority(idea),
             rationale: idea.rationale || null,
+            pesto: idea.pesto ?? null,
+            funnelRole: idea.funnelRole ?? null,
             source: "ai",
             status: "backlog",
             createdById: ctx.user.id,

@@ -249,6 +249,8 @@ function buildIdeas(ctx: DemoContext) {
       relevanceScore: 60 + (seed % 34),
       proofStrength: ctx.topPerformers?.length ? 55 + (seed % 38) : 40 + (seed % 30),
       formatFit: 58 + (seed % 36),
+      pesto: (["expertise", "opinion", "trending", "personal", "social_proof"] as const)[i % 5],
+      funnelRole: (["awareness", "consideration", "conversion"] as const)[i % 3],
       rationale: `Demo composition. Frame: ${shape.frame}. Built from the workspace's stored ${
         ctx.pains?.length ? "customer pains" : "context"
       }${ctx.learnings?.length ? " and the most recent performance learning" : ""}. Review the angle before scripting.`,

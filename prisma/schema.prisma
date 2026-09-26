@@ -573,6 +573,10 @@ model Idea {
   relevanceScore   Int      @default(50)
   proofStrength    Int      @default(50)
   formatFit        Int      @default(50)
+  /// AI-04: personal | expertise | social_proof | trending | opinion (PESTO)
+  pesto            String?
+  /// AI-04: awareness | consideration | conversion | retention
+  funnelRole       String?
   priorityScore    Float    @default(0)
   status           String   @default("backlog") // backlog | shortlisted | approved | scripted | rejected | archived
   rationale        String?

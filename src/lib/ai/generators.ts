@@ -60,6 +60,9 @@ const generatedIdeaSchema = z.object({
   proofStrength: z.coerce.number().min(0).max(100).default(50),
   formatFit: z.coerce.number().min(0).max(100).default(50),
   rationale: z.string().max(1500).default(""),
+  /** AI-04: PESTO category and funnel role; unknown values are dropped rather than guessed. */
+  pesto: z.enum(["personal", "expertise", "social_proof", "trending", "opinion"]).optional().catch(undefined),
+  funnelRole: z.enum(["awareness", "consideration", "conversion", "retention"]).optional().catch(undefined),
 });
 
 export type GeneratedIdea = z.infer<typeof generatedIdeaSchema>;
