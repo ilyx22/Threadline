@@ -61,6 +61,8 @@ export class MockProvider implements AiProvider {
         return buildNarrative(ctx);
       case "lead.reply":
         return buildLeadReply(ctx);
+      case "review.draft":
+        return JSON.stringify(buildReviewDraft(ctx));
       case "source.mine":
         return JSON.stringify({ items: buildMined(ctx) });
       case "corpus.analyse":
@@ -129,6 +131,9 @@ type DemoContext = {
   inquiries?: number;
   calls?: number;
   bottleneck?: string;
+  /** Four-week review draft (AI-07). */
+  reviewFacts?: string;
+  reviewFigures?: { published: number; views: number; inquiries: number; callsBooked: number; correctionsMade: number; correctionsWorked: number };
   /** Source miner (AI-01): the source text, so demo quotes are exact. */
   mineSource?: string;
   /** Lead reply (AI-06). */
@@ -820,4 +825,14 @@ function buildMined(ctx: DemoContext) {
     : /\b(when we|last year|I remember|once)\b/i.test(x) ? "story"
     : "expertise";
   return sentences.slice(0, 12).map((x) => ({ kind: kindOf(x), quote: x, note: "Demo classification; review before use." }));
+}
+
+function buildReviewDraft(ctx: DemoContext) {
+  const f = ctx.reviewFigures ?? { published: 0, views: 0, inquiries: 0, callsBooked: 0, correctionsMade: 0, correctionsWorked: 0 };
+  return {
+    action: `${f.published} pieces were published this period.`,
+    results: `They reached ${f.views.toLocaleString("en-GB")} views and produced ${f.inquiries} inquiries and ${f.callsBooked} booked calls.`,
+    problems: f.correctionsMade ? `${f.correctionsMade} corrections were made; ${f.correctionsWorked} are confirmed as working so far.` : "No corrections were recorded, so there is no recorded evidence of what did not work.",
+    future: "Carry forward what the records show worked, and retest the corrections not yet confirmed.",
+  };
 }

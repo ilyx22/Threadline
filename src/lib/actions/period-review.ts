@@ -9,7 +9,7 @@ import { appUrl } from "@/lib/app-url";
 import { enqueue } from "@/lib/jobs";
 import "@/lib/jobs/handlers";
 import { WorkflowError } from "@/lib/domain/workflow";
-import { finaliseReview, openPeriodReview, refreshFigures, reviseReview, saveReviewSections } from "@/lib/reports/period-review";
+import { draftReviewSections, finaliseReview, openPeriodReview, refreshFigures, reviseReview, saveReviewSections } from "@/lib/reports/period-review";
 import { err, guarded, ok, okVoid, parseForm, type ActionResult } from "./shared";
 
 /** Four-week reviews (REP-02): written and finalised by Threadline, read by the client. */
@@ -46,6 +46,21 @@ export async function saveReviewAction(orgSlug: string, reviewId: string, _prev:
     }
     where(orgSlug, reviewId);
     return okVoid("Saved.");
+  });
+}
+
+/** AI-07: draft the empty sections from the records, for the operator to edit. */
+export async function draftReviewSectionsAction(orgSlug: string, reviewId: string): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "reports.finalise");
+    try {
+      const r = await draftReviewSections(reviewId, ctx.org.id, ctx.user.id);
+      await audit(ctx, { action: "review.ai_draft", entityType: "period_review", entityId: reviewId, summary: `Drafted ${r.filled.join(", ") || "nothing"} from the records${r.isDemo ? " (demo)" : ""}` });
+      where(orgSlug, reviewId);
+      return okVoid(r.filled.length ? `Drafted ${r.filled.join(", ")}. Edit before finalising.` : "Nothing was drafted.");
+    } catch (x) {
+      return wrap(x) ?? Promise.reject(x);
+    }
   });
 }
 

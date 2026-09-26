@@ -100,3 +100,50 @@ export async function reviseReview(reviewId: string, orgId: string, userId: stri
     data: { orgId, engagementId: r.engagementId, periodNumber: r.periodNumber, periodStart: r.periodStart, periodEnd: r.periodEnd, version: r.version + 1, figures: r.figures, action: r.action, results: r.results, problems: r.problems, future: r.future, createdById: userId, revisionReason: reason.slice(0, 1000) },
   });
 }
+
+/**
+ * AI-07: a draft of the four sections from the frozen figures and the
+ * period's recorded corrections and approved diagnoses, for the operator to
+ * edit. It fills only sections that are still empty, never overwrites what a
+ * person wrote, and never finalises.
+ */
+export async function draftReviewSections(reviewId: string, orgId: string, userId: string) {
+  const r = await prisma.periodReview.findFirst({ where: { id: reviewId, orgId } });
+  if (!r) throw new WorkflowError("That review no longer exists.");
+  if (r.status !== "draft") throw new WorkflowError("Only a draft review can be drafted.");
+  const empty = (["action", "results", "problems", "future"] as const).filter((k) => !r[k].trim());
+  if (!empty.length) throw new WorkflowError("Every section already has text; nothing was changed.");
+  const f = JSON.parse(r.figures) as PeriodFigures;
+  const range = { gte: r.periodStart, lt: r.periodEnd };
+  const [corrections, diagnoses] = await Promise.all([
+    prisma.correctionEntry.findMany({ where: { orgId, createdAt: range }, select: { failedAssumption: true, correction: true, worked: true }, take: 10 }),
+    prisma.contentDiagnosis.findMany({ where: { orgId, approvalState: "approved", approvedAt: range }, select: { failureClass: true, explanation: true }, take: 10 }),
+  ]);
+  const facts = [
+    `Published ${f.published} pieces, ${f.views} views. Inquiries ${f.inquiries}, qualified ${f.qualified}, calls booked ${f.callsBooked}, won ${f.won}.`,
+    `Approvals given ${f.approvalsGiven}; changes requested ${f.changesRequested}; weekly reports finalised ${f.weeklyReportsFinal}.`,
+    `Corrections made ${f.correctionsMade}, of which ${f.correctionsWorked} confirmed as working.`,
+    ...corrections.map((c) => `Correction: believed "${c.failedAssumption}"; changed "${c.correction}"; ${c.worked === true ? "worked" : c.worked === false ? "did not work" : "not yet retested"}.`),
+    ...diagnoses.map((d) => `Approved diagnosis (${d.failureClass}): ${d.explanation}`),
+  ].join("\n");
+  const { runGeneration } = await import("@/lib/ai");
+  const { extractJson } = await import("@/lib/ai/provider");
+  const { result, meta } = await runGeneration(
+    {
+      key: "review.draft",
+      system: 'You draft a four-week review for a founder, from the records given and nothing else. Never add a number, a result or a cause that is not in the records. Where the records are thin, say so plainly. Return JSON { "action": string, "results": string, "problems": string, "future": string }, each two to five sentences.',
+      user: `RECORDS FOR THE PERIOD\n${facts}\n\nDraft ACTION (what was done), RESULTS (what happened, with the figures), PROBLEMS (what did not work and why, only where recorded) and FUTURE (what changes next period).`,
+      maxTokens: 1500,
+      temperature: 0.3,
+    },
+    { orgId, userId, kind: "review_draft", entityType: "period_review", entityId: r.id, demoContext: { reviewFacts: facts, reviewFigures: f } },
+  );
+  const parsed = (extractJson(result.text) ?? {}) as Record<string, unknown>;
+  const data: Record<string, string> = {};
+  for (const k of empty) {
+    const v = parsed[k];
+    if (typeof v === "string" && v.trim()) data[k] = `${v.trim().slice(0, 4000)}${meta.isDemo ? " [demo draft]" : ""}`;
+  }
+  if (Object.keys(data).length) await prisma.periodReview.updateMany({ where: { id: r.id, status: "draft" }, data });
+  return { filled: Object.keys(data), isDemo: meta.isDemo };
+}

@@ -9,7 +9,7 @@ import { Field } from "@/components/ui/field";
 import { Input, Textarea } from "@/components/ui/input";
 import { toast } from "@/components/ui/toast";
 import { ActionForm, FormError, SubmitButton } from "@/components/forms/action-form";
-import { finaliseReviewAction, refreshReviewFiguresAction, reviseReviewAction, saveReviewAction } from "@/lib/actions/period-review";
+import { draftReviewSectionsAction, finaliseReviewAction, refreshReviewFiguresAction, reviseReviewAction, saveReviewAction } from "@/lib/actions/period-review";
 
 type Section = { key: "action" | "results" | "problems" | "future"; title: string; ask: string; value: string };
 
@@ -61,6 +61,9 @@ export function ReviewEditor({ slug, reviewId, sections, reviseOnly = false }: {
             <SubmitButton variant="secondary">Save draft</SubmitButton>
             <Button type="button" variant="ghost" icon={RefreshCw} disabled={pending} onClick={() => run(() => refreshReviewFiguresAction(slug, reviewId))}>
               Recompute figures
+            </Button>
+            <Button type="button" variant="ghost" disabled={pending} onClick={() => run(() => draftReviewSectionsAction(slug, reviewId))}>
+              Draft empty sections from the records
             </Button>
             <Button
               type="button"
