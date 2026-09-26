@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { turnaround } from "@/lib/delivery/qa";
 import Link from "next/link";
 import { requireInternal } from "@/lib/auth/guard";
 import { deliveryLoad } from "@/lib/data/delivery-load";
@@ -14,7 +15,7 @@ const gbp = (minor: number) => `£${(minor / 100).toLocaleString("en-GB", { maxi
 
 export default async function DeliveryLoadPage() {
   await requireInternal("admin.view");
-  const load = await deliveryLoad();
+  const [load, turn] = await Promise.all([deliveryLoad(), turnaround(new Date(Date.now() - 56 * 86_400_000))]);
 
   return (
     <div className="space-y-6">
@@ -24,6 +25,28 @@ export default async function DeliveryLoadPage() {
           Is each client getting easier or harder to serve? Active minutes, waiting minutes and cash cost as operators recorded them, by client and service period. Nothing here is an estimate; a period with no recorded load shows nothing.
         </p>
       </header>
+
+      <Card>
+        <CardHeader title="Turnaround, last eight weeks" eyebrow={`${turn.pieces} approved`} description="From the recorded history of each approved piece: medians, not targets." />
+        <CardBody className="pt-0 text-[12.5px] text-muted">
+          {turn.pieces === 0 ? (
+            <p>No piece was approved in the window.</p>
+          ) : (
+            <>
+              <p>
+                To first review: <span className="tabular text-ink">{turn.toReviewHours ?? "n/a"} h</span> · review to approval: <span className="tabular text-ink">{turn.reviewToApprovalHours ?? "n/a"} h</span> · revision rounds: <span className="tabular text-ink">{turn.revisions ?? "n/a"}</span>
+              </p>
+              <ul className="mt-2 space-y-0.5">
+                {turn.byEditor.map((e) => (
+                  <li key={e.editor}>
+                    {e.editor}: {e.pieces} pieces · {e.toApprovalHours ?? "n/a"} h to approval · {e.revisions ?? "n/a"} revisions
+                  </li>
+                ))}
+              </ul>
+            </>
+          )}
+        </CardBody>
+      </Card>
 
       {load.recordedTasks === 0 ? (
         <EmptyState icon={Gauge} title="No load recorded yet" description="Log minutes and a work class on tasks as they complete. This view fills in from those records." />

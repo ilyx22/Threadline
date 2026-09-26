@@ -16,6 +16,8 @@ import { fingerprint } from "@/lib/delivery/approvals";
 import { prisma } from "@/lib/db/client";
 import { CORRECTION_LEVERS, FAILURE_CLASSES } from "@/lib/domain/content-diagnosis";
 import { LearningPanel } from "./learning-panel";
+import { QaPanel } from "./qa-panel";
+import { currentQa, QA_CHECKS } from "@/lib/delivery/qa";
 import { assignableEditors, contentComments, getContentItem } from "@/lib/data/content";
 import { contentLineage } from "@/lib/data/lineage";
 import { PLATFORM_META, metaOf } from "@/lib/domain/enums";
@@ -51,6 +53,8 @@ export default async function ContentDetailPage({
 
   if (!item || !lineage) notFound();
   const currentVersion = (await fingerprint(ctx.org.id, { type: "content_item", id }))?.label ?? null;
+  // DEL-06: internal QA, for staff and the assigned editor.
+  const qa = ctx.isInternal || ctx.role === "editor" ? { latest: await currentQa(ctx.org.id, id) } : null;
 
   const totalViews = item.publishRecords.reduce((a, r) => a + (r.snapshots[0]?.views ?? 0), 0);
 
@@ -318,6 +322,7 @@ export default async function ContentDetailPage({
             </CardBody>
           </Card>
           {learning ? <LearningPanel slug={slug} view={learning} /> : null}
+          {qa ? <QaPanel slug={slug} contentItemId={id} checks={QA_CHECKS.map((c) => ({ key: c.key, label: c.label }))} latest={qa.latest ? { result: qa.latest.result, versionLabel: qa.latest.versionLabel, current: qa.latest.current, createdAt: qa.latest.createdAt.toISOString() } : null} /> : null}
         </div>
 
         {/* -------------------------------- Sidebar -------------------------------- */}

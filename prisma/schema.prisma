@@ -3411,3 +3411,20 @@ model DataExport {
   @@index([orgId, createdAt])
   @@index([status, expiresAt])
 }
+
+/// An internal QA pass on a cut before the client sees it (DEL-06), against
+/// the editor QA checklist, bound to the version checked.
+model QaReview {
+  id            String   @id @default(cuid())
+  orgId         String
+  contentItemId String
+  versionLabel  String
+  reviewerId    String
+  /// JSON [{ key, pass, note }]
+  checks        String
+  result        String // pass | fail
+  notes         String?
+  createdAt     DateTime @default(now())
+
+  @@index([orgId, contentItemId, createdAt])
+}
