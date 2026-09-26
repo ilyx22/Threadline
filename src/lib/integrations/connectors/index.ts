@@ -50,6 +50,12 @@ export type Connector = {
   /** What live use needs beyond credentials — platform review, partner tiers. */
   gates: string[];
   externalIdFromUrl?(url: string): string | null;
+  /**
+   * The account to publish as, looked up once after the OAuth exchange: the
+   * member, page or profile id, and for Facebook the Page's own token. Without
+   * it a connection can exist that can never post.
+   */
+  resolveAccount?(accessToken: string): Promise<{ id: string; label?: string | null; accessToken?: string } | null>;
   publish(input: PublishInput): Promise<PublishOutcome>;
   publishStatus?(input: { accessToken: string; externalId: string }): Promise<StatusOutcome>;
   /** Publish a processed container (Instagram, Threads). Returns the final media id. */

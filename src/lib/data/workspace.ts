@@ -291,30 +291,44 @@ export async function searchWorkspace(
   orgSlug: string,
   query: string,
   role: Role,
+  /**
+   * TEAM-09 / SEC-01: what this caller may see. `scope` limits a contractor to
+   * their pieces (and files they uploaded); `can` hides whole areas the
+   * caller's role cannot open (ideas, pipeline, signals).
+   */
+  access: { scope: { ids: string[]; userId: string } | null; can: (capability: string) => boolean } = { scope: null, can: () => true },
 ): Promise<SearchResult[]> {
   const q = query.trim();
   if (q.length < 2) return [];
+  const { scope, can } = access;
+  const none = Promise.resolve([] as never[]);
 
   const base = `/app/${orgSlug}`;
   const take = 6;
   const operator = seesOperatorSurface(role);
 
   const [ideas, scripts, content, research, patterns, assets, inquiries] = await Promise.all([
-    prisma.idea.findMany({
-      where: { orgId, title: { contains: q } },
-      take,
-      select: { id: true, title: true, status: true },
-    }),
-    prisma.script.findMany({
-      where: { orgId, title: { contains: q } },
-      take,
-      select: { id: true, title: true, qaState: true },
-    }),
-    prisma.contentItem.findMany({
-      where: { orgId, title: { contains: q } },
-      take,
-      select: { id: true, title: true, stage: true },
-    }),
+    can("ideas.view") && !scope
+      ? prisma.idea.findMany({
+          where: { orgId, title: { contains: q } },
+          take,
+          select: { id: true, title: true, status: true },
+        })
+      : none,
+    can("scripts.view")
+      ? prisma.script.findMany({
+          where: { orgId, title: { contains: q }, ...(scope ? { contentItems: { some: { id: { in: scope.ids } } } } : {}) },
+          take,
+          select: { id: true, title: true, qaState: true },
+        })
+      : none,
+    can("production.view")
+      ? prisma.contentItem.findMany({
+          where: { orgId, title: { contains: q }, ...(scope ? { id: { in: scope.ids } } : {}) },
+          take,
+          select: { id: true, title: true, stage: true },
+        })
+      : none,
     // Raw research is operator-only. A client reaches the items that mattered
     // through the brief that cites them, with the reasoning attached.
     operator
@@ -324,21 +338,27 @@ export async function searchWorkspace(
           select: { id: true, title: true, kind: true },
         })
       : Promise.resolve([]),
-    prisma.pattern.findMany({
+    scope
+      ? none
+      : prisma.pattern.findMany({
       where: { orgId, title: { contains: q }, ...clientScope.patterns(role) },
       take,
       select: { id: true, title: true, kind: true },
     }),
-    prisma.asset.findMany({
-      where: { orgId, title: { contains: q } },
-      take,
-      select: { id: true, title: true, category: true },
-    }),
-    prisma.inquiry.findMany({
-      where: { orgId, OR: [{ name: { contains: q } }, { company: { contains: q } }] },
-      take,
-      select: { id: true, name: true, company: true, stage: true },
-    }),
+    can("library.view")
+      ? prisma.asset.findMany({
+          where: { orgId, title: { contains: q }, ...(scope ? { OR: [{ contentItemId: { in: scope.ids } }, { uploadedById: scope.userId }] } : {}) },
+          take,
+          select: { id: true, title: true, category: true },
+        })
+      : none,
+    can("pipeline.view") && !scope
+      ? prisma.inquiry.findMany({
+          where: { orgId, OR: [{ name: { contains: q } }, { company: { contains: q } }] },
+          take,
+          select: { id: true, name: true, company: true, stage: true },
+        })
+      : none,
   ]);
 
   return [

@@ -28,6 +28,13 @@ export const facebook: Connector = {
       env,
     }),
   externalIdFromUrl: () => null, // Page post URLs do not carry the Graph id reliably; the id comes back from publishing.
+  // A Page is published with the Page's own token, from /me/accounts. With several Pages the first
+  // is used and named, so an admin can see which one was connected.
+  async resolveAccount(accessToken) {
+    const res = await http(`${GRAPH}/me/accounts?fields=id,name,access_token&access_token=${encodeURIComponent(accessToken)}`);
+    const page = (res.json as { data?: { id?: string; name?: string; access_token?: string }[] } | null)?.data?.[0];
+    return res.status === 200 && page?.id && page.access_token ? { id: page.id, label: page.name ?? null, accessToken: page.access_token } : null;
+  },
 
   async publish(input) {
     if (!input.externalAccountId) return { ok: false, code: "invalid_request", message: "Facebook needs the Page id.", retryable: false };

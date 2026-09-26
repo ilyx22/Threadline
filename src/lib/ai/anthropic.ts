@@ -27,7 +27,7 @@ export class AnthropicProvider implements AiProvider {
         temperature: request.temperature ?? 0.7,
         system: request.system,
         messages: request.messages.map((m) => ({ role: m.role, content: m.content })),
-      });
+      }, { signal: request.signal });
 
       const text = response.content
         .filter((block): block is Anthropic.TextBlock => block.type === "text")

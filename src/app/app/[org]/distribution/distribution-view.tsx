@@ -20,6 +20,7 @@ import { ActionButton, ActionForm, FormError, SubmitButton } from "@/components/
 import {
   createPublishRecordAction,
   resolveUncertainPublishAction,
+  resumeThreadAction,
   deletePublishRecordAction,
   updatePublishRecordAction,
 } from "@/lib/actions/distribution";
@@ -266,7 +267,14 @@ export function DistributionView({
                   <TD>{metaOf(PLATFORM_META, record.platform).label}</TD>
                   <TD>
                     <PublishStatusBadge status={record.status} />
-                    {record.providerStatus === "UNCERTAIN" && canPublish ? <UncertainResolver slug={slug} recordId={record.id} /> : record.failureReason && record.status === "failed" ? <p className="mt-1 max-w-[16rem] text-[11px] text-ghost">{record.failureReason}</p> : null}
+                    {record.providerStatus === "PARTIAL_THREAD" && canPublish ? (
+                      <div className="mt-1 max-w-[18rem] space-y-1 text-[11px] text-ghost">
+                        <p>{record.failureReason}</p>
+                        <ActionButton size="xs" variant="ghost" action={() => resumeThreadAction(slug, record.id)} onDone={() => router.refresh()}>
+                          Resume the thread
+                        </ActionButton>
+                      </div>
+                    ) : record.providerStatus === "UNCERTAIN" && canPublish ? <UncertainResolver slug={slug} recordId={record.id} /> : record.failureReason && record.status === "failed" ? <p className="mt-1 max-w-[16rem] text-[11px] text-ghost">{record.failureReason}</p> : null}
                   </TD>
                   <TD>
                     {record.publishedAt

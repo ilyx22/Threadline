@@ -89,7 +89,11 @@ async function main() {
     // the authoritative copy, so the scratch tables start empty.
     for (const m of [...seq].reverse()) await (dst as unknown as Record<string, { deleteMany(): Promise<unknown> }>)[delegate(m.name)].deleteMany();
 
-    // 3. Restore
+    // 3. Restore. Rows are copied exactly as backed up, so user triggers (such as the
+    // Brand Brain versioning trigger, which would write its own version rows) are
+    // disabled for the restore and switched back on afterwards.
+    const tableOf = (m: (typeof seq)[number]) => (m as unknown as { dbName?: string | null }).dbName ?? m.name;
+    for (const m of seq) await dst.$executeRawUnsafe(`ALTER TABLE "${tableOf(m)}" DISABLE TRIGGER USER`);
     for (const m of seq) {
       const cols = m.fields.filter((f) => f.kind === "scalar" || f.kind === "enum").map((f) => f.name);
       const self = selfRefs.get(m.name) ?? [];
@@ -103,6 +107,7 @@ async function main() {
         if (Object.keys(patch).length) await (dst as unknown as Table)[delegate(m.name)].update({ where: { [id]: r[id] }, data: patch });
       }
     }
+    for (const m of seq) await dst.$executeRawUnsafe(`ALTER TABLE "${tableOf(m)}" ENABLE TRIGGER USER`);
     await dst.$executeRawUnsafe(`SELECT setval('invoice_number_seq', ${Number(seqRow[0]?.last_value ?? 1)})`);
 
     // 4. Reconcile

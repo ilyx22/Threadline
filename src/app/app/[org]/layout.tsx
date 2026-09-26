@@ -11,6 +11,7 @@ import { workspaceNav } from "@/lib/navigation";
 import { seesOperatorSurface } from "@/lib/domain/visibility";
 import { prisma } from "@/lib/db/client";
 import { listNotifications, unreadNotificationCount, searchWorkspace } from "@/lib/data/workspace";
+import { contentScope } from "@/lib/team/scope";
 import { approvalCount } from "@/lib/data/client-surface";
 import { logoutAction } from "@/lib/actions/auth";
 import { markNotificationsReadAction } from "@/lib/actions/workspace";
@@ -71,7 +72,8 @@ export default async function AppLayout({
     // Re-resolves the caller server-side: the client cannot widen this scope.
     const inner = await requireOrgAccess(slug, "workspace.view");
     // Role re-resolved server-side: the caller cannot widen their own scope.
-    return searchWorkspace(inner.org.id, slug, query, inner.role);
+    const scope = await contentScope(inner.org.id, inner.user.id, inner.role);
+    return searchWorkspace(inner.org.id, slug, query, inner.role, { scope: scope ? { ids: scope, userId: inner.user.id } : null, can: (c) => inner.can(c as never) });
   }
 
   async function markRead() {

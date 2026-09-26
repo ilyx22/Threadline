@@ -6,7 +6,8 @@ import type { AuthContext } from "@/lib/auth/guard";
 import { recordDecision } from "@/lib/delivery/approvals";
 import { putCredential } from "@/lib/integrations/credentials";
 import { __setConnectorFetch } from "@/lib/integrations/connectors";
-import { accessTokenFor, pollPublish, queueDuePublishes, refreshExpiringTokens, resolveUncertain, runPublish, schedulePublish } from "./index";
+import { accessTokenFor, pollPublish, queueDuePublishes, reapStaleClaims, refreshExpiringTokens, resolveUncertain, resumeThread, runPublish, schedulePublish } from "./index";
+import { splitThread } from "@/lib/integrations/connectors/x";
 
 const stamp = Date.now();
 const saved = { keys: process.env.CREDENTIAL_ENCRYPTION_KEYS, env: process.env.APP_ENV, id: process.env.LINKEDIN_CLIENT_ID, secret: process.env.LINKEDIN_CLIENT_SECRET };
@@ -32,7 +33,7 @@ before(async () => {
   packageId = (await prisma.platformPackage.create({ data: { orgId, contentItemId: contentId, platform: "linkedin", caption: "The caption", hashtags: '["growth"]' } as never })).id;
   await recordDecision(ctx, { type: "content_item", id: contentId }, "approved");
   await recordDecision(ctx, { type: "platform_package", id: packageId }, "approved");
-  for (const provider of ["linkedin", "instagram"]) {
+  for (const provider of ["linkedin", "instagram", "x"]) {
     await prisma.integration.create({ data: { orgId, provider, authStatus: "connected", externalAccountId: "acct-1", status: "configured" } as never });
     await putCredential({ orgId, provider, purpose: "oauth_access", secret: `token-${provider}`, scopes: [], externalAccountId: "acct-1" });
   }
@@ -104,6 +105,46 @@ describe("scheduled publishing (INT-03, INT-02, JOB-02)", () => {
     assert.deepEqual([row.status, row.providerStatus], ["scheduled", null]);
     assert.equal(await queueDuePublishes(), 1);
     await prisma.publishRecord.delete({ where: { id: r.id } });
+  });
+
+  it("long X text goes out as a thread; a break is recorded and resumed without re-posting", async () => {
+    const long = Array.from({ length: 4 }, (_, i) => `Paragraph ${i + 1}. ` + "Specific point about the forecast meeting. ".repeat(4)).join("\n\n");
+    const posts = splitThread(long);
+    assert.ok(posts.length >= 4 && posts.every((p) => p.length <= 280));
+    await prisma.platformPackage.update({ where: { id: packageId }, data: { caption: long, hashtags: "[]" } });
+    await recordDecision(ctx, { type: "platform_package", id: packageId }, "approved");
+    let n = 0;
+    const sent: string[] = [];
+    __setConnectorFetch((async (_u: string | URL, init?: RequestInit) => {
+      n++;
+      sent.push(String(init?.body ?? ""));
+      if (n === 3) return respond(503, {});
+      return respond(201, { data: { id: `t${n}` } });
+    }) as typeof fetch);
+    const r = await record("x");
+    assert.equal((await runPublish(r.id)).state, "partial");
+    const row = await prisma.publishRecord.findUniqueOrThrow({ where: { id: r.id } });
+    assert.deepEqual([row.status, row.providerStatus], ["failed", "PARTIAL_THREAD"]);
+    assert.deepEqual(JSON.parse(row.providerPayload!).postedIds, ["t1", "t2"]);
+    n = 10;
+    sent.length = 0;
+    assert.equal((await resumeThread(orgId, r.id)).state, "published");
+    assert.match(sent[0], /"in_reply_to_tweet_id":"t2"/, "resumes as a reply to the last post");
+    assert.equal(sent.length, posts.length - 2, "posted parts are never sent again");
+    await prisma.platformPackage.update({ where: { id: packageId }, data: { caption: "The caption", hashtags: '["growth"]' } });
+    await recordDecision(ctx, { type: "platform_package", id: packageId }, "approved");
+  });
+
+  it("a claim left by a crashed worker is released as UNCERTAIN after fifteen minutes, never resent", async () => {
+    const r = await record("linkedin", { providerStatus: "PUBLISHING" });
+    // The column holds UTC without a zone; pass it as such so the session time zone cannot shift it.
+    const past = new Date(Date.now() - 20 * 60_000).toISOString().replace("Z", "");
+    await prisma.$executeRaw`UPDATE "PublishRecord" SET "updatedAt" = ${past}::timestamp WHERE id = ${r.id}`;
+    const out = await reapStaleClaims();
+    assert.ok(out.released >= 1);
+    const row = await prisma.publishRecord.findUniqueOrThrow({ where: { id: r.id } });
+    assert.deepEqual([row.status, row.providerStatus], ["failed", "UNCERTAIN"]);
+    assert.equal((await runPublish(r.id)).state, "skipped");
   });
 
   it("an Instagram container is polled, then finalised with media_publish", async () => {

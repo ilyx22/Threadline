@@ -1,5 +1,6 @@
 "use server";
 
+import { assertLongFormAllowed, isLongForm, longFormEnabled } from "@/lib/domain/longform";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db/client";
@@ -58,6 +59,11 @@ export async function createIdeaAction(
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "ideas.create");
     const input = parseForm(ideaInputSchema, formData);
+    // ENG-05: long-form is a separately priced module; refuse it unless the client has it.
+    {
+      const scope = await prisma.organization.findUnique({ where: { id: ctx.org.id }, select: { modulesEnabled: true, name: true } });
+      assertLongFormAllowed(input.format, scope?.modulesEnabled, scope?.name);
+    }
 
     if (input.requestId) {
       const already = await prisma.idea.findUnique({ where: { orgId_requestId: { orgId: ctx.org.id, requestId: input.requestId } }, select: { id: true } });
@@ -125,6 +131,11 @@ export async function updateIdeaAction(
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "ideas.create");
     const input = parseForm(ideaInputSchema, formData);
+    // ENG-05: long-form is a separately priced module; refuse it unless the client has it.
+    {
+      const scope = await prisma.organization.findUnique({ where: { id: ctx.org.id }, select: { modulesEnabled: true, name: true } });
+      assertLongFormAllowed(input.format, scope?.modulesEnabled, scope?.name);
+    }
 
     const existing = await prisma.idea.findFirst({
       where: { id: ideaId, orgId: ctx.org.id },
@@ -276,12 +287,17 @@ export async function generateIdeasAction(
 
     const input = parseForm(generateSchema, formData);
 
-    const { ideas, meta } = await generateIdeas({
+    const generated = await generateIdeas({
       orgId: ctx.org.id,
       userId: ctx.user.id,
       count: input.count,
       steer: input.steer,
     });
+    const meta = generated.meta;
+    // ENG-05: without the long-form module, a generated long-form idea is kept as a short one
+    // rather than quietly adding long-form work to the retainer.
+    const modules = (await prisma.organization.findUnique({ where: { id: ctx.org.id }, select: { modulesEnabled: true } }))?.modulesEnabled;
+    const ideas = generated.ideas.map((i) => (isLongForm(i.format) && !longFormEnabled(modules) ? { ...i, format: "short_form" } : i));
 
     const created = await prisma.$transaction(
       ideas.map((idea) =>

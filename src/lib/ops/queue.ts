@@ -31,7 +31,7 @@ export async function unifiedQueue(now = new Date()): Promise<QueueItem[]> {
     jobSummary(),
     crmBacklog(),
     strandedWork(),
-    prisma.publishRecord.findMany({ where: { providerStatus: "UNCERTAIN" }, select: { id: true, platform: true, updatedAt: true, org: { select: { name: true, slug: true } } }, take: 50 }),
+    prisma.publishRecord.findMany({ where: { providerStatus: { in: ["UNCERTAIN", "PARTIAL_THREAD"] } }, select: { id: true, platform: true, providerStatus: true, updatedAt: true, org: { select: { name: true, slug: true } } }, take: 50 }),
     prisma.processingTask.findMany({ where: { status: "failed" }, select: { id: true, kind: true, updatedAt: true, org: { select: { name: true, slug: true } } }, take: 50 }),
     prisma.inquiry.findMany({ where: { firstResponseAt: null, stage: { notIn: ["won", "lost"] }, occurredAt: { lt: new Date(now.getTime() - DAY) }, org: { kind: "client" } }, select: { id: true, name: true, occurredAt: true, ownerId: true, org: { select: { name: true, slug: true } } }, take: 50 }),
     prisma.task.findMany({ where: { audience: "internal", status: { in: ["open", "in_progress"] }, dueDate: { lte: new Date(now.getTime() + DAY) } }, select: { id: true, title: true, dueDate: true, assignee: { select: { name: true } }, entityType: true, entityId: true }, take: 100 }),
@@ -41,7 +41,9 @@ export async function unifiedQueue(now = new Date()): Promise<QueueItem[]> {
   const push = (i: QueueItem) => items.push(i);
 
   for (const j of jobs.dead) push({ kind: "dead job", severity: 3, title: j.type, org: null, owner: null, since: j.updatedAt ?? now, cause: `Failed ${j.attempts} times: ${(j.lastError ?? "").slice(0, 120)}`, next: "Fix the cause, then requeue", href: "/admin/system" });
-  for (const u of uncertain) push({ kind: "uncertain post", severity: 3, title: `${u.platform} post`, org: u.org.name, owner: null, since: u.updatedAt, cause: "The platform never answered after the request was sent", next: "Check the account, then record whether it posted", href: `/app/${u.org.slug}/distribution` });
+  for (const u of uncertain) push(u.providerStatus === "PARTIAL_THREAD"
+      ? { kind: "partial thread", severity: 3, title: `${u.platform} thread`, org: u.org.name, owner: null, since: u.updatedAt, cause: "Part of the thread was posted, then the platform refused the rest", next: "Resume the thread from the distribution page", href: `/app/${u.org.slug}/distribution` }
+      : { kind: "uncertain post", severity: 3, title: `${u.platform} post`, org: u.org.name, owner: null, since: u.updatedAt, cause: "The platform never answered after the request was sent", next: "Check the account, then record whether it posted", href: `/app/${u.org.slug}/distribution` });
   for (const s of q.issues) push({ kind: "support", severity: s.severity === "critical" ? 3 : s.severity === "high" ? 2 : 1, title: s.title, org: s.org?.name ?? null, owner: s.owner?.name ?? null, since: s.createdAt, cause: `Support request, ${s.severity}`, next: s.owner ? "Reply and resolve" : "Take ownership", href: "/admin/support" });
   for (const a of q.overdueApprovals) push({ kind: "approval overdue", severity: 2, title: a.title, org: a.org.name, owner: null, since: a.dueDate ?? a.updatedAt, cause: "Waiting on the client's approval past its due date", next: "Chase the approver or re-plan", href: `/app/${a.org.slug}/production/${a.id}` });
   for (const b of q.blockedProduction) push({ kind: "changes stuck", severity: 2, title: b.title, org: b.org.name, owner: b.editor?.name ?? null, since: b.updatedAt, cause: "Changes requested more than three days ago", next: "Get the revision done", href: `/app/${b.org.slug}/production/${b.id}` });

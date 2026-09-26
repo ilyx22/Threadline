@@ -176,3 +176,18 @@ describe("Facebook Pages and Threads (INT-06)", () => {
     assert.deepEqual(m.ok && [m.metrics.views, m.metrics.likes, m.metrics.comments, m.metrics.shares], [900, 20, 2, 1]);
   });
 });
+
+describe("account resolution after connecting", () => {
+  test("LinkedIn resolves the member URN from OpenID userinfo; Facebook swaps in the Page token", async () => {
+    __setConnectorFetch((async (u: string | URL) => {
+      const url = String(u);
+      if (url.endsWith("/v2/userinfo")) return respond(200, { sub: "abc123", name: "Alex Morgan" });
+      if (url.includes("/me/accounts")) return respond(200, { data: [{ id: "page9", name: "Northbeam", access_token: "PAGE-TOKEN" }] });
+      return respond(404, {});
+    }) as typeof fetch);
+    assert.deepEqual(await getConnector("linkedin")!.resolveAccount!("t"), { id: "urn:li:person:abc123", label: "Alex Morgan" });
+    assert.deepEqual(await getConnector("facebook")!.resolveAccount!("t"), { id: "page9", label: "Northbeam", accessToken: "PAGE-TOKEN" });
+    __setConnectorFetch((async () => respond(401, {})) as typeof fetch);
+    assert.equal(await getConnector("linkedin")!.resolveAccount!("t"), null, "no account means no connection claimed");
+  });
+});

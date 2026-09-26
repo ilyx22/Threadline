@@ -128,6 +128,8 @@ export async function moveContentAction(
     // a double-click on Approve — both pass the transition check above; only
     // the one whose UPDATE finds the row still in the expected stage may log an
     // event. Found by QA on 2026-09-09: the race double-logged approvals.
+    // CX-06: the version the reviewer saw, taken before the revision count moves on.
+    const reviewedVersion = (await fingerprint(ctx.org.id, { type: "content_item", id: contentItemId }))?.label ?? null;
     const moved = await prisma.contentItem.updateMany({
       where: { id: contentItemId, orgId: ctx.org.id, stage: item.stage },
       data,
@@ -153,7 +155,7 @@ export async function moveContentAction(
           kind: "revision_request",
           authorId: ctx.user.id,
           // CX-06: the version the feedback is about.
-          version: (await fingerprint(ctx.org.id, { type: "content_item", id: contentItemId }))?.label ?? null,
+          version: reviewedVersion,
         },
       });
     }

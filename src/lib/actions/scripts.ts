@@ -1,5 +1,7 @@
 "use server";
 
+import { assertLongFormAllowed } from "@/lib/domain/longform";
+import { WorkflowError } from "@/lib/domain/workflow";
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -717,6 +719,16 @@ export async function sendToRecordingAction(
     const current = script.versions[0];
     const format = script.idea?.format ?? "short_form";
     const textLed = isTextLed({ format, platform: script.platform });
+    // ENG-05: production of long-form needs the long-form module.
+    {
+      const scope = await prisma.organization.findUnique({ where: { id: ctx.org.id }, select: { modulesEnabled: true, name: true } });
+      try {
+        assertLongFormAllowed(format, scope?.modulesEnabled, scope?.name);
+      } catch (e) {
+        if (e instanceof WorkflowError) return err(e.message, "workflow");
+        throw e;
+      }
+    }
 
     const item = await prisma.contentItem.create({
       data: {

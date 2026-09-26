@@ -1,11 +1,11 @@
 {
-  "at": "2026-09-26T06:53:37.448Z",
-  "tables": 97,
-  "rows": 1916,
+  "at": "2026-09-26T18:06:57.148Z",
+  "tables": 113,
+  "rows": 2928,
   "failed": false,
-  "seconds": 3,
-  "backupFile": "scripts\\db\\.backups\\restore_drill_1790405614288.json",
-  "invoiceSequence": 15,
+  "seconds": 6,
+  "backupFile": "scripts\\db\\.backups\\restore_drill_1790446011030.json",
+  "invoiceSequence": 58,
   "details": [
     {
       "table": "User",
@@ -33,20 +33,20 @@
     },
     {
       "table": "AuditLog",
-      "rows": 465,
-      "restored": 465,
+      "rows": 765,
+      "restored": 765,
       "ok": true
     },
     {
       "table": "Notification",
-      "rows": 11,
-      "restored": 11,
+      "rows": 19,
+      "restored": 19,
       "ok": true
     },
     {
       "table": "Task",
-      "rows": 14,
-      "restored": 14,
+      "rows": 71,
+      "restored": 71,
       "ok": true
     },
     {
@@ -219,8 +219,8 @@
     },
     {
       "table": "PeriodReview",
-      "rows": 0,
-      "restored": 0,
+      "rows": 1,
+      "restored": 1,
       "ok": true
     },
     {
@@ -321,8 +321,8 @@
     },
     {
       "table": "AiGeneration",
-      "rows": 50,
-      "restored": 50,
+      "rows": 71,
+      "restored": 71,
       "ok": true
     },
     {
@@ -399,8 +399,8 @@
     },
     {
       "table": "JudgeCalibration",
-      "rows": 16,
-      "restored": 16,
+      "rows": 23,
+      "restored": 23,
       "ok": true
     },
     {
@@ -441,14 +441,14 @@
     },
     {
       "table": "EmailMessage",
-      "rows": 68,
-      "restored": 68,
+      "rows": 114,
+      "restored": 114,
       "ok": true
     },
     {
       "table": "Job",
-      "rows": 72,
-      "restored": 72,
+      "rows": 233,
+      "restored": 233,
       "ok": true
     },
     {
@@ -513,8 +513,8 @@
     },
     {
       "table": "CrmOutbox",
-      "rows": 101,
-      "restored": 101,
+      "rows": 213,
+      "restored": 213,
       "ok": true
     },
     {
@@ -531,8 +531,8 @@
     },
     {
       "table": "Approval",
-      "rows": 165,
-      "restored": 165,
+      "rows": 332,
+      "restored": 332,
       "ok": true
     },
     {
@@ -543,20 +543,20 @@
     },
     {
       "table": "Invoice",
-      "rows": 0,
-      "restored": 0,
+      "rows": 16,
+      "restored": 16,
       "ok": true
     },
     {
       "table": "InvoiceLine",
-      "rows": 0,
-      "restored": 0,
+      "rows": 16,
+      "restored": 16,
       "ok": true
     },
     {
       "table": "Payment",
-      "rows": 0,
-      "restored": 0,
+      "rows": 8,
+      "restored": 8,
       "ok": true
     },
     {
@@ -579,12 +579,108 @@
     },
     {
       "table": "OffboardingRecord",
+      "rows": 8,
+      "restored": 8,
+      "ok": true
+    },
+    {
+      "table": "NotificationPreference",
       "rows": 0,
       "restored": 0,
       "ok": true
     },
     {
-      "table": "NotificationPreference",
+      "table": "RenewalReview",
+      "rows": 13,
+      "restored": 13,
+      "ok": true
+    },
+    {
+      "table": "ProofPlacement",
+      "rows": 8,
+      "restored": 8,
+      "ok": true
+    },
+    {
+      "table": "UploadSession",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "ProcessingTask",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "EffortEntry",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "LeadMessage",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "ReplyDraft",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "InboundSource",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "EmailSuppression",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "BrandBrainVersion",
+      "rows": 63,
+      "restored": 63,
+      "ok": true
+    },
+    {
+      "table": "GenerationLesson",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "DataExport",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "QaReview",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "ResearchSchedule",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "JudgeEvaluation",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "JudgePromotion",
       "rows": 0,
       "restored": 0,
       "ok": true

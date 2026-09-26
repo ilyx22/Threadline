@@ -49,6 +49,10 @@ type RunOptions = {
   entityType?: string;
   entityId?: string;
   demoContext?: Record<string, unknown>;
+  /** Cancels the generation (for example when the person who asked leaves). */
+  signal?: AbortSignal;
+  /** Upper bound on a single generation; the request is cancelled after it. Default two minutes. */
+  timeoutMs?: number;
 };
 
 /**
@@ -72,6 +76,9 @@ export async function runGeneration(
     expectsJson: true,
     demoContext: options.demoContext,
   };
+  // One signal for the caller's cancellation and the time limit.
+  const limit = AbortSignal.timeout(options.timeoutMs ?? 120_000);
+  request.signal = options.signal ? AbortSignal.any([options.signal, limit]) : limit;
 
   // AI-08: a workspace with a monthly ceiling stops generating once it is spent.
   if (options.orgId && provider.name !== "demo") {
@@ -105,6 +112,11 @@ export async function runGeneration(
       };
     } catch (error) {
       lastError = error;
+      // A cancelled or timed-out generation is final: never retried, recorded as such.
+      if (request.signal?.aborted) {
+        lastError = new AiError(options.signal?.aborted ? "The generation was cancelled." : "The generation took too long and was stopped.", { retryable: false });
+        break;
+      }
       const retryable = error instanceof AiError && error.retryable;
       if (!retryable || attempt === 1) break;
       await new Promise((r) => setTimeout(r, 700));

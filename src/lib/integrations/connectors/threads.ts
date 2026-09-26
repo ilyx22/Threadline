@@ -27,6 +27,11 @@ export const threads: Connector = {
       env,
     }),
   externalIdFromUrl: () => null, // post shortcodes are not media ids
+  async resolveAccount(accessToken) {
+    const res = await http(`${API}/me?fields=id,username&access_token=${encodeURIComponent(accessToken)}`);
+    const j = res.json as { id?: string; username?: string } | null;
+    return res.status === 200 && j?.id ? { id: j.id, label: j.username ? `@${j.username}` : null } : null;
+  },
 
   async publish(input) {
     if (!input.externalAccountId) return { ok: false, code: "invalid_request", message: "Threads needs the Threads user id.", retryable: false };

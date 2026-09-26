@@ -10,7 +10,7 @@ import { platformSchema, publishStatusSchema } from "@/lib/domain/enums";
 import { assertPublishTransition } from "@/lib/domain/workflow";
 import { assertReleasable } from "@/lib/delivery/approvals";
 import { getAdapter } from "@/lib/integrations/adapter";
-import { resolveUncertain, schedulePublish } from "@/lib/publishing";
+import { PublishBlocked, resolveUncertain, resumeThread, schedulePublish } from "@/lib/publishing";
 import { integrationByProvider } from "@/lib/integrations/registry";
 import { cleanUrl, err, guarded, ok, okVoid, parseForm, type ActionResult } from "./shared";
 
@@ -434,5 +434,21 @@ export async function resolveUncertainPublishAction(orgSlug: string, recordId: s
     await audit(ctx, { action: "publish.resolve_uncertain", entityType: "publish_record", entityId: recordId, summary: clean ? "Confirmed an uncertain post was published" : "Confirmed an uncertain post did not publish; sent again" });
     revalidateDistribution(orgSlug);
     return okVoid(clean ? "Recorded as published." : "Queued again.");
+  });
+}
+
+/** INT-03: continue a partly posted X thread from where it stopped. */
+export async function resumeThreadAction(orgSlug: string, recordId: string): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "distribution.publish");
+    try {
+      const r = await resumeThread(ctx.org.id, recordId);
+      await audit(ctx, { action: "publish.resume_thread", entityType: "publish_record", entityId: recordId, summary: `Resumed a partly posted thread: ${r.state}` });
+      revalidateDistribution(orgSlug);
+      return r.state === "published" ? okVoid("Thread completed.") : err(`The thread is still incomplete (${r.state}).`, "workflow");
+    } catch (e) {
+      if (e instanceof PublishBlocked) return err(e.message, "workflow");
+      throw e;
+    }
   });
 }

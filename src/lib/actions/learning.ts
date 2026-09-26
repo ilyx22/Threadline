@@ -191,6 +191,13 @@ export async function recordExpectationAction(
     const subject = await loadSubject(ctx.org.id, input.subjectType, input.subjectId);
     if (!subject) return err("That is no longer in this workspace.", "not_found");
 
+    // LRN-01 / brief 14: an expectation is a forecast. Once the piece is out, a
+    // new one would be written with the result in view, so it is refused.
+    if (input.subjectType === "content") {
+      const live = await prisma.contentItem.findFirst({ where: { id: input.subjectId, orgId: ctx.org.id }, select: { liveAt: true, publishRecords: { where: { status: "published" }, select: { id: true }, take: 1 } } });
+      if (live && (live.liveAt || live.publishRecords.length)) return err("This piece is already published. An expectation can only be recorded before publication; the one frozen then is what it is judged against.", "workflow");
+    }
+
     const template = judgePrompt({
       rubric: RUBRIC.map(({ key, label, question, why }) => ({ key, label, question, why })),
       subjectKind: `${input.subjectType} being considered for this client, scored before publication`,

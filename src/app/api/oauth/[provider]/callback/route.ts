@@ -38,6 +38,15 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ prov
   const exchanged = await exchangeCode({ config, code: q.get("code") ?? "", verifier: state.verifier });
   if (!exchanged.ok) return back(`oauth_error=${encodeURIComponent(exchanged.reason)}`);
 
+  // The account to publish as (LinkedIn member, Threads profile, Instagram account, Facebook Page).
+  let accountLabel: string | null = null;
+  if (connector.resolveAccount && !exchanged.token.externalAccountId) {
+    const account = await connector.resolveAccount(exchanged.token.accessToken).catch(() => null);
+    if (!account) return back(`oauth_error=${encodeURIComponent(`Connected, but ${connector.label} did not say which account to publish as. Check the account has what publishing needs (for example a Page or a professional account), then reconnect.`)}`);
+    exchanged.token.externalAccountId = account.id;
+    if (account.accessToken) exchanged.token.accessToken = account.accessToken;
+    accountLabel = account.label ?? null;
+  }
   const granted = new Set(exchanged.token.scopesGranted);
   const has = (scopes: string[]) => (scopes.length === 0 ? "none" : scopes.every((s) => granted.has(s)) ? "available" : scopes.some((s) => granted.has(s)) ? "partial" : "missing_scope");
   try {
@@ -50,6 +59,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ prov
       analyticsCapability: has(connector.scopes.analytics),
       reviewStatus: connector.gates.length ? "review_may_be_required" : "not_required",
       restrictions: connector.gates,
+      accountLabel,
     });
   } catch (error) {
     await reportError(error, { event: "oauth.persist", provider });

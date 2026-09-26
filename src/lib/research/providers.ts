@@ -1,4 +1,5 @@
 import "server-only";
+import { looksLikeInstruction } from "@/lib/ai/untrusted";
 import { createHash } from "node:crypto";
 import { prisma } from "@/lib/db/client";
 import { fetchPublicPage } from "@/lib/integrations/fetch-url";
@@ -75,7 +76,9 @@ export function quarantine(text: string): { text: string; injectionFlag: boolean
   const cleaned = text
     .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f]/g, "")
     .replace(/[\u200b\u200c\u200d\ufeff]/g, "");
-  return { text: cleaned, injectionFlag: INJECTION_PATTERNS.some((p) => p.test(cleaned)) };
+  // AI-09: the same instruction detector as the prompt fence, line by line.
+  const flagged = INJECTION_PATTERNS.some((p) => p.test(cleaned)) || cleaned.split(/\r?\n/).some((line) => looksLikeInstruction(line));
+  return { text: cleaned, injectionFlag: flagged };
 }
 
 function hostOf(url: string | null) {

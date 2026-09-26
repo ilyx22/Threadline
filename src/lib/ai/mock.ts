@@ -24,7 +24,7 @@ export class MockProvider implements AiProvider {
 
   async complete(request: AiRequest): Promise<AiResult> {
     // A short, variable delay keeps loading states honest and testable.
-    await delay(320 + (hash(request.promptKey) % 380));
+    await delay(320 + (hash(request.promptKey) % 380), request.signal);
 
     const ctx = (request.demoContext ?? {}) as DemoContext;
     const text = this.render(request.promptKey, ctx);
@@ -745,8 +745,15 @@ function buildNarrative(ctx: DemoContext) {
 
 /* --------------------------------- Helpers --------------------------------- */
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function delay(ms: number, signal?: AbortSignal) {
+  return new Promise<void>((resolve, reject) => {
+    if (signal?.aborted) return reject(new AiError("The generation was cancelled.", { retryable: false }));
+    const t = setTimeout(resolve, ms);
+    signal?.addEventListener("abort", () => {
+      clearTimeout(t);
+      reject(new AiError("The generation was cancelled.", { retryable: false }));
+    }, { once: true });
+  });
 }
 
 function hash(value: string) {

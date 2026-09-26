@@ -15,6 +15,12 @@ export const instagram: Connector = {
   gates: ["Meta App Review for instagram_content_publish and instagram_manage_insights", "Business verification", "Professional (business/creator) Instagram account linked to a Facebook Page"],
   authConfig: (env) => envAuthConfig({ provider: "instagram", authorizeUrl: "https://www.facebook.com/v21.0/dialog/oauth", tokenUrl: "https://graph.facebook.com/v21.0/oauth/access_token", scopes: ["instagram_basic", "instagram_content_publish", "instagram_manage_insights", "pages_show_list", "business_management"], usesPkce: false, env }),
   externalIdFromUrl: () => null, // Instagram shortcodes are not media ids; the id comes back from publishing.
+  // The professional account linked to the first Page the person manages.
+  async resolveAccount(accessToken) {
+    const res = await http(`${GRAPH}/me/accounts?fields=instagram_business_account{id,username}&access_token=${encodeURIComponent(accessToken)}`);
+    const ig = (res.json as { data?: { instagram_business_account?: { id?: string; username?: string } }[] } | null)?.data?.find((p) => p.instagram_business_account?.id)?.instagram_business_account;
+    return res.status === 200 && ig?.id ? { id: ig.id, label: ig.username ? `@${ig.username}` : null } : null;
+  },
 
   async publish(input) {
     if (!input.externalAccountId) return { ok: false, code: "invalid_request", message: "Instagram needs the professional account id.", retryable: false };

@@ -2,6 +2,7 @@ import "server-only";
 import { prisma } from "@/lib/db/client";
 import { enqueue } from "@/lib/jobs";
 import { getConnector, type PublishOutcome } from "@/lib/integrations/connectors";
+import { publishThread, splitThread } from "@/lib/integrations/connectors/x";
 import { readCredential, putCredential } from "@/lib/integrations/credentials";
 import { refreshAccessToken } from "@/lib/integrations/oauth";
 import { assertReleasable } from "@/lib/delivery/approvals";
@@ -162,6 +163,9 @@ export async function runPublish(recordId: string, now = new Date()) {
     throw e;
   }
 
+  // X: text longer than one post goes out as a thread (INT-03); a break partway is recorded, never re-posted.
+  if (r.platform === "x" && request.text.length > 280) return publishXThread(r, request.accessToken, splitThread(request.text));
+
   let outcome: PublishOutcome;
   try {
     outcome = await connector.publish(request);
@@ -230,6 +234,41 @@ export async function pollPublish(recordId: string, attempt: number) {
   return { state: "published" as const };
 }
 
+async function publishXThread(r: { id: string; orgId: string; contentItemId: string }, accessToken: string, posts: string[], replyTo?: string, alreadyPosted: string[] = []) {
+  let result: Awaited<ReturnType<typeof publishThread>>;
+  try {
+    result = await publishThread(accessToken, posts, replyTo);
+  } catch {
+    // A dropped connection mid-thread: some posts may have gone out. A person checks.
+    await prisma.publishRecord.update({ where: { id: r.id }, data: { status: "failed", providerStatus: "UNCERTAIN", failureReason: "The platform stopped answering partway through the thread. Check the account before continuing.", providerPayload: JSON.stringify({ postedIds: alreadyPosted, remaining: posts }) } });
+    return { state: "uncertain" as const };
+  }
+  const posted = [...alreadyPosted, ...(result.ok ? result.ids : result.posted)];
+  if (result.ok) {
+    await markPublished(r.id, r.orgId, r.contentItemId, posted[0], `https://x.com/i/status/${posted[0]}`, { threadIds: posted });
+    return { state: "published" as const };
+  }
+  if (!posted.length) {
+    await fail(r.id, result.message);
+    return { state: "failed" as const };
+  }
+  await prisma.publishRecord.update({
+    where: { id: r.id },
+    data: { status: "failed", providerStatus: "PARTIAL_THREAD", externalId: posted[0], failureReason: `Posted ${posted.length} of ${posted.length + (posts.length - (result.ok ? posts.length : result.posted.length))} posts, then: ${result.message}. Resume to post the rest as replies; nothing already posted is sent again.`.slice(0, 500), providerPayload: JSON.stringify({ postedIds: posted, remaining: posts.slice(result.posted.length) }) },
+  });
+  return { state: "partial" as const };
+}
+
+/** A person resumes a partly posted X thread: the remaining posts go out as replies to the last one posted. */
+export async function resumeThread(orgId: string, recordId: string) {
+  const r = await prisma.publishRecord.findFirst({ where: { id: recordId, orgId, platform: "x", providerStatus: "PARTIAL_THREAD" } });
+  if (!r) throw new PublishBlocked("That record is not a partly posted thread.");
+  const payload = JSON.parse(r.providerPayload ?? "{}") as { postedIds?: string[]; remaining?: string[] };
+  if (!payload.postedIds?.length || !payload.remaining?.length) throw new PublishBlocked("Nothing is left to post.");
+  const { token } = await accessTokenFor(orgId, "x");
+  return publishXThread(r, token, payload.remaining, payload.postedIds[payload.postedIds.length - 1], payload.postedIds);
+}
+
 /** A person resolves an UNCERTAIN record after checking the platform. */
 export async function resolveUncertain(orgId: string, recordId: string, outcome: { posted: true; url: string } | { posted: false }) {
   const r = await prisma.publishRecord.findFirst({ where: { id: recordId, orgId, providerStatus: "UNCERTAIN" } });
@@ -243,8 +282,33 @@ export async function resolveUncertain(orgId: string, recordId: string, outcome:
   return true;
 }
 
+const STALE_CLAIM_MS = 15 * 60_000;
+
+/**
+ * A worker that claimed a send and then died leaves the record claimed. After
+ * fifteen minutes the claim is released as UNCERTAIN (the post may have gone
+ * out, so a person checks; nothing is sent again automatically). A record left
+ * processing with no poll pending gets its poll queued again.
+ */
+export async function reapStaleClaims(now = new Date()) {
+  const stale = await prisma.publishRecord.updateMany({
+    where: { status: "scheduled", providerStatus: "PUBLISHING", updatedAt: { lt: new Date(now.getTime() - STALE_CLAIM_MS) } },
+    data: { status: "failed", providerStatus: "UNCERTAIN", failureReason: "The worker stopped after claiming this post, so it may or may not have been published. Check the account before sending it again." },
+  });
+  const processing = await prisma.publishRecord.findMany({ where: { status: "scheduled", providerStatus: "PROCESSING", updatedAt: { lt: new Date(now.getTime() - 2 * 3_600_000) } }, select: { id: true, orgId: true } });
+  let repolled = 0;
+  for (const r of processing) {
+    const pending = await prisma.job.count({ where: { type: "publish.poll", status: { in: ["queued", "running"] }, payload: { contains: r.id } } });
+    if (pending) continue;
+    await enqueue("publish.poll", { recordId: r.id, attempt: 1 }, { idempotencyKey: `publish.poll:${r.id}:reaped:${now.toISOString().slice(0, 13)}`, orgId: r.orgId });
+    repolled++;
+  }
+  return { released: stale.count, repolled };
+}
+
 /** Daily tick backstop: queue any due scheduled record whose job was lost. */
 export async function queueDuePublishes(now = new Date()) {
+  await reapStaleClaims(now);
   const due = await prisma.publishRecord.findMany({ where: { status: "scheduled", method: "integration", scheduledFor: { lte: now }, OR: [{ providerStatus: null }, { providerStatus: { notIn: ["PUBLISHING", "PROCESSING", "UNCERTAIN"] } }] }, select: { id: true }, take: 200 });
   for (const r of due) await schedulePublish(r.id);
   return due.length;

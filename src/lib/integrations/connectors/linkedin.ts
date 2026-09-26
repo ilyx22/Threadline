@@ -14,6 +14,12 @@ export const linkedin: Connector = {
   scopes: { publish: ["openid", "profile", "w_member_social"], analytics: ["r_member_postAnalytics"] },
   gates: ["Community Management API access for organisation posts", "Marketing Developer Platform for post analytics"],
   authConfig: (env) => envAuthConfig({ provider: "linkedin", authorizeUrl: "https://www.linkedin.com/oauth/v2/authorization", tokenUrl: "https://www.linkedin.com/oauth/v2/accessToken", scopes: ["openid", "profile", "w_member_social"], usesPkce: false, env }),
+  // OpenID userinfo: `sub` is the member id the Posts API needs as urn:li:person:{sub}.
+  async resolveAccount(accessToken) {
+    const res = await http(`${API}/v2/userinfo`, { headers: { Authorization: `Bearer ${accessToken}` } });
+    const j = res.json as { sub?: string; name?: string } | null;
+    return res.status === 200 && j?.sub ? { id: `urn:li:person:${j.sub}`, label: j.name ?? null } : null;
+  },
   externalIdFromUrl: (url) => /urn:li:(?:share|ugcPost|activity):(\d+)/.exec(url)?.[0] ?? /activity[-:](\d{15,})/.exec(url)?.[1] ?? null,
 
   async publish(input) {

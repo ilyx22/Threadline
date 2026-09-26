@@ -293,8 +293,11 @@ export async function latestExpectation(
   subjectType: string,
   subjectId: string,
 ): Promise<StoredExpectation | null> {
+  // The forecast a piece is judged against is the last one frozen BEFORE it went
+  // live; anything recorded afterwards cannot count as a prediction.
+  const liveAt = subjectType === "content" ? (await prisma.contentItem.findFirst({ where: { id: subjectId, orgId }, select: { liveAt: true } }))?.liveAt ?? null : null;
   const row = await prisma.contentExpectation.findFirst({
-    where: { orgId, subjectType, subjectId },
+    where: { orgId, subjectType, subjectId, ...(liveAt ? { createdAt: { lte: liveAt } } : {}) },
     orderBy: { createdAt: "desc" },
   });
   if (!row) return null;

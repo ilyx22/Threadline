@@ -17,6 +17,8 @@ export type AiRequest = {
   temperature?: number;
   /** When set, the provider is asked to return JSON matching this shape description. */
   expectsJson?: boolean;
+  /** AI-08/AI-09: cancels the request; a cancelled generation is recorded and never retried. */
+  signal?: AbortSignal;
   /**
    * Structured inputs for the deterministic demo provider. The live provider
    * ignores this entirely; it exists so the demo provider can produce coherent,
