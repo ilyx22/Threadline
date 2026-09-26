@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Lightbulb, Video } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
 import { getScript } from "@/lib/data/scripts";
+import { contentScope } from "@/lib/team/scope";
 import { prisma } from "@/lib/db/client";
 import { OwnershipControl } from "./ownership-control";
 import { isLiveAi } from "@/lib/ai";
@@ -23,6 +24,9 @@ export default async function ScriptDetailPage({
   const ctx = await requireOrgPage(slug, "scripts.view");
   const script = await getScript(ctx.org.id, id);
   if (!script) notFound();
+  // TEAM-09: a contractor opens only the scripts of pieces assigned to them.
+  const scope = await contentScope(ctx.org.id, ctx.user.id, ctx.role);
+  if (scope && !script.contentItems.some((c) => scope.includes(c.id))) notFound();
 
   const contentItem = script.contentItems[0];
 

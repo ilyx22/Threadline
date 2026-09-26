@@ -6,6 +6,8 @@ import type { Claim } from "@/lib/domain/workflow";
 /** Script repository. Versions are append-only; the latest version is the working copy. */
 
 export type ScriptFilters = {
+  /** TEAM-09: only scripts of these pieces (a contractor's scope). */
+  scopeIds?: string[];
   qaState?: string[];
   scriptType?: string[];
   platform?: string[];
@@ -14,6 +16,7 @@ export type ScriptFilters = {
 
 export async function listScripts(orgId: string, filters: ScriptFilters = {}) {
   const where: Record<string, unknown> = { orgId };
+  if (filters.scopeIds) where.contentItems = { some: { id: { in: filters.scopeIds } } };
   if (filters.qaState?.length) where.qaState = { in: filters.qaState };
   if (filters.scriptType?.length) where.scriptType = { in: filters.scriptType };
   if (filters.platform?.length) where.platform = { in: filters.platform };

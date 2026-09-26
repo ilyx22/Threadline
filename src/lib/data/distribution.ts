@@ -12,8 +12,9 @@ export type DistributionFilters = {
   to?: Date;
 };
 
-export async function listPublishRecords(orgId: string, filters: DistributionFilters = {}) {
+export async function listPublishRecords(orgId: string, filters: DistributionFilters = {}, scopeIds?: string[]) {
   const where: Record<string, unknown> = { orgId };
+  if (scopeIds) where.contentItemId = { in: scopeIds };
   if (filters.status?.length) where.status = { in: filters.status };
   if (filters.platform?.length) where.platform = { in: filters.platform };
   if (filters.from || filters.to) {
@@ -73,13 +74,14 @@ export async function getPublishRecord(orgId: string, id: string) {
 }
 
 /** Calendar grid for a month, with publish records bucketed by day. */
-export async function distributionCalendar(orgId: string, month: Date) {
+export async function distributionCalendar(orgId: string, month: Date, scopeIds?: string[]) {
   const cells = monthGrid(month);
   const first = cells[0]!;
   const last = cells[cells.length - 1]!;
 
   const records = await prisma.publishRecord.findMany({
     where: {
+      ...(scopeIds ? { contentItemId: { in: scopeIds } } : {}),
       orgId,
       OR: [
         { scheduledFor: { gte: first, lte: addDays(last, 1) } },
@@ -137,10 +139,10 @@ export async function getIntegration(orgId: string, provider: string) {
   return prisma.integration.findUnique({ where: { orgId_provider: { orgId, provider } } });
 }
 
-export async function distributionCounts(orgId: string) {
+export async function distributionCounts(orgId: string, scopeIds?: string[]) {
   const rows = await prisma.publishRecord.groupBy({
     by: ["status"],
-    where: { orgId },
+    where: { orgId, ...(scopeIds ? { contentItemId: { in: scopeIds } } : {}) },
     _count: { _all: true },
   });
   const counts: Record<string, number> = {};
@@ -149,9 +151,9 @@ export async function distributionCounts(orgId: string) {
 }
 
 /** Approved content that has no publish record yet — the scheduling queue. */
-export async function schedulingQueue(orgId: string) {
+export async function schedulingQueue(orgId: string, scopeIds?: string[]) {
   return prisma.contentItem.findMany({
-    where: { orgId, stage: "approved", publishRecords: { none: {} } },
+    where: { orgId, stage: "approved", publishRecords: { none: {} }, ...(scopeIds ? { id: { in: scopeIds } } : {}) },
     orderBy: { approvedAt: "asc" },
     include: { packages: { select: { id: true, platform: true } } },
   });

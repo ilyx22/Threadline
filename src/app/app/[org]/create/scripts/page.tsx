@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { AlertTriangle, FileText, Mic } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { contentScope } from "@/lib/team/scope";
 import { listScripts, scriptCounts } from "@/lib/data/scripts";
 import { scriptingQueue } from "@/lib/data/ideas";
 import {
@@ -43,7 +44,7 @@ export default async function ScriptsPage({
   };
 
   const [scripts, counts, queue] = await Promise.all([
-    listScripts(ctx.org.id, filters),
+    listScripts(ctx.org.id, { ...filters, scopeIds: (await contentScope(ctx.org.id, ctx.user.id, ctx.role)) ?? undefined }),
     scriptCounts(ctx.org.id),
     scriptingQueue(ctx.org.id),
   ]);

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Send } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { contentScope } from "@/lib/team/scope";
 import {
   distributionCalendar,
   distributionCounts,
@@ -37,12 +38,14 @@ export default async function DistributionPage({
     search: readSingle(query, "q"),
   };
 
+  // TEAM-09: a contractor sees only what goes out for their pieces.
+  const scope = (await contentScope(ctx.org.id, ctx.user.id, ctx.role)) ?? undefined;
   const [records, calendar, counts, accounts, queue] = await Promise.all([
-    listPublishRecords(ctx.org.id, filters),
-    distributionCalendar(ctx.org.id, safeMonth),
-    distributionCounts(ctx.org.id),
+    listPublishRecords(ctx.org.id, filters, scope),
+    distributionCalendar(ctx.org.id, safeMonth, scope),
+    distributionCounts(ctx.org.id, scope),
     listSocialAccounts(ctx.org.id),
-    schedulingQueue(ctx.org.id),
+    schedulingQueue(ctx.org.id, scope),
   ]);
 
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
