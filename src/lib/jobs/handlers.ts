@@ -60,6 +60,11 @@ registerHandler<{ recordId: string; attempt: number }>("publish.poll", async (pa
   await pollPublish(payload.recordId, payload.attempt);
 });
 
+registerHandler<{ exportId: string }>("export.build", async (payload) => {
+  const { buildExport } = await import("@/lib/exports");
+  await buildExport(payload.exportId);
+});
+
 /**
  * The daily housekeeping run (queued once per day by the cron runner): keep
  * every active engagement's service periods current, lapse old invitations,
@@ -95,6 +100,9 @@ registerHandler("daily.tick", async () => {
   await expireStaleUploads();
   const { submitWaitingTasks } = await import("@/lib/processing");
   await submitWaitingTasks();
+  // FILE-06: delete export files past their download window.
+  const { expireExports } = await import("@/lib/exports");
+  await expireExports();
   // INT-03: queue any due scheduled publish whose job was lost.
   const { queueDuePublishes } = await import("@/lib/publishing");
   await queueDuePublishes();
@@ -109,4 +117,4 @@ registerHandler("daily.tick", async () => {
   await pruneExpiredSessions();
 });
 
-export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune", "crm.sync", "daily.tick", "processing.submit", "publish.run", "publish.poll"] as const;
+export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune", "crm.sync", "daily.tick", "processing.submit", "publish.run", "publish.poll", "export.build"] as const;

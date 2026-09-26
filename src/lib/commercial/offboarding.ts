@@ -20,7 +20,7 @@ type Step = { step: string; outcome: string; at: string };
 
 /** A JSON export of the workspace's records (files are listed, not inlined). */
 export async function buildWorkspaceExport(orgId: string) {
-  const [org, members, brain, ideas, scripts, content, packages, publishes, inquiries, events, reports, reviews, invoices, approvals, comments, assets] = await Promise.all([
+  const [org, members, brain, ideas, scripts, content, packages, publishes, inquiries, events, reports, reviews, invoices, approvals, comments, assets, leadMessages, effort] = await Promise.all([
     prisma.organization.findUniqueOrThrow({ where: { id: orgId }, select: { name: true, slug: true, website: true, industry: true, createdAt: true, startedAt: true } }),
     prisma.membership.findMany({ where: { orgId }, select: { role: true, profiles: true, user: { select: { name: true, email: true, title: true } } } }),
     prisma.brandBrain.findUnique({ where: { orgId } }),
@@ -37,6 +37,8 @@ export async function buildWorkspaceExport(orgId: string) {
     prisma.approval.findMany({ where: { orgId } }),
     prisma.comment.findMany({ where: { orgId, internal: false } }),
     prisma.asset.findMany({ where: { orgId }, select: { id: true, title: true, fileName: true, category: true, mimeType: true, sizeBytes: true, createdAt: true } }),
+    prisma.leadMessage.findMany({ where: { orgId } }),
+    prisma.effortEntry.findMany({ where: { orgId } }),
   ]);
   return {
     exportedAt: new Date().toISOString(),
@@ -58,6 +60,8 @@ export async function buildWorkspaceExport(orgId: string) {
     invoices,
     approvals,
     comments,
+    leadMessages,
+    effort,
     files: assets,
   };
 }

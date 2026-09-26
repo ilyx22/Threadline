@@ -3385,3 +3385,22 @@ model GenerationLesson {
 
   @@index([orgId, status])
 }
+
+/// An on-demand export of a workspace's records (FILE-06, PRV). Built by a
+/// job into private storage; downloadable by admins for seven days, then the
+/// file is deleted and the row kept as the record that it happened.
+model DataExport {
+  id            String    @id @default(cuid())
+  orgId         String
+  requestedById String
+  status        String    @default("queued") // queued | ready | failed | expired
+  assetId       String?
+  sizeBytes     Int?
+  error         String?
+  expiresAt     DateTime?
+  createdAt     DateTime  @default(now())
+  readyAt       DateTime?
+
+  @@index([orgId, createdAt])
+  @@index([status, expiresAt])
+}

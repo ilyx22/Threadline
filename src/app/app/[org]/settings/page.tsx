@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { listExports } from "@/lib/exports";
+import { ExportCard } from "./export-card";
 import { loadBrandBrain } from "@/lib/data/workspace";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { ProofPermissions } from "@/components/app/proof-permissions";
@@ -18,6 +20,7 @@ export default async function SettingsPage({ params }: { params: Promise<{ org: 
   const ctx = await requireOrgPage(slug, "workspace.view");
   const proofView = await proofPermissionView(ctx.org.id);
   const brain = await loadBrandBrain(ctx.org.id);
+  const exports = ctx.can("workspace.settings") ? await listExports(ctx.org.id) : [];
   const canEdit = ctx.can("workspace.settings");
 
   const packageMeta = metaOf(PACKAGE_TIER_META, ctx.org.packageTier);
@@ -94,6 +97,15 @@ export default async function SettingsPage({ params }: { params: Promise<{ org: 
               </p>
             </CardBody>
           </Card>
+
+          {ctx.can("workspace.settings") ? (
+            <Card>
+              <CardHeader title="Your data" eyebrow="Export" />
+              <CardBody className="pt-0">
+                <ExportCard slug={slug} rows={exports.map((e) => ({ id: e.id, status: e.status, createdAt: e.createdAt.toISOString(), expiresAt: e.expiresAt?.toISOString() ?? null, downloadPath: e.downloadPath, sizeBytes: e.sizeBytes }))} />
+              </CardBody>
+            </Card>
+          ) : null}
 
           <Card>
             <CardHeader
