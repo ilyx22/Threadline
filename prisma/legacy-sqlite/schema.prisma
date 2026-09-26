@@ -1,21 +1,21 @@
+// LEGACY SQLITE SCHEMA (frozen 26 September 2026). Used only by scripts/db/sqlite-to-postgres.ts to read
+// the pre-PostgreSQL development database. Do not edit; the live schema is prisma/schema.prisma.
 // Threadline OS — data model
 //
 // PORTABILITY CONTRACT (see docs/ARCHITECTURE.md ADR-001):
 //   * No database enums    -> statuses are String, constrained by Zod unions in src/lib/domain
 //   * No array columns     -> list values are JSON-encoded String, read via src/lib/db/json.ts
 //   * No provider-specific types
-// PostgreSQL since 26 September 2026 (ADR-001 amended). The SQLite migration history is preserved under
-// prisma/legacy-sqlite/ and is not replayed; prisma/migrations starts from a PostgreSQL baseline.
-// DATABASE_URL is the pooled runtime URL; DIRECT_URL is the direct connection used by migrations.
+// Switching to PostgreSQL is a change of `provider` + DATABASE_URL, then `prisma migrate dev`.
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../../node_modules/.prisma/legacy-sqlite-client"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "sqlite"
+  url      = env("LEGACY_SQLITE_URL")
 }
 
 // ---------------------------------------------------------------------------

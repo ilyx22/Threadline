@@ -35,3 +35,7 @@ qa-baselines/**/.candidate/
 
 # Birdhouse-derived reference build copied in on 2026-09-11 — design reference only, never committed (copied media, imported third-party playbook, nested .git)
 thebirdhouse/
+
+# local PostgreSQL for integration tests (embedded-postgres)
+.pg-data/
+.chrome-profile-audit/
