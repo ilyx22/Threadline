@@ -8,6 +8,8 @@ import type { Claim } from "@/lib/domain/workflow";
 /** Production repository: content items, board, comments, events, packaging. */
 
 export type ContentFilters = {
+  /** Assignment scope (TEAM-09): only these pieces. */
+  ids?: string[];
   stage?: string[];
   platform?: string[];
   editorId?: string;
@@ -18,6 +20,7 @@ export type ContentFilters = {
 
 export async function listContent(orgId: string, filters: ContentFilters = {}) {
   const where: Record<string, unknown> = { orgId };
+  if (filters.ids) where.id = { in: filters.ids };
   if (filters.stage?.length) where.stage = { in: filters.stage };
   if (filters.platform?.length) where.platform = { in: filters.platform };
   if (filters.editorId) where.editorId = filters.editorId;
@@ -151,10 +154,10 @@ export async function contentComments(orgId: string, contentItemId: string, role
 
 export type ContentComment = Awaited<ReturnType<typeof contentComments>>[number];
 
-export async function contentCounts(orgId: string) {
+export async function contentCounts(orgId: string, ids?: string[]) {
   const rows = await prisma.contentItem.groupBy({
     by: ["stage"],
-    where: { orgId },
+    where: { orgId, ...(ids ? { id: { in: ids } } : {}) },
     _count: { _all: true },
   });
   const counts: Record<string, number> = {};

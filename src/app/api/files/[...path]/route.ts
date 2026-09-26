@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db/client";
 import { currentUser } from "@/lib/auth/guard";
 import { getStorage, orgIdFromStoragePath } from "@/lib/storage";
 import { servingHeaders } from "@/lib/storage/sniff";
+import { assetInScope } from "@/lib/team/scope";
 
 /**
  * Private file access.
@@ -33,23 +34,27 @@ export async function GET(
   // The asset row is the authority on ownership; the path alone is not trusted.
   const asset = await prisma.asset.findFirst({
     where: { orgId, storagePath },
-    select: { id: true, fileName: true, mimeType: true, orgId: true },
+    select: { id: true, fileName: true, mimeType: true, orgId: true, contentItemId: true, uploadedById: true },
   });
   if (!asset) {
     return new NextResponse("Not found", { status: 404 });
   }
 
-  const allowed = user.isSuperAdmin
-    ? true
-    : Boolean(
-        await prisma.membership.findFirst({
-          where: {
-            userId: user.id,
-            OR: [{ orgId: asset.orgId }, { role: { in: ["internal_operator", "super_admin"] }, org: { kind: "internal" } }],
-          },
-          select: { id: true },
-        }),
-      );
+  // Only an ACTIVE membership counts (TEAM-05: a suspended member reads
+  // nothing), and a contractor reads only the files of pieces assigned to
+  // them or that they uploaded (TEAM-09).
+  let allowed = user.isSuperAdmin;
+  if (!allowed) {
+    const staff = await prisma.membership.findFirst({
+      where: { userId: user.id, status: "active", role: { in: ["internal_operator", "super_admin"] }, org: { kind: "internal" } },
+      select: { id: true },
+    });
+    if (staff) allowed = true;
+    else {
+      const member = await prisma.membership.findFirst({ where: { userId: user.id, orgId: asset.orgId, status: "active" }, select: { role: true } });
+      allowed = Boolean(member) && (member!.role !== "editor" || (await assetInScope(asset.orgId, user.id, member!.role, asset)));
+    }
+  }
 
   if (!allowed) {
     return new NextResponse("Forbidden", { status: 403 });

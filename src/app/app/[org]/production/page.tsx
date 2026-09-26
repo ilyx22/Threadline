@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Video } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
 import { assignableEditors, contentBoard, contentCounts } from "@/lib/data/content";
+import { contentScope } from "@/lib/team/scope";
 import { CONTENT_STAGES, CONTENT_STAGE_META, PLATFORM_OPTIONS, PRIORITY_OPTIONS } from "@/lib/domain/enums";
 import { readBool, readFilter, readSingle, type RawSearchParams } from "@/lib/utils/search-params";
 import { ActiveFilters, FilterBar, FilterSearch, MultiFilter } from "@/components/app/filters";
@@ -30,9 +31,11 @@ export default async function ProductionPage({
     overdue: readBool(query, "overdue"),
   };
 
+  // TEAM-09: a contractor sees only the pieces assigned to them.
+  const scope = await contentScope(ctx.org.id, ctx.user.id, ctx.role);
   const [board, counts, editors] = await Promise.all([
-    contentBoard(ctx.org.id, filters),
-    contentCounts(ctx.org.id),
+    contentBoard(ctx.org.id, { ...filters, ids: scope ?? undefined }),
+    contentCounts(ctx.org.id, scope ?? undefined),
     assignableEditors(ctx.org.id),
   ]);
 

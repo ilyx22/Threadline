@@ -11,6 +11,7 @@ import {
   Users,
 } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { contentScope } from "@/lib/team/scope";
 import { prisma } from "@/lib/db/client";
 import { CORRECTION_LEVERS, FAILURE_CLASSES } from "@/lib/domain/content-diagnosis";
 import { LearningPanel } from "./learning-panel";
@@ -36,6 +37,9 @@ export default async function ContentDetailPage({
 }) {
   const { org: slug, id } = await params;
   const ctx = await requireOrgPage(slug, "production.view");
+  // TEAM-09: a contractor cannot open a piece they are not assigned to.
+  const scope = await contentScope(ctx.org.id, ctx.user.id, ctx.role);
+  if (scope && !scope.includes(id)) notFound();
 
   const [item, comments, editors, lineage] = await Promise.all([
     getContentItem(ctx.org.id, id),

@@ -207,6 +207,7 @@ export async function unreadNotificationCount(orgId: string, userId: string, rol
 /* ---------------------------------- Library -------------------------------- */
 
 export type LibraryFilters = {
+  scope?: { ids: string[]; userId: string };
   category?: string[];
   search?: string;
   contentItemId?: string;
@@ -224,6 +225,9 @@ export async function listAssets(orgId: string, filters: LibraryFilters = {}) {
       { fileName: { contains: q } },
     ];
   }
+
+  // TEAM-09: a contractor sees files of their pieces and files they uploaded.
+  if (filters.scope) where.AND = [{ OR: [{ contentItemId: { in: filters.scope.ids } }, { uploadedById: filters.scope.userId }] }];
 
   const assets = await prisma.asset.findMany({
     where,

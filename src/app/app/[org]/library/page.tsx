@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { FolderOpen } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { contentScope } from "@/lib/team/scope";
 import { assetCounts, listAssets } from "@/lib/data/workspace";
 import { listContent } from "@/lib/data/content";
 import { ASSET_CATEGORIES, ASSET_CATEGORY_META } from "@/lib/domain/enums";
@@ -27,10 +28,11 @@ export default async function LibraryPage({
     search: readSingle(query, "q"),
   };
 
+  const scope = await contentScope(ctx.org.id, ctx.user.id, ctx.role);
   const [assets, counts, content] = await Promise.all([
-    listAssets(ctx.org.id, filters),
+    listAssets(ctx.org.id, { ...filters, scope: scope ? { ids: scope, userId: ctx.user.id } : undefined }),
     assetCounts(ctx.org.id),
-    listContent(ctx.org.id, {}),
+    listContent(ctx.org.id, { ids: scope ?? undefined }),
   ]);
 
   const total = Object.values(counts).reduce((a, b) => a + b, 0);

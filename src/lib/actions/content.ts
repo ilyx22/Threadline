@@ -15,6 +15,7 @@ import { recordDecision, supersedeApprovals } from "@/lib/delivery/approvals";
 import { notify } from "@/lib/notify";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import { queueProcessingFor } from "@/lib/processing";
+import { assertContentInScope } from "@/lib/team/scope";
 import { getStorage, storageProviderName } from "@/lib/storage";
 import {
   cleanText,
@@ -79,6 +80,7 @@ export async function moveContentAction(
     // designated approver holds without edit rights; moving work along the
     // board otherwise needs edit (TEAM-01, DEL-04).
     const ctx = await requireOrgAccess(orgSlug);
+    await assertContentInScope(ctx, contentItemId);
     const input = moveSchema.parse({ stage, note });
     const isDecision = input.stage === "approved" || input.stage === "changes_requested";
     if (isDecision ? !ctx.can("production.approve") && !ctx.can("production.edit") : !ctx.can("production.edit")) {
@@ -212,6 +214,7 @@ export async function assignEditorAction(
 ): Promise<ActionResult> {
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "production.assign");
+    await assertContentInScope(ctx, contentItemId);
 
     const item = await prisma.contentItem.findFirst({
       where: { id: contentItemId, orgId: ctx.org.id },
@@ -265,6 +268,7 @@ export async function updateContentDetailsAction(
 ): Promise<ActionResult> {
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "production.edit");
+    await assertContentInScope(ctx, contentItemId);
     const input = parseForm(detailsSchema, formData);
 
     const item = await prisma.contentItem.findFirst({
@@ -311,6 +315,7 @@ export async function addCommentAction(
 ): Promise<ActionResult> {
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "production.view");
+    await assertContentInScope(ctx, contentItemId);
     const input = parseForm(commentSchema, formData);
 
     const item = await prisma.contentItem.findFirst({
@@ -350,6 +355,7 @@ export async function resolveCommentAction(
       select: { id: true, entityId: true },
     });
     if (!comment) return err("That comment no longer exists.", "not_found");
+    await assertContentInScope(ctx, comment.entityId);
 
     await prisma.comment.update({ where: { id: commentId }, data: { resolved } });
     revalidateContent(orgSlug, comment.entityId);
@@ -374,6 +380,7 @@ export async function uploadContentAssetAction(
 ): Promise<ActionResult<{ assetId: string }>> {
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "library.upload");
+    await assertContentInScope(ctx, contentItemId);
     await enforceRateLimit(`upload:${ctx.org.id}`, LIMITS.upload);
 
     const input = parseForm(uploadSchema, formData);
@@ -456,6 +463,7 @@ export async function markRecordedAction(
 ): Promise<ActionResult> {
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "recording.complete");
+    await assertContentInScope(ctx, contentItemId);
 
     const item = await prisma.contentItem.findFirst({
       where: { id: contentItemId, orgId: ctx.org.id },
@@ -504,6 +512,7 @@ export async function generatePackagingAction(
 ): Promise<ActionResult<{ created: number; isDemo: boolean }>> {
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "ai.generate");
+    await assertContentInScope(ctx, contentItemId);
     await enforceRateLimit(`ai:${ctx.org.id}`, LIMITS.aiGeneration);
 
     const targets = z.array(platformSchema).min(1).max(6).parse(platforms);
@@ -713,6 +722,7 @@ export async function createPackageAction(
 ): Promise<ActionResult<{ id: string }>> {
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "distribution.edit");
+    await assertContentInScope(ctx, contentItemId);
     const target = platformSchema.parse(platform);
 
     const item = await prisma.contentItem.findFirst({

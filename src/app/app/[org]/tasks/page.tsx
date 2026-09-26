@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { ClipboardList } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { contentScope } from "@/lib/team/scope";
 import { listMembers, listTasks, taskCounts } from "@/lib/data/workspace";
 import { EmptyState } from "@/components/ui/feedback";
 import { TaskList, NewTaskButton } from "./task-client";
@@ -12,13 +13,18 @@ export default async function TasksPage({ params }: { params: Promise<{ org: str
   const { org: slug } = await params;
   const ctx = await requireOrgPage(slug, "tasks.view");
 
-  const [clientTasks, internalTasks, counts, members] = await Promise.all([
+  // TEAM-09: a contractor sees tasks assigned to them or on their pieces.
+  const scope = await contentScope(ctx.org.id, ctx.user.id, ctx.role);
+  const [allClientTasks, internalTasks, counts, members] = await Promise.all([
     listTasks(ctx.org.id, { audience: "client" }),
     ctx.isInternal ? listTasks(ctx.org.id, { audience: "internal" }) : Promise.resolve([]),
     taskCounts(ctx.org.id, "client"),
     listMembers(ctx.org.id),
   ]);
 
+  const clientTasks = scope
+    ? allClientTasks.filter((t) => t.assigneeId === ctx.user.id || (t.entityType === "content_item" && t.entityId && scope.includes(t.entityId)))
+    : allClientTasks;
   const open = clientTasks.filter((t) => t.status === "open" || t.status === "in_progress");
 
   return (
