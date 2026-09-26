@@ -7,7 +7,7 @@ import { crmBacklog } from "@/lib/crm/outbox";
 import { strandedWork } from "@/lib/team/members";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
-import { SystemButton } from "./system-client";
+import { ResetMfaForm, SystemButton } from "./system-client";
 
 export const metadata: Metadata = { title: "System" };
 export const dynamic = "force-dynamic";
@@ -21,7 +21,7 @@ const when = (d: Date | null) => (d ? d.toISOString().slice(0, 16).replace("T", 
  * Values of configuration are never shown, only names and problems.
  */
 export default async function SystemPage() {
-  await requireInternal("admin.view");
+  const admin = await requireInternal("admin.view");
   const [{ env, issues }, jobs, crm, webhooks, emails, stranded, recentAudit] = await Promise.all([
     Promise.resolve(configReport()),
     jobSummary(),
@@ -123,6 +123,15 @@ export default async function SystemPage() {
           {!stranded.length ? <p className="text-[13px] text-muted">None.</p> : null}
         </CardBody>
       </Card>
+
+      {admin.can("workspace.delete") ? (
+        <Card>
+          <CardHeader title="Two-factor recovery" description="For a colleague who lost their phone and their recovery codes. Confirm who they are another way first." />
+          <CardBody className="pt-0">
+            <ResetMfaForm />
+          </CardBody>
+        </Card>
+      ) : null}
 
       <Card>
         <CardHeader title="Latest audit entries" />
