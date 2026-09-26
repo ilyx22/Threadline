@@ -41,7 +41,7 @@ describe("the rubric", () => {
   });
 
   it("gates on the things that cannot be traded away", () => {
-    assert.deepEqual(GATING_CRITERIA.sort(), ["authority", "evidence", "icp_relevance"]);
+    assert.deepEqual(GATING_CRITERIA.sort(), ["authority", "evidence", "icp_relevance", "invented_detail"]);
   });
 });
 

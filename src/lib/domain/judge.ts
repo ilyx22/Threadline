@@ -33,7 +33,7 @@ import type { OutlierBand } from "./corpus";
  * older rubric is not comparable to a newer one and silently mixing them would
  * make the calibration record meaningless.
  */
-export const RUBRIC_VERSION = "v0.1";
+export const RUBRIC_VERSION = "v0.2"; // v0.2 (AI-05): clarity, repetition, platform fit, invented detail
 
 export type Criterion = {
   key: string;
@@ -54,7 +54,7 @@ export const RUBRIC: Criterion[] = [
     label: "ICP relevance",
     question: "Would the client's actual buyer stop for this, or only their peers?",
     why: "Content that impresses the industry and bores the buyer is the most common expensive failure in expert-led B2B.",
-    weight: 18,
+    weight: 14,
     gating: true,
   },
   {
@@ -62,14 +62,14 @@ export const RUBRIC: Criterion[] = [
     label: "Buyer problem",
     question: "Does this address a problem the buyer would recognise in their own words?",
     why: "A piece about a problem nobody has is well-made content with no audience.",
-    weight: 12,
+    weight: 10,
   },
   {
     key: "authority",
     label: "Authority",
     question: "Could only someone who has actually done this work have written it?",
     why: "The entire premise is that the founder knows something. Content anyone could have written wastes the one asset the client has.",
-    weight: 14,
+    weight: 12,
     gating: true,
   },
   {
@@ -77,21 +77,21 @@ export const RUBRIC: Criterion[] = [
     label: "Originality",
     question: "Is the thesis distinct from what the rest of the market is already saying?",
     why: "Buyers are choosing between firms that describe themselves identically. Sounding like them is the problem, not the solution.",
-    weight: 12,
+    weight: 10,
   },
   {
     key: "curiosity",
     label: "Curiosity",
     question: "Does the opening create a reason to keep watching that the payoff honours?",
     why: "A hook that overpromises buys attention it then loses, and trains the audience to skip the next one.",
-    weight: 10,
+    weight: 8,
   },
   {
     key: "evidence",
     label: "Evidence",
     question: "Is every claim supported, and is the strongest claim the best-supported one?",
     why: "One unsupported claim in a piece about expertise costs more credibility than the whole piece earns.",
-    weight: 12,
+    weight: 10,
     gating: true,
   },
   {
@@ -106,7 +106,7 @@ export const RUBRIC: Criterion[] = [
     label: "Commercial path",
     question: "Is there a plausible route from watching this to a buying conversation?",
     why: "Threadline optimises for commercially valuable attention. Attention with no path is a vanity metric with production costs.",
-    weight: 10,
+    weight: 8,
   },
   {
     key: "wrong_audience",
@@ -114,6 +114,35 @@ export const RUBRIC: Criterion[] = [
     question: "Would this attract people the client does not want — job seekers, peers, bad-fit buyers?",
     why: "Content that reliably attracts the wrong people makes the pipeline worse while the metrics improve.",
     weight: 4,
+  },
+  {
+    key: "clarity",
+    label: "Clarity",
+    question: "Could the buyer say back the one point after a single watch?",
+    why: "A point the buyer cannot repeat is a point they will not act on or pass on.",
+    weight: 6,
+  },
+  {
+    key: "repetition",
+    label: "Repetition",
+    question: "Does this say something the client has not already said recently, in the same way?",
+    why: "An audience that has heard it last week learns to skip, and the account teaches the platform that it is skippable.",
+    weight: 4,
+  },
+  {
+    key: "platform_fit",
+    label: "Platform fit",
+    question: "Does it respect the platform's length, format and conventions, and the funnel role it is meant to play?",
+    why: "The same idea fails on the wrong platform or in the wrong funnel position; the constraint is part of the brief, not decoration.",
+    weight: 4,
+  },
+  {
+    key: "invented_detail",
+    label: "No invented detail",
+    question: "Does it contain a personal story, number, client or result that the source material does not support?",
+    why: "A made-up story to sound human is a lie told in the founder's name. It is disqualifying whatever else the piece does well.",
+    weight: 2,
+    gating: true,
   },
 ];
 
