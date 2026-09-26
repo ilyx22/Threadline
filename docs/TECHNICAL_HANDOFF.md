@@ -41,6 +41,10 @@ Every variable is listed with its purpose in `.env.example`. `src/lib/env.ts` va
 
 Only production (`sideEffectsAllowed`) writes to the CRM. Email goes to the `capture` provider unless `EMAIL_PROVIDER=resend`.
 
+Added in this pass (all in `.env.example`): `DEPLOYMENT_ROLE` (primary | mirror), `PROCESSING_PROVIDER`, `PROCESSING_ENDPOINT`, `PROCESSING_WEBHOOK_SECRET`, `PROCESSING_SCAN`, `RESEND_WEBHOOK_SECRET`, `FACEBOOK_CLIENT_ID`/`_SECRET`, `THREADS_CLIENT_ID`/`_SECRET`. Direct uploads need the R2 bucket's CORS to allow `PUT` from the site origin and to expose the `ETag` header.
+
+New routes: `POST /api/uploads/{id}/parts/{n}` (local part upload), `POST /api/processing/callback` (signed worker results), `POST /api/inbound/leads` (bearer-token lead capture), `POST /api/email/resend` (delivery webhooks), `GET /app/{org}/reports/{id}/pdf`.
+
 ## 5. Data and migrations
 
 Migrations in `prisma/migrations` are forward-only and never edited once applied:
@@ -58,6 +62,24 @@ Migrations in `prisma/migrations` are forward-only and never edited once applied
 | …083000_ai_cost_budget | AI run cost and demo flag, workspace AI budget |
 | …090000_renewals | renewal reviews |
 | …093000_proof_placements | proof expiry/scope, placements |
+| …110000_uploads_processing_effort | direct upload sessions, processing tasks, effort entries, asset processing state |
+| …113000_lead_inbox | lead channel, dedupe key, owner, first response, follow-up, qualification; lead messages, reply drafts, inbound sources |
+| …120000_email_delivery_suppression | delivery events on email messages; suppression list |
+| …123000_brand_brain_versions, …123100_brand_brain_version_fix | Brand Brain version and version history, kept by a database trigger (the second migration corrects the trigger) |
+| …124000_generation_lessons | lessons in force for generation |
+| …125000_data_exports | on-demand exports |
+| …130000_installation_signoff_early_win | installation sign-off, early win definition, date and evidence |
+| …131000_qa_reviews | internal QA passes |
+| …132000_asset_provenance | file source, provenance note, content root |
+| …133000_brain_confirmations | prefilled and confirmed Brand Brain sections |
+| …134000_idea_pesto_funnel | PESTO category and funnel role on ideas |
+| …135000_expert_voice | per-expert voice notes |
+| …136000_owner_due_blocker | blocker on pieces; owner, due date and blocker on scripts |
+| …137000_research_schedules | scheduled research |
+| …138000_judge_evaluation | held-out evaluations and variant promotions |
+| …139000_asset_scan_state | malware scan state |
+
+**Triggers.** `BrandBrain` has a user trigger that writes `BrandBrainVersion` rows. A logical restore must disable user triggers while it copies rows (`npm run db:drill` does); a managed point-in-time restore is unaffected.
 
 Deploy: `npx prisma migrate deploy` with `DIRECT_URL` set. Local database: `npm run db:local` (embedded PostgreSQL 18 on port 55432, data in `.pg-data/`).
 
@@ -71,6 +93,14 @@ Deploy: `npx prisma migrate deploy` with `DIRECT_URL` set. Local database: `npm 
 | crm.sync | CRM outbox writes | sends one outbox row to Attio |
 | daily.tick | the cron runner, once per UTC day | extends service periods; drafts due invoices and overdue reminders (never sends); opens renewals; flags withdrawn proof uses; closes access after offboarding windows; escalates stale approvals; sends opted-in digests; prunes tokens and sessions |
 | metrics.refresh(_org), maintenance.prune | existing | platform metrics refresh; housekeeping |
+| processing.submit | a stored video, audio or (with scanning) any file | sends the task to the processing worker with a signed request and a 30-minute signed source URL |
+| publish.run, publish.poll | a connector-published record at its time; media still processing | publishes (approval re-checked, send claimed, timeouts recorded as UNCERTAIN, X threads with resume); polls and finalises containers |
+| export.build | an admin's export request | writes the JSON export to storage |
+| mine.asset | a new transcript | mines exact quotes into research evidence |
+
+The daily tick also: expires abandoned uploads, submits processing that waited for a worker, refreshes tokens expiring within a day, releases publish claims stuck for 15 minutes as UNCERTAIN and re-polls stuck processing, queues lost publishes, deletes expired export files, runs due research schedules, reminds lead owners and Threadline's own prospect owners of due follow-ups.
+
+**Cron frequency.** `vercel.json` runs `/api/cron/jobs` daily (the Hobby limit). Scheduled publishing and follow-ups are only as timely as the runner: for publishing at a set hour, call `/api/cron/jobs` with the cron secret every 5 to 15 minutes from an external scheduler, or use Vercel Pro cron.
 
 Leases are five minutes; completion and failure are conditional on the lease holder; retries back off exponentially with jitter; dead jobs are listed on **Admin → System** with a requeue button.
 
@@ -84,8 +114,23 @@ Leases are five minutes; completion and failure are conditional on the lease hol
 | Attio | companies (match on domain), people (match on email), deals (create then patch by id) through an outbox | contract with mocked HTTP | API key |
 | Stripe | customers, invoices, items, finalise, void; billing webhook | contract with mocked HTTP; test mode only | test keys, webhook secret |
 | Webhooks in | Stripe, HubSpot (v3), Pipedrive (basic auth), Attio (HMAC), HighLevel (Ed25519 + location) | unit tests with real signatures | per-client credentials |
-| LinkedIn, YouTube, Instagram, TikTok, X | OAuth start/callback, publish and metrics connectors | contract with mocks | platform app review |
-| Facebook Page, Threads | OAuth, publish (text, image, video with processing), status and insights connectors | contract with mocks | Meta App Review + business verification |
+| LinkedIn, YouTube, Instagram, TikTok, X, Facebook Page, Threads | OAuth start/callback with account resolution, scheduled publishing, status polling and finalisation, metrics (inventory below) | contract with mocks; acceptance journeys 3, 5, 6 | platform app review |
+| Processing worker (any) | signed submit and callback contract for transcode, transcribe, thumbnail, scan | contract; journey 6 | owner chooses a worker; PROCESSING_* variables |
+| Resend webhooks | delivered, delayed, bounced, complained (Svix signature) | unit tests with real signatures | webhook secret |
+
+### Platform inventory (INT-07)
+
+| Platform | Publish endpoint and formats | Scopes requested | API version | Status and metrics | Quotas and limits | Gate | Test level |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| LinkedIn | `POST /rest/posts`, text posts as the member (`urn:li:person` from OpenID userinfo) | openid, profile, w_member_social | LinkedIn-Version 202409 | `/rest/socialActions` likes and comments; impressions need Marketing Developer Platform | member rate limits | Community Management API for organisation posts; MDP for analytics | contract + journey 3 |
+| YouTube | resumable upload (Data API v3), video | youtube.upload, youtube.readonly | v3 | statistics on the video | 10,000 quota units a day; an upload costs 1,600 | quota extension audit | contract |
+| Instagram | container then `media_publish`; Reels (video) and images | instagram_basic, instagram_content_publish, instagram_manage_insights, pages_show_list, business_management | Graph v21.0 | container `status_code`; media insights | a rolling 24-hour cap on API-published posts (confirm the current figure in the content publishing docs) | App Review; professional account; business verification | contract |
+| Facebook Page | `/feed` text, `/photos` image, `/videos` video (processing) with the Page token | pages_show_list, pages_manage_posts, pages_read_engagement, read_insights | Graph v21.0 | video status; reactions, comments, shares; video views | Page rate limits | App Review; business verification; Page admin | contract |
+| Threads | container then `threads_publish`; text (500 characters), image, video | threads_basic, threads_content_publish, threads_manage_insights | v1.0 | container status; media insights | 250 API posts a day | App Review | contract |
+| TikTok | Content Posting API, video | video.publish, video.upload | v2 | publish status | per-app daily caps | audit; posts are private until audited | contract |
+| X | `POST /2/tweets`; longer text as a thread of replies, resumable after a break | tweet.read, tweet.write, users.read, offline.access | v2 | public_metrics | tier-dependent monthly write caps | paid access tier | contract + journey 6 |
+
+Scopes, versions and limits follow each platform's public documentation as of September 2026; re-verify them when an application is approved.
 | Anthropic | generation with cost records and budgets | demo provider in tests | API key |
 
 ## 8. Deployment and rollback
@@ -107,10 +152,11 @@ Leases are five minutes; completion and failure are conditional on the lease hol
 
 | Command | What | Last result |
 | --- | --- | --- |
-| `DATABASE_URL=<local pg> npm test` | unit and database tests | 727 passed, 0 failed |
-| `node scripts/qa/run.cjs run-all` | tenancy, workflow, diagnosis, corpus, attribution, hostile input, onboarding, sales, reports, core spine (3 engagements), acceptance journeys 1, 2, 8 | 526 checks passed, 0 failed, 1 partial (print export has no server-side PDF) |
+| `DATABASE_URL=<local pg> npm test` | unit and database tests | 808 passed, 0 failed |
+| `node scripts/qa/run.cjs run-all` | tenancy, workflow, diagnosis, corpus, attribution, hostile input, onboarding, sales, reports, core spine (3 engagements), acceptance journeys 1-10 | see the final audit for the last full run |
+| `node scripts/qa/run.cjs suite-journeys-more` | acceptance journeys 3, 4, 5, 6, 7, 9, 10 | 87 passed, 0 partial, 0 failed |
 | `node scripts/qa/run.cjs marketing-v9` (against a production build) | public site regression | 62 passed |
-| `npm run db:drill` | backup and restore | passed, 97 tables |
+| `npm run db:drill` | backup and restore | passed, 113 tables, 2,928 rows |
 | `npx tsc --noEmit`, `npx eslint` | types and lint | clean |
 
 ## 11. Supported manual operations
@@ -119,3 +165,7 @@ Leases are five minutes; completion and failure are conditional on the lease hol
 - **Invoicing without Stripe**: issue the drafted invoice, send it from your accounting tool, record payments with their evidence.
 - **CRM without Attio**: the outbox holds every change until a key is configured; nothing is lost.
 - **Email without Resend**: invitation and reset links are shown on screen to send yourself.
+- **Uploads without S3**: files up to 12 MB use the form upload; direct uploads also work on local storage in development. On Vercel, set up R2 (FILE-02).
+- **Processing without a worker**: tasks wait as queued and are submitted once a worker is configured; transcripts can be uploaded as text and mined.
+- **An uncertain or partly posted publish**: check the account; record the URL if it posted, send again if it did not, or resume a partly posted X thread (Distribution page).
+- **DMs from platforms without an API**: add the lead by hand in the Pipeline (manual entry), or send leads from a form or Zapier to an inbound source.

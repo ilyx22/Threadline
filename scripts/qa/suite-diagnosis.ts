@@ -46,8 +46,9 @@ async function makeCase(orgId: string, rootId: string, spec: CaseSpec) {
       data: { orgId, publishRecordId: pub.id, capturedAt: new Date(Date.now() - (spec.daysAgo - (spec.daysAgo * (i / n))) * 86_400_000), views: Math.round(spec.views * f), likes: Math.round(spec.likes * f), comments: Math.round(spec.comments * f), shares: Math.round(spec.shares * f), saves: Math.round(spec.saves * f), retentionPct: spec.retentionPct ?? 0, source: "manual" },
     });
   }
+  // The forecast is frozen BEFORE publication (an hour before it went live), as the product requires.
   await prisma.contentExpectation.create({
-    data: { orgId, rootId, subjectType: "content", subjectId: item.id, rubricVersion: "v0.1", overall: spec.expectOverall, expectedClass: spec.expectedClass, calibrated: false, provider: "qa", model: "qa" },
+    data: { orgId, rootId, subjectType: "content", subjectId: item.id, rubricVersion: "v0.1", overall: spec.expectOverall, expectedClass: spec.expectedClass, calibrated: false, provider: "qa", model: "qa", createdAt: new Date(item.liveAt!.getTime() - 3_600_000) },
   });
   for (let i = 0; i < (spec.qualified ?? 0); i++) {
     const inq = await prisma.inquiry.create({ data: { orgId, name: `Buyer ${i}`, contentItemId: item.id, stage: "booked_call" } as never });
@@ -131,19 +132,25 @@ export async function runDiagnosis(fx: Fixture) {
 
   /* ------------------------ expectation immutability ------------------------ */
   section("expected vs actual — immutability");
-  const e1 = await prisma.contentExpectation.findFirst({ where: { subjectId: aId }, orderBy: { createdAt: "asc" } });
-  const rec = await attempt(() => Learning.recordExpectationAction(ALPHA, { subjectType: "content", subjectId: aId }));
-  const all = await prisma.contentExpectation.findMany({ where: { subjectId: aId }, orderBy: { createdAt: "asc" } });
+  // A live piece cannot be re-predicted: the forecast frozen before publication stands.
+  const onLive = await attempt(() => Learning.recordExpectationAction(ALPHA, { subjectType: "content", subjectId: aId }));
+  record("expectation", "a published piece cannot be given a new expectation after the fact", onLive.outcome !== "ok" ? "PASS" : "FAIL", `${onLive.outcome}`, onLive.outcome === "ok" ? "EXPECTATION-POSTHOC" : undefined);
+  // Append-only behaviour is checked on a piece that has not gone out yet.
+  const pre = await prisma.contentItem.create({ data: { orgId: A, rootId: root.id, title: "Not yet published", stage: "editing", platform: "linkedin", format: "short_form" } });
+  await attempt(() => Learning.recordExpectationAction(ALPHA, { subjectType: "content", subjectId: pre.id }));
+  const e1 = await prisma.contentExpectation.findFirst({ where: { subjectId: pre.id }, orderBy: { createdAt: "asc" } });
+  const rec = await attempt(() => Learning.recordExpectationAction(ALPHA, { subjectType: "content", subjectId: pre.id }));
+  const all = await prisma.contentExpectation.findMany({ where: { subjectId: pre.id }, orderBy: { createdAt: "asc" } });
   const e1After = all.find((e) => e.id === e1!.id);
   record("expectation", "re-recording appends a NEW row, never edits the old", rec.outcome === "ok" && all.length === 2 && e1After!.overall === e1!.overall && e1After!.rubricVersion === e1!.rubricVersion && e1After!.dimensions === e1!.dimensions ? "PASS" : "FAIL", `${rec.outcome} rows=${all.length} old overall=${e1After?.overall} (was ${e1!.overall})`);
   record("expectation", "every expectation stored calibrated:false", all.every((e) => e.calibrated === false) ? "PASS" : "FAIL", `${all.length} rows`);
   const recMsg = rec.outcome === "ok" ? ((rec.value as { message?: string }).message ?? "") : "";
   record("expectation", "demo provider is labelled, not passed off as a model", rec.outcome === "ok" && /offline provider|Uncalibrated/.test(recMsg) && all[1].provider !== "anthropic" ? "PASS" : "PARTIAL", `provider=${all[1]?.provider} msg="${recMsg.slice(0, 60)}"`);
   // Simulated rubric change: a v0.2 expectation must coexist with the v0.1 one untouched.
-  await prisma.contentExpectation.create({ data: { orgId: A, rootId: root.id, subjectType: "content", subjectId: aId, rubricVersion: "v0.2-qa", overall: 33, expectedClass: "under" } });
+  await prisma.contentExpectation.create({ data: { orgId: A, rootId: root.id, subjectType: "content", subjectId: pre.id, rubricVersion: "v0.2-qa", overall: 33, expectedClass: "under" } });
   const v01 = await prisma.contentExpectation.findUnique({ where: { id: e1!.id } });
-  record("expectation", "old rubric version survives a new rubric", v01!.rubricVersion === "v0.1" && v01!.overall === e1!.overall ? "PASS" : "FAIL", `v0.1 overall=${v01!.overall}`);
-  const latest = await (await import("../../src/lib/data/content-learning")).latestExpectation(A, "content", aId);
+  record("expectation", "old rubric version survives a new rubric", v01!.rubricVersion === e1!.rubricVersion && v01!.overall === e1!.overall ? "PASS" : "FAIL", `${v01!.rubricVersion} overall=${v01!.overall}`);
+  const latest = await (await import("../../src/lib/data/content-learning")).latestExpectation(A, "content", pre.id);
   record("expectation", "latest expectation is the newest by time, not the highest score", latest?.rubricVersion === "v0.2-qa" ? "PASS" : "FAIL", `latest=${latest?.rubricVersion}/${latest?.overall}`);
 
   /* ------------------------ correction memory ------------------------ */

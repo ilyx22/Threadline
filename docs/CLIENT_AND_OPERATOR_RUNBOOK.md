@@ -24,9 +24,15 @@ Recovery: an invitation expired or went astray → **Members → Invitations →
 
 ## 3. Onboarding and recording (client, operator)
 
-- The founder works through onboarding at their own pace; progress saves. Operators can prefill the Brand Brain.
+- The founder works through onboarding at their own pace; progress saves. Operators can prefill the Brand Brain; each section they write shows on the Brand Brain page as **waiting for your confirmation** until the client confirms it (editing a section also confirms it).
+- **Installation**: when every step is complete, the client admin **signs off installation** on the Installation page (it is refused while a step is open). Threadline records the agreed **early win** in words at kickoff and, when it happens, the date and what shows it.
+- Every change to the Brand Brain is kept as a version. Drafts written against an older version are listed on the Brand Brain page for a check; any version can be restored (as a new version).
 - Recording readiness problems appear at the top of the client's home screen until fixed.
-- Contributors upload source material (call notes, voice notes, documents) in the Library. Only images, video, audio, PDF, text and Word files are accepted, and the file's content must match its type.
+- Contributors upload source material (call notes, voice notes, documents) in the Library. Only images, video, audio, PDF, text and Word files are accepted, and the file's content must match its type. Files over 10 MB go straight to storage in parts with a progress bar; each file shows where it came from.
+- Video and audio are processed (transcoded, transcribed, thumbnailed) when a processing worker is configured; a transcript is added to the Library and mined automatically for questions, objections, stories, proof, claims and ideas as exact quotes. Any text file can be mined with **Mine it**.
+- With scanning on, every file is scanned; an infected file is quarantined and cannot be downloaded.
+- **Your time**: founders and their team record the minutes they spend (recording, review, approval, calls). The page shows each week against the one-hour promise; weeks with nothing recorded say so.
+- **Help**: anyone in the workspace can ask Threadline for help from the Help page and see where their requests stand.
 
 ## 4. Approving and revising (client approver)
 
@@ -34,10 +40,15 @@ Recovery: an invitation expired or went astray → **Members → Invitations →
 - Open an item to approve it or send it back with a note (a send-back without a note is refused).
 - To approve several unchanged items at once, tick them and **Approve selected**. Anything that changed since the page loaded is skipped and left for you to look at again.
 - An approval covers that exact version. If the script, cut or packaging changes afterwards, it comes back for approval; it cannot be published otherwise.
+- Comments show which cut they were about; feedback on an earlier cut is marked **Earlier version**.
+- Packaging with a figure the script does not contain (or an unverified one), or with promise language, cannot be approved; the message says what to fix.
 
 ## 5. Publishing and evidence (operator)
 
 - **Connected platforms**: a client admin connects an account from **Settings → Access** (where the platform app is configured). Scheduling and publishing refuse anything not approved in its current version.
+- **Scheduled through the connected account**: choose it when scheduling. At the time, approval is checked again and the post is sent once. Long X text goes out as a thread.
+  - **Uncertain**: if the platform never answered, the record says so. Check the account, then record the URL (**It posted**) or **send again**.
+  - **Partly posted thread**: **Resume the thread** posts only the rest, as replies.
 - **Manual publishing**: post the approved package by hand, then record the URL and time on the publish record.
 - **Numbers**: connected platforms refresh automatically where supported; otherwise **Performance → Import numbers from a CSV**: preview, then import. Re-importing the same file adds nothing.
 - **Commercial evidence**: record inquiries, calls and deals; the evidence class says how strong the link to content is (from directly tracked to qualitative only). Client CRMs and payment tools can post events by webhook once their credential is stored (**Settings → Access → Inbound webhooks**, staff only).
@@ -50,11 +61,33 @@ On each piece (**Production → the piece → Learning loop**):
 3. After it has data, **Read the gap**, then correct and **approve the diagnosis**.
 4. **Record the correction** (believed, actual, failed assumption, what changes), then later **record the verdict**.
 Approved diagnoses and corrections appear in that week's report learnings.
+5. When a retest confirms a correction, **Make it a lesson** on the Learning page: generation follows lessons in force (for the workspace or one platform). Retire a lesson to take it out.
+
+An expectation can only be frozen before publication; after it, the last one frozen is what the piece is judged against.
+
+**Research**: schedule recurring runs (Intelligence → Runs → Scheduled research). Each run collects workspace records and public pages, says why any source could not be read, and waits for you.
+
+**Judge evaluation** (Admin → Research → Calibration): run the held-out evaluation; promote a variant only when it has enough held-out examples and beats chance; roll back at any time.
 
 ## 7. Reports (operator drafts and finalises; client reads)
 
 - **Weekly**: Reports → Generate. Check it, then **Mark final**: each reader gets one email. To correct a final report: open it → **Start a correction** with the reason; the client keeps seeing the current version until the correction is final.
-- **Four-week reviews**: Reports → Four-week reviews → **Write review** for the period. Figures are computed from records; write Action, Results, Problems, Future; **Finalise and send**. Corrections work as for weekly reports.
+- **Four-week reviews**: Reports → Four-week reviews → **Write review** for the period. Figures are computed from records; write Action, Results, Problems, Future (or **Draft empty sections from the records**, then edit); **Finalise and send**. Corrections work as for weekly reports.
+- **PDF**: any report opens as a PDF (**Download PDF**); clients only get final versions.
+
+## 7a. Leads (client admin, commercial; operator)
+
+- Leads arrive from **inbound sources** (Pipeline → inbound sources: a website form, Zapier or an import, each with its own token) or are added by hand for DMs. A repeat message from the same person joins their open lead.
+- Each lead has an owner (the primary contact by default), a thread, qualification evidence (location alone is refused) and a follow-up date that becomes a task on the day.
+- **Draft a reply** writes a suggested reply; approve or edit it, send it yourself on the channel, then **I sent it**. Speed to lead is shown on the Pipeline page.
+
+## 7b. Operator control
+
+- **Admin → Queue → Everything, in order**: every item needing a person across all clients, most urgent first, with its cause, owner and next action.
+- On each piece: internal **QA** against the editor checklist (for that cut), and a **blocker** when something is stopping it. Scripts have an owner, a due date and a blocker.
+- **Admin → Delivery**: turnaround medians and revision rounds per editor. **Admin → System**: recorded operator load per client, suppressed email addresses, uncertain posts, failed processing.
+- Contractors (editors) see only the pieces assigned to them and those pieces' files, tasks, scripts and publishing.
+- **Settings → Your data**: a workspace admin can export the workspace's records; the download lasts seven days.
 
 ## 8. Billing (operator; client admin and commercial can view)
 
@@ -94,3 +127,7 @@ Approved diagnoses and corrections appear in that week's report learnings.
 | Client's CRM events not appearing | Admin → System → Recent webhook deliveries | "refused" means the stored credential is wrong or missing |
 | A page says "Something went wrong (Reference …)" | Error tracker, search the reference | — |
 | Staff locked out of two-factor | A super admin resets their two-factor; they re-enrol |
+| A post shows "uncertain" or "partly posted" | Distribution, or Admin → Queue | Check the platform account; record the URL, send again, or resume the thread |
+| Emails to one address stopped | Admin → System → Suppressed email addresses | The address bounced or complained; lift the suppression only once it is known to work |
+| A file cannot be downloaded ("quarantined") | The file's scan result | The scanner flagged it; ask for a clean copy |
+| Uploads over 10 MB fail on the live site | Browser console shows a CORS error | Fix the bucket CORS policy (allow PUT, expose ETag) |

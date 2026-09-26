@@ -41,12 +41,16 @@ Every database, cron and key setting below goes on **`threadline`**. `threadline
 | --- | --- | --- | --- | --- | --- | --- |
 | Resend account and a verified sending domain | Invitations, confirmations, reports; without it links are shown on screen for you to send by hand | Verify `threadline.<your domain>` with the DNS records Resend gives you | `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM="Threadline <hello@yourdomain>"` | Send yourself an invitation from Members; it arrives | Free tier: 3,000 emails/month | First client (manual links work meanwhile) |
 | Where application alerts go | You hear about new applications | Your inbox address | `OPS_NOTIFY_EMAIL` | Submit a test application on /apply | None | Advisory |
+| Resend delivery webhook | Bounces and spam complaints stop further mail to that address | In Resend → Webhooks, add `https://<site>/api/email/resend` for delivered, delivery delayed, bounced, complained; copy its signing secret | `RESEND_WEBHOOK_SECRET` | Suppressed addresses appear on Admin → System after a test bounce | Included | Advisory |
 
 ## 4. Files (blocks first client uploads)
 
 | What | Why | Exact setting | Where | Verify | Cost / gate | Blocks |
 | --- | --- | --- | --- | --- | --- | --- |
 | Cloudflare R2 (or any S3-compatible) bucket, private | Uploads cannot live on Vercel's disk | Create a private bucket and an API token with read/write on it only | `STORAGE_PROVIDER=s3`, `S3_BUCKET`, `S3_REGION=auto`, `S3_ENDPOINT=https://<account>.r2.cloudflarestorage.com`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_FORCE_PATH_STYLE=true` | Upload a file in Library, download it | R2 has no egress fees | First client |
+
+| Bucket CORS for direct uploads | Large recordings go straight from the browser to the bucket in parts | In the R2 bucket's CORS policy allow `PUT` from `https://<site>` (and the other project's address if used), allowed header `content-type`, **expose header `ETag`** | R2 dashboard → bucket → Settings → CORS | Upload a file over 10 MB in the Library; it shows progress and appears | Included | First large upload |
+| Processing worker (transcode, transcribe, thumbnails, malware scan) | Transcripts and scanning happen outside the app, reported back by signed callback | Choose a worker (your own small service, or a transcription provider behind one); it must accept the signed task and call `https://<site>/api/processing/callback` with the same signature | `PROCESSING_PROVIDER=webhook`, `PROCESSING_ENDPOINT`, `PROCESSING_WEBHOOK_SECRET`; `PROCESSING_SCAN=true` once it scans | A new video in the Library shows "Processing", then "Processed"; an EICAR test file is quarantined | Worker cost | Feature (scanning: advisory until you decide) |
 
 ## 5. Rate limits and monitoring
 
@@ -73,7 +77,12 @@ Every database, cron and key setting below goes on **`threadline`**. `threadline
 | Instagram | Meta app with Instagram Graph API | `INSTAGRAM_CLIENT_ID`, `INSTAGRAM_CLIENT_SECRET` | Meta app review |
 | TikTok | TikTok developer app with Content Posting API | `TIKTOK_CLIENT_ID`, `TIKTOK_CLIENT_SECRET`; `TIKTOK_APP_AUDITED=true` only after audit | TikTok audit |
 | X | X developer app | `X_CLIENT_ID`, `X_CLIENT_SECRET` | Paid API tier for posting |
-| Facebook / Threads | Not built: needs a Meta app first | — | Meta review |
+| Facebook Page | Meta app with Pages permissions (built; publishes to the first Page the person manages, with the Page's own token) | `FACEBOOK_CLIENT_ID`, `FACEBOOK_CLIENT_SECRET`; redirect `…/api/oauth/facebook/callback` | Meta App Review (pages_manage_posts, pages_read_engagement, read_insights) + business verification |
+| Threads | Threads app (built) | `THREADS_CLIENT_ID`, `THREADS_CLIENT_SECRET`; redirect `…/api/oauth/threads/callback` | Meta App Review (threads_content_publish, threads_manage_insights) |
+
+One Meta business verification covers Instagram, Facebook and Threads; submit the three permission sets together.
+
+**Timely scheduled publishing.** Connected platforms publish from the job queue at the scheduled time only if something calls `/api/cron/jobs` often (every 5 to 15 minutes, with `Authorization: Bearer <CRON_SECRET>`), from an external scheduler or Vercel Pro cron. On Hobby it runs once a day.
 
 Until a platform is approved, publishing is manual: approved packages are posted by hand and the URL recorded; numbers come in by CSV import on the Performance page.
 
@@ -94,7 +103,10 @@ Until a platform is approved, publishing is manual: approved packages are posted
 | Retention periods | How long client data is kept after an engagement ends (default in the offboarding form: 30-day export window, then 90 days) | First client |
 | Lawful basis for the tracked-link visitor cookie | Until decided, clicks count but no visitor cookie is set; set `TRACKED_LINK_VISITOR_COOKIE=lawful-basis-documented` only after deciding | Feature |
 | Custom domain | The site runs on `threadline-fawn.vercel.app` and `threadlinex.vercel.app`; set `NEXT_PUBLIC_APP_URL` to the final domain once attached | Advisory |
-| Vercel plan | Hobby allows one scheduled run per day (configured); Pro allows more frequent runs if you want emails and reminders to move faster than "right after the request plus daily" | Advisory |
+| Vercel plan | Hobby allows one scheduled run per day and 100 deployments a day (exceeded on 26 September; see `docs/implementation/DEPLOYMENT_INVESTIGATION.md`). Pro allows frequent runs and 6,000 deployments a day | Advisory |
+| Processing worker | Which service transcodes, transcribes and scans files (FILE-05, FILE-03) | Feature |
+| Capacity | Hours each operator and editor is available per week, so recorded time can become capacity alerts (CAP-01) | Advisory |
+| Recovery objectives | RPO and RTO (INF-09) | First client |
 
 ## 10. After setting everything
 

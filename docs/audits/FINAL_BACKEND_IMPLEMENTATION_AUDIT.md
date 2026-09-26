@@ -2,10 +2,27 @@
 
 Date: 26 September 2026. Branch `backend/completion` (see `git log main..backend/completion`). This is a checkpoint audit of a large brief: it states what is done and tested, what is partial, and what is missing, without rounding up. The per-requirement record is `docs/implementation/BACKEND_COMPLETION_LEDGER.md`.
 
-## 1. Verdict
+## 1. Verdict (updated 27 September 2026)
 
-- **Full requested backend implementation: INCOMPLETE.** 61 requirements are implemented and tested, 5 were verified as already correct, 37 are partial, 9 are missing, 2 await an owner decision and 1 is unsupported by the provider. Nothing is `LIVE_VERIFIED`, because no production database or provider credentials exist yet.
-- **First-client production readiness: NO.** The code path for a first client (application → conversion → invitation → onboarding → delivery with exact-version approvals → reports → invoicing → renewal → offboarding) is implemented and tested end to end locally, but production has no database, no file storage, no email, no encryption keys and no cron secret. See the owner checklist.
+- **Code against the requirement ledger: COMPLETE.**
+  - 101 requirements are implemented and tested, and 5 were verified as already correct.
+  - 7 are implemented but need external configuration or platform approval to run live: FILE-02, FILE-03, FILE-05, NOT-02, INT-02, INT-03, INT-06.
+  - 2 await an owner decision: INF-09 and PRV-01.
+  - None is partial or missing, and none is blocked by unfinished code.
+  - None is LIVE_VERIFIED: no production service is configured yet.
+  - The brief in the repository ends at section 19. A version with a section 18A has not been received; its requirements are not in this ledger.
+- **First-client production readiness: NO.** Production has no database, keys, email, storage or scheduler configured. The blockers are listed by kind in the ledger's "Remaining requirements by blocker" and set out step by step in OWNER_ACTIVATION_CHECKLIST.md: section 0 (which project is production), then 1 to 9.
+
+### Verification at this checkpoint
+
+| Check | Result |
+| --- | --- |
+| Unit and database tests (`npm test`, local PostgreSQL 18) | 808 passed, 0 failed |
+| QA run-all (all suites, including acceptance journeys 1 to 10) | 616 passed, 2 passed with an external gate, 0 partial, 0 failed |
+| Acceptance journeys 3, 4, 5, 6, 7, 9, 10 (`suite-journeys-more`) | 87 passed |
+| Public regression (`marketing-v9`) and public-file freeze | see the checkpoint log; 104 protected files unchanged |
+| Backup and restore drill | passed: 113 tables, 2,928 rows |
+| Types and lint (`tsc`, `eslint src`) | clean |
 
 ## 2. Before and after
 
@@ -32,6 +49,18 @@ Date: 26 September 2026. Branch `backend/completion` (see `git log main..backend
 5. Report learnings ignored the learning loop (approved diagnoses and corrections).
 6. Decimal idea scores were accepted into an integer column.
 7. The job queue threw if a job vanished while running.
+8. File downloads counted suspended memberships as access.
+9. Nested content storage keys were refused by the S3 adapter, so content files could not be read back on S3.
+10. Instagram treated a processed Reel container as published; it still needs `media_publish`, so Reels would never have gone live.
+11. A refused token refresh was written inside a rolled-back transaction, so the reconnect prompt was lost.
+12. The first Brand Brain version trigger would have refused every Brand Brain edit (text-array append); corrected in a forward migration before it left the machine.
+13. LinkedIn could never publish: no member id was captured at connection (found by the new acceptance journeys).
+14. Contractor search returned unassigned pieces and pipeline leads (journeys).
+15. A publish claim left by a crashed worker stayed claimed forever (journeys).
+16. The long-form entitlement check existed but was never called (journeys).
+17. An expectation recorded after publication replaced the frozen forecast in diagnosis (journeys).
+18. The restore drill failed on the Brand Brain trigger (journeys).
+19. Email sends had no idempotency key, so a retried send after a timeout could deliver twice.
 
 ## 4. Permissions matrix (who may do what)
 
