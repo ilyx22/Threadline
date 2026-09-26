@@ -1,6 +1,9 @@
 import "server-only";
 import { lookup } from "node:dns/promises";
-import { isIP } from "node:net";
+import { lookup as lookupCb, type LookupAddress } from "node:dns";
+import http from "node:http";
+import https from "node:https";
+import { isIP, type LookupFunction } from "node:net";
 
 /**
  * Public page reader.
@@ -77,8 +80,7 @@ export async function fetchPublicPage(rawUrl: string): Promise<FetchOutcome> {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
     try {
-      response = await fetch(current, {
-        redirect: "manual",
+      response = await pinnedFetch(current, {
         signal: controller.signal,
         headers: {
           // Identify honestly. A reader that lies about what it is has no place
@@ -162,6 +164,56 @@ export async function fetchPublicPage(rawUrl: string): Promise<FetchOutcome> {
   }
 
   return { ok: false, blocked: false, reason: "Too many redirects." };
+}
+
+/* ------------------------- Pinned connection (SEC-10) ------------------------ */
+
+/**
+ * The address check runs inside the socket's own DNS lookup, so the address
+ * that was checked is the address that is connected to. A hostname that
+ * answers "public" to the first lookup and "private" to the second (DNS
+ * rebinding) is refused at connect time. Redirects are never followed here.
+ */
+export const guardedLookup: LookupFunction = (hostname, options, callback) => {
+  lookupCb(hostname, { ...options, all: true }, (err, addresses) => {
+    if (err) return (callback as (e: NodeJS.ErrnoException | null, a: LookupAddress[]) => void)(err, []);
+    const list = addresses as unknown as LookupAddress[];
+    const bad = !list.length || list.some((a) => isPrivateAddress(a.address));
+    if (bad) {
+      const e = Object.assign(new Error(`Refused: ${hostname} resolves to a private network.`), { code: "EPRIVATE" });
+      return (callback as (e: NodeJS.ErrnoException | null, a: LookupAddress[]) => void)(e, []);
+    }
+    if ((options as { all?: boolean }).all) return (callback as (e: null, a: LookupAddress[]) => void)(null, list);
+    return (callback as (e: null, a: string, f: number) => void)(null, list[0].address, list[0].family);
+  });
+};
+
+function pinnedFetch(url: URL, init: { signal: AbortSignal; headers: Record<string, string> }): Promise<Response> {
+  return new Promise((resolve, reject) => {
+    const mod = url.protocol === "https:" ? https : http;
+    const req = mod.request(url, { method: "GET", headers: init.headers, lookup: guardedLookup, signal: init.signal }, (res) => {
+      const chunks: Buffer[] = [];
+      let total = 0;
+      res.on("data", (c: Buffer) => {
+        total += c.length;
+        if (total > MAX_BYTES + 1) {
+          res.destroy();
+          return;
+        }
+        chunks.push(c);
+      });
+      res.on("close", () => {
+        const headers = new Headers();
+        for (const [k, v] of Object.entries(res.headers)) if (v !== undefined) headers.set(k, Array.isArray(v) ? v.join(", ") : v);
+        const status = res.statusCode ?? 0;
+        const noBody = status === 204 || status === 304 || (status >= 300 && status < 400);
+        resolve(new Response(noBody ? null : new Uint8Array(Buffer.concat(chunks)), { status: status < 200 || status > 599 ? 502 : status, headers }));
+      });
+      res.on("error", reject);
+    });
+    req.on("error", reject);
+    req.end();
+  });
 }
 
 /* --------------------------------- Guards ---------------------------------- */
@@ -349,8 +401,7 @@ export async function fetchPublicJson(rawUrl: string): Promise<JsonOutcome> {
   const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
   let response: Response;
   try {
-    response = await fetch(url, {
-      redirect: "error",
+    response = await pinnedFetch(url, {
       signal: controller.signal,
       headers: {
         "user-agent": "ThreadlineIntelligence/1.0 (+https://threadline.example; research reader)",

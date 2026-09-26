@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { extractReadable, fetchPublicPage, isPrivateAddress } from "./fetch-url";
+import { extractReadable, fetchPublicPage, guardedLookup, isPrivateAddress } from "./fetch-url";
 
 /**
  * The URL reader is the only place in the product that makes a server-side
@@ -146,5 +146,22 @@ describe("readable extraction", () => {
   it("caps the extracted text", () => {
     const { text } = extractReadable(`<p>${"word ".repeat(20_000)}</p>`);
     assert.ok(text.length <= 20_000);
+  });
+});
+
+describe("connection pinning (SEC-10)", () => {
+  const run = (host: string, all: boolean) =>
+    new Promise<{ err: (Error & { code?: string }) | null; value: unknown }>((resolve) =>
+      guardedLookup(host, { all } as never, ((err: Error | null, value: unknown) => resolve({ err, value })) as never),
+    );
+  it("refuses at connect time when the name resolves to a private address", async () => {
+    const r = await run("localhost", false);
+    assert.equal(r.err?.code, "EPRIVATE");
+    const all = await run("localhost", true);
+    assert.equal(all.err?.code, "EPRIVATE");
+  });
+  it("passes an IP literal through the same check", async () => {
+    const r = await run("127.0.0.1", false);
+    assert.equal(r.err?.code, "EPRIVATE");
   });
 });
