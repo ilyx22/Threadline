@@ -32,7 +32,7 @@ async function main() {
       js: document.documentElement.dataset.js || '',
       hidden: [...document.querySelectorAll('.v9-home h1, .v9-home h2, .v9-home .v5-art')].filter(e => parseFloat(getComputedStyle(e).opacity) < 0.99 && !e.closest('[data-scene]:not([data-seen])')).length
     })`);
-    ok("v9:story", "ten sections: hero, ticker, gap, memory, roles, workshop, expressions, learning, fit, closing", s.sections === 10, `${s.sections}`);
+    ok("v9:story", "ten sections: hero, ticker, gap, memory, roles, workshop, expressions, learning, engagement, closing", s.sections === 10, `${s.sections}`);
     ok("v9:copy", "approved hero proposition", /expertise that wins the work visible before the sales call/i.test(s.h1), s.h1);
     ok("v9:copy", "inside the firm and what the market sees", /inside the firm/i.test(s.text) && /what the market sees/i.test(s.text));
     ok("v9:copy", "market memory idea", /familiar to the people who matter/i.test(s.text));
@@ -105,9 +105,10 @@ async function main() {
     await evaluate(cdp, `(() => { const b = [...document.querySelectorAll('.pb-card-actions button')]; b[0].click(); return true; })()`);
     await sleep(150);
     ok("v9:playbook", "the sorter answers a card", /topic|thesis/i.test(await evaluate<string>(cdp, `${q(".pb-card-feedback")}?.textContent || ''`)));
-    await evaluate(cdp, `${q(".pb-mark")}.click(); true`);
-    await sleep(150);
-    ok("v9:playbook", "marking a chapter read lights its mark", (await evaluate<string>(cdp, `${q(".pb-rail-mark")}.className + ' ' + ${q(".pb-rail-count")}.textContent`)).includes("is-done") && /1 of 10/.test(await evaluate<string>(cdp, `${q(".pb-rail-count")}.textContent`)));
+    /* no button any more: a chapter counts as read once it has been on screen (AutoRead: 45% visible for 2.5s) */
+    await evaluate(cdp, `(() => { document.getElementById('chapter-1').scrollIntoView({ block: 'start' }); return true; })()`);
+    await sleep(3200);
+    ok("v9:playbook", "a chapter that has been on screen lights its mark", (await evaluate<string>(cdp, `${q(".pb-rail-mark")}.className + ' ' + ${q(".pb-rail-count")}.textContent`)).includes("is-done") && /1 of 10/.test(await evaluate<string>(cdp, `${q(".pb-rail-count")}.textContent`)));
     for (const width of [1024, 390, 320]) {
       for (const route of ["/who-its-for", "/playbook", "/playbook/measure-what-the-buyer-did", "/how-it-works", "/apply", "/calculator"]) {
         await setViewport(cdp, width, 900);
