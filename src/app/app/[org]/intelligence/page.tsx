@@ -3,6 +3,8 @@ import { Brain } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
 import { currentBrainVersion, listBrainVersions, staleDrafts } from "@/lib/ai/brain-versions";
 import { BrainVersions } from "./brain-versions";
+import { PrefillConfirm } from "./prefill-confirm";
+import { prisma } from "@/lib/db/client";
 import { loadBrandBrain } from "@/lib/data/workspace";
 import { COMPLETENESS_LABELS, COMPLETENESS_SECTIONS } from "@/lib/domain/brand-brain";
 import { Card, CardBody } from "@/components/ui/card";
@@ -24,6 +26,8 @@ export default async function BrandBrainPage({ params }: { params: Promise<{ org
   const data = await loadBrandBrain(ctx.org.id);
   const canEdit = ctx.can("brain.edit");
   const [brainCurrent, brainVersions, staleScripts] = await Promise.all([currentBrainVersion(ctx.org.id), listBrainVersions(ctx.org.id, 12), staleDrafts(ctx.org.id)]);
+  const confirmations = JSON.parse((await prisma.brandBrain.findUnique({ where: { orgId: ctx.org.id }, select: { confirmations: true } }))?.confirmations ?? "{}") as Record<string, { state: string }>;
+  const prefilled = Object.entries(confirmations).filter(([, v]) => v.state === "prefilled").map(([k]) => k);
 
   const weakest = COMPLETENESS_SECTIONS.map((key) => ({ key, value: data.sections[key] }))
     .sort((a, b) => a.value - b.value)
@@ -94,6 +98,7 @@ export default async function BrandBrainPage({ params }: { params: Promise<{ org
           saveRules: saveContentRulesAction.bind(null, slug),
         }}
       />
+      <PrefillConfirm slug={slug} sections={prefilled} canConfirm={canEdit && !ctx.isInternal} />
       <BrainVersions
         slug={slug}
         current={brainCurrent ?? 1}

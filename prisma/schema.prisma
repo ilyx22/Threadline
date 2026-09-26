@@ -326,6 +326,9 @@ model BrandBrain {
   /// AI-03/ENG-04: bumped by a database trigger on every change to the four
   /// sections; each version's content is kept in BrandBrainVersion.
   version      Int      @default(1)
+  /// CX-04: per section, whether Threadline prefilled it and the client has
+  /// confirmed it: JSON { [section]: { state: "prefilled" | "confirmed", by, at, version } }.
+  confirmations String  @default("{}")
   updatedAt    DateTime @updatedAt
   createdAt    DateTime @default(now())
 

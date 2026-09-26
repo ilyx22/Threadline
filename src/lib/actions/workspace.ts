@@ -73,6 +73,18 @@ async function recomputeCompleteness(orgId: string) {
   });
 }
 
+/**
+ * CX-04: a section Threadline writes is "prefilled" until the client confirms
+ * it; a section the client writes is confirmed by that act.
+ */
+async function markBrainSection(ctx: { org: { id: string }; user: { id: string }; isInternal: boolean }, section: "company" | "founder" | "voice" | "contentRules") {
+  const brain = await prisma.brandBrain.findUnique({ where: { orgId: ctx.org.id }, select: { confirmations: true, version: true } });
+  if (!brain) return;
+  const map = JSON.parse(brain.confirmations || "{}") as Record<string, unknown>;
+  map[section] = { state: ctx.isInternal ? "prefilled" : "confirmed", by: ctx.user.id, at: new Date().toISOString(), version: brain.version };
+  await prisma.brandBrain.update({ where: { orgId: ctx.org.id }, data: { confirmations: JSON.stringify(map) } });
+}
+
 async function ensureBrain(orgId: string) {
   return prisma.brandBrain.upsert({
     where: { orgId },
@@ -119,6 +131,7 @@ export async function saveCompanyProfileAction(
       where: { orgId: ctx.org.id },
       data: { company: stringify(profile) },
     });
+    await markBrainSection(ctx, "company");
 
     // Keep the org record consistent with the Brand Brain.
     await prisma.organization.update({
@@ -180,6 +193,7 @@ export async function saveFounderProfileAction(
       where: { orgId: ctx.org.id },
       data: { founder: stringify(profile) },
     });
+    await markBrainSection(ctx, "founder");
 
     await recomputeCompleteness(ctx.org.id);
     await audit(ctx, {
@@ -229,6 +243,7 @@ export async function saveVoiceProfileAction(
       where: { orgId: ctx.org.id },
       data: { voice: stringify(profile) },
     });
+    await markBrainSection(ctx, "voice");
 
     await recomputeCompleteness(ctx.org.id);
     await audit(ctx, {
@@ -278,6 +293,7 @@ export async function saveContentRulesAction(
       where: { orgId: ctx.org.id },
       data: { contentRules: stringify(rules) },
     });
+    await markBrainSection(ctx, "contentRules");
 
     await recomputeCompleteness(ctx.org.id);
     await audit(ctx, {
