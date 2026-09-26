@@ -174,7 +174,7 @@ export const expressions = {
 
 export const learning = {
   index: "07",
-  eyebrow: "How we test and perfect",
+  eyebrow: "How we test and iterate",
   headline: "Expected. Actual. Why. Change. Retest.",
   body: "Before a piece goes out we write down what we expect it to do. Once it has travelled we read what it did, name the likeliest reason for any gap, change one thing and send it again. A calendar posts. This gets smarter.",
   illustrative: "Illustrative cases. Not client results.", // claim:C-LEARNING-ILLUSTRATIVE

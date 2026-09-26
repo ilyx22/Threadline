@@ -1481,3 +1481,13 @@
 @media (max-width: 991px) { .pb-hero-map { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (max-width: 599px) { .pb-hero-map { grid-template-columns: repeat(4, minmax(0, 1fr)); } .pb-rail-marks { grid-template-columns: repeat(4, 44px); } }
 @media (max-width: 759px) { .pb-hero .v9-hero-panel { padding-bottom: 28px; } .pb-hero-map { margin-bottom: 0; } }
+
+/* pass 18: the homepage bench without its reading panel, 10% smaller */
+.tl-public.v9 .v5-bench-panel.is-hidden-with-notes { display: none; }
+.tl-public.v9 .v5-step-note { display: none; }
+.v9-learning-bench { max-width: 90%; margin-inline: auto; }
+@media (max-width: 759px) {
+  .v9-learning-bench { max-width: none; }
+  .tl-public.v9 .v5-step-note { display: block; margin: 0 0 10px; font-size: 15px; line-height: 1.45; text-align: center; color: var(--v9-ink-soft); }
+}
+@media (max-width: 599px) { .v5-bench-stage .v5-label-plate { display: none; } }

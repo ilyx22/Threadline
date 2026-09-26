@@ -117,6 +117,7 @@ export default function Bench({ notes }: { notes?: readonly { step: string; note
         ))}
       </div>
 
+      {notes ? <p className="v5-step-note">{notes[state]?.note}</p> : null}
       <p className="v9-visually-hidden">Illustrative case: {c.title}. Not a client result.</p>
       <div className="v5-bench-stage" ref={stage}>
         <svg viewBox="0 0 900 520" className="v5-art" role="img" aria-label={`The testing bench. The piece sits on five blocks: idea, hook, distribution, audience, destination. Three measuring jars, ${c.gauges.join(", ")}, each with an expected mark. ${state >= 1 ? "The actual level is shown." : ""} ${state >= 2 ? `The ${c.failing} block has tipped.` : ""} ${state >= 3 && applied ? `The ${c.failing} block has been replaced.` : ""} ${retest ? "The jars have been read again." : ""}`}>
@@ -141,7 +142,7 @@ export default function Bench({ notes }: { notes?: readonly { step: string; note
                       <path d="M-18 -30 H10 M-14 -16 H14" stroke={C.ink} strokeWidth={1.2} opacity={0.3} strokeLinecap="round" />
                     </g>
                     {/* the label on a small plate, centred in the bench's plank */}
-                    <rect x={-(name.length * 6.7 + 10) / 2} y={2} width={name.length * 6.7 + 10} height={14} rx={7} fill={C.paper} stroke={C.ink} strokeWidth={0.8} strokeOpacity={0.4} />
+                    <rect className="v5-label-plate" x={-(name.length * 6.7 + 10) / 2} y={2} width={name.length * 6.7 + 10} height={14} rx={7} fill={C.paper} stroke={C.ink} strokeWidth={0.8} strokeOpacity={0.4} />
                     <text x={0} y={9} textAnchor="middle" dominantBaseline="central" className="v5-label is-xs">
                       {name.toUpperCase()}
                     </text>
@@ -190,7 +191,7 @@ export default function Bench({ notes }: { notes?: readonly { step: string; note
         </svg>
       </div>
 
-      <div className="v5-bench-panel">
+      <div className={`v5-bench-panel${notes ? " is-hidden-with-notes" : ""}`}>
         <div id="bench-readout" role="tabpanel" aria-labelledby={`bench-tab-${state}`} className="v5-readout" aria-live="polite">
           <p className="v5-readout-step">
             {String(state + 1).padStart(2, "0")} of 05 · Illustrative case
