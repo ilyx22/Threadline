@@ -1242,6 +1242,18 @@ export const ATTRIBUTION_CLASSES = [
   "associated",
   "qualitative_only",
 ] as const;
+/**
+ * ATT-01: the five evidence classes, exactly as the commercial brief names
+ * them. Stored values are the short keys above; every export and report uses
+ * these canonical names, and the mapping is one to one (tested).
+ */
+export const EVIDENCE_CLASS_CANONICAL = {
+  directly_tracked: "DIRECTLY_TRACKED",
+  buyer_named: "BUYER_NAMED_CLIENT_ATTRIBUTED",
+  multi_touch: "MULTI_TOUCH_INFLUENCED",
+  associated: "ASSOCIATED_CORRELATED",
+  qualitative_only: "QUALITATIVE_ONLY",
+} as const;
 export const attributionClassSchema = z.enum(ATTRIBUTION_CLASSES);
 export type AttributionClass = z.infer<typeof attributionClassSchema>;
 

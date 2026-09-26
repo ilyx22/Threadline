@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db/client";
 import { getStorage, storageProviderName } from "@/lib/storage";
 import { WorkflowError } from "@/lib/domain/workflow";
 import { endEngagement } from "./engagements";
+import { EVIDENCE_CLASS_CANONICAL } from "@/lib/domain/enums";
 
 /**
  * Offboarding (OFF-01, PRV-01).
@@ -50,7 +51,8 @@ export async function buildWorkspaceExport(orgId: string) {
     packages,
     publishes,
     inquiries,
-    commercialEvents: events,
+    // ATT-01: evidence classes under their canonical names.
+    commercialEvents: events.map((e) => ({ ...e, evidenceClass: EVIDENCE_CLASS_CANONICAL[e.attribution as keyof typeof EVIDENCE_CLASS_CANONICAL] ?? e.attribution })),
     weeklyReports: reports,
     periodReviews: reviews,
     invoices,
