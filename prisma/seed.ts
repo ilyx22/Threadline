@@ -41,10 +41,12 @@ import { seedCorpus } from "./seed/corpus";
 import { seedLearning } from "./seed/learning";
 import { SCRIPTS } from "./seed/scripts";
 import { RECORDING_QUEUE_SCRIPTS } from "./seed/recording-queue";
+import { seedRefusals } from "../src/lib/db/seed-guard";
 
 const prisma = new PrismaClient();
 
-const DEMO_PASSWORD = process.env.SEED_DEMO_PASSWORD || "threadline-demo-2026";
+// INF-04: no default password; seedRefusals() refuses to run without one.
+const DEMO_PASSWORD = process.env.SEED_DEMO_PASSWORD ?? "";
 
 const DAY = 86_400_000;
 const now = new Date();
@@ -74,6 +76,19 @@ function pickOne<T>(items: readonly T[]): T {
 
 async function main() {
   console.log("Seeding Threadline OS…\n");
+
+  // INF-04: refuse before any write unless this is a local, demo-only database
+  // and the operator confirmed the reset explicitly.
+  const refusals = seedRefusals({
+    env: process.env,
+    databaseUrl: process.env.DATABASE_URL,
+    orgSlugs: (await prisma.organization.findMany({ select: { slug: true } })).map((o) => o.slug),
+    userEmails: (await prisma.user.findMany({ select: { email: true } })).map((u) => u.email),
+  });
+  if (refusals.length) {
+    console.error("The demo seed refused to run:\n  - " + refusals.join("\n  - "));
+    process.exit(1);
+  }
 
   await reset();
 
@@ -1771,9 +1786,9 @@ async function main() {
     const range = weekRangeFor(daysAgo(weekOffset * 7));
     const payload = await computeWeeklyReport(org.id, range);
 
-    await prisma.weeklyReport.upsert({
-      where: { orgId_periodStart: { orgId: org.id, periodStart: range.start } },
-      create: {
+    // The seed runs on an emptied database, so a plain create is enough.
+    await prisma.weeklyReport.create({
+      data: {
         orgId: org.id,
         periodStart: range.start,
         periodEnd: range.end,
@@ -1782,8 +1797,8 @@ async function main() {
         narrative: buildNarrative(payload, weekOffset),
         generatedById: operator.id,
         generatedAt: daysAgo(weekOffset * 7 - 1),
+        finalisedAt: daysAgo(weekOffset * 7 - 1),
       },
-      update: {},
     });
   }
 
@@ -2112,7 +2127,7 @@ async function main() {
 
   /* --------------------------------- Summary --------------------------------- */
 
-  console.log("\nDemo accounts (password for all: " + DEMO_PASSWORD + ")\n");
+  console.log("\nDemo accounts (password for all: the value of SEED_DEMO_PASSWORD)\n");
   console.log("  Founder (client_admin)     alex@northbeamadvisory.com     -> /app/northbeam");
   console.log("  Team member (client_member) jordan@northbeamadvisory.com  -> /app/northbeam");
   console.log("  Editor (editor)            editor@threadline.com          -> /app/northbeam");

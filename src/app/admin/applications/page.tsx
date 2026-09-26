@@ -8,6 +8,7 @@ import { readFilter, type RawSearchParams } from "@/lib/utils/search-params";
 import { ActiveFilters, FilterBar, MultiFilter } from "@/components/app/filters";
 import { EmptyState } from "@/components/ui/feedback";
 import { ApplicationList } from "./applications-client";
+import { prisma } from "@/lib/db/client";
 
 export const metadata: Metadata = { title: "Applications" };
 
@@ -25,6 +26,12 @@ export default async function ApplicationsPage({
   ]);
 
   const total = Object.values(counts).reduce((a, b) => a + b, 0);
+  const [staffRows, orgs] = await Promise.all([
+    prisma.membership.findMany({ where: { role: { in: ["internal_operator", "super_admin"] }, status: "active", org: { kind: "internal" } }, select: { user: { select: { id: true, name: true } } } }),
+    prisma.organization.findMany({ where: { id: { in: applications.map((a) => a.orgId).filter((x): x is string => Boolean(x)) } }, select: { id: true, slug: true } }),
+  ]);
+  const staff = [...new Map(staffRows.map((s) => [s.user.id, s.user])).values()];
+  const slugOf = new Map(orgs.map((o) => [o.id, o.slug]));
 
   return (
     <div className="space-y-6">
@@ -73,6 +80,8 @@ export default async function ApplicationsPage({
         />
       ) : (
         <ApplicationList
+          staff={staff}
+          openId={typeof query.open === "string" ? query.open : null}
           applications={applications.map((a) => ({
             id: a.id,
             name: a.name,
@@ -93,6 +102,12 @@ export default async function ApplicationsPage({
             status: a.status,
             reviewNotes: a.reviewNotes,
             createdAt: a.createdAt.toISOString(),
+            ownerId: a.ownerId,
+            nextAction: a.nextAction,
+            nextActionDue: a.nextActionDue ? a.nextActionDue.toISOString().slice(0, 10) : null,
+            outcome: a.outcome,
+            outcomeReason: a.outcomeReason,
+            clientSlug: a.orgId ? (slugOf.get(a.orgId) ?? null) : null,
           }))}
         />
       )}

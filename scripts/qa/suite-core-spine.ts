@@ -23,7 +23,8 @@
  */
 import { NextRequest } from "next/server";
 import { prisma } from "../../src/lib/db/client";
-import { actAs, attempt, fd, record, section, cleanupSessions } from "./context";
+import { actAs, anonymous, attempt, fd, record, section, cleanupSessions } from "./context";
+import * as Team from "../../src/lib/actions/team";
 import * as Admin from "../../src/lib/actions/admin";
 import * as Auth from "../../src/lib/actions/auth";
 import * as Onboarding from "../../src/lib/actions/onboarding";
@@ -72,7 +73,7 @@ const msg = (r: Awaited<ReturnType<typeof attempt<unknown>>>) => `${r.outcome}${
 
 async function follow(slug: string, cookie?: string, referer?: string) {
   const req = new NextRequest(`http://localhost:3000/t/${slug}`, {
-    headers: { ...(cookie ? { cookie: `tl_v=${cookie}` } : {}), ...(referer ? { referer } : {}) },
+    headers: { cookie: `tl_consent=1${cookie ? `; tl_v=${cookie}` : ""}`, ...(referer ? { referer } : {}) },
   });
   const res = await redirectGET(req, { params: Promise.resolve({ slug }) });
   const token = /tl_v=([^;]+)/.exec(res.headers.get("set-cookie") ?? "")?.[1] ?? null;
@@ -205,18 +206,27 @@ async function runEngagement(e: Engagement) {
   /* ----- 1. Operator creates the client. ----- */
   await actAs(OPERATOR);
   const created = await attempt(() => Admin.createClientAction(null, fd({ name: e.name, slug, website: `https://${slug}.example.test`, industry: isText ? "Legal services" : "B2B services", geography: "UK", packageTier: "install", currency: "GBP", setupFee: 2500, periodFee: 2500, cadencePerWeek: isText ? 4 : 3, platforms: "linkedin", founderName: e.founderName, founderEmail: e.founderEmail, founderPassword: e.password })));
-  const org = await prisma.organization.findUnique({ where: { slug }, include: { memberships: true, brandBrain: true, onboardingSession: true } });
-  record(area, "operator creates the client workspace (org, founder client_admin, Brand Brain shell, onboarding session)", created.outcome === "ok" && !!org && org.memberships.some((m) => m.role === "client_admin") && !!org.brandBrain && !!org.onboardingSession && org.periodFee === 250_000 ? "PASS" : "FAIL", `${msg(created)} members=${org?.memberships.length} brain=${!!org?.brandBrain} session=${!!org?.onboardingSession} periodFee=${org?.periodFee}`);
+  const org = await prisma.organization.findUnique({ where: { slug }, include: { memberships: true, brandBrain: true, onboardingSession: true, invitations: true, engagements: true } });
+  const inviteLink = created.outcome === "ok" ? ((created.value as { data?: { inviteLink?: string | null } }).data?.inviteLink ?? null) : null;
+  record(area, "operator creates the client workspace (org, Brand Brain shell, onboarding session, draft engagement, founder invited as client_admin; no account yet)", created.outcome === "ok" && !!org && !!org.brandBrain && !!org.onboardingSession && org.engagements.length === 1 && org.invitations.some((i) => i.role === "client_admin" && i.state === "pending") && org.memberships.length === 0 && !!inviteLink ? "PASS" : "FAIL", msg(created));
   if (!org) throw new Error("no org");
   await prisma.organization.update({ where: { id: org.id }, data: { startedAt: new Date(Date.now() - 30 * 86_400_000) } }); // CLOCK: engagement began 30 days ago
   const dup = await attempt(() => Admin.createClientAction(null, fd({ name: e.name, slug, founderName: e.founderName, founderEmail: e.founderEmail, founderPassword: e.password })));
   record(area, "duplicate slug refused", dup.outcome !== "ok" ? "PASS" : "FAIL", msg(dup));
 
-  /* ----- 2. Founder logs in with the password the operator set. ----- */
+  /* ----- 2. Founder accepts the invitation, choosing their password, then signs in. ----- */
+  anonymous();
+  const token = inviteLink ? new URL(inviteLink).searchParams.get("token") ?? "" : "";
+  const accepted = await attempt(() => Team.acceptInvitationAction(null, fd({ token, password: e.password, confirm: e.password })));
+  const founderMembership = await prisma.membership.findFirst({ where: { orgId: org.id, user: { email: e.founderEmail } } });
+  record(area, "founder accepts the invitation with their own password → owner and client_admin", accepted.outcome === "refused" && accepted.via === "redirect" && founderMembership?.role === "client_admin" && founderMembership.isOwner ? "PASS" : "FAIL", msg(accepted));
+  anonymous(); // a stranger replaying the used link, not the founder
+  const replay = await attempt(() => Team.acceptInvitationAction(null, fd({ token, password: "another-password-9", confirm: "another-password-9" })));
+  record(area, "the invitation link works once (a signed-out replay is refused)", replay.outcome !== "ok" && !(replay.outcome === "refused" && replay.via === "redirect") ? "PASS" : "FAIL", msg(replay));
   __resetRateLimits();
   const login = await attempt(() => Auth.loginAction(null, fd({ email: e.founderEmail, password: e.password })));
   const target = login.outcome === "refused" && login.via === "redirect" ? login.message.split(";")[2] ?? "" : "";
-  record(area, "founder logs in with the issued password → redirected into the workspace", login.outcome === "refused" && login.via === "redirect" && target.includes(`/app/${slug}`) ? "PASS" : "FAIL", `${msg(login)} → ${target}`);
+  record(area, "founder signs in with the password they chose → redirected into the workspace", login.outcome === "refused" && login.via === "redirect" && target.includes(`/app/${slug}`) ? "PASS" : "FAIL", `${msg(login)} → ${target}`);
   const wrong = await attempt(() => Auth.loginAction(null, fd({ email: e.founderEmail, password: "not-the-password" })));
   record(area, "wrong password refused", wrong.outcome === "refused" && wrong.via !== "redirect" ? "PASS" : "FAIL", msg(wrong));
 
@@ -378,16 +388,16 @@ async function runEngagement(e: Engagement) {
   }
 
   /* ----- 11. Weekly report. ----- */
-  await actAs(e.founderEmail);
+  await actAs(OPERATOR); // REP-01: Threadline drafts and finalises; the founder reads
   const rep = await attempt(() => Reports.generateWeeklyReportAction(slug, -3));
   const repId = data<{ id: string }>(rep)?.id ?? "";
-  const repView = repId ? await getReport(org.id, repId) : null;
+  const repView = repId ? await getReport(org.id, repId, "internal_operator") : null;
   const payload = (repView as { payload?: Record<string, unknown> } | null)?.payload ?? {};
   const payloadText = JSON.stringify(payload);
   const shipped = (payload as { shipped?: { count: number; titles?: string[] } }).shipped;
   const repRow = repId ? await prisma.weeklyReport.findUnique({ where: { id: repId } }) : null;
   const wantShipped = repRow ? await prisma.contentItem.count({ where: { orgId: org.id, liveAt: { gte: repRow.periodStart, lte: repRow.periodEnd } } }) : -1;
-  record(area, "founder generates the weekly report for the week the piece went live: shipped matches, no overclaim", rep.outcome === "ok" && wantShipped >= 1 && shipped?.count === wantShipped && !/guarantee|will generate|ROI of/i.test(payloadText) ? "PASS" : "FAIL", `${msg(rep)} shipped=${shipped?.count} expected=${wantShipped} views=${(payload as { performance?: { views?: number } }).performance?.views}`);
+  record(area, "operator generates the weekly report for the week the piece went live: shipped matches, no overclaim", rep.outcome === "ok" && wantShipped >= 1 && shipped?.count === wantShipped && !/guarantee|will generate|ROI of/i.test(payloadText) ? "PASS" : "FAIL", `${msg(rep)} shipped=${shipped?.count} expected=${wantShipped} views=${(payload as { performance?: { views?: number } }).performance?.views}`);
   if (mode === "bad") {
     record(area, "bad outcome: report carries the miss and the learning, not just the retest win", ((payload as { misses?: unknown[] }).misses?.length ?? 0) > 0 && ((payload as { learnings?: unknown[] }).learnings?.length ?? 0) > 0 ? "PASS" : "PARTIAL", `misses=${(payload as { misses?: unknown[] }).misses?.length ?? 0} learnings=${(payload as { learnings?: unknown[] }).learnings?.length ?? 0}`);
   }

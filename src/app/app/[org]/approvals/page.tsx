@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, BadgeCheck, Boxes, CheckCircle2, FileText, Video } from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
-import { approvalQueue, type ApprovalItem } from "@/lib/data/client-surface";
+import { approvalQueue } from "@/lib/data/client-surface";
+import { fingerprint } from "@/lib/delivery/approvals";
+import { ApprovalQueue, type QueueItem } from "./approvals-client";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardBody } from "@/components/ui/card";
 import { EmptyState } from "@/components/ui/feedback";
-import { relativeTime } from "@/lib/utils/dates";
 
 export const metadata: Metadata = { title: "Approvals" };
 
@@ -30,6 +30,15 @@ export default async function ApprovalsPage({ params }: { params: Promise<{ org:
   const canApproveAny = canApproveScripts || canApproveContent;
 
   const overdue = queue.filter((item) => item.waitingDays >= 3);
+  // Each item carries the fingerprint of the version shown, so a bulk approval
+  // can skip anything that changes before the reviewer presses the button.
+  const TYPE = { script: "script", content: "content_item", package: "platform_package" } as const;
+  const versioned: QueueItem[] = await Promise.all(
+    queue.map(async (item) => {
+      const fp = await fingerprint(ctx.org.id, { type: TYPE[item.kind], id: item.id });
+      return { ...item, waitingSince: item.waitingSince.toISOString(), hash: fp?.hash ?? null, versionLabel: fp?.label ?? null };
+    }),
+  );
 
   return (
     <div className="space-y-6">
@@ -78,70 +87,13 @@ export default async function ApprovalsPage({ params }: { params: Promise<{ org:
             </p>
           ) : null}
 
-          <ul className="space-y-2">
-            {queue.map((item) => (
-              <li key={`${item.kind}-${item.id}`}>
-                <ApprovalRow item={item} />
-              </li>
-            ))}
-          </ul>
+          <ApprovalQueue
+            slug={slug}
+            items={versioned}
+            canApprove={{ script: canApproveScripts, content: canApproveContent, package: ctx.can("distribution.publish") }}
+          />
         </>
       )}
     </div>
-  );
-}
-
-const KIND_META: Record<
-  ApprovalItem["kind"],
-  { label: string; icon: React.ElementType; tone: "accent" | "info" | "purple" }
-> = {
-  script: { label: "Script", icon: FileText, tone: "accent" },
-  content: { label: "Edit", icon: Video, tone: "info" },
-  package: { label: "Packaging", icon: Boxes, tone: "purple" },
-};
-
-function ApprovalRow({ item }: { item: ApprovalItem }) {
-  const meta = KIND_META[item.kind];
-  const Icon = meta.icon;
-  const waited = item.waitingDays;
-
-  return (
-    <Link href={item.href} className="block">
-      <Card interactive className="p-0">
-        <CardBody className="pt-4">
-          <div className="flex gap-4">
-            <span
-              className={`mt-0.5 grid size-8 shrink-0 place-items-center rounded-md border ${
-                waited >= 3
-                  ? "border-warning/35 bg-warning-soft text-warning"
-                  : "border-line bg-surface text-faint"
-              }`}
-            >
-              <Icon className="size-4" aria-hidden />
-            </span>
-
-            <div className="min-w-0 flex-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <Badge tone={meta.tone}>{meta.label}</Badge>
-                {item.context ? (
-                  <span className="text-[11.5px] text-ghost">{item.context}</span>
-                ) : null}
-                <span
-                  className={`ml-auto text-[11.5px] ${waited >= 3 ? "text-warning" : "text-ghost"}`}
-                >
-                  waiting {relativeTime(item.waitingSince).replace(/^/, "")}
-                </span>
-              </div>
-
-              <p className="mt-2 text-[14.5px] font-medium leading-snug text-ink">{item.title}</p>
-              <p className="mt-1 flex items-center gap-1.5 text-[12.5px] text-muted">
-                <BadgeCheck className="size-3.5 shrink-0 text-accent" aria-hidden />
-                {item.ask}
-              </p>
-            </div>
-          </div>
-        </CardBody>
-      </Card>
-    </Link>
   );
 }

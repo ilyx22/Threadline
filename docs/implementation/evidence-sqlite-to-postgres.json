@@ -1,0 +1,701 @@
+{
+  "at": "2026-09-26T05:04:00.783Z",
+  "dryRun": false,
+  "tables": [
+    {
+      "table": "User",
+      "source": 6,
+      "target": 6,
+      "idDigest": "048006caa85e57dc",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Session",
+      "source": 1,
+      "target": 1,
+      "idDigest": "830ef8c6567c5ec0",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Organization",
+      "source": 4,
+      "target": 4,
+      "idDigest": "21360e8c3d5adc9b",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Membership",
+      "source": 9,
+      "target": 9,
+      "idDigest": "fe57fdb4f3c58aa4",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "AuditLog",
+      "source": 279,
+      "target": 279,
+      "idDigest": "0732135f42e33dfe",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Notification",
+      "source": 6,
+      "target": 6,
+      "idDigest": "8fde3a4bed8cc53a",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Task",
+      "source": 14,
+      "target": 14,
+      "idDigest": "685898d7f660da7c",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "BrandBrain",
+      "source": 2,
+      "target": 2,
+      "idDigest": "062b3dfd59b51d3b",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Offer",
+      "source": 2,
+      "target": 2,
+      "idDigest": "f65c11e00ee898d6",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "IcpProfile",
+      "source": 2,
+      "target": 2,
+      "idDigest": "83028f4616f12be0",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ProofItem",
+      "source": 6,
+      "target": 6,
+      "idDigest": "7127efa425c3a5ae",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Competitor",
+      "source": 5,
+      "target": 5,
+      "idDigest": "a67bb44570b39baf",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "IntelligenceRun",
+      "source": 2,
+      "target": 2,
+      "idDigest": "9170f39a54aa7a1d",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ResearchItem",
+      "source": 38,
+      "target": 38,
+      "idDigest": "3c15f80f5e532d83",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Tag",
+      "source": 13,
+      "target": 13,
+      "idDigest": "e4ad621fb6d66cdc",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ResearchItemTag",
+      "source": 58,
+      "target": 58,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Pattern",
+      "source": 15,
+      "target": 15,
+      "idDigest": "32fa6f0def5b2560",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ContentRoot",
+      "source": 2,
+      "target": 2,
+      "idDigest": "a3ec9eba61c06e85",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Idea",
+      "source": 34,
+      "target": 34,
+      "idDigest": "b6ecb9a0971aeaa1",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Script",
+      "source": 10,
+      "target": 10,
+      "idDigest": "cff3b758464c284e",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ContentItem",
+      "source": 34,
+      "target": 34,
+      "idDigest": "91d49fb5cd9a326c",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "PatternEvidence",
+      "source": 34,
+      "target": 34,
+      "idDigest": "45a764f7e92f970a",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "IdeaEvidence",
+      "source": 64,
+      "target": 64,
+      "idDigest": "ecdfa034c98d5274",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ScriptVersion",
+      "source": 12,
+      "target": 12,
+      "idDigest": "04bbcfd9a51e5959",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ContentEvent",
+      "source": 172,
+      "target": 172,
+      "idDigest": "1d7383fd50f774b7",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Asset",
+      "source": 74,
+      "target": 74,
+      "idDigest": "cd5a789527b058bc",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Comment",
+      "source": 5,
+      "target": 5,
+      "idDigest": "b6569c1034a5854e",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "PlatformPackage",
+      "source": 22,
+      "target": 22,
+      "idDigest": "04ca0f6fce724ad0",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Integration",
+      "source": 12,
+      "target": 12,
+      "idDigest": "5a6235ba65fb2c89",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "SocialAccount",
+      "source": 3,
+      "target": 3,
+      "idDigest": "6a88e5d4a0d9bbbd",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "PublishRecord",
+      "source": 22,
+      "target": 22,
+      "idDigest": "0b14d92255ad3609",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "PerformanceSnapshot",
+      "source": 51,
+      "target": 51,
+      "idDigest": "6b6e17700fed17de",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Visitor",
+      "source": 2,
+      "target": 2,
+      "idDigest": "6cf8e7e1e372bdd5",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Inquiry",
+      "source": 12,
+      "target": 12,
+      "idDigest": "688bc51720f90a91",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "WeeklyReport",
+      "source": 3,
+      "target": 3,
+      "idDigest": "a305c39ee976c21f",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "OperatingMetric",
+      "source": 16,
+      "target": 16,
+      "idDigest": "3bcb216b0a737a7d",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "RunSource",
+      "source": 8,
+      "target": 8,
+      "idDigest": "c538732073f6bfab",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "CandidateSignal",
+      "source": 6,
+      "target": 6,
+      "idDigest": "5a740bad5cba4f9f",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "CandidateEvidence",
+      "source": 13,
+      "target": 13,
+      "idDigest": "ace19b760fe1d6f4",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ConstraintDiagnosis",
+      "source": 1,
+      "target": 1,
+      "idDigest": "c3f62a82efebb713",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ConstraintAssessment",
+      "source": 9,
+      "target": 9,
+      "idDigest": "69d9937426c8f471",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "InstallationMilestone",
+      "source": 1,
+      "target": 1,
+      "idDigest": "2b783b0e1c891c16",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ProofPeriod",
+      "source": 4,
+      "target": 4,
+      "idDigest": "9485ab7bb762a226",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "RecordingReadiness",
+      "source": 1,
+      "target": 1,
+      "idDigest": "0db03e3a85160f94",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ReadinessCheck",
+      "source": 7,
+      "target": 7,
+      "idDigest": "54ae0b2b30d98b0d",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "SupportIssue",
+      "source": 3,
+      "target": 3,
+      "idDigest": "ebb983ad5481337f",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "SopDocument",
+      "source": 15,
+      "target": 15,
+      "idDigest": "3e36f15c422da40c",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "OnboardingSession",
+      "source": 1,
+      "target": 1,
+      "idDigest": "0a4bd90b60b496d0",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "MarketWedge",
+      "source": 3,
+      "target": 3,
+      "idDigest": "bfb74fb0d52eed57",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Prospect",
+      "source": 53,
+      "target": 53,
+      "idDigest": "23aa5c2e4881790e",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Application",
+      "source": 5,
+      "target": 5,
+      "idDigest": "1f4fdb52a50115ef",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "AiGeneration",
+      "source": 32,
+      "target": 32,
+      "idDigest": "7feebcbed1d6856a",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "InternalMetric",
+      "source": 6,
+      "target": 6,
+      "idDigest": "886d4ea90c2952fd",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ValidationConversation",
+      "source": 3,
+      "target": 3,
+      "idDigest": "f11b985eebc68fb5",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "SopCheck",
+      "source": 15,
+      "target": 15,
+      "idDigest": "46dcd0abe7c37487",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "SalesCall",
+      "source": 3,
+      "target": 3,
+      "idDigest": "8176af4d4396aab5",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "AcquisitionTarget",
+      "source": 1,
+      "target": 1,
+      "idDigest": "f4a98b91e0bff8d1",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "FunnelReview",
+      "source": 1,
+      "target": 1,
+      "idDigest": "547da203a966df4f",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "TrackedLink",
+      "source": 3,
+      "target": 3,
+      "idDigest": "ce6705fb6f9a8e03",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Touchpoint",
+      "source": 5,
+      "target": 5,
+      "idDigest": "26282503e8cdc59c",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "CommercialEvent",
+      "source": 8,
+      "target": 8,
+      "idDigest": "06434ee3e5f7104e",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ResearchExample",
+      "source": 8,
+      "target": 8,
+      "idDigest": "0571574c9b0cbadf",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ExampleAnalysis",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "JudgeVerdict",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "JudgeCalibration",
+      "source": 10,
+      "target": 10,
+      "idDigest": "73d0f3a1bedfe0e8",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ContentExpectation",
+      "source": 2,
+      "target": 2,
+      "idDigest": "e0694cdb8ca38805",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ContentDiagnosis",
+      "source": 1,
+      "target": 1,
+      "idDigest": "979d7cb562b17133",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "CorrectionEntry",
+      "source": 2,
+      "target": 2,
+      "idDigest": "316adbd6bf633559",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Credential",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "OAuthState",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "AuthToken",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "EmailMessage",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "Job",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "SalesScript",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "SalesCallScriptSnapshot",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "ProofPermission",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    },
+    {
+      "table": "WebhookEvent",
+      "source": 0,
+      "target": 0,
+      "idDigest": "e3b0c44298fc1c14",
+      "countOk": true,
+      "idsOk": true,
+      "sampleOk": true
+    }
+  ],
+  "total": 1276,
+  "failed": false
+}

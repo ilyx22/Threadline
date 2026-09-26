@@ -1,3 +1,4 @@
+import { parseProfiles } from "@/lib/auth/roles";
 import "server-only";
 import { prisma } from "@/lib/db/client";
 import { parseStringArray, parseWith } from "@/lib/db/json";
@@ -87,7 +88,25 @@ export async function listMembers(orgId: string) {
     },
     orderBy: { createdAt: "asc" },
   });
-  return memberships.map((m) => ({ ...m.user, role: m.role, membershipId: m.id }));
+  return memberships.map((m) => ({
+    ...m.user,
+    role: m.role,
+    membershipId: m.id,
+    status: m.status,
+    isOwner: m.isOwner,
+    isExpert: m.isExpert,
+    contactRole: m.contactRole,
+    profiles: parseProfiles(m.profiles) as string[],
+  }));
+}
+
+/** Pending and lapsed invitations for the members screen (TEAM-04). */
+export async function listInvitations(orgId: string) {
+  return prisma.invitation.findMany({
+    where: { orgId, state: { in: ["pending", "expired"] } },
+    orderBy: { createdAt: "desc" },
+    select: { id: true, name: true, email: true, role: true, state: true, expiresAt: true, sentCount: true },
+  });
 }
 
 export type Member = Awaited<ReturnType<typeof listMembers>>[number];

@@ -295,3 +295,12 @@ describe("evidence must be supportable (QA-005)", () => {
     assert.doesNotThrow(() => assertEvidenceSupportable("qualitative_only", { visitorId: null, inquiryId: null }));
   });
 });
+
+describe("evidence classes are the brief's five, exactly (ATT-01)", () => {
+  it("maps every stored class to one canonical name and back", async () => {
+    const { EVIDENCE_CLASS_CANONICAL } = await import("./enums");
+    const canonical = ATTRIBUTION_CLASSES.map((c) => EVIDENCE_CLASS_CANONICAL[c]);
+    assert.deepEqual([...canonical].sort(), ["ASSOCIATED_CORRELATED", "BUYER_NAMED_CLIENT_ATTRIBUTED", "DIRECTLY_TRACKED", "MULTI_TOUCH_INFLUENCED", "QUALITATIVE_ONLY"]);
+    assert.equal(new Set(canonical).size, ATTRIBUTION_CLASSES.length);
+  });
+});

@@ -25,7 +25,7 @@ import { cleanText, err, guarded, ok, okVoid, parseForm, type ActionResult } fro
  * `orgId` is never read from client input.
  */
 
-const scoreField = z.coerce.number().min(0).max(100);
+const scoreField = z.coerce.number().int("Use a whole number from 0 to 100.").min(0).max(100);
 
 const ideaInputSchema = z.object({
   title: z.string().min(3, "Give the idea a title.").max(240),

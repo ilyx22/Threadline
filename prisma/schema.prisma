@@ -4,15 +4,18 @@
 //   * No database enums    -> statuses are String, constrained by Zod unions in src/lib/domain
 //   * No array columns     -> list values are JSON-encoded String, read via src/lib/db/json.ts
 //   * No provider-specific types
-// Switching to PostgreSQL is a change of `provider` + DATABASE_URL, then `prisma migrate dev`.
+// PostgreSQL since 26 September 2026 (ADR-001 amended). The SQLite migration history is preserved under
+// prisma/legacy-sqlite/ and is not replayed; prisma/migrations starts from a PostgreSQL baseline.
+// DATABASE_URL is the pooled runtime URL; DIRECT_URL is the direct connection used by migrations.
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // ---------------------------------------------------------------------------
@@ -29,11 +32,20 @@ model User {
   isSuperAdmin Boolean   @default(false)
   isActive     Boolean   @default(true)
   lastSeenAt   DateTime?
+  /// Staff two-factor (SEC-08). The TOTP secret is sealed with the credential
+  /// keyring (never stored in the clear); recovery codes are stored as hashes.
+  mfaSecret         String?
+  mfaEnabledAt      DateTime?
+  /// Last accepted TOTP time step, so a code cannot be replayed.
+  mfaLastStep       Int?
+  mfaRecoveryHashes String    @default("[]")
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
   sessions             Session[]
   memberships          Membership[]
+  invitationsSent      Invitation[]            @relation("InvitationInviter")
+  workAssignments      WorkAssignment[]
   auditLogs            AuditLog[]
   notifications        Notification[]
   tasksAssigned        Task[]                  @relation("TaskAssignee")
@@ -81,6 +93,9 @@ model Session {
   ipHash    String?
   expiresAt DateTime
   createdAt DateTime @default(now())
+  /// Set when the second factor was verified for this session (SEC-08).
+  mfaVerifiedAt DateTime?
+  lastSeenAt    DateTime?
 
   @@index([userId])
   @@index([expiresAt])
@@ -116,10 +131,21 @@ model Organization {
   synthetic       Boolean   @default(false)
   startedAt       DateTime?
   lastActivityAt  DateTime?
+  /// OFF-01: offboarding. Client access ends at accessEndsAt (after the export
+  /// window); tenant data is deleted after retentionUntil unless on legal hold.
+  offboardedAt    DateTime?
+  accessEndsAt    DateTime?
+  retentionUntil  DateTime?
+  legalHold       Boolean   @default(false)
+  /// AI-08: monthly AI spend ceiling in millionths of a US dollar; null = no ceiling.
+  aiBudgetMicroUsd Int?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
   memberships          Membership[]
+  invitations          Invitation[]
+  engagements          Engagement[]
+  workAssignments      WorkAssignment[]
   auditLogs            AuditLog[]
   notifications        Notification[]
   tasks                Task[]
@@ -181,6 +207,19 @@ model Membership {
   role      String // super_admin | internal_operator | client_admin | client_member | editor
   isPrimary Boolean  @default(false)
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  /// Client permission profiles layered on the role (TEAM-01): JSON array of
+  /// admin | approver | contributor | viewer | commercial.
+  profiles    String    @default("[]")
+  /// active | suspended. A suspended member keeps history but has no access.
+  status      String    @default("active")
+  suspendedAt DateTime?
+  /// The workspace owner: cannot be removed or demoted except by an explicit transfer.
+  isOwner     Boolean   @default(false)
+  /// A named expert whose voice Threadline writes in (TEAM-08).
+  isExpert    Boolean   @default(false)
+  /// primary | backup | null: the client contact for decisions.
+  contactRole String?
 
   user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
@@ -218,12 +257,16 @@ model Notification {
   severity  String    @default("info") // info | success | warning | critical
   readAt    DateTime?
   createdAt DateTime  @default(now())
+  /// NOT-01: the same event never notifies the same person twice.
+  dedupeKey String?
+  emailedAt DateTime?
 
   org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
   user User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([orgId, createdAt])
   @@index([userId, readAt])
+  @@unique([userId, dedupeKey])
 }
 
 model Task {
@@ -732,6 +775,8 @@ model Comment {
   resolved   Boolean  @default(false)
   /// Operator-only note. Never returned by a client-scoped read.
   internal   Boolean  @default(false)
+  /// The version of the thing the comment is about (script version, package or cut hash), so feedback on an old version is never mistaken for feedback on the current one.
+  version    String?
   authorId   String?
   createdAt  DateTime @default(now())
 
@@ -929,11 +974,50 @@ model WeeklyReport {
   generatedById String?
   generatedAt   DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  /// REP-01: each correction of a final report is a new version; a final
+  /// version is never edited, and clients read the latest final one.
+  version        Int       @default(1)
+  supersedesId   String?
+  revisionReason String?
+  finalisedAt    DateTime?
+  finalisedById  String?
+  supersededAt   DateTime?
 
   org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
   generatedBy User?        @relation(fields: [generatedById], references: [id], onDelete: SetNull)
 
-  @@unique([orgId, periodStart])
+  @@unique([orgId, periodStart, version])
+  @@index([orgId, periodStart])
+}
+
+/// The four-week review at the end of each service period (REP-02), in the
+/// order ACTION, RESULTS, PROBLEMS, FUTURE. Figures are computed from records
+/// and frozen; the operator writes the judgement. Versioned like reports.
+model PeriodReview {
+  id              String    @id @default(cuid())
+  orgId           String
+  engagementId    String
+  periodNumber    Int
+  periodStart     DateTime  @db.Date
+  periodEnd       DateTime  @db.Date
+  version         Int       @default(1)
+  /// draft | final
+  status          String    @default("draft")
+  /// JSON: figures computed from the period's records.
+  figures         String    @default("{}")
+  action          String    @default("")
+  results         String    @default("")
+  problems        String    @default("")
+  future          String    @default("")
+  createdById     String?
+  finalisedAt     DateTime?
+  finalisedById   String?
+  supersededAt    DateTime?
+  revisionReason  String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now()) @updatedAt
+
+  @@unique([engagementId, periodNumber, version])
   @@index([orgId, periodStart])
 }
 
@@ -1420,6 +1504,19 @@ model Application {
   prospectId       String?
   prospect         Prospect? @relation(fields: [prospectId], references: [id], onDelete: SetNull)
 
+  /// Qualification (COM-02): who at Threadline owns it and what happens next.
+  ownerId             String?
+  nextAction          String?
+  nextActionDue       DateTime?
+  /// won | lost | not_a_fit | no_response | null while open
+  outcome             String?
+  outcomeReason       String?
+  /// Set when converted into a client workspace (COM-03).
+  orgId               String?
+  convertedAt         DateTime?
+  confirmationQueuedAt DateTime?
+  operatorNotifiedAt  DateTime?
+
   @@index([status, createdAt])
 }
 
@@ -1439,6 +1536,11 @@ model AiGeneration {
   entityType   String?
   entityId     String?
   createdAt    DateTime @default(now())
+  /// AI-08: estimated cost in millionths of a US dollar, from configured
+  /// prices; null when no price is configured (never guessed).
+  costMicroUsd Int?
+  /// Labelled mock output, never counted as model work.
+  isDemo       Boolean  @default(false)
 
   org  Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
   user User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
@@ -1622,6 +1724,9 @@ model Prospect {
   economicConsequence    String?
   economicsUpdatedAt     DateTime?
   applications           Application[]
+  /// Set when this prospect became a client workspace (COM-03).
+  orgId                  String?
+  convertedAt            DateTime?
 
   @@index([state, nextActionDueAt])
   @@index([tier, state])
@@ -2545,6 +2650,9 @@ model ProofPermission {
   grantedAt              DateTime?
   grantedNote            String?
   requestedAt            DateTime?
+  /// PRF-01: when the permissions lapse (null = until withdrawn), and what they cover.
+  expiresAt              DateTime?
+  scopeNote              String?
   createdAt              DateTime     @default(now())
   updatedAt              DateTime     @updatedAt
   org                    Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
@@ -2565,3 +2673,481 @@ model WebhookEvent {
   @@unique([provider, externalId])
   @@index([provider, receivedAt])
 }
+
+/// A pending invitation to a workspace (TEAM-02). No user or membership exists
+/// until the invitee accepts; the link carries a random token stored only as a
+/// hash, single use, with an expiry.
+model Invitation {
+  id             String    @id @default(cuid())
+  orgId          String
+  email          String
+  name           String
+  title          String?
+  role           String
+  profiles       String    @default("[]")
+  isExpert       Boolean   @default(false)
+  tokenHash      String    @unique
+  invitedById    String?
+  expiresAt      DateTime
+  /// pending | accepted | revoked | expired
+  state          String    @default("pending")
+  sentCount      Int       @default(0)
+  lastSentAt     DateTime?
+  acceptedAt     DateTime?
+  acceptedUserId String?
+  revokedAt      DateTime?
+  revokedById    String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
+
+  org       Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  invitedBy User?        @relation("InvitationInviter", fields: [invitedById], references: [id], onDelete: SetNull)
+
+  @@index([orgId, state])
+  @@index([email])
+}
+
+/// Assignment-scoped access for contractors, editors and QA reviewers (TEAM-09):
+/// with an assignment scope they see only the work they are assigned to.
+model WorkAssignment {
+  id            String   @id @default(cuid())
+  orgId         String
+  userId        String
+  /// editor | backup_editor | qa_reviewer
+  kind          String
+  /// null = every item in the workspace of this kind of work
+  contentItemId String?
+  createdById   String?
+  createdAt     DateTime @default(now())
+
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, userId, kind, contentItemId])
+  @@index([userId])
+}
+
+/// A commercial offer Threadline sells (ENG-02). Engagements copy its terms at
+/// signing, so changing an offer never rewrites a signed engagement.
+model OfferTemplate {
+  id             String   @id @default(cuid())
+  key            String   @unique
+  name           String
+  description    String?
+  currency       String   @default("GBP")
+  setupFeeMinor  Int
+  periodFeeMinor Int
+  periodDays     Int      @default(28)
+  initialPeriods Int      @default(3)
+  /// JSON: what each period includes (entitlements).
+  entitlements   String   @default("{}")
+  active         Boolean  @default(true)
+  version        Int      @default(1)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+
+  engagements Engagement[]
+}
+
+/// One client engagement (ENG-01): the signed terms, the calendar and the state.
+model Engagement {
+  id                  String    @id @default(cuid())
+  orgId               String
+  offerTemplateId     String?
+  /// The offer's terms exactly as signed (JSON), immune to later offer edits.
+  offerSnapshot       String    @default("{}")
+  agreementVersion    String?
+  agreementSignedAt   DateTime?
+  /// Where the signed agreement lives (a document id or storage path), never its content.
+  agreementEvidence   String?
+  currency            String    @default("GBP")
+  setupFeeMinor       Int
+  periodFeeMinor      Int
+  periodDays          Int       @default(28)
+  initialPeriods      Int       @default(3)
+  /// Calendar date the first period starts, in the workspace's timezone.
+  startDate           DateTime? @db.Date
+  timezone            String    @default("Europe/London")
+  /// draft | active | paused | ended | terminated
+  status              String    @default("draft")
+  activatedAt         DateTime?
+  pausedAt            DateTime?
+  endedAt             DateTime?
+  endReason           String?
+  entitlements        String    @default("{}")
+  earlyWinDueDate     DateTime? @db.Date
+  /// BIL-02: exactly one invoice authority per engagement: manual | stripe.
+  billingProvider     String    @default("manual")
+  stripeCustomerId    String?
+  /// Days allowed to pay an issued invoice.
+  paymentTermsDays    Int       @default(14)
+  sourceApplicationId String?   @unique
+  sourceProspectId    String?
+  createdById         String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @default(now()) @updatedAt
+
+  org          Organization   @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  offer        OfferTemplate? @relation(fields: [offerTemplateId], references: [id], onDelete: SetNull)
+  periods      ServicePeriod[]
+  scopeChanges ScopeChange[]
+
+  @@index([orgId, status])
+}
+
+/// A 28-day service period (ENG-01, ENG-06). Dates are calendar dates in the
+/// engagement's timezone; the end date is exclusive.
+model ServicePeriod {
+  id           String   @id @default(cuid())
+  engagementId String
+  orgId        String
+  number       Int
+  startDate    DateTime @db.Date
+  endDate      DateTime @db.Date
+  feeMinor     Int
+  /// upcoming | current | complete | paused
+  status       String   @default("upcoming")
+  createdAt    DateTime @default(now())
+
+  engagement Engagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+
+  @@unique([engagementId, number])
+  @@index([orgId, startDate])
+}
+
+/// A change to what the engagement includes (ENG-05), approved before it applies.
+model ScopeChange {
+  id                  String    @id @default(cuid())
+  engagementId        String
+  orgId               String
+  summary             String
+  detail              String?
+  /// proposed | approved | rejected
+  state               String    @default("proposed")
+  requestedById       String?
+  decidedById         String?
+  decidedAt           DateTime?
+  effectiveFromPeriod Int?
+  feeChangeMinor      Int?
+  createdAt           DateTime  @default(now())
+
+  engagement Engagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+
+  @@index([engagementId, state])
+}
+
+/// Outbound CRM work (COM-04): each change Threadline must mirror into the CRM
+/// is a durable row, sent by a job, retried, and never lost if the CRM is down.
+model CrmOutbox {
+  id             String    @id @default(cuid())
+  provider       String
+  entityType     String
+  entityId       String
+  operation      String
+  payload        String
+  idempotencyKey String    @unique
+  /// pending | sent | failed | dead | needs_review
+  state          String    @default("pending")
+  attempts       Int       @default(0)
+  lastError      String?
+  remoteId       String?
+  createdAt      DateTime  @default(now())
+  sentAt         DateTime?
+
+  @@index([state, createdAt])
+  @@index([entityType, entityId])
+}
+
+/// The mapping between a Threadline record and its CRM record (COM-04).
+model CrmLink {
+  id           String   @id @default(cuid())
+  provider     String
+  entityType   String
+  entityId     String
+  remoteObject String
+  remoteId     String
+  remoteUrl    String?
+  lastSyncedAt DateTime @default(now())
+
+  @@unique([provider, entityType, entityId])
+  @@unique([provider, remoteObject, remoteId])
+}
+
+/// One approval decision on one exact version of a piece of work (DEL-02).
+/// `contentHash` fingerprints what was approved; any material edit changes the
+/// hash, which makes this approval stale (DEL-03). Nothing is ever approved
+/// automatically: every row names the person and the authority they acted on.
+model Approval {
+  id                String    @id @default(cuid())
+  orgId             String
+  /// idea | script | content_item | platform_package
+  entityType        String
+  entityId          String
+  /// Human-readable version label: script v3, cut 2, package edit time.
+  versionLabel      String?
+  contentHash       String
+  /// approved | changes_requested | rejected
+  decision          String
+  reviewerId        String?
+  /// designated_approver | backup_approver | workspace_admin | staff_on_behalf
+  authority         String
+  /// What the approval covers, e.g. "LinkedIn post" or "all platforms".
+  scope             String?
+  note              String?
+  reviewRequestedAt DateTime?
+  decidedAt         DateTime  @default(now())
+  /// Set when a later material edit made this approval stale.
+  supersededAt      DateTime?
+  supersededReason  String?
+  batchId           String?
+
+  batch ReviewBatch? @relation(fields: [batchId], references: [id], onDelete: SetNull)
+
+  @@index([orgId, entityType, entityId])
+  @@index([orgId, decidedAt])
+}
+
+/// A set of items sent to the client for review together (CX-02). Each item is
+/// pinned to the hash it had when the batch was sent; a bulk decision applies
+/// only to items still at that hash.
+model ReviewBatch {
+  id          String    @id @default(cuid())
+  orgId       String
+  title       String
+  createdById String?
+  dueAt       DateTime?
+  /// open | closed
+  state       String    @default("open")
+  createdAt   DateTime  @default(now())
+  closedAt    DateTime?
+
+  items     ReviewBatchItem[]
+  approvals Approval[]
+
+  @@index([orgId, state])
+}
+
+model ReviewBatchItem {
+  id          String  @id @default(cuid())
+  batchId     String
+  entityType  String
+  entityId    String
+  contentHash String
+  /// null until decided: approved | changes_requested | rejected | stale
+  outcome     String?
+
+  batch ReviewBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  @@unique([batchId, entityType, entityId])
+}
+
+/// An invoice (BIL-01). Issued invoices are never edited: a mistake is voided
+/// with a reason, or corrected with a credit note. Amounts in minor units.
+model Invoice {
+  id                String    @id @default(cuid())
+  orgId             String
+  engagementId      String?
+  number            String    @unique
+  /// setup | period | adjustment | credit_note
+  kind              String
+  periodNumber      Int?
+  currency          String    @default("GBP")
+  totalMinor        Int
+  /// draft | issued | paid | void
+  status            String    @default("draft")
+  issuedAt          DateTime?
+  dueDate           DateTime? @db.Date
+  paidAt            DateTime?
+  voidedAt          DateTime?
+  voidReason        String?
+  /// manual | stripe
+  provider          String    @default("manual")
+  providerInvoiceId String?   @unique
+  hostedUrl         String?
+  /// For a credit note: the invoice it credits.
+  creditsInvoiceId  String?
+  notes             String?
+  createdById       String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now()) @updatedAt
+
+  lines    InvoiceLine[]
+  payments Payment[]
+  disputes Dispute[]
+
+  @@index([orgId, status])
+  @@index([engagementId, kind, periodNumber])
+}
+
+model InvoiceLine {
+  id          String @id @default(cuid())
+  invoiceId   String
+  description String
+  quantity    Int    @default(1)
+  unitMinor   Int
+  amountMinor Int
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}
+
+/// Money in or out against an invoice (BIL-01): a payment (positive), a refund
+/// (negative). Partial payments are simply several rows. Provider ids are
+/// unique so a redelivered webhook cannot record the same payment twice.
+model Payment {
+  id                String   @id @default(cuid())
+  orgId             String
+  invoiceId         String
+  amountMinor       Int
+  /// payment | refund
+  kind              String   @default("payment")
+  /// bank_transfer | card | stripe | other
+  method            String
+  receivedAt        DateTime
+  reference         String?
+  /// Where the evidence is (bank statement line, remittance email), never the evidence itself.
+  evidence          String?
+  providerPaymentId String?  @unique
+  recordedById      String?
+  createdAt         DateTime @default(now())
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+
+  @@index([orgId, receivedAt])
+}
+
+model Dispute {
+  id                String    @id @default(cuid())
+  orgId             String
+  invoiceId         String
+  reason            String
+  /// open | won | lost | withdrawn
+  state             String    @default("open")
+  amountMinor       Int?
+  providerDisputeId String?   @unique
+  openedAt          DateTime  @default(now())
+  closedAt          DateTime?
+  note              String?
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+}
+
+/// A signed agreement (BIL-03): which document, which version, when and by whom.
+/// The file itself lives in storage; this row is the evidence trail.
+model AgreementDocument {
+  id           String   @id @default(cuid())
+  orgId        String
+  engagementId String?
+  /// msa | dpa | sow | order_form
+  kind         String
+  version      String
+  signedAt     DateTime
+  signedByName String
+  signedByRole String?
+  /// Storage path or e-signature envelope id.
+  evidence     String
+  recordedById String?
+  createdAt    DateTime @default(now())
+
+  @@index([orgId, kind])
+}
+
+/// A reminder about an overdue invoice (BIL-04), drafted by the system and
+/// sent only when a person approves it.
+model PaymentReminder {
+  id           String    @id @default(cuid())
+  orgId        String
+  invoiceId    String
+  toEmail      String
+  subject      String
+  body         String
+  /// draft | approved | sent | discarded
+  state        String    @default("draft")
+  approvedById String?
+  approvedAt   DateTime?
+  sentAt       DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@index([orgId, state])
+}
+
+/// The permanent record of an offboarding (OFF-01, PRV-01). Deliberately not
+/// linked to the organisation, so it survives the tenant's deletion as the
+/// evidence of what was done, when, and by whom.
+model OffboardingRecord {
+  id             String    @id @default(cuid())
+  orgId          String    @unique
+  orgName        String
+  reason         String
+  /// JSON: each step with its outcome and time.
+  steps          String    @default("[]")
+  startedById    String?
+  startedAt      DateTime  @default(now())
+  accessEndsAt   DateTime
+  retentionUntil DateTime
+  exportAssetId  String?
+  deletedAt      DateTime?
+  /// JSON: row counts removed, per table, at deletion.
+  deletionCounts String?
+}
+
+/// How a person wants to hear about work (NOT-01), per workspace. Email is
+/// off unless the person turns it on: in-app notifications always appear.
+model NotificationPreference {
+  id           String    @id @default(cuid())
+  userId       String
+  orgId        String
+  /// off | immediate | digest
+  email        String    @default("off")
+  /// Local hours (0-23) during which nothing is emailed; digests wait.
+  quietStart   Int?
+  quietEnd     Int?
+  timezone     String    @default("Europe/London")
+  snoozedUntil DateTime?
+  lastDigestAt DateTime?
+  updatedAt    DateTime  @default(now()) @updatedAt
+
+  @@unique([userId, orgId])
+}
+
+/// A renewal decision (RNW-01), opened ahead of the end of the initial term
+/// or of any later period an owner marks, and decided by a person.
+model RenewalReview {
+  id           String    @id @default(cuid())
+  orgId        String
+  engagementId String
+  /// The period whose end prompts the review.
+  periodNumber Int
+  dueDate      DateTime  @db.Date
+  /// open | renewed | paused | expanded | ended | handed_over
+  state        String    @default("open")
+  note         String?
+  decidedById  String?
+  decidedAt    DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@unique([engagementId, periodNumber])
+  @@index([orgId, state])
+}
+
+/// Where Threadline uses a client's proof (PRF-01): which permission it rests
+/// on and where it appears. Withdrawing or expiring the permission flags every
+/// placement that relies on it, for a person to take down.
+model ProofPlacement {
+  id           String    @id @default(cuid())
+  orgId        String
+  /// The ProofPermission flag this relies on, e.g. allowPublicTestimonial.
+  permission   String
+  /// What is used: the quote, figure or logo, as placed.
+  content      String
+  /// Where it appears (page URL, deck name, proposal).
+  location     String
+  evidence     String?
+  placedById   String?
+  placedAt     DateTime  @default(now())
+  flaggedAt    DateTime?
+  flagReason   String?
+  removedAt    DateTime?
+
+  @@index([orgId, permission])
+}
+

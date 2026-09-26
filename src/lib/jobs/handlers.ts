@@ -40,4 +40,47 @@ registerHandler("maintenance.prune", async () => {
   await purgeExpiredStates();
 });
 
-export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune"] as const;
+registerHandler<{ outboxId: string }>("crm.sync", async (payload) => {
+  const { sendOutboxRow } = await import("@/lib/crm/outbox");
+  await sendOutboxRow(payload.outboxId);
+});
+
+/**
+ * The daily housekeeping run (queued once per day by the cron runner): keep
+ * every active engagement's service periods current, lapse old invitations,
+ * re-offer held CRM work, and prune expired tokens and sessions.
+ */
+registerHandler("daily.tick", async () => {
+  const { prisma } = await import("@/lib/db/client");
+  const { ensurePeriods } = await import("@/lib/commercial/engagements");
+  const { expireInvitations } = await import("@/lib/team/invitations");
+  const { kickCrm } = await import("@/lib/crm/outbox");
+  for (const e of await prisma.engagement.findMany({ where: { status: "active" }, select: { id: true } })) await ensurePeriods(e.id);
+  await expireInvitations();
+  // RNW-01: open renewal reviews ahead of the end of the initial term.
+  const { openDueRenewals } = await import("@/lib/commercial/renewals");
+  await openDueRenewals();
+  // PRF-01: expired proof permissions flag the placements that rely on them.
+  const { flagWithdrawnPlacements } = await import("@/lib/proof/placements");
+  await flagWithdrawnPlacements();
+  // BIL-01/BIL-04: draft due invoices and overdue reminders; issuing and
+  // sending remain a person's decision.
+  const { draftDueInvoices, draftOverdueReminders } = await import("@/lib/billing/invoices");
+  for (const e of await prisma.engagement.findMany({ where: { status: "active" }, select: { id: true } })) await draftDueInvoices(e.id);
+  await draftOverdueReminders();
+  // OFF-01: end client access when an offboarding export window closes.
+  const { closeExpiredAccess } = await import("@/lib/commercial/offboarding");
+  await closeExpiredAccess();
+  // NOT-01: escalate approvals left waiting, then send opted-in digests.
+  const { escalateStaleApprovals, sendDigests } = await import("@/lib/notify");
+  await escalateStaleApprovals();
+  await sendDigests();
+  const held = await prisma.crmOutbox.findMany({ where: { state: { in: ["pending", "failed"] } }, select: { id: true }, take: 200 });
+  await kickCrm(held.map((h) => h.id));
+  const { pruneTokens } = await import("@/lib/auth/tokens");
+  const { pruneExpiredSessions } = await import("@/lib/auth/session");
+  await pruneTokens();
+  await pruneExpiredSessions();
+});
+
+export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune", "crm.sync", "daily.tick"] as const;

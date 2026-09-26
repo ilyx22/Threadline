@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LogOut } from "lucide-react";
+import { KeyRound, LogOut } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { Avatar } from "@/components/ui/data";
 import {
@@ -89,6 +89,9 @@ export function AdminUserMenu({
           <p className="truncate text-[11px] text-faint">{email}</p>
         </div>
         <DropdownMenuSeparator />
+        <DropdownMenuItem asChild icon={KeyRound}>
+          <Link href="/account">Account security</Link>
+        </DropdownMenuItem>
         <DropdownMenuItem icon={LogOut} destructive onSelect={() => void onLogout()}>
           Sign out
         </DropdownMenuItem>

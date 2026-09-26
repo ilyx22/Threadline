@@ -5,8 +5,8 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db/client";
 import { audit, touchOrg } from "@/lib/auth/audit";
 import { requireOrgAccess } from "@/lib/auth/guard";
-import { canAssignRole } from "@/lib/auth/roles";
-import { hashPassword, passwordIssues } from "@/lib/auth/password";
+import { canAssignRoleIn, canManageMemberWithRole } from "@/lib/auth/roles";
+import type { Role } from "@/lib/domain/enums";
 import { stringify, stringifyArray } from "@/lib/db/json";
 import {
   assetCategorySchema,
@@ -609,74 +609,8 @@ export async function updateWorkspaceAction(
 
 /* ----------------------------------- Members --------------------------------- */
 
-const inviteSchema = z.object({
-  name: z.string().min(2, "Enter a name.").max(120),
-  email: z.string().email("Enter a valid email address.").max(200),
-  title: z.string().max(120).optional(),
-  role: roleSchema,
-  password: z.string().min(10, "Use at least 10 characters.").max(200),
-});
-
-/**
- * Add a member.
- *
- * v1 has no email delivery, so an operator sets an initial password and shares
- * it out of band. This is stated plainly in the UI rather than pretending an
- * invitation email was sent.
- */
-export async function addMemberAction(
-  orgSlug: string,
-  _prev: ActionResult | null,
-  formData: FormData,
-): Promise<ActionResult> {
-  return guarded(async () => {
-    const ctx = await requireOrgAccess(orgSlug, "workspace.members");
-    const input = parseForm(inviteSchema, formData);
-
-    if (!canAssignRole(ctx.role, input.role)) {
-      return err("You cannot grant that role.", "auth");
-    }
-
-    const issues = passwordIssues(input.password);
-    if (issues.length > 0) {
-      return err(issues.join(" "), "validation", { password: issues[0] });
-    }
-
-    const email = input.email.toLowerCase();
-    let user = await prisma.user.findUnique({ where: { email } });
-
-    if (!user) {
-      user = await prisma.user.create({
-        data: {
-          email,
-          name: cleanText(input.name, 120),
-          title: input.title ?? null,
-          passwordHash: await hashPassword(input.password),
-          avatarHue: Math.floor(Math.random() * 360),
-        },
-      });
-    }
-
-    const existing = await prisma.membership.findUnique({
-      where: { userId_orgId: { userId: user.id, orgId: ctx.org.id } },
-    });
-    if (existing) return err("That person is already a member of this workspace.", "validation");
-
-    await prisma.membership.create({
-      data: { userId: user.id, orgId: ctx.org.id, role: input.role },
-    });
-
-    await audit(ctx, {
-      action: "member.add",
-      entityType: "membership",
-      entityId: user.id,
-      summary: `Added ${user.name} as ${input.role.replace(/_/g, " ")}`,
-    });
-    revalidatePath(`/app/${orgSlug}/settings/members`);
-
-    return okVoid(`${user.name} added to the workspace.`);
-  });
-}
+// Adding members goes through invitations (src/lib/actions/team.ts): an admin
+// never sets another person's password (TEAM-10).
 
 export async function updateMemberRoleAction(
   orgSlug: string,
@@ -687,7 +621,7 @@ export async function updateMemberRoleAction(
     const ctx = await requireOrgAccess(orgSlug, "workspace.members");
     const target = roleSchema.parse(role);
 
-    if (!canAssignRole(ctx.role, target)) {
+    if (!canAssignRoleIn(ctx.role, target, ctx.org.kind)) {
       return err("You cannot grant that role.", "auth");
     }
     if (userId === ctx.user.id) {
@@ -699,11 +633,30 @@ export async function updateMemberRoleAction(
       include: { user: { select: { name: true } } },
     });
     if (!membership) return err("That person is not a member of this workspace.", "not_found");
+    if (!canManageMemberWithRole(ctx.role, membership.role as Role, ctx.org.kind)) {
+      return err("You cannot change that person's role.", "auth");
+    }
+    if (membership.isOwner && target !== "client_admin") {
+      return err("The owner must stay an admin. Transfer ownership first.", "workflow");
+    }
 
-    await prisma.membership.update({
-      where: { userId_orgId: { userId, orgId: ctx.org.id } },
-      data: { role: target },
-    });
+    // Never demote the last workspace admin. Checked and written in one
+    // serialisable transaction so two concurrent demotions cannot both pass.
+    const blocked = await prisma.$transaction(
+      async (tx) => {
+        if (membership.role === "client_admin" && target !== "client_admin") {
+          const admins = await tx.membership.count({ where: { orgId: ctx.org.id, role: "client_admin" } });
+          if (admins <= 1) return true;
+        }
+        await tx.membership.update({
+          where: { userId_orgId: { userId, orgId: ctx.org.id } },
+          data: { role: target },
+        });
+        return false;
+      },
+      { isolationLevel: "Serializable" },
+    );
+    if (blocked) return err("This is the only workspace admin. Promote someone else first.", "workflow");
 
     await audit(ctx, {
       action: "member.role",
@@ -715,44 +668,6 @@ export async function updateMemberRoleAction(
     revalidatePath(`/app/${orgSlug}/settings/members`);
 
     return okVoid("Role updated.");
-  });
-}
-
-export async function removeMemberAction(orgSlug: string, userId: string): Promise<ActionResult> {
-  return guarded(async () => {
-    const ctx = await requireOrgAccess(orgSlug, "workspace.members");
-
-    if (userId === ctx.user.id) return err("You cannot remove yourself.", "validation");
-
-    const membership = await prisma.membership.findUnique({
-      where: { userId_orgId: { userId, orgId: ctx.org.id } },
-      include: { user: { select: { name: true } } },
-    });
-    if (!membership) return err("That person is not a member of this workspace.", "not_found");
-
-    // Never leave a workspace without an admin.
-    if (membership.role === "client_admin") {
-      const admins = await prisma.membership.count({
-        where: { orgId: ctx.org.id, role: "client_admin" },
-      });
-      if (admins <= 1) {
-        return err("This is the only workspace admin. Promote someone else first.", "workflow");
-      }
-    }
-
-    await prisma.membership.delete({
-      where: { userId_orgId: { userId, orgId: ctx.org.id } },
-    });
-
-    await audit(ctx, {
-      action: "member.remove",
-      entityType: "membership",
-      entityId: userId,
-      summary: `Removed ${membership.user.name} from the workspace`,
-    });
-    revalidatePath(`/app/${orgSlug}/settings/members`);
-
-    return okVoid("Member removed.");
   });
 }
 

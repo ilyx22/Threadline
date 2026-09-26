@@ -22,11 +22,12 @@ import {
   Video,
 } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { prisma } from "@/lib/db/client";
 import { cadenceTarget, loadDashboard, sortActions } from "@/lib/data/dashboard";
 import { installationView } from "@/lib/data/installation";
 import { diagnosisSummary } from "@/lib/data/diagnosis";
 import { latestPublishedRun } from "@/lib/data/runs";
-import { workingOn } from "@/lib/data/client-surface";
+import { waitingOnColleagues, workingOn } from "@/lib/data/client-surface";
 import { recordingReadinessSummary } from "@/lib/data/readiness";
 import { needsClientAction, READINESS_STATUS_META, type ReadinessStatus } from "@/lib/domain/readiness";
 import { CONSTRAINT_DIMENSION_META, type ConstraintDimension } from "@/lib/domain/enums";
@@ -52,7 +53,8 @@ export default async function HomePage({ params }: { params: Promise<{ org: stri
   const { org: slug } = await params;
   const ctx = await requireOrgPage(slug, "workspace.view");
 
-  const [data, target, assets, installation, diagnosis, brief, working, readiness] =
+  const canApprove = ctx.can("production.approve") || ctx.can("scripts.approve");
+  const [data, target, assets, installation, diagnosis, brief, working, readiness, colleagues] =
     await Promise.all([
       loadDashboard(ctx.org.id, slug),
       cadenceTarget(ctx.org.id),
@@ -62,7 +64,14 @@ export default async function HomePage({ params }: { params: Promise<{ org: stri
       latestPublishedRun(ctx.org.id),
       workingOn(ctx.org.id, slug),
       recordingReadinessSummary(ctx.org.id),
+      waitingOnColleagues(ctx.org.id, slug, ctx.user.id, canApprove),
     ]);
+
+  // OFF-01: an ending engagement tells the client where their export is and when access ends.
+  const ending = await prisma.organization.findUnique({ where: { id: ctx.org.id }, select: { offboardedAt: true, accessEndsAt: true } });
+  const exportFile = ending?.offboardedAt
+    ? await prisma.offboardingRecord.findUnique({ where: { orgId: ctx.org.id }, select: { exportAssetId: true } }).then((r) => (r?.exportAssetId ? prisma.asset.findUnique({ where: { id: r.exportAssetId }, select: { storagePath: true } }) : null))
+    : null;
 
   const trend = viewsTrend(
     assets.filter(
@@ -73,7 +82,10 @@ export default async function HomePage({ params }: { params: Promise<{ org: stri
   );
 
   const firstName = ctx.user.name.split(" ")[0] ?? ctx.user.name;
-  const { today } = data;
+  // CX-01: approvals only "need you" if you can give them; otherwise they are
+  // shown as waiting on a colleague below.
+  const today = canApprove ? data.today : { ...data.today, approve: [], approveMinutes: 0 };
+  const attentionCount = data.attentionCount - (!canApprove && data.today.approve.length > 0 ? 1 : 0);
   const nothingToday =
     today.record.length === 0 &&
     today.approve.length === 0 &&
@@ -100,13 +112,26 @@ export default async function HomePage({ params }: { params: Promise<{ org: stri
           ) : (
             <>
               <span className="font-medium text-ink">
-                {pluralise(data.attentionCount, "thing")}
+                {pluralise(attentionCount, "thing")}
               </span>{" "}
-              {data.attentionCount === 1 ? "needs" : "need"} you today.
+              {attentionCount === 1 ? "needs" : "need"} you today.
             </>
           )}
         </p>
       </header>
+
+      {ending?.offboardedAt ? (
+        <Notice tone="info" title="This engagement has ended">
+          Your full export is ready
+          {exportFile?.storagePath ? (
+            <>
+              {" "}
+              <a href={`/api/files/${exportFile.storagePath}`} className="text-accent underline">to download here</a>
+            </>
+          ) : null}
+          . Access to this workspace ends on {ending.accessEndsAt ? ending.accessEndsAt.toISOString().slice(0, 10) : "the date we agreed"}.
+        </Notice>
+      ) : null}
 
       {/* --------------------------- Recording readiness --------------------------- */}
       {/*
@@ -285,6 +310,22 @@ export default async function HomePage({ params }: { params: Promise<{ org: stri
           />
         </div>
       )}
+
+      {/* ------------------------ Waiting on your colleagues ------------------------ */}
+      {colleagues.length ? (
+        <section>
+          <SectionHeading title="Waiting on your colleagues" description="Things in your team's hands, not yours." />
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+            {colleagues.map((c) => (
+              <li key={`${c.who}-${c.what}`}>
+                <Link href={c.href} className="block rounded-lg border border-line bg-elevated px-4 py-3 text-[13.5px] text-muted transition-colors hover:text-ink">
+                  <span className="font-medium text-ink">{c.who}</span> · {pluralise(c.count, c.what === "tasks" ? "open task" : "item")} {c.what === "approvals" ? "to approve" : ""}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       {/* -------------------------- Threadline is working on ----------------------- */}
       <section>

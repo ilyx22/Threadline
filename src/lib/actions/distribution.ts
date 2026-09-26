@@ -8,6 +8,7 @@ import { requireOrgAccess } from "@/lib/auth/guard";
 import { parseRecord, stringify } from "@/lib/db/json";
 import { platformSchema, publishStatusSchema } from "@/lib/domain/enums";
 import { assertPublishTransition } from "@/lib/domain/workflow";
+import { assertReleasable } from "@/lib/delivery/approvals";
 import { getAdapter } from "@/lib/integrations/adapter";
 import { integrationByProvider } from "@/lib/integrations/registry";
 import { cleanUrl, err, guarded, ok, okVoid, parseForm, type ActionResult } from "./shared";
@@ -48,6 +49,8 @@ export async function createPublishRecordAction(
     if (!["approved", "scheduled", "live"].includes(item.stage)) {
       return err("Only approved content can be scheduled for distribution.", "workflow");
     }
+    // DEL-03: the exact versions going out must be the approved ones.
+    await assertReleasable(ctx.org.id, [{ type: "content_item", id: item.id }, ...(input.packageId ? [{ type: "platform_package" as const, id: input.packageId }] : [])]);
 
     // Verify any referenced account and package belong to this workspace.
     if (input.accountId) {
@@ -151,6 +154,9 @@ export async function updatePublishRecordAction(
         url: nextUrl,
         scheduledFor: nextScheduled,
       });
+      if (input.status === "published" || input.status === "scheduled") {
+        await assertReleasable(ctx.org.id, [{ type: "content_item", id: record.contentItemId }, ...(record.packageId ? [{ type: "platform_package" as const, id: record.packageId }] : [])]);
+      }
     }
 
     await prisma.publishRecord.update({

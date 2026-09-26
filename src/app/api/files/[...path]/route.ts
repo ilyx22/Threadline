@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/db/client";
 import { currentUser } from "@/lib/auth/guard";
 import { getStorage, orgIdFromStoragePath } from "@/lib/storage";
+import { servingHeaders } from "@/lib/storage/sniff";
 
 /**
  * Private file access.
@@ -44,7 +45,7 @@ export async function GET(
         await prisma.membership.findFirst({
           where: {
             userId: user.id,
-            OR: [{ orgId: asset.orgId }, { role: { in: ["internal_operator", "super_admin"] } }],
+            OR: [{ orgId: asset.orgId }, { role: { in: ["internal_operator", "super_admin"] }, org: { kind: "internal" } }],
           },
           select: { id: true },
         }),
@@ -56,15 +57,11 @@ export async function GET(
 
   try {
     const buffer = await getStorage().get(storagePath);
+    // SEC-02: only raster images, video and audio render inline; everything
+    // else (including any legacy SVG) downloads with a neutral type, and every
+    // response is sandboxed so a stored file cannot run script on this origin.
     return new NextResponse(new Uint8Array(buffer), {
-      headers: {
-        "Content-Type": asset.mimeType ?? "application/octet-stream",
-        "Content-Length": String(buffer.byteLength),
-        "Content-Disposition": `inline; filename="${encodeURIComponent(asset.fileName ?? "file")}"`,
-        // Private: these are tenant files, never shared caches.
-        "Cache-Control": "private, max-age=0, must-revalidate",
-        "X-Content-Type-Options": "nosniff",
-      },
+      headers: servingHeaders(asset.mimeType, asset.fileName, buffer.byteLength),
     });
   } catch {
     return new NextResponse("File is no longer available", { status: 404 });

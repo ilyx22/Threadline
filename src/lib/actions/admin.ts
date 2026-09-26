@@ -6,7 +6,9 @@ import { prisma } from "@/lib/db/client";
 import { LONG_FORM_MODULE } from "@/lib/domain/longform";
 import { auditInternal } from "@/lib/auth/audit";
 import { requireInternalStrict } from "@/lib/auth/guard";
-import { hashPassword, passwordIssues } from "@/lib/auth/password";
+import { emailDeliveryConfigured } from "@/lib/email";
+import { provisionClientWorkspace, ProvisionError } from "@/lib/commercial/provision";
+import { InvitationError } from "@/lib/team/invitations";
 import { parseStringArray, stringify, stringifyArray } from "@/lib/db/json";
 import {
   applicationStatusSchema,
@@ -16,8 +18,6 @@ import {
   severitySchema,
   sopCategorySchema,
 } from "@/lib/domain/enums";
-import { INTEGRATIONS } from "@/lib/integrations/registry";
-import { MASTER_TEMPLATE } from "@/lib/templates/master";
 import {
   checkbox,
   cleanText,
@@ -59,7 +59,6 @@ const createClientSchema = z.object({
   platforms: commaField,
   founderName: z.string().min(2, "Enter the founder's name.").max(120),
   founderEmail: z.string().email("Enter a valid email address.").max(200),
-  founderPassword: z.string().min(10, "Use at least 10 characters.").max(200),
   seedTemplate: checkbox,
 });
 
@@ -72,160 +71,88 @@ const createClientSchema = z.object({
  * onboarding.
  */
 export async function createClientAction(
-  _prev: ActionResult<{ slug: string }> | null,
+  _prev: ActionResult<{ slug: string; inviteLink: string | null }> | null,
   formData: FormData,
-): Promise<ActionResult<{ slug: string }>> {
+): Promise<ActionResult<{ slug: string; inviteLink: string | null }>> {
   return guarded(async () => {
     const admin = await requireInternalStrict("admin.clients.manage");
     const input = parseForm(createClientSchema, formData);
-
-    const issues = passwordIssues(input.founderPassword);
-    if (issues.length > 0) {
-      return err(issues.join(" "), "validation", { founderPassword: issues[0] });
-    }
-
-    const existingOrg = await prisma.organization.findUnique({ where: { slug: input.slug } });
-    if (existingOrg) {
-      return err("That workspace slug is already taken.", "validation", { slug: "Already in use." });
-    }
-
-    const org = await prisma.organization.create({
-      data: {
-        slug: input.slug,
-        name: cleanText(input.name, 200),
-        kind: "client",
-        status: "onboarding",
-        packageTier: input.packageTier,
-        onboardingStage: "not_started",
-        website: cleanUrl(input.website),
-        industry: input.industry ?? null,
-        geography: input.geography ?? null,
-        currency: input.currency,
-        setupFee: Math.round(input.setupFee * 100),
-        periodFee: Math.round(input.periodFee * 100),
-        modulesEnabled: stringifyArray(MASTER_TEMPLATE.modules),
-        startedAt: new Date(),
-        lastActivityAt: new Date(),
-      },
-    });
-
-    // Founder account.
-    const email = input.founderEmail.toLowerCase();
-    let founder = await prisma.user.findUnique({ where: { email } });
-    if (!founder) {
-      founder = await prisma.user.create({
-        data: {
-          email,
-          name: cleanText(input.founderName, 120),
-          title: "Founder",
-          passwordHash: await hashPassword(input.founderPassword),
-          avatarHue: Math.floor(Math.random() * 360),
-        },
-      });
-    }
-    await prisma.membership.create({
-      data: { userId: founder.id, orgId: org.id, role: "client_admin", isPrimary: true },
-    });
-
-    const platforms = input.platforms.length > 0 ? input.platforms : MASTER_TEMPLATE.platforms;
-
-    // Brand Brain shell, pre-filled with what we already know.
-    await prisma.brandBrain.create({
-      data: {
-        orgId: org.id,
-        company: stringify({
-          description: "",
-          website: cleanUrl(input.website) ?? "",
-          category: input.industry ?? "",
-          geography: input.geography ?? "",
-          products: [],
-          teamSize: "",
-          revenueRange: "",
-        }),
-        founder: stringify({
-          name: input.founderName,
-          title: "Founder",
-          bio: "",
-          experience: "",
-          beliefs: [],
-          opinions: [],
-          stories: [],
-          credentials: [],
-          approvedAnecdotes: [],
-        }),
-        voice: stringify({
-          tone: "",
-          vocabulary: "",
-          sentenceStructure: "",
-          humour: "",
-          phrasesUsed: [],
-          phrasesAvoided: [],
-          soundsLikeMe: [],
-          notMe: [],
-        }),
-        contentRules: stringify({
-          platforms,
-          formats: MASTER_TEMPLATE.formats,
-          preferredCtas: [],
+    try {
+      const { org, inviteLink } = await provisionClientWorkspace(
+        { userId: admin.user.id, name: admin.user.name, role: admin.role },
+        {
+          name: cleanText(input.name, 200),
+          slug: input.slug,
+          website: cleanUrl(input.website),
+          industry: input.industry ?? null,
+          geography: input.geography ?? null,
+          currency: input.currency,
+          packageTier: input.packageTier,
           cadencePerWeek: input.cadencePerWeek,
-          pillars: MASTER_TEMPLATE.pillars,
-          topics: [],
-          bannedTopics: [],
-          complianceNotes: "",
-        }),
-        completeness: 0,
-      },
-    });
-
-    if (input.seedTemplate) {
-      // Integration rows so the settings surface is complete and honest from day one.
-      await prisma.integration.createMany({
-        data: INTEGRATIONS.map((i) => ({
-          orgId: org.id,
-          provider: i.provider,
-          status: "not_configured",
-        })),
-      });
-
-      await prisma.socialAccount.createMany({
-        data: platforms.map((platform) => ({
-          orgId: org.id,
-          platform,
-          handle: input.slug,
-          isConnected: false,
-        })),
-      });
-
-      await prisma.task.createMany({
-        data: MASTER_TEMPLATE.onboardingTasks.map((task) => ({
-          orgId: org.id,
-          title: task.title,
-          description: task.description,
-          kind: task.kind,
-          audience: task.audience,
-          priority: task.priority,
-          estimateMin: task.estimateMin,
-        })),
-      });
+          platforms: input.platforms,
+          seedTemplate: input.seedTemplate,
+          founder: { name: cleanText(input.founderName, 120), email: input.founderEmail },
+          feeOverrides: { setupFeeMinor: Math.round(input.setupFee * 100), periodFeeMinor: Math.round(input.periodFee * 100) },
+        },
+      );
+      await auditInternal(admin.user.id, { orgId: org.id, action: "client.create", entityType: "organization", entityId: org.id, summary: `Created client workspace "${org.name}" and invited its founder`, meta: { slug: org.slug } });
+      revalidatePath("/admin");
+      revalidatePath("/admin/clients");
+      const captured = !emailDeliveryConfigured();
+      return ok({ slug: org.slug, inviteLink: captured ? inviteLink : null }, `${org.name} created. The founder has been invited${captured ? "; email is not configured here, so share the link directly" : ""}.`);
+    } catch (e) {
+      if (e instanceof ProvisionError || e instanceof InvitationError) return err(e.message, "validation", e.message.includes("slug") ? { slug: "Already in use." } : undefined);
+      throw e;
     }
+  });
+}
 
-    await prisma.onboardingSession.create({
-      data: { orgId: org.id, currentStep: "welcome", status: "in_progress" },
-    });
+const convertSchema = z.object({
+  applicationId: z.string().min(1),
+  slug: z.string().min(2).max(60).regex(/^[a-z0-9-]+$/, "Use lowercase letters, numbers and hyphens only."),
+  name: z.string().min(2).max(200),
+  offerKey: z.string().max(60).default("standard"),
+});
 
-    await auditInternal(admin.user.id, {
-      orgId: org.id,
-      action: "client.create",
-      entityType: "organization",
-      entityId: org.id,
-      summary: `Created client workspace "${org.name}"`,
-      meta: { slug: org.slug, packageTier: org.packageTier },
-    });
-
-    revalidatePath("/admin");
-    revalidatePath("/admin/clients");
-
-    return ok({ slug: org.slug }, `${org.name} created. Onboarding is ready to start.`);
+/**
+ * Convert an accepted application into a client (COM-03): workspace, draft
+ * engagement on the chosen offer, founder invitation and CRM records, in one
+ * step. Converting twice returns the first result.
+ */
+export async function convertApplicationAction(
+  _prev: ActionResult<{ slug: string; inviteLink: string | null }> | null,
+  formData: FormData,
+): Promise<ActionResult<{ slug: string; inviteLink: string | null }>> {
+  return guarded(async () => {
+    const admin = await requireInternalStrict("admin.applications");
+    const input = parseForm(convertSchema, formData);
+    const app = await prisma.application.findUnique({ where: { id: input.applicationId } });
+    if (!app) return err("That application no longer exists.", "not_found");
+    try {
+      const { org, inviteLink, alreadyConverted } = await provisionClientWorkspace(
+        { userId: admin.user.id, name: admin.user.name, role: admin.role },
+        {
+          name: cleanText(input.name, 200),
+          slug: input.slug,
+          website: cleanUrl(app.website),
+          founder: { name: app.name, email: app.email },
+          offerKey: input.offerKey,
+          sourceApplicationId: app.id,
+          sourceProspectId: app.prospectId,
+          platforms: parseStringArray(app.platforms),
+        },
+      );
+      if (!alreadyConverted) {
+        await auditInternal(admin.user.id, { orgId: org.id, action: "application.convert", entityType: "application", entityId: app.id, summary: `Converted ${app.company} into a client workspace and invited ${app.name}` });
+      }
+      revalidatePath("/admin/applications");
+      revalidatePath("/admin/clients");
+      const captured = !emailDeliveryConfigured();
+      return ok({ slug: org.slug, inviteLink: captured ? inviteLink : null }, alreadyConverted ? "Already converted; opening the existing workspace." : `${app.company} is now a client. ${app.name} has been invited.`);
+    } catch (e) {
+      if (e instanceof ProvisionError || e instanceof InvitationError) return err(e.message, "validation");
+      throw e;
+    }
   });
 }
 
@@ -257,6 +184,16 @@ export async function updateClientAction(
 
     const org = await prisma.organization.findUnique({ where: { id: orgId } });
     if (!org || org.kind !== "client") return err("That client no longer exists.", "not_found");
+
+    // ENG-02: once an engagement is live its signed terms are the authority;
+    // fees change only through an approved scope change. A draft follows the form.
+    const newSetup = Math.round(input.setupFee * 100);
+    const newPeriod = Math.round(input.periodFee * 100);
+    if (newSetup !== org.setupFee || newPeriod !== org.periodFee) {
+      const live = await prisma.engagement.findFirst({ where: { orgId, status: { in: ["active", "paused"] } }, select: { id: true } });
+      if (live) return err("This client's engagement is live, so its fees change through a scope change on the engagement, not here.", "workflow", { periodFee: "Use a scope change." });
+      await prisma.engagement.updateMany({ where: { orgId, status: "draft" }, data: { setupFeeMinor: newSetup, periodFeeMinor: newPeriod } });
+    }
 
     await prisma.organization.update({
       where: { id: orgId },
@@ -603,5 +540,44 @@ export async function setSyntheticAction(
         ? "Marked synthetic. Excluded from portfolio totals and refused as proof."
         : "Marker cleared. Everything in this workspace now counts as a real client result.",
     );
+  });
+}
+
+const qualifySchema = z.object({
+  ownerId: z.string().max(60).optional(),
+  nextAction: z.string().max(300).optional(),
+  nextActionDue: z.string().max(20).optional(),
+  outcome: z.enum(["open", "won", "lost", "not_a_fit", "no_response"]).default("open"),
+  outcomeReason: z.string().max(1000).optional(),
+});
+
+/** Qualification (COM-02): owner, next action with a due date, and the outcome with its reason. */
+export async function qualifyApplicationAction(applicationId: string, _prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  return guarded(async () => {
+    const admin = await requireInternalStrict("admin.applications");
+    const input = parseForm(qualifySchema, formData);
+    const app = await prisma.application.findUnique({ where: { id: applicationId }, select: { id: true, company: true, orgId: true } });
+    if (!app) return err("That application no longer exists.", "not_found");
+    if (input.ownerId) {
+      const staff = await prisma.membership.findFirst({ where: { userId: input.ownerId, role: { in: ["internal_operator", "super_admin"] }, org: { kind: "internal" } } });
+      if (!staff) return err("The owner must be a member of the Threadline team.", "validation", { ownerId: "Not a staff member." });
+    }
+    if (input.outcome === "won" && !app.orgId) return err("Mark it won by converting it into a client.", "workflow");
+    const due = input.nextActionDue ? new Date(`${input.nextActionDue}T09:00:00Z`) : null;
+    if (due && Number.isNaN(due.getTime())) return err("Use a valid date.", "validation", { nextActionDue: "Invalid date." });
+    await prisma.application.update({
+      where: { id: app.id },
+      data: {
+        ownerId: input.ownerId || null,
+        nextAction: input.nextAction ? cleanText(input.nextAction, 300) : null,
+        nextActionDue: due,
+        outcome: input.outcome === "open" ? null : input.outcome,
+        outcomeReason: input.outcomeReason ? cleanText(input.outcomeReason, 1000) : null,
+        ...(input.outcome === "lost" || input.outcome === "not_a_fit" ? { status: "declined" } : {}),
+      },
+    });
+    await auditInternal(admin.user.id, { action: "application.qualify", entityType: "application", entityId: app.id, summary: `Qualified ${app.company}: ${input.outcome}${input.nextAction ? `; next: ${input.nextAction}` : ""}` });
+    revalidatePath("/admin/applications");
+    return okVoid("Saved.");
   });
 }

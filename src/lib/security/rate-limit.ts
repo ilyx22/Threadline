@@ -1,5 +1,6 @@
 import "server-only";
 import { headers } from "next/headers";
+import { clientIpFrom } from "./client-ip";
 
 /**
  * Sliding-window rate limiter with a pluggable store.
@@ -152,14 +153,16 @@ export async function rateLimitAsync(key: string, options: { limit: number; wind
 
 /** Caller identity for rate limiting. Falls back to a constant when no IP is present. */
 export async function callerKey(prefix: string) {
-  const headerList = await headers();
-  const forwarded = headerList.get("x-forwarded-for");
-  const ip = forwarded?.split(",")[0]?.trim() || headerList.get("x-real-ip") || "local";
+  // SEC-03: only proxy-set headers are trusted; see client-ip.ts.
+  const ip = clientIpFrom(await headers()) ?? "unknown";
   return `${prefix}:${ip}`;
 }
 
 export const LIMITS = {
   login: { limit: 6, windowMs: 10 * 60_000 },
+  /// Per account, across all addresses (SEC-06): slows a distributed guess
+  /// against one mailbox without locking it for long.
+  loginAccount: { limit: 10, windowMs: 15 * 60_000 },
   application: { limit: 5, windowMs: 60 * 60_000 },
   aiGeneration: { limit: 40, windowMs: 60 * 60_000 },
   upload: { limit: 60, windowMs: 60 * 60_000 },

@@ -72,6 +72,10 @@ export const CAPABILITIES = [
   "tasks.complete",
   "reports.view",
   "reports.generate",
+  /// REP-01: marking a report or review final is Threadline's call, never the client's.
+  "reports.finalise",
+  /// BIL-01: invoices, balances and signed agreements.
+  "billing.view",
   // AI
   "ai.generate",
   // Threadline's own commercial operations. The Living SOP Engine, prospects,
@@ -147,7 +151,7 @@ const CLIENT_ADMIN: Capability[] = [
   "distribution.publish",
   "performance.edit",
   "pipeline.edit",
-  "reports.generate",
+  "billing.view",
 ];
 
 const INTERNAL_OPERATOR: Capability[] = [
@@ -171,6 +175,9 @@ const INTERNAL_OPERATOR: Capability[] = [
   "admin.support",
   "admin.sops",
   "admin.applications",
+  // REP-01: drafting and finalising reports is operator work.
+  "reports.generate",
+  "reports.finalise",
 ];
 
 const SUPER_ADMIN: Capability[] = [...CAPABILITIES];
@@ -185,6 +192,44 @@ const MATRIX: Record<Role, ReadonlySet<Capability>> = {
 
 export function can(role: Role, capability: Capability): boolean {
   return MATRIX[role]?.has(capability) ?? false;
+}
+
+/**
+ * Client permission profiles (TEAM-01), layered on a client role:
+ *   admin        mirrors the client_admin role (the role is the authority)
+ *   approver     may approve ideas, scripts and finished pieces
+ *   contributor  the default member: contributes input, uploads, records
+ *   viewer       read-only: every create/edit/upload/complete power removed
+ *   commercial   sees and updates the commercial side (pipeline, performance)
+ * Profiles never apply to staff roles and never grant workspace settings or
+ * member management; those stay with client_admin.
+ */
+export const CLIENT_PROFILES = ["admin", "approver", "contributor", "viewer", "commercial"] as const;
+export type ClientProfile = (typeof CLIENT_PROFILES)[number];
+
+const PROFILE_GRANTS: Partial<Record<ClientProfile, Capability[]>> = {
+  approver: ["ideas.approve", "scripts.approve", "production.approve"],
+  commercial: ["pipeline.view", "pipeline.edit", "performance.view", "performance.edit", "reports.view", "billing.view"],
+};
+const VIEW_ONLY = (c: Capability) => c.endsWith(".view");
+
+export function parseProfiles(raw: string | null | undefined): ClientProfile[] {
+  try {
+    const v = JSON.parse(raw ?? "[]");
+    return Array.isArray(v) ? v.filter((p): p is ClientProfile => (CLIENT_PROFILES as readonly string[]).includes(p)) : [];
+  } catch {
+    return [];
+  }
+}
+
+/** The capabilities a member actually holds: role, narrowed by viewer, widened by grants. */
+export function effectiveCapabilities(role: Role, profiles: ClientProfile[] = []): Set<Capability> {
+  const base = new Set(MATRIX[role] ?? []);
+  if (isInternalRole(role) || role === "client_admin") return base;
+  let caps = [...base];
+  if (profiles.includes("viewer")) caps = caps.filter(VIEW_ONLY);
+  for (const p of profiles) for (const c of PROFILE_GRANTS[p] ?? []) caps.push(c);
+  return new Set(caps);
 }
 
 export function canAny(role: Role, capabilities: Capability[]): boolean {
@@ -208,6 +253,34 @@ export function canAssignRole(actorRole: Role, target: Role): boolean {
   if (actorRole === "internal_operator") return target !== "super_admin";
   if (actorRole === "client_admin") return ASSIGNABLE_CLIENT_ROLES.includes(target);
   return false;
+}
+
+/**
+ * Role assignment scoped to the kind of workspace (SEC-01).
+ *
+ * Staff roles live ONLY in the internal Threadline organisation. A client
+ * workspace can hold client roles and nothing else, whoever is acting, so no
+ * one can mint an operator by granting a staff role inside a client workspace.
+ * In the internal organisation only a super admin may grant internal_operator,
+ * and super_admin itself is a user flag, never a granted membership role.
+ */
+export function canAssignRoleIn(actorRole: Role, target: Role, orgKind: string): boolean {
+  if (target === "super_admin") return false;
+  if (orgKind === "internal") return actorRole === "super_admin" && target === "internal_operator";
+  if (!ASSIGNABLE_CLIENT_ROLES.includes(target)) return false;
+  return canAssignRole(actorRole, target);
+}
+
+/**
+ * May the actor change or remove a member who currently holds `current`?
+ * Only when the actor could have granted that role in this workspace, so a
+ * client admin can never touch a staff membership.
+ */
+export function canManageMemberWithRole(actorRole: Role, current: Role, orgKind: string): boolean {
+  if (current === "super_admin") return actorRole === "super_admin";
+  if (orgKind === "internal") return actorRole === "super_admin";
+  if (isInternalRole(current)) return isInternalRole(actorRole);
+  return canAssignRole(actorRole, current);
 }
 
 /** Human-readable reason shown when a control is disabled rather than hidden. */

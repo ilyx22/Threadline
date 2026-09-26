@@ -413,7 +413,6 @@ for — see `NOTIFICATION_CAPABILITY` in `src/lib/data/workspace.ts`.
 | Name | Purpose | Required | Where obtained |
 |---|---|---|---|
 | `DATABASE_URL` | Database connection | **Yes** | SQLite default `file:./dev.db`; or a Postgres URL |
-| `SESSION_SECRET` | Reserved for signed session material | Production | `node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"` |
 | `NEXT_PUBLIC_APP_URL` | Public origin for absolute links | Production | Your deployment URL |
 | `ANTHROPIC_API_KEY` | Enables live AI generation | No | console.anthropic.com → Settings → API keys |
 | `ANTHROPIC_MODEL` | Model override (default `claude-sonnet-5`) | No | — |
@@ -471,12 +470,12 @@ npm run verify         # all four in sequence
 1. **Database.** Provision PostgreSQL. In `prisma/schema.prisma` set
    `datasource db { provider = "postgresql" }`. The schema is written to be portable — no enums,
    no array columns, no Postgres-only types.
-2. **Environment.** Set `DATABASE_URL`, `SESSION_SECRET`, `NEXT_PUBLIC_APP_URL` and
+2. **Environment.** Set `DATABASE_URL`, `DIRECT_URL`, `NEXT_PUBLIC_APP_URL` and
    `CREDENTIAL_ENCRYPTION_KEYS`. Optionally `ANTHROPIC_API_KEY`, `NEXT_PUBLIC_BOOKING_URL`,
    `EMAIL_PROVIDER=resend` + `RESEND_API_KEY` + `EMAIL_FROM`.
 3. **Migrate.** `npx prisma migrate deploy`
 4. **Seed** (first deploy only, and only if you want the demo workspace):
-   `SEED_DEMO_PASSWORD=<strong value> npm run seed`
+   `SEED_DEMO_PASSWORD=<strong value> SEED_CONFIRM_RESET=wipe-local-demo-data npm run seed` (local demo databases only)
 5. **Build and start.** `npm run build && npm start`
 6. **Worker.** Run `npm run jobs:worker` alongside the app (or a scheduled
    `npm run jobs:worker -- --once`) so email, metric refresh and maintenance jobs execute.
@@ -504,7 +503,7 @@ Before running more than one instance, switch two adapters by configuration — 
   demonstrated and tested rather than asserted.
 - **Threadline** — the internal organisation, with 14 SOP documents and business metrics.
 
-Accounts (password from `SEED_DEMO_PASSWORD`, default `threadline-demo-2026` — **development
+Accounts (password from `SEED_DEMO_PASSWORD`, required, no default; the seed also needs `SEED_CONFIRM_RESET=wipe-local-demo-data` — **development
 value only, change it anywhere shared**):
 
 | Email | Role | Lands on |

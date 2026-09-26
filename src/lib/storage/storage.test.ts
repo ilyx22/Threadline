@@ -6,7 +6,17 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import os from "node:os";
 
-const file = (name: string, type: string, bytes = 12) => new File([new Uint8Array(bytes)], name, { type });
+// Real leading bytes per type: uploads are checked against their contents (SEC-02).
+const HEAD: Record<string, number[]> = {
+  "video/mp4": [0, 0, 0, 0x18, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6f, 0x6d],
+  "application/pdf": [0x25, 0x50, 0x44, 0x46, 0x2d, 0x31, 0x2e, 0x37, 0x0a, 0x25, 0x25, 0x0a],
+  "text/plain": [0x68, 0x65, 0x6c, 0x6c, 0x6f, 0x20, 0x77, 0x6f, 0x72, 0x6c, 0x64, 0x0a],
+};
+const file = (name: string, type: string, bytes = 12) => {
+  const b = new Uint8Array(bytes);
+  b.set((HEAD[type] ?? []).slice(0, bytes));
+  return new File([b], name, { type });
+};
 
 describe("storage validation", () => {
   test("refuses empty, oversized and disallowed files before any adapter runs", () => {

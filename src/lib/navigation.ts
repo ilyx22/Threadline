@@ -9,6 +9,7 @@ import {
   Flag,
   FolderOpen,
   Gauge,
+  Activity,
   Grid2X2,
   BadgeCheck,
   Home,
@@ -181,6 +182,7 @@ export function operatorNav(slug: string): NavItem[] {
           href: `${base}/settings/integrations`,
           capability: "workspace.view",
         },
+        { key: "billing", label: "Billing", href: `${base}/settings/billing`, capability: "billing.view" },
       ],
     },
   ];
@@ -309,6 +311,7 @@ export function clientNav(slug: string): NavItem[] {
           href: `${base}/settings/integrations`,
           capability: "workspace.view",
         },
+        { key: "billing", label: "Billing", href: `${base}/settings/billing`, capability: "billing.view" },
       ],
     },
   ];
@@ -410,6 +413,7 @@ export const ADMIN_NAV: NavItem[] = [
     capability: "admin.support",
   },
   { key: "sops", label: "SOPs", href: "/admin/sops", icon: ScrollText, capability: "admin.sops" },
+  { key: "system", label: "System", href: "/admin/system", icon: Activity, capability: "admin.view" },
   {
     key: "metrics",
     label: "Business metrics",

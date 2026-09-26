@@ -1,6 +1,50 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === "production";
+
+/**
+ * Content-Security-Policy (SEC-04).
+ *
+ * Every script, style, font and connection comes from this origin; nothing is
+ * loaded from a third party. `script-src 'unsafe-inline'` is required by the
+ * Next.js App Router's inline bootstrap on statically rendered pages (a nonce
+ * would force every public page to render dynamically); the rest of the policy
+ * still blocks third-party scripts, plugins, framing, <base> hijacking and
+ * form posts off-site. Images may come from https: because content thumbnails
+ * are links the operator pastes. A direct-to-storage upload origin is added
+ * when S3_ENDPOINT is set.
+ */
+const storageOrigin = (() => {
+  try {
+    return process.env.S3_ENDPOINT ? new URL(process.env.S3_ENDPOINT).origin : "";
+  } catch {
+    return "";
+  }
+})();
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https:",
+  "media-src 'self' blob:",
+  "font-src 'self' data:",
+  `connect-src 'self'${storageOrigin ? ` ${storageOrigin}` : ""}${isProd ? "" : " ws: wss:"}`,
+  "frame-src 'none'",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "manifest-src 'self'",
+  "worker-src 'self' blob:",
+  ...(isProd ? ["upgrade-insecure-requests"] : []),
+].join("; ");
+
 const securityHeaders = [
+  { key: "Content-Security-Policy", value: csp },
+  // Two years, subdomains included. Not submitted to the preload list: that is
+  // hard to undo and belongs to the owner once the custom domain is settled.
+  ...(isProd ? [{ key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" }] : []),
+  { key: "Cross-Origin-Opener-Policy", value: "same-origin" },
   { key: "X-Content-Type-Options", value: "nosniff" },
   { key: "X-Frame-Options", value: "DENY" },
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },

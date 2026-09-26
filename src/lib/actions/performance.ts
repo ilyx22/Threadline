@@ -1,5 +1,7 @@
 "use server";
 
+import { Prisma } from "@prisma/client";
+import { detectMapping, normaliseUrl, parseCsv, toCandidates } from "@/lib/analytics/csv-import";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db/client";
@@ -250,3 +252,61 @@ export async function deriveLearningsAction(
     );
   });
 }
+
+/**
+ * INT-05: import platform metrics from a CSV export. `mode=preview` reports
+ * what would happen (mapping, matches, duplicates, problems) and writes
+ * nothing; `mode=import` writes one snapshot per matched row, deduplicated on
+ * the row's fingerprint, and audits the import.
+ */
+export async function importMetricsCsvAction(
+  orgSlug: string,
+  _prev: ActionResult<CsvImportSummary> | null,
+  formData: FormData,
+): Promise<ActionResult<CsvImportSummary>> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "performance.edit");
+    const file = formData.get("file");
+    const mode = formData.get("mode") === "import" ? "import" : "preview";
+    if (!(file instanceof File) || file.size === 0) return err("Choose a CSV file.", "validation", { file: "Choose a file." });
+    if (file.size > 2_000_000) return err("That file is larger than 2 MB. Export a shorter date range.", "validation");
+    const rows = parseCsv(await file.text());
+    if (rows.length < 2) return err("The file has no data rows.", "validation");
+    const { mapping, ignored } = detectMapping(rows[0]);
+    if (mapping.url === undefined && mapping.postId === undefined) return err("No column identifies the post (expected a post URL or post id column).", "validation");
+    const candidates = toCandidates(rows, mapping);
+    const records = await prisma.publishRecord.findMany({ where: { orgId: ctx.org.id, status: "published" }, select: { id: true, url: true, externalId: true } });
+    const byUrl = new Map(records.filter((r) => r.url).map((r) => [normaliseUrl(r.url), r.id]));
+    const byId = new Map(records.filter((r) => r.externalId).map((r) => [r.externalId!, r.id]));
+    const summary: CsvImportSummary = { mode, rows: candidates.length, mapped: Object.keys(mapping), ignored, matched: 0, created: 0, duplicates: 0, unmatched: [], problems: [] };
+    for (const c of candidates) {
+      if (c.problem) {
+        summary.problems.push(`Line ${c.line}: ${c.problem}`);
+        continue;
+      }
+      const recordId = (c.postId && byId.get(c.postId)) || byUrl.get(normaliseUrl(c.url));
+      if (!recordId) {
+        summary.unmatched.push(`Line ${c.line}: ${c.url ?? c.postId}`);
+        continue;
+      }
+      summary.matched++;
+      if (mode !== "import") continue;
+      try {
+        await prisma.performanceSnapshot.create({ data: { orgId: ctx.org.id, publishRecordId: recordId, capturedAt: c.capturedAt ?? new Date(), source: "csv", providerRecordId: c.fingerprint, fetchedAt: new Date(), provenance: JSON.stringify({ provider: "csv", file: file.name.slice(0, 120), line: c.line }), ...c.metrics } });
+        summary.created++;
+      } catch (e) {
+        if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") summary.duplicates++;
+        else throw e;
+      }
+    }
+    summary.unmatched = summary.unmatched.slice(0, 50);
+    summary.problems = summary.problems.slice(0, 50);
+    if (mode === "import") {
+      await audit(ctx, { action: "performance.csv_import", entityType: "performance_snapshot", entityId: ctx.org.id, summary: `Imported ${summary.created} snapshot(s) from ${file.name} (${summary.duplicates} duplicate, ${summary.unmatched.length} unmatched)` });
+      revalidatePath(`/app/${orgSlug}/performance`);
+    }
+    return ok(summary, mode === "import" ? `${summary.created} snapshot(s) imported.` : `${summary.matched} of ${summary.rows} row(s) match a published post.`);
+  });
+}
+
+export type CsvImportSummary = { mode: "preview" | "import"; rows: number; mapped: string[]; ignored: string[]; matched: number; created: number; duplicates: number; unmatched: string[]; problems: string[] };

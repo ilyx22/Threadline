@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import { requireInternal } from "@/lib/auth/guard";
+import { prisma } from "@/lib/db/client";
 import { getClient, listAuditLog } from "@/lib/data/admin";
 import { diagnosisSummary } from "@/lib/data/diagnosis";
 import { installationView } from "@/lib/data/installation";
@@ -28,6 +29,13 @@ import { compactNumber, money } from "@/lib/utils/format";
 import { formatDate, relativeTime } from "@/lib/utils/dates";
 import { integrationByProvider } from "@/lib/integrations/registry";
 import { ClientConfigForm } from "./client-config-form";
+import { EngagementPanel } from "./engagement-panel";
+import { BillingPanel } from "./billing-panel";
+import { OffboardingPanel } from "./offboarding-panel";
+import { PlacementsPanel } from "./placements-panel";
+import { PROOF_PERMISSIONS } from "@/lib/proof/placements";
+import { invoiceBalance } from "@/lib/billing/invoices";
+import { currentEngagement, ensurePeriods } from "@/lib/commercial/engagements";
 
 export const metadata: Metadata = { title: "Client" };
 
@@ -52,6 +60,51 @@ export default async function ClientDetailPage({
   ]);
   const scope = longFormScope(client.modulesEnabled);
   const proofView = await proofPermissionView(client.id);
+  const engagementRow = await currentEngagement(client.id);
+  if (engagementRow && (engagementRow.status === "active" || engagementRow.status === "paused")) await ensurePeriods(engagementRow.id);
+  const engagement = engagementRow ? await currentEngagement(client.id) : null;
+  const scopeChanges = engagement ? await prisma.scopeChange.findMany({ where: { engagementId: engagement.id }, orderBy: { createdAt: "desc" } }) : [];
+  const renewals = engagement ? await prisma.renewalReview.findMany({ where: { engagementId: engagement.id }, orderBy: { createdAt: "desc" } }) : [];
+  const offerName = engagement ? ((JSON.parse(engagement.offerSnapshot) as { name?: string }).name ?? "Engagement") : "";
+  const [invoiceRows, reminderRows, agreementRows] = await Promise.all([
+    prisma.invoice.findMany({ where: { orgId: client.id }, orderBy: [{ createdAt: "desc" }], include: { disputes: { select: { id: true, state: true, reason: true } } } }),
+    prisma.paymentReminder.findMany({ where: { orgId: client.id, state: "draft" }, orderBy: { createdAt: "asc" } }),
+    prisma.agreementDocument.findMany({ where: { orgId: client.id }, orderBy: { signedAt: "desc" } }),
+  ]);
+  const offRecord = await prisma.offboardingRecord.findUnique({ where: { orgId: client.id } });
+  const orgRow = await prisma.organization.findUniqueOrThrow({ where: { id: client.id }, select: { slug: true, offboardedAt: true, accessEndsAt: true, retentionUntil: true, legalHold: true } });
+  const offboardingView = {
+    orgId: client.id,
+    slug: orgRow.slug,
+    offboarded: Boolean(orgRow.offboardedAt),
+    accessEndsAt: orgRow.accessEndsAt ? orgRow.accessEndsAt.toISOString().slice(0, 10) : null,
+    retentionUntil: orgRow.retentionUntil ? orgRow.retentionUntil.toISOString().slice(0, 10) : null,
+    legalHold: orgRow.legalHold,
+    deletable: Boolean(orgRow.retentionUntil && orgRow.retentionUntil < new Date() && !orgRow.legalHold && admin.can("workspace.delete")),
+    steps: offRecord ? (JSON.parse(offRecord.steps) as { step: string; outcome: string }[]) : [],
+  };
+  const [placementRows, proofRow] = await Promise.all([
+    prisma.proofPlacement.findMany({ where: { orgId: client.id }, orderBy: { placedAt: "desc" } }),
+    prisma.proofPermission.findUnique({ where: { orgId: client.id } }),
+  ]);
+  const permittedUses = PROOF_PERMISSIONS.filter((k) => proofRow && (proofRow as Record<string, unknown>)[k] === true && !(proofRow.expiresAt && proofRow.expiresAt < new Date()));
+  const todayIso = new Date().toISOString().slice(0, 10);
+  const billingView = {
+    orgId: client.id,
+    engagementId: engagement?.id ?? null,
+    provider: engagement?.billingProvider ?? "manual",
+    currency: client.currency,
+    invoices: await Promise.all(
+      invoiceRows.map(async (i) => {
+        const balanceMinor = i.status === "issued" || i.status === "paid" ? await invoiceBalance(i.id) : i.totalMinor;
+        const due = i.dueDate ? i.dueDate.toISOString().slice(0, 10) : null;
+        return { id: i.id, number: i.number, kind: i.kind, periodNumber: i.periodNumber, totalMinor: i.totalMinor, balanceMinor, status: i.status, dueDate: due, overdue: i.status === "issued" && !!due && due < todayIso && balanceMinor > 0, hostedUrl: i.hostedUrl, disputes: i.disputes };
+      }),
+    ),
+    reminders: reminderRows.map((r) => ({ id: r.id, toEmail: r.toEmail, subject: r.subject, body: r.body })),
+    agreements: agreementRows.map((a) => ({ id: a.id, kind: a.kind, version: a.version, signedAt: a.signedAt.toISOString().slice(0, 10), signedByName: a.signedByName })),
+  };
+
   const proofGate = testimonialGate(proofView);
   const configuredIntegrations = client.integrations.filter((i) => i.status === "configured");
 
@@ -118,6 +171,35 @@ export default async function ClientDetailPage({
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
+          <EngagementPanel
+            engagement={
+              engagement
+                ? {
+                    id: engagement.id,
+                    status: engagement.status,
+                    offerName,
+                    currency: engagement.currency,
+                    setupFeeMinor: engagement.setupFeeMinor,
+                    periodFeeMinor: engagement.periodFeeMinor,
+                    periodDays: engagement.periodDays,
+                    initialPeriods: engagement.initialPeriods,
+                    startDate: engagement.startDate ? engagement.startDate.toISOString().slice(0, 10) : null,
+                    earlyWinDueDate: engagement.earlyWinDueDate ? engagement.earlyWinDueDate.toISOString().slice(0, 10) : null,
+                    timezone: engagement.timezone,
+                    periods: engagement.periods.map((p) => ({ number: p.number, startDate: p.startDate.toISOString().slice(0, 10), endDate: p.endDate.toISOString().slice(0, 10), status: p.status, feeMinor: p.feeMinor })),
+                    scopeChanges: scopeChanges.map((c) => ({ id: c.id, summary: c.summary, state: c.state, effectiveFromPeriod: c.effectiveFromPeriod, feeChangeMinor: c.feeChangeMinor })),
+                    renewals: renewals.map((r) => ({ id: r.id, dueDate: r.dueDate.toISOString().slice(0, 10), state: r.state, note: r.note })),
+                  }
+                : null
+            }
+          />
+
+          <BillingPanel view={billingView} />
+
+          <PlacementsPanel slug={orgRow.slug} permissions={[...permittedUses]} placements={placementRows.map((p) => ({ id: p.id, permission: p.permission, content: p.content, location: p.location, flagReason: p.flagReason, removed: Boolean(p.removedAt) }))} />
+
+          <OffboardingPanel view={offboardingView} />
+
           <ClientConfigForm
             orgId={client.id}
             defaults={{

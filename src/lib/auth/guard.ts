@@ -3,8 +3,9 @@ import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/db/client";
 import type { Role } from "@/lib/domain/enums";
-import { can, isInternalRole, type Capability } from "./roles";
-import { getSessionUser, type SessionUser } from "./session";
+import { can, effectiveCapabilities, isInternalRole, parseProfiles, type Capability, type ClientProfile } from "./roles";
+import { getSessionState, getSessionUser, type SessionUser } from "./session";
+import { mfaRequiredForStaff } from "./mfa";
 
 /**
  * The security boundary.
@@ -54,6 +55,8 @@ export type AuthContext = {
   role: Role;
   /** True when the caller is Threadline staff acting inside a client workspace. */
   isInternal: boolean;
+  /** Client permission profiles on the caller's membership (empty for staff). */
+  profiles: ClientProfile[];
   can: (capability: Capability) => boolean;
 };
 
@@ -63,6 +66,12 @@ export const currentUser = cache(async (): Promise<SessionUser | null> => getSes
 export async function requireUser(nextPath?: string): Promise<SessionUser> {
   const user = await currentUser();
   if (!user) {
+    // A password-only session waiting for its second factor goes to the
+    // verification step, keeping where it was headed (SEC-08).
+    const state = await getSessionState();
+    if (state?.pendingMfa) {
+      redirect(`/login/verify${nextPath ? `?next=${encodeURIComponent(nextPath)}` : ""}`);
+    }
     // Reaching here means a session cookie was present — middleware bounces
     // anonymous requests before they get this far — but the database has no
     // valid session behind it. The flag tells middleware that, so it stops
@@ -99,7 +108,7 @@ const loadOrgBySlug = cache(async (slug: string) => {
 const loadMembership = cache(async (userId: string, orgId: string) => {
   return prisma.membership.findUnique({
     where: { userId_orgId: { userId, orgId } },
-    select: { role: true },
+    select: { role: true, profiles: true, status: true },
   });
 });
 
@@ -119,7 +128,16 @@ export async function requireOrgAccess(
 
   const membership = await loadMembership(user.id, org.id);
 
-  let role: Role | null = (membership?.role as Role) ?? null;
+  // TEAM-05: a suspended membership grants nothing; history stays intact.
+  const activeMembership = membership && membership.status === "active" ? membership : null;
+  let role: Role | null = (activeMembership?.role as Role) ?? null;
+  const profiles = role && !isInternalRole(role) ? parseProfiles(activeMembership?.profiles) : [];
+
+  // SEC-01: a staff role only means something inside the internal
+  // organisation. A staff role recorded on a client workspace (legacy data or a
+  // past bug) grants nothing there; staff access is re-derived below from the
+  // internal organisation alone.
+  if (role && isInternalRole(role) && org.kind !== "internal") role = null;
 
   // Threadline staff work across client workspaces without an explicit membership
   // row in every one. Super admins are resolved from the user flag; operators must
@@ -130,11 +148,14 @@ export async function requireOrgAccess(
     } else if (await hasInternalOperatorRole(user.id)) {
       role = "internal_operator";
     }
+    // Staff crossing into a client workspace must have two-factor on.
+    if (role) enforceStaffMfa(user, "page");
   }
 
   if (!role) notFound();
 
-  if (capability && !can(role, capability)) {
+  const caps = effectiveCapabilities(role, profiles);
+  if (capability && !caps.has(capability)) {
     throw new AuthError(`Missing capability: ${capability}`);
   }
 
@@ -143,7 +164,8 @@ export async function requireOrgAccess(
     org,
     role,
     isInternal: isInternalRole(role),
-    can: (c: Capability) => can(role, c),
+    profiles,
+    can: (c: Capability) => caps.has(c),
   };
 }
 
@@ -166,13 +188,28 @@ export async function requireOrgPage(
   return ctx;
 }
 
+/**
+ * Staff status comes from a staff role in the INTERNAL organisation only
+ * (SEC-01). A staff role recorded on a client workspace never counts.
+ */
 const hasInternalOperatorRole = cache(async (userId: string) => {
   const membership = await prisma.membership.findFirst({
-    where: { userId, role: { in: ["internal_operator", "super_admin"] } },
+    where: { userId, role: { in: ["internal_operator", "super_admin"] }, status: "active", org: { kind: "internal" } },
     select: { id: true },
   });
   return Boolean(membership);
 });
+
+/**
+ * SEC-08: staff without two-factor, where it is required, are sent to enrol
+ * (pages) or refused (actions). Enrolment itself lives on /account, which
+ * never calls a staff guard, so this cannot loop.
+ */
+function enforceStaffMfa(user: SessionUser, mode: "page" | "strict") {
+  if (user.mfaEnabled || !mfaRequiredForStaff()) return;
+  if (mode === "strict") throw new AuthError("Turn on two-factor authentication in your account before using staff tools.");
+  redirect("/account?mfa=required");
+}
 
 /** Guard for the admin portal. */
 export async function requireInternal(capability?: Capability) {
@@ -184,6 +221,7 @@ export async function requireInternal(capability?: Capability) {
   } else if (await hasInternalOperatorRole(user.id)) {
     role = "internal_operator";
   }
+  if (role) enforceStaffMfa(user, "page");
 
   if (!role) {
     // Rendered as a plain explanation rather than an error boundary. Server
@@ -214,6 +252,7 @@ export async function requireInternalStrict(capability?: Capability) {
   if (!role) {
     throw new AuthError("The Threadline admin portal is only available to Threadline staff.");
   }
+  enforceStaffMfa(user, "strict");
   if (capability && !can(role, capability)) {
     throw new AuthError(`Missing capability: ${capability}`);
   }
@@ -241,7 +280,7 @@ export async function accessibleOrgs(user: SessionUser) {
   }
 
   const memberships = await prisma.membership.findMany({
-    where: { userId: user.id },
+    where: { userId: user.id, status: "active" },
     include: {
       org: { select: { id: true, slug: true, name: true, status: true, kind: true } },
     },

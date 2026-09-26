@@ -15,7 +15,7 @@
     "db:reset": "prisma migrate reset --force --skip-seed && npm run seed",
     "db:studio": "prisma studio",
     "seed": "tsx --conditions=react-server prisma/seed.ts",
-    "setup": "prisma migrate deploy && prisma generate && npm run seed",
+    "setup": "prisma migrate deploy && prisma generate",
     "test": "tsx --conditions=react-server --test --test-reporter=spec \"src/**/*.test.ts\"",
     "verify:features": "tsx --conditions=react-server scripts/verify-features.ts",
     "verify": "npm run typecheck && npm run lint && npm test && npm run build && npm run verify:features",
@@ -28,7 +28,14 @@
     "qa:vitals": "node scripts/qa/run.cjs web-vitals",
     "qa:visual": "node scripts/qa/run.cjs visual-capture",
     "qa:visual:compare": "node scripts/qa/run.cjs visual-capture --compare",
-    "jobs:worker": "node scripts/jobs/run.cjs"
+    "jobs:worker": "node scripts/jobs/run.cjs",
+    "env:check": "tsx scripts/ops/env-check.ts",
+    "db:drill": "tsx scripts/db/backup-restore-drill.ts --report docs/implementation/evidence-restore-drill.json",
+    "db:local": "node scripts/pg/local.mjs start",
+    "db:local:url": "node scripts/pg/local.mjs url",
+    "db:deploy": "prisma migrate deploy",
+    "db:transfer-sqlite": "tsx scripts/db/sqlite-to-postgres.ts",
+    "setup:demo": "prisma migrate deploy && prisma generate && npm run seed"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.71.0",
@@ -61,6 +68,7 @@
     "@types/node": "^24.5.2",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
+    "embedded-postgres": "18.4.0-beta.17",
     "eslint": "^9.36.0",
     "eslint-config-next": "^15.5.4",
     "prisma": "^6.18.0",

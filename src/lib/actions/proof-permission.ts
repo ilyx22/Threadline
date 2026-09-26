@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db/client";
 import { requireOrgAccess } from "@/lib/auth/guard";
 import { audit } from "@/lib/auth/audit";
+import { flagWithdrawnPlacements, recordPlacement, PROOF_PERMISSIONS } from "@/lib/proof/placements";
 import { checkbox, cleanText, err, guarded, okVoid, parseForm, type ActionResult } from "./shared";
 
 /**
@@ -51,6 +52,9 @@ export async function grantProofPermissionsAction(orgSlug: string, _prev: Action
       update: { ...data, grantedAt: new Date(), grantedNote: input.grantedNote ? cleanText(String(input.grantedNote), 1000) : null },
     });
     await audit(ctx, { action: "proof.permissions", entityType: "ProofPermission", entityId: ctx.org.id, summary: `Permissions granted: ${PERMISSION_KEYS.filter((k) => data[k]).join(", ") || "none"}` });
+    // PRF-01: anything already placed on a permission just withdrawn is flagged for removal.
+    const flagged = await flagWithdrawnPlacements(ctx.org.id);
+    if (flagged) await audit(ctx, { action: "proof.placements_flagged", entityType: "ProofPermission", entityId: ctx.org.id, summary: `${flagged} placement(s) flagged for removal after permissions changed` });
     revalidatePath(`/app/${orgSlug}/settings`);
     revalidatePath(`/admin/clients/${ctx.org.id}`);
     return okVoid("Permissions recorded. Each one can be withdrawn here at any time.");
@@ -99,3 +103,34 @@ export const PROOF_PERMISSION_LABELS: Record<(typeof PERMISSION_KEYS)[number], s
   allowPublishMetrics: "Publish specific numbers",
   allowLogo: "Show the company logo",
 };
+
+const placementSchema = z.object({ permission: z.enum(PROOF_PERMISSIONS), content: z.string().trim().min(3).max(2000), location: z.string().trim().min(3).max(500), evidence: z.string().max(500).optional() });
+
+/** Staff record where a client's proof is used; refused unless currently permitted. */
+export async function recordPlacementAction(orgSlug: string, _prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "proof.edit");
+    if (!ctx.isInternal) return err("Placements are recorded by Threadline.", "auth");
+    const input = parseForm(placementSchema, formData);
+    try {
+      await recordPlacement(ctx.org.id, { ...input, placedById: ctx.user.id });
+    } catch (e) {
+      return err(e instanceof Error ? e.message : "Not permitted.", "workflow");
+    }
+    await audit(ctx, { action: "proof.placement", entityType: "ProofPlacement", entityId: ctx.org.id, summary: `Placed ${input.permission.replace("allow", "")} at ${input.location}` });
+    revalidatePath(`/admin/clients/${ctx.org.id}`);
+    return okVoid("Placement recorded.");
+  });
+}
+
+export async function markPlacementRemovedAction(orgSlug: string, placementId: string): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "proof.edit");
+    if (!ctx.isInternal) return err("Placements are managed by Threadline.", "auth");
+    const r = await prisma.proofPlacement.updateMany({ where: { id: placementId, orgId: ctx.org.id, removedAt: null }, data: { removedAt: new Date() } });
+    if (!r.count) return err("That placement is already removed.", "workflow");
+    await audit(ctx, { action: "proof.placement_removed", entityType: "ProofPlacement", entityId: placementId, summary: "Placement taken down" });
+    revalidatePath(`/admin/clients/${ctx.org.id}`);
+    return okVoid("Marked as taken down.");
+  });
+}

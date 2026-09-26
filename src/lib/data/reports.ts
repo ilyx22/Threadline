@@ -1,3 +1,5 @@
+import { clientScope, seesOperatorSurface } from "@/lib/domain/visibility";
+import type { Role } from "@/lib/domain/enums";
 import "server-only";
 import { prisma } from "@/lib/db/client";
 import { parseWith } from "@/lib/db/json";
@@ -48,10 +50,15 @@ const EMPTY_PAYLOAD = {
   isDemoNarrative: false,
 } satisfies WeeklyReportPayload;
 
-export async function listReports(orgId: string) {
+/**
+ * Reports a caller may read. Clients see only final versions, and only the
+ * latest final one per period (REP-01); staff see every version.
+ */
+export async function listReports(orgId: string, role: Role) {
+  const client = !seesOperatorSurface(role);
   const reports = await prisma.weeklyReport.findMany({
-    where: { orgId },
-    orderBy: { periodStart: "desc" },
+    where: { orgId, ...clientScope.reports(role), ...(client ? { supersededAt: null } : {}) },
+    orderBy: [{ periodStart: "desc" }, { version: "desc" }],
     include: { generatedBy: { select: { name: true } } },
   });
 
@@ -63,9 +70,9 @@ export async function listReports(orgId: string) {
 
 export type ReportListItem = Awaited<ReturnType<typeof listReports>>[number];
 
-export async function getReport(orgId: string, id: string) {
+export async function getReport(orgId: string, id: string, role: Role) {
   const report = await prisma.weeklyReport.findFirst({
-    where: { id, orgId },
+    where: { id, orgId, ...clientScope.reports(role) },
     include: {
       generatedBy: { select: { name: true } },
       org: { select: { name: true, currency: true } },
@@ -77,10 +84,10 @@ export async function getReport(orgId: string, id: string) {
 
 export type ReportDetail = NonNullable<Awaited<ReturnType<typeof getReport>>>;
 
-export async function latestReport(orgId: string) {
+export async function latestReport(orgId: string, role?: Role) {
   const report = await prisma.weeklyReport.findFirst({
-    where: { orgId },
-    orderBy: { periodStart: "desc" },
+    where: { orgId, ...(role ? clientScope.reports(role) : {}), supersededAt: null },
+    orderBy: [{ periodStart: "desc" }, { version: "desc" }],
   });
   if (!report) return null;
   return { ...report, payload: parseWith(report.payload, weeklyReportPayloadSchema, EMPTY_PAYLOAD) };

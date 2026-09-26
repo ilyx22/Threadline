@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { CAPABILITIES, can, canAssignRole, capabilitiesFor, isInternalRole } from "./roles";
+import { CAPABILITIES, can, canAssignRole, canAssignRoleIn, canManageMemberWithRole, capabilitiesFor, isInternalRole } from "./roles";
 import { ROLES } from "@/lib/domain/enums";
 
 /**
@@ -151,5 +151,61 @@ describe("the research corpus", () => {
     for (const role of ["internal_operator", "super_admin"] as const) {
       assert.equal(can(role, "corpus.manage"), true);
     }
+  });
+});
+
+describe("staff roles are scoped to the internal organisation (SEC-01)", () => {
+  it("never grants a staff role inside a client workspace, whoever acts", () => {
+    for (const actor of ["super_admin", "internal_operator", "client_admin"] as const) {
+      assert.equal(canAssignRoleIn(actor, "internal_operator", "client"), false, `${actor} minted an operator in a client org`);
+      assert.equal(canAssignRoleIn(actor, "super_admin", "client"), false);
+    }
+  });
+
+  it("lets only a super admin grant internal_operator in the internal organisation", () => {
+    assert.equal(canAssignRoleIn("super_admin", "internal_operator", "internal"), true);
+    assert.equal(canAssignRoleIn("internal_operator", "internal_operator", "internal"), false);
+    assert.equal(canAssignRoleIn("super_admin", "client_admin", "internal"), false);
+    assert.equal(canAssignRoleIn("super_admin", "super_admin", "internal"), false);
+  });
+
+  it("keeps client role assignment as before in client workspaces", () => {
+    assert.equal(canAssignRoleIn("client_admin", "client_member", "client"), true);
+    assert.equal(canAssignRoleIn("internal_operator", "client_admin", "client"), true);
+    assert.equal(canAssignRoleIn("client_member", "client_member", "client"), false);
+  });
+
+  it("stops a client admin changing or removing a staff membership", () => {
+    assert.equal(canManageMemberWithRole("client_admin", "internal_operator", "client"), false);
+    assert.equal(canManageMemberWithRole("client_admin", "super_admin", "client"), false);
+    assert.equal(canManageMemberWithRole("internal_operator", "super_admin", "client"), false);
+    assert.equal(canManageMemberWithRole("client_admin", "editor", "client"), true);
+    assert.equal(canManageMemberWithRole("internal_operator", "internal_operator", "internal"), false);
+  });
+});
+
+describe("client permission profiles (TEAM-01)", () => {
+  it("lets an approver member approve without admin powers", async () => {
+    const { effectiveCapabilities } = await import("./roles");
+    const caps = effectiveCapabilities("client_member", ["contributor", "approver"]);
+    assert.ok(caps.has("scripts.approve"));
+    assert.ok(!caps.has("workspace.members"));
+    assert.ok(!caps.has("workspace.settings"));
+  });
+  it("makes a viewer read-only", async () => {
+    const { effectiveCapabilities } = await import("./roles");
+    const caps = effectiveCapabilities("client_member", ["viewer"]);
+    assert.ok(caps.has("ideas.view"));
+    for (const c of ["ideas.create", "library.upload", "scripts.edit", "ai.generate", "tasks.complete"] as const) assert.ok(!caps.has(c), c);
+  });
+  it("never changes staff or client admin capabilities", async () => {
+    const { effectiveCapabilities, capabilitiesFor } = await import("./roles");
+    assert.equal(effectiveCapabilities("internal_operator", ["viewer"]).size, capabilitiesFor("internal_operator").length);
+    assert.equal(effectiveCapabilities("client_admin", ["viewer"]).size, capabilitiesFor("client_admin").length);
+  });
+  it("ignores unknown profile names", async () => {
+    const { parseProfiles } = await import("./roles");
+    assert.deepEqual(parseProfiles('["approver","root","viewer"]'), ["approver", "viewer"]);
+    assert.deepEqual(parseProfiles("not json"), []);
   });
 });

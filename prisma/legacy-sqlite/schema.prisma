@@ -1,0 +1,2570 @@
+// LEGACY SQLITE SCHEMA (frozen 26 September 2026). Used only by scripts/db/sqlite-to-postgres.ts to read
+// the pre-PostgreSQL development database. Do not edit; the live schema is prisma/schema.prisma.
+// Threadline OS — data model
+//
+// PORTABILITY CONTRACT (see docs/ARCHITECTURE.md ADR-001):
+//   * No database enums    -> statuses are String, constrained by Zod unions in src/lib/domain
+//   * No array columns     -> list values are JSON-encoded String, read via src/lib/db/json.ts
+//   * No provider-specific types
+// Switching to PostgreSQL is a change of `provider` + DATABASE_URL, then `prisma migrate dev`.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../../node_modules/.prisma/legacy-sqlite-client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("LEGACY_SQLITE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Identity, tenancy and access
+// ---------------------------------------------------------------------------
+
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  title        String?
+  avatarHue    Int       @default(210)
+  isSuperAdmin Boolean   @default(false)
+  isActive     Boolean   @default(true)
+  lastSeenAt   DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  sessions             Session[]
+  memberships          Membership[]
+  auditLogs            AuditLog[]
+  notifications        Notification[]
+  tasksAssigned        Task[]                  @relation("TaskAssignee")
+  comments             Comment[]
+  assetsUploaded       Asset[]
+  ideasCreated         Idea[]
+  scriptVersions       ScriptVersion[]
+  contentAsEditor      ContentItem[]           @relation("ContentEditor")
+  contentAsFounder     ContentItem[]           @relation("ContentFounder")
+  contentApproved      ContentItem[]           @relation("ContentApprover")
+  contentEvents        ContentEvent[]
+  reportsGenerated     WeeklyReport[]
+  aiGenerations        AiGeneration[]
+  supportIssuesOwned   SupportIssue[]
+  sopEdits             SopDocument[]
+  runsCreated          IntelligenceRun[]
+  signalDecisions      CandidateSignal[]
+  diagnosesCreated     ConstraintDiagnosis[]
+  milestonesSigned     InstallationMilestone[]
+  proofRecorded        ProofPeriod[]
+  readinessReviews     RecordingReadiness[]
+  packagesApproved     PlatformPackage[]       @relation("PackageApprover")
+  prospectsOwned       Prospect[]              @relation("ProspectOwner")
+  wedgesOwned          MarketWedge[]           @relation("WedgeOwner")
+  callsOwned           SalesCall[]             @relation("CallOwner")
+  funnelReviews        FunnelReview[]          @relation("ReviewAuthor")
+  trackedLinks         TrackedLink[]           @relation("LinkAuthor")
+  examplesAdded        ResearchExample[]       @relation("ExampleAuthor")
+  eventsRecorded       CommercialEvent[]       @relation("EventRecorder")
+  contentRoots         ContentRoot[]           @relation("RootAuthor")
+  expectationsAuthored ContentExpectation[]    @relation("ExpectationAuthor")
+  diagnosesAuthored    ContentDiagnosis[]      @relation("DiagnosisAuthor")
+  diagnosesApproved    ContentDiagnosis[]      @relation("DiagnosisApprover")
+  correctionsAuthored  CorrectionEntry[]       @relation("CorrectionAuthor")
+  oauthStatesStarted   OAuthState[]            @relation("OAuthInitiator")
+  authTokens           AuthToken[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userAgent String?
+  ipHash    String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+/// A tenant. `kind` = "client" for customer workspaces, "internal" for the Threadline team org.
+model Organization {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  name            String
+  kind            String    @default("client")
+  status          String    @default("active") // active | onboarding | paused | churned
+  packageTier     String    @default("install") // install | operate | scale
+  onboardingStage String    @default("not_started") // not_started | in_progress | complete
+  industry        String?
+  website         String?
+  geography       String?
+  timezone        String    @default("Europe/London")
+  currency        String    @default("GBP")
+  setupFee        Int       @default(0) // minor units
+  /// Fee for one four-week service period, in minor units.
+  ///
+  /// Not a monthly fee: four-week periods produce thirteen invoices a year, not
+  /// twelve. See src/lib/domain/service-period.ts.
+  periodFee       Int       @default(0)
+  healthScore     Int       @default(80)
+  accentHex       String?
+  modulesEnabled  String    @default("[]") // JSON string[]
+  supportNotes    String?
+  /// A dry-run workspace that exercises the real fulfilment path without being
+  /// a real client. Excluded from every portfolio and proof aggregate, and
+  /// labelled wherever it appears. See src/lib/domain/synthetic.ts.
+  synthetic       Boolean   @default(false)
+  startedAt       DateTime?
+  lastActivityAt  DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  memberships          Membership[]
+  auditLogs            AuditLog[]
+  notifications        Notification[]
+  tasks                Task[]
+  brandBrain           BrandBrain?
+  offers               Offer[]
+  icpProfiles          IcpProfile[]
+  proofItems           ProofItem[]
+  competitors          Competitor[]
+  researchItems        ResearchItem[]
+  tags                 Tag[]
+  patterns             Pattern[]
+  ideas                Idea[]
+  scripts              Script[]
+  contentItems         ContentItem[]
+  contentEvents        ContentEvent[]
+  assets               Asset[]
+  comments             Comment[]
+  platformPackages     PlatformPackage[]
+  socialAccounts       SocialAccount[]
+  publishRecords       PublishRecord[]
+  performanceSnapshots PerformanceSnapshot[]
+  inquiries            Inquiry[]
+  weeklyReports        WeeklyReport[]
+  operatingMetrics     OperatingMetric[]
+  integrations         Integration[]
+  supportIssues        SupportIssue[]
+  sopDocuments         SopDocument[]
+  onboardingSession    OnboardingSession?
+  aiGenerations        AiGeneration[]
+  intelligenceRuns     IntelligenceRun[]
+  runSources           RunSource[]
+  candidateSignals     CandidateSignal[]
+  diagnoses            ConstraintDiagnosis[]
+  milestones           InstallationMilestone[]
+  proofPeriods         ProofPeriod[]
+  recordingReadiness   RecordingReadiness?
+  trackedLinks         TrackedLink[]
+  visitors             Visitor[]
+  touchpoints          Touchpoint[]
+  commercialEvents     CommercialEvent[]
+  judgeVerdicts        JudgeVerdict[]
+
+  proofPermission     ProofPermission?
+  contentRoots        ContentRoot[]
+  contentExpectations ContentExpectation[]
+  contentDiagnoses    ContentDiagnosis[]
+  corrections         CorrectionEntry[]
+  credentials         Credential[]
+  oauthStates         OAuthState[]
+
+  @@index([kind, status])
+  @@index([synthetic])
+}
+
+model Membership {
+  id        String   @id @default(cuid())
+  userId    String
+  orgId     String
+  role      String // super_admin | internal_operator | client_admin | client_member | editor
+  isPrimary Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, orgId])
+  @@index([orgId])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  orgId      String?
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String?
+  summary    String
+  meta       String   @default("{}") // JSON
+  createdAt  DateTime @default(now())
+
+  org   Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  actor User?         @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([orgId, createdAt])
+  @@index([entityType, entityId])
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  orgId     String
+  userId    String?
+  kind      String // approval | recording | report | alert | system | pipeline | intelligence_brief
+  title     String
+  body      String?
+  href      String?
+  severity  String    @default("info") // info | success | warning | critical
+  readAt    DateTime?
+  createdAt DateTime  @default(now())
+
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([orgId, createdAt])
+  @@index([userId, readAt])
+}
+
+model Task {
+  id             String    @id @default(cuid())
+  orgId          String
+  title          String
+  description    String?
+  kind           String // record | approve | upload | decide | review | ops
+  audience       String    @default("client") // client | internal
+  status         String    @default("open") // open | in_progress | done | dismissed
+  priority       String    @default("medium") // low | medium | high | urgent
+  dueDate        DateTime?
+  assigneeId     String?
+  entityType     String?
+  entityId       String?
+  estimateMin    Int?
+  // Delivery Load. Filled in after the work, by whoever did it — the point is to
+  // find the real delegation trigger from measured work rather than from a
+  // revenue milestone somebody picked.
+  /// Minutes of actual attention, excluding waiting.
+  activeMinutes  Int?
+  /// Minutes lost to waiting on somebody else. Kept separate because the two
+  /// have completely different fixes.
+  waitingMinutes Int?
+  /// Cash paid out for this task, in minor units.
+  costMinor      Int       @default(0)
+  /// What this work turned out to be. See WORK_CLASSES.
+  workClass      String?
+  loadNote       String?
+  completedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  org      Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  assignee User?        @relation("TaskAssignee", fields: [assigneeId], references: [id], onDelete: SetNull)
+
+  @@index([orgId, status, audience])
+  @@index([orgId, dueDate])
+}
+
+// ---------------------------------------------------------------------------
+// Brand Brain — the context layer
+// ---------------------------------------------------------------------------
+
+model BrandBrain {
+  id           String   @id @default(cuid())
+  orgId        String   @unique
+  company      String   @default("{}") // JSON CompanyProfile
+  founder      String   @default("{}") // JSON FounderProfile
+  voice        String   @default("{}") // JSON VoiceProfile
+  contentRules String   @default("{}") // JSON ContentRules
+  completeness Int      @default(0)
+  updatedAt    DateTime @updatedAt
+  createdAt    DateTime @default(now())
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+}
+
+model Offer {
+  id              String   @id @default(cuid())
+  orgId           String
+  name            String
+  isPrimary       Boolean  @default(false)
+  priceMinor      Int      @default(0)
+  currency        String   @default("GBP")
+  priceModel      String   @default("one_off") // one_off | retainer | subscription | hybrid
+  mechanism       String?
+  outcome         String?
+  differentiators String   @default("[]") // JSON string[]
+  guarantees      String?
+  ctas            String   @default("[]") // JSON string[]
+  exclusions      String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+}
+
+model IcpProfile {
+  id             String   @id @default(cuid())
+  orgId          String
+  name           String
+  isPrimary      Boolean  @default(false)
+  description    String?
+  demographics   String?
+  firmographics  String?
+  pains          String   @default("[]") // JSON string[]
+  desires        String   @default("[]") // JSON string[]
+  objections     String   @default("[]") // JSON string[]
+  triggers       String   @default("[]") // JSON string[]
+  sophistication String   @default("moderate") // low | moderate | high
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+}
+
+model ProofItem {
+  id          String   @id @default(cuid())
+  orgId       String
+  kind        String // testimonial | case_study | metric | screenshot | credential
+  title       String
+  body        String?
+  source      String?
+  metricLabel String?
+  metricValue String?
+  claimStatus String   @default("allowed") // allowed | needs_review | prohibited
+  assetId     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId, kind])
+}
+
+// ---------------------------------------------------------------------------
+// Market Radar
+// ---------------------------------------------------------------------------
+
+model Competitor {
+  id          String   @id @default(cuid())
+  orgId       String
+  name        String
+  url         String?
+  platforms   String   @default("[]") // JSON string[]
+  positioning String?
+  notes       String?
+  threatLevel String   @default("medium") // low | medium | high
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  org           Organization   @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  researchItems ResearchItem[]
+  runSources    RunSource[]
+
+  @@index([orgId])
+}
+
+model ResearchItem {
+  id           String   @id @default(cuid())
+  orgId        String
+  kind         String // competitor_post | customer_language | question | objection | trend | content_example | offer_example | source
+  title        String
+  body         String?
+  url          String?
+  sourceName   String?
+  author       String?
+  platform     String?
+  competitorId String?
+  metrics      String   @default("{}") // JSON { views, likes, comments, ... }
+  capturedAt   DateTime @default(now())
+  collectedVia String   @default("manual") // manual | url | seed | adapter | run
+  /// Source metadata preserved verbatim from collection:
+  /// JSON { sourceType, collectedAt, adapter, author, ... }.
+  sourceMeta   String   @default("{}")
+  /// Stable fingerprint used to deduplicate evidence across intelligence runs.
+  /// Nullable, so items captured by hand are never forced into a fingerprint.
+  dedupeKey    String?
+  runId        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  org            Organization        @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  competitor     Competitor?         @relation(fields: [competitorId], references: [id], onDelete: SetNull)
+  run            IntelligenceRun?    @relation(fields: [runId], references: [id], onDelete: SetNull)
+  tags           ResearchItemTag[]
+  evidenceFor    PatternEvidence[]
+  ideaLinks      IdeaEvidence[]
+  candidateLinks CandidateEvidence[]
+
+  @@unique([orgId, dedupeKey])
+  @@index([orgId, kind])
+  @@index([orgId, capturedAt])
+  @@index([runId])
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  orgId     String
+  name      String
+  kind      String   @default("theme") // theme | competitor | pain | objection | desire | hook | format | proof | trend | question | customer_language | cta | offer | breakout
+  createdAt DateTime @default(now())
+
+  org   Organization      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  items ResearchItemTag[]
+
+  @@unique([orgId, name])
+  @@index([orgId, kind])
+}
+
+model ResearchItemTag {
+  researchItemId String
+  tagId          String
+
+  researchItem ResearchItem @relation(fields: [researchItemId], references: [id], onDelete: Cascade)
+  tag          Tag          @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([researchItemId, tagId])
+  @@index([tagId])
+}
+
+// ---------------------------------------------------------------------------
+// Signal / Pattern engine
+// ---------------------------------------------------------------------------
+
+model Pattern {
+  id             String    @id @default(cuid())
+  orgId          String
+  kind           String // outlier | pattern | hypothesis | test | learning
+  title          String
+  description    String?
+  status         String    @default("open") // open | testing | validated | rejected | archived
+  confidence     Int       @default(50) // 0-100
+  impact         Int       @default(3) // 1-5
+  effort         Int       @default(3) // 1-5
+  score          Float     @default(0)
+  nextExperiment String?
+  detectedBy     String    @default("manual") // manual | performance_loop | ai | intelligence_run
+  /// The run that produced this signal, when it came from an intelligence cycle.
+  runId          String?
+  /// The signal this one was derived from - an approved pattern that became a test.
+  derivedFromId  String?
+  /// Ranking position among the tests derived from one run. 0 = unranked.
+  rank           Int       @default(0)
+  /// What the test is read on, so it has a defined outcome rather than a vibe.
+  successMetric  String?
+  /// Written back by the performance and commercial loop, never by a model.
+  feedbackNote   String?
+  lastFeedbackAt DateTime?
+  /// Client visibility. The ONLY stored visibility flag in the product: every
+  /// other surface derives visibility from state that already exists (see
+  /// src/lib/domain/visibility.ts). A signal is internal working thought until
+  /// somebody decides the client should see it, and no existing status answers
+  /// that question.
+  /// internal | client_published
+  visibility     String    @default("internal")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  org         Organization      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  run         IntelligenceRun?  @relation(fields: [runId], references: [id], onDelete: SetNull)
+  derivedFrom Pattern?          @relation("PatternDerivation", fields: [derivedFromId], references: [id], onDelete: SetNull)
+  derived     Pattern[]         @relation("PatternDerivation")
+  evidence    PatternEvidence[]
+  candidates  CandidateSignal[]
+  ideas       Idea[]
+
+  @@index([orgId, kind, status])
+  @@index([runId])
+  @@index([derivedFromId])
+}
+
+model PatternEvidence {
+  id             String   @id @default(cuid())
+  patternId      String
+  researchItemId String?
+  contentItemId  String?
+  note           String?
+  metricRef      String?
+  createdAt      DateTime @default(now())
+
+  pattern      Pattern       @relation(fields: [patternId], references: [id], onDelete: Cascade)
+  researchItem ResearchItem? @relation(fields: [researchItemId], references: [id], onDelete: Cascade)
+  contentItem  ContentItem?  @relation(fields: [contentItemId], references: [id], onDelete: Cascade)
+
+  @@index([patternId])
+}
+
+// ---------------------------------------------------------------------------
+// Idea engine
+// ---------------------------------------------------------------------------
+
+model Idea {
+  id               String   @id @default(cuid())
+  orgId            String
+  title            String
+  concept          String?
+  audience         String?
+  painDesire       String?
+  pillar           String?
+  platform         String   @default("linkedin")
+  format           String   @default("short_form")
+  angle            String?
+  hookConcept      String?
+  objective        String?
+  cta              String?
+  commercialIntent String   @default("medium") // low | medium | high
+  noveltyScore     Int      @default(50)
+  relevanceScore   Int      @default(50)
+  proofStrength    Int      @default(50)
+  formatFit        Int      @default(50)
+  priorityScore    Float    @default(0)
+  status           String   @default("backlog") // backlog | shortlisted | approved | scripted | rejected | archived
+  rationale        String?
+  source           String   @default("manual") // manual | ai | learning | onboarding
+  patternId        String?
+  /// The thesis this idea serves. Null for ideas created before lineage
+  /// existed, and for one-off ideas that have not earned a root yet.
+  rootId           String?
+  createdById      String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  org          Organization   @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  pattern      Pattern?       @relation(fields: [patternId], references: [id], onDelete: SetNull)
+  root         ContentRoot?   @relation(fields: [rootId], references: [id], onDelete: SetNull)
+  createdBy    User?          @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  evidence     IdeaEvidence[]
+  scripts      Script[]
+  contentItems ContentItem[]
+
+  intendedJob String  @default("authority") // discovery | authority | conversion
+  requestId   String? // client-supplied idempotency key
+
+  @@unique([orgId, requestId])
+  @@index([orgId, status])
+  @@index([orgId, priorityScore])
+  @@index([rootId])
+}
+
+model IdeaEvidence {
+  id             String  @id @default(cuid())
+  ideaId         String
+  researchItemId String
+  note           String?
+
+  idea         Idea         @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+  researchItem ResearchItem @relation(fields: [researchItemId], references: [id], onDelete: Cascade)
+
+  @@unique([ideaId, researchItemId])
+}
+
+// ---------------------------------------------------------------------------
+// Script engine
+// ---------------------------------------------------------------------------
+
+model Script {
+  id               String    @id @default(cuid())
+  orgId            String
+  ideaId           String?
+  title            String
+  scriptType       String    @default("short_form") // short_form | youtube | linkedin_video | educational | founder_pov | story | authority | case_study | objection | list | teardown | vsl
+  platform         String    @default("linkedin")
+  qaState          String    @default("ai_draft") // ai_draft | needs_fact_check | ready_to_record | approved
+  estimatedSeconds Int       @default(60)
+  currentVersion   Int       @default(1)
+  claimsVerified   Boolean   @default(false)
+  approvedAt       DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  org          Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  idea         Idea?           @relation(fields: [ideaId], references: [id], onDelete: SetNull)
+  versions     ScriptVersion[]
+  contentItems ContentItem[]
+
+  @@index([orgId, qaState])
+}
+
+model ScriptVersion {
+  id            String   @id @default(cuid())
+  scriptId      String
+  version       Int
+  hook          String
+  altHooks      String   @default("[]") // JSON string[]
+  body          String
+  cta           String?
+  filmingNotes  String?
+  claims        String   @default("[]") // JSON Claim[] { text, status, note }
+  contextUsed   String   @default("[]") // JSON string[] of context block keys
+  changeSummary String?
+  generatedBy   String   @default("human") // human | ai | ai_refine
+  createdById   String?
+  createdAt     DateTime @default(now())
+
+  script    Script @relation(fields: [scriptId], references: [id], onDelete: Cascade)
+  createdBy User?  @relation(fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@unique([scriptId, version])
+  @@index([scriptId])
+}
+
+// ---------------------------------------------------------------------------
+// Production
+// ---------------------------------------------------------------------------
+
+model ContentItem {
+  id            String    @id @default(cuid())
+  orgId         String
+  ideaId        String?
+  scriptId      String?
+  title         String
+  selectedHook  String?
+  stage         String    @default("raw") // raw | editing | in_review | changes_requested | approved | scheduled | live
+  platform      String    @default("linkedin")
+  format        String    @default("short_form")
+  priority      String    @default("medium") // low | medium | high | urgent
+  dueDate       DateTime?
+  editorId      String?
+  founderId     String?
+  revisionCount Int       @default(0)
+  /// The thesis this piece tests.
+  rootId        String?
+  /// Set when this piece was cut from another — a short from an interview, a
+  /// LinkedIn text version of a video. A derivative is measured on its own but
+  /// never counted as a separate source asset against the period's output.
+  derivedFromId String?
+  /// source | derivative | retest — `retest` marks a deliberate re-attempt at
+  /// the same thesis after a diagnosis.
+  lineageRole   String    @default("source")
+  recordedAt    DateTime?
+  approvedAt    DateTime?
+  approvedById  String?
+  liveAt        DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  org         Organization       @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  idea        Idea?              @relation(fields: [ideaId], references: [id], onDelete: SetNull)
+  script      Script?            @relation(fields: [scriptId], references: [id], onDelete: SetNull)
+  editor      User?              @relation("ContentEditor", fields: [editorId], references: [id], onDelete: SetNull)
+  founder     User?              @relation("ContentFounder", fields: [founderId], references: [id], onDelete: SetNull)
+  approvedBy  User?              @relation("ContentApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+  root        ContentRoot?       @relation(fields: [rootId], references: [id], onDelete: SetNull)
+  derivedFrom ContentItem?       @relation("ContentDerivatives", fields: [derivedFromId], references: [id], onDelete: SetNull)
+  derivatives ContentItem[]      @relation("ContentDerivatives")
+  diagnoses   ContentDiagnosis[]
+
+  assets          Asset[]
+  events          ContentEvent[]
+  packages        PlatformPackage[]
+  publishRecords  PublishRecord[]
+  inquiries       Inquiry[]
+  patternEvidence PatternEvidence[]
+  trackedLinks    TrackedLink[]
+  touchpoints     Touchpoint[]
+
+  intendedJob String @default("authority") // discovery | authority | conversion
+
+  @@index([orgId, stage])
+  @@index([orgId, dueDate])
+  @@index([rootId])
+  @@index([derivedFromId])
+}
+
+model ContentEvent {
+  id            String   @id @default(cuid())
+  orgId         String
+  contentItemId String
+  type          String // stage_change | comment | revision_requested | approved | asset_added | recorded | scheduled | published | metric_added
+  fromStage     String?
+  toStage       String?
+  note          String?
+  actorId       String?
+  createdAt     DateTime @default(now())
+
+  org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  contentItem ContentItem  @relation(fields: [contentItemId], references: [id], onDelete: Cascade)
+  actor       User?        @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([contentItemId, createdAt])
+}
+
+/// Unified library + production asset record.
+model Asset {
+  id            String   @id @default(cuid())
+  orgId         String
+  contentItemId String?
+  category      String // raw_media | edited_media | script_doc | transcript | research_doc | testimonial | case_study | brand_asset | offer_doc | thumbnail | report
+  title         String
+  description   String?
+  fileName      String?
+  mimeType      String?
+  sizeBytes     Int?
+  storagePath   String?
+  externalUrl   String?
+  version       Int      @default(1)
+  tags          String   @default("[]") // JSON string[]
+  uploadedById  String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  contentItem ContentItem? @relation(fields: [contentItemId], references: [id], onDelete: SetNull)
+  uploadedBy  User?        @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+
+  storageProvider String @default("local") // local | s3
+
+  @@index([orgId, category])
+  @@index([contentItemId])
+}
+
+model Comment {
+  id         String   @id @default(cuid())
+  orgId      String
+  entityType String // content_item | idea | script | pattern | research_item
+  entityId   String
+  body       String
+  kind       String   @default("comment") // comment | revision_request | approval_note
+  timecodeMs Int?
+  resolved   Boolean  @default(false)
+  /// Operator-only note. Never returned by a client-scoped read.
+  internal   Boolean  @default(false)
+  authorId   String?
+  createdAt  DateTime @default(now())
+
+  org    Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  author User?        @relation(fields: [authorId], references: [id], onDelete: SetNull)
+
+  @@index([orgId, entityType, entityId])
+  @@index([orgId, internal])
+}
+
+// ---------------------------------------------------------------------------
+// Packaging and distribution
+// ---------------------------------------------------------------------------
+
+model PlatformPackage {
+  id                String    @id @default(cuid())
+  orgId             String
+  contentItemId     String
+  platform          String
+  /// Long-form packaging works title-first: a working title carries the piece
+  /// through production, and the final title is a separate decision taken once
+  /// the edit exists. Short-form simply leaves the working title empty.
+  workingTitle      String?
+  title             String?
+  caption           String?
+  description       String?
+  hashtags          String    @default("[]") // JSON string[]
+  overlays          String    @default("[]") // JSON string[]
+  thumbnailConcepts String    @default("[]") // JSON string[]
+  ctaOptions        String    @default("[]") // JSON string[]
+  clipOpportunities String    @default("[]") // JSON { label, startSec, endSec, rationale }[]
+  repurposing       String?
+  /// The chosen thumbnail: an Asset id, or an external URL.
+  thumbnailRef      String?
+  status            String    @default("draft") // draft | ready | approved
+  approvedAt        DateTime?
+  approvedById      String?
+  generatedBy       String    @default("human") // human | ai
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  org            Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  contentItem    ContentItem     @relation(fields: [contentItemId], references: [id], onDelete: Cascade)
+  approvedBy     User?           @relation("PackageApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+  publishRecords PublishRecord[]
+
+  @@unique([contentItemId, platform])
+  @@index([orgId])
+}
+
+model SocialAccount {
+  id            String   @id @default(cuid())
+  orgId         String
+  platform      String
+  handle        String
+  displayName   String?
+  isConnected   Boolean  @default(false)
+  integrationId String?
+  createdAt     DateTime @default(now())
+
+  org            Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  integration    Integration?    @relation(fields: [integrationId], references: [id], onDelete: SetNull)
+  publishRecords PublishRecord[]
+
+  @@index([orgId, platform])
+}
+
+model PublishRecord {
+  id            String    @id @default(cuid())
+  orgId         String
+  contentItemId String
+  packageId     String?
+  accountId     String?
+  platform      String
+  status        String    @default("draft") // draft | ready | scheduled | published | failed
+  method        String    @default("manual") // manual | integration
+  scheduledFor  DateTime?
+  publishedAt   DateTime?
+  url           String?
+  failureReason String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  org          Organization          @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  contentItem  ContentItem           @relation(fields: [contentItemId], references: [id], onDelete: Cascade)
+  package      PlatformPackage?      @relation(fields: [packageId], references: [id], onDelete: SetNull)
+  account      SocialAccount?        @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  snapshots    PerformanceSnapshot[]
+  inquiries    Inquiry[]
+  trackedLinks TrackedLink[]
+  touchpoints  Touchpoint[]
+
+  distributionMode String  @default("organic") // organic | paid_amplified
+  externalId       String?
+  providerStatus   String?
+  providerPayload  String? // JSON — last provider response, secrets stripped
+
+  @@index([orgId, status])
+  @@index([orgId, scheduledFor])
+  @@index([contentItemId])
+}
+
+// ---------------------------------------------------------------------------
+// Performance and commercial pipeline
+// ---------------------------------------------------------------------------
+
+model PerformanceSnapshot {
+  id              String   @id @default(cuid())
+  orgId           String
+  publishRecordId String
+  capturedAt      DateTime @default(now())
+  views           Int      @default(0)
+  impressions     Int      @default(0)
+  reach           Int      @default(0)
+  likes           Int      @default(0)
+  comments        Int      @default(0)
+  shares          Int      @default(0)
+  saves           Int      @default(0)
+  watchTimeSec    Int      @default(0)
+  avgViewSec      Float    @default(0)
+  retentionPct    Float    @default(0)
+  ctrPct          Float    @default(0)
+  leads           Int      @default(0)
+  bookedCalls     Int      @default(0)
+  revenueMinor    Int      @default(0)
+  source          String   @default("manual") // manual | adapter | seed
+  createdAt       DateTime @default(now())
+
+  org           Organization  @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  publishRecord PublishRecord @relation(fields: [publishRecordId], references: [id], onDelete: Cascade)
+
+  // Provenance for ingested rows. `providerRecordId` + `source` + `capturedAt` stop the same reading landing twice.
+  providerRecordId String?
+  fetchedAt        DateTime?
+  provenance       String? // JSON: { provider, endpoint, requestedAt, fields: { views: "0"|"unknown"|"unavailable"|"unsupported"|"stale" } }
+  unavailable      String    @default("[]") // JSON string[] of metric keys the provider could not supply
+
+  @@unique([publishRecordId, source, providerRecordId, capturedAt])
+  @@index([orgId, capturedAt])
+  @@index([publishRecordId, capturedAt])
+}
+
+model Inquiry {
+  id              String    @id @default(cuid())
+  orgId           String
+  name            String
+  company         String?
+  email           String?
+  stage           String    @default("inquiry") // inquiry | qualified | call_booked | won | lost
+  source          String    @default("content") // content | referral | outbound | other
+  contentItemId   String?
+  publishRecordId String?
+  cta             String?
+  leadMagnet      String?
+  link            String?
+  valueMinor      Int       @default(0)
+  currency        String    @default("GBP")
+  occurredAt      DateTime  @default(now())
+  closedAt        DateTime?
+  notes           String?
+  // How strongly this signal is actually connected to the content. Organic
+  // content does not have paid-advertising certainty and the product must not
+  // imply that it does, so every commercial signal carries its own class.
+  attribution     String    @default("qualitative_only")
+  evidenceBasis   String    @default("client_reported") // measured | client_reported | unavailable
+  evidenceSource  String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  /// The anonymous journey this person arrived through, when one is known.
+  visitorId String?
+
+  org           Organization      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  contentItem   ContentItem?      @relation(fields: [contentItemId], references: [id], onDelete: SetNull)
+  publishRecord PublishRecord?    @relation(fields: [publishRecordId], references: [id], onDelete: SetNull)
+  visitor       Visitor?          @relation(fields: [visitorId], references: [id], onDelete: SetNull)
+  events        CommercialEvent[]
+
+  @@index([orgId, stage])
+  @@index([orgId, occurredAt])
+}
+
+// ---------------------------------------------------------------------------
+// Reporting and operating metrics
+// ---------------------------------------------------------------------------
+
+model WeeklyReport {
+  id            String   @id @default(cuid())
+  orgId         String
+  periodStart   DateTime
+  periodEnd     DateTime
+  status        String   @default("draft") // draft | final
+  payload       String   @default("{}") // JSON WeeklyReportPayload
+  narrative     String? // optional AI-written executive narrative
+  generatedById String?
+  generatedAt   DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  generatedBy User?        @relation(fields: [generatedById], references: [id], onDelete: SetNull)
+
+  @@unique([orgId, periodStart])
+  @@index([orgId, periodStart])
+}
+
+model OperatingMetric {
+  id                  String   @id @default(cuid())
+  orgId               String
+  weekStart           DateTime
+  founderHours        Float    @default(0)
+  hoursSaved          Float    @default(0)
+  cycleTimeHours      Float    @default(0)
+  approvalHours       Float    @default(0)
+  piecesShipped       Int      @default(0)
+  contractorCostMinor Int      @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, weekStart])
+  @@index([orgId, weekStart])
+}
+
+// ---------------------------------------------------------------------------
+// Intelligence Run - the market intelligence cycle
+// ---------------------------------------------------------------------------
+
+/// One cycle of market intelligence: scope, collect, synthesise, human review,
+/// ranked tests. A run is the unit a client reads as "what Threadline found in
+/// your market this week, why it matters, and what we are doing because of it".
+///
+/// Invariant: a candidate signal cannot influence strategy until a human has
+/// approved it. Enforced in src/lib/domain/intelligence.ts.
+model IntelligenceRun {
+  id            String    @id @default(cuid())
+  orgId         String
+  label         String
+  periodStart   DateTime
+  periodEnd     DateTime
+  status        String    @default("scoping") // scoping | collecting | synthesis | review | published | archived
+  /// The question this run was asked to answer.
+  focus         String?
+  /// Headline paragraph, written or edited by a human before publishing.
+  summary       String?
+  /// Frozen brief payload, written at publish time so a brief read months later
+  /// shows what the client was actually sent (same rule as WeeklyReport).
+  brief         String    @default("{}")
+  evidenceCount Int       @default(0)
+  signalCount   Int       @default(0)
+  approvedCount Int       @default(0)
+  testCount     Int       @default(0)
+  publishedAt   DateTime?
+  createdById   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  org        Organization      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdBy  User?             @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  sources    RunSource[]
+  candidates CandidateSignal[]
+  research   ResearchItem[]
+  patterns   Pattern[]
+
+  @@index([orgId, status])
+  @@index([orgId, periodStart])
+}
+
+/// A declared input to a run.
+///
+/// Honesty rule: a source whose adapter cannot legitimately collect records
+/// status "unavailable" with the specific blocker, and keeps its manual intake
+/// path. Nothing here ever reports a connection that does not exist.
+model RunSource {
+  id             String    @id @default(cuid())
+  orgId          String
+  runId          String
+  kind           String // competitor | creator | category | sales_call | customer_language | historic_content | performance | pipeline | url | note
+  label          String
+  url            String?
+  competitorId   String?
+  collectionMode String    @default("manual") // manual | url | adapter
+  status         String    @default("pending") // pending | collected | unavailable | skipped
+  /// Why an automatic collection is not available, in the operator's words.
+  statusNote     String?
+  /// Manually supplied material: call notes, transcript excerpts, pasted copy.
+  content        String?
+  itemsCollected Int       @default(0)
+  collectedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  org        Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  run        IntelligenceRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  competitor Competitor?     @relation(fields: [competitorId], references: [id], onDelete: SetNull)
+
+  @@index([orgId])
+  @@index([runId, status])
+}
+
+/// A proposed signal awaiting a human decision. Approving one creates a Pattern
+/// in the existing signal engine and carries the evidence trail with it.
+model CandidateSignal {
+  id            String    @id @default(cuid())
+  orgId         String
+  runId         String
+  kind          String // customer_language | pain | desire | objection | competitor_theme | content_outlier | recurring_hook | offer_shift | content_gap
+  title         String
+  rationale     String?
+  /// Why this matters commercially, in plain language.
+  soWhat        String?
+  confidence    Int       @default(50) // 0-100
+  decision      String    @default("pending") // pending | approved | rejected
+  decisionNote  String?
+  decidedById   String?
+  decidedAt     DateTime?
+  /// True once a human has changed the wording, so provenance stays truthful.
+  editedByHuman Boolean   @default(false)
+  /// Set when approved and promoted into the signal engine.
+  patternId     String?
+  generatedBy   String    @default("ai") // ai | operator
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  org       Organization        @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  run       IntelligenceRun     @relation(fields: [runId], references: [id], onDelete: Cascade)
+  decidedBy User?               @relation(fields: [decidedById], references: [id], onDelete: SetNull)
+  pattern   Pattern?            @relation(fields: [patternId], references: [id], onDelete: SetNull)
+  evidence  CandidateEvidence[]
+
+  @@index([orgId, decision])
+  @@index([runId, decision])
+}
+
+/// Join between a candidate signal and the evidence that produced it. A
+/// candidate with no evidence cannot be created - see the run domain rules.
+model CandidateEvidence {
+  id                String   @id @default(cuid())
+  candidateSignalId String
+  researchItemId    String
+  note              String?
+  createdAt         DateTime @default(now())
+
+  candidateSignal CandidateSignal @relation(fields: [candidateSignalId], references: [id], onDelete: Cascade)
+  researchItem    ResearchItem    @relation(fields: [researchItemId], references: [id], onDelete: Cascade)
+
+  @@unique([candidateSignalId, researchItemId])
+  @@index([researchItemId])
+}
+
+// ---------------------------------------------------------------------------
+// Constraint diagnosis
+// ---------------------------------------------------------------------------
+
+/// A structured read on what is actually limiting demand, so the operation does
+/// not default to assuming that more content is always the answer.
+model ConstraintDiagnosis {
+  id                String    @id @default(cuid())
+  orgId             String
+  status            String    @default("draft") // draft | active | superseded
+  /// One of the nine dimensions in src/lib/domain/diagnosis.ts.
+  primaryConstraint String
+  severity          String    @default("medium") // low | medium | high | critical
+  confidence        Int       @default(50) // 0-100
+  evidence          String?
+  /// Why the constraint matters commercially, not just descriptively.
+  commercialImpact  String?
+  recommendedAction String?
+  /// The next experiment that would move the constraint.
+  experiment        String?
+  reviewDate        DateTime?
+  reviewedAt        DateTime?
+  createdById       String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  org         Organization           @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdBy   User?                  @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  assessments ConstraintAssessment[]
+
+  @@index([orgId, status])
+}
+
+/// One dimension of a diagnosis. Rating runs 1 (severely constrained) to 5 (strong).
+model ConstraintAssessment {
+  id          String  @id @default(cuid())
+  diagnosisId String
+  dimension   String
+  rating      Int     @default(3)
+  note        String?
+  evidence    String?
+
+  diagnosis ConstraintDiagnosis @relation(fields: [diagnosisId], references: [id], onDelete: Cascade)
+
+  @@unique([diagnosisId, dimension])
+}
+
+// ---------------------------------------------------------------------------
+// Installation milestones - the first-value flow
+// ---------------------------------------------------------------------------
+
+/// Stored overlay for the installation milestones.
+///
+/// Milestone completion is DERIVED from real workspace state wherever it can be
+/// (see src/lib/domain/installation.ts); this table stores only what cannot be
+/// derived: an explicit human sign-off, a blocker, a note and a target date.
+model InstallationMilestone {
+  id            String    @id @default(cuid())
+  orgId         String
+  key           String
+  note          String?
+  blockedReason String?
+  signedOffAt   DateTime?
+  signedOffById String?
+  targetDate    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  signedOffBy User?        @relation(fields: [signedOffById], references: [id], onDelete: SetNull)
+
+  @@unique([orgId, key])
+  @@index([orgId])
+}
+
+// ---------------------------------------------------------------------------
+// Proof capture - baseline and monthly comparison
+// ---------------------------------------------------------------------------
+
+/// A measurement period. The baseline records how the operation ran BEFORE
+/// Threadline, which only the client can report - nothing before the engagement
+/// is observable from inside the product, so those fields are stored as
+/// client-reported and are always labelled that way in the UI.
+///
+/// Figures the platform can observe (pieces published, cycle time, approval
+/// time, inquiries, calls booked) are computed at read time from the workspace
+/// rather than copied in here, so they cannot drift from the records.
+model ProofPeriod {
+  id          String   @id @default(cuid())
+  orgId       String
+  kind        String   @default("month") // baseline | month
+  label       String
+  periodStart DateTime
+  periodEnd   DateTime
+
+  reportedFounderHours           Float?
+  reportedContentOutput          Int?
+  reportedCycleTimeDays          Float?
+  reportedApprovalDays           Float?
+  reportedAudienceSize           Int?
+  reportedEngagementRate         Float?
+  reportedQualifiedInquiries     Int?
+  reportedCallsBooked            Int?
+  reportedAttributableValueMinor Int?
+
+  /// How attribution was established for this period, in the operator's words.
+  attributionNote  String?
+  /// Notable qualitative outcomes: a named inbound, a partnership, a speaking slot.
+  qualitativeNotes String?
+  source           String    @default("client_reported") // client_reported | operator_recorded
+  lockedAt         DateTime?
+  recordedById     String?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  org        Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  recordedBy User?        @relation(fields: [recordedById], references: [id], onDelete: SetNull)
+
+  @@unique([orgId, kind, periodStart])
+  @@index([orgId, periodStart])
+}
+
+// ---------------------------------------------------------------------------
+// Recording readiness - installation QA for the client's recording setup
+// ---------------------------------------------------------------------------
+
+/// Whether this client can actually record usable footage, repeatably.
+///
+/// The first batch is where an installation succeeds or quietly fails, and a
+/// bad room is not something the operating loop can fix downstream. This makes
+/// it an explicit gate with three honest outcomes rather than an assumption.
+///
+/// Status is set by an operator from the individual checks. The suggestion is
+/// computed (src/lib/domain/readiness.ts) but the call belongs to a person.
+model RecordingReadiness {
+  id             String    @id @default(cuid())
+  orgId          String    @unique
+  status         String    @default("not_assessed") // not_assessed | ready | ready_with_limitation | blocked
+  /// Formats this client needs to produce. JSON string[]:
+  /// vertical_short | horizontal_long
+  formats        String    @default("[]")
+  roomNotes      String?
+  gearNotes      String?
+  /// What the operator recommends doing about it, in plain language.
+  recommendation String?
+  /// The single next action the client must take. Surfaced to them when the
+  /// setup is blocked or limited; null when nothing is required of them.
+  clientAction   String?
+  submittedAt    DateTime?
+  reviewedAt     DateTime?
+  reviewedById   String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  org        Organization     @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  reviewedBy User?            @relation(fields: [reviewedById], references: [id], onDelete: SetNull)
+  checks     ReadinessCheck[]
+
+  @@index([status])
+}
+
+/// One dimension of the recording setup. Keys are defined in
+/// src/lib/domain/readiness.ts. A check in state "blocked" prevents the overall
+/// assessment from being marked ready.
+model ReadinessCheck {
+  id          String  @id @default(cuid())
+  readinessId String
+  key         String // audio | light | framing | background | focus_stability | repeatability | format
+  state       String  @default("unknown") // unknown | ok | limitation | blocked
+  note        String?
+
+  readiness RecordingReadiness @relation(fields: [readinessId], references: [id], onDelete: Cascade)
+
+  @@unique([readinessId, key])
+}
+
+// ---------------------------------------------------------------------------
+// Integrations, internal ops, AI accountability
+// ---------------------------------------------------------------------------
+
+model Integration {
+  id       String @id @default(cuid())
+  orgId    String
+  provider String // youtube | linkedin | instagram | tiktok | x | google_drive | dropbox | stripe | calendly | hubspot | gohighlevel | email | analytics
+  status   String @default("not_configured") // not_configured | configured | error | disabled
+
+  /// ---------------------------------------------------------------------
+  /// CAPABILITY-GRANULAR STATE
+  ///
+  /// One green "Connected" badge is a lie on every one of these platforms. An
+  /// account can be authenticated and still unable to publish publicly, or
+  /// able to publish and unable to read a single metric. Each capability is
+  /// tracked separately because each is gated separately in reality.
+  /// ---------------------------------------------------------------------
+
+  /// none | connected | expired | revoked | error
+  authStatus String @default("none")
+
+  /// unavailable | manual | native_delegated | api_private_only | api_public
+  ///
+  /// `api_private_only` is the state an unaudited TikTok app is in: the API
+  /// accepts the post, returns success, and nobody can see it.
+  publishCapability String @default("manual")
+
+  /// unavailable | manual | api
+  analyticsCapability String @default("manual")
+
+  /// unavailable | manual | provider | api
+  researchCapability String @default("unavailable")
+
+  /// not_required | not_submitted | in_review | approved | rejected
+  reviewStatus String @default("not_required")
+
+  /// JSON string[]. Requested and granted are held apart because providers
+  /// routinely grant a subset without saying so.
+  scopesRequested String @default("[]")
+  scopesGranted   String @default("[]")
+
+  /// JSON string[] — plain-language limits currently in force, shown verbatim.
+  restrictions String @default("[]")
+
+  externalAccountId    String?
+  externalAccountLabel String?
+
+  tokenExpiresAt       DateTime?
+  lastVerifiedAt       DateTime?
+  lastSuccessfulSyncAt DateTime?
+  lastErrorAt          DateTime?
+  lastErrorCode        String?
+  lastErrorMessage     String?
+  /// Set when the token is gone and only the operator can fix it.
+  reconnectRequired    Boolean   @default(false)
+  /// How access to this provider actually works for this client:
+  /// manual | native_delegated | api
+  ///
+  /// This exists so "configured" can never be read as "connected to an API".
+  /// native_delegated means a person publishes from the client's own account
+  /// under delegated access. Threadline holds no credential in either case.
+  accessMethod         String    @default("manual")
+  config               String    @default("{}") // JSON, non-secret configuration only
+  notes                String?
+  connectedAt          DateTime?
+  lastSyncAt           DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  org      Organization    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  accounts SocialAccount[]
+
+  @@unique([orgId, provider])
+}
+
+model SupportIssue {
+  id          String    @id @default(cuid())
+  orgId       String?
+  title       String
+  description String?
+  severity    String    @default("medium") // low | medium | high | critical
+  status      String    @default("open") // open | investigating | blocked | resolved
+  ownerId     String?
+  resolution  String?
+  becomesSop  Boolean   @default(false)
+  becomesFix  Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  resolvedAt  DateTime?
+  updatedAt   DateTime  @updatedAt
+
+  org   Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  owner User?         @relation(fields: [ownerId], references: [id], onDelete: SetNull)
+
+  @@index([status, severity])
+}
+
+/// Internal SOP / knowledge documents. orgId null = global Threadline SOP.
+model SopDocument {
+  id          String   @id @default(cuid())
+  orgId       String?
+  key         String
+  title       String
+  category    String   @default("delivery") // sales | delivery | research | production | account | support
+  summary     String?
+  body        String   @default("")
+  version     Int      @default(1)
+  updatedById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  org       Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  updatedBy User?         @relation(fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@unique([key])
+  @@index([category])
+}
+
+model OnboardingSession {
+  id             String    @id @default(cuid())
+  orgId          String    @unique
+  currentStep    String    @default("welcome")
+  completedSteps String    @default("[]") // JSON string[]
+  data           String    @default("{}") // JSON OnboardingData
+  status         String    @default("in_progress") // in_progress | building | complete
+  startedAt      DateTime  @default(now())
+  completedAt    DateTime?
+  updatedAt      DateTime  @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+}
+
+/// Inbound applications from the public marketing site. Intentionally has no orgId.
+model Application {
+  id                String   @id @default(cuid())
+  name              String
+  email             String
+  company           String
+  website           String?
+  whatYouSell       String
+  revenueRange      String
+  contentProcess    String
+  peopleInvolved    String
+  publishCadence    String
+  biggestBottleneck String
+  founderHours      String
+  platforms         String   @default("[]") // JSON string[]
+  successLooksLike  String
+  urgency           String
+  extra             String?
+  status            String   @default("new") // new | reviewing | call_booked | accepted | declined
+  reviewNotes       String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  role             String?
+  typicalDealValue Int? // minor units, disclosed by the applicant
+  acquisitionToday String?
+  capacityNote     String?
+  prospectId       String?
+  prospect         Prospect? @relation(fields: [prospectId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+}
+
+model AiGeneration {
+  id           String   @id @default(cuid())
+  orgId        String?
+  userId       String?
+  kind         String // ideas | script | hooks | refine | packaging | patterns | report | signals | brief
+  promptKey    String
+  provider     String
+  model        String
+  status       String   @default("ok") // ok | error
+  latencyMs    Int      @default(0)
+  inputTokens  Int      @default(0)
+  outputTokens Int      @default(0)
+  error        String?
+  entityType   String?
+  entityId     String?
+  createdAt    DateTime @default(now())
+
+  org  Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([orgId, createdAt])
+}
+
+/// Threadline's own business metrics (internal portal only, not tenant data).
+model InternalMetric {
+  id                  String   @id @default(cuid())
+  periodStart         DateTime @unique
+  leadsBySource       String   @default("{}") // JSON Record<string, number>
+  salesCalls          Int      @default(0)
+  showRatePct         Float    @default(0)
+  closeRatePct        Float    @default(0)
+  cashCollectedMinor  Int      @default(0)
+  setupFeesMinor      Int      @default(0)
+  mrrMinor            Int      @default(0)
+  implementationHours Float    @default(0)
+  supportHours        Float    @default(0)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Threadline's own commercial operations — the Living SOP Engine
+// ---------------------------------------------------------------------------
+//
+// Everything below is Threadline's own business, not a client's. Like
+// `Application` and `InternalMetric`, these models deliberately have no `orgId`:
+// they are not tenant data, they are never readable from a client workspace, and
+// the capability that guards them is denied to every client role.
+//
+// TWO BOUNDARIES ARE DELIBERATE AND SHOULD BE PRESERVED:
+//
+//   1. **This is not a CRM.** An external CRM owns contacts, companies,
+//      communications, deal history and broad pipeline. These models own the
+//      proprietary part: given the state a record is in, what exactly happens
+//      next. The link between the two is three columns — provider, record id,
+//      record url — and no synchronisation. Duplicating a CRM here would mean
+//      maintaining a worse one.
+//   2. **No channel is encoded anywhere.** `Prospect.channel` is free text
+//      because which channel carries a first touch is an operating decision,
+//      not an architectural one. The state machine and the arithmetic are
+//      identical either way.
+//
+// The invariant "no active record without a next action and a due date" lives in
+// src/lib/domain/sop.ts rather than in a database constraint: "active" is a
+// property of the state rather than of the row, and a conditional NOT NULL would
+// need a trigger maintained in two SQL dialects. It is enforced on every write
+// and covered by tests.
+
+/// One candidate market wedge and the expensive problem being claimed for it.
+///
+/// "Expert-led B2B" is the umbrella category. This is the specific segment
+/// currently being sold against, held as a record precisely because it is a
+/// belief that changes on evidence.
+model MarketWedge {
+  id              String    @id @default(cuid())
+  label           String
+  state           String    @default("candidate") // candidate | immersion | interviews | commercial_test | validated | revised
+  /// True for the single wedge currently being sold against.
+  active          Boolean   @default(false)
+  summary         String? // exactly who this is
+  problem         String? // the expensive recurring problem, in their language
+  outcome         String? // the outcome hypothesis
+  qualification   String? // what must already be true for them to succeed here
+  mechanism       String?
+  // Candidate scoring, 0-5. Used to choose between wedges, not to prove one.
+  scoreEconomics  Int       @default(0)
+  scorePain       Int       @default(0)
+  scoreReach      Int       @default(0)
+  scorePrecedent  Int       @default(0)
+  notes           String?
+  /// Set when the hypothesis was frozen for a controlled sales sample.
+  frozenAt        DateTime?
+  ownerId         String?
+  nextAction      String?
+  nextActionDueAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  owner         User?                    @relation("WedgeOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  checks        SopCheck[]
+  conversations ValidationConversation[]
+  prospects     Prospect[]
+  examples      ResearchExample[]
+
+  @@index([state])
+  @@index([active])
+}
+
+/// One research conversation. Not a disguised sales call.
+///
+/// `volunteered` is the most important column here: a problem the buyer raised
+/// themselves is far stronger evidence than one we named and they agreed with,
+/// and collapsing the two is how a hypothesis survives being wrong.
+model ValidationConversation {
+  id             String   @id @default(cuid())
+  wedgeId        String
+  person         String
+  company        String?
+  heldAt         DateTime @default(now())
+  /// The problem, in their words.
+  problem        String
+  /// Which recurring problem this belongs to, assigned by an operator.
+  ///
+  /// Convergence is a judgement about whether two people described the same
+  /// expensive problem in different words, and no string comparison can make
+  /// that judgement. A conversation with no theme is excluded from convergence
+  /// rather than guessed at.
+  problemTheme   String?
+  volunteered    Boolean  @default(false)
+  quote          String?
+  currentProcess String?
+  triedBefore    String?
+  consequence    String?
+  notes          String?
+  createdAt      DateTime @default(now())
+
+  wedge MarketWedge @relation(fields: [wedgeId], references: [id], onDelete: Cascade)
+
+  @@index([wedgeId, heldAt])
+}
+
+/// A prospect moving through Threadline's own acquisition and sales process.
+model Prospect {
+  id                   String    @id @default(cuid())
+  company              String
+  contactName          String?
+  contactRole          String?
+  website              String?
+  state                String    @default("new") // see PROSPECT_STATES
+  tier                 String    @default("b") // a | b | c
+  wedgeId              String?
+  /// How this prospect is being reached. Free text on purpose.
+  channel              String?
+  sourceNote           String?
+  /// What one more good customer is worth to them, and how we know.
+  economicsNote        String?
+  /// Labelled a hypothesis, never a diagnosis.
+  constraintHypothesis String?
+  /// Set once a reply arrives and has been classified.
+  replyClass           String?
+  ownerId              String?
+  nextAction           String?
+  nextActionDueAt      DateTime?
+  // The external CRM link. Three columns, no synchronisation.
+  crmProvider          String?
+  crmRecordId          String?
+  crmRecordUrl         String?
+  // Funnel timestamps. Every acquisition rate in the product is counted from
+  // these rather than typed in, so the numbers cannot drift from what happened.
+  firstTouchAt         DateTime?
+  repliedAt            DateTime?
+  positiveReplyAt      DateTime?
+  closedAt             DateTime?
+  closedReason         String?
+  notes                String?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @updatedAt
+
+  owner  User?        @relation("ProspectOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  wedge  MarketWedge? @relation(fields: [wedgeId], references: [id], onDelete: SetNull)
+  checks SopCheck[]
+  calls  SalesCall[]
+
+  // Discovery economics — every field nullable because "unknown" is a real answer.
+  econCurrency           String        @default("GBP")
+  typicalDealValueMinor  Int?
+  grossProfitMinor       Int?
+  grossMarginPct         Float?
+  ltvMinor               Int?
+  qualifiedOppValueMinor Int?
+  cycleLengthDays        Int?
+  closeRatePct           Float?
+  capacityNote           String?
+  acquisitionCostMinor   Int?
+  acquisitionNote        String?
+  urgency                String? // now | quarter | year | none
+  economicConsequence    String?
+  economicsUpdatedAt     DateTime?
+  applications           Application[]
+
+  @@index([state, nextActionDueAt])
+  @@index([tier, state])
+  @@index([firstTouchAt])
+}
+
+/// One checklist item on one state of one record.
+///
+/// Shared by prospects and wedges because it is the same idea in both places:
+/// the tick records that somebody looked, and the note records what they found.
+/// For items the SOP marks as requiring evidence, the note is the part with
+/// value and the tick alone does not satisfy the gate.
+model SopCheck {
+  id          String    @id @default(cuid())
+  prospectId  String?
+  wedgeId     String?
+  /// The state this item belongs to. Keys repeat across states.
+  state       String
+  key         String
+  done        Boolean   @default(false)
+  note        String?
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  prospect Prospect?    @relation(fields: [prospectId], references: [id], onDelete: Cascade)
+  wedge    MarketWedge? @relation(fields: [wedgeId], references: [id], onDelete: Cascade)
+
+  @@unique([prospectId, state, key])
+  @@unique([wedgeId, state, key])
+  @@index([prospectId])
+  @@index([wedgeId])
+}
+
+/// A diagnosis call: preparation, the state map, and exactly one outcome.
+model SalesCall {
+  id            String    @id @default(cuid())
+  prospectId    String
+  scheduledAt   DateTime
+  attended      Boolean   @default(false)
+  /// Whether the prospect was genuinely a fit. This is what turns the
+  /// qualification rate from an operator assumption into a measurement.
+  qualified     Boolean   @default(false)
+  offerMade     Boolean   @default(false)
+  /// JSON string[] of CallStage — which information the call actually covered.
+  stagesCovered String    @default("[]")
+  /// JSON Record<CallStage, string> — what was learned at each stage.
+  stageNotes    String    @default("{}")
+  outcome       String? // won | follow_up | proposal_process | not_fit | lost
+  /// Their exact words. Not a paraphrase into our language.
+  voc           String?
+  objections    String?
+  valueMinor    Int       @default(0)
+  currency      String    @default("GBP")
+  ownerId       String?
+  completedAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  prospect Prospect @relation(fields: [prospectId], references: [id], onDelete: Cascade)
+  owner    User?    @relation("CallOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+
+  scriptSnapshots SalesCallScriptSnapshot[]
+
+  @@index([scheduledAt])
+  @@index([prospectId])
+}
+
+/// The reverse-engineered acquisition target for a period.
+///
+/// The assumed rates exist only to make the arithmetic possible before
+/// Threadline has its own data, and are always rendered as assumptions. As soon
+/// as real rates can be derived from prospect and call records, those are used
+/// instead and the assumptions stay visible beside them so one win or one
+/// no-show cannot silently rewrite the plan.
+model AcquisitionTarget {
+  id                      String   @id @default(cuid())
+  label                   String
+  targetWins              Int      @default(2)
+  periodStart             DateTime
+  periodEnd               DateTime
+  status                  String   @default("active") // active | closed
+  assumedBookingRatePct   Float    @default(0)
+  assumedShowRatePct      Float    @default(0)
+  assumedQualifiedRatePct Float    @default(0)
+  assumedCloseRatePct     Float    @default(0)
+  notes                   String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@index([status, periodStart])
+}
+
+/// The weekly acquisition control loop.
+///
+/// Counts are frozen before anything is changed, so the comparison stays
+/// legible. One meaningful variable per week: changing five things at once
+/// produces a result nobody can attribute to anything.
+model FunnelReview {
+  id              String   @id @default(cuid())
+  weekStart       DateTime @unique
+  /// JSON FunnelCounts, frozen at review time.
+  counts          String   @default("{}")
+  brokenStep      String?
+  variableChanged String?
+  hypothesis      String?
+  learning        String?
+  createdById     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  createdBy User? @relation("ReviewAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([weekStart])
+}
+
+// ---------------------------------------------------------------------------
+// Attribution — content to commercial outcome
+// ---------------------------------------------------------------------------
+//
+// The question this exists to answer is "which content is creating commercially
+// valuable attention", and the chain it reconstructs is:
+//
+//   content asset -> tracked touchpoint -> visitor -> commercial event -> value
+//
+// THREE RULES SHAPE EVERY MODEL BELOW.
+//
+//   1. **A touchpoint is an observation, never an inference.** Each row is
+//      something that actually happened and was recorded. Attribution models
+//      read these rows; they never create them.
+//   2. **Evidence strength is separate from the attribution model.** Splitting a
+//      deal three ways does not make the connection to any of those three
+//      assets better evidenced. `attribution` on a commercial event is the
+//      evidence class and is never raised by arithmetic.
+//   3. **Unknown stays unknown.** Every foreign key here is optional because
+//      most real journeys are partial, and a model that needs a complete
+//      journey to say anything would say nothing about real data.
+//
+// Identity is a first-party opaque token, nothing more. No fingerprinting, no
+// device graph, no cross-device stitching, and no claim of identity certainty
+// the mechanism cannot support.
+
+/// A Threadline-owned redirect that records the click and sends the visitor on.
+///
+/// This is what makes attribution work without Threadline publishing the
+/// content: the client or operator posts manually, uses the tracked URL in the
+/// caption or bio, and the click is still ours to observe.
+model TrackedLink {
+  id              String   @id @default(cuid())
+  orgId           String
+  /// The public token in /t/<slug>. Short, unguessable, and never reused.
+  slug            String   @unique
+  label           String
+  /// Where the visitor actually goes. Validated on write; see
+  /// src/lib/domain/tracked-link.ts — an unvalidated destination here would be
+  /// an open redirect wearing the company's domain.
+  destinationUrl  String
+  contentItemId   String?
+  publishRecordId String?
+  /// Where the link was placed. Free text; no channel is doctrine.
+  platform        String?
+  campaign        String?
+  active          Boolean  @default(true)
+  createdById     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  org           Organization   @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  contentItem   ContentItem?   @relation(fields: [contentItemId], references: [id], onDelete: SetNull)
+  publishRecord PublishRecord? @relation(fields: [publishRecordId], references: [id], onDelete: SetNull)
+  createdBy     User?          @relation("LinkAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+  touchpoints   Touchpoint[]
+
+  @@index([orgId, active])
+  @@index([contentItemId])
+}
+
+/// An anonymous person, as far as a first-party cookie can describe one.
+///
+/// The token is random and opaque. It says "these touches were the same browser"
+/// and nothing else — not who, not what device, not the same person on another
+/// device. Treating it as more than that is how attribution starts lying.
+model Visitor {
+  id          String   @id @default(cuid())
+  orgId       String
+  /// Opaque, random, and unique per organisation rather than globally: one
+  /// browser that reads two clients' content gets one cookie value and two
+  /// visitor rows, so neither client can be linked to the other through it.
+  token       String
+  firstSeenAt DateTime @default(now())
+  lastSeenAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+
+  org         Organization      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  touchpoints Touchpoint[]
+  inquiries   Inquiry[]
+  events      CommercialEvent[]
+
+  @@unique([orgId, token])
+  @@index([orgId, lastSeenAt])
+}
+
+/// One recorded contact between a person and a piece of Threadline content.
+model Touchpoint {
+  id              String   @id @default(cuid())
+  orgId           String
+  visitorId       String?
+  trackedLinkId   String?
+  contentItemId   String?
+  publishRecordId String?
+  kind            String   @default("click") // click | form | reported | provider
+  platform        String?
+  campaign        String?
+  /// Host only. A full referring URL can carry personal data in its query
+  /// string, and the host answers the only question worth asking of it.
+  referrerHost    String?
+  /// Who observed this. Never invented.
+  source          String   @default("native") // native | crm | booking | payment | manual | client_reported
+  providerRef     String?
+  note            String?
+  occurredAt      DateTime @default(now())
+  createdAt       DateTime @default(now())
+
+  org           Organization   @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  visitor       Visitor?       @relation(fields: [visitorId], references: [id], onDelete: SetNull)
+  trackedLink   TrackedLink?   @relation(fields: [trackedLinkId], references: [id], onDelete: SetNull)
+  contentItem   ContentItem?   @relation(fields: [contentItemId], references: [id], onDelete: SetNull)
+  publishRecord PublishRecord? @relation(fields: [publishRecordId], references: [id], onDelete: SetNull)
+
+  @@index([orgId, occurredAt])
+  @@index([visitorId, occurredAt])
+  @@index([contentItemId])
+}
+
+/// A dated commercial event, with its provenance and its evidence class.
+///
+/// Separate from `Inquiry`, which is the person and their current stage. This
+/// is the event log behind them: an enquiry, a booking, a call attended, an
+/// opportunity, a win — each dated, each with a source, each answerable for how
+/// well it connects to content.
+model CommercialEvent {
+  id                String   @id @default(cuid())
+  orgId             String
+  kind              String // opt_in | inquiry | booked_call | showed | qualified | opportunity | won
+  occurredAt        DateTime @default(now())
+  visitorId         String?
+  inquiryId         String?
+  valueMinor        Int      @default(0)
+  currency          String   @default("GBP")
+  source            String   @default("manual") // native | crm | booking | payment | manual | client_reported
+  externalProvider  String?
+  externalRecordId  String?
+  externalRecordUrl String?
+  /// Whether Threadline observed the figure or was told it.
+  evidenceBasis     String   @default("client_reported") // measured | client_reported | unavailable
+  /// How strongly this connects to content. NEVER raised by an attribution
+  /// model — arithmetic redistributes credit, it does not create evidence.
+  attribution       String   @default("qualitative_only")
+  note              String?
+  recordedById      String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  org        Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  visitor    Visitor?     @relation(fields: [visitorId], references: [id], onDelete: SetNull)
+  inquiry    Inquiry?     @relation(fields: [inquiryId], references: [id], onDelete: SetNull)
+  recordedBy User?        @relation("EventRecorder", fields: [recordedById], references: [id], onDelete: SetNull)
+
+  // Rev-share-ready fields (v1.5). Nothing here is used for billing at launch.
+  cashCollectedMinor       Int?
+  attributableRevenueMinor Int?
+  attributionEligibility   String    @default("ineligible") // ineligible | eligible | agreed
+  attributionStatus        String    @default("pending") // pending | confirmed | disputed | excluded
+  attributablePercentage   Float?
+  exclusionReason          String?
+  collectedAt              DateTime?
+  externalDealId           String?
+  externalPaymentId        String?
+  statusChangedAt          DateTime?
+  statusChangedById        String?
+  statusHistory            String    @default("[]") // JSON [{ at, by, from, to, reason }]
+
+  @@index([orgId, occurredAt])
+  @@index([orgId, kind])
+  @@index([inquiryId])
+}
+
+// ---------------------------------------------------------------------------
+// Research corpus and the Judge
+// ---------------------------------------------------------------------------
+//
+// The corpus is real, high-performing content from the wedge's market. Like
+// Threadline's own acquisition records it has **no orgId**: market evidence is
+// not tenant data, and one corpus serves every client in the same wedge, which
+// is the whole economic argument for building it (see ADR-011 for the same
+// reasoning applied to prospects).
+//
+// It does two jobs. It is the signal source for what earns attention in this
+// market — and, because every example has a known real-world outcome, it is the
+// only material available for finding out whether the Judge's opinion is worth
+// anything before that opinion is allowed near a client's content.
+
+/// One piece of real market content, captured by hand.
+model ResearchExample {
+  id            String    @id @default(cuid())
+  wedgeId       String?
+  platform      String
+  creatorHandle String
+  creatorName   String?
+  /// Canonical URL. Unique so the same piece cannot be counted twice.
+  url           String    @unique
+  title         String
+  publishedAt   DateTime?
+  capturedAt    DateTime  @default(now())
+
+  // Metrics at capture. Absent is zero, and zero views means the example cannot
+  // be banded rather than that nobody watched it.
+  views     Int @default(0)
+  likes     Int @default(0)
+  comments  Int @default(0)
+  shares    Int @default(0)
+  saves     Int @default(0)
+  /// Creator's follower count at capture. Zero when unknown.
+  followers Int @default(0)
+
+  /// short_video | long_video | carousel | text_post | newsletter | podcast |
+  /// unknown. Format is part of what makes two pieces comparable, so it is the
+  /// first thing the baseline ladder narrows on.
+  format String @default("unknown")
+
+  /// direct | adjacent | off_icp | unrated — operator judgement, never inferred.
+  ///
+  /// An LLM asked whether content is relevant to our buyer will find a way to
+  /// say yes. `unrated` is an honest state, and the corpus reading says how many
+  /// rows are in it rather than assuming.
+  buyerRelevance String @default("unrated")
+
+  /// commercial | mixed | entertainment | unrated — whether the *attention*
+  /// looks like it could belong to a buyer. Read together with buyerRelevance
+  /// this is what separates a commercial outlier from a popular irrelevance.
+  commercialIntent String @default("unrated")
+
+  /// Where the descriptive fields came from: manual | auto_oembed | auto_page |
+  /// url_only. Recorded because a title a machine read and a title a person
+  /// typed are not equally trustworthy, and the difference stops mattering
+  /// silently once there are 300 rows.
+  provenance String @default("manual")
+
+  /// Where the *numbers* came from: manual | api | unknown.
+  ///
+  /// Held separately from `provenance` and it matters more, because the metrics
+  /// are what the banding is computed from. No unauthenticated public endpoint
+  /// returns a view count on any platform in this wedge, so until the platform
+  /// applications land this is `manual` for every real row — and the corpus says
+  /// so rather than implying the figures were measured.
+  metricsProvenance String @default("manual")
+
+  /// When enrichment last ran, and what it could and could not get.
+  enrichedAt     DateTime?
+  enrichmentNote String?
+
+  transcript String?
+  notes      String?
+
+  /// A placeholder shipped with the seed to make the machinery visible.
+  ///
+  /// Never a real creator and never real metrics, so it is excluded from
+  /// calibration by default — a rubric checked against invented outcomes would
+  /// be worse than an unchecked one.
+  illustrative Boolean @default(false)
+
+  addedById String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  wedge    MarketWedge?     @relation(fields: [wedgeId], references: [id], onDelete: SetNull)
+  addedBy  User?            @relation("ExampleAuthor", fields: [addedById], references: [id], onDelete: SetNull)
+  analysis ExampleAnalysis?
+  verdicts JudgeVerdict[]
+
+  @@index([wedgeId])
+  @@index([creatorHandle])
+  @@index([platform])
+}
+
+/// What an LLM extracted from one example. Structured so it can be clustered.
+model ExampleAnalysis {
+  id        String @id @default(cuid())
+  exampleId String @unique
+
+  topic               String?
+  buyerPain           String?
+  hook                String?
+  thesis              String?
+  promise             String?
+  proof               String?
+  format              String?
+  storyStructure      String?
+  cta                 String?
+  emotionalDriver     String?
+  whyItWorked         String?
+  /// commercial | mixed | entertainment — whether the attention looks like it
+  /// could belong to a buyer, which is the only kind Threadline is optimising
+  /// for.
+  commercialRelevance String  @default("mixed")
+
+  provider      String
+  model         String
+  promptVersion String
+  createdAt     DateTime @default(now())
+
+  example ResearchExample @relation(fields: [exampleId], references: [id], onDelete: Cascade)
+}
+
+/// One adversarial evaluation pass.
+///
+/// Subject is polymorphic by design: the same rubric scores a candidate idea for
+/// a client and a corpus example with a known outcome, which is what makes the
+/// second usable to check the first.
+model JudgeVerdict {
+  id          String  @id @default(cuid())
+  subjectType String // idea | script | example
+  subjectId   String
+  /// Null for corpus examples, which belong to no tenant.
+  orgId       String?
+  exampleId   String?
+
+  rubricVersion String
+  overall       Int
+  verdict       String // pass | revise | reject
+  /// JSON CriterionScore[]
+  scores        String @default("[]")
+  /// JSON string[]
+  concerns      String @default("[]")
+
+  /// Always false while the rubric is unchecked against client outcomes. Stored
+  /// rather than computed so an old verdict cannot be retrospectively promoted
+  /// by a later calibration.
+  calibrated Boolean @default(false)
+
+  provider  String
+  model     String
+  createdAt DateTime @default(now())
+
+  org     Organization?    @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  example ResearchExample? @relation(fields: [exampleId], references: [id], onDelete: Cascade)
+
+  @@index([subjectType, subjectId])
+  @@index([orgId, createdAt])
+}
+
+/// A frozen record of how well the Judge tracked reality on a given day.
+model JudgeCalibration {
+  id            String   @id @default(cuid())
+  runAt         DateTime @default(now())
+  rubricVersion String
+  pairs         Int      @default(0)
+  outperformers Int      @default(0)
+  /// Mean score gap between examples that outperformed and those that did not.
+  separation    Float?
+  sufficient    Boolean  @default(false)
+  reading       String
+  /// JSON payload, frozen: a later corpus change must not rewrite what a past
+  /// run concluded.
+  payload       String   @default("{}")
+  runById       String?
+  createdAt     DateTime @default(now())
+
+  @@index([runAt])
+}
+
+/// ---------------------------------------------------------------------------
+/// CONTENT LINEAGE AND THE LEARNING LOOP
+///
+/// SCORE -> EXPLAIN -> DIAGNOSE -> PRESCRIBE -> RETEST
+///
+/// The question these models answer is not "how did this post do". It is "what
+/// did we believe would happen, what actually happened, why did those differ,
+/// and did the change we made in response work". Without a persistent identity
+/// for the *thesis*, that question cannot even be asked: every re-hook and
+/// cross-post looks like an unrelated new idea, and the system relearns the
+/// same lesson forever.
+/// ---------------------------------------------------------------------------
+
+/// The persistent identity of one commercial thesis. The ROOT_ID.
+///
+/// A root is the claim being tested — "founders lose the expertise when the
+/// senior person leaves the room" — not a piece of content. Everything made in
+/// service of that claim hangs off it: the original short video, the re-hooked
+/// retest, the LinkedIn text version, the carousel cut from the same interview.
+///
+/// A genuinely new claim gets a new root. A new hook on the same claim does
+/// not, which is the whole point: it stays comparable.
+model ContentRoot {
+  id     String @id @default(cuid())
+  orgId  String
+  /// Short internal name. Client surfaces call these "test families".
+  label  String
+  /// The claim being tested, in one sentence.
+  thesis String
+
+  /// Who the claim is aimed at, when narrower than the org's ICP.
+  audience String?
+  pillar   String?
+
+  /// open | winning | exhausted | abandoned
+  ///
+  /// `exhausted` means the thesis was proven and has stopped teaching us
+  /// anything new; `abandoned` means the evidence said the claim was wrong.
+  /// Both are useful and neither is a failure of the system.
+  status String @default("open")
+
+  /// Set when the root is closed, with the reason in `closedReason`.
+  closedAt     DateTime?
+  closedReason String?
+
+  createdById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  org          Organization         @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdBy    User?                @relation("RootAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+  ideas        Idea[]
+  contentItems ContentItem[]
+  expectations ContentExpectation[]
+  diagnoses    ContentDiagnosis[]
+  corrections  CorrectionEntry[]
+
+  @@index([orgId, status])
+  @@index([orgId, createdAt])
+}
+
+/// A frozen pre-publication expectation.
+///
+/// Written before the piece goes out and never rewritten. When the rubric
+/// changes, old expectations keep their old `rubricVersion` and their old
+/// numbers — a prediction edited after the result is known is not a prediction,
+/// and a calibration run over retrofitted scores would measure nothing.
+///
+/// `calibrated` is stored rather than derived for the same reason (ADR-018): a
+/// later calibration cannot retrospectively promote an opinion formed before
+/// there was evidence for it.
+model ContentExpectation {
+  id     String  @id @default(cuid())
+  orgId  String
+  rootId String?
+
+  /// idea | script | content
+  subjectType String
+  subjectId   String
+
+  rubricVersion String
+  /// 0-100, computed by us from the criterion scores. Never asked of the model.
+  overall       Int
+  /// JSON: { key, label, score, weight, reason }[] — the decomposition, which
+  /// is the part that is actually useful.
+  dimensions    String @default("[]")
+
+  /// JSON string[] — what we expect to carry the piece, and what we expect to
+  /// hold it back. Stated up front so a post-hoc explanation cannot quietly
+  /// become the thing we "always thought".
+  predictedStrengths  String @default("[]")
+  predictedWeaknesses String @default("[]")
+
+  /// under | typical | strong | exceptional | unknown — a defensible guess at
+  /// the performance class, or `unknown` when there is no basis for one.
+  expectedClass String @default("unknown")
+  /// low | moderate | high
+  confidence    String @default("low")
+
+  /// Always false at write time. See ADR-018.
+  calibrated Boolean @default(false)
+
+  provider      String  @default("none")
+  model         String  @default("none")
+  promptVersion String  @default("none")
+  /// Free-text reasoning kept for error analysis, never shown as a verdict.
+  reasoning     String?
+
+  createdById String?
+  createdAt   DateTime @default(now())
+
+  org       Organization       @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  root      ContentRoot?       @relation(fields: [rootId], references: [id], onDelete: SetNull)
+  createdBy User?              @relation("ExpectationAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+  diagnoses ContentDiagnosis[]
+
+  @@index([orgId, subjectType, subjectId])
+  @@index([rootId])
+  @@index([orgId, rubricVersion])
+}
+
+/// What we concluded once reality arrived.
+///
+/// The *evidence* is frozen into `evidence` at diagnosis time rather than
+/// recomputed, because the snapshots keep arriving and a diagnosis has to stay
+/// readable as the judgement made on the evidence available that day. The
+/// live reading is computed elsewhere and is deliberately a different thing.
+model ContentDiagnosis {
+  id            String  @id @default(cuid())
+  orgId         String
+  rootId        String?
+  contentItemId String?
+  expectationId String?
+
+  /// The observation window the conclusion rests on.
+  windowStart  DateTime?
+  windowEnd    DateTime?
+  /// Days between publication and the last snapshot used.
+  maturityDays Int?
+
+  /// JSON: the frozen actual reading — metrics, derived rates, comparisons and
+  /// explicit unknowns.
+  evidence String @default("{}")
+
+  strongestDimension String?
+  weakestDimension   String?
+
+  /// idea_thesis | icp_targeting | hook_packaging | delivery |
+  /// retention_structure | proof_credibility | distribution | cta_conversion |
+  /// commercial_relevance | mixed | insufficient_data | none
+  ///
+  /// `mixed` and `insufficient_data` are first-class answers. Forcing a single
+  /// cause onto ambiguous evidence is how a learning system teaches itself
+  /// something false.
+  failureClass String @default("insufficient_data")
+
+  explanation      String?
+  /// The specific belief that turned out to be wrong.
+  failedAssumption String?
+
+  /// low | moderate | high
+  confidence String @default("low")
+
+  /// Whether the underlying claim survives. A packaging failure on a good
+  /// thesis is the most common and most valuable result there is.
+  preserveThesis Boolean @default(true)
+
+  /// What to do next, and how much of it.
+  prescription     String?
+  nextIntervention String?
+  retestBatchSize  Int?
+  targetPlatform   String?
+  targetFormat     String?
+
+  /// Model assistance is recorded, never hidden. A diagnosis drafted by an LLM
+  /// and approved by a person is a different object from one a person wrote.
+  aiAssisted    Boolean @default(false)
+  provider      String  @default("none")
+  model         String  @default("none")
+  promptVersion String  @default("none")
+
+  /// draft | approved | superseded — a diagnosis only becomes authoritative
+  /// when a human approves it.
+  approvalState String    @default("draft")
+  approvedAt    DateTime?
+  approvedById  String?
+
+  createdById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  org         Organization        @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  root        ContentRoot?        @relation(fields: [rootId], references: [id], onDelete: SetNull)
+  contentItem ContentItem?        @relation(fields: [contentItemId], references: [id], onDelete: SetNull)
+  expectation ContentExpectation? @relation(fields: [expectationId], references: [id], onDelete: SetNull)
+  approvedBy  User?               @relation("DiagnosisApprover", fields: [approvedById], references: [id], onDelete: SetNull)
+  createdBy   User?               @relation("DiagnosisAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+  corrections CorrectionEntry[]
+
+  @@index([orgId, createdAt])
+  @@index([rootId])
+  @@index([contentItemId])
+}
+
+/// Correction memory.
+///
+/// MODEL BELIEVED -> ACTUAL RESULT -> FAILED ASSUMPTION -> CORRECTION.
+///
+/// This is the part that compounds. A miss that is merely observed teaches
+/// nothing; a miss with a recorded correction and a later verdict on whether
+/// the correction worked is the only mechanism by which the system gets better
+/// at this particular founder in this particular market.
+model CorrectionEntry {
+  id          String  @id @default(cuid())
+  orgId       String
+  rootId      String?
+  diagnosisId String?
+
+  believed         String
+  actual           String
+  failedAssumption String
+  correction       String
+
+  /// What was changed in response, as a machine-readable hint for later
+  /// pattern-finding: hook | thesis | icp | proof | structure | delivery |
+  /// distribution | cta | format | platform | other
+  lever String @default("other")
+
+  /// Did it work? Null until a retest has been read. Null is the honest state
+  /// for most entries most of the time and must never be rendered as "no".
+  worked      Boolean?
+  /// How we know, once we know.
+  verdictNote String?
+  verdictAt   DateTime?
+
+  /// The content made to test the correction.
+  retestContentItemId String?
+
+  createdById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  org       Organization      @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  root      ContentRoot?      @relation(fields: [rootId], references: [id], onDelete: SetNull)
+  diagnosis ContentDiagnosis? @relation(fields: [diagnosisId], references: [id], onDelete: SetNull)
+  createdBy User?             @relation("CorrectionAuthor", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([orgId, createdAt])
+  @@index([rootId])
+  @@index([orgId, lever])
+}
+
+/// ---------------------------------------------------------------------------
+/// CREDENTIALS AND HONEST CONNECTION STATE
+/// ---------------------------------------------------------------------------
+
+/// An encrypted secret belonging to one tenant.
+///
+/// Held apart from `Integration.config` on purpose: that column is documented
+/// as non-secret configuration and is read in places where a token has no
+/// business being. Secrets live here, sealed with AES-256-GCM and bound to the
+/// tenant that owns them (`src/lib/security/secret-box.ts`), so a row copied
+/// into another organisation fails to decrypt rather than working.
+model Credential {
+  id       String @id @default(cuid())
+  orgId    String
+  provider String
+  /// oauth_access | oauth_refresh | api_key | webhook_secret
+  purpose  String
+
+  /// The sealed payload as JSON: { v, keyId, nonce, ciphertext, tag }.
+  /// Never plaintext, never logged, never returned to a client component.
+  sealed String
+  /// Denormalised from `sealed` so a rotation sweep can find stale rows without
+  /// decrypting every secret it looks at.
+  keyId  String
+
+  /// When the provider says this expires. Null when it does not.
+  expiresAt DateTime?
+  /// JSON string[] — what the provider actually granted, which is frequently
+  /// not what was asked for.
+  scopes    String    @default("[]")
+
+  externalAccountId    String?
+  externalAccountLabel String?
+
+  rotatedAt  DateTime?
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, provider, purpose])
+  @@index([orgId, provider])
+  @@index([keyId])
+}
+
+/// One attempt to connect an account, held across the redirect to the provider.
+///
+/// `state` is the CSRF defence for the OAuth handshake and is stored rather
+/// than signed into a cookie so that a callback can be verified exactly once:
+/// the row is consumed on use, which makes replay impossible rather than
+/// merely unlikely.
+model OAuthState {
+  id              String  @id @default(cuid())
+  orgId           String
+  provider        String
+  /// Random, single-use, compared in constant time.
+  state           String  @unique
+  /// PKCE verifier where the provider supports it. Sealed, because it is a
+  /// secret for the lifetime of the handshake.
+  sealedVerifier  String?
+  /// Where to send the operator once the callback completes. Validated against
+  /// the app's own origin before use — an open redirect here would be handed a
+  /// provider's trust.
+  returnTo        String?
+  /// JSON string[] — what we asked for, so the callback can report what was
+  /// refused rather than assuming it got everything.
+  scopesRequested String  @default("[]")
+
+  createdById String?
+  expiresAt   DateTime
+  consumedAt  DateTime?
+  createdAt   DateTime  @default(now())
+
+  org       Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  createdBy User?        @relation("OAuthInitiator", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@index([orgId, provider])
+  @@index([expiresAt])
+}
+
+/**
+ * -------------------------------------------------------------------------
+ */
+/**
+ * Completion pass 2026-09-09: email, jobs, sales scripts, proof permissions
+ */
+/**
+ * -------------------------------------------------------------------------
+ */
+
+model AuthToken {
+  id          String    @id @default(cuid())
+  userId      String
+  kind        String // invite | password_reset
+  tokenHash   String    @unique
+  orgId       String?
+  createdById String?
+  expiresAt   DateTime
+  usedAt      DateTime?
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, kind])
+  @@index([expiresAt])
+}
+
+model EmailMessage {
+  id         String    @id @default(cuid())
+  orgId      String?
+  toEmail    String
+  template   String
+  subject    String
+  textBody   String
+  htmlBody   String
+  provider   String // capture | resend | smtp
+  status     String    @default("queued") // queued | sent | failed | captured
+  providerId String?
+  error      String?
+  jobId      String?
+  sentAt     DateTime?
+  createdAt  DateTime  @default(now())
+
+  @@index([toEmail, createdAt])
+  @@index([status])
+}
+
+model Job {
+  id             String    @id @default(cuid())
+  type           String
+  payload        String    @default("{}") // JSON
+  status         String    @default("queued") // queued | running | succeeded | failed | dead
+  attempts       Int       @default(0)
+  maxAttempts    Int       @default(5)
+  runAt          DateTime  @default(now())
+  lockedAt       DateTime?
+  lockedBy       String?
+  lastError      String?
+  completedAt    DateTime?
+  idempotencyKey String?   @unique
+  orgId          String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([status, runAt])
+  @@index([type, status])
+}
+
+model SalesScript {
+  id         String                    @id @default(cuid())
+  key        String // stable identity across versions, e.g. "discovery.open"
+  version    Int
+  stage      String // outreach | research_call | discovery | diagnosis | offer | objection | close | kickoff
+  context    String // when this block is used, in a sentence
+  exactText  String
+  checksum   String // sha256 of exactText
+  status     String                    @default("draft") // draft | approved | retired
+  provenance String // where the wording came from — document, author, date
+  createdAt  DateTime                  @default(now())
+  approvedAt DateTime?
+  retiredAt  DateTime?
+  snapshots  SalesCallScriptSnapshot[]
+
+  @@unique([key, version])
+  @@index([stage, status])
+}
+
+model SalesCallScriptSnapshot {
+  id        String      @id @default(cuid())
+  callId    String
+  scriptId  String
+  key       String
+  version   Int
+  checksum  String
+  exactText String
+  usedAt    DateTime    @default(now())
+  call      SalesCall   @relation(fields: [callId], references: [id], onDelete: Cascade)
+  script    SalesScript @relation(fields: [scriptId], references: [id], onDelete: Restrict)
+
+  @@index([callId])
+}
+
+model ProofPermission {
+  id                     String       @id @default(cuid())
+  orgId                  String       @unique
+  interviewWillingness   String       @default("unknown") // unknown | yes | maybe | no
+  successConfirmedAt     DateTime?
+  successConfirmedById   String?
+  successNote            String?
+  allowInterview         Boolean      @default(false)
+  allowInternalUse       Boolean      @default(false)
+  allowTestimonial       Boolean      @default(false)
+  allowPublicTestimonial Boolean      @default(false)
+  allowNamedCaseStudy    Boolean      @default(false)
+  allowAnonCaseStudy     Boolean      @default(false)
+  allowPublishMetrics    Boolean      @default(false)
+  allowLogo              Boolean      @default(false)
+  grantedAt              DateTime?
+  grantedNote            String?
+  requestedAt            DateTime?
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+  org                    Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+}
+
+model WebhookEvent {
+  id          String    @id @default(cuid())
+  provider    String
+  externalId  String
+  orgId       String?
+  eventType   String
+  payload     String // JSON, secrets stripped
+  verified    Boolean   @default(false)
+  processedAt DateTime?
+  error       String?
+  receivedAt  DateTime  @default(now())
+
+  @@unique([provider, externalId])
+  @@index([provider, receivedAt])
+}
