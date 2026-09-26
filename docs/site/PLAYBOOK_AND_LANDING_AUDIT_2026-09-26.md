@@ -110,3 +110,16 @@ Applied to ours the same day, in our own words and our own objects:
 - Two lines the owner suggested were the reference site's own words. The site's clean-room rule (composition and behaviour only, never copy) means they are used in our own words: "Slow on day one. Inevitable by day ninety." on the homepage engagement, and the playbook closing "This playbook is the fifth of the system we can give away. If you run a 7, 8 or 9-figure firm and want the other four-fifths run for you, book a call."
 - The diagnose tool's seven station chips are removed; the panel already names the station.
 - The track record is two figures on one line under the hero. It stays under the hero rather than above it: proof after the promise reads as evidence; proof before the headline reads as a banner and pushes the headline below the fold on phones.
+
+## 8. The landing page against the reference agency's homepage (structure only)
+
+What their page does that ours now does or could do:
+
+| Their structure | Ours | Action |
+| --- | --- | --- |
+| A proof line straight under the hero | The 100m+ / 10,000+ band | Done |
+| The button repeated after each block | Asked only at the top and the bottom | Added one mid-page ask after the formats section |
+| Client video testimonials | None | Needs real clients; nothing will be invented |
+| A logo strip ("trusted by") | None | Needs real, permissioned logos |
+| FAQ covering start time and contract length | FAQ has neither | Needs the owner's terms: onboarding days, contract length |
+| A short "about us" origin story | None | Could be one paragraph in the owner's words |

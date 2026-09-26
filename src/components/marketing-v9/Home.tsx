@@ -236,6 +236,21 @@ function Expressions() {
 }
 
 /* --------------------------------------------------------------- 7 learning */
+/* ------------------------------------------------------------ mid-page ask */
+function MidCta() {
+  return (
+    <div className="v9-wrap">
+      <p className="v9-midcta v9-reveal">
+        <span>Seen enough of the system?</span>
+        <Link href={hero.cta.href} className="v9-btn">
+          {hero.cta.label}
+          <Arrow />
+        </Link>
+      </p>
+    </div>
+  );
+}
+
 function Learning() {
   return (
     <section id="learning" className="v9-learning" data-scene aria-labelledby="learning-title">
@@ -364,6 +379,7 @@ export default function HomeV9() {
       <Burden />
       <Workshop />
       <Expressions />
+      <MidCta />
       <Learning />
       <Engagement />
       <Faq />

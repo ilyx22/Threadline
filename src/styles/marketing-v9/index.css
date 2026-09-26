@@ -1465,3 +1465,7 @@
   .pb-chapter .pb-chapter-tool { margin-top: 18px; padding: 18px 16px 20px; }
   .pb-today { justify-content: center; text-align: center; font-size: 15.5px; }
 }
+
+/* pass 16: one ask mid-page, after the system and before the proof of learning */
+.v9-midcta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 20px; margin: 40px 0 0; font-family: var(--v9-serif); font-size: 1.5rem; color: var(--v9-ink); }
+@media (max-width: 759px) { .v9-midcta { flex-direction: column; margin-top: 28px; font-size: 1.3rem; } .v9-midcta .v9-btn { width: 100%; justify-content: center; } }
