@@ -74,8 +74,15 @@ export async function moveContentAction(
   note?: string,
 ): Promise<ActionResult<{ stage: string }>> {
   return guarded(async () => {
-    const ctx = await requireOrgAccess(orgSlug, "production.edit");
+    // A decision (approve or send back) needs the approve capability, which a
+    // designated approver holds without edit rights; moving work along the
+    // board otherwise needs edit (TEAM-01, DEL-04).
+    const ctx = await requireOrgAccess(orgSlug);
     const input = moveSchema.parse({ stage, note });
+    const isDecision = input.stage === "approved" || input.stage === "changes_requested";
+    if (isDecision ? !ctx.can("production.approve") && !ctx.can("production.edit") : !ctx.can("production.edit")) {
+      return err("You do not have permission to do that.", "auth");
+    }
 
     const item = await prisma.contentItem.findFirst({
       where: { id: contentItemId, orgId: ctx.org.id },
@@ -652,7 +659,8 @@ export async function approvePackageAction(
   packageId: string,
 ): Promise<ActionResult> {
   return guarded(async () => {
-    const ctx = await requireOrgAccess(orgSlug, "distribution.publish");
+    const ctx = await requireOrgAccess(orgSlug);
+    if (!ctx.can("distribution.publish") && !ctx.can("production.approve")) return err("You do not have permission to do that.", "auth");
 
     const pkg = await prisma.platformPackage.findFirst({
       where: { id: packageId, orgId: ctx.org.id },

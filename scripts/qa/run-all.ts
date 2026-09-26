@@ -18,6 +18,7 @@ import { runOnboarding } from "./suite-onboarding";
 import { runSales } from "./suite-sales-validation";
 import { runReports } from "./suite-reports";
 import { runCoreSpine, teardownSpine } from "./suite-core-spine";
+import { runJourneys, cleanupJourneys } from "./suite-journeys";
 
 type Suite = { name: string; run: () => Promise<void>; fresh?: boolean };
 
@@ -36,6 +37,7 @@ async function main() {
     { name: "sales / validation gate / cockpit", run: () => runSales(fx), fresh: true },
     { name: "reports / periods / cadence", run: () => runReports(fx), fresh: true },
     { name: "core spine (3 engagements)", run: () => runCoreSpine() },
+    { name: "acceptance journeys 1, 2 and 8", run: () => runJourneys() },
   ];
 
   const perSuite: { name: string; before: number; ms: number; error?: string }[] = [];
@@ -56,6 +58,7 @@ async function main() {
 
   await teardown();
   await teardownSpine();
+  await cleanupJourneys();
 
   /* ------------------------------ Master matrix ------------------------------ */
   const byArea = new Map<string, Finding[]>();

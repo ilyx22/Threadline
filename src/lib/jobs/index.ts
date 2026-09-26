@@ -125,7 +125,9 @@ export async function complete(id: string, workerId?: string) {
 }
 
 export async function fail(id: string, error: unknown, workerId?: string) {
-  const job = await prisma.job.findUniqueOrThrow({ where: { id } });
+  const job = await prisma.job.findUnique({ where: { id } });
+  // The row can be gone (cancelled and cleaned up while running): nothing to record.
+  if (!job) return "dead" as const;
   const message = (error instanceof Error ? error.message : String(error)).slice(0, 1000);
   const held = { id, ...(workerId ? { lockedBy: workerId } : {}) };
   if (job.attempts >= job.maxAttempts) {
