@@ -45,16 +45,28 @@ export const DropdownMenuItem = React.forwardRef<
     destructive?: boolean;
     shortcut?: string;
   }
->(function DropdownMenuItem({ className, icon: Icon, destructive, shortcut, children, ...props }, ref) {
-  return (
-    <DropdownPrimitive.Item
-      ref={ref}
-      className={cn(ITEM, destructive && "text-negative focus:text-negative", className)}
-      {...props}
-    >
+>(function DropdownMenuItem({ className, icon: Icon, destructive, shortcut, children, asChild, ...props }, ref) {
+  const inner = (content: React.ReactNode) => (
+    <>
       {Icon ? <Icon className="size-3.5 shrink-0" aria-hidden /> : null}
-      <span className="flex-1 truncate">{children}</span>
+      <span className="flex-1 truncate">{content}</span>
       {shortcut ? <span className="text-[11px] text-ghost">{shortcut}</span> : null}
+    </>
+  );
+  const cls = cn(ITEM, destructive && "text-negative focus:text-negative", className);
+  // With asChild, Radix merges the item onto its ONE child (e.g. a Link), so
+  // the icon and label must go inside that child, not beside it; otherwise the
+  // slot receives several children and the whole page crashes.
+  if (asChild && React.isValidElement<{ children?: React.ReactNode }>(children)) {
+    return (
+      <DropdownPrimitive.Item ref={ref} className={cls} asChild {...props}>
+        {React.cloneElement(children, undefined, inner(children.props.children))}
+      </DropdownPrimitive.Item>
+    );
+  }
+  return (
+    <DropdownPrimitive.Item ref={ref} className={cls} {...props}>
+      {inner(children)}
     </DropdownPrimitive.Item>
   );
 });

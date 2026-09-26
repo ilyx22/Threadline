@@ -17,6 +17,10 @@ async function main() {
   try {
     await cdp.send("Page.enable");
     await cdp.send("Runtime.enable");
+    if (flag("session")) {
+      await cdp.send("Network.enable");
+      await cdp.send("Network.setCookie", { name: "threadline_session", value: flag("session"), url: BASE, httpOnly: true, path: "/" });
+    }
     await setViewport(cdp, Number(flag("width") ?? 1440), 900);
     await open(cdp, `${BASE}${flag("url") ?? "/"}`, 1200);
     await sleep(Number(flag("wait") ?? 500));
