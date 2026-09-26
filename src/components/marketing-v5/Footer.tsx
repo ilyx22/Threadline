@@ -12,7 +12,6 @@ export default function Footer() {
           <div className="v5-footer-brand">
             <Wordmark light />
             <p className="v5-footer-line">{FOOTER.line}</p>
-            <p className="v5-footer-small">{FOOTER.small}</p>
           </div>
           {FOOTER.columns.map((col) => (
             <div key={col.title} className="v5-footer-col">
@@ -27,7 +26,7 @@ export default function Footer() {
         </div>
         <div className="v5-footer-end">
           <span>
-            © {new Date().getFullYear()} {SITE.name}. Founding client programme.
+            © {new Date().getFullYear()} {SITE.name}
           </span>
           <span>{burden.relief}</span>
         </div>

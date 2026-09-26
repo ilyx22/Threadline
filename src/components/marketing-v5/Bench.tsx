@@ -37,11 +37,16 @@ export default function Bench() {
     io.observe(el);
     return () => io.disconnect();
   }, []);
+  /* the change lands whether the loop is running or a reader tapped straight to it */
+  React.useEffect(() => {
+    if (state !== 3) return;
+    const t = window.setTimeout(() => setLever(100), 1100);
+    return () => window.clearTimeout(t);
+  }, [state]);
   React.useEffect(() => {
     if (!seen || paused) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const timers: number[] = [];
-    if (state === 3) timers.push(window.setTimeout(() => setLever(100), 1100));
     timers.push(
       window.setTimeout(
         () => {

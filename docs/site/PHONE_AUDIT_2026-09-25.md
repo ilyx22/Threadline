@@ -141,3 +141,15 @@ Uses the same panel and wordmark rules; inherits the width change.
 | "The moving Threadline banner should be on every page" | everywhere | `WordmarkMarquee` ends the homepage, How it works, Who it is for, the Playbook, Apply and the calculator |
 | "The four gate boxes need not be that large" | everywhere | The mark sits beside the title instead of above it; padding and type reduced. Each gate is about 60% of its former height |
 | "Does the footer need to be as long on phone" | phone | The three link columns sit side by side under the brand, rows are 36px, the end line stacks. The footer is about half as tall |
+
+## Fifth pass (26 September 2026)
+
+| Note | Where it applies | What changed |
+| --- | --- | --- |
+| "04 Change doesn't work when clicked during the animation" | everywhere | The change (the fresh block dropping in) was timed by the loop, and the loop pauses on hover or focus, so a click on step 4 never applied it. It now lands 1.1s after step 4 is entered, whichever way it was reached |
+| "Remove the founding client programme small print, then centre the three footer columns" | everywhere | The small print is gone and the end line is the copyright alone. The three columns are centred in their cells with even spacing; on phones they sit side by side under the brand |
+| "One idea, the right expressions: move the image up" | everywhere | The line art sits 20px under the heading instead of 40px (12px on phones) |
+| "The visibility gap: space the text equally between the banner above and the rooms below" | everywhere | Equal space: 32px above the heading (ticker bottom + section top) and 32px below it (heading bottom + band gap) on desktop, 24px each on phones |
+| "Number 10 still touches the edge of its box" | phone | The rail marks are now flex-centred with no padding and the rail has 12px of padding; in headless Chrome the number sits centred with 10px clear on every side, so this may be a Safari rendering of the grid centring, which is what changed |
+| "Remove the short copy between the chapter titles and the idea" | everywhere | The chapter summary line is gone on the playbook page and the standalone chapter pages |
+| "Remove the bottom copy about three four-week periods" | everywhere | The note under the three period tiles is gone |

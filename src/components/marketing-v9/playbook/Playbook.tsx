@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { DIAGNOSTIC, HOME_V3, HOW_IT_WORKS, PLAYBOOK, PLAYBOOK_TOOLS } from "@/content/public-site";
-import { MAXIMS, PERIODS, PERIODS_NOTE, PLAYBOOK_HERO } from "@/content/playbook";
+import { MAXIMS, PERIODS, PLAYBOOK_HERO } from "@/content/playbook";
 import Motion from "@/components/marketing-v5/Motion";
 import { Diagnostic } from "@/components/public/diagnostic";
 import { AcquisitionCalculator } from "@/components/marketing-v5/AcquisitionCalculator";
@@ -139,7 +139,6 @@ export default function Playbook() {
               </li>
             ))}
           </ol>
-          <p className="v9-note is-center">{PERIODS_NOTE}</p>
         </div>
       </section>
 

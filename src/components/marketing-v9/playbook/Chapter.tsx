@@ -68,7 +68,6 @@ export function Chapter({ index, standalone = false }: { index: number; standalo
               {ch.title}
             </h2>
           )}
-          <p className="v9-lead">{ch.summary}</p>
         </header>
         <div className="pb-chapter-grid">
           <div className="pb-chapter-copy v9-reveal">
