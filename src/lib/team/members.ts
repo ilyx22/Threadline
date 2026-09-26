@@ -104,7 +104,7 @@ export async function transferOwnership(actor: Actor, org: Org, toUserId: string
 }
 
 /** Profiles, expert flag and contact role for a client member (TEAM-01, TEAM-08). */
-export async function updateMemberProfile(actor: Actor, org: Org, userId: string, input: { profiles: ClientProfile[]; isExpert: boolean; contactRole: "primary" | "backup" | null }) {
+export async function updateMemberProfile(actor: Actor, org: Org, userId: string, input: { profiles: ClientProfile[]; isExpert: boolean; contactRole: "primary" | "backup" | null; voiceNotes?: string | null }) {
   if (org.kind !== "client") throw new MemberError("Profiles apply to client workspaces only.");
   const m = await target(org, userId);
   if (!canManageMemberWithRole(actor.role, m.role as Role, org.kind)) throw new MemberError("You cannot change that person.");
@@ -112,7 +112,7 @@ export async function updateMemberProfile(actor: Actor, org: Org, userId: string
   await prisma.$transaction(async (tx) => {
     // One primary and one backup contact per workspace.
     if (input.contactRole) await tx.membership.updateMany({ where: { orgId: org.id, contactRole: input.contactRole, NOT: { id: m.id } }, data: { contactRole: null } });
-    await tx.membership.update({ where: { id: m.id }, data: { profiles: JSON.stringify(profiles), isExpert: input.isExpert, contactRole: input.contactRole } });
+    await tx.membership.update({ where: { id: m.id }, data: { profiles: JSON.stringify(profiles), isExpert: input.isExpert, contactRole: input.contactRole, ...(input.voiceNotes !== undefined ? { voiceNotes: input.voiceNotes?.trim().slice(0, 2000) || null } : {}) } });
   });
   return { name: m.user.name, profiles };
 }

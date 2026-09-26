@@ -55,6 +55,7 @@ export default async function MembersPage({ params }: { params: Promise<{ org: s
           status: m.status,
           isOwner: m.isOwner,
           isExpert: m.isExpert,
+          voiceNotes: m.voiceNotes,
           contactRole: m.contactRole,
           profiles: m.profiles,
         }))}

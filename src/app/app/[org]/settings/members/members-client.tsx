@@ -6,7 +6,7 @@ import { Crown, MailPlus, MoreHorizontal, RotateCw, UserMinus, UserPlus, X } fro
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
-import { Input, NativeSelect } from "@/components/ui/input";
+import { Input, NativeSelect, Textarea } from "@/components/ui/input";
 import { Avatar } from "@/components/ui/data";
 import { Table, TBody, TD, TH, THead, TR, CellTitle } from "@/components/ui/table";
 import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader } from "@/components/ui/dialog";
@@ -40,6 +40,7 @@ type Member = {
   status: string;
   isOwner: boolean;
   isExpert: boolean;
+  voiceNotes?: string | null;
   contactRole: string | null;
   profiles: string[];
 };
@@ -222,6 +223,9 @@ function ProfileDialog({ slug, member, onClose }: { slug: string; member: Member
                   <input type="checkbox" name="isExpert" defaultChecked={member.isExpert} />
                   An expert whose voice Threadline writes in
                 </label>
+                <Field label="How they speak" htmlFor="voiceNotes" optional hint="For writing in this expert's voice: tone, phrases they use, things they would never say.">
+                  <Textarea id="voiceNotes" name="voiceNotes" rows={3} defaultValue={member.voiceNotes ?? ""} />
+                </Field>
                 <Field label="Decision contact" htmlFor="contactRole">
                   <NativeSelect id="contactRole" name="contactRole" defaultValue={member.contactRole ?? "none"}>
                     <option value="none">Not a contact</option>

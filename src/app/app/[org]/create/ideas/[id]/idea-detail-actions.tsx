@@ -63,7 +63,10 @@ export function IdeaDetailActions({
   canEdit,
   canScript,
   defaults,
+  experts = [],
 }: {
+  /** TEAM-08: experts who may speak the piece; the script is written in their voice. */
+  experts?: { id: string; name: string }[];
   slug: string;
   ideaId: string;
   status: string;
@@ -282,6 +285,18 @@ export function IdeaDetailActions({
                 <DialogBody className="space-y-4">
                   <FormError error={error} />
                   <input type="hidden" name="ideaId" value={ideaId} />
+                  {experts.length ? (
+                    <Field label="Who will say it" htmlFor="speakerUserId" hint="The script is written in that person's voice.">
+                      <NativeSelect id="speakerUserId" name="speakerUserId" defaultValue="">
+                        <option value="">The founder</option>
+                        {experts.map((e) => (
+                          <option key={e.id} value={e.id}>
+                            {e.name}
+                          </option>
+                        ))}
+                      </NativeSelect>
+                    </Field>
+                  ) : null}
 
                   <Field label="Script type" htmlFor="scriptType">
                     <NativeSelect id="scriptType" name="scriptType" defaultValue="founder_pov">

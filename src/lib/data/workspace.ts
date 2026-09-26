@@ -96,6 +96,7 @@ export async function listMembers(orgId: string) {
     isOwner: m.isOwner,
     isExpert: m.isExpert,
     contactRole: m.contactRole,
+    voiceNotes: m.voiceNotes,
     profiles: parseProfiles(m.profiles) as string[],
   }));
 }

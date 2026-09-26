@@ -92,6 +92,7 @@ const createFromIdeaSchema = z.object({
   scriptType: scriptTypeSchema.default("short_form"),
   targetSeconds: z.coerce.number().int().min(15).max(1800).default(60),
   generate: z.union([z.literal("on"), z.literal("true"), z.literal("false")]).optional(),
+  speakerUserId: z.string().max(60).optional(),
 });
 
 export async function createScriptFromIdeaAction(
@@ -139,6 +140,7 @@ export async function createScriptFromIdeaAction(
         targetSeconds: input.targetSeconds,
         cta: idea.cta ?? undefined,
         entityId: script.id,
+        speakerUserId: input.speakerUserId || undefined,
       });
       isDemo = meta.isDemo;
 

@@ -175,14 +175,14 @@ export async function transferOwnershipAction(orgSlug: string, toUserId: string)
   });
 }
 
-const profileSchema = z.object({ contactRole: z.enum(["primary", "backup", "none"]).default("none"), isExpert: z.preprocess((v) => v === "on" || v === "true", z.boolean()) });
+const profileSchema = z.object({ contactRole: z.enum(["primary", "backup", "none"]).default("none"), isExpert: z.preprocess((v) => v === "on" || v === "true", z.boolean()), voiceNotes: z.string().max(2000).optional() });
 
 export async function updateMemberProfileAction(orgSlug: string, userId: string, _prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "workspace.members");
     const input = parseForm(profileSchema, formData);
     try {
-      const r = await updateMemberProfile({ userId: ctx.user.id, role: ctx.role }, ctx.org, userId, { profiles: formProfiles(formData), isExpert: input.isExpert, contactRole: input.contactRole === "none" ? null : input.contactRole });
+      const r = await updateMemberProfile({ userId: ctx.user.id, role: ctx.role }, ctx.org, userId, { profiles: formProfiles(formData), isExpert: input.isExpert, contactRole: input.contactRole === "none" ? null : input.contactRole, voiceNotes: input.voiceNotes });
       await audit(ctx, { action: "member.profile", entityType: "membership", entityId: userId, summary: `Updated ${r.name}: ${r.profiles.join(", ") || "no profiles"}${input.isExpert ? ", expert" : ""}${input.contactRole !== "none" ? `, ${input.contactRole} contact` : ""}` });
       members(orgSlug);
       return okVoid("Saved.");

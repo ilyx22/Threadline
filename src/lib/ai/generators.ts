@@ -162,8 +162,9 @@ export async function generateScript(input: {
   targetSeconds: number;
   cta?: string;
   entityId?: string;
+  speakerUserId?: string;
 }): Promise<{ script: GeneratedScript; meta: GenerationMeta }> {
-  const context = await loadWorkspaceContext(input.orgId, { blocks: SCRIPT_BLOCKS, platform: input.platform });
+  const context = await loadWorkspaceContext(input.orgId, { blocks: SCRIPT_BLOCKS, platform: input.platform, speakerUserId: input.speakerUserId });
 
   const template = scriptPrompt({
     context: renderContext(context, SCRIPT_BLOCKS),

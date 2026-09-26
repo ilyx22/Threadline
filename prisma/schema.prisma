@@ -222,6 +222,8 @@ model Membership {
   isOwner     Boolean   @default(false)
   /// A named expert whose voice Threadline writes in (TEAM-08).
   isExpert    Boolean   @default(false)
+  /// TEAM-08: how this expert speaks, for writing in their voice (tone, phrases, what they would never say).
+  voiceNotes String?
   /// primary | backup | null: the client contact for decisions.
   contactRole String?
 

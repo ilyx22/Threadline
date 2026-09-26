@@ -14,6 +14,7 @@ import { DefinitionList, ScoreBar } from "@/components/ui/data";
 import { IdeaStatusBadge, StageBadge, ScriptQaBadge } from "@/components/ui/status";
 import { formatDate } from "@/lib/utils/dates";
 import { IdeaDetailActions } from "./idea-detail-actions";
+import { prisma } from "@/lib/db/client";
 
 export const metadata: Metadata = { title: "Idea" };
 
@@ -64,6 +65,7 @@ export default async function IdeaDetailPage({
           canApprove={ctx.can("ideas.approve")}
           canEdit={ctx.can("ideas.create")}
           canScript={ctx.can("scripts.edit")}
+          experts={(await prisma.membership.findMany({ where: { orgId: ctx.org.id, isExpert: true, isOwner: false, status: "active" }, select: { userId: true, user: { select: { name: true } } } })).map((m) => ({ id: m.userId, name: m.user.name }))}
           defaults={{
             title: idea.title,
             concept: idea.concept ?? "",

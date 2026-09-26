@@ -49,6 +49,8 @@ export type WorkspaceContext = {
 
 type LoadOptions = {
   blocks?: ContextBlock[];
+  /** TEAM-08: the expert who will speak the piece, when not the founder. */
+  speakerUserId?: string;
   /** The platform the output is for; platform-scoped lessons apply only there. */
   platform?: string;
   /** Extra task-specific instruction appended as TASK_CONTEXT. */
@@ -154,6 +156,11 @@ export async function loadWorkspaceContext(
       bullets("Sounds like them", voice.soundsLikeMe),
       bullets("Does NOT sound like them", voice.notMe),
     ].filter(Boolean);
+    // TEAM-08: when the piece is for a named expert, write in their voice.
+    if (options.speakerUserId) {
+      const speaker = await prisma.membership.findFirst({ where: { orgId, userId: options.speakerUserId, isExpert: true, status: "active" }, select: { voiceNotes: true, user: { select: { name: true, title: true } } } });
+      if (speaker) lines.push(`WRITING FOR: ${speaker.user.name}${speaker.user.title ? `, ${speaker.user.title}` : ""}. This piece is spoken by them, not the founder.`, ...(speaker.voiceNotes ? [`How ${speaker.user.name} speaks: ${speaker.voiceNotes}`] : []));
+    }
     blocks.FOUNDER_VOICE = section("FOUNDER AND VOICE", lines as string[]);
     if (lines.length > 0) used.push("FOUNDER_VOICE");
   }
