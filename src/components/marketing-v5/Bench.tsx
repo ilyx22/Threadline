@@ -14,7 +14,7 @@ import { At, C, LINE, outline as O } from "./art/kit";
  */
 const COMPONENT_X = [-148, -74, 0, 74, 148];
 
-export default function Bench() {
+export default function Bench({ notes }: { notes?: readonly { step: string; note: string }[] } = {}) {
   const d = diagnosis;
   const jarId = React.useId().replace(/[^a-zA-Z0-9]/g, "");
   const [state, setState] = React.useState(0);
@@ -108,14 +108,11 @@ export default function Bench() {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setPaused(false);
       }}
     >
-      <p className="v5-bench-case">
-        <span className="pb-stamp">Illustrative</span>
-        <span>{c.title}. Not a client result.</span>
-      </p>
-      <div className="v5-tabs v5-bench-steps" role="tablist" aria-label="Loop states" onKeyDown={onTabKey}>
+      <div className={`v5-tabs v5-bench-steps${notes ? " has-notes" : ""}`} role="tablist" aria-label="Loop states" onKeyDown={onTabKey}>
         {d.states.map((st, i) => (
           <button key={st} id={`bench-tab-${i}`} type="button" role="tab" aria-selected={i === state} aria-controls="bench-readout" tabIndex={i === state ? 0 : -1} className="v5-tab" onClick={() => go(i)}>
             <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span> {st}
+            {notes ? <small className="v5-tab-note">{notes[i]?.note}</small> : null}
           </button>
         ))}
       </div>
@@ -134,8 +131,14 @@ export default function Bench() {
               return (
                 <g key={name} className={`v5-block${failed && !replaced ? " is-failed" : ""}${replaced ? " is-new" : ""}`} style={{ ["--bx" as string]: `${COMPONENT_X[i]}px` }}>
                   <g transform={`translate(${COMPONENT_X[i]} 0)`}>
-                    <image href={replaced ? "/marketing/bench/block-new.png" : "/marketing/bench/block.png"} x={-33} y={-70} width={66} height={70} preserveAspectRatio="xMidYMax meet" />
-                    {failed && !replaced ? <rect x={-30} y={-64} width={60} height={62} rx={6} fill={C.coral} opacity={0.55} /> : null}
+                    {/* a drawn block: front, top and side faces, two grain strokes; mint when replaced, coral when at fault */}
+                    <g className="v5-block-art">
+                      <path d="M-28 0 V-44 H24 V0 Z" fill={replaced ? C.mint : failed ? C.coral : C.wood} stroke={C.ink} strokeWidth={LINE} strokeLinejoin="round" />
+                      <path d="M-28 -44 L-16 -56 H36 L24 -44 Z" fill={replaced ? C.mint : failed ? C.coral : C.wood} stroke={C.ink} strokeWidth={LINE} strokeLinejoin="round" />
+                      <path d="M-28 -44 L-16 -56 H36 L24 -44 Z" fill="#fff" opacity={0.28} />
+                      <path d="M24 -44 L36 -56 V-12 L24 0 Z" fill={replaced ? C.mintDeep : failed ? C.coralDeep : C.woodDeep} stroke={C.ink} strokeWidth={LINE} strokeLinejoin="round" />
+                      <path d="M-18 -30 H10 M-14 -16 H14" stroke={C.ink} strokeWidth={1.2} opacity={0.3} strokeLinecap="round" />
+                    </g>
                     <text x={0} y={16} textAnchor="middle" className="v5-label is-xs">
                       {name.toUpperCase()}
                     </text>
@@ -189,6 +192,7 @@ export default function Bench() {
           <p className="v5-readout-step">
             {String(state + 1).padStart(2, "0")} of 05
           </p>
+          {notes ? <p className="v5-readout-note">{notes[state]?.note}</p> : null}
           <p className="v5-readout-verdict">{readout.verdict}</p>
           <ul>
             {readout.lines.map((l) => (

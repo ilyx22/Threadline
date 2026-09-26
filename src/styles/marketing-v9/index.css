@@ -1347,3 +1347,24 @@
   .v9-hero-scene.is-machine { overflow: hidden; aspect-ratio: 16 / 10; }
   .v9-hero-scene.is-machine svg { width: 180%; height: auto; margin-left: -66%; margin-top: -6%; }
 }
+
+/* ============================================================ pass 11 (26 September 2026): the hero loops over the same picture; the learning section tidied; drawn blocks */
+.v9-hero-scene.is-photo { position: relative; }
+.v9-hero-loop { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+@media (prefers-reduced-motion: reduce) { .v9-hero-loop { display: none; } }
+@media (max-width: 759px) { .v9-hero-loop { display: none; } }
+/* the learning section: head, then the bench whose five steps carry the notes */
+.v9-learning-panel .v9-head { max-width: 760px; }
+.v9-learning-bench { margin-top: 28px; }
+.tl-public.v9 .v5-bench-steps.has-notes .v5-tab { align-items: flex-start; text-align: left; min-height: 0; padding: 12px 14px 14px; gap: 4px; }
+.tl-public.v9 .v5-bench-steps.has-notes .v5-tab span { align-self: flex-start; }
+.tl-public.v9 .v5-tab-note { display: block; font-family: var(--v9-sans); font-size: 13.5px; font-weight: 400; line-height: 1.4; color: var(--v9-ink-soft); }
+.tl-public.v9 .v5-tab[aria-selected="true"] .v5-tab-note { color: rgba(255, 255, 255, 0.78); }
+.tl-public.v9 .v5-readout-note { display: none; }
+@media (max-width: 759px) {
+  .tl-public.v9 .v5-bench-steps.has-notes .v5-tab { align-items: center; text-align: center; padding: 6px 3px; gap: 2px; }
+  .tl-public.v9 .v5-bench-steps.has-notes .v5-tab span { align-self: center; }
+  .tl-public.v9 .v5-tab-note { display: none; }
+  .tl-public.v9 .v5-readout-note { display: block; margin: 0 0 6px; font-size: 15px; line-height: 1.45; color: var(--v9-ink-soft); }
+  .v9-learning-bench { margin-top: 18px; }
+}

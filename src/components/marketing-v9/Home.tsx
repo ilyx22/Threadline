@@ -9,6 +9,7 @@ import Bench from "@/components/marketing-v5/Bench";
 import { Obj, type ObjName } from "./Obj";
 import { ExpressionsArt } from "./ExpressionsArt";
 import { WordmarkMarquee } from "./Marquee";
+import { HeroLoop } from "./HeroLoop";
 
 /**
  * The homepage, 24 September 2026 (second pass). The composition the owner
@@ -84,6 +85,7 @@ function Hero() {
         </div>
         <div className="v9-hero-scene is-photo">
           <Image src="/marketing/hero-scene.jpg" alt="The firm's private archive on the left; one thread leaves it, passes through a small press and hangs four finished pieces on a line where four buyers stand looking up at them." width={1262} height={468} priority sizes="(max-width: 991px) 100vw, 58vw" />
+          <HeroLoop />
         </div>
       </div>
     </section>
@@ -289,21 +291,9 @@ function Learning() {
   return (
     <section id="learning" className="v9-learning" data-scene aria-labelledby="learning-title">
       <div className="v9-panel v9-learning-panel">
-        <div className="v9-learning-grid">
-          <Head eyebrow={learning.eyebrow} title={learning.headline} body={learning.body} id="learning-title" />
-          <ol className="v9-learning-steps v9-reveal" aria-label="The five steps">
-            {learning.steps.map((st, i) => (
-              <li key={st.step} style={{ ["--i" as string]: i }}>
-                <strong>{st.step}</strong> {st.note}
-              </li>
-            ))}
-          </ol>
-          <div className="v9-learning-scene v9-reveal" style={{ ["--d" as string]: "120ms" }}>
-            <Image src="/marketing/learning-scene.jpg" alt="A work bench. A printed sheet stands on an easel above a row of five wooden blocks; an inspector has lifted one block out and a fresh mint-green block waits beside the gap. Three measuring jars stand to the right, each with a marigold marker clipped at a different height." width={1310} height={453} sizes="(max-width: 991px) 100vw, 560px" loading="eager" />
-          </div>
-        </div>
+        <Head eyebrow={learning.eyebrow} title={learning.headline} body={learning.body} id="learning-title" />
         <div className="v9-learning-bench v9-reveal">
-          <Bench />
+          <Bench notes={learning.steps} />
         </div>
         <p className="v9-more">
           <Link href={learning.more.href} className="v9-link">

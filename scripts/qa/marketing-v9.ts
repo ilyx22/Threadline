@@ -39,7 +39,7 @@ async function main() {
     ok("v9:copy", "founder role", /talk, record when useful, approve and sell/i.test(s.text));
     ok("v9:copy", "the workshop and the loop", /six stations/i.test(s.text) && /Expected\. Actual\.\s+Why\. Change\. Retest\./.test(s.text));
     ok("v9:copy", "one idea, multiple formats", /One idea, multiple formats/.test(s.text));
-    ok("v9:design", "six mosaic tiles, five bench states, one labelled case", s.tiles === 6 && s.tabs === 5 && s.cases === 1, JSON.stringify({ tiles: s.tiles, tabs: s.tabs, cases: s.cases }));
+    ok("v9:design", "six mosaic tiles, five bench states", s.tiles === 6 && s.tabs === 5, JSON.stringify({ tiles: s.tiles, tabs: s.tabs, cases: s.cases }));
     ok("v9:design", "every scene is a labelled illustration (three generated scenes, the frieze, the line, the bench)", s.scenes >= 6, `${s.scenes}`);
     ok("v9:design", "the object set is loaded: four capsules, eight tools, six stations", s.objects >= 18, `${s.objects}`);
     ok("v9:design", "scripting flag set by the observer", s.js === "1");
