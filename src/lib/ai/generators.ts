@@ -1,4 +1,5 @@
 import "server-only";
+import { fence, neutralise } from "./untrusted";
 import { z } from "zod";
 import { randomUUID } from "node:crypto";
 import { loadWorkspaceContext, renderContext, type ContextBlock } from "./context";
@@ -513,13 +514,14 @@ export async function extractSignals(input: {
   const lines = input.evidence.map((item, index) => {
     const ref = `e${index + 1}`;
     refToId.set(ref, item.id);
-    const source = [item.sourceName, item.author].filter(Boolean).join(" / ");
-    const excerpt = (item.body ?? "").replace(/\s+/g, " ").slice(0, 600);
+    const source = [item.sourceName, item.author].filter(Boolean).map((s) => neutralise(String(s), 80).text).join(" / ");
+    // AI-09: third-party text reaches the model only neutralised and fenced as data.
+    const title = neutralise(item.title, 200).text;
+    const excerpt = neutralise(item.body ?? "", 600).text;
     return [
       `[${ref}] (${item.kind}${source ? `, ${source}` : ""}, captured ${item.capturedAt.toISOString().slice(0, 10)})`,
-      `Title: ${item.title}`,
-      excerpt ? `Content: ${excerpt}` : null,
-      item.url ? `URL: ${item.url}` : null,
+      fence(ref, [`Title: ${title}`, excerpt ? `Content: ${excerpt}` : null].filter(Boolean).join("\n")),
+      item.url ? `URL: ${item.url.slice(0, 300)}` : null,
     ]
       .filter(Boolean)
       .join("\n");

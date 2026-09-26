@@ -5,6 +5,7 @@ import { WorkflowError } from "@/lib/domain/workflow";
 import { runGeneration } from "@/lib/ai";
 import { loadWorkspaceContext, renderContext, type ContextBlock } from "@/lib/ai/context";
 import { leadReplyPrompt } from "@/lib/ai/prompts";
+import { fence, neutralise } from "@/lib/ai/untrusted";
 
 /**
  * The lead inbox (AI-06).
@@ -187,7 +188,8 @@ export async function draftReply(orgId: string, inquiryId: string, userId: strin
     context: renderContext(context, blocks),
     leadName: i.name,
     channel: i.channel,
-    thread: thread.length ? thread.map((m) => `${m.direction === "in" ? i.name : "Us"}: ${m.body}`).join("\n\n") : "(no message text recorded)",
+    // AI-09: the lead's own words are third-party text: neutralised and fenced as data.
+    thread: thread.length ? thread.map((m, n) => (m.direction === "in" ? `From the lead:\n${fence(`m${n + 1}`, neutralise(m.body, 1500).text)}` : `Us: ${m.body}`)).join("\n\n") : "(no message text recorded)",
   });
   const { result, meta } = await runGeneration(template, { orgId, userId, kind: "lead_reply", entityType: "inquiry", entityId: i.id, demoContext: { ...context.demo, leadName: i.name, leadMessage: lastIn?.body } });
   return prisma.replyDraft.create({ data: { orgId, inquiryId, body: result.text.trim().slice(0, 5000), generatedBy: "ai", isDemo: meta.isDemo, createdById: userId } });

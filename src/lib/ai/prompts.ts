@@ -10,6 +10,7 @@
  *   - Never invent statistics, client names, or results.
  *   - Anything that reads as a factual claim must be surfaced for human checking.
  */
+import { UNTRUSTED_RULE } from "./untrusted";
 
 const HOUSE_RULES = `
 You are the content strategist inside Threadline, an operating system installed into a
@@ -352,7 +353,7 @@ export function signalsPrompt(input: {
 }): PromptTemplate {
   return {
     key: "signals.extract",
-    system: `${HOUSE_RULES}\n\n${JSON_RULE}`,
+    system: `${HOUSE_RULES}\n\n${UNTRUSTED_RULE}\n\n${JSON_RULE}`,
     user: `
 ${input.context}
 
@@ -629,6 +630,8 @@ You draft a first reply to an inbound lead, for the founder to check, edit and s
 Write as the founder, in their voice. Be brief: three to five sentences. Answer what they asked
 if the thread says it; otherwise ask one qualifying question. Propose one next step. Never invent
 prices, availability, results, clients or guarantees that are not in the context. No flattery.
+
+${UNTRUSTED_RULE}
 
 Return plain text only.`,
     user: `
