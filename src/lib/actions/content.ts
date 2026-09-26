@@ -11,6 +11,7 @@ import { stringify, stringifyArray } from "@/lib/db/json";
 import { contentStageSchema, prioritySchema, platformSchema } from "@/lib/domain/enums";
 import { canMoveContent, requiresNote, WorkflowError } from "@/lib/domain/workflow";
 import { assertPackageApprovable } from "@/lib/domain/longform";
+import { recordDecision, supersedeApprovals } from "@/lib/delivery/approvals";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import { getStorage, storageProviderName } from "@/lib/storage";
 import {
@@ -141,6 +142,11 @@ export async function moveContentAction(
           authorId: ctx.user.id,
         },
       });
+    }
+
+    // DEL-02: the decision is recorded against the exact version reviewed.
+    if (input.stage === "approved" || input.stage === "changes_requested") {
+      await recordDecision(ctx, { type: "content_item", id: contentItemId }, input.stage, { note: input.note ?? null });
     }
 
     // Close the founder's approval task once the piece is approved.
@@ -395,6 +401,16 @@ export async function uploadContentAssetAction(
       note: `${stored.fileName} added`,
     });
 
+    // DEL-03: a new cut after approval makes that approval stale; the piece
+    // goes back for review rather than shipping a version nobody approved.
+    if (input.category === "edited_media") {
+      const stale = await supersedeApprovals(ctx.org.id, { type: "content_item", id: contentItemId }, "a new cut was uploaded");
+      if (stale && item.stage === "approved") {
+        await prisma.contentItem.update({ where: { id: contentItemId }, data: { stage: "in_review", approvedAt: null, approvedById: null } });
+        await recordEvent(ctx, contentItemId, { type: "stage_change", fromStage: "approved", toStage: "in_review", note: "New cut uploaded after approval; needs approving again" });
+      }
+    }
+
     // Uploading raw footage is the signal that recording actually happened.
     if (input.category === "raw_media" && item.stage === "raw") {
       await prisma.contentItem.update({
@@ -602,6 +618,9 @@ export async function savePackageAction(
       },
     });
 
+    // DEL-03: editing approved packaging makes the approval stale.
+    await supersedeApprovals(ctx.org.id, { type: "platform_package", id: packageId }, "packaging edited");
+
     await audit(ctx, {
       action: "packaging.edit",
       entityType: "platform_package",
@@ -657,6 +676,7 @@ export async function approvePackageAction(
       where: { id: packageId },
       data: { status: "approved", approvedAt: new Date(), approvedById: ctx.user.id },
     });
+    await recordDecision(ctx, { type: "platform_package", id: packageId }, "approved", { scope: `${pkg.platform} packaging` });
 
     await audit(ctx, {
       action: "packaging.approve",

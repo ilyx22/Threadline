@@ -12,6 +12,7 @@ import { REFINE_INSTRUCTIONS, type RefineInstruction } from "@/lib/ai/prompts";
 import { parseJson, parseStringArray, stringify, stringifyArray } from "@/lib/db/json";
 import { platformSchema, scriptQaStateSchema, scriptTypeSchema } from "@/lib/domain/enums";
 import { assertScriptTransition, type Claim } from "@/lib/domain/workflow";
+import { recordDecision, supersedeApprovals } from "@/lib/delivery/approvals";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import { estimateSpokenSeconds } from "@/lib/utils/format";
 import { cleanText, err, guarded, ok, okVoid, parseForm, type ActionResult } from "./shared";
@@ -66,14 +67,18 @@ async function appendVersion(
     },
   });
 
+  const before = await prisma.script.findUnique({ where: { id: scriptId }, select: { qaState: true } });
   await prisma.script.update({
     where: { id: scriptId },
     data: {
       currentVersion: nextVersion,
       estimatedSeconds: estimateSpokenSeconds(data.body),
       claimsVerified: data.claims.every((c) => c.status !== "unverified"),
+      // DEL-03: a new version of an approved script needs approving again.
+      ...(before?.qaState === "approved" ? { qaState: "ready_to_record", approvedAt: null } : {}),
     },
   });
+  await supersedeApprovals(ctx.org.id, { type: "script", id: scriptId }, `new version v${nextVersion}`);
 
   return version;
 }
@@ -489,6 +494,8 @@ export async function setScriptStateAction(
       where: { id: scriptId },
       data: { qaState: target, approvedAt: target === "approved" ? new Date() : null },
     });
+
+    if (target === "approved") await recordDecision(ctx, { type: "script", id: scriptId }, "approved");
 
     await audit(ctx, {
       action: "script.state",

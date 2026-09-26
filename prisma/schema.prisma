@@ -763,6 +763,8 @@ model Comment {
   resolved   Boolean  @default(false)
   /// Operator-only note. Never returned by a client-scoped read.
   internal   Boolean  @default(false)
+  /// The version of the thing the comment is about (script version, package or cut hash), so feedback on an old version is never mistaken for feedback on the current one.
+  version    String?
   authorId   String?
   createdAt  DateTime @default(now())
 
@@ -2806,3 +2808,72 @@ model CrmLink {
   @@unique([provider, entityType, entityId])
   @@unique([provider, remoteObject, remoteId])
 }
+
+/// One approval decision on one exact version of a piece of work (DEL-02).
+/// `contentHash` fingerprints what was approved; any material edit changes the
+/// hash, which makes this approval stale (DEL-03). Nothing is ever approved
+/// automatically: every row names the person and the authority they acted on.
+model Approval {
+  id                String    @id @default(cuid())
+  orgId             String
+  /// idea | script | content_item | platform_package
+  entityType        String
+  entityId          String
+  /// Human-readable version label: script v3, cut 2, package edit time.
+  versionLabel      String?
+  contentHash       String
+  /// approved | changes_requested | rejected
+  decision          String
+  reviewerId        String?
+  /// designated_approver | backup_approver | workspace_admin | staff_on_behalf
+  authority         String
+  /// What the approval covers, e.g. "LinkedIn post" or "all platforms".
+  scope             String?
+  note              String?
+  reviewRequestedAt DateTime?
+  decidedAt         DateTime  @default(now())
+  /// Set when a later material edit made this approval stale.
+  supersededAt      DateTime?
+  supersededReason  String?
+  batchId           String?
+
+  batch ReviewBatch? @relation(fields: [batchId], references: [id], onDelete: SetNull)
+
+  @@index([orgId, entityType, entityId])
+  @@index([orgId, decidedAt])
+}
+
+/// A set of items sent to the client for review together (CX-02). Each item is
+/// pinned to the hash it had when the batch was sent; a bulk decision applies
+/// only to items still at that hash.
+model ReviewBatch {
+  id          String    @id @default(cuid())
+  orgId       String
+  title       String
+  createdById String?
+  dueAt       DateTime?
+  /// open | closed
+  state       String    @default("open")
+  createdAt   DateTime  @default(now())
+  closedAt    DateTime?
+
+  items     ReviewBatchItem[]
+  approvals Approval[]
+
+  @@index([orgId, state])
+}
+
+model ReviewBatchItem {
+  id          String  @id @default(cuid())
+  batchId     String
+  entityType  String
+  entityId    String
+  contentHash String
+  /// null until decided: approved | changes_requested | rejected | stale
+  outcome     String?
+
+  batch ReviewBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
+
+  @@unique([batchId, entityType, entityId])
+}
+
