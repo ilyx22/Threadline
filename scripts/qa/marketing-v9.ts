@@ -95,7 +95,7 @@ async function main() {
     await evaluate(cdp, "localStorage.removeItem('tl-playbook-read'); true");
     await open(cdp, `${BASE}/playbook`, 2000);
     const pb = await evaluate<{ chapters: number; marks: number; widgets: number; flips: number; tools: number; periods: number; text: string }>(cdp, `({ chapters: document.querySelectorAll('.pb-chapter').length, marks: document.querySelectorAll('.pb-rail-mark').length, widgets: document.querySelectorAll('.pb-chapter-tool').length, flips: document.querySelectorAll('.pb-flip').length, tools: document.querySelectorAll('.pb-tool').length, periods: document.querySelectorAll('.pb-period-line li').length, text: document.body.innerText })`);
-    ok("v9:playbook", "ten chapters, ten marks, ten things to do, two tools, no periods (they live on the homepage)", pb.chapters === 10 && pb.marks === 10 && pb.widgets === 10 && pb.tools === 2 && pb.periods === 0, JSON.stringify({ chapters: pb.chapters, marks: pb.marks, widgets: pb.widgets, tools: pb.tools, periods: pb.periods }));
+    ok("v9:playbook", "eight chapters, eight marks, eight things to do, two tools, no periods (they live on the homepage)", pb.chapters === 8 && pb.marks === 8 && pb.widgets === 8 && pb.tools === 2 && pb.periods === 0, JSON.stringify({ chapters: pb.chapters, marks: pb.marks, widgets: pb.widgets, tools: pb.tools, periods: pb.periods }));
     ok("v9:playbook", "the start button promises a time, not a result", /fully interactive/i.test(pb.text) && !/guarantee[ds]? (leads|calls|revenue|results)/i.test(pb.text));
     const flipH = await evaluate<number>(cdp, `Math.round(${q(".pb-flip")}.getBoundingClientRect().height)`);
     ok("v9:playbook", "flip cards have room for their faces", flipH >= 120, `${flipH}px`);
@@ -110,7 +110,7 @@ async function main() {
     await sleep(3200);
     ok("v9:playbook", "a chapter that has been on screen lights its mark", (await evaluate<string>(cdp, `${q(".pb-rail-mark")}.className + ' ' + ${q(".pb-rail-count")}.textContent`)).includes("is-done") && /1 of 10/.test(await evaluate<string>(cdp, `${q(".pb-rail-count")}.textContent`)));
     for (const width of [1024, 390, 320]) {
-      for (const route of ["/who-its-for", "/playbook", "/playbook/measure-what-the-buyer-did", "/how-it-works", "/apply", "/calculator"]) {
+      for (const route of ["/who-its-for", "/playbook", "/playbook/write-down-what-you-expect", "/how-it-works", "/apply", "/calculator"]) {
         await setViewport(cdp, width, 900);
         await open(cdp, `${BASE}${route}`, 1200);
         const w = await evaluate<{ sw: number; iw: number }>(cdp, `({ sw: document.documentElement.scrollWidth, iw: innerWidth })`);

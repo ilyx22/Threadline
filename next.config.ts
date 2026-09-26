@@ -18,6 +18,12 @@ const nextConfig: NextConfig = {
   experimental: {
     serverActions: { bodySizeLimit: "12mb" },
   },
+  async redirects() {
+    return [
+      { source: "/playbook/repeated-exposure-builds-memory", destination: "/playbook/distribution-is-a-place-not-a-blast", permanent: true },
+      { source: "/playbook/measure-what-the-buyer-did", destination: "/playbook/write-down-what-you-expect", permanent: true },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

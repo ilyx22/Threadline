@@ -1469,3 +1469,15 @@
 /* pass 16: one ask mid-page, after the system and before the proof of learning */
 .v9-midcta { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 20px; margin: 40px 0 0; font-family: var(--v9-serif); font-size: 1.5rem; color: var(--v9-ink); }
 @media (max-width: 759px) { .v9-midcta { flex-direction: column; margin-top: 28px; font-size: 1.3rem; } .v9-midcta .v9-btn { width: 100%; justify-content: center; } }
+
+/* ============================================================ pass 17 (26 September 2026) */
+/* the hero pans slowly back and forth along the line; the thread overlay moves with the picture */
+.v9-hero-scene.is-photo { overflow: hidden; }
+.v9-hero-scene.is-photo > img, .v9-hero-scene.is-photo > .v9-hero-loop { transform-origin: 50% 60%; animation: v9-hero-pan 22s ease-in-out infinite alternate; will-change: transform; }
+@keyframes v9-hero-pan { from { transform: scale(1.12) translateX(4.5%); } to { transform: scale(1.12) translateX(-4.5%); } }
+@media (prefers-reduced-motion: reduce) { .v9-hero-scene.is-photo > img, .v9-hero-scene.is-photo > .v9-hero-loop { animation: none; transform: none; } }
+/* the playbook map and rail at eight chapters */
+.pb-hero-map { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 991px) { .pb-hero-map { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (max-width: 599px) { .pb-hero-map { grid-template-columns: repeat(4, minmax(0, 1fr)); } .pb-rail-marks { grid-template-columns: repeat(4, 44px); } }
+@media (max-width: 759px) { .pb-hero .v9-hero-panel { padding-bottom: 28px; } .pb-hero-map { margin-bottom: 0; } }

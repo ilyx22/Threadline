@@ -123,3 +123,10 @@ What their page does that ours now does or could do:
 | A logo strip ("trusted by") | None | Needs real, permissioned logos |
 | FAQ covering start time and contract length | FAQ has neither | Needs the owner's terms: onboarding days, contract length |
 | A short "about us" origin story | None | Could be one paragraph in the owner's words |
+
+## 9. The owner's decisions (26 September, evening)
+
+- Playbook: chapters 6 and 7 merged. "Distribution is a place, not a blast" now carries the familiarity idea; "Expect first, then measure what the buyer did" carries the evidence idea. Eight chapters. The two old addresses redirect permanently.
+- FAQ: "How fast can we start?" (10 to 14 days of onboarding) and "Is there a long contract?" (month to month, twelve weeks recommended), taken from the reference agency's terms for now at the owner's instruction, pending Threadline's own.
+- Hero: the picture pans slowly back and forth along the line (22 seconds each way); the thread overlay moves with it. Off under reduced motion.
+- Left as is at the owner's word: "conversions", testimonials and logos, the entity details.

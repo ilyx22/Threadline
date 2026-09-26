@@ -10,7 +10,7 @@
 import { launchChrome, evaluate, open, scrollThrough, setViewport, sleep } from "./cdp";
 
 const BASE = process.env.QA_BASE ?? "http://localhost:3001";
-const CHAPTERS = ["expertise-is-the-raw-material", "positioning-is-a-decision", "listen-before-you-speak", "one-thesis-many-expressions", "distribution-is-a-place-not-a-blast", "repeated-exposure-builds-memory", "measure-what-the-buyer-did", "write-down-what-you-expect", "change-one-thing-and-retest", "what-we-do-not-promise"];
+const CHAPTERS = ["expertise-is-the-raw-material", "positioning-is-a-decision", "listen-before-you-speak", "one-thesis-many-expressions", "distribution-is-a-place-not-a-blast", "write-down-what-you-expect", "change-one-thing-and-retest", "what-we-do-not-promise"];
 const ROUTES = ["/", "/how-it-works", "/who-its-for", "/playbook", ...CHAPTERS.map((c) => `/playbook/${c}`), "/calculator", "/apply", "/login", "/forgot-password", "/reset-password"];
 const WIDTHS = [1440, 1024, 768, 390, 320];
 

@@ -2,12 +2,12 @@ import * as React from "react";
 import { PLAYBOOK } from "@/content/public-site";
 import { LANGUAGE_SOURCES, PROMISES, RAW_MATERIAL } from "@/content/playbook";
 import Bench from "@/components/marketing-v5/Bench";
-import { Drawers, EvidenceLadder, ExpectationCard, FlipGrid, MemoryScrubber, RoomPicker, SentenceBuilder, Sorter } from "./Widgets";
+import { Drawers, ExpectationCard, FlipGrid, RoomPicker, SentenceBuilder, Sorter } from "./Widgets";
 import { AutoRead } from "./Progress";
 import { Obj, type ObjName } from "../Obj";
 
 /** One object per chapter, the same set as the homepage, so the chapters read as stations of the same workshop. */
-export const CHAPTER_OBJECTS: ObjName[] = ["crate", "spool", "magnifier", "press", "peg", "ledger", "sheet-tick", "stamp", "bench", "folder"];
+export const CHAPTER_OBJECTS: ObjName[] = ["crate", "spool", "magnifier", "press", "peg", "stamp", "bench", "folder"];
 
 const TONES = ["is-sky", "is-peach", "is-mint", "is-lilac", "is-butter", "is-sky", "is-peach", "is-mint", "is-lilac", "is-butter"];
 
@@ -24,10 +24,6 @@ function Widget({ slug }: { slug: string }) {
       return <Sorter />;
     case "distribution-is-a-place-not-a-blast":
       return <RoomPicker />;
-    case "repeated-exposure-builds-memory":
-      return <MemoryScrubber />;
-    case "measure-what-the-buyer-did":
-      return <EvidenceLadder />;
     case "write-down-what-you-expect":
       return <ExpectationCard />;
     case "change-one-thing-and-retest":

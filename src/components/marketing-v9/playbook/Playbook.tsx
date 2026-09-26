@@ -58,7 +58,7 @@ export default function Playbook() {
               ))}
             </dl>
           </div>
-          <ol className="pb-hero-map v9-reveal" aria-label="The ten chapters" style={{ ["--d" as string]: "200ms" }}>
+          <ol className="pb-hero-map v9-reveal" aria-label="The chapters" style={{ ["--d" as string]: "200ms" }}>
             {PLAYBOOK.chapters.map((ch, i) => (
               <li key={ch.slug} style={{ ["--i" as string]: i }}>
                 <a href={`#chapter-${i + 1}`} className="pb-map-tile">

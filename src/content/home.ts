@@ -233,6 +233,8 @@ export const faq = {
     { q: "What do you need from me?", a: "About twenty minutes of recording a week when it is useful, and one approval pass. You talk, record, approve and sell. We run everything else." },
     { q: "Do I have to be on camera?", a: "Only where being on camera adds trust. Most of the work is written, spoken or shown, and the format is chosen per idea, not per platform." },
     { q: "Which platforms?", a: "The ones your buyers are actually in. Platforms are prescribed after diagnosis, not picked from a menu." },
+    { q: "How fast can we start?", a: "Onboarding takes 10 to 14 days: your voice, your positioning and your buyer, mapped before the first piece goes out." },
+    { q: "Is there a long contract?", a: "No. Engagements run month to month. Authority compounds, so we recommend committing to at least the first twelve weeks." },
     { q: "How long before it works?", a: "The first engagement is twelve weeks in three four-week periods. The first is quiet by design. By the third, the system runs on evidence from your own market." },
     { q: "What does it cost?", a: "Commercial terms are discussed on the call, once we both know it fits. We take a small number of firms at a time." },
     { q: "Do you guarantee leads?", a: "Leads, views and followers are not the scoreboard. Named enquiries and conversations are, and every one is recorded with its evidence." },

@@ -10,13 +10,13 @@
 export const PLAYBOOK_HERO = {
   eyebrow: "A resource, not a pitch",
   title: ["The Founder", "Authority System"],
-  lead: "How expert-led firms turn what they know into work the market wants, learn from what comes back, and become the obvious call. Ten chapters, one thing to do in each. No email wall.",
+  lead: "How expert-led firms turn what they know into work the market wants, learn from what comes back, and become the obvious call. Eight chapters, one thing to do in each. No email wall.",
   start: { label: "Start the playbook", href: "#chapter-1" },
   meta: "15 minutes, fully interactive",
   facts: [
     ["100m+", "views"],
     ["10,000+", "conversions"],
-    ["10", "chapters"],
+    ["8", "chapters"],
     ["0", "vanity metrics"],
   ],
 } as const;
