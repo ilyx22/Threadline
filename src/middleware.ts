@@ -10,7 +10,7 @@ import { NextResponse, type NextRequest } from "next/server";
  * here — middleware cannot query the database and must not be trusted.
  */
 
-const PROTECTED_PREFIXES = ["/app", "/admin", "/onboarding"];
+const PROTECTED_PREFIXES = ["/app", "/admin", "/onboarding", "/account"];
 const SESSION_COOKIE = "threadline_session";
 
 /**

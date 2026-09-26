@@ -47,7 +47,7 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   if (e === "production" && !set(env, "NEXT_PUBLIC_APP_URL")) add("warning", "NEXT_PUBLIC_APP_URL", "Not set; the Vercel production hostname is used until a custom domain is configured.");
 
   // Credentials at rest
-  if (!set(env, "CREDENTIAL_ENCRYPTION_KEYS")) add("warning", "CREDENTIAL_ENCRYPTION_KEYS", "Not set; no integration credential or webhook secret can be stored.");
+  if (!set(env, "CREDENTIAL_ENCRYPTION_KEYS")) add(e === "production" ? "error" : "warning", "CREDENTIAL_ENCRYPTION_KEYS", "Not set; no integration credential, webhook secret or staff two-factor secret can be stored.");
 
   // Email
   const email = env.EMAIL_PROVIDER ?? "capture";

@@ -32,11 +32,20 @@ model User {
   isSuperAdmin Boolean   @default(false)
   isActive     Boolean   @default(true)
   lastSeenAt   DateTime?
+  /// Staff two-factor (SEC-08). The TOTP secret is sealed with the credential
+  /// keyring (never stored in the clear); recovery codes are stored as hashes.
+  mfaSecret         String?
+  mfaEnabledAt      DateTime?
+  /// Last accepted TOTP time step, so a code cannot be replayed.
+  mfaLastStep       Int?
+  mfaRecoveryHashes String    @default("[]")
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
   sessions             Session[]
   memberships          Membership[]
+  invitationsSent      Invitation[]            @relation("InvitationInviter")
+  workAssignments      WorkAssignment[]
   auditLogs            AuditLog[]
   notifications        Notification[]
   tasksAssigned        Task[]                  @relation("TaskAssignee")
@@ -84,6 +93,9 @@ model Session {
   ipHash    String?
   expiresAt DateTime
   createdAt DateTime @default(now())
+  /// Set when the second factor was verified for this session (SEC-08).
+  mfaVerifiedAt DateTime?
+  lastSeenAt    DateTime?
 
   @@index([userId])
   @@index([expiresAt])
@@ -123,6 +135,8 @@ model Organization {
   updatedAt       DateTime  @updatedAt
 
   memberships          Membership[]
+  invitations          Invitation[]
+  workAssignments      WorkAssignment[]
   auditLogs            AuditLog[]
   notifications        Notification[]
   tasks                Task[]
@@ -184,6 +198,19 @@ model Membership {
   role      String // super_admin | internal_operator | client_admin | client_member | editor
   isPrimary Boolean  @default(false)
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  /// Client permission profiles layered on the role (TEAM-01): JSON array of
+  /// admin | approver | contributor | viewer | commercial.
+  profiles    String    @default("[]")
+  /// active | suspended. A suspended member keeps history but has no access.
+  status      String    @default("active")
+  suspendedAt DateTime?
+  /// The workspace owner: cannot be removed or demoted except by an explicit transfer.
+  isOwner     Boolean   @default(false)
+  /// A named expert whose voice Threadline writes in (TEAM-08).
+  isExpert    Boolean   @default(false)
+  /// primary | backup | null: the client contact for decisions.
+  contactRole String?
 
   user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
@@ -2567,4 +2594,57 @@ model WebhookEvent {
 
   @@unique([provider, externalId])
   @@index([provider, receivedAt])
+}
+
+/// A pending invitation to a workspace (TEAM-02). No user or membership exists
+/// until the invitee accepts; the link carries a random token stored only as a
+/// hash, single use, with an expiry.
+model Invitation {
+  id             String    @id @default(cuid())
+  orgId          String
+  email          String
+  name           String
+  title          String?
+  role           String
+  profiles       String    @default("[]")
+  isExpert       Boolean   @default(false)
+  tokenHash      String    @unique
+  invitedById    String?
+  expiresAt      DateTime
+  /// pending | accepted | revoked | expired
+  state          String    @default("pending")
+  sentCount      Int       @default(0)
+  lastSentAt     DateTime?
+  acceptedAt     DateTime?
+  acceptedUserId String?
+  revokedAt      DateTime?
+  revokedById    String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
+
+  org       Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  invitedBy User?        @relation("InvitationInviter", fields: [invitedById], references: [id], onDelete: SetNull)
+
+  @@index([orgId, state])
+  @@index([email])
+}
+
+/// Assignment-scoped access for contractors, editors and QA reviewers (TEAM-09):
+/// with an assignment scope they see only the work they are assigned to.
+model WorkAssignment {
+  id            String   @id @default(cuid())
+  orgId         String
+  userId        String
+  /// editor | backup_editor | qa_reviewer
+  kind          String
+  /// null = every item in the workspace of this kind of work
+  contentItemId String?
+  createdById   String?
+  createdAt     DateTime @default(now())
+
+  org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([orgId, userId, kind, contentItemId])
+  @@index([userId])
 }

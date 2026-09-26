@@ -5,7 +5,8 @@ import { safePath } from "@/lib/security/safe-path";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/db/client";
 import { verifyPassword } from "@/lib/auth/password";
-import { createSession, destroySession, pruneExpiredSessions } from "@/lib/auth/session";
+import { createSession, destroySession, getSessionState, pruneExpiredSessions, rotateSession } from "@/lib/auth/session";
+import { verifySecondFactor } from "@/lib/auth/mfa";
 import { auditInternal } from "@/lib/auth/audit";
 import { createHash } from "node:crypto";
 import { enforceRateLimit, LIMITS, RateLimitError, rateLimitAsync } from "@/lib/security/rate-limit";
@@ -47,12 +48,13 @@ export async function loginAction(
     }
 
     await pruneExpiredSessions();
-    await createSession(user.id);
+    const needsSecondFactor = Boolean(user.mfaEnabledAt);
+    await createSession(user.id, { mfaVerified: !needsSecondFactor });
     await auditInternal(user.id, {
-      action: "auth.login",
+      action: needsSecondFactor ? "auth.password_ok" : "auth.login",
       entityType: "user",
       entityId: user.id,
-      summary: `${user.name} signed in`,
+      summary: needsSecondFactor ? `${user.name} entered a correct password; second factor pending` : `${user.name} signed in`,
     });
 
     const clientOrg = user.memberships.find((m) => m.org.kind === "client");
@@ -68,9 +70,41 @@ export async function loginAction(
       safePath(input.next) ??
       (isInternal ? "/admin" : clientOrg ? `/app/${clientOrg.org.slug}` : "/app");
 
+    if (needsSecondFactor) return { ok: true as const, data: { redirectTo: `/login/verify?next=${encodeURIComponent(target)}` } };
     return { ok: true as const, data: { redirectTo: target } };
   });
 
+  if (result.ok) redirect(result.data.redirectTo);
+  return result;
+}
+
+/**
+ * Second step of sign-in for users with two-factor on (SEC-08): an
+ * authenticator code or a recovery code. Success rotates the session token.
+ */
+export async function verifySecondFactorAction(
+  _prev: ActionResult<{ redirectTo: string }> | null,
+  formData: FormData,
+): Promise<ActionResult<{ redirectTo: string }>> {
+  const result = await guarded(async () => {
+    const state = await getSessionState();
+    if (!state?.pendingMfa) return err("There is no sign-in waiting for a code. Sign in again.", "auth");
+    const accountKey = `mfa:${state.user.id}`;
+    const limited = await rateLimitAsync(accountKey, LIMITS.loginAccount);
+    if (!limited.ok) throw new RateLimitError(limited.retryAfterSeconds);
+    const code = String(formData.get("code") ?? "").slice(0, 40);
+    const check = await verifySecondFactor(state.user.id, code);
+    if (!check.ok) return err("That code was not accepted. Codes change every 30 seconds; each works once.", "auth");
+    await rotateSession(state.user.id, { mfaVerified: true });
+    await auditInternal(state.user.id, {
+      action: check.usedRecovery ? "auth.login_recovery_code" : "auth.login",
+      entityType: "user",
+      entityId: state.user.id,
+      summary: check.usedRecovery ? `${state.user.name} signed in with a recovery code (${check.remainingRecovery} left)` : `${state.user.name} signed in`,
+    });
+    const next = safePath(String(formData.get("next") ?? "")) ?? "/app";
+    return { ok: true as const, data: { redirectTo: next } };
+  });
   if (result.ok) redirect(result.data.redirectTo);
   return result;
 }

@@ -7,6 +7,7 @@ import {
   Bell,
   ClipboardList,
   ExternalLink,
+  KeyRound,
   LogOut,
   Menu,
   Play,
@@ -152,6 +153,9 @@ export function TopBar({
                     <Link href="/admin">Threadline admin</Link>
                   </DropdownMenuItem>
                 ) : null}
+                <DropdownMenuItem asChild icon={KeyRound}>
+                  <Link href="/account">Account security</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem icon={LogOut} destructive onSelect={() => void onLogout()}>
                   Sign out
