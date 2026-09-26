@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { Lightbulb, Video } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
 import { getScript } from "@/lib/data/scripts";
+import { prisma } from "@/lib/db/client";
+import { OwnershipControl } from "./ownership-control";
 import { isLiveAi } from "@/lib/ai";
 import { Breadcrumbs } from "@/components/ui/tabs";
 import { Card, CardBody } from "@/components/ui/card";
@@ -33,6 +35,17 @@ export default async function ScriptDetailPage({
           { label: script.title },
         ]}
       />
+
+      {ctx.can("scripts.edit") ? (
+        <OwnershipControl
+          slug={slug}
+          scriptId={script.id}
+          ownerId={script.ownerId}
+          dueDate={script.dueDate ? script.dueDate.toISOString().slice(0, 10) : null}
+          blockedReason={script.blockedReason}
+          people={(await prisma.membership.findMany({ where: { orgId: ctx.org.id, status: "active" }, select: { userId: true, user: { select: { name: true } } } })).map((m) => ({ id: m.userId, name: m.user.name }))}
+        />
+      ) : null}
 
       {script.idea || contentItem ? (
         <Card>

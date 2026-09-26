@@ -17,6 +17,7 @@ import { prisma } from "@/lib/db/client";
 import { CORRECTION_LEVERS, FAILURE_CLASSES } from "@/lib/domain/content-diagnosis";
 import { LearningPanel } from "./learning-panel";
 import { QaPanel } from "./qa-panel";
+import { BlockerControl } from "./blocker-control";
 import { currentQa, QA_CHECKS } from "@/lib/delivery/qa";
 import { assignableEditors, contentComments, getContentItem } from "@/lib/data/content";
 import { contentLineage } from "@/lib/data/lineage";
@@ -322,6 +323,7 @@ export default async function ContentDetailPage({
             </CardBody>
           </Card>
           {learning ? <LearningPanel slug={slug} view={learning} /> : null}
+          {ctx.can("production.edit") ? <BlockerControl slug={slug} contentItemId={id} blockedReason={item.blockedReason} blockedAt={item.blockedAt?.toISOString() ?? null} /> : null}
           {qa ? <QaPanel slug={slug} contentItemId={id} checks={QA_CHECKS.map((c) => ({ key: c.key, label: c.label }))} latest={qa.latest ? { result: qa.latest.result, versionLabel: qa.latest.versionLabel, current: qa.latest.current, createdAt: qa.latest.createdAt.toISOString() } : null} /> : null}
         </div>
 

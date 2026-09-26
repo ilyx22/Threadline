@@ -636,6 +636,11 @@ model Script {
   currentVersion   Int       @default(1)
   claimsVerified   Boolean   @default(false)
   approvedAt       DateTime?
+  /// DEL-01: who moves this script on, by when, and what is stopping it.
+  ownerId          String?
+  dueDate          DateTime?
+  blockedReason    String?
+  blockedAt        DateTime?
   createdAt        DateTime  @default(now())
   updatedAt        DateTime  @updatedAt
 
@@ -693,6 +698,10 @@ model ContentItem {
   revisionCount Int       @default(0)
   /// The thesis this piece tests.
   rootId        String?
+  /// DEL-01: what is stopping this piece, and since when. Cleared when the blocker is resolved.
+  blockedReason String?
+  blockedAt     DateTime?
+  blockedById   String?
   /// Set when this piece was cut from another — a short from an interview, a
   /// LinkedIn text version of a video. A derivative is measured on its own but
   /// never counted as a separate source asset against the period's output.

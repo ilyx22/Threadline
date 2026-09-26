@@ -26,7 +26,7 @@ export type QueueItem = {
 const DAY = 86_400_000;
 
 export async function unifiedQueue(now = new Date()): Promise<QueueItem[]> {
-  const [q, jobs, crm, stranded, uncertain, processing, leads, internalTasks] = await Promise.all([
+  const [q, jobs, crm, stranded, uncertain, processing, leads, internalTasks, blocked] = await Promise.all([
     operatorQueue(),
     jobSummary(),
     crmBacklog(),
@@ -35,6 +35,7 @@ export async function unifiedQueue(now = new Date()): Promise<QueueItem[]> {
     prisma.processingTask.findMany({ where: { status: "failed" }, select: { id: true, kind: true, updatedAt: true, org: { select: { name: true, slug: true } } }, take: 50 }),
     prisma.inquiry.findMany({ where: { firstResponseAt: null, stage: { notIn: ["won", "lost"] }, occurredAt: { lt: new Date(now.getTime() - DAY) }, org: { kind: "client" } }, select: { id: true, name: true, occurredAt: true, ownerId: true, org: { select: { name: true, slug: true } } }, take: 50 }),
     prisma.task.findMany({ where: { audience: "internal", status: { in: ["open", "in_progress"] }, dueDate: { lte: new Date(now.getTime() + DAY) } }, select: { id: true, title: true, dueDate: true, assignee: { select: { name: true } }, entityType: true, entityId: true }, take: 100 }),
+    prisma.contentItem.findMany({ where: { blockedReason: { not: null } }, select: { id: true, title: true, blockedReason: true, blockedAt: true, editor: { select: { name: true } }, org: { select: { name: true, slug: true } } }, take: 50 }),
   ]);
   const items: QueueItem[] = [];
   const push = (i: QueueItem) => items.push(i);
@@ -44,6 +45,7 @@ export async function unifiedQueue(now = new Date()): Promise<QueueItem[]> {
   for (const s of q.issues) push({ kind: "support", severity: s.severity === "critical" ? 3 : s.severity === "high" ? 2 : 1, title: s.title, org: s.org?.name ?? null, owner: s.owner?.name ?? null, since: s.createdAt, cause: `Support request, ${s.severity}`, next: s.owner ? "Reply and resolve" : "Take ownership", href: "/admin/support" });
   for (const a of q.overdueApprovals) push({ kind: "approval overdue", severity: 2, title: a.title, org: a.org.name, owner: null, since: a.dueDate ?? a.updatedAt, cause: "Waiting on the client's approval past its due date", next: "Chase the approver or re-plan", href: `/app/${a.org.slug}/production/${a.id}` });
   for (const b of q.blockedProduction) push({ kind: "changes stuck", severity: 2, title: b.title, org: b.org.name, owner: b.editor?.name ?? null, since: b.updatedAt, cause: "Changes requested more than three days ago", next: "Get the revision done", href: `/app/${b.org.slug}/production/${b.id}` });
+  for (const b of blocked) push({ kind: "blocked piece", severity: 2, title: b.title, org: b.org.name, owner: b.editor?.name ?? null, since: b.blockedAt ?? now, cause: `Blocked: ${b.blockedReason}`, next: "Remove the blocker or re-plan", href: `/app/${b.org.slug}/production/${b.id}` });
   for (const l of leads) push({ kind: "lead waiting", severity: 2, title: l.name, org: l.org.name, owner: null, since: l.occurredAt, cause: "No reply recorded after a day", next: "Draft a reply for the owner", href: `/app/${l.org.slug}/pipeline/${l.id}` });
   for (const c of crm.filter((r) => r.state === "dead" || r.state === "needs_review")) push({ kind: "CRM sync", severity: 1, title: `${c.operation} ${c.entityType} to the CRM`, org: null, owner: null, since: c.createdAt, cause: (c.lastError ?? "Failed to sync").slice(0, 120), next: "Retry after fixing the cause", href: "/admin/system" });
   for (const p of processing) push({ kind: "processing failed", severity: 1, title: p.kind, org: p.org.name, owner: null, since: p.updatedAt, cause: "The media worker reported a failure", next: "Retry the step", href: `/app/${p.org.slug}/library` });
