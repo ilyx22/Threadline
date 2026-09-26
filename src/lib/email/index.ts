@@ -23,6 +23,8 @@ export type EmailProvider = {
 };
 
 export type RenderedEmail = {
+  /** JOB-02: one key per message, so a retried send after a timeout is not delivered twice. */
+  idempotencyKey?: string;
   to: string;
   subject: string;
   text: string;
@@ -43,7 +45,7 @@ export function resendProvider(apiKey: string, from: string, fetchImpl: typeof f
     async send(message) {
       const res = await fetchImpl("https://api.resend.com/emails", {
         method: "POST",
-        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json", ...(message.idempotencyKey ? { "Idempotency-Key": message.idempotencyKey } : {}) },
         body: JSON.stringify({ from, to: [message.to], subject: message.subject, text: message.text, html: message.html }),
       });
       if (!res.ok) {
@@ -109,7 +111,9 @@ export async function sendEmail<K extends EmailTemplateKey>(input: {
     await prisma.emailMessage.update({ where: { id: row.id }, data: { status: "suppressed", error: "Address is suppressed after a bounce or complaint." } });
     return { id: row.id, status: "suppressed" as const };
   }
-  const result = await p.send({ to: input.to, template: input.template, ...rendered });
+  // The key is the message row when there is no job, and the job otherwise, so a job
+  // retried after a provider timeout reuses the same key and Resend sends it once.
+  const result = await p.send({ to: input.to, template: input.template, ...rendered, idempotencyKey: `tl-email-${input.jobId ?? row.id}` });
   await prisma.emailMessage.update({
     where: { id: row.id },
     data: result.ok
