@@ -12,6 +12,7 @@ export type TemplateMap = {
   weekly_report: { name: string; workspaceName: string; periodLabel: string; link: string };
   application_received: { name: string };
   application_operator_alert: { name: string; company: string; urgency: string; link: string };
+  period_review: { name: string; workspaceName: string; periodLabel: string; link: string };
 };
 
 export type EmailTemplateKey = keyof TemplateMap;
@@ -73,6 +74,13 @@ export function renderTemplate<K extends EmailTemplateKey>(key: K, data: Templat
       const title = `New application: ${d.company}`;
       const paragraphs = [`${d.name} at ${d.company} has applied (urgency: ${d.urgency}).`, `Open it to qualify it, set the next action and the owner.`];
       const cta = { label: "Open the application", href: d.link };
+      return { subject: title, text: text(title, paragraphs, cta), html: shell(title, paragraphs, cta) };
+    }
+    case "period_review": {
+      const d = data as TemplateMap["period_review"];
+      const title = `Your four-week review: ${d.periodLabel}`;
+      const paragraphs = [`Hello ${d.name},`, `The review of ${d.periodLabel} for ${d.workspaceName} is ready: what we did, what happened, what got in the way, and what we do next.`];
+      const cta = { label: "Read the review", href: d.link };
       return { subject: title, text: text(title, paragraphs, cta), html: shell(title, paragraphs, cta) };
     }
     default: {
