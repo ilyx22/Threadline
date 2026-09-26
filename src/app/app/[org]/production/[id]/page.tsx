@@ -11,6 +11,9 @@ import {
   Users,
 } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { prisma } from "@/lib/db/client";
+import { CORRECTION_LEVERS, FAILURE_CLASSES } from "@/lib/domain/content-diagnosis";
+import { LearningPanel } from "./learning-panel";
 import { assignableEditors, contentComments, getContentItem } from "@/lib/data/content";
 import { contentLineage } from "@/lib/data/lineage";
 import { PLATFORM_META, metaOf } from "@/lib/domain/enums";
@@ -44,6 +47,29 @@ export default async function ContentDetailPage({
   if (!item || !lineage) notFound();
 
   const totalViews = item.publishRecords.reduce((a, r) => a + (r.snapshots[0]?.views ?? 0), 0);
+
+  // LRN-01: the learning loop, for Threadline staff only.
+  const learning = ctx.can("learning.manage")
+    ? await (async () => {
+        const [roots, expectation, diagnosis] = await Promise.all([
+          prisma.contentRoot.findMany({ where: { orgId: ctx.org.id }, orderBy: { createdAt: "desc" }, select: { id: true, label: true }, take: 100 }),
+          prisma.contentExpectation.findFirst({ where: { orgId: ctx.org.id, subjectType: "content", subjectId: id }, orderBy: { createdAt: "desc" } }),
+          prisma.contentDiagnosis.findFirst({ where: { orgId: ctx.org.id, contentItemId: id, approvalState: { not: "superseded" } }, orderBy: { createdAt: "desc" } }),
+        ]);
+        const corrections = diagnosis ? await prisma.correctionEntry.findMany({ where: { orgId: ctx.org.id, diagnosisId: diagnosis.id }, orderBy: { createdAt: "asc" } }) : [];
+        return {
+          contentItemId: id,
+          live: item.stage === "live",
+          roots,
+          rootId: item.rootId ?? null,
+          expectation: expectation ? { overall: expectation.overall, expectedClass: expectation.expectedClass, confidence: expectation.confidence, createdAt: expectation.createdAt.toISOString() } : null,
+          diagnosis: diagnosis ? { id: diagnosis.id, state: diagnosis.approvalState, failureClass: diagnosis.failureClass, explanation: diagnosis.explanation, failedAssumption: diagnosis.failedAssumption, prescription: diagnosis.prescription, confidence: diagnosis.confidence } : null,
+          corrections: corrections.map((c) => ({ id: c.id, correction: c.correction, worked: c.worked })),
+          failureClasses: [...FAILURE_CLASSES],
+          levers: [...CORRECTION_LEVERS],
+        };
+      })()
+    : null;
 
   return (
     <div className="space-y-6">
@@ -283,6 +309,7 @@ export default async function ContentDetailPage({
               </ol>
             </CardBody>
           </Card>
+          {learning ? <LearningPanel slug={slug} view={learning} /> : null}
         </div>
 
         {/* -------------------------------- Sidebar -------------------------------- */}
