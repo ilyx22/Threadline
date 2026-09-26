@@ -212,7 +212,7 @@ export const engagement = {
   index: "09",
   eyebrow: "What the engagement looks like",
   headline: "Slow on day one. Inevitable by day ninety.",
-  body: "Three four-week periods. The first is quiet by design. By the third, the system runs on evidence from your own market.", // claim:C-CADENCE
+  curveNote: "What you give us in week one is still working in month six. Every idea, objection and reply goes into the system's memory, so each piece starts smarter than the last.",
   more: { label: "See if Threadline fits", href: links.apply },
 } as const;
 
@@ -237,7 +237,7 @@ export const faq = {
     { q: "Is there a long contract?", a: "No. Engagements run month to month. Authority compounds, so we recommend committing to at least the first twelve weeks." },
     { q: "How long before it works?", a: "The first engagement is twelve weeks in three four-week periods. The first is quiet by design. By the third, the system runs on evidence from your own market." },
     { q: "What does it cost?", a: "Commercial terms are discussed on the call, once we both know it fits. We take a small number of firms at a time." },
-    { q: "Do you guarantee leads?", a: "Leads, views and followers are not the scoreboard. Named enquiries and conversations are, and every one is recorded with its evidence." },
+    { q: "Is this about leads and views?", a: "Leads, views and followers are not the scoreboard. Named enquiries and conversations are, and every one is recorded with its evidence." },
     { q: "Who owns the content?", a: "You do. Every piece, transcript and asset lives in your workspace and stays yours." },
     { q: "Are you an agency?", a: "No. Threadline is a managed system: one root idea at a time, run station by station, and read back to you every week." },
   ],

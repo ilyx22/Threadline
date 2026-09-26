@@ -182,8 +182,8 @@ export default function Bench({ notes }: { notes?: readonly { step: string; note
                   <path d="M-33 0 H33" stroke={C.ink} strokeWidth={LINE} strokeDasharray="4 3" />
                   <rect x={31} y={-7} width={20} height={14} rx={4} fill="var(--v5-gold)" stroke={C.ink} strokeWidth={LINE} />
                 </g>
-                <text x={0} y={-258} textAnchor="middle" className="v5-label is-xs">{g.toUpperCase()}</text>
-                <text x={0} y={-274} textAnchor="middle" className="v5-label is-lg">{val}</text>
+                <text x={0} y={-256} textAnchor="middle" className="v5-label is-xs v5-jar-label">{g.toUpperCase()}</text>
+                <text x={0} y={-278} textAnchor="middle" className="v5-label is-lg v5-jar-value">{val}</text>
               </g>
             );
           })}

@@ -91,7 +91,7 @@ export function AutoRead({ slug, target }: { slug: string; target: string }) {
           timer = null;
         }
       },
-      { threshold: 0.45 },
+      { rootMargin: "-35% 0px -35% 0px", threshold: 0 }, /* the chapter crosses the middle third of the screen: works for chapters taller than the viewport */
     );
     io.observe(el);
     return () => {

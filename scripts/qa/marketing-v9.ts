@@ -63,7 +63,7 @@ async function main() {
       await open(cdp, `${BASE}/`, 1200);
       const w = await evaluate<{ sw: number; iw: number; wide: string[]; clipped: string[] }>(cdp, `(() => {
         const iw = innerWidth;
-        const wide = [...document.querySelectorAll('.v9-home *')].filter(e => { if (e.namespaceURI === 'http://www.w3.org/2000/svg') return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.right > iw + 1 && !e.closest('.v9-marquee, .v9-wordmark-marquee, .v9-frieze.is-photo, .v9-frieze.is-tiles'); }).slice(0, 4).map(e => e.tagName.toLowerCase() + '.' + [...e.classList].slice(0, 2).join('.'));
+        const wide = [...document.querySelectorAll('.v9-home *')].filter(e => { if (e.namespaceURI === 'http://www.w3.org/2000/svg') return false; const r = e.getBoundingClientRect(); return r.width > 0 && r.right > iw + 1 && !e.closest('.v9-marquee, .v9-wordmark-marquee, .v9-hero-scene.is-photo, .v9-frieze.is-photo, .v9-frieze.is-tiles'); }).slice(0, 4).map(e => e.tagName.toLowerCase() + '.' + [...e.classList].slice(0, 2).join('.'));
         const clipped = [...document.querySelectorAll('.v9-h1, .v9-h2, .v9-h3, .v9-eyebrow, .v9-tag, .v9-capsule-text strong, .v9-forms strong, .v9-tile-caption strong')].filter(e => e.scrollWidth > e.clientWidth + 1 && getComputedStyle(e).overflow !== 'visible').slice(0, 4).map(e => e.textContent.trim().slice(0, 30));
         return { sw: document.documentElement.scrollWidth, iw, wide, clipped };
       })()`);

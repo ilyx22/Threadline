@@ -10,6 +10,7 @@ import { Obj, type ObjName } from "./Obj";
 import { ExpressionsArt } from "./ExpressionsArt";
 import { WordmarkMarquee } from "./Marquee";
 import { HeroLoop } from "./HeroLoop";
+import { GrowthCurve } from "./GrowthCurve";
 
 /**
  * The homepage, 24 September 2026 (second pass). The composition the owner
@@ -315,7 +316,8 @@ function Engagement() {
   return (
     <section id="engagement" className="v9-engagement" data-scene aria-labelledby="engagement-title">
       <div className="v9-wrap">
-        <Head center eyebrow={engagement.eyebrow} title={engagement.headline} body={engagement.body} id="engagement-title" />
+        <Head center eyebrow={engagement.eyebrow} title={engagement.headline} id="engagement-title" />
+        <GrowthCurve note={engagement.curveNote} />
         <ol className="v9-periods v9-reveal">
           {PERIODS.map((p, i) => (
             <li key={p.label} className={`v9-tile ${PERIOD_TONES[i]}`} style={{ ["--i" as string]: i }}>

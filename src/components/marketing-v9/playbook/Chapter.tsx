@@ -66,10 +66,6 @@ export function Chapter({ index, standalone = false }: { index: number; standalo
         <div className={`pb-chapter-tool v9-tile ${TONES[index]} v9-reveal`} style={{ ["--d" as string]: "120ms" }}>
           <Widget slug={ch.slug} />
         </div>
-        <p className="pb-today v9-reveal">
-          <span className="v9-tag">Do this today</span>
-          {ch.practice}
-        </p>
       </div>
     </section>
   );

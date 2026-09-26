@@ -1471,11 +1471,6 @@
 @media (max-width: 759px) { .v9-midcta { flex-direction: column; margin-top: 28px; font-size: 1.3rem; } .v9-midcta .v9-btn { width: 100%; justify-content: center; } }
 
 /* ============================================================ pass 17 (26 September 2026) */
-/* the hero pans slowly back and forth along the line; the thread overlay moves with the picture */
-.v9-hero-scene.is-photo { overflow: hidden; }
-.v9-hero-scene.is-photo > img, .v9-hero-scene.is-photo > .v9-hero-loop { transform-origin: 50% 60%; animation: v9-hero-pan 22s ease-in-out infinite alternate; will-change: transform; }
-@keyframes v9-hero-pan { from { transform: scale(1.12) translateX(4.5%); } to { transform: scale(1.12) translateX(-4.5%); } }
-@media (prefers-reduced-motion: reduce) { .v9-hero-scene.is-photo > img, .v9-hero-scene.is-photo > .v9-hero-loop { animation: none; transform: none; } }
 /* the playbook map and rail at eight chapters */
 .pb-hero-map { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 @media (max-width: 991px) { .pb-hero-map { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -1491,3 +1486,59 @@
   .tl-public.v9 .v5-step-note { display: block; margin: 0 0 10px; font-size: 15px; line-height: 1.45; text-align: center; color: var(--v9-ink-soft); }
 }
 @media (max-width: 599px) { .v5-bench-stage .v5-label-plate { display: none; } }
+
+/* ============================================================ pass 19 (26 September 2026) */
+/* the bench on desktop: zoomed and sliding between the blocks and the jars, like the phone view */
+@media (min-width: 600px) {
+  .v9-learning-bench .v5-bench-stage { overflow: hidden; border-radius: 24px; }
+  .v9-learning-bench .v5-bench-stage svg.v5-art { width: 135%; min-width: 135%; height: auto; display: block; }
+}
+/* the jar names and values on phones, larger than the block labels */
+@media (max-width: 599px) {
+  .v5-bench-stage svg text.v5-jar-label, .v5-bench-stage svg text.v5-jar-value { display: inline; }
+  .tl-public.v9 .v5-bench-stage svg text.v5-jar-label { font-size: 17px; letter-spacing: 0.04em; }
+  .tl-public.v9 .v5-bench-stage svg text.v5-jar-value { font-size: 26px; }
+}
+/* the compounding curve */
+.v9-curve { margin: 32px auto 0; max-width: 760px; color: var(--v9-ink); }
+.v9-curve-art { display: block; width: 100%; height: auto; overflow: visible; }
+[data-js] [data-scene]:not([data-seen]) .v9-curve-path { stroke-dasharray: 100; stroke-dashoffset: 100; }
+[data-js] [data-scene][data-seen] .v9-curve-path { stroke-dasharray: 100; animation: v9-curve-draw 1600ms var(--v9-ease) 200ms both; }
+@keyframes v9-curve-draw { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+.v9-curve-stages { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; text-align: right; }
+.v9-curve-stages li { display: grid; gap: 2px; }
+.v9-curve-stages li:first-child { padding-right: 18%; }
+.v9-curve-stages strong { font-family: var(--v9-serif); font-weight: 400; font-size: 1.2rem; line-height: 1.1; }
+.v9-curve-note { margin: 18px auto 0; max-width: 56ch; text-align: center; font-size: 16px; line-height: 1.55; color: var(--v9-ink-soft); }
+.pb-curve { padding: var(--v9-section) 0 0; }
+.pb-curve .v9-curve { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .v9-curve-path { animation: none !important; stroke-dashoffset: 0 !important; } }
+@media (max-width: 759px) {
+  .v9-curve { margin-top: 20px; }
+  .v9-curve-stages { gap: 6px; }
+  .v9-curve-stages li:first-child { padding-right: 0; }
+  .v9-curve-stages strong { font-size: 1rem; }
+  .v9-curve-note { font-size: 15px; }
+}
+
+/* ============================================================ pass 20 (26 September 2026): the intro, second version; the FAQ in two columns */
+html.tl-intro-lock, html.tl-intro-lock body { overflow: hidden; }
+.tl-intro { animation: tl-intro-lift 700ms cubic-bezier(0.7, 0, 0.2, 1) 1250ms both; }
+@keyframes tl-intro-lift { to { transform: translateY(-100%); visibility: hidden; } }
+.tl-intro-lead { position: absolute; left: 0; top: 50%; width: calc(50% - 70px); height: 3px; margin-top: -1.5px; border-radius: 2px; background: var(--v5-gold); transform: scaleX(0); transform-origin: left center; animation: tl-intro-lead 520ms cubic-bezier(0.3, 0.6, 0.2, 1) 60ms forwards; }
+@keyframes tl-intro-lead { to { transform: scaleX(1); } }
+.tl-intro-lockup { gap: 18px; }
+.tl-intro-mark { width: 140px; height: 140px; }
+.tl-intro-mark path { animation-delay: 420ms; animation-duration: 620ms; }
+.tl-intro-mark circle:first-of-type { animation-delay: 700ms; }
+.tl-intro-mark circle:last-of-type { animation-delay: 900ms; }
+.tl-intro-word { display: inline-flex; opacity: 1; transform: none; animation: none; font-size: 22px; font-weight: 700; letter-spacing: 0.26em; }
+.tl-intro-word span { display: inline-block; opacity: 0; transform: translateY(10px); animation: tl-intro-word 380ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards; animation-delay: calc(640ms + var(--i) * 32ms); }
+@media (max-width: 759px) {
+  .tl-intro-mark { width: 96px; height: 96px; }
+  .tl-intro-lead { width: calc(50% - 48px); }
+  .tl-intro-word { font-size: 17px; }
+}
+@media (min-width: 992px) {
+  .v9-faq-list { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 1120px; align-items: start; column-gap: 14px; }
+}
