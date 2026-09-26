@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BarChart3, Eye, MessageSquare, Target, TrendingDown, TrendingUp, Users } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { CsvImport } from "./csv-import";
 import {
   breakdowns,
   classifyAssets,
@@ -103,6 +104,8 @@ export default async function PerformancePage({
           }))}
         />
       </header>
+
+      {ctx.can("performance.edit") ? <CsvImport slug={slug} /> : null}
 
       {/* -------------------------------- Headline -------------------------------- */}
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
