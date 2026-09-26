@@ -32,6 +32,8 @@ import { ClientConfigForm } from "./client-config-form";
 import { EngagementPanel } from "./engagement-panel";
 import { BillingPanel } from "./billing-panel";
 import { OffboardingPanel } from "./offboarding-panel";
+import { PlacementsPanel } from "./placements-panel";
+import { PROOF_PERMISSIONS } from "@/lib/proof/placements";
 import { invoiceBalance } from "@/lib/billing/invoices";
 import { currentEngagement, ensurePeriods } from "@/lib/commercial/engagements";
 
@@ -81,6 +83,11 @@ export default async function ClientDetailPage({
     deletable: Boolean(orgRow.retentionUntil && orgRow.retentionUntil < new Date() && !orgRow.legalHold && admin.can("workspace.delete")),
     steps: offRecord ? (JSON.parse(offRecord.steps) as { step: string; outcome: string }[]) : [],
   };
+  const [placementRows, proofRow] = await Promise.all([
+    prisma.proofPlacement.findMany({ where: { orgId: client.id }, orderBy: { placedAt: "desc" } }),
+    prisma.proofPermission.findUnique({ where: { orgId: client.id } }),
+  ]);
+  const permittedUses = PROOF_PERMISSIONS.filter((k) => proofRow && (proofRow as Record<string, unknown>)[k] === true && !(proofRow.expiresAt && proofRow.expiresAt < new Date()));
   const todayIso = new Date().toISOString().slice(0, 10);
   const billingView = {
     orgId: client.id,
@@ -188,6 +195,8 @@ export default async function ClientDetailPage({
           />
 
           <BillingPanel view={billingView} />
+
+          <PlacementsPanel slug={orgRow.slug} permissions={[...permittedUses]} placements={placementRows.map((p) => ({ id: p.id, permission: p.permission, content: p.content, location: p.location, flagReason: p.flagReason, removed: Boolean(p.removedAt) }))} />
 
           <OffboardingPanel view={offboardingView} />
 

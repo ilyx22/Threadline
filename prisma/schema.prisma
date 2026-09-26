@@ -2650,6 +2650,9 @@ model ProofPermission {
   grantedAt              DateTime?
   grantedNote            String?
   requestedAt            DateTime?
+  /// PRF-01: when the permissions lapse (null = until withdrawn), and what they cover.
+  expiresAt              DateTime?
+  scopeNote              String?
   createdAt              DateTime     @default(now())
   updatedAt              DateTime     @updatedAt
   org                    Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
@@ -3124,5 +3127,27 @@ model RenewalReview {
 
   @@unique([engagementId, periodNumber])
   @@index([orgId, state])
+}
+
+/// Where Threadline uses a client's proof (PRF-01): which permission it rests
+/// on and where it appears. Withdrawing or expiring the permission flags every
+/// placement that relies on it, for a person to take down.
+model ProofPlacement {
+  id           String    @id @default(cuid())
+  orgId        String
+  /// The ProofPermission flag this relies on, e.g. allowPublicTestimonial.
+  permission   String
+  /// What is used: the quote, figure or logo, as placed.
+  content      String
+  /// Where it appears (page URL, deck name, proposal).
+  location     String
+  evidence     String?
+  placedById   String?
+  placedAt     DateTime  @default(now())
+  flaggedAt    DateTime?
+  flagReason   String?
+  removedAt    DateTime?
+
+  @@index([orgId, permission])
 }
 

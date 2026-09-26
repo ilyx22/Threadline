@@ -60,6 +60,9 @@ registerHandler("daily.tick", async () => {
   // RNW-01: open renewal reviews ahead of the end of the initial term.
   const { openDueRenewals } = await import("@/lib/commercial/renewals");
   await openDueRenewals();
+  // PRF-01: expired proof permissions flag the placements that rely on them.
+  const { flagWithdrawnPlacements } = await import("@/lib/proof/placements");
+  await flagWithdrawnPlacements();
   // BIL-01/BIL-04: draft due invoices and overdue reminders; issuing and
   // sending remain a person's decision.
   const { draftDueInvoices, draftOverdueReminders } = await import("@/lib/billing/invoices");
