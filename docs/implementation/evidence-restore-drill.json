@@ -1,0 +1,593 @@
+{
+  "at": "2026-09-26T06:53:37.448Z",
+  "tables": 97,
+  "rows": 1916,
+  "failed": false,
+  "seconds": 3,
+  "backupFile": "scripts\\db\\.backups\\restore_drill_1790405614288.json",
+  "invoiceSequence": 15,
+  "details": [
+    {
+      "table": "User",
+      "rows": 6,
+      "restored": 6,
+      "ok": true
+    },
+    {
+      "table": "Session",
+      "rows": 3,
+      "restored": 3,
+      "ok": true
+    },
+    {
+      "table": "Organization",
+      "rows": 4,
+      "restored": 4,
+      "ok": true
+    },
+    {
+      "table": "Membership",
+      "rows": 9,
+      "restored": 9,
+      "ok": true
+    },
+    {
+      "table": "AuditLog",
+      "rows": 465,
+      "restored": 465,
+      "ok": true
+    },
+    {
+      "table": "Notification",
+      "rows": 11,
+      "restored": 11,
+      "ok": true
+    },
+    {
+      "table": "Task",
+      "rows": 14,
+      "restored": 14,
+      "ok": true
+    },
+    {
+      "table": "BrandBrain",
+      "rows": 2,
+      "restored": 2,
+      "ok": true
+    },
+    {
+      "table": "Offer",
+      "rows": 2,
+      "restored": 2,
+      "ok": true
+    },
+    {
+      "table": "IcpProfile",
+      "rows": 2,
+      "restored": 2,
+      "ok": true
+    },
+    {
+      "table": "ProofItem",
+      "rows": 6,
+      "restored": 6,
+      "ok": true
+    },
+    {
+      "table": "Competitor",
+      "rows": 5,
+      "restored": 5,
+      "ok": true
+    },
+    {
+      "table": "IntelligenceRun",
+      "rows": 2,
+      "restored": 2,
+      "ok": true
+    },
+    {
+      "table": "ResearchItem",
+      "rows": 38,
+      "restored": 38,
+      "ok": true
+    },
+    {
+      "table": "Tag",
+      "rows": 13,
+      "restored": 13,
+      "ok": true
+    },
+    {
+      "table": "ResearchItemTag",
+      "rows": 58,
+      "restored": 58,
+      "ok": true
+    },
+    {
+      "table": "Pattern",
+      "rows": 15,
+      "restored": 15,
+      "ok": true
+    },
+    {
+      "table": "ContentRoot",
+      "rows": 2,
+      "restored": 2,
+      "ok": true
+    },
+    {
+      "table": "Idea",
+      "rows": 34,
+      "restored": 34,
+      "ok": true
+    },
+    {
+      "table": "Script",
+      "rows": 10,
+      "restored": 10,
+      "ok": true
+    },
+    {
+      "table": "ContentItem",
+      "rows": 34,
+      "restored": 34,
+      "ok": true
+    },
+    {
+      "table": "PatternEvidence",
+      "rows": 34,
+      "restored": 34,
+      "ok": true
+    },
+    {
+      "table": "IdeaEvidence",
+      "rows": 64,
+      "restored": 64,
+      "ok": true
+    },
+    {
+      "table": "ScriptVersion",
+      "rows": 12,
+      "restored": 12,
+      "ok": true
+    },
+    {
+      "table": "ContentEvent",
+      "rows": 172,
+      "restored": 172,
+      "ok": true
+    },
+    {
+      "table": "Asset",
+      "rows": 74,
+      "restored": 74,
+      "ok": true
+    },
+    {
+      "table": "Comment",
+      "rows": 5,
+      "restored": 5,
+      "ok": true
+    },
+    {
+      "table": "PlatformPackage",
+      "rows": 22,
+      "restored": 22,
+      "ok": true
+    },
+    {
+      "table": "Integration",
+      "rows": 12,
+      "restored": 12,
+      "ok": true
+    },
+    {
+      "table": "SocialAccount",
+      "rows": 3,
+      "restored": 3,
+      "ok": true
+    },
+    {
+      "table": "PublishRecord",
+      "rows": 22,
+      "restored": 22,
+      "ok": true
+    },
+    {
+      "table": "PerformanceSnapshot",
+      "rows": 51,
+      "restored": 51,
+      "ok": true
+    },
+    {
+      "table": "Visitor",
+      "rows": 2,
+      "restored": 2,
+      "ok": true
+    },
+    {
+      "table": "Inquiry",
+      "rows": 12,
+      "restored": 12,
+      "ok": true
+    },
+    {
+      "table": "WeeklyReport",
+      "rows": 3,
+      "restored": 3,
+      "ok": true
+    },
+    {
+      "table": "PeriodReview",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "OperatingMetric",
+      "rows": 16,
+      "restored": 16,
+      "ok": true
+    },
+    {
+      "table": "RunSource",
+      "rows": 8,
+      "restored": 8,
+      "ok": true
+    },
+    {
+      "table": "CandidateSignal",
+      "rows": 6,
+      "restored": 6,
+      "ok": true
+    },
+    {
+      "table": "CandidateEvidence",
+      "rows": 13,
+      "restored": 13,
+      "ok": true
+    },
+    {
+      "table": "ConstraintDiagnosis",
+      "rows": 1,
+      "restored": 1,
+      "ok": true
+    },
+    {
+      "table": "ConstraintAssessment",
+      "rows": 9,
+      "restored": 9,
+      "ok": true
+    },
+    {
+      "table": "InstallationMilestone",
+      "rows": 1,
+      "restored": 1,
+      "ok": true
+    },
+    {
+      "table": "ProofPeriod",
+      "rows": 4,
+      "restored": 4,
+      "ok": true
+    },
+    {
+      "table": "RecordingReadiness",
+      "rows": 1,
+      "restored": 1,
+      "ok": true
+    },
+    {
+      "table": "ReadinessCheck",
+      "rows": 7,
+      "restored": 7,
+      "ok": true
+    },
+    {
+      "table": "SupportIssue",
+      "rows": 3,
+      "restored": 3,
+      "ok": true
+    },
+    {
+      "table": "SopDocument",
+      "rows": 15,
+      "restored": 15,
+      "ok": true
+    },
+    {
+      "table": "OnboardingSession",
+      "rows": 1,
+      "restored": 1,
+      "ok": true
+    },
+    {
+      "table": "MarketWedge",
+      "rows": 3,
+      "restored": 3,
+      "ok": true
+    },
+    {
+      "table": "Prospect",
+      "rows": 53,
+      "restored": 53,
+      "ok": true
+    },
+    {
+      "table": "Application",
+      "rows": 5,
+      "restored": 5,
+      "ok": true
+    },
+    {
+      "table": "AiGeneration",
+      "rows": 50,
+      "restored": 50,
+      "ok": true
+    },
+    {
+      "table": "InternalMetric",
+      "rows": 6,
+      "restored": 6,
+      "ok": true
+    },
+    {
+      "table": "ValidationConversation",
+      "rows": 3,
+      "restored": 3,
+      "ok": true
+    },
+    {
+      "table": "SopCheck",
+      "rows": 15,
+      "restored": 15,
+      "ok": true
+    },
+    {
+      "table": "SalesCall",
+      "rows": 3,
+      "restored": 3,
+      "ok": true
+    },
+    {
+      "table": "AcquisitionTarget",
+      "rows": 1,
+      "restored": 1,
+      "ok": true
+    },
+    {
+      "table": "FunnelReview",
+      "rows": 1,
+      "restored": 1,
+      "ok": true
+    },
+    {
+      "table": "TrackedLink",
+      "rows": 3,
+      "restored": 3,
+      "ok": true
+    },
+    {
+      "table": "Touchpoint",
+      "rows": 5,
+      "restored": 5,
+      "ok": true
+    },
+    {
+      "table": "CommercialEvent",
+      "rows": 8,
+      "restored": 8,
+      "ok": true
+    },
+    {
+      "table": "ResearchExample",
+      "rows": 8,
+      "restored": 8,
+      "ok": true
+    },
+    {
+      "table": "ExampleAnalysis",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "JudgeVerdict",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "JudgeCalibration",
+      "rows": 16,
+      "restored": 16,
+      "ok": true
+    },
+    {
+      "table": "ContentExpectation",
+      "rows": 2,
+      "restored": 2,
+      "ok": true
+    },
+    {
+      "table": "ContentDiagnosis",
+      "rows": 1,
+      "restored": 1,
+      "ok": true
+    },
+    {
+      "table": "CorrectionEntry",
+      "rows": 2,
+      "restored": 2,
+      "ok": true
+    },
+    {
+      "table": "Credential",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "OAuthState",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "AuthToken",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "EmailMessage",
+      "rows": 68,
+      "restored": 68,
+      "ok": true
+    },
+    {
+      "table": "Job",
+      "rows": 72,
+      "restored": 72,
+      "ok": true
+    },
+    {
+      "table": "SalesScript",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "SalesCallScriptSnapshot",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "ProofPermission",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "WebhookEvent",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "Invitation",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "WorkAssignment",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "OfferTemplate",
+      "rows": 1,
+      "restored": 1,
+      "ok": true
+    },
+    {
+      "table": "Engagement",
+      "rows": 3,
+      "restored": 3,
+      "ok": true
+    },
+    {
+      "table": "ServicePeriod",
+      "rows": 13,
+      "restored": 13,
+      "ok": true
+    },
+    {
+      "table": "ScopeChange",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "CrmOutbox",
+      "rows": 101,
+      "restored": 101,
+      "ok": true
+    },
+    {
+      "table": "CrmLink",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "ReviewBatch",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "Approval",
+      "rows": 165,
+      "restored": 165,
+      "ok": true
+    },
+    {
+      "table": "ReviewBatchItem",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "Invoice",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "InvoiceLine",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "Payment",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "Dispute",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "AgreementDocument",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "PaymentReminder",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "OffboardingRecord",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    },
+    {
+      "table": "NotificationPreference",
+      "rows": 0,
+      "restored": 0,
+      "ok": true
+    }
+  ]
+}

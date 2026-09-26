@@ -30,6 +30,7 @@
     "qa:visual:compare": "node scripts/qa/run.cjs visual-capture --compare",
     "jobs:worker": "node scripts/jobs/run.cjs",
     "env:check": "tsx scripts/ops/env-check.ts",
+    "db:drill": "tsx scripts/db/backup-restore-drill.ts --report docs/implementation/evidence-restore-drill.json",
     "db:local": "node scripts/pg/local.mjs start",
     "db:local:url": "node scripts/pg/local.mjs url",
     "db:deploy": "prisma migrate deploy",

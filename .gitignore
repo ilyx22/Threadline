@@ -39,3 +39,6 @@ thebirdhouse/
 # local PostgreSQL for integration tests (embedded-postgres)
 .pg-data/
 .chrome-profile-audit/
+
+# Local backup drill output (may contain local data)
+scripts/db/.backups/
