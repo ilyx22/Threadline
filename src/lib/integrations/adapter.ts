@@ -2,7 +2,12 @@ import "server-only";
 import { integrationByProvider, type IntegrationDefinition } from "./registry";
 
 /**
- * Integration adapter interface.
+ * Integration configuration adapter.
+ *
+ * Validates and stores the non-secret configuration an integration collects
+ * (a booking URL, a profile address). Publishing and metrics go through the
+ * platform connectors (src/lib/integrations/connectors) since INT-09; the old
+ * always-unavailable publish and metrics paths here were removed.
  *
  * Real interface, real registry, honest states. Adapters that cannot connect
  * without credentials we do not have return an explicit `unavailable` result —
@@ -14,14 +19,6 @@ export type ConnectionResult =
   | { ok: true; connectedAt: Date; detail: string }
   | { ok: false; reason: "unavailable" | "invalid_config" | "error"; message: string };
 
-export type PublishResult =
-  | { ok: true; url: string; publishedAt: Date }
-  | { ok: false; reason: "unavailable" | "error"; message: string };
-
-export type MetricsResult =
-  | { ok: true; metrics: Record<string, number>; capturedAt: Date }
-  | { ok: false; reason: "unavailable" | "error"; message: string };
-
 export type ValidationResult = { ok: true } | { ok: false; errors: string[] };
 
 export interface IntegrationAdapter {
@@ -29,15 +26,6 @@ export interface IntegrationAdapter {
   describe(): IntegrationDefinition;
   validateConfig(config: Record<string, unknown>): ValidationResult;
   connect(config: Record<string, unknown>): Promise<ConnectionResult>;
-  publish?(input: {
-    config: Record<string, unknown>;
-    caption: string;
-    mediaPath?: string;
-  }): Promise<PublishResult>;
-  fetchMetrics?(input: {
-    config: Record<string, unknown>;
-    externalUrl: string;
-  }): Promise<MetricsResult>;
 }
 
 /**
@@ -96,24 +84,6 @@ class ConfigOnlyAdapter implements IntegrationAdapter {
       message:
         def.blockedReason ??
         "This integration cannot complete a connection in this version. The manual workflow is available.",
-    };
-  }
-
-  async publish(): Promise<PublishResult> {
-    const def = this.describe();
-    return {
-      ok: false,
-      reason: "unavailable",
-      message: `Automatic publishing to ${def.name} is not available. ${def.manualFallback}`,
-    };
-  }
-
-  async fetchMetrics(): Promise<MetricsResult> {
-    const def = this.describe();
-    return {
-      ok: false,
-      reason: "unavailable",
-      message: `Automatic metric import from ${def.name} is not available. ${def.manualFallback}`,
     };
   }
 }

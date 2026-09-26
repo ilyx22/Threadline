@@ -9,7 +9,8 @@ import { audit, touchOrg } from "@/lib/auth/audit";
 import { requireOrgAccess } from "@/lib/auth/guard";
 import { detectPatterns } from "@/lib/ai/generators";
 import { patternScore } from "@/lib/domain/scoring";
-import { getAdapter } from "@/lib/integrations/adapter";
+import { getConnector } from "@/lib/integrations/connectors";
+import { refreshMetricsForRecord } from "@/lib/analytics/ingest";
 import { integrationByProvider } from "@/lib/integrations/registry";
 import {
   breakdowns,
@@ -110,10 +111,10 @@ export async function addPerformanceSnapshotAction(
 }
 
 /**
- * Attempt a metric import through the provider adapter.
- *
- * In v1 every social adapter reports `unavailable`, and this action surfaces
- * that message verbatim rather than pretending an import ran.
+ * Import metrics for every published record on one platform through its
+ * connector (INT-09). Each record reports its own outcome; the action says how
+ * many were measured and, when none were, the first reason, verbatim. Nothing
+ * is recorded for a record the connector could not read.
  */
 export async function importMetricsAction(
   orgSlug: string,
@@ -124,25 +125,18 @@ export async function importMetricsAction(
     const definition = integrationByProvider(provider);
     if (!definition) return err("Unknown integration.", "not_found");
 
-    const integration = await prisma.integration.findUnique({
-      where: { orgId_provider: { orgId: ctx.org.id, provider } },
-    });
-
-    const adapter = getAdapter(provider);
-    if (!adapter.fetchMetrics) {
-      return err(`${definition.name} does not support metric import.`, "workflow");
+    if (!getConnector(provider)) return err(`${definition.name} has no metrics connector. ${definition.manualFallback}`, "workflow");
+    const records = await prisma.publishRecord.findMany({ where: { orgId: ctx.org.id, platform: provider, status: "published" }, select: { id: true }, take: 100 });
+    if (!records.length) return err(`Nothing published on ${definition.name} yet.`, "workflow");
+    const results = [];
+    for (const r of records) results.push(await refreshMetricsForRecord(ctx.org.id, r.id));
+    const measured = results.filter((r) => r.ok).length;
+    if (!measured) {
+      const first = results.find((r) => !r.ok) as { message: string } | undefined;
+      return err(first?.message ?? `${definition.name} returned no metrics.`, "workflow");
     }
-
-    const result = await adapter.fetchMetrics({
-      config: integration ? JSON.parse(integration.config) : {},
-      externalUrl: "",
-    });
-
-    if (!result.ok) {
-      return err(result.message, "workflow");
-    }
-
-    return okVoid("Metrics imported.");
+    revalidatePath(`/app/${orgSlug}/performance`);
+    return okVoid(`Measured ${measured} of ${records.length} ${definition.name} posts${measured < records.length ? "; the rest reported why on the record" : ""}.`);
   });
 }
 
