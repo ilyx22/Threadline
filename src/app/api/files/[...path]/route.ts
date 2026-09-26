@@ -44,7 +44,7 @@ export async function GET(
         await prisma.membership.findFirst({
           where: {
             userId: user.id,
-            OR: [{ orgId: asset.orgId }, { role: { in: ["internal_operator", "super_admin"] } }],
+            OR: [{ orgId: asset.orgId }, { role: { in: ["internal_operator", "super_admin"] }, org: { kind: "internal" } }],
           },
           select: { id: true },
         }),

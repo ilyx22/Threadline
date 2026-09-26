@@ -51,7 +51,7 @@ export async function loginAction(
     const clientOrg = user.memberships.find((m) => m.org.kind === "client");
     const isInternal =
       user.isSuperAdmin ||
-      user.memberships.some((m) => m.role === "internal_operator" || m.role === "super_admin");
+      user.memberships.some((m) => m.org.kind === "internal" && (m.role === "internal_operator" || m.role === "super_admin"));
 
     // `next` is attacker-controlled: it arrives on the login URL. Only an
     // unambiguous same-origin path is honoured. `startsWith("/")` alone let

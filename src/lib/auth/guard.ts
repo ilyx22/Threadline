@@ -121,6 +121,12 @@ export async function requireOrgAccess(
 
   let role: Role | null = (membership?.role as Role) ?? null;
 
+  // SEC-01: a staff role only means something inside the internal
+  // organisation. A staff role recorded on a client workspace (legacy data or a
+  // past bug) grants nothing there; staff access is re-derived below from the
+  // internal organisation alone.
+  if (role && isInternalRole(role) && org.kind !== "internal") role = null;
+
   // Threadline staff work across client workspaces without an explicit membership
   // row in every one. Super admins are resolved from the user flag; operators must
   // hold an internal_operator membership in the internal organisation.
@@ -166,9 +172,13 @@ export async function requireOrgPage(
   return ctx;
 }
 
+/**
+ * Staff status comes from a staff role in the INTERNAL organisation only
+ * (SEC-01). A staff role recorded on a client workspace never counts.
+ */
 const hasInternalOperatorRole = cache(async (userId: string) => {
   const membership = await prisma.membership.findFirst({
-    where: { userId, role: { in: ["internal_operator", "super_admin"] } },
+    where: { userId, role: { in: ["internal_operator", "super_admin"] }, org: { kind: "internal" } },
     select: { id: true },
   });
   return Boolean(membership);

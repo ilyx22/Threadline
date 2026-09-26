@@ -210,6 +210,34 @@ export function canAssignRole(actorRole: Role, target: Role): boolean {
   return false;
 }
 
+/**
+ * Role assignment scoped to the kind of workspace (SEC-01).
+ *
+ * Staff roles live ONLY in the internal Threadline organisation. A client
+ * workspace can hold client roles and nothing else, whoever is acting, so no
+ * one can mint an operator by granting a staff role inside a client workspace.
+ * In the internal organisation only a super admin may grant internal_operator,
+ * and super_admin itself is a user flag, never a granted membership role.
+ */
+export function canAssignRoleIn(actorRole: Role, target: Role, orgKind: string): boolean {
+  if (target === "super_admin") return false;
+  if (orgKind === "internal") return actorRole === "super_admin" && target === "internal_operator";
+  if (!ASSIGNABLE_CLIENT_ROLES.includes(target)) return false;
+  return canAssignRole(actorRole, target);
+}
+
+/**
+ * May the actor change or remove a member who currently holds `current`?
+ * Only when the actor could have granted that role in this workspace, so a
+ * client admin can never touch a staff membership.
+ */
+export function canManageMemberWithRole(actorRole: Role, current: Role, orgKind: string): boolean {
+  if (current === "super_admin") return actorRole === "super_admin";
+  if (orgKind === "internal") return actorRole === "super_admin";
+  if (isInternalRole(current)) return isInternalRole(actorRole);
+  return canAssignRole(actorRole, current);
+}
+
 /** Human-readable reason shown when a control is disabled rather than hidden. */
 export function denialReason(role: Role, capability: Capability): string {
   const labels: Partial<Record<Capability, string>> = {

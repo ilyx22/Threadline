@@ -15,11 +15,11 @@ export default async function MembersPage({ params }: { params: Promise<{ org: s
   const members = await listMembers(ctx.org.id);
   const canManage = ctx.can("workspace.members");
 
-  const assignable = ctx.role === "super_admin"
-    ? (["client_admin", "client_member", "editor", "internal_operator"] as const)
-    : ctx.role === "internal_operator"
-      ? (["client_admin", "client_member", "editor", "internal_operator"] as const)
-      : ASSIGNABLE_CLIENT_ROLES;
+  // Client workspaces hold client roles only; staff roles live in the
+  // internal organisation (SEC-01).
+  const assignable: readonly string[] = ctx.org.kind === "internal"
+    ? (ctx.role === "super_admin" ? ["internal_operator"] : [])
+    : ASSIGNABLE_CLIENT_ROLES;
 
   return (
     <div className="space-y-6">

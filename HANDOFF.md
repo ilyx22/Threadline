@@ -476,7 +476,7 @@ npm run verify         # all four in sequence
    `EMAIL_PROVIDER=resend` + `RESEND_API_KEY` + `EMAIL_FROM`.
 3. **Migrate.** `npx prisma migrate deploy`
 4. **Seed** (first deploy only, and only if you want the demo workspace):
-   `SEED_DEMO_PASSWORD=<strong value> npm run seed`
+   `SEED_DEMO_PASSWORD=<strong value> SEED_CONFIRM_RESET=wipe-local-demo-data npm run seed` (local demo databases only)
 5. **Build and start.** `npm run build && npm start`
 6. **Worker.** Run `npm run jobs:worker` alongside the app (or a scheduled
    `npm run jobs:worker -- --once`) so email, metric refresh and maintenance jobs execute.
@@ -504,7 +504,7 @@ Before running more than one instance, switch two adapters by configuration — 
   demonstrated and tested rather than asserted.
 - **Threadline** — the internal organisation, with 14 SOP documents and business metrics.
 
-Accounts (password from `SEED_DEMO_PASSWORD`, default `threadline-demo-2026` — **development
+Accounts (password from `SEED_DEMO_PASSWORD`, required, no default; the seed also needs `SEED_CONFIRM_RESET=wipe-local-demo-data` — **development
 value only, change it anywhere shared**):
 
 | Email | Role | Lands on |

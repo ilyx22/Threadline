@@ -26,7 +26,7 @@ export default async function SupportPage({
     }),
     listClients(),
     prisma.membership.findMany({
-      where: { role: { in: ["internal_operator", "super_admin"] } },
+      where: { role: { in: ["internal_operator", "super_admin"] }, org: { kind: "internal" } },
       include: { user: { select: { id: true, name: true } } },
     }),
   ]);

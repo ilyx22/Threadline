@@ -8,7 +8,7 @@ import { hashPassword, passwordIssues } from "@/lib/auth/password";
 import { createSession } from "@/lib/auth/session";
 import { audit, auditInternal } from "@/lib/auth/audit";
 import { requireOrgAccess } from "@/lib/auth/guard";
-import { canAssignRole } from "@/lib/auth/roles";
+import { canAssignRoleIn } from "@/lib/auth/roles";
 import { consumeToken, inspectToken, issueToken, tokenLink, TOKEN_TTL } from "@/lib/auth/tokens";
 import { enqueue } from "@/lib/jobs";
 import "@/lib/jobs/handlers";
@@ -102,7 +102,7 @@ export async function inviteMemberAction(orgSlug: string, _prev: ActionResult<{ 
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "workspace.members");
     const input = parseForm(inviteSchema, formData);
-    if (!canAssignRole(ctx.role, input.role)) return err("You cannot grant that role.", "auth");
+    if (!canAssignRoleIn(ctx.role, input.role, ctx.org.kind)) return err("You cannot grant that role.", "auth");
 
     const email = input.email.toLowerCase();
     let user = await prisma.user.findUnique({ where: { email } });

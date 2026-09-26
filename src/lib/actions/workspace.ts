@@ -5,7 +5,8 @@ import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db/client";
 import { audit, touchOrg } from "@/lib/auth/audit";
 import { requireOrgAccess } from "@/lib/auth/guard";
-import { canAssignRole } from "@/lib/auth/roles";
+import { canAssignRoleIn, canManageMemberWithRole } from "@/lib/auth/roles";
+import type { Role } from "@/lib/domain/enums";
 import { hashPassword, passwordIssues } from "@/lib/auth/password";
 import { stringify, stringifyArray } from "@/lib/db/json";
 import {
@@ -633,7 +634,7 @@ export async function addMemberAction(
     const ctx = await requireOrgAccess(orgSlug, "workspace.members");
     const input = parseForm(inviteSchema, formData);
 
-    if (!canAssignRole(ctx.role, input.role)) {
+    if (!canAssignRoleIn(ctx.role, input.role, ctx.org.kind)) {
       return err("You cannot grant that role.", "auth");
     }
 
@@ -687,7 +688,7 @@ export async function updateMemberRoleAction(
     const ctx = await requireOrgAccess(orgSlug, "workspace.members");
     const target = roleSchema.parse(role);
 
-    if (!canAssignRole(ctx.role, target)) {
+    if (!canAssignRoleIn(ctx.role, target, ctx.org.kind)) {
       return err("You cannot grant that role.", "auth");
     }
     if (userId === ctx.user.id) {
@@ -699,11 +700,27 @@ export async function updateMemberRoleAction(
       include: { user: { select: { name: true } } },
     });
     if (!membership) return err("That person is not a member of this workspace.", "not_found");
+    if (!canManageMemberWithRole(ctx.role, membership.role as Role, ctx.org.kind)) {
+      return err("You cannot change that person's role.", "auth");
+    }
 
-    await prisma.membership.update({
-      where: { userId_orgId: { userId, orgId: ctx.org.id } },
-      data: { role: target },
-    });
+    // Never demote the last workspace admin. Checked and written in one
+    // serialisable transaction so two concurrent demotions cannot both pass.
+    const blocked = await prisma.$transaction(
+      async (tx) => {
+        if (membership.role === "client_admin" && target !== "client_admin") {
+          const admins = await tx.membership.count({ where: { orgId: ctx.org.id, role: "client_admin" } });
+          if (admins <= 1) return true;
+        }
+        await tx.membership.update({
+          where: { userId_orgId: { userId, orgId: ctx.org.id } },
+          data: { role: target },
+        });
+        return false;
+      },
+      { isolationLevel: "Serializable" },
+    );
+    if (blocked) return err("This is the only workspace admin. Promote someone else first.", "workflow");
 
     await audit(ctx, {
       action: "member.role",
@@ -729,20 +746,24 @@ export async function removeMemberAction(orgSlug: string, userId: string): Promi
       include: { user: { select: { name: true } } },
     });
     if (!membership) return err("That person is not a member of this workspace.", "not_found");
-
-    // Never leave a workspace without an admin.
-    if (membership.role === "client_admin") {
-      const admins = await prisma.membership.count({
-        where: { orgId: ctx.org.id, role: "client_admin" },
-      });
-      if (admins <= 1) {
-        return err("This is the only workspace admin. Promote someone else first.", "workflow");
-      }
+    if (!canManageMemberWithRole(ctx.role, membership.role as Role, ctx.org.kind)) {
+      return err("You cannot remove that person.", "auth");
     }
 
-    await prisma.membership.delete({
-      where: { userId_orgId: { userId, orgId: ctx.org.id } },
-    });
+    // Never leave a workspace without an admin; checked and written together
+    // in one serialisable transaction so concurrent removals cannot race.
+    const blocked = await prisma.$transaction(
+      async (tx) => {
+        if (membership.role === "client_admin") {
+          const admins = await tx.membership.count({ where: { orgId: ctx.org.id, role: "client_admin" } });
+          if (admins <= 1) return true;
+        }
+        await tx.membership.delete({ where: { userId_orgId: { userId, orgId: ctx.org.id } } });
+        return false;
+      },
+      { isolationLevel: "Serializable" },
+    );
+    if (blocked) return err("This is the only workspace admin. Promote someone else first.", "workflow");
 
     await audit(ctx, {
       action: "member.remove",
