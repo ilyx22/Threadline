@@ -12,7 +12,7 @@ import { At, C, LINE, outline as O } from "./art/kit";
  * slides in; the jars are read again. Keyboard, touch and reduced motion all
  * land on the same states. Cases and values are illustrative and labelled so.
  */
-const COMPONENT_X = [-148, -74, 0, 74, 148];
+const COMPONENT_X = [-160, -80, 0, 80, 160];
 
 export default function Bench({ notes }: { notes?: readonly { step: string; note: string }[] } = {}) {
   const d = diagnosis;
@@ -139,7 +139,9 @@ export default function Bench({ notes }: { notes?: readonly { step: string; note
                       <path d="M24 -44 L36 -56 V-12 L24 0 Z" fill={replaced ? C.mintDeep : failed ? C.coralDeep : C.woodDeep} stroke={C.ink} strokeWidth={LINE} strokeLinejoin="round" />
                       <path d="M-18 -30 H10 M-14 -16 H14" stroke={C.ink} strokeWidth={1.2} opacity={0.3} strokeLinecap="round" />
                     </g>
-                    <text x={0} y={16} textAnchor="middle" className="v5-label is-xs">
+                    {/* the label on a small plate, centred in the bench's plank */}
+                    <rect x={-(name.length * 6.7 + 10) / 2} y={2} width={name.length * 6.7 + 10} height={14} rx={7} fill={C.paper} stroke={C.ink} strokeWidth={0.8} strokeOpacity={0.4} />
+                    <text x={0} y={9} textAnchor="middle" dominantBaseline="central" className="v5-label is-xs">
                       {name.toUpperCase()}
                     </text>
                   </g>
@@ -147,7 +149,7 @@ export default function Bench({ notes }: { notes?: readonly { step: string; note
               );
             })}
             <g className="v5-piece">
-              <rect x={-190} y={-82} width={380} height={12} rx={1} fill={C.lilac} {...O} />
+              <rect x={-206} y={-82} width={412} height={12} rx={1} fill={C.lilac} {...O} />
               <image href="/marketing/bench/sheet-easel.png" x={-60} y={-244} width={120} height={162} preserveAspectRatio="xMidYMax meet" />
               <text x={0} y={-256} textAnchor="middle" className="v5-label">THE PIECE · {c.title.toUpperCase()}</text>
             </g>
