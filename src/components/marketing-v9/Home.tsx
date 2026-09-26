@@ -1,13 +1,13 @@
 import * as React from "react";
 import Link from "next/link";
-import { closing, expressions, fit, gap, hero, learning, memory, roles } from "@/content/home";
+import { closing, engagement, expressions, gap, hero, learning, memory, roles } from "@/content/home";
+import { PERIODS } from "@/content/playbook";
 import { workshop } from "@/content/marketing-v5";
 import Image from "next/image";
 import Motion from "@/components/marketing-v5/Motion";
 import Bench from "@/components/marketing-v5/Bench";
 import { Obj, type ObjName } from "./Obj";
 import { ExpressionsArt } from "./ExpressionsArt";
-import { FitTable } from "./FitTable";
 import { WordmarkMarquee } from "./Marquee";
 
 /**
@@ -316,16 +316,27 @@ function Learning() {
   );
 }
 
-/* -------------------------------------------------------------------- 8 fit */
-function Fit() {
+/* ------------------------------------------------------------- 8 engagement */
+const PERIOD_TONES = ["is-sky", "is-peach", "is-mint"];
+function Engagement() {
   return (
-    <section id="fit" className="v9-fit" data-scene aria-labelledby="fit-title">
+    <section id="engagement" className="v9-engagement" data-scene aria-labelledby="engagement-title">
       <div className="v9-wrap">
-        <Head center eyebrow={fit.eyebrow} title={fit.headline} body={fit.body} id="fit-title" />
-        <FitTable good={fit.good} bad={fit.bad} tinted />
+        <Head center eyebrow={engagement.eyebrow} title={engagement.headline} body={engagement.body} id="engagement-title" />
+        <ol className="v9-periods v9-reveal">
+          {PERIODS.map((p, i) => (
+            <li key={p.label} className={`v9-tile ${PERIOD_TONES[i]}`} style={{ ["--i" as string]: i }}>
+              <span className="v9-tag">
+                {p.label} · {p.weeks}
+              </span>
+              <h3 className="v9-h3">{p.title}</h3>
+              <p>{p.body}</p>
+            </li>
+          ))}
+        </ol>
         <p className="v9-more is-center">
-          <Link href={fit.more.href} className="v9-link">
-            {fit.more.label}
+          <Link href={engagement.more.href} className="v9-link">
+            {engagement.more.label}
             <Arrow />
           </Link>
         </p>
@@ -376,7 +387,7 @@ export default function HomeV9() {
       <Workshop />
       <Expressions />
       <Learning />
-      <Fit />
+      <Engagement />
       <Closing />
     </div>
   );

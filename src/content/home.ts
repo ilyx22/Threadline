@@ -13,7 +13,7 @@ export const links = { apply: "/apply", playbook: "/playbook", how: "/how-it-wor
 export const hero = {
   eyebrow: "A managed authority system for expert-led B2B firms",
   headline: "Make the expertise that wins the work visible before the sales call.", // claim:C-HERO-V4
-  lead: "Threadline takes the judgement your firm already sells, turns it into work the right buyers keep meeting, and learns from what comes back. You talk, record when useful, approve and sell. Threadline runs the system around you.",
+  lead: "The judgement your firm already sells becomes work the right buyers keep meeting, and every reply teaches the next piece. You talk, record when useful, approve and sell. We run everything else.",
   cta: { label: "See if Threadline fits", href: links.apply },
   secondary: { label: "How it works", href: links.how },
   fit: "Built for firms where judgement is what clients buy and one conversation is worth a lot.",
@@ -205,4 +205,13 @@ export const closing = {
   body: "A small number of firms at a time. Applications are read by a person and answered either way, including when the answer is that we are not the right fit.", // claim:C-FOUNDING, C-REPLY-EITHER-WAY
   cta: { label: "See if Threadline fits", href: links.apply },
   secondary: { label: "Read the Playbook first", href: links.playbook },
+} as const;
+
+/** 09. What the first engagement looks like: the three four-week periods from the Playbook, on the front page. */
+export const engagement = {
+  index: "09",
+  eyebrow: "What the engagement looks like",
+  headline: "Twelve weeks. Three periods. One honest verdict.",
+  body: "Threadline runs in four-week service periods, and the first engagement is three of them. Each period tells you something the last one could not.", // claim:C-CADENCE
+  more: { label: "See if Threadline fits", href: links.apply },
 } as const;

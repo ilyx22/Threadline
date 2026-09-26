@@ -1247,3 +1247,36 @@
 .pb-chapter + .pb-chapter::before { content: ""; display: block; max-width: var(--v9-max); margin: 0 auto var(--v9-section); border-top: 1px solid var(--v9-line); }
 .pb-chapter + .pb-chapter { padding-top: 0; }
 @media (max-width: 759px) { .pb-chapter + .pb-chapter::before { margin-inline: 16px; } }
+
+/* ============================================================ pass 8 (26 September 2026) */
+/* the menu sheet opens with a settle, its links follow */
+.tl-public.v9 .v5-drawer:not([hidden]) { animation: tl-drawer-in 260ms var(--v9-ease) both; }
+.tl-public.v9 .v5-drawer:not([hidden]) .v5-drawer-link, .tl-public.v9 .v5-drawer:not([hidden]) .v5-drawer-cta { animation: tl-drawer-link 320ms var(--v9-ease) both; animation-delay: calc(60ms + var(--i, 3) * 40ms); }
+@keyframes tl-drawer-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+@keyframes tl-drawer-link { from { opacity: 0; transform: translateX(-6px); } to { opacity: 1; transform: none; } }
+/* the engagement on the front page: three period tiles */
+.v9-engagement { padding: var(--v9-section) 0 0; }
+.v9-periods { list-style: none; margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.v9-periods li { display: flex; flex-direction: column; gap: 10px; padding: 24px 26px 28px; }
+.v9-periods p { margin: 0; font-size: 15px; line-height: 1.5; color: var(--v9-ink-soft); }
+/* the five learning steps as outlined cards, on every width */
+.v9-learning-panel .v9-head .v9-body { display: none; }
+.v9-learning-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); align-items: center; }
+.v9-learning-grid .v9-head { order: 0; }
+.v9-learning-grid .v9-learning-scene { order: 1; }
+.v9-learning-steps { order: 2; grid-column: 1 / -1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin: 8px 0 0; padding: 0; list-style: none; counter-reset: step; }
+.v9-learning-steps li { counter-increment: step; display: grid; gap: 6px; padding: 16px 18px 18px; border-radius: 18px; background: #fff; border: 1.5px solid var(--v9-line); box-shadow: inset 4px 0 0 var(--v9-action); font-size: 15px; line-height: 1.45; color: var(--v9-ink-soft); }
+.v9-learning-steps li::before { content: "0" counter(step); font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; color: var(--v9-action); }
+.v9-learning-steps strong { display: block; font-family: var(--v9-serif); font-weight: 400; font-size: 1.35rem; line-height: 1.1; color: var(--v9-ink); }
+@media (max-width: 1023px) { .v9-learning-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 759px) {
+  .v9-periods { grid-template-columns: 1fr; gap: 10px; margin-top: 24px; }
+  .v9-periods li { padding: 18px 18px 20px; }
+  .v9-learning-steps { grid-template-columns: 1fr; gap: 8px; margin-top: 4px; padding: 0; font-size: 15px; }
+  .v9-learning-steps li { padding: 12px 14px 14px; }
+  .v9-learning-steps strong { font-size: 1.2rem; }
+}
+@media (max-width: 991px) {
+  /* the learning head keeps the full width on tablets and phones; the scene sits under it */
+  .v9-learning-grid { grid-template-columns: 1fr; align-items: start; }
+}

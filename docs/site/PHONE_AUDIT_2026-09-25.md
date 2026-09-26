@@ -174,3 +174,14 @@ Uses the same panel and wordmark rules; inherits the width change.
 | "A line divider between each chapter" | everywhere | A hairline rule between chapters, with the section space below it |
 | Titles and copy as one story, no longer than before | homepage | Section eyebrows now read in sequence: The visibility gap; What we build instead; How we'll work together; Our curated system; One idea, multiple formats; How we test and perfect; Who this is for. Headlines: "Strong firms know far more than the market does." and "One idea, multiple formats." Bodies shortened in the gap, memory, roles, expressions and learning sections; the five learning steps rewritten as one clear line each. The hero, the memory headline, the founder-role headline and the five-word learning headline are unchanged (approved copy). No promises added, no em dashes |
 | The inner pages' eyebrows | How it works, Who it is for | "The system, station by station", "Who does what", "What we refuse to do", "One idea, start to finish"; "Seven signs it fits", "The fit, plainly" |
+
+## Eighth pass (26 September 2026)
+
+| Note | Where it applies | What changed |
+| --- | --- | --- |
+| "Animation when clicking the dropdown bar" | phone | The menu sheet fades and settles in over 260ms and its links follow in a 40ms stagger |
+| "Remove Who this is for from the main page; replace it with what the engagement looks like" | homepage | The fit table is gone from the homepage (it stays on Who it is for). In its place: "Twelve weeks. Three periods. One honest verdict." with the three period tiles from the Playbook and a link to apply |
+| "Expected, actual, why, change, retest in cool boxes" | everywhere | The five steps are five outlined cards on every width (a row of five on desktop, stacked on phones): number, name, one line. The paragraph is gone |
+| Final copy update | everywhere | Hero lead, workshop body, How it works lead, Who it is for lead, Apply lead and calculator lead rewritten to be sharper and shorter. Approved and suite-protected lines unchanged. No promises, no em dashes |
+| Body font | everywhere | Left as Inter, on purpose: against the Instrument Serif headings it is the quietest, most legible body face at 17px on a phone, and a serif body or a geometric sans would either drop legibility or make the site read as a generic startup. Reopen if you have a face in mind |
+| "The jars are drawn poorly" | everywhere | The jars are now drawn in code rather than pasted from a render: clean glass with a rim, a highlight, a scale, a level that rises and changes colour, and a pegged expected mark. Same behaviour, same labels |

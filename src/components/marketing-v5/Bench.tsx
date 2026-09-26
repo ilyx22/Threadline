@@ -16,6 +16,7 @@ const COMPONENT_X = [-148, -74, 0, 74, 148];
 
 export default function Bench() {
   const d = diagnosis;
+  const jarId = React.useId().replace(/[^a-zA-Z0-9]/g, "");
   const [state, setState] = React.useState(0);
   const [lever, setLever] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
@@ -148,20 +149,31 @@ export default function Bench() {
               <text x={0} y={-256} textAnchor="middle" className="v5-label">THE PIECE · {c.title.toUpperCase()}</text>
             </g>
           </At>
-          {/* the measuring jars: the jar is a generated piece, the level and the expected marker are drawn */}
+          {/* the measuring jars: drawn glass, a level that rises, a pegged expected mark and a scale (26 September 2026) */}
           {c.gauges.map((g, i) => {
             const x = 580 + i * 100;
             const exp = c.expected[i];
             const val = values[i];
             const short = showActual && !retest && val < exp - 12;
             const over = showActual && !retest && val > exp + 12;
+            const clip = `${jarId}-${i}`;
             return (
               <g key={g} transform={`translate(${x} 400)`}>
-                <image href="/marketing/bench/jar.png" x={-40} y={-240} width={80} height={240} preserveAspectRatio="xMidYMax meet" />
-                <rect x={-27} y={-16 - val * 1.8} width={54} height={val * 1.8} rx={4} fill={short ? C.coral : over ? C.butter : C.mintDeep} opacity={0.78} className="v5-fill" />
-                <g transform={`translate(34 ${-16 - exp * 1.8})`}>
-                  <image href="/marketing/bench/marker.png" x={-6} y={-16} width={30} height={30} preserveAspectRatio="xMidYMid meet" />
-                  <path d="M-64 0 H-4" stroke={C.ink} strokeWidth={LINE} strokeDasharray="3 3" />
+                <defs>
+                  <clipPath id={clip}>
+                    <rect x={-33} y={-234} width={66} height={220} rx={12} />
+                  </clipPath>
+                </defs>
+                <rect className="v5-jar-glass" x={-33} y={-234} width={66} height={220} rx={12} fill="#fff" fillOpacity={0.62} stroke={C.ink} strokeWidth={LINE} />
+                <rect className="v5-fill" clipPath={`url(#${clip})`} x={-33} y={-16 - val * 1.8} width={66} height={val * 1.8 + 4} fill={short ? C.coral : over ? C.butter : C.mintDeep} opacity={0.85} />
+                <path d="M-22 -218 V-40" stroke="#fff" strokeOpacity={0.75} strokeWidth={5} strokeLinecap="round" />
+                {[20, 40, 60, 80].map((t) => (
+                  <path key={t} d={`M20 ${-16 - t * 1.8} H29`} stroke={C.ink} strokeWidth={1.4} opacity={0.42} />
+                ))}
+                <rect x={-38} y={-246} width={76} height={14} rx={5} fill={C.wood} stroke={C.ink} strokeWidth={LINE} />
+                <g transform={`translate(0 ${-16 - exp * 1.8})`}>
+                  <path d="M-33 0 H33" stroke={C.ink} strokeWidth={LINE} strokeDasharray="4 3" />
+                  <rect x={31} y={-7} width={20} height={14} rx={4} fill="var(--v5-gold)" stroke={C.ink} strokeWidth={LINE} />
                 </g>
                 <text x={0} y={-258} textAnchor="middle" className="v5-label is-xs">{g.toUpperCase()}</text>
                 <text x={0} y={-274} textAnchor="middle" className="v5-label is-lg">{val}</text>

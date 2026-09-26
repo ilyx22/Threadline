@@ -94,7 +94,7 @@ export const burden = {
 export const workshop = {
   eyebrow: "Our curated system",
   headline: "Your expertise goes in. A visible authority system comes out.",
-  body: "One root idea travels the whole bench. Six stations, each with one job. Nothing is duplicated; everything is decided by a person and read back against what we expected.",
+  body: "One root idea travels six stations. Each has one job and one person deciding. Nothing goes out unread, and nothing that comes back is wasted.",
   stations: [
     { key: "intel", title: "Listen", plain: "What your buyers are asking, objecting to and searching for, in their words.", object: "Loose fragments, sorted." },
     { key: "thesis", title: "Decide the idea", plain: "The fragments become one argument worth testing. One root idea at a time.", object: "One spool, wound tight." },

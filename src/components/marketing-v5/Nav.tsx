@@ -62,7 +62,7 @@ export default function Nav() {
       <div id="v5-drawer" className="v5-drawer" hidden={!open}>
         <nav aria-label="Primary, mobile" className="v5-wrap">
           {nav.links.map((l, i) => (
-            <Link key={l.href} href={l.href} className="v5-drawer-link" aria-current={pathname === l.href || pathname.startsWith(l.href + "/") ? "page" : undefined}>
+            <Link key={l.href} href={l.href} className="v5-drawer-link" style={{ ["--i" as string]: i }} aria-current={pathname === l.href || pathname.startsWith(l.href + "/") ? "page" : undefined}>
               <span className="v5-drawer-n">{String(i + 1).padStart(2, "0")}</span>
               {l.label}
             </Link>

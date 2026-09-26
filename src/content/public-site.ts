@@ -195,7 +195,7 @@ export const HOME = {
 
 export const HOW_IT_WORKS = {
   title: "How the machine works.",
-  lead: "Raw expertise in. Market intelligence, content decisions, production, distribution, commercial response and learning: in that order, every service period.",
+  lead: "Your expertise goes in at one end. Six stations later the market has met it, answered it, and taught the next piece. Every service period, in this order.",
   stages: [
     { key: "raw", title: "Raw expertise", body: "You bring what only you have: what you know, what you have seen, what you would argue. It arrives as conversation, not as homework.", station: "founder" },
     { key: "intel", title: "Market intelligence", body: "The Scanner reads what your market says, its questions, objections and language, from your own records, from public sources and from what you paste in. Every source is kept with its provenance. Login-walled platforms are refused by name, never scraped in the dark.", station: "scanner" },
@@ -215,7 +215,7 @@ export const HOW_IT_WORKS = {
 
 export const WHO_ITS_FOR = {
   title: "Expert-led B2B businesses with something proven to sell.",
-  lead: "Threadline works when there is real expertise, a real offer and enough value per customer that one good conversation matters. It does not work as a shortcut to fame.",
+  lead: "Real expertise, a real offer, and enough value per client that one good conversation matters. If you want a shortcut to fame, this is the wrong door.",
   profile: [
     { label: "Buyer profile", body: "Founders, partners and senior operators of expert-led firms, advisory, consulting, professional services, specialist B2B, where the founder's judgement is the product." },
     { label: "Offer maturity", body: "An offer that has been sold more than once, with a price, a scope and a customer who can describe what they got." },
@@ -231,7 +231,7 @@ export const WHO_ITS_FOR = {
 export const APPLY = {
   eyebrow: "Founding client programme",
   title: "Apply for a diagnosis, not a pitch.",
-  lead: "This is a diagnostic, not a signup. Your answers tell us where demand is actually constrained, and on several of the dimensions we look at, more content would make the problem more expensive rather than smaller.",
+  lead: "Your answers tell us where demand is actually constrained. Sometimes the honest finding is that more content would make the problem more expensive, not smaller. You keep the finding either way.",
   reassurance: "Answer honestly. If the answer is that we are not the right fit, we would both rather know now, and you keep the finding either way.",
   meta: "Three short steps, about four minutes. Read by a person. Replied to either way.",
 };
@@ -239,7 +239,7 @@ export const APPLY = {
 export const CALCULATOR = {
   eyebrow: "The cost of the status quo",
   title: "What does your content operation cost today?",
-  lead: "Most founders have never costed it, because the largest line, their own time, never appears on an invoice. Put your real numbers in. This is a scenario built from your inputs: it computes what the current operation costs and what a different workflow would release. It never projects revenue, and organic content is not paid media, nothing here is a deterministic attribution model.",
+  lead: "Most founders have never costed their content operation, because the biggest line, their own time, never appears on an invoice. Put your real numbers in and see what today costs and what a different workflow would release. Nothing here projects revenue.",
 };
 
 export const PLAYBOOK = {
