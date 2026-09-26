@@ -90,7 +90,20 @@ export async function runReports(fx: Fixture) {
   const priorDraft = await prisma.weeklyReport.create({ data: { orgId: A, periodStart: new Date(Date.now() - 21 * 86_400_000), periodEnd: new Date(Date.now() - 14 * 86_400_000), status: "draft" } });
   const opDel = await attempt(() => Reports.deleteReportAction(ALPHA, priorDraft.id));
   record("reports", "operator can delete a draft", opDel.outcome === "ok" && !(await prisma.weeklyReport.findUnique({ where: { id: priorDraft.id } })) ? "PASS" : "FAIL", `${opDel.outcome}`);
-  record("reports", "export / print path", "PARTIAL", "print stylesheet exists per HANDOFF; no server-side export verified in this harness — browser check pending");
+  // REP-03: server-side PDF, with the page's visibility rules.
+  {
+    const { GET } = await import("../../src/app/app/[org]/reports/[id]/pdf/route");
+    const call = (id: string) => GET(new Request(`http://qa/app/${ALPHA}/reports/${id}/pdf`) as never, { params: Promise.resolve({ org: ALPHA, id }) });
+    await actAs(A_MEMBER);
+    const finalPdf = await call(revId);
+    const bytes = Buffer.from(await finalPdf.arrayBuffer());
+    const draft = await prisma.weeklyReport.create({ data: { orgId: A, periodStart: new Date(Date.now() - 35 * 86_400_000), periodEnd: new Date(Date.now() - 28 * 86_400_000), status: "draft" } });
+    const draftPdf = await call(draft.id);
+    const ok = finalPdf.status === 200 && finalPdf.headers.get("content-type") === "application/pdf" && bytes.subarray(0, 5).toString() === "%PDF-" && draftPdf.status === 404;
+    record("reports", "server-side PDF export: a client downloads the final version; a draft is not found (REP-03)", ok ? "PASS" : "FAIL", `final=${finalPdf.status} ${bytes.length}B draft=${draftPdf.status}`);
+    await prisma.weeklyReport.delete({ where: { id: draft.id } });
+    await actAs(OPERATOR);
+  }
 
   section("service periods — four weeks, never a month");
   const start = new Date("2026-01-05T00:00:00.000Z");

@@ -256,6 +256,9 @@ export async function runTenancy(fx: Fixture) {
 
   /* ------------------------------ role matrix inside A ------------------------------ */
   section("roles — inside Alpha");
+  // TEAM-09: an editor is a contractor who works on the pieces assigned to them.
+  await prisma.contentItem.update({ where: { id: rows.content.id }, data: { editorId: users.aEditor.id } });
+  const unassigned = await prisma.contentItem.create({ data: { orgId: A, title: "ALPHA piece not assigned to the editor", stage: "raw" } });
   const roleCases: [string, string, () => Promise<unknown>, boolean][] = [
     // editor
     ["editor", "approve content", () => Content.moveContentAction(ALPHA, rows.content.id, "approved"), false],
@@ -263,7 +266,8 @@ export async function runTenancy(fx: Fixture) {
     ["editor", "edit Brand Brain", () => Workspace.saveCompanyProfileAction(ALPHA, null, fd({ companyName: "Editor edit" })), false],
     ["editor", "change member role", () => Workspace.updateMemberRoleAction(ALPHA, users.aMember.id, "client_admin"), false],
     ["editor", "record correction verdict", () => Learning.recordCorrectionVerdictAction(ALPHA, null, fd({ correctionId: rows.correction.id, worked: "no", verdictNote: "editor verdict" })), false],
-    ["editor", "move raw → editing (their job)", () => Content.moveContentAction(ALPHA, rows.content.id, "editing"), true],
+    ["editor", "move a piece they are not assigned to", () => Content.moveContentAction(ALPHA, unassigned.id, "editing"), false],
+    ["editor", "move raw → editing on their assigned piece (their job)", () => Content.moveContentAction(ALPHA, rows.content.id, "editing"), true],
     // member
     ["member", "approve content", () => Content.moveContentAction(ALPHA, rows.content.id, "approved"), false],
     ["member", "change member role", () => Workspace.updateMemberRoleAction(ALPHA, users.aEditor.id, "client_admin"), false],

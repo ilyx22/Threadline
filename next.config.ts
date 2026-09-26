@@ -59,6 +59,11 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   serverExternalPackages: ["@prisma/client"],
+  // The sales-script import reads the draft working documents at run time
+  // (COM-07); without this they are not shipped with the function on Vercel.
+  outputFileTracingIncludes: {
+    "/admin/scripts": ["./Threadline Final Working Resources/03 Acquisition and Sales/DRAFT_*.md"],
+  },
   experimental: {
     serverActions: { bodySizeLimit: "12mb" },
   },
