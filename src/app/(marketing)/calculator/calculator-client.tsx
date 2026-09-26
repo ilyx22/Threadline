@@ -4,8 +4,6 @@ import * as React from "react";
 import Link from "next/link";
 import {
   CALCULATOR_DEFAULTS,
-  TARGET_MINUTES_PER_PIECE,
-  TARGET_WEEKLY_OVERHEAD_MINUTES,
   calculate,
   type CalculatorInputs,
 } from "@/lib/domain/calculator";
@@ -182,10 +180,6 @@ export function CalculatorClient() {
               <p className="calc-sub">per year, valued at {money(result.releasedValue * 100, "GBP", { compact: true })}</p>
             </div>
           </div>
-          <p className="calc-note">
-            <strong>The assumption, stated openly: </strong>
-            this scenario models the founder spending about {TARGET_MINUTES_PER_PIECE} minutes per published piece on recording, plus {TARGET_WEEKLY_OVERHEAD_MINUTES} minutes a week on approvals. Not zero: you never leave the loop entirely, and any calculator that shows zero is selling you something.
-          </p>
         </section>
 
         {result.attributedRevenue != null ? (
@@ -204,13 +198,8 @@ export function CalculatorClient() {
                 <p className="calc-figure">{result.revenuePerPiece != null ? money(result.revenuePerPiece * 100, "GBP") : ", "}</p>
               </div>
             </div>
-            <p className="calc-note">This is your own historical figure divided by your own output. It is not a forecast and it does not imply that more pieces produce proportionally more revenue.</p>
           </section>
         ) : null}
-
-        <p className="calc-notice">
-          <strong>What this is and is not.</strong> These are estimates built from the numbers you entered. They describe the operation you have today and one scenario for a different workflow. It does not show a saving, a reach figure or a revenue outcome, because those are not things a calculator can know.
-        </p>
 
         <Link href="/apply" className="v9-btn calc-cta">
           See if Threadline fits
