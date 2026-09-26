@@ -1,4 +1,5 @@
 import "server-only";
+import { after } from "next/server";
 import { prisma } from "@/lib/db/client";
 
 /**
@@ -33,8 +34,10 @@ export function registeredTypes() {
   return [...handlers.keys()];
 }
 
-export function backoffMs(attempts: number) {
-  return Math.min(MAX_BACKOFF_MS, BASE_BACKOFF_MS * 2 ** Math.max(0, attempts - 1));
+/** Exponential backoff with ±20% jitter, so retries from one outage do not arrive together. */
+export function backoffMs(attempts: number, random: () => number = Math.random) {
+  const base = Math.min(MAX_BACKOFF_MS, BASE_BACKOFF_MS * 2 ** Math.max(0, attempts - 1));
+  return Math.round(base * (0.8 + 0.4 * random()));
 }
 
 export type EnqueueOptions = { idempotencyKey?: string; runAt?: Date; orgId?: string | null; maxAttempts?: number };
@@ -60,6 +63,7 @@ export async function enqueue(type: string, payload: Record<string, unknown>, op
         idempotencyKey: opts.idempotencyKey ?? null,
       },
     });
+    scheduleRunSoon(job.runAt);
     return { job, created: true };
   } catch (error) {
     // Unique collision from a concurrent enqueue with the same key.
@@ -68,6 +72,20 @@ export async function enqueue(type: string, payload: Record<string, unknown>, op
       return { job: existing, created: false };
     }
     throw error;
+  }
+}
+
+/**
+ * Inside a request, run due work just after the response is sent. Outside a
+ * request (tests, scripts, the worker itself) `after` throws, and the job
+ * simply waits for a runner.
+ */
+function scheduleRunSoon(runAt: Date) {
+  if (runAt.getTime() > Date.now() + 1000 || process.env.JOBS_RUN_SOON === "false") return;
+  try {
+    after(async () => (await import("./kick")).runSoon());
+  } catch {
+    /* not in a request scope */
   }
 }
 
@@ -97,19 +115,25 @@ export async function claimNext(workerId: string, types?: string[]) {
   return null;
 }
 
-export async function complete(id: string) {
-  await prisma.job.update({ where: { id }, data: { status: "succeeded", completedAt: new Date(), lockedAt: null, lockedBy: null, lastError: null } });
+/**
+ * Finish a job this worker still holds. Conditional on the lock, so a worker
+ * whose lease expired (and whose job another worker reclaimed) cannot
+ * overwrite the other worker's outcome.
+ */
+export async function complete(id: string, workerId?: string) {
+  await prisma.job.updateMany({ where: { id, ...(workerId ? { lockedBy: workerId } : {}) }, data: { status: "succeeded", completedAt: new Date(), lockedAt: null, lockedBy: null, lastError: null } });
 }
 
-export async function fail(id: string, error: unknown) {
+export async function fail(id: string, error: unknown, workerId?: string) {
   const job = await prisma.job.findUniqueOrThrow({ where: { id } });
   const message = (error instanceof Error ? error.message : String(error)).slice(0, 1000);
+  const held = { id, ...(workerId ? { lockedBy: workerId } : {}) };
   if (job.attempts >= job.maxAttempts) {
-    await prisma.job.update({ where: { id }, data: { status: "dead", lastError: message, lockedAt: null, lockedBy: null } });
+    await prisma.job.updateMany({ where: held, data: { status: "dead", lastError: message, lockedAt: null, lockedBy: null } });
     return "dead" as const;
   }
-  await prisma.job.update({
-    where: { id },
+  await prisma.job.updateMany({
+    where: held,
     data: { status: "queued", lastError: message, lockedAt: null, lockedBy: null, runAt: new Date(Date.now() + backoffMs(job.attempts)) },
   });
   return "retry" as const;
@@ -126,10 +150,10 @@ export async function runOnce(workerId: string, types?: string[]): Promise<{ id:
   }
   try {
     await handler(JSON.parse(job.payload) as Record<string, unknown>, { id: job.id, attempts: job.attempts, orgId: job.orgId });
-    await complete(job.id);
+    await complete(job.id, workerId);
     return { id: job.id, type: job.type, outcome: "succeeded" };
   } catch (error) {
-    const outcome = await fail(job.id, error);
+    const outcome = await fail(job.id, error, workerId);
     return { id: job.id, type: job.type, outcome };
   }
 }
@@ -138,6 +162,21 @@ export async function runOnce(workerId: string, types?: string[]): Promise<{ id:
 export async function drain(workerId: string, limit = 50) {
   const results = [];
   for (let i = 0; i < limit; i++) {
+    const r = await runOnce(workerId);
+    if (!r) break;
+    results.push(r);
+  }
+  return results;
+}
+
+/**
+ * Drain within a time budget: the scheduled runner uses this so a serverless
+ * invocation stops claiming work well before the platform's time limit.
+ */
+export async function drainFor(workerId: string, budgetMs: number, limit = 200) {
+  const deadline = Date.now() + budgetMs;
+  const results = [];
+  while (results.length < limit && Date.now() < deadline) {
     const r = await runOnce(workerId);
     if (!r) break;
     results.push(r);

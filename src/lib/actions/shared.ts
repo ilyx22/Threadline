@@ -1,3 +1,5 @@
+import { randomUUID } from "node:crypto";
+import { reportError } from "@/lib/log";
 import "server-only";
 import { z } from "zod";
 import { AuthError } from "@/lib/auth/guard";
@@ -72,9 +74,12 @@ export async function guarded<T>(fn: () => Promise<ActionResult<T>>): Promise<Ac
       return err(error.message, "storage");
     }
 
-    console.error("[action] unhandled error", error);
+    // A reference the person can quote to support; the full error goes to the
+    // log and the error tracker, redacted, never to the browser.
+    const ref = randomUUID().slice(0, 8);
+    await reportError(error, { event: "action.unhandled", ref });
     return err(
-      "Something went wrong on our side. The action was not completed.",
+      `Something went wrong on our side. The action was not completed. (Reference ${ref})`,
       "unknown",
     );
   }

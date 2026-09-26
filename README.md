@@ -100,7 +100,7 @@ Full variable reference: `HANDOFF.md` section 6.
 
 1. Provision PostgreSQL (recommended for production).
 2. In `prisma/schema.prisma`, set `provider = "postgresql"`.
-3. Set `DATABASE_URL`, `SESSION_SECRET` and `NEXT_PUBLIC_APP_URL`.
+3. Set `DATABASE_URL`, `DIRECT_URL` and `NEXT_PUBLIC_APP_URL`, then run `npm run env:check`.
 4. `npx prisma migrate deploy`
 5. `npm run build && npm start`
 

@@ -40,7 +40,7 @@ describe("durable jobs", () => {
     assert.equal(r2?.outcome, "retry");
     const afterFirst = await prisma.job.findUniqueOrThrow({ where: { id: flaky.job.id } });
     assert.equal(afterFirst.status, "queued");
-    assert.ok(afterFirst.runAt.getTime() > Date.now() + backoffMs(1) - 5000);
+    assert.ok(afterFirst.runAt.getTime() > Date.now() + backoffMs(1, () => 0) - 5000);
     assert.equal(afterFirst.lastError, "still broken");
 
     // Not runnable yet (backoff), so nothing is claimed…

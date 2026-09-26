@@ -413,7 +413,6 @@ for — see `NOTIFICATION_CAPABILITY` in `src/lib/data/workspace.ts`.
 | Name | Purpose | Required | Where obtained |
 |---|---|---|---|
 | `DATABASE_URL` | Database connection | **Yes** | SQLite default `file:./dev.db`; or a Postgres URL |
-| `SESSION_SECRET` | Reserved for signed session material | Production | `node -e "console.log(require('crypto').randomBytes(48).toString('base64url'))"` |
 | `NEXT_PUBLIC_APP_URL` | Public origin for absolute links | Production | Your deployment URL |
 | `ANTHROPIC_API_KEY` | Enables live AI generation | No | console.anthropic.com → Settings → API keys |
 | `ANTHROPIC_MODEL` | Model override (default `claude-sonnet-5`) | No | — |
@@ -471,7 +470,7 @@ npm run verify         # all four in sequence
 1. **Database.** Provision PostgreSQL. In `prisma/schema.prisma` set
    `datasource db { provider = "postgresql" }`. The schema is written to be portable — no enums,
    no array columns, no Postgres-only types.
-2. **Environment.** Set `DATABASE_URL`, `SESSION_SECRET`, `NEXT_PUBLIC_APP_URL` and
+2. **Environment.** Set `DATABASE_URL`, `DIRECT_URL`, `NEXT_PUBLIC_APP_URL` and
    `CREDENTIAL_ENCRYPTION_KEYS`. Optionally `ANTHROPIC_API_KEY`, `NEXT_PUBLIC_BOOKING_URL`,
    `EMAIL_PROVIDER=resend` + `RESEND_API_KEY` + `EMAIL_FROM`.
 3. **Migrate.** `npx prisma migrate deploy`
