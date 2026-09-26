@@ -32,7 +32,7 @@ async function main() {
       js: document.documentElement.dataset.js || '',
       hidden: [...document.querySelectorAll('.v9-home h1, .v9-home h2, .v9-home .v5-art')].filter(e => parseFloat(getComputedStyle(e).opacity) < 0.99 && !e.closest('[data-scene]:not([data-seen])')).length
     })`);
-    ok("v9:story", "twelve sections: hero, ticker, proof, gap, memory, roles, workshop, expressions, learning, engagement, faq, closing", s.sections === 12, `${s.sections}`);
+    ok("v9:story", "eleven sections: hero, proof, gap, memory, roles, workshop, expressions, learning, engagement, faq, closing", s.sections === 11, `${s.sections}`);
     ok("v9:copy", "approved hero proposition", /expertise that wins you work visible before the sales call/i.test(s.h1), s.h1);
     ok("v9:copy", "inside the firm and what the market sees", /inside the firm/i.test(s.text) && /what the market sees/i.test(s.text));
     ok("v9:copy", "market memory idea", /familiar to the people who matter/i.test(s.text));
@@ -41,7 +41,7 @@ async function main() {
     ok("v9:copy", "one idea, multiple formats", /One idea, multiple formats/.test(s.text));
     ok("v9:design", "six mosaic tiles, five bench states", s.tiles === 6 && s.tabs === 5, JSON.stringify({ tiles: s.tiles, tabs: s.tabs, cases: s.cases }));
     ok("v9:design", "every scene is a labelled illustration (three generated scenes, the frieze, the line, the bench)", s.scenes >= 6, `${s.scenes}`);
-    ok("v9:design", "the object set is loaded: four capsules, eight tools, six stations", s.objects >= 18, `${s.objects}`);
+    ok("v9:design", "the object set is loaded: eight tools, six stations", s.objects >= 14, `${s.objects}`);
     ok("v9:design", "scripting flag set by the observer", s.js === "1");
     ok("v9:design", "nothing in a seen scene is hidden", s.hidden === 0, `${s.hidden}`);
 
@@ -120,7 +120,7 @@ async function main() {
 
     section("homepage v9 — without scripting, reduced motion, claims");
     const html = await (await fetch(`${BASE}/`)).text();
-    ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects(-big)?\//g) || []).length >= 18 && /(hero-scene\.jpg|v9-hero-machine)/.test(html) && /gap-left\.jpg/.test(html) && /gap-right\.jpg/.test(html) && (html.match(/memory\/encounter-/g) || []).length >= 5 && /closing-scene\.jpg/.test(html));
+    ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects(-big)?\//g) || []).length >= 14 && /(hero-scene\.jpg|v9-hero-machine)/.test(html) && /gap-left\.jpg/.test(html) && /gap-right\.jpg/.test(html) && (html.match(/memory\/encounter-/g) || []).length >= 5 && /closing-scene\.jpg/.test(html));
     ok("v9:nojs", "the bench's Expected readout is in the server HTML", /v5-readout-verdict">Expected</.test(html));
     ok("v9:nojs", "the ticker's items are in the server HTML as a list", (html.match(/v9-chip/g) || []).length >= 10);
     await setViewport(cdp, 1440, 900);

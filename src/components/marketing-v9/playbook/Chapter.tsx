@@ -74,14 +74,14 @@ export function Chapter({ index, standalone = false }: { index: number; standalo
             <div className="pb-idea">
               <p className="v9-tag">The idea</p>
               <p>{ch.keyIdea}</p>
+              <details className="pb-turn is-inline">
+                <summary>
+                  <strong>{ch.reveal.prompt}</strong>
+                  <i aria-hidden="true">+</i>
+                </summary>
+                <p>{ch.reveal.answer}</p>
+              </details>
             </div>
-            <details className="pb-turn">
-              <summary>
-                <strong>{ch.reveal.prompt}</strong>
-                <i aria-hidden="true">+</i>
-              </summary>
-              <p>{ch.reveal.answer}</p>
-            </details>
             <div className="pb-do">
               <p className="v9-tag">Do this today</p>
               <p>{ch.practice}</p>

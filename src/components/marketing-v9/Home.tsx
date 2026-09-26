@@ -26,12 +26,6 @@ const Arrow = () => (
   </svg>
 );
 
-const YOU: { verb: string; obj: ObjName }[] = [
-  { verb: "Talk", obj: "microphone" },
-  { verb: "Record", obj: "camera" },
-  { verb: "Approve", obj: "stamp" },
-  { verb: "Sell", obj: "folder" },
-];
 const THREADLINE_JOBS: { job: string; obj: ObjName }[] = [
   { job: "Research", obj: "magnifier" },
   { job: "Positioning", obj: "ledger" },
@@ -46,7 +40,6 @@ const STATION_OBJECTS: ObjName[] = ["magnifier", "spool", "press", "peg", "ledge
 
 const ENCOUNTER_ALT = ["Seated on a train, reading a post on a phone.", "At a desk, reading a printed note.", "At a coffee table with a colleague, a short video on a small screen between them.", "At a boardroom table, holding up a document with a circled tick.", "Standing at a window, on a call."];
 
-const TICKER = ["proposal decks", "delivery notes", "Slack threads", "partners’ heads", "pricing conversations", "post-mortems", "board memos", "private advice", "client calls", "the method nobody wrote down"];
 
 function Head({ eyebrow, title, body, id, center = false, light = false }: { eyebrow: string; title: React.ReactNode; body?: string; id: string; center?: boolean; light?: boolean }) {
   return (
@@ -93,29 +86,6 @@ function Hero() {
 }
 
 /* ---------------------------------------------------------------- 2 ticker */
-function Ticker() {
-  const items = [...TICKER, ...TICKER];
-  return (
-    <section className="v9-ticker" aria-label="Where the expertise lives today">
-      <p className="v9-ticker-line">The expertise already exists. Today it lives in</p>
-      <div className="v9-marquee" aria-hidden="true">
-        <div className="v9-marquee-track">
-          {items.map((t, i) => (
-            <span key={i} className="v9-chip">
-              {t}
-            </span>
-          ))}
-        </div>
-      </div>
-      <ul className="v9-visually-hidden">
-        {TICKER.map((t) => (
-          <li key={t}>{t}</li>
-        ))}
-      </ul>
-    </section>
-  );
-}
-
 /* ------------------------------------------------- 3 the gap, then memory */
 function GapAndMemory() {
   return (
@@ -193,19 +163,6 @@ function Burden() {
       <div className="v9-wrap">
         <div className="v9-burden-grid">
           <Head eyebrow={roles.eyebrow} title={roles.headline} body={roles.body} id="roles-title" />
-          <ol className="v9-capsules v9-reveal" aria-label="What we need from you">
-            {roles.you.rows.map((r, i) => (
-              <li key={r.verb} className="v9-capsule" style={{ ["--i" as string]: i }}>
-                <span className="v9-capsule-mark is-obj">
-                  <Obj name={YOU.find((y) => y.verb === r.verb)?.obj ?? "folder"} size={44} />
-                </span>
-                <span className="v9-capsule-text">
-                  <strong>{r.verb}</strong>
-                  <span>{r.note}</span>
-                </span>
-              </li>
-            ))}
-          </ol>
         </div>
         <div className="v9-burden-tiles">
           <div className="v9-tile is-night v9-bench-tile is-alone v9-reveal">
@@ -239,7 +196,7 @@ function Workshop() {
           {workshop.stations.map((s, i) => (
             <li key={s.key} className={`v9-tile v9-mosaic-tile ${TONES[i]}${[0, 3, 4].includes(i) ? " is-wide-tile" : ""} v9-reveal`} style={{ ["--i" as string]: i % 2 }}>
               <div className="v9-mosaic-art is-obj">
-                <Obj name={STATION_OBJECTS[i]} size={260} big />
+                <Obj name={STATION_OBJECTS[i]} size={120} big />
               </div>
               <div className="v9-mosaic-text">
                 <span className="v9-tag">Station {String(i + 1).padStart(2, "0")}</span>
@@ -273,14 +230,6 @@ function Expressions() {
             </li>
           ))}
         </ol>
-        <p className="v9-route v9-reveal">
-          {e.route.map((r, i) => (
-            <span key={r}>
-              {i > 0 ? <i aria-hidden="true">→</i> : null}
-              {r}
-            </span>
-          ))}
-        </p>
       </div>
     </section>
   );
@@ -295,12 +244,6 @@ function Learning() {
         <div className="v9-learning-bench v9-reveal">
           <Bench notes={learning.steps} />
         </div>
-        <p className="v9-more">
-          <Link href={learning.more.href} className="v9-link">
-            {learning.more.label}
-            <Arrow />
-          </Link>
-        </p>
       </div>
     </section>
   );
@@ -419,7 +362,6 @@ export default function HomeV9() {
     <div className="v9-home">
       <Motion />
       <Hero />
-      <Ticker />
       <Proof />
       <GapAndMemory />
       <Burden />

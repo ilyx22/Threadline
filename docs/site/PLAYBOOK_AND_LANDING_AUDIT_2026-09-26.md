@@ -89,3 +89,11 @@ Every answer is drawn from copy already on the site, except two that are commerc
 - Type-check and lint clean.
 - The marketing suite's section count is updated to twelve; the illustrative-label check is satisfied by the stage's stamp.
 - Screenshots at 1440 and 390 in `scripts/qa/.shots/pass13/`.
+
+## 6. "Do what's best" (the owner's reply, 26 September)
+
+Done the same day:
+
+- Landing: the ticker strip, the four capsules, the route line and the learning section's "read more" link are removed; the six stations are one row of six small tiles (three on tablets, two on phones). The apply link under the engagement stays, because it converts. Eleven sections.
+- Playbook: the card to turn now sits inside the idea, so each chapter is three things: the idea (with its question), do this today, and the interactive object.
+- Left alone, on purpose: rebuilding six of the interactive objects as one pattern, and merging chapters 6 and 7, because both mean rewriting content blind. The track record's attribution and the meaning of "conversions", and the two commercial FAQ answers, still need the owner's word.

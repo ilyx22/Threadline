@@ -1403,3 +1403,37 @@
   .v9-faq-list { margin-top: 20px; gap: 8px; }
   .v9-faq-item summary strong { font-size: 1.15rem; }
 }
+
+/* ============================================================ pass 14 (26 September 2026): "do what's best" */
+/* the hero hands straight to the track record, then the gap */
+.v9-proof { padding-top: 28px; }
+.v9-gap { padding-top: 44px; }
+/* how we'll work together: the headline and the eight jobs */
+.v9-burden-grid { grid-template-columns: 1fr; }
+.v9-burden-grid .v9-head { max-width: 760px; }
+.v9-burden-tiles { margin-top: 28px; }
+/* the six stations as one row of six small tiles */
+.v9-mosaic { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 32px; }
+.v9-mosaic-tile, .v9-mosaic-tile:nth-child(2n), .v9-mosaic-tile:nth-child(3), .v9-mosaic-tile:nth-child(4), .v9-mosaic-tile.is-wide-tile { grid-column: span 1; min-height: 0; display: grid; grid-template-columns: 1fr; justify-items: center; align-content: start; gap: 6px; padding: 18px 14px 18px; text-align: center; }
+.v9-mosaic-art, .v9-mosaic-art.is-obj, .v9-mosaic-tile.is-wide-tile .v9-mosaic-art { position: static; inset: auto; width: 96px; height: 96px; }
+.v9-mosaic-art.is-obj .v9-obj { width: 96px; }
+.v9-mosaic-text, .v9-mosaic-tile.is-wide-tile .v9-mosaic-text { position: static; width: auto; gap: 4px; align-items: center; }
+.v9-mosaic-text .v9-h3 { font-size: 1.15rem; line-height: 1.15; }
+.v9-mosaic-text p { font-size: 13.5px; line-height: 1.4; max-width: none; }
+@media (max-width: 1199px) {
+  .v9-mosaic { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .v9-mosaic-tile, .v9-mosaic-tile:nth-child(2n), .v9-mosaic-tile:nth-child(3), .v9-mosaic-tile:nth-child(4), .v9-mosaic-tile.is-wide-tile { min-height: 0; grid-column: span 1; }
+}
+@media (max-width: 759px) {
+  .v9-mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 24px; }
+  .v9-mosaic-tile, .v9-mosaic-tile:nth-child(2n), .v9-mosaic-tile:nth-child(3), .v9-mosaic-tile:nth-child(4), .v9-mosaic-tile.is-wide-tile { grid-template-columns: 1fr; padding: 14px 12px 16px; gap: 4px; text-align: center; }
+  .v9-mosaic-art, .v9-mosaic-art.is-obj, .v9-mosaic-tile.is-wide-tile .v9-mosaic-art { width: 72px; height: 72px; }
+  .v9-mosaic-art.is-obj .v9-obj { width: 72px; }
+  .v9-proof { padding-top: 20px; }
+  .v9-gap { padding-top: 32px; }
+}
+/* the playbook: the card to turn sits inside the idea */
+.pb-idea .pb-turn.is-inline { margin-top: 14px; border: 0; border-top: 1px solid var(--v9-line); border-radius: 0; background: transparent; }
+.pb-idea .pb-turn.is-inline summary { padding: 12px 0 0; min-height: 0; grid-template-columns: minmax(0, 1fr) auto; }
+.pb-idea .pb-turn.is-inline > p { padding: 8px 0 0; }
+.pb-idea .pb-turn.is-inline[open] { background: transparent; }
