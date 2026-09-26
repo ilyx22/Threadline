@@ -179,6 +179,7 @@ async function recordGeneration(
         error: error?.slice(0, 500) ?? null,
         entityType: options.entityType ?? null,
         entityId: options.entityId ?? null,
+        brainVersion: options.orgId ? ((await prisma.brandBrain.findUnique({ where: { orgId: options.orgId }, select: { version: true } }))?.version ?? null) : null,
       },
     });
   } catch (e) {

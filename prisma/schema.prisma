@@ -323,6 +323,9 @@ model BrandBrain {
   voice        String   @default("{}") // JSON VoiceProfile
   contentRules String   @default("{}") // JSON ContentRules
   completeness Int      @default(0)
+  /// AI-03/ENG-04: bumped by a database trigger on every change to the four
+  /// sections; each version's content is kept in BrandBrainVersion.
+  version      Int      @default(1)
   updatedAt    DateTime @updatedAt
   createdAt    DateTime @default(now())
 
@@ -648,6 +651,8 @@ model ScriptVersion {
   contextUsed   String   @default("[]") // JSON string[] of context block keys
   changeSummary String?
   generatedBy   String   @default("human") // human | ai | ai_refine
+  /// The Brand Brain version an AI draft was written against (AI-03).
+  brainVersion  Int?
   createdById   String?
   createdAt     DateTime @default(now())
 
@@ -1561,6 +1566,8 @@ model AiGeneration {
   costMicroUsd Int?
   /// Labelled mock output, never counted as model work.
   isDemo       Boolean  @default(false)
+  /// The Brand Brain version in the context (AI-03).
+  brainVersion Int?
 
   org  Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
   user User?         @relation(fields: [userId], references: [id], onDelete: SetNull)
@@ -3337,4 +3344,21 @@ model EmailSuppression {
   detail    String?
   createdAt DateTime @default(now())
   liftedAt  DateTime?
+}
+
+/// Every version of a workspace's Brand Brain (AI-03, ENG-04), written by a
+/// database trigger so no code path can change the context without a record.
+model BrandBrainVersion {
+  id           String   @id @default(cuid())
+  orgId        String
+  version      Int
+  company      String
+  founder      String
+  voice        String
+  contentRules String
+  /// JSON string[] of the sections that changed from the previous version.
+  changed      String   @default("[]")
+  createdAt    DateTime @default(now())
+
+  @@unique([orgId, version])
 }

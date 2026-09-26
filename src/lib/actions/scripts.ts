@@ -63,6 +63,8 @@ async function appendVersion(
       contextUsed: stringifyArray(data.contextUsed),
       changeSummary: data.changeSummary,
       generatedBy: data.generatedBy,
+      // AI-03: which Brand Brain version an AI draft was written against.
+      brainVersion: data.generatedBy === "human" ? null : ((await prisma.brandBrain.findUnique({ where: { orgId: ctx.org.id }, select: { version: true } }))?.version ?? null),
       createdById: ctx.user.id,
     },
   });
