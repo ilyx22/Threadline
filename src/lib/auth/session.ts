@@ -2,6 +2,7 @@ import "server-only";
 import { createHash, randomBytes } from "node:crypto";
 import { cookies, headers } from "next/headers";
 import { prisma } from "@/lib/db/client";
+import { clientIpFrom } from "@/lib/security/client-ip";
 
 export const SESSION_COOKIE = "threadline_session";
 const SESSION_DAYS = 30;
@@ -30,8 +31,7 @@ export async function createSession(userId: string) {
   const expiresAt = new Date(Date.now() + SESSION_DAYS * 86_400_000);
 
   const headerList = await headers();
-  const forwarded = headerList.get("x-forwarded-for");
-  const ip = forwarded?.split(",")[0]?.trim() ?? null;
+  const ip = clientIpFrom(headerList);
 
   await prisma.session.create({
     data: {

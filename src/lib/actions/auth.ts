@@ -7,7 +7,8 @@ import { prisma } from "@/lib/db/client";
 import { verifyPassword } from "@/lib/auth/password";
 import { createSession, destroySession, pruneExpiredSessions } from "@/lib/auth/session";
 import { auditInternal } from "@/lib/auth/audit";
-import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
+import { createHash } from "node:crypto";
+import { enforceRateLimit, LIMITS, RateLimitError, rateLimitAsync } from "@/lib/security/rate-limit";
 import { err, guarded, okVoid, parseForm, type ActionResult } from "./shared";
 
 const loginSchema = z.object({
@@ -24,6 +25,12 @@ export async function loginAction(
     await enforceRateLimit("login", LIMITS.login);
 
     const input = parseForm(loginSchema, formData);
+    // SEC-06: a per-account window as well as per-address, so guesses spread
+    // across many addresses still slow down against one mailbox. The key is a
+    // hash, so the limiter store never holds email addresses.
+    const accountKey = createHash("sha256").update(input.email.toLowerCase()).digest("hex").slice(0, 32);
+    const perAccount = await rateLimitAsync(`login-account:${accountKey}`, LIMITS.loginAccount);
+    if (!perAccount.ok) throw new RateLimitError(perAccount.retryAfterSeconds);
     const user = await prisma.user.findUnique({
       where: { email: input.email.toLowerCase() },
       include: { memberships: { include: { org: { select: { slug: true, kind: true } } } } },
