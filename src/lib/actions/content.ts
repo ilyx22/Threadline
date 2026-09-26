@@ -16,6 +16,7 @@ import { notify } from "@/lib/notify";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import { queueProcessingFor } from "@/lib/processing";
 import { assertContentInScope } from "@/lib/team/scope";
+import { packageClaimProblems } from "@/lib/domain/package-claims";
 import { getStorage, storageProviderName } from "@/lib/storage";
 import {
   cleanText,
@@ -688,11 +689,22 @@ export async function approvePackageAction(
         title: true,
         thumbnailRef: true,
         description: true,
-        contentItem: { select: { format: true, title: true } },
+        caption: true,
+        overlays: true,
+        ctaOptions: true,
+        contentItem: { select: { format: true, title: true, script: { select: { claimsVerified: true, versions: { orderBy: { version: "desc" }, take: 1, select: { hook: true, body: true, cta: true, claims: true } } } } } },
       },
     });
     if (!pkg) return err("That package no longer exists.", "not_found");
     if (pkg.status === "approved") return okVoid("Already approved.");
+
+    // DEL-05: figures and promises in packaging need the script's verified claims behind them.
+    const v = pkg.contentItem.script?.versions[0];
+    const claimProblems = packageClaimProblems(
+      [pkg.workingTitle, pkg.title, pkg.caption, pkg.description, pkg.overlays, pkg.ctaOptions].filter(Boolean).join(" | "),
+      pkg.contentItem.script && v ? { text: [v.hook, v.body, v.cta, v.claims].filter(Boolean).join(" | "), claimsVerified: pkg.contentItem.script.claimsVerified } : null,
+    );
+    if (claimProblems.length) return err(claimProblems.join(" "), "workflow");
 
     assertPackageApprovable(pkg.contentItem.format, {
       workingTitle: pkg.workingTitle,
