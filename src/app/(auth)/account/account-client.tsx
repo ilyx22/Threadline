@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ActionButton, ActionForm, FormError, SubmitButton } from "@/components/forms/action-form";
-import { beginMfaEnrolmentAction, confirmMfaEnrolmentAction, disableMfaAction, revokeOtherSessionsAction, revokeSessionAction } from "@/lib/actions/security";
+import { beginMfaEnrolmentAction, confirmMfaEnrolmentAction, disableMfaAction, revokeOtherSessionsAction, revokeSessionAction, saveNotificationPreferenceAction } from "@/lib/actions/security";
 
 const panel = "mt-8 rounded-xl border border-line bg-elevated p-6";
 
@@ -188,6 +188,53 @@ export function SessionsPanel({ currentId, sessions }: { currentId: string; sess
           </li>
         ))}
       </ul>
+    </section>
+  );
+}
+
+type PrefView = { orgId: string; orgName: string; email: string; quietStart: number | null; quietEnd: number | null; snoozedUntil: string | null };
+
+/** NOT-01: how each workspace reaches you by email. In-app notifications always appear. */
+export function NotificationsPanel({ prefs }: { prefs: PrefView[] }) {
+  const router = useRouter();
+  if (!prefs.length) return null;
+  return (
+    <section className={panel}>
+      <h2 className="text-[16px] font-medium text-ink">Notifications</h2>
+      <p className="mt-1 text-[13px] text-muted">In-app notifications always appear. Choose whether each workspace also emails you.</p>
+      <div className="mt-4 space-y-4">
+        {prefs.map((p) => (
+          <ActionForm key={p.orgId} action={saveNotificationPreferenceAction} onSuccess={() => router.refresh()} className="grid gap-2 border-t border-line pt-4 sm:grid-cols-5 sm:items-end">
+            {({ error }) => (
+              <>
+                <input type="hidden" name="orgId" value={p.orgId} />
+                <div className="sm:col-span-5">
+                  <FormError error={error} />
+                  <p className="text-[13.5px] text-ink">{p.orgName}</p>
+                  {p.snoozedUntil ? <p className="text-[12px] text-ghost">Snoozed until {p.snoozedUntil.slice(0, 10)}</p> : null}
+                </div>
+                <Field label="Email me" htmlFor={`pref-${p.orgId}`}>
+                  <select id={`pref-${p.orgId}`} name="email" defaultValue={p.email} className="h-10 rounded-md border border-line bg-transparent px-2 text-[13px] text-ink">
+                    <option value="off">Never</option>
+                    <option value="immediate">As it happens</option>
+                    <option value="digest">A daily summary</option>
+                  </select>
+                </Field>
+                <Field label="Quiet from (hour)" htmlFor={`qs-${p.orgId}`} optional>
+                  <Input id={`qs-${p.orgId}`} name="quietStart" type="number" min={0} max={23} defaultValue={p.quietStart ?? ""} />
+                </Field>
+                <Field label="Quiet until (hour)" htmlFor={`qe-${p.orgId}`} optional>
+                  <Input id={`qe-${p.orgId}`} name="quietEnd" type="number" min={0} max={23} defaultValue={p.quietEnd ?? ""} />
+                </Field>
+                <Field label="Snooze (days)" htmlFor={`sn-${p.orgId}`} optional>
+                  <Input id={`sn-${p.orgId}`} name="snoozeDays" type="number" min={0} max={30} defaultValue={0} />
+                </Field>
+                <SubmitButton size="sm" variant="secondary">Save</SubmitButton>
+              </>
+            )}
+          </ActionForm>
+        ))}
+      </div>
     </section>
   );
 }

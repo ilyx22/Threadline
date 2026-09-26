@@ -12,6 +12,7 @@ import { contentStageSchema, prioritySchema, platformSchema } from "@/lib/domain
 import { canMoveContent, requiresNote, WorkflowError } from "@/lib/domain/workflow";
 import { assertPackageApprovable } from "@/lib/domain/longform";
 import { recordDecision, supersedeApprovals } from "@/lib/delivery/approvals";
+import { notify } from "@/lib/notify";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import { getStorage, storageProviderName } from "@/lib/storage";
 import {
@@ -142,6 +143,11 @@ export async function moveContentAction(
           authorId: ctx.user.id,
         },
       });
+    }
+
+    // NOT-01: a piece entering review tells the people who approve.
+    if (input.stage === "in_review") {
+      await notify({ orgId: ctx.org.id, audience: { orgRole: "approvers" }, kind: "approval", title: `Ready for your review: ${item.title}`, href: `/app/${orgSlug}/production/${contentItemId}`, dedupeKey: `review:${contentItemId}:${item.revisionCount ?? 0}` });
     }
 
     // DEL-02: the decision is recorded against the exact version reviewed.

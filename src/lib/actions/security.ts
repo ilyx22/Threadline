@@ -1,11 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
+import { prisma } from "@/lib/db/client";
 import { auditInternal } from "@/lib/auth/audit";
 import { requireUser } from "@/lib/auth/guard";
 import { beginEnrolment, confirmEnrolment, disableMfa } from "@/lib/auth/mfa";
 import { revokeOtherSessions, revokeSession, rotateSession } from "@/lib/auth/session";
-import { err, guarded, ok, okVoid, type ActionResult } from "./shared";
+import { err, guarded, ok, okVoid, parseForm, type ActionResult } from "./shared";
 
 /**
  * The signed-in person's own security settings (SEC-07, SEC-08): two-factor
@@ -66,5 +68,28 @@ export async function revokeOtherSessionsAction(): Promise<ActionResult> {
     await auditInternal(user.id, { action: "auth.sessions_revoked", entityType: "user", entityId: user.id, summary: `${user.name} ended ${n} other session(s)` });
     revalidatePath("/account");
     return okVoid(n ? `Ended ${n} other session${n === 1 ? "" : "s"}.` : "No other sessions were open.");
+  });
+}
+
+const prefSchema = z.object({
+  orgId: z.string().min(1),
+  email: z.enum(["off", "immediate", "digest"]),
+  quietStart: z.string().optional(),
+  quietEnd: z.string().optional(),
+  snoozeDays: z.coerce.number().int().min(0).max(30).default(0),
+});
+
+/** NOT-01: the caller's own notification preferences for one of their workspaces. */
+export async function saveNotificationPreferenceAction(_prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  return guarded(async () => {
+    const user = await requireUser("/account");
+    const input = parseForm(prefSchema, formData);
+    const member = await prisma.membership.findUnique({ where: { userId_orgId: { userId: user.id, orgId: input.orgId } }, select: { org: { select: { timezone: true } } } });
+    if (!member) return err("You are not a member of that workspace.", "auth");
+    const hour = (v?: string) => (v === undefined || v === "" ? null : Math.max(0, Math.min(23, Number(v))));
+    const data = { email: input.email, quietStart: hour(input.quietStart), quietEnd: hour(input.quietEnd), timezone: member.org.timezone, snoozedUntil: input.snoozeDays ? new Date(Date.now() + input.snoozeDays * 86_400_000) : null };
+    await prisma.notificationPreference.upsert({ where: { userId_orgId: { userId: user.id, orgId: input.orgId } }, create: { userId: user.id, orgId: input.orgId, ...data }, update: data });
+    revalidatePath("/account");
+    return okVoid("Saved.");
   });
 }

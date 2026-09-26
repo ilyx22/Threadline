@@ -255,12 +255,16 @@ model Notification {
   severity  String    @default("info") // info | success | warning | critical
   readAt    DateTime?
   createdAt DateTime  @default(now())
+  /// NOT-01: the same event never notifies the same person twice.
+  dedupeKey String?
+  emailedAt DateTime?
 
   org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
   user User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([orgId, createdAt])
   @@index([userId, readAt])
+  @@unique([userId, dedupeKey])
 }
 
 model Task {
@@ -3074,5 +3078,24 @@ model OffboardingRecord {
   deletedAt      DateTime?
   /// JSON: row counts removed, per table, at deletion.
   deletionCounts String?
+}
+
+/// How a person wants to hear about work (NOT-01), per workspace. Email is
+/// off unless the person turns it on: in-app notifications always appear.
+model NotificationPreference {
+  id           String    @id @default(cuid())
+  userId       String
+  orgId        String
+  /// off | immediate | digest
+  email        String    @default("off")
+  /// Local hours (0-23) during which nothing is emailed; digests wait.
+  quietStart   Int?
+  quietEnd     Int?
+  timezone     String    @default("Europe/London")
+  snoozedUntil DateTime?
+  lastDigestAt DateTime?
+  updatedAt    DateTime  @default(now()) @updatedAt
+
+  @@unique([userId, orgId])
 }
 

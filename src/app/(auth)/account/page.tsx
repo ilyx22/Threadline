@@ -6,7 +6,8 @@ import { isInternalUser, requireUser } from "@/lib/auth/guard";
 import { mfaRequiredForStaff } from "@/lib/auth/mfa";
 import { listSessions } from "@/lib/auth/session";
 import { credentialStorageConfigured } from "@/lib/security/secret-box";
-import { MfaPanel, SessionsPanel } from "./account-client";
+import { MfaPanel, NotificationsPanel, SessionsPanel } from "./account-client";
+import { prisma } from "@/lib/db/client";
 
 export const metadata: Metadata = { title: "Account security", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
@@ -17,6 +18,12 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
   const user = await requireUser("/account");
   const [sessions, staff] = await Promise.all([listSessions(user.id), isInternalUser(user)]);
   const required = staff && mfaRequiredForStaff();
+  const memberships = await prisma.membership.findMany({ where: { userId: user.id, status: "active", org: { kind: "client" } }, select: { orgId: true, org: { select: { name: true } } } });
+  const prefRows = await prisma.notificationPreference.findMany({ where: { userId: user.id } });
+  const prefs = memberships.map((m) => {
+    const p = prefRows.find((r) => r.orgId === m.orgId);
+    return { orgId: m.orgId, orgName: m.org.name, email: p?.email ?? "off", quietStart: p?.quietStart ?? null, quietEnd: p?.quietEnd ?? null, snoozedUntil: p?.snoozedUntil ? p.snoozedUntil.toISOString() : null };
+  });
 
   return (
     <main className="mx-auto w-full max-w-2xl px-4 py-12">
@@ -38,6 +45,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
       ) : null}
 
       <MfaPanel enabled={user.mfaEnabled} required={required} storageReady={credentialStorageConfigured()} />
+      <NotificationsPanel prefs={prefs} />
       <SessionsPanel
         currentId={user.sessionId}
         sessions={sessions.map((s) => ({

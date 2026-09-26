@@ -15,6 +15,8 @@ export type TemplateMap = {
   period_review: { name: string; workspaceName: string; periodLabel: string; link: string };
   /// BIL-04: written from a draft a person approved; sent as they approved it.
   payment_reminder: { subject: string; body: string };
+  notification: { name: string; title: string; body: string; link: string };
+  digest: { name: string; workspaceName: string; items: string[]; link: string };
 };
 
 export type EmailTemplateKey = keyof TemplateMap;
@@ -89,6 +91,19 @@ export function renderTemplate<K extends EmailTemplateKey>(key: K, data: Templat
       const d = data as TemplateMap["payment_reminder"];
       const paragraphs = d.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
       return { subject: d.subject, text: text(d.subject, paragraphs), html: shell(d.subject, paragraphs) };
+    }
+    case "notification": {
+      const d = data as TemplateMap["notification"];
+      const paragraphs = [`Hello ${d.name},`, d.title, ...(d.body ? [d.body] : [])];
+      const cta = { label: "Open Threadline", href: d.link };
+      return { subject: d.title, text: text(d.title, paragraphs, cta), html: shell(d.title, paragraphs, cta) };
+    }
+    case "digest": {
+      const d = data as TemplateMap["digest"];
+      const title = `Today in ${d.workspaceName}: ${d.items.length} update${d.items.length === 1 ? "" : "s"}`;
+      const paragraphs = [`Hello ${d.name},`, ...d.items.map((i) => `• ${i}`), "You chose a daily summary. Change it any time under Account security."];
+      const cta = { label: "Open the workspace", href: d.link };
+      return { subject: title, text: text(title, paragraphs, cta), html: shell(title, paragraphs, cta) };
     }
     default: {
       const never: never = key;

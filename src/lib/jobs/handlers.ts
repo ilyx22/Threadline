@@ -65,6 +65,10 @@ registerHandler("daily.tick", async () => {
   // OFF-01: end client access when an offboarding export window closes.
   const { closeExpiredAccess } = await import("@/lib/commercial/offboarding");
   await closeExpiredAccess();
+  // NOT-01: escalate approvals left waiting, then send opted-in digests.
+  const { escalateStaleApprovals, sendDigests } = await import("@/lib/notify");
+  await escalateStaleApprovals();
+  await sendDigests();
   const held = await prisma.crmOutbox.findMany({ where: { state: { in: ["pending", "failed"] } }, select: { id: true }, take: 200 });
   await kickCrm(held.map((h) => h.id));
   const { pruneTokens } = await import("@/lib/auth/tokens");
