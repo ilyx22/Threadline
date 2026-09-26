@@ -1,6 +1,6 @@
 import * as React from "react";
 import Link from "next/link";
-import { closing, engagement, expressions, gap, hero, learning, memory, roles } from "@/content/home";
+import { closing, engagement, expressions, faq, gap, hero, learning, memory, proof, roles } from "@/content/home";
 import { PERIODS } from "@/content/playbook";
 import { workshop } from "@/content/marketing-v5";
 import Image from "next/image";
@@ -306,6 +306,54 @@ function Learning() {
   );
 }
 
+/* ------------------------------------------------------------------ proof */
+function Proof() {
+  return (
+    <section id="proof" className="v9-proof" data-scene aria-labelledby="proof-title">
+      <div className="v9-wrap">
+        <div className="v9-proof-band v9-reveal">
+          <p id="proof-title" className="v9-eyebrow">
+            {proof.eyebrow}
+          </p>
+          <dl className="v9-proof-figures">
+            {proof.figures.map((f) => (
+              <div key={f.label}>
+                <dt>
+                  <strong>{f.n}</strong> {f.label}
+                </dt>
+                <dd>{f.note}</dd>
+              </div>
+            ))}
+          </dl>
+          <p className="v9-proof-line">{proof.line}</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------- faq */
+function Faq() {
+  return (
+    <section id="faq" className="v9-faq" data-scene aria-labelledby="faq-title">
+      <div className="v9-wrap">
+        <Head center eyebrow={faq.eyebrow} title={faq.headline} id="faq-title" />
+        <div className="v9-faq-list v9-reveal">
+          {faq.items.map((it) => (
+            <details key={it.q} className="pb-turn v9-faq-item">
+              <summary>
+                <strong>{it.q}</strong>
+                <i aria-hidden="true">+</i>
+              </summary>
+              <p>{it.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ------------------------------------------------------------- 8 engagement */
 const PERIOD_TONES = ["is-sky", "is-peach", "is-mint"];
 function Engagement() {
@@ -372,12 +420,14 @@ export default function HomeV9() {
       <Motion />
       <Hero />
       <Ticker />
+      <Proof />
       <GapAndMemory />
       <Burden />
       <Workshop />
       <Expressions />
       <Learning />
       <Engagement />
+      <Faq />
       <Closing />
     </div>
   );

@@ -215,3 +215,29 @@ export const engagement = {
   body: "Threadline runs in four-week service periods, and the first engagement is three of them. The first is quiet by design. By the third, the system is running on evidence from your own market.", // claim:C-CADENCE
   more: { label: "See if Threadline fits", href: links.apply },
 } as const;
+
+/** The founder's own track record, stated as the founder's, not as client results. Numbers supplied by the owner on 26 September 2026; wording to be confirmed. */
+export const proof = {
+  eyebrow: "Built by someone who has done it",
+  figures: [
+    { n: "100m+", label: "views", note: "reach we know how to get" },
+    { n: "10,000+", label: "conversions", note: "what that reach was for" },
+  ],
+  line: "The founder's own numbers, across his own and client work. Not Threadline client results, which we will show when a client agrees.",
+} as const;
+
+/** The questions a buyer asks before the call. Answers drawn from the site; two are commercial terms the owner must confirm (cost, ownership). */
+export const faq = {
+  eyebrow: "Before you ask",
+  headline: "The questions every founder asks first.",
+  items: [
+    { q: "What do you need from me?", a: "About twenty minutes of recording a week when it is useful, and one approval pass. You talk, record, approve and sell. We run everything else." },
+    { q: "Do I have to be on camera?", a: "Only where being on camera adds trust. Most of the work is written, spoken or shown, and the format is chosen per idea, not per platform." },
+    { q: "Which platforms?", a: "The ones your buyers are actually in. Platforms are prescribed after diagnosis, not picked from a menu." },
+    { q: "How long before it works?", a: "The first engagement is twelve weeks in three four-week periods. The first is quiet by design. By the third, the system runs on evidence from your own market." },
+    { q: "What does it cost?", a: "Commercial terms are discussed on the call, once we both know it fits. We take a small number of firms at a time." },
+    { q: "Do you guarantee leads?", a: "Leads, views and followers are not the scoreboard. Named enquiries and conversations are, and every one is recorded with its evidence." },
+    { q: "Who owns the content?", a: "You do. Every piece, transcript and asset lives in your workspace and stays yours." },
+    { q: "Are you an agency?", a: "No. Threadline is a managed system: one root idea at a time, run station by station, and read back to you every week." },
+  ],
+} as const;

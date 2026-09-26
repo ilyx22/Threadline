@@ -1,11 +1,12 @@
 import * as React from "react";
 import Link from "next/link";
 import { DIAGNOSTIC, HOME_V3, HOW_IT_WORKS, PLAYBOOK, PLAYBOOK_TOOLS } from "@/content/public-site";
-import { MAXIMS, PLAYBOOK_HERO } from "@/content/playbook";
+import { PLAYBOOK_HERO } from "@/content/playbook";
 import Motion from "@/components/marketing-v5/Motion";
 import { Diagnostic } from "@/components/public/diagnostic";
 import { AcquisitionCalculator } from "@/components/marketing-v5/AcquisitionCalculator";
 import { Obj } from "../Obj";
+import { Stepper } from "./Stepper";
 import { CHAPTER_OBJECTS } from "./Chapter";
 import { ProgressRail } from "./Progress";
 import { Chapter } from "./Chapter";
@@ -69,28 +70,13 @@ export default function Playbook() {
         </div>
       </section>
 
-      <section className="v9-ticker" aria-label="What the system believes">
-        <div className="v9-marquee" aria-hidden="true">
-          <div className="v9-marquee-track">
-            {[...MAXIMS, ...MAXIMS].map((m, i) => (
-              <span key={i} className="v9-chip pb-maxim">
-                {m}
-              </span>
-            ))}
-          </div>
-        </div>
-        <ul className="v9-visually-hidden">
-          {MAXIMS.map((m) => (
-            <li key={m}>{m}</li>
-          ))}
-        </ul>
-      </section>
-
       <ProgressRail />
 
-      {PLAYBOOK.chapters.map((_, i) => (
-        <Chapter key={i} index={i} />
-      ))}
+      <Stepper titles={PLAYBOOK.chapters.map((c) => c.title)}>
+        {PLAYBOOK.chapters.map((_, i) => (
+          <Chapter key={i} index={i} />
+        ))}
+      </Stepper>
 
       <section id="tools" className="pb-tools" data-scene aria-labelledby="tools-title">
         <div className="v9-panel">

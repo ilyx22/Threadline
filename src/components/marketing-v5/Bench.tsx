@@ -117,6 +117,7 @@ export default function Bench({ notes }: { notes?: readonly { step: string; note
         ))}
       </div>
 
+      <p className="v9-visually-hidden">Illustrative case: {c.title}. Not a client result.</p>
       <div className="v5-bench-stage" ref={stage}>
         <svg viewBox="0 0 900 520" className="v5-art" role="img" aria-label={`The testing bench. The piece sits on five blocks: idea, hook, distribution, audience, destination. Three measuring jars, ${c.gauges.join(", ")}, each with an expected mark. ${state >= 1 ? "The actual level is shown." : ""} ${state >= 2 ? `The ${c.failing} block has tipped.` : ""} ${state >= 3 && applied ? `The ${c.failing} block has been replaced.` : ""} ${retest ? "The jars have been read again." : ""}`}>
           <rect x={0} y={0} width={900} height={520} rx={8} fill={C.mint} />
@@ -192,7 +193,7 @@ export default function Bench({ notes }: { notes?: readonly { step: string; note
       <div className="v5-bench-panel">
         <div id="bench-readout" role="tabpanel" aria-labelledby={`bench-tab-${state}`} className="v5-readout" aria-live="polite">
           <p className="v5-readout-step">
-            {String(state + 1).padStart(2, "0")} of 05
+            {String(state + 1).padStart(2, "0")} of 05 · Illustrative case
           </p>
           {notes ? <p className="v5-readout-note">{notes[state]?.note}</p> : null}
           <p className="v5-readout-verdict">{readout.verdict}</p>

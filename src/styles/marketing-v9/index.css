@@ -1368,3 +1368,38 @@
   .tl-public.v9 .v5-readout-note { display: block; margin: 0 0 6px; font-size: 15px; line-height: 1.45; color: var(--v9-ink-soft); }
   .v9-learning-bench { margin-top: 18px; }
 }
+
+/* ============================================================ pass 13 (26 September 2026): the playbook one chapter at a time; the track record; the FAQ */
+/* the stepper: with scripting only the current chapter shows; without it, all ten, in order */
+[data-js] .pb-step:not(.is-current) { display: none; }
+.pb-step .pb-chapter { padding-top: 24px; }
+.pb-step .pb-chapter + .pb-chapter::before { display: none; }
+.pb-step-nav { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 28px 20px 8px; }
+.pb-step-next { display: inline-grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; column-gap: 12px; text-align: left; min-height: 64px; padding: 10px 22px 10px 20px; border-radius: 22px; }
+.pb-step-next-label { font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.75; grid-column: 1 / 3; }
+.pb-step-next-title { font-family: var(--v9-serif); font-weight: 400; font-size: 1.25rem; line-height: 1.1; grid-column: 1 / 3; }
+.pb-step-next .v9-arrow { grid-column: 3; grid-row: 1 / 3; }
+.pb-stepper { scroll-margin-top: 96px; }
+/* the track record */
+.v9-proof { padding: 20px 0 0; }
+.v9-proof-band { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px 40px; align-items: center; padding: 22px 28px; border-radius: 24px; background: var(--v9-night); color: #fff; }
+.v9-proof-band .v9-eyebrow { margin: 0; color: var(--v5-butter); grid-column: 1; }
+.v9-proof-figures { display: flex; gap: 36px; margin: 0; grid-column: 2; grid-row: 1 / 3; }
+.v9-proof-figures div { display: grid; gap: 2px; }
+.v9-proof-figures dt { font-size: 14px; color: rgba(255, 255, 255, 0.72); }
+.v9-proof-figures dt strong { display: block; font-family: var(--v9-serif); font-weight: 400; font-size: 2.6rem; line-height: 1; color: #fff; letter-spacing: -0.01em; }
+.v9-proof-figures dd { margin: 0; font-size: 13px; color: rgba(255, 255, 255, 0.55); }
+.v9-proof-line { margin: 0; font-size: 14.5px; line-height: 1.5; color: rgba(255, 255, 255, 0.72); max-width: 52ch; grid-column: 1; }
+/* the FAQ */
+.v9-faq { padding: var(--v9-section) 0 0; }
+.v9-faq-list { display: grid; gap: 10px; max-width: 820px; margin: 32px auto 0; }
+.v9-faq-item summary strong { font-size: 1.3rem; }
+@media (max-width: 759px) {
+  .pb-step-nav { flex-direction: column-reverse; align-items: stretch; padding: 20px 16px 4px; }
+  .pb-step-back { align-self: flex-start; }
+  .v9-proof-band { grid-template-columns: 1fr; padding: 20px 18px; gap: 12px; }
+  .v9-proof-figures { grid-column: 1; grid-row: auto; gap: 24px; }
+  .v9-proof-figures dt strong { font-size: 2.1rem; }
+  .v9-faq-list { margin-top: 20px; gap: 8px; }
+  .v9-faq-item summary strong { font-size: 1.15rem; }
+}
