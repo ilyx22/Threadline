@@ -3106,3 +3106,23 @@ model NotificationPreference {
   @@unique([userId, orgId])
 }
 
+/// A renewal decision (RNW-01), opened ahead of the end of the initial term
+/// or of any later period an owner marks, and decided by a person.
+model RenewalReview {
+  id           String    @id @default(cuid())
+  orgId        String
+  engagementId String
+  /// The period whose end prompts the review.
+  periodNumber Int
+  dueDate      DateTime  @db.Date
+  /// open | renewed | paused | expanded | ended | handed_over
+  state        String    @default("open")
+  note         String?
+  decidedById  String?
+  decidedAt    DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@unique([engagementId, periodNumber])
+  @@index([orgId, state])
+}
+

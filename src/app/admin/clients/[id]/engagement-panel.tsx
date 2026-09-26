@@ -16,6 +16,7 @@ import {
   pauseEngagementAction,
   proposeScopeChangeAction,
   resumeEngagementAction,
+  decideRenewalAction,
 } from "@/lib/actions/engagement";
 import type { ActionResult } from "@/lib/actions/shared";
 
@@ -33,6 +34,7 @@ export type EngagementView = {
   timezone: string;
   periods: { number: number; startDate: string; endDate: string; status: string; feeMinor: number }[];
   scopeChanges: { id: string; summary: string; state: string; effectiveFromPeriod: number | null; feeChangeMinor: number | null }[];
+  renewals: { id: string; dueDate: string; state: string; note: string | null }[];
 };
 
 const money = (minor: number, currency: string) => new Intl.NumberFormat("en-GB", { style: "currency", currency, maximumFractionDigits: 0 }).format(minor / 100);
@@ -129,6 +131,37 @@ export function EngagementPanel({ engagement }: { engagement: EngagementView | n
               ))}
             </tbody>
           </table>
+        ) : null}
+
+        {e.renewals.length ? (
+          <div className="space-y-2">
+            <p className="text-eyebrow text-faint">Renewal</p>
+            {e.renewals.map((r) =>
+              r.state === "open" ? (
+                <div key={r.id} className="space-y-2 rounded-lg border border-line p-3">
+                  <p className="text-[13px] text-ink">Renewal review due {r.dueDate}. Decide with the client.</p>
+                  {(["renewed", "expanded", "paused", "ended", "handed_over"] as const).map((d) => (
+                    <ActionForm key={d} action={decideRenewalAction.bind(null, r.id, d)} onSuccess={() => router.refresh()} className="inline-flex flex-wrap items-end gap-2">
+                      {({ error }) => (
+                        <>
+                          <FormError error={error} />
+                          <Input name="note" placeholder={`What was agreed (${d.replace("_", " ")})`} aria-label={`Note for ${d}`} />
+                          <SubmitButton size="xs" variant={d === "renewed" ? "primary" : "ghost"}>
+                            {d === "renewed" ? "Renew" : d === "expanded" ? "Expand" : d === "paused" ? "Pause" : d === "ended" ? "End" : "Hand over"}
+                          </SubmitButton>
+                        </>
+                      )}
+                    </ActionForm>
+                  ))}
+                </div>
+              ) : (
+                <p key={r.id} className="text-[12.5px] text-muted">
+                  Renewal due {r.dueDate}: {r.state.replace("_", " ")}
+                  {r.note ? `. ${r.note}` : ""}
+                </p>
+              ),
+            )}
+          </div>
         ) : null}
 
         <div className="space-y-2">

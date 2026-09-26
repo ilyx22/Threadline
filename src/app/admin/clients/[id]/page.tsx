@@ -62,6 +62,7 @@ export default async function ClientDetailPage({
   if (engagementRow && (engagementRow.status === "active" || engagementRow.status === "paused")) await ensurePeriods(engagementRow.id);
   const engagement = engagementRow ? await currentEngagement(client.id) : null;
   const scopeChanges = engagement ? await prisma.scopeChange.findMany({ where: { engagementId: engagement.id }, orderBy: { createdAt: "desc" } }) : [];
+  const renewals = engagement ? await prisma.renewalReview.findMany({ where: { engagementId: engagement.id }, orderBy: { createdAt: "desc" } }) : [];
   const offerName = engagement ? ((JSON.parse(engagement.offerSnapshot) as { name?: string }).name ?? "Engagement") : "";
   const [invoiceRows, reminderRows, agreementRows] = await Promise.all([
     prisma.invoice.findMany({ where: { orgId: client.id }, orderBy: [{ createdAt: "desc" }], include: { disputes: { select: { id: true, state: true, reason: true } } } }),
@@ -180,6 +181,7 @@ export default async function ClientDetailPage({
                     timezone: engagement.timezone,
                     periods: engagement.periods.map((p) => ({ number: p.number, startDate: p.startDate.toISOString().slice(0, 10), endDate: p.endDate.toISOString().slice(0, 10), status: p.status, feeMinor: p.feeMinor })),
                     scopeChanges: scopeChanges.map((c) => ({ id: c.id, summary: c.summary, state: c.state, effectiveFromPeriod: c.effectiveFromPeriod, feeChangeMinor: c.feeChangeMinor })),
+                    renewals: renewals.map((r) => ({ id: r.id, dueDate: r.dueDate.toISOString().slice(0, 10), state: r.state, note: r.note })),
                   }
                 : null
             }

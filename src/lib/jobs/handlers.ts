@@ -57,6 +57,9 @@ registerHandler("daily.tick", async () => {
   const { kickCrm } = await import("@/lib/crm/outbox");
   for (const e of await prisma.engagement.findMany({ where: { status: "active" }, select: { id: true } })) await ensurePeriods(e.id);
   await expireInvitations();
+  // RNW-01: open renewal reviews ahead of the end of the initial term.
+  const { openDueRenewals } = await import("@/lib/commercial/renewals");
+  await openDueRenewals();
   // BIL-01/BIL-04: draft due invoices and overdue reminders; issuing and
   // sending remain a person's decision.
   const { draftDueInvoices, draftOverdueReminders } = await import("@/lib/billing/invoices");

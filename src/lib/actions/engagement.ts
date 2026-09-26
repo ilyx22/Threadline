@@ -7,6 +7,8 @@ import { auditInternal } from "@/lib/auth/audit";
 import { requireInternalStrict } from "@/lib/auth/guard";
 import { activateEngagement, decideScopeChange, EngagementError, endEngagement, pauseEngagement, proposeScopeChange, resumeEngagement } from "@/lib/commercial/engagements";
 import { kickCrm, queueCrm } from "@/lib/crm/outbox";
+import { decideRenewal } from "@/lib/commercial/renewals";
+import { WorkflowError } from "@/lib/domain/workflow";
 import { err, guarded, okVoid, parseForm, type ActionResult } from "./shared";
 
 /**
@@ -114,6 +116,23 @@ export async function decideScopeChangeAction(changeId: string, decision: "appro
       refresh(c.orgId);
       return okVoid(decision === "approved" ? "Approved and applied." : "Rejected.");
     } catch (x) {
+      return handle(x) ?? Promise.reject(x);
+    }
+  });
+}
+
+/** RNW-01: a person decides the renewal. */
+export async function decideRenewalAction(reviewId: string, decision: "renewed" | "paused" | "expanded" | "ended" | "handed_over", _prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  return guarded(async () => {
+    const admin = await requireInternalStrict("admin.clients.manage");
+    const { note } = parseForm(z.object({ note: z.string().trim().min(3, "Say what was agreed.").max(1000) }), formData);
+    try {
+      const r = await decideRenewal(reviewId, decision, note, admin.user.id);
+      await auditInternal(admin.user.id, { orgId: r.orgId, action: `renewal.${decision}`, entityType: "renewal_review", entityId: r.id, summary: `Renewal decided: ${decision.replace("_", " ")}. ${note}` });
+      refresh(r.orgId);
+      return okVoid("Renewal decision recorded.");
+    } catch (x) {
+      if (x instanceof WorkflowError) return err(x.message, "workflow");
       return handle(x) ?? Promise.reject(x);
     }
   });
