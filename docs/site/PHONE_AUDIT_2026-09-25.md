@@ -153,3 +153,15 @@ Uses the same panel and wordmark rules; inherits the width change.
 | "Number 10 still touches the edge of its box" | phone | The rail marks are now flex-centred with no padding and the rail has 12px of padding; in headless Chrome the number sits centred with 10px clear on every side, so this may be a Safari rendering of the grid centring, which is what changed |
 | "Remove the short copy between the chapter titles and the idea" | everywhere | The chapter summary line is gone on the playbook page and the standalone chapter pages |
 | "Remove the bottom copy about three four-week periods" | everywhere | The note under the three period tiles is gone |
+
+## Sixth pass (26 September 2026)
+
+| Note | Where it applies | What changed |
+| --- | --- | --- |
+| "The chapter pictures aren't aligned" | phone | The object is centred over its title (the wrapper was centred, the picture inside it was not) |
+| "What Threadline does: put the title at the top of the graphic" | everywhere | The caption sits above the eight objects |
+| "One idea, the right expressions: the line at the bottom of the four boxes" | everywhere | The faint room line ("Where the buyer reads" etc.) is removed from all four |
+| "04 Change: make the box move instantly when clicked" | everywhere | Tapping step 4 (or 5) applies the change at once; the 1.1s beat remains only when the loop plays itself |
+| "Move the ten boxes up by 0.3cm on phone" | phone | The rail sits 10px higher |
+| "Animate the card turn, and remove the 'Turn the card' label" | everywhere | The answer fades and settles in over 360ms and the card tints; the label is gone, the plus icon and the question remain |
+| "The 1 to 10 bar should not scroll with the page" | everywhere | The rail is no longer sticky |

@@ -207,6 +207,10 @@ function Burden() {
         </div>
         <div className="v9-burden-tiles">
           <div className="v9-tile is-night v9-bench-tile is-alone v9-reveal">
+            <p className="v9-tile-caption is-light">
+              <strong>What Threadline does</strong>
+              <span>{roles.handoff}</span>
+            </p>
             <ul className="v9-tools is-eight is-light" aria-label="What Threadline does">
               {THREADLINE_JOBS.map((j, i) => (
                 <li key={j.job} style={{ ["--i" as string]: i }}>
@@ -215,10 +219,6 @@ function Burden() {
                 </li>
               ))}
             </ul>
-            <p className="v9-tile-caption is-light">
-              <strong>What Threadline does</strong>
-              <span>{roles.handoff}</span>
-            </p>
           </div>
         </div>
       </div>
@@ -268,7 +268,6 @@ function Expressions() {
               <span className="v9-tag">{String(i + 1).padStart(2, "0")}</span>
               <strong>{f.kind}</strong>
               <span>{f.role}</span>
-              <small>{f.room}</small>
             </li>
           ))}
         </ol>

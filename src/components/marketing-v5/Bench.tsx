@@ -65,7 +65,7 @@ export default function Bench() {
 
   const go = (s: number) => {
     if (s < 3) setLever(0);
-    if (s === 4 && !applied) setLever(100);
+    if (s >= 3) setLever(100);
     setState(s);
   };
 

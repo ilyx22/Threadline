@@ -77,7 +77,6 @@ export function Chapter({ index, standalone = false }: { index: number; standalo
             </div>
             <details className="pb-turn">
               <summary>
-                <span className="v9-tag">Turn the card</span>
                 <strong>{ch.reveal.prompt}</strong>
                 <i aria-hidden="true">+</i>
               </summary>
