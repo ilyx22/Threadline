@@ -312,7 +312,7 @@ export function denialReason(role: Role, capability: Capability): string {
     "corpus.manage":
       "The research corpus is Threadline's own market evidence. What it produces reaches you as strategy, not as raw material.",
     "signals.edit":
-      "Signals are reviewed by Threadline before they reach you. Nothing the system proposes changes strategy until a person decides on it, and you approve the 30-day strategy that comes out of it.",
+      "Signals are reviewed by Threadline before they reach you. Nothing the system proposes changes strategy until a person decides on it, and you approve the strategy for each four-week period that comes out of it.",
     "diagnosis.edit": "Only a workspace admin can change the constraint diagnosis.",
     "install.signoff": "Only a workspace admin can sign off the strategy.",
     "proof.edit": "Only a workspace admin can record proof figures.",

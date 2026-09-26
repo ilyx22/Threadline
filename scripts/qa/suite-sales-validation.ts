@@ -84,9 +84,21 @@ export async function runSales(fx: Fixture) {
   const wedge = await prisma.marketWedge.create({ data: { label: `${QA}wedge`, summary: "QA hypothesis", state: "interviews", active: false, nextAction: "Interview", nextActionDueAt: new Date() } });
   for (let i = 0; i < 9; i++) await prisma.validationConversation.create({ data: { wedgeId: wedge.id, person: `P${i}`, problem: `p${i}`, volunteered: true, problemTheme: i < 6 ? "same" : null, heldAt: new Date() } as never });
   const early = await attempt(() => Val.advanceWedgeAction(wedge.id, null, fd({ to: "commercial_test", nextAction: "Test", nextActionDueAt: new Date().toISOString().slice(0, 10) })));
-  record("validation", "wedge cannot enter commercial_test at 9 conversations (real action)", early.outcome !== "ok" && (await prisma.marketWedge.findUnique({ where: { id: wedge.id } }))!.state === "interviews" ? "PASS" : "FAIL", `${early.outcome} ${(early as { message?: string }).message?.slice(0, 70) ?? ""}`, early.outcome === "ok" ? "GATE-VALIDATION" : undefined);
+  record("validation", "wedge cannot enter commercial_test at 9 conversations without a recorded uncertainty (real action)", early.outcome !== "ok" && (await prisma.marketWedge.findUnique({ where: { id: wedge.id } }))!.state === "interviews" ? "PASS" : "FAIL", `${early.outcome} ${(early as { message?: string }).message?.slice(0, 70) ?? ""}`, early.outcome === "ok" ? "GATE-VALIDATION" : undefined);
   const forced = await attempt(() => Val.advanceWedgeAction(wedge.id, null, fd({ to: "commercial_test", override: "Founder says go.", nextAction: "Test", nextActionDueAt: new Date().toISOString().slice(0, 10) })));
   record("validation", "override cannot bypass the interview gate", forced.outcome !== "ok" && (await prisma.marketWedge.findUnique({ where: { id: wedge.id } }))!.state === "interviews" ? "PASS" : "FAIL", `${forced.outcome}`, forced.outcome === "ok" ? "GATE-VALIDATION-OVERRIDE" : undefined);
+  // Starting a commercial test early is allowed, but only with the uncertainty
+  // written down; declaring validation early is not allowed at all.
+  const earlyWedge = await prisma.marketWedge.create({ data: { label: `${QA}early-wedge`, summary: "QA early test", state: "interviews", active: false, nextAction: "Interview", nextActionDueAt: new Date() } });
+  for (let i = 0; i < 3; i++) await prisma.validationConversation.create({ data: { wedgeId: earlyWedge.id, person: `E${i}`, problem: `e${i}`, volunteered: true, problemTheme: "same", heldAt: new Date() } as never });
+  const earlyNote = "Three interviews only; the recurring problem is a hypothesis. Replies are read as signal, not validation.";
+  const earlyTest = await attempt(() => Val.advanceWedgeAction(earlyWedge.id, null, fd({ to: "commercial_test", override: "Checklist not finished: testing in parallel.", uncertainty: earlyNote, nextAction: "Send the first batch", nextActionDueAt: new Date().toISOString().slice(0, 10) })));
+  const earlyRow = await prisma.marketWedge.findUnique({ where: { id: earlyWedge.id } });
+  record("validation", "an authorised operator can start a commercial test early with the uncertainty recorded", earlyTest.outcome === "ok" && earlyRow!.state === "commercial_test" && earlyRow!.testedBeforeValidation && earlyRow!.uncertaintyNote === earlyNote ? "PASS" : "FAIL", `${earlyTest.outcome} ${(earlyTest as { message?: string }).message?.slice(0, 70) ?? ""}`);
+  const earlyAudit = await prisma.auditLog.findFirst({ where: { entityId: earlyWedge.id, action: "wedge.transition" }, orderBy: { createdAt: "desc" } });
+  record("validation", "the early start and its uncertainty are in the audit trail", earlyAudit && JSON.stringify(earlyAudit.meta ?? {}).includes("earlyCommercialTest") ? "PASS" : "FAIL", "");
+  const earlyValidated = await attempt(() => Val.advanceWedgeAction(earlyWedge.id, null, fd({ to: "validated", override: "Replies were strong, call it.", nextAction: "Freeze", nextActionDueAt: new Date().toISOString().slice(0, 10) })));
+  record("validation", "a wedge tested early cannot be declared validated without the interview sample", earlyValidated.outcome !== "ok" && (await prisma.marketWedge.findUnique({ where: { id: earlyWedge.id } }))!.state === "commercial_test" ? "PASS" : "FAIL", `${earlyValidated.outcome} ${(earlyValidated as { message?: string }).message?.slice(0, 60) ?? ""}`, earlyValidated.outcome === "ok" ? "GATE-VALIDATION-EARLY" : undefined);
   await Val.addConversationAction(wedge.id, null, fd({ person: "P9", problem: "Tenth conversation, same expensive problem.", volunteered: "true", problemTheme: "same" }));
   // The SOP checklist is a separate gate from the interview evidence. Prove it
   // blocks on its own, then satisfy it through the real action so the evidence
@@ -101,6 +113,20 @@ export async function runSales(fx: Fixture) {
   }
   const tenth = await attempt(() => Val.advanceWedgeAction(wedge.id, null, fd({ to: "commercial_test", nextAction: "Test", nextActionDueAt: new Date().toISOString().slice(0, 10) })));
   record("validation", "10 conversations with 6 converging → commercial_test allowed", tenth.outcome === "ok" && (await prisma.marketWedge.findUnique({ where: { id: wedge.id } }))!.state === "commercial_test" ? "PASS" : "FAIL", `${tenth.outcome} ${(tenth as { message?: string }).message?.slice(0, 70) ?? ""}`);
+
+  section("touches and demand source — recorded after a person sent it, sources kept apart");
+  const tp = await prisma.prospect.create({ data: { company: `${QA}touch co`, state: "new", tier: "b", channel: "linkedin", nextAction: "Research", nextActionDueAt: new Date() } });
+  const t1 = await attempt(() => Acq.logTouchAction(tp.id, null, fd({ kind: "follow_up", note: "Sent by hand." })));
+  const tpRow = await prisma.prospect.findUnique({ where: { id: tp.id }, include: { touches: true } });
+  record("touches", "the first recorded touch is a first touch and dates the funnel", t1.outcome === "ok" && tpRow!.touches.length === 1 && tpRow!.touches[0].kind === "first" && tpRow!.firstTouchAt !== null ? "PASS" : "FAIL", `${t1.outcome} kinds=${tpRow?.touches.map((t) => t.kind).join(",")}`);
+  const t2 = await attempt(() => Acq.logTouchAction(tp.id, null, fd({ kind: "follow_up" })));
+  const future = await attempt(() => Acq.logTouchAction(tp.id, null, fd({ kind: "follow_up", at: new Date(Date.now() + 5 * 86_400_000).toISOString().slice(0, 10) })));
+  record("touches", "a follow-up is counted as a touch; a future-dated touch is refused", t2.outcome === "ok" && future.outcome !== "ok" && (await prisma.prospectTouch.count({ where: { prospectId: tp.id } })) === 2 ? "PASS" : "FAIL", `${t2.outcome} ${future.outcome}`);
+  const noEvidence = await attempt(() => Acq.setDemandSourceAction(tp.id, null, fd({ demandSource: "content_sourced" })));
+  const withEvidence = await attempt(() => Acq.setDemandSourceAction(tp.id, null, fd({ demandSource: "content_assisted", demandSourceNote: "Named the calendar-vs-system post on the call." })));
+  record("touches", "content credit needs a note saying how we know", noEvidence.outcome !== "ok" && withEvidence.outcome === "ok" && (await prisma.prospect.findUnique({ where: { id: tp.id } }))!.demandSource === "content_assisted" ? "PASS" : "FAIL", `${noEvidence.outcome} ${withEvidence.outcome}`);
+  const fc = await (await import("../../src/lib/data/acquisition")).funnelCounts({ start: new Date(Date.now() - 86_400_000), end: new Date(Date.now() + 60_000) });
+  record("touches", "funnel counts carry targeted and touches", (fc.targeted ?? 0) >= 1 && (fc.touches ?? 0) >= 2 ? "PASS" : "FAIL", `targeted=${fc.targeted} touches=${fc.touches}`);
 
   section("acquisition arithmetic — refuses to project from unknowable rates");
   const target = await attempt(() => Acq.saveTargetAction(null, null, fd({ label: `${QA}target`, targetWins: 2, periodStart: new Date().toISOString().slice(0, 10), periodEnd: new Date(Date.now() + 84 * 86_400_000).toISOString().slice(0, 10) })));

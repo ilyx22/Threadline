@@ -1,5 +1,17 @@
 # HANDOFF — Threadline OS
 
+> **Historical document (last substantive update 9 September 2026).** Parts of it are obsolete. It does **not** override newer implementation or documents. For example, it says there is no billing, no PDFs, no CRM sync, local-only storage and git, and no workers; all of those have since been built or changed.
+>
+> **Current state:**
+> - `docs/TECHNICAL_HANDOFF.md` (engineering)
+> - `docs/implementation/BACKEND_COMPLETION_LEDGER.md` and `docs/audits/FINAL_BACKEND_IMPLEMENTATION_AUDIT.md` (what is built and tested)
+> - `docs/OWNER_ACTIVATION_CHECKLIST.md` (what the owner must configure or decide)
+> - `docs/CLIENT_AND_OPERATOR_RUNBOOK.md` (how to operate)
+> - `docs/launch-pack/README.md` (business launch assets and their approval status)
+> - `docs/launch-pack/MASTER_LAUNCH_CHECKLIST.md` (the consolidated launch checklist)
+>
+> The text below is kept as context.
+
 If you are a new session picking this up cold: read this file top to bottom, then
 `docs/BUILD_CHECKLIST.md` for state and `docs/ARCHITECTURE.md` for reasoning. Everything you need
 is on disk; nothing depends on a previous conversation.

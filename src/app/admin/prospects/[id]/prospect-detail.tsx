@@ -11,6 +11,8 @@ import { Input, NativeSelect, Textarea } from "@/components/ui/input";
 import {
   bookCallAction,
   classifyReplyAction,
+  logTouchAction,
+  setDemandSourceAction,
   recordCallOutcomeAction,
   saveCallStageAction,
   saveProspectAction,
@@ -104,6 +106,119 @@ export function ReplyPanel({
                 </Field>
                 <SubmitButton icon={MessageSquare}>Classify</SubmitButton>
               </div>
+            </>
+          )}
+        </ActionForm>
+      </CardBody>
+    </Card>
+  );
+}
+
+/* ------------------------------ Touches and source ------------------------------ */
+
+const TOUCH_OPTIONS = [
+  { value: "follow_up", label: "Follow-up" },
+  { value: "value_sent", label: "Promised observation or sample sent" },
+  { value: "reply", label: "Reply sent" },
+  { value: "booking", label: "Booking or reminder" },
+  { value: "other", label: "Other" },
+];
+
+const SOURCE_OPTIONS = [
+  { value: "unknown", label: "Not known yet" },
+  { value: "outbound", label: "Outbound" },
+  { value: "content_sourced", label: "Content-sourced (found us through content)" },
+  { value: "content_assisted", label: "Content-assisted (content helped a conversation that started elsewhere)" },
+  { value: "referral", label: "Referral" },
+  { value: "inbound_other", label: "Other inbound" },
+];
+
+/**
+ * Touches are recorded after a person has sent something by hand; nothing is
+ * sent from here. The first touch on a prospect is always recorded as "first".
+ */
+export function TouchesPanel({
+  prospectId,
+  touches,
+  demandSource,
+  demandSourceNote,
+}: {
+  prospectId: string;
+  touches: { id: string; at: string; kind: string; channel: string | null; note: string | null }[];
+  demandSource: string | null;
+  demandSourceNote: string | null;
+}) {
+  return (
+    <Card>
+      <CardHeader
+        title="Touches and demand source"
+        description="Record each message after you have sent it yourself. Nothing is sent from Threadline."
+        action={<Badge tone="neutral">{touches.length} touch{touches.length === 1 ? "" : "es"}</Badge>}
+      />
+      <CardBody className="space-y-5">
+        <ActionForm action={logTouchAction.bind(null, prospectId)} className="space-y-3">
+          {({ fieldErrors, error }) => (
+            <>
+              <FormError error={error} />
+              <div className="grid gap-3 sm:grid-cols-3">
+                <Field label="Touch" htmlFor="touch-kind" error={fieldErrors.kind}>
+                  <NativeSelect id="touch-kind" name="kind" defaultValue="follow_up">
+                    {TOUCH_OPTIONS.map((o) => (
+                      <option key={o.value} value={o.value}>{o.label}</option>
+                    ))}
+                  </NativeSelect>
+                </Field>
+                <Field label="Channel" htmlFor="touch-channel" optional>
+                  <Input id="touch-channel" name="channel" placeholder="LinkedIn, email, phone" />
+                </Field>
+                <Field label="Sent on" htmlFor="touch-at" optional error={fieldErrors.at}>
+                  <Input id="touch-at" name="at" type="date" />
+                </Field>
+              </div>
+              <div className="flex items-end gap-3">
+                <Field label="Note" htmlFor="touch-note" optional className="flex-1">
+                  <Input id="touch-note" name="note" placeholder="What it said or added" />
+                </Field>
+                <SubmitButton icon={MessageSquare}>Record touch</SubmitButton>
+              </div>
+            </>
+          )}
+        </ActionForm>
+
+        {touches.length > 0 ? (
+          <ul className="space-y-1.5 text-[12px]">
+            {touches.map((t) => (
+              <li key={t.id} className="flex flex-wrap gap-2 text-muted">
+                <span className="tabular text-faint">{t.at.slice(0, 10)}</span>
+                <span className="text-ink">{t.kind.replace(/_/g, " ")}</span>
+                {t.channel ? <span>{t.channel}</span> : null}
+                {t.note ? <span className="text-faint">{t.note}</span> : null}
+              </li>
+            ))}
+          </ul>
+        ) : null}
+
+        <ActionForm action={setDemandSourceAction.bind(null, prospectId)} className="space-y-3 border-t border-line pt-4">
+          {({ fieldErrors, error }) => (
+            <>
+              <FormError error={error} />
+              <Field label="Where the demand came from" htmlFor="demandSource" error={fieldErrors.demandSource}>
+                <NativeSelect id="demandSource" name="demandSource" defaultValue={demandSource ?? "unknown"}>
+                  {SOURCE_OPTIONS.map((o) => (
+                    <option key={o.value} value={o.value}>{o.label}</option>
+                  ))}
+                </NativeSelect>
+              </Field>
+              <Field
+                label="How we know"
+                htmlFor="demandSourceNote"
+                optional
+                hint="Required for content-sourced or content-assisted: the piece they named, the link they used, or their words."
+                error={fieldErrors.demandSourceNote}
+              >
+                <Input id="demandSourceNote" name="demandSourceNote" defaultValue={demandSourceNote ?? ""} />
+              </Field>
+              <SubmitButton icon={Save}>Save source</SubmitButton>
             </>
           )}
         </ActionForm>

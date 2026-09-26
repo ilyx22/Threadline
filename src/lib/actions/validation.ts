@@ -8,11 +8,14 @@ import { requireInternalStrict } from "@/lib/auth/guard";
 import { wedgeStateSchema } from "@/lib/domain/enums";
 import {
   assertActiveRecord,
+  assertEarlyTestRecorded,
   assertInterviewEvidence,
   assertWedgeTransition,
+  CONVERGENCE_MINIMUM,
   defaultNextAction,
   readValidation,
   resolveCheck,
+  VALIDATION_DECISION_MINIMUM,
   wedgeState,
 } from "@/lib/domain/sop";
 import {
@@ -180,6 +183,8 @@ const advanceSchema = z.object({
   nextAction: z.string().max(300).optional(),
   nextActionDueAt: optionalDate,
   override: z.string().max(600).optional(),
+  /** What is still uncertain, when a commercial test starts before the evidence is in. */
+  uncertainty: z.string().max(1200).optional(),
 });
 
 export async function advanceWedgeAction(
@@ -207,17 +212,25 @@ export async function advanceWedgeAction(
       override: input.override,
     });
 
-    // The sample gate. Unlike the checklist this one has no override, because
-    // the whole purpose of the state is that the conversations happened and
-    // that they said the same thing.
+    const reading = readValidation(
+      wedge.conversations.map((c) => ({
+        volunteered: c.volunteered,
+        problem: c.problem,
+        theme: c.problemTheme,
+      })),
+    );
+    // A commercial test may start before the sample is in, but only with the
+    // uncertainty written down. The checklist override does not count: it
+    // explains skipping a checklist item, not testing an unvalidated problem.
+    let early = false;
     if (wedge.state === "interviews" && input.to === "commercial_test") {
-      const reading = readValidation(
-        wedge.conversations.map((c) => ({
-          volunteered: c.volunteered,
-          problem: c.problem,
-          theme: c.problemTheme,
-        })),
-      );
+      assertEarlyTestRecorded(reading.total, reading.convergence, input.uncertainty);
+      early = reading.total < VALIDATION_DECISION_MINIMUM || reading.convergence < CONVERGENCE_MINIMUM;
+    }
+    // The sample gate on declaring validation. Unlike the checklist this one has
+    // no override, because the whole purpose of the state is that the
+    // conversations happened and that they said the same thing.
+    if (input.to === "validated") {
       assertInterviewEvidence(reading.total, reading.convergence);
     }
 
@@ -234,6 +247,14 @@ export async function advanceWedgeAction(
         nextAction,
         nextActionDueAt,
         frozenAt: input.to === "validated" ? new Date() : null,
+        ...(early
+          ? {
+              testedBeforeValidation: true,
+              uncertaintyNote: input.uncertainty!.trim(),
+              uncertaintyAt: new Date(),
+              uncertaintyById: admin.user.id,
+            }
+          : {}),
       },
     });
 
@@ -242,7 +263,15 @@ export async function advanceWedgeAction(
       entityType: "MarketWedge",
       entityId: wedgeId,
       summary: `${wedge.label}: ${wedge.state} → ${input.to}`,
-      meta: { from: wedge.state, to: input.to, override: input.override ?? null },
+      meta: {
+        from: wedge.state,
+        to: input.to,
+        override: input.override ?? null,
+        earlyCommercialTest: early,
+        uncertainty: early ? input.uncertainty!.trim() : null,
+        conversations: reading.total,
+        converging: reading.convergence,
+      },
     });
 
     revalidateAll(wedgeId);

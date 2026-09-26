@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Call Reference</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --canvas: #e8f1f8; --panel: #ffffff; --ink: #17233a; --ink-soft: #3b475e;
+    --ink-faint: #6b768a; --action: #1f63d6; --line: #d3dde8; --warn: #fff0c2;
+  }
+  @page { size: A4; margin: 10mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--panel); color: var(--ink); }
+  body { font: 400 8.6pt/1.35 Inter, Arial, Helvetica, sans-serif; }
+  .page { width: 190mm; margin: 0 auto; padding: 4mm 0; }
+  header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1.5pt solid var(--ink); padding-bottom: 2mm; }
+  h1 { font: 400 20pt/1 "Instrument Serif", Georgia, serif; margin: 0; }
+  .meta { color: var(--ink-faint); font-size: 7.4pt; text-align: right; }
+  .states { margin: 2mm 0; font-size: 7.8pt; color: var(--ink-soft); }
+  .states b { color: var(--ink); }
+  table { width: 100%; border-collapse: collapse; margin-top: 1.5mm; }
+  th, td { text-align: left; vertical-align: top; padding: 1.3mm 1.5mm; border-bottom: 0.5pt solid var(--line); }
+  th { font-size: 7pt; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-faint); font-weight: 500; }
+  td.n { width: 5mm; color: var(--ink-faint); }
+  td.s { width: 26mm; font-weight: 600; }
+  td.m { width: 8mm; color: var(--ink-faint); }
+  td.u { width: 31mm; color: var(--action); font-weight: 500; }
+  .price { background: var(--canvas); }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 3mm; }
+  .box { border: 0.6pt solid var(--line); border-radius: 2mm; padding: 2mm 2.5mm; }
+  .box h2 { font: 600 7.6pt/1.2 Inter, sans-serif; text-transform: uppercase; letter-spacing: .05em; margin: 0 0 1.2mm; color: var(--ink-soft); }
+  .box p, .box li { margin: 0 0 .8mm; }
+  .box ul { margin: 0; padding-left: 3.5mm; }
+  .never { background: var(--warn); }
+  .headline { margin-top: 3mm; font: 400 12pt/1.25 "Instrument Serif", Georgia, serif; text-align: center; }
+  footer { gap: 4mm; margin-top: 2.5mm; font-size: 6.8pt; color: var(--ink-faint); display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <h1>Threadline: live diagnosis call</h1>
+    <div class="meta">45 minutes · internal only · drafted, owner approval pending<br>[V-X] = read passage X exactly from APPROVED_VERBATIM_LIBRARY.md</div>
+  </header>
+  <p class="states">Ends in exactly one state, with a dated next action: <b>WON</b> · <b>FOLLOW_UP</b> · <b>PROPOSAL_PROCESS</b> · <b>NOT_FIT</b> · <b>LOST</b></p>
+  <table>
+    <thead><tr><th>#</th><th>Stage</th><th>Min</th><th>Ask or do</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td class="n">1</td><td class="s">OPEN</td><td class="m">3</td><td>Agenda. “Why now?” “Who else decides?”</td><td class="u"></td></tr>
+      <tr><td class="n">2</td><td class="s">ECONOMICS</td><td class="m">6</td><td>Deal value · margin · lifetime · cycle · close rate · capacity · value of one extra qualified opportunity · current sources</td><td class="u">Log on the prospect</td></tr>
+      <tr><td class="n">3</td><td class="s">CURRENT</td><td class="m">6</td><td>How clients find you · who researches, writes, records, edits, approves and publishes · what stalls · their own time (their answer, not yours)</td><td class="u">Arrive knowing, then verify</td></tr>
+      <tr><td class="n">4</td><td class="s">DESIRED</td><td class="m">3</td><td>“If content worked 90 days from now, what’s different?” “What would prove it commercially?”</td><td class="u">Their words</td></tr>
+      <tr><td class="n">5</td><td class="s">CONSTRAINT</td><td class="m">4</td><td>Topics · positioning · scripting · recording · QA · approvals · distribution · conversion path · learning · coordination</td><td class="u">1–3 hypotheses</td></tr>
+      <tr><td class="n">6</td><td class="s">CONSEQUENCE</td><td class="m">3</td><td>Cost of no change: time, consistency, pipeline, pricing power. Reframe in their words; get agreement.</td><td class="u"></td></tr>
+      <tr><td class="n">7</td><td class="s">PRESCRIPTION</td><td class="m">3</td><td>The standard 80% process plus their configured 20%. They talk, record, approve and sell; Threadline runs the rest.</td><td class="u">[V-I]</td></tr>
+      <tr><td class="n">8</td><td class="s">DEMO</td><td class="m">5</td><td>One path matched to the constraint. Synthetic workspace only; say it is synthetic.</td><td class="u">[V-H]</td></tr>
+      <tr class="price"><td class="n">9</td><td class="s">COMMERCIALS</td><td class="m">7</td><td><b>£2,500 implementation + £2,500 every four weeks.</b> Initial 12 weeks = 3 periods = <b>£10,000</b>. One offer. No guarantees. Show the arithmetic with their numbers.</td><td class="u">[V-D] [V-E] [V-G] [V-J]</td></tr>
+      <tr><td class="n">10</td><td class="s">DECISION</td><td class="m">5</td><td>Ask plainly. No fake urgency. WON → SOP 04 the same day; record testimonial permission (YES/MAYBE/NO) with the exact wording.</td><td class="u">[V-B]</td></tr>
+    </tbody>
+  </table>
+  <div class="grid">
+    <div class="box">
+      <h2>Objections</h2>
+      <ul>
+        <li><b>Proof:</b> [V-A]; if you are not the founder, use the adaptation in the guide</li>
+        <li><b>AI:</b> “AI is internal leverage…” (Vault)</li>
+        <li><b>Time:</b> no hours figure. “Measured in your workspace, not assumed.”</li>
+        <li><b>Price:</b> [V-D] with their numbers; compare against the real alternative</li>
+        <li><b>Alternatives:</b> compare the full scope, not one job title</li>
+        <li><b>Speed:</b> [V-C] then [V-H] · <b>One month:</b> [V-G]</li>
+        <li><b>Guarantee:</b> “Not responsibly…” (Vault)</li>
+      </ul>
+    </div>
+    <div class="box never">
+      <h2>Never say</h2>
+      <ul>
+        <li>“monthly” / “per month” (it is every four weeks)</li>
+        <li>“nothing to lose” · “0.25 clients” · “one client in 90 days”</li>
+        <li>a follower target · a fixed exposure frequency</li>
+        <li>“the algorithm needs 90 days”</li>
+        <li>a number of founder hours per week</li>
+        <li>anything that implies case studies exist privately</li>
+      </ul>
+    </div>
+  </div>
+  <p class="headline">“We are not trying to make you famous. We are trying to make you familiar to the people who matter.” <span style="font:500 7pt Inter,sans-serif;color:var(--action)">[V-F]</span></p>
+  <footer><span>Afterwards (within 24 hours): log the state, objections, value maths and dated next action · send the recap in their words · send nothing you didn’t promise</span><span style="white-space:nowrap">Threadline · internal</span></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img" aria-labelledby="t3 d3">
+<title id="t3">People decide. AI drafts in between.</title><desc id="d3">Three lanes: founder, AI drafting, Threadline team. The founder talks and records the raw expertise; the AI writes a first draft from that source and the Brand Brain; the Threadline team checks facts, voice, claims and evidence; the founder approves that exact version, which is the gate; the team publishes only what was approved. The AI drafts and never publishes. A draft changed after approval comes back for approval.</desc>
+<defs><style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;600&amp;display=swap');</style><marker id="arr" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#17233a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="0" y="0" width="1200" height="1500" rx="0" fill="#e8f1f8"/>
+<text x="72" y="116" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#6b768a" text-anchor="start" letter-spacing="3"><tspan x="72" dy="0">THREADLINE FIELD NOTES · 03</tspan></text>
+<text x="72" y="206" font-family="&#x27;Instrument Serif&#x27;, &#x27;Iowan Old Style&#x27;, Georgia, serif" font-size="72" font-weight="400" fill="#17233a" text-anchor="start"><tspan x="72" dy="0">People decide.</tspan><tspan x="72" dy="77.8">AI drafts in between.</tspan></text>
+<rect x="72" y="356" width="320" height="930" rx="28" fill="#ffffff"/>
+<text x="232" y="408" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#6b768a" text-anchor="middle" letter-spacing="2.5"><tspan x="232" dy="0">FOUNDER</tspan></text>
+<rect x="440" y="356" width="320" height="930" rx="28" fill="#e6ddfa"/>
+<text x="600" y="408" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#6b768a" text-anchor="middle" letter-spacing="2.5"><tspan x="600" dy="0">AI DRAFTING</tspan></text>
+<rect x="808" y="356" width="320" height="930" rx="28" fill="#ffffff"/>
+<text x="968" y="408" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#6b768a" text-anchor="middle" letter-spacing="2.5"><tspan x="968" dy="0">THREADLINE TEAM</tspan></text>
+<rect x="92" y="450" width="280" height="136" rx="22" fill="#e8f1f8" stroke="#17233a" stroke-width="3"/>
+<text x="232" y="500" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="30" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="232" dy="0">Talk and record</tspan></text>
+<text x="232" y="538" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="400" fill="#3b475e" text-anchor="middle"><tspan x="232" dy="0">the raw expertise</tspan></text>
+<rect x="460" y="612" width="280" height="136" rx="22" fill="#ffffff" stroke="#17233a" stroke-width="3"/>
+<text x="600" y="662" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="30" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="600" dy="0">First draft</tspan></text>
+<text x="600" y="700" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="400" fill="#3b475e" text-anchor="middle"><tspan x="600" dy="0">from the source and</tspan><tspan x="600" dy="28.8">the Brand Brain</tspan></text>
+<path d="M372 518 C432 518 600 552 600 606" fill="none" stroke="#17233a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<rect x="828" y="774" width="280" height="136" rx="22" fill="#e8f1f8" stroke="#17233a" stroke-width="3"/>
+<text x="968" y="824" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="30" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="968" dy="0">Check</tspan></text>
+<text x="968" y="862" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="400" fill="#3b475e" text-anchor="middle"><tspan x="968" dy="0">facts, voice, claims,</tspan><tspan x="968" dy="28.8">evidence</tspan></text>
+<path d="M740 680 C800 680 968 714 968 768" fill="none" stroke="#17233a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<rect x="92" y="936" width="280" height="136" rx="22" fill="#e8f1f8" stroke="#1f63d6" stroke-width="3"/>
+<text x="232" y="986" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="30" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="232" dy="0">Approve</tspan></text>
+<text x="232" y="1024" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="400" fill="#3b475e" text-anchor="middle"><tspan x="232" dy="0">this exact version</tspan></text>
+<path d="M828 842 C548 842 232 826 232 930" fill="none" stroke="#17233a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<rect x="828" y="1098" width="280" height="136" rx="22" fill="#e8f1f8" stroke="#17233a" stroke-width="3"/>
+<text x="968" y="1148" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="30" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="968" dy="0">Publish</tspan></text>
+<text x="968" y="1186" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="400" fill="#3b475e" text-anchor="middle"><tspan x="968" dy="0">only what was</tspan><tspan x="968" dy="28.8">approved</tspan></text>
+<path d="M372 1004 C432 1004 968 1038 968 1092" fill="none" stroke="#17233a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" marker-end="url(#arr)"/>
+<rect x="176" y="1092" width="112" height="40" rx="20" fill="#1f63d6"/>
+<text x="232" y="1121" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="22" font-weight="600" fill="#ffffff" text-anchor="middle" letter-spacing="2"><tspan x="232" dy="0">GATE</tspan></text>
+<text x="600" y="1170" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="600" dy="0">The AI drafts.</tspan><tspan x="600" dy="32.5">It never publishes.</tspan></text>
+<text x="600.0" y="1340" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="400" fill="#3b475e" text-anchor="middle"><tspan x="600.0" dy="0">Change a draft after approval and it comes back for approval.</tspan></text>
+<g transform="translate(72,1404) scale(2.4)" fill="none"><path d="M3 17.5C5.5 17.5 6.2 6.5 9 6.5C11.8 6.5 12.2 17.5 15 17.5C17.8 17.5 18.5 6.5 21 6.5" stroke="#1f63d6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><circle cx="9" cy="6.5" r="1.9" fill="#1f63d6"/><circle cx="15" cy="17.5" r="1.9" fill="#1f63d6" opacity="0.55"/></g>
+<text x="146" y="1448" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="500" fill="#17233a" text-anchor="start" letter-spacing="5.5"><tspan x="146" dy="0">THREADLINE</tspan></text>
+</svg>

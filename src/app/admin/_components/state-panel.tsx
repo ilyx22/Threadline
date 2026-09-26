@@ -20,6 +20,8 @@ import { SopChecklist, type ChecklistRow } from "./sop-checklist";
  * the bottom, and the intent is that it is almost never followed.
  */
 
+export type UncertaintyPrompt = { to: string; label: string; hint: string };
+
 export type StateView = {
   state: string;
   meaning: string;
@@ -38,6 +40,7 @@ export function StatePanel({
   toggleAction,
   advanceAction,
   stateLabels,
+  uncertainty,
 }: {
   view: StateView;
   label: string;
@@ -47,6 +50,8 @@ export function StatePanel({
   toggleAction: (prev: never, formData: FormData) => Promise<ActionResult>;
   advanceAction: (prev: never, formData: FormData) => Promise<ActionResult>;
   stateLabels: Record<string, string>;
+  /** Asks for a written uncertainty when moving to `to` before the evidence is in. */
+  uncertainty?: UncertaintyPrompt;
 }) {
   return (
     <Card>
@@ -73,6 +78,7 @@ export function StatePanel({
             next={view.next}
             stateLabels={stateLabels}
             complete={complete}
+            uncertainty={uncertainty}
           />
         ) : (
           <p className="text-[12.5px] text-muted">
@@ -99,10 +105,12 @@ function TransitionForm({
   next,
   stateLabels,
   complete,
+  uncertainty,
 }: {
   action: (prev: never, formData: FormData) => Promise<ActionResult>;
   next: string[];
   stateLabels: Record<string, string>;
+  uncertainty?: UncertaintyPrompt;
   complete: boolean;
 }) {
   const [target, setTarget] = React.useState(next[0] ?? "");
@@ -154,6 +162,22 @@ function TransitionForm({
               <Input id="move-due" name="nextActionDueAt" type="date" icon={CalendarClock} />
             </Field>
           </div>
+
+          {uncertainty && target === uncertainty.to ? (
+            <Field
+              label={uncertainty.label}
+              htmlFor="move-uncertainty"
+              hint={uncertainty.hint}
+              error={fieldErrors.uncertainty}
+            >
+              <Textarea
+                id="move-uncertainty"
+                name="uncertainty"
+                rows={3}
+                placeholder="What the interviews have not yet shown, and how this test's result will be read"
+              />
+            </Field>
+          ) : null}
 
           {!complete ? (
             <Field

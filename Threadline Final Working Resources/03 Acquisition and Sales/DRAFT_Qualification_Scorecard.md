@@ -9,7 +9,7 @@
 Score only to prioritise outreach; do not pretend the number measures objective fit.
 
 ## Strong-fit checks
-- Proven offer around GBP 5k+ or customer LTV that makes a GBP 2.5k-5k monthly fee economically sensible.
+- Proven offer around GBP 5k+ or customer LTV that makes a GBP 2.5k-5k fee every four weeks economically sensible.
 - Established B2B consultant, specialist agency or expert-led service firm.
 - Founder/expert credibility materially influences acquisition.
 - Capacity to accept more demand.

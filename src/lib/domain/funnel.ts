@@ -282,6 +282,10 @@ function clamp01(value: number): number | null {
  * remember them is the difference between a funnel and a feeling.
  */
 export type FunnelCounts = {
+  /** Prospects added to the list in the period (researched and targeted). */
+  targeted?: number;
+  /** Every recorded touch in the period: first touches, follow-ups, value sends. */
+  touches?: number;
   firstTouches: number;
   replies: number;
   positiveReplies: number;
@@ -290,7 +294,32 @@ export type FunnelCounts = {
   qualified: number;
   offers: number;
   won: number;
+  /** Wins by where the demand came from. Content-sourced and content-assisted stay separate. */
+  wonBySource?: Partial<Record<DemandSource | "unknown", number>>;
 };
+
+/**
+ * Where a prospect's demand came from.
+ *
+ * Content-sourced: they found Threadline through its content and started the
+ * conversation. Content-assisted: the conversation started elsewhere (outbound,
+ * a referral) and content helped it along. Counting them together would credit
+ * content with every deal it touched, so they are kept apart.
+ */
+export const DEMAND_SOURCES = ["outbound", "content_sourced", "content_assisted", "referral", "inbound_other"] as const;
+export type DemandSource = (typeof DEMAND_SOURCES)[number];
+export const DEMAND_SOURCE_LABELS: Record<DemandSource | "unknown", string> = {
+  outbound: "Outbound",
+  content_sourced: "Content-sourced",
+  content_assisted: "Content-assisted",
+  referral: "Referral",
+  inbound_other: "Other inbound",
+  unknown: "Not recorded",
+};
+
+/** Touch kinds an operator records after sending something by hand. */
+export const TOUCH_KINDS = ["first", "follow_up", "value_sent", "reply", "booking", "other"] as const;
+export type TouchKind = (typeof TOUCH_KINDS)[number];
 
 export const EMPTY_COUNTS: FunnelCounts = {
   firstTouches: 0,
@@ -337,13 +366,15 @@ export function funnelSteps(counts: FunnelCounts): FunnelStep[] {
   });
 
   return [
+    // Only when the period's targeted count is known (older frozen reviews do not carry it).
+    ...(counts.targeted !== undefined ? [step("contacted", "Targeted to contacted", counts.targeted, counts.firstTouches)] : []),
     step("reply", "Touch to reply", counts.firstTouches, counts.replies),
     step("positive", "Reply to positive", counts.replies, counts.positiveReplies),
     step("booking", "Positive to booked", counts.positiveReplies, counts.booked),
     step("show", "Booked to showed", counts.booked, counts.showed),
     step("qualified", "Showed to qualified", counts.showed, counts.qualified),
-    step("offer", "Qualified to offer", counts.qualified, counts.offers),
-    step("close", "Offer to won", counts.offers, counts.won),
+    step("offer", "Qualified to proposal", counts.qualified, counts.offers),
+    step("close", "Proposal to won", counts.offers, counts.won),
   ];
 }
 
@@ -386,6 +417,24 @@ export function inputFromCounts(counts: FunnelCounts): FunnelInput {
     showRatePct: counts.booked > 0 ? (counts.showed / counts.booked) * 100 : 0,
     closeRatePct: counts.qualified > 0 ? (counts.won / counts.qualified) * 100 : 0,
     qualifiedFromRecords: { showed: counts.showed, qualified: counts.qualified },
+  };
+}
+
+/**
+ * Audience-to-call ratio: followers per booked call in the period.
+ *
+ * A diagnostic, not a target. Other businesses' ratios (such as the often
+ * quoted 50:1) are not evidence about this one, so nothing here compares the
+ * reading with a benchmark or marks it good or bad. Null when either side is
+ * missing, because a ratio over nothing is not a reading.
+ */
+export function audienceToCallRatio(audience: number | null | undefined, booked: number): { ratio: number | null; reading: string } {
+  if (!audience || audience <= 0) return { ratio: null, reading: "Record the audience size to read this." };
+  if (booked <= 0) return { ratio: null, reading: "No calls booked in the period, so there is no ratio to read." };
+  const ratio = audience / booked;
+  return {
+    ratio,
+    reading: `About ${Math.round(ratio).toLocaleString("en-GB")} followers per booked call. A diagnostic reading: compare it with this business's own earlier periods, not with anyone else's.`,
   };
 }
 

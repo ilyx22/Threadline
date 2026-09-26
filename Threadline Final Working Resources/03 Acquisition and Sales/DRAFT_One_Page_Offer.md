@@ -24,13 +24,13 @@ Threadline researches your market, identifies the messages worth owning, turns t
 - Recording queue and production coordination.
 - Editing/packaging/publishing workflow.
 - Performance and commercial-signal tracking.
-- Weekly optimisation + monthly strategy/reporting.
+- Weekly optimisation + strategy/reporting every four weeks.
 
 ## Founding scope hypothesis
 - GBP 2,500 implementation.
-- GBP 2,500/month.
-- 3-month initial engagement.
-- 12-16 core short-form assets/month, repurposed where appropriate.
+- GBP 2,500 every four weeks (never labelled monthly).
+- 12-week initial engagement: three four-week service periods (GBP 10,000 initial contract value including implementation).
+- 12-16 core short-form assets per four-week period, repurposed where appropriate.
 - Up to 3 channels.
 
 ## Risk reversal

@@ -10,7 +10,12 @@ Date: 26 September 2026. Branch `backend/completion` (see `git log main..backend
   - 2 await an owner decision: INF-09 and PRV-01.
   - None is partial or missing, and none is blocked by unfinished code.
   - None is LIVE_VERIFIED: no production service is configured yet.
-  - The brief in the repository ends at section 19. A version with a section 18A has not been received; its requirements are not in this ledger.
+  - Section 18A (the business launch asset pack) was received and addressed on 27 September 2026. See ledger rows LP-01…LP-11 and `docs/launch-pack/README.md`.
+    - Three more defects were found and fixed along the way:
+      - the wedge page ignored conversation themes, so it always showed 0 converging;
+      - "30-day strategy" clashed with the four-week periods;
+      - several public claims were inaccurate: "month to month", numeric founder-time promises, and unattributed proof figures.
+    - Unit tests: 824 passed, 0 failed.
 - **First-client production readiness: NO.** Production has no database, keys, email, storage or scheduler configured. The blockers are listed by kind in the ledger's "Remaining requirements by blocker" and set out step by step in OWNER_ACTIVATION_CHECKLIST.md: section 0 (which project is production), then 1 to 9.
 
 ### Verification at this checkpoint

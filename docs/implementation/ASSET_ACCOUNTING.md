@@ -1,65 +1,28 @@
-# Asset accounting: brand kit, onboarding resources, call and email scripts, newsletter graphics
+# Asset accounting: brand kit, onboarding, call and outreach scripts, newsletter graphics
 
-26 September 2026. This covers every place these assets could be:
+This file was updated on 27 September 2026 after the business launch asset pack (the brief's section 18A) was received and produced.
 
-- the repository, including untracked files;
-- every branch's history;
-- the Desktop folders beside it;
-- the working resources folder (`Threadline Final Working Resources/`, 66 files, tracked in git).
-
-Paths are relative to the repository root.
-
-The brief version this was checked against is `docs/implementation/BACKEND_COMPLETION_BRIEF.md`, which ends at section 19. **It has no section 18A.** If 18A names these assets with specific requirements (formats, counts, placement), that version is needed to confirm them.
+- The full inventory, with sources and classes, is in `docs/launch-pack/INVENTORY.md`.
+- The index of every finished file is in `docs/launch-pack/README.md`.
+- The 26 September version of this file, which recorded the assets as missing, is in git history.
 
 ## Summary
 
-| Asset | Completion | Blocker |
-| --- | --- | --- |
-| Brand kit | **Partial.** The design tokens, the logo as a component and the art direction exist. There is no packaged kit: no logo files, no usage guide, no social or email variants. | Owner decision and design work. Every draft document is headed "DRAFT - BRANDING PENDING". Not a code task. |
-| Onboarding resources | **In-app flow implemented and tested. Documents in draft.** | Owner review of the drafts (branding and legal). |
-| Call scripts | **Drafts exist. The versioned script library and its importer are implemented. Nothing is imported or approved yet.** | Owner approval of each block. The import is one click on `/admin/scripts` once production has a database. |
-| Email scripts | **Transactional emails implemented (9 templates). Outreach email scripts do not exist.** | Owner content. The outreach playbook deliberately stops before messages are written. |
-| Ten newsletter graphics | **Do not exist anywhere.** | Creative production against a brand kit that does not exist yet. Not code-addressable, and not fabricated here. |
+Every asset produced here is **production-complete**; none is owner-approved yet.
 
-## Brand kit
+| Asset | Completion | Where | Approval |
+| --- | --- | --- | --- |
+| Brand kit | **Produced** | `docs/launch-pack/brand-kit/`: vector masters (outlined and live text), transparent PNGs, icons and favicon set, guidelines, four templates with previews, browsable index | Owner approval pending (O-08). The live favicon and OG image still use the older identity (O-07, frontend freeze) |
+| Onboarding resources | **In-app flow implemented and tested. Client pack produced.** | `docs/launch-pack/onboarding/` (9 files, written against the real UI) | Owner review pending (O-16) |
+| Call scripts | **Produced.** The repo SOP 03 copy now carries the founder-approved verbatim library A–M from Drive, and `/admin/scripts` import reads it. | `docs/launch-pack/sales/` (guide, one-pager, library, admin check) | The library is founder-approved in its source. Imported blocks land as drafts until approved in `/admin/scripts`. Adaptations pending (O-09) |
+| Outreach and follow-up scripts | **Produced.** Research and sales tracks are separate; the playbook scripts are used verbatim. | `docs/launch-pack/outreach/` | Owner review pending (O-09). Nothing is sent by the software |
+| Ten newsletter graphics | **Produced.** Editable SVGs, 20 PNG exports, alt text, contact sheet | `docs/launch-pack/newsletter-graphics/` | "drafted; owner review pending" (O-16); PESTO expansion to confirm (O-10) |
+| Transactional email | Implemented (9 templates, job queue, suppression) | `src/lib/email/templates.ts` | Needs Resend in production |
 
-| Item | Path | State |
-| --- | --- | --- |
-| Logo (mark and wordmark, drawn in code) | `src/components/brand/logo.tsx` | Implemented; used in the app shell |
-| Design tokens (colour, type, spacing) | `design-system/threadline-design-dna.json`, `src/styles/marketing-v9/index.css`, `src/styles/marketing-v5/tokens.css` | Implemented for the site and app |
-| Art direction and public design system | `docs/design/ART_DIRECTION_2026-09-25.md`, `docs/design/THREADLINE_PUBLIC_DESIGN_SYSTEM.md`, `docs/design/V5_THREADLINE_VISUAL_SYSTEM.md` | Written |
-| Illustration set | `public/marketing/` (objects, scenes, bench) | In use on the approved public site (frozen) |
-| Logo files (SVG/PNG exports), clear-space and misuse rules, colour codes for print, social avatars and banners, email header | none | **Missing** |
+## Canonical sources
 
-## Onboarding resources
+The canonical sources are the Google Drive files listed in `docs/launch-pack/INVENTORY.md`. They were read on 27 September 2026.
 
-| Item | Path | State |
-| --- | --- | --- |
-| In-app onboarding (progressive, save and resume) | `src/app/onboarding/[org]/onboarding-flow.tsx`, `src/lib/domain/onboarding.ts`, `src/lib/actions/onboarding.ts` | Implemented; covered by `node scripts/qa/run.cjs suite-onboarding` |
-| Brand Brain intake | `Threadline Final Working Resources/04 Delivery and Client/DRAFT_Onboarding_Brand_Brain_Intake.md` | Draft (branding pending) |
-| Recording readiness install | `Threadline Final Working Resources/04 Delivery and Client/DRAFT_Recording_Readiness_Install_V2.md` | Draft |
-| Day 7 win plan | `Threadline Final Working Resources/04 Delivery and Client/DRAFT_Day7_Win_Plan.md` | Draft |
-| Close to kickoff; client install day 7 | `Threadline Final Working Resources/02 SOPs/SOP_04_CLOSE_TO_KICKOFF.md`, `SOP_05_CLIENT_INSTALL_DAY7.md` | SOPs written |
-| Client and operator runbook | `docs/CLIENT_AND_OPERATOR_RUNBOOK.md` | Written |
-
-## Call and email scripts
-
-| Item | Path | State |
-| --- | --- | --- |
-| Discovery and content diagnosis call | `Threadline Final Working Resources/03 Acquisition and Sales/DRAFT_Sales_Discovery_and_Content_Diagnosis.md` | Draft; nine stages |
-| Answers and objections | `Threadline Final Working Resources/03 Acquisition and Sales/DRAFT_Answer_and_Objection_Vault.md` | Draft; four answers |
-| Qualification scorecard, one-page offer, proposal checklist | same folder: `DRAFT_Qualification_Scorecard.md`, `DRAFT_One_Page_Offer.md`, `DRAFT_Proposal_SOW_Commercial_Checklist.md` | Drafts |
-| Script library (versioned, checksummed, exact wording, snapshotted per call) | `src/lib/sales/scripts.ts`, `src/lib/sales/canonical-import.ts`, `/admin/scripts` | Implemented. The importer brings the two call documents in verbatim as **drafts** that cannot be used until a person approves them. The documents now ship with the function on Vercel (`next.config.ts` file tracing). Rows today: 0, because nothing has been imported into a production database. |
-| Transactional email | `src/lib/email/templates.ts`: invite, password reset, weekly report, application received, operator alert, period review, payment reminder, notification, digest | Implemented; sent only through the job queue; suppression after bounces or complaints |
-| Outreach email scripts | none | **Missing.** The prospect playbook (`THREADLINE_FIRST_US_RESEARCH_PROSPECT_BATCH_AND_OUTREACH_PLAYBOOK_V1.docx`) stops "before the user must personally send messages", and advises against scaled cold email for now. |
-| Lead replies | `src/lib/leads` (AI-06) | Implemented as drafts a person approves and sends themselves. Nothing is sent automatically. |
-
-## Ten newsletter graphics
-
-None exist: no image files, no source files, no briefs, and no mention in any commit on any branch. The working documents mention newsletters only as a future content idea. These are creative deliverables. Producing them needs, in order:
-
-1. the brand kit above;
-2. a brief (topics, sizes, platform: email header or social);
-3. design time.
-
-None of this is built here. Placeholders presented as the real graphics would be fabricated deliverables.
+Their repo copies were brought up to date:
+- SOP 03 and SOP 04.
+- The one-page offer, the proposal checklist and the qualification scorecard, which now use four-week wording.

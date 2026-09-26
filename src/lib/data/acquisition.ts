@@ -60,7 +60,9 @@ export async function funnelCounts(range: Range, channel?: string | null): Promi
   const within = { gte: range.start, lte: range.end };
   const channelWhere = channel ? { channel } : {};
 
-  const [firstTouches, replies, positive, booked, calls] = await Promise.all([
+  const [targeted, touches, firstTouches, replies, positive, booked, calls] = await Promise.all([
+    prisma.prospect.count({ where: { ...channelWhere, createdAt: within } }),
+    prisma.prospectTouch.count({ where: { at: within, ...(channel ? { prospect: { channel } } : {}) } }),
     prisma.prospect.count({ where: { ...channelWhere, firstTouchAt: within } }),
     prisma.prospect.count({ where: { ...channelWhere, repliedAt: within } }),
     prisma.prospect.count({ where: { ...channelWhere, positiveReplyAt: within } }),
@@ -69,11 +71,21 @@ export async function funnelCounts(range: Range, channel?: string | null): Promi
     }),
     prisma.salesCall.findMany({
       where: { completedAt: within, ...(channel ? { prospect: { channel } } : {}) },
-      select: { attended: true, qualified: true, offerMade: true, outcome: true },
+      select: { attended: true, qualified: true, offerMade: true, outcome: true, prospect: { select: { demandSource: true } } },
     }),
   ]);
 
+  const wonBySource: NonNullable<FunnelCounts["wonBySource"]> = {};
+  for (const c of calls) {
+    if (c.outcome !== "won") continue;
+    const key = (c.prospect?.demandSource ?? "unknown") as keyof typeof wonBySource;
+    wonBySource[key] = (wonBySource[key] ?? 0) + 1;
+  }
+
   return {
+    targeted,
+    touches,
+    wonBySource,
     firstTouches,
     replies,
     positiveReplies: positive,
@@ -123,6 +135,8 @@ export type AcquisitionPlan = {
     periodStart: Date;
     periodEnd: Date;
     assumed: { booking: number; show: number; qualified: number; close: number };
+    audienceSize: number | null;
+    audienceAsOf: Date | null;
     notes: string | null;
   } | null;
   counts: FunnelCounts;
@@ -188,6 +202,8 @@ export async function acquisitionPlan(): Promise<AcquisitionPlan> {
             qualified: target.assumedQualifiedRatePct,
             close: target.assumedCloseRatePct,
           },
+          audienceSize: target.audienceSize,
+          audienceAsOf: target.audienceAsOf,
           notes: target.notes,
         }
       : null,
@@ -264,6 +280,7 @@ export async function getProspect(id: string) {
       wedge: { select: { id: true, label: true, problem: true, state: true } },
       checks: true,
       calls: { orderBy: { scheduledAt: "desc" } },
+      touches: { orderBy: { at: "desc" }, take: 30 },
     },
   });
   if (!prospect) return null;
@@ -328,7 +345,7 @@ export async function getWedge(id: string) {
     definition,
     status,
     reading: readValidation(
-      wedge.conversations.map((c) => ({ volunteered: c.volunteered, problem: c.problem })),
+      wedge.conversations.map((c) => ({ volunteered: c.volunteered, problem: c.problem, theme: c.problemTheme })),
     ),
   };
 }

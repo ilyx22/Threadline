@@ -12,13 +12,13 @@
 - Client legal name:
 - Start date:
 - Implementation fee:
-- Monthly fee:
+- Fee per four-week period:
 - Initial term:
 - Payment timing:
 
 ## Scope
 - Channels:
-- Monthly core asset range:
+- Core asset range per four-week period:
 - Repurposing rules:
 - Strategy/research cadence:
 - Recording cadence:

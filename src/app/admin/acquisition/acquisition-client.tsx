@@ -27,6 +27,8 @@ export function TargetButton({
     periodStart: string;
     periodEnd: string;
     assumed: { booking: number; show: number; qualified: number; close: number };
+    audienceSize?: number | null;
+    audienceAsOf?: string | null;
     notes: string | null;
   } | null;
 }) {
@@ -114,6 +116,15 @@ export function TargetButton({
                     />
                     <Rate name="assumedCloseRatePct" label="Close %" value={target?.assumed.close} />
                   </div>
+
+                  <Field
+                    label="Audience size"
+                    htmlFor="audienceSize"
+                    optional
+                    hint="Followers across Threadline's own channels today. Used only for the audience-to-call diagnostic, never as a target."
+                  >
+                    <Input id="audienceSize" name="audienceSize" type="number" min={0} defaultValue={target?.audienceSize ?? ""} />
+                  </Field>
 
                   <Field label="Notes" htmlFor="notes" optional>
                     <Textarea id="notes" name="notes" rows={2} defaultValue={target?.notes ?? ""} />

@@ -455,7 +455,7 @@ export const WEDGE_SOP: Record<WedgeState, StateDefinition<WedgeState>> = {
       { key: "replies", label: "Compare reply quality, not just reply rate", requiresNote: true },
       { key: "bookings", label: "Compare booking and qualification quality", requiresNote: true },
     ],
-    completion: "Qualitative evidence and market response point the same way — or they do not, and that is recorded.",
+    completion: "Qualitative evidence and market response point the same way — or they do not, and that is recorded. Validated needs the interview sample as well (ten conversations, more than five converging), even when the test started early.",
     next: ["validated", "revised"],
     onEnter: { action: "Run the commercial response batch", dueInDays: 10 },
   },
@@ -852,11 +852,15 @@ function describe(r: {
 }
 
 /**
- * The gate on leaving interviews for commercial testing.
+ * The gate on DECLARING a wedge validated.
  *
  * Two conditions, refused separately so the operator is told which one is
  * missing. Neither has an override: the whole purpose of the state is that the
  * conversations happened and that they said the same thing.
+ *
+ * This gate no longer blocks outreach, discovery, a commercial test or a paid
+ * pilot. Those can start earlier (see `assertEarlyTestRecorded`); what cannot
+ * happen early is calling the problem validated.
  */
 export function assertInterviewEvidence(conversationCount: number, convergence: number) {
   if (conversationCount < VALIDATION_DECISION_MINIMUM) {
@@ -865,15 +869,46 @@ export function assertInterviewEvidence(conversationCount: number, convergence: 
         conversationCount >= INTERIM_CHECKPOINT
           ? ` ${INTERIM_CHECKPOINT} is an interim checkpoint, not a validation gate.`
           : ""
-      } Commercial testing against an unvalidated problem produces a number nobody can interpret.`,
+      } A wedge cannot be called validated on fewer. A commercial test can run meanwhile, with its uncertainty written down.`,
     );
   }
 
   if (convergence < CONVERGENCE_MINIMUM) {
     throw new WorkflowError(
-      `${conversationCount} conversations recorded, but only ${convergence} converge on the same expensive recurring problem. Validation needs more than ${INTERIM_CHECKPOINT} converging — a large sample that agrees on nothing is evidence the hypothesis is wrong, not evidence to test it.`,
+      `${conversationCount} conversations recorded, but only ${convergence} converge on the same expensive recurring problem. Validation needs more than ${INTERIM_CHECKPOINT} converging — a large sample that agrees on nothing is evidence the hypothesis is wrong, not evidence to validate it.`,
     );
   }
+}
+
+/** The shortest uncertainty statement accepted for an early commercial test. */
+export const UNCERTAINTY_NOTE_MINIMUM = 40;
+
+/** Whether the interview evidence already meets the validation thresholds. */
+export function interviewEvidenceMet(conversationCount: number, convergence: number): boolean {
+  return conversationCount >= VALIDATION_DECISION_MINIMUM && convergence >= CONVERGENCE_MINIMUM;
+}
+
+/**
+ * Starting a commercial test before the interview evidence is in.
+ *
+ * Starting outreach, collecting research, running a commercial test and
+ * declaring validation are four different things. The first three may run in
+ * parallel; only the last waits for the sample. An authorised operator may move
+ * a wedge into a commercial test early, but only by writing down what is still
+ * uncertain, so the result is read as a test against an unvalidated problem and
+ * not quoted as proof. The note is kept on the wedge and in the audit trail.
+ */
+export function assertEarlyTestRecorded(
+  conversationCount: number,
+  convergence: number,
+  uncertainty: string | null | undefined,
+) {
+  if (interviewEvidenceMet(conversationCount, convergence)) return;
+  const note = uncertainty?.trim() ?? "";
+  if (note.length >= UNCERTAINTY_NOTE_MINIMUM) return;
+  throw new WorkflowError(
+    `The interview evidence is not in yet (${conversationCount} of ${VALIDATION_DECISION_MINIMUM} conversations, ${convergence} converging; validation needs more than ${INTERIM_CHECKPOINT}). A commercial test can still start, but write down what is still uncertain (at least ${UNCERTAINTY_NOTE_MINIMUM} characters) so its result is not read as validation.`,
+  );
 }
 
 /* --------------------------------- The call --------------------------------- */

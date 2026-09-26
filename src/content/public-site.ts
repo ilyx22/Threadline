@@ -43,7 +43,7 @@ export const STATIONS = [
   { key: "signals", label: "Signals", detail: "The few patterns worth acting on, approved by a person." },
   { key: "ideas", label: "Ideas", detail: "Each one tied to a thesis it will test." },
   { key: "script", label: "Script", detail: "Written in your voice, every factual claim checked before it is recorded." },
-  { key: "record", label: "Record", detail: "You talk. A teleprompter, a checklist, twenty minutes." },
+  { key: "record", label: "Record", detail: "You talk. A teleprompter, a checklist, one short session." },
   { key: "produce", label: "Produce", detail: "Cut, packaged, titled: one idea into the formats that fit it." },
   { key: "approve", label: "Approve", detail: "Nothing goes out that you have not seen." },
   { key: "distribute", label: "Distribute", detail: "Published where the buyer is, with a link we can measure." },
@@ -82,7 +82,7 @@ export const HOME = {
     eyebrow: "The division of labour",
     title: "You do four things. Threadline handles the machine.",
     you: [
-      { label: "Talk", body: "Answer questions, tell the story, give the opinion. Twenty minutes, not a writing task." },
+      { label: "Talk", body: "Answer questions, tell the story, give the opinion. A short session, not a writing task." },
       { label: "Record", body: "A teleprompter and a checklist. One session covers a week." },
       { label: "Approve", body: "Every script and every cut passes you before it goes anywhere." },
       { label: "Sell", body: "Take the conversations the content starts." },
@@ -219,8 +219,8 @@ export const WHO_ITS_FOR = {
   profile: [
     { label: "Buyer profile", body: "Founders, partners and senior operators of expert-led firms, advisory, consulting, professional services, specialist B2B, where the founder's judgement is the product." },
     { label: "Offer maturity", body: "An offer that has been sold more than once, with a price, a scope and a customer who can describe what they got." },
-    { label: "Economics", body: "Meaningful value per client. If one additional good customer is worth four figures or more, content that starts one conversation a month pays for itself. If it is worth forty pounds, this is the wrong tool." },
-    { label: "The founder's role", body: "Twenty minutes of recording and one approval pass a week. If that is not available, no system can manufacture your voice." },
+    { label: "Economics", body: "Meaningful value per client. If one additional good customer is worth four figures or more, a handful of the right conversations can justify the work. If it is worth forty pounds, this is the wrong tool." },
+    { label: "The founder's role", body: "A short recording session and one approval pass per batch. If that is not available, no system can manufacture your voice." },
     { label: "Expectations", body: "Three 4-week periods before anyone can say what works for your market. Leads, views and follower counts are not the measure; named enquiries are. A report every week that shows what shipped, what we expected, what happened and what we are testing next." },
     { label: "What Threadline is", body: "A managed authority system: market intelligence, expertise extraction, the right expressions, distribution, commercial signal, diagnosis and learning, run for you, with you keeping the four things only you can do." },
     { label: "What it is not", body: "Not a tool you learn. Not a ghostwriting retainer. Not an audience-growth hack. Not an agency that stops at publish." },
@@ -245,7 +245,7 @@ export const CALCULATOR = {
 export const PLAYBOOK = {
   eyebrow: "A resource, not a pitch",
   title: "The Founder Authority System",
-  lead: "How expert-led businesses turn what they know into content the market wants, keep learning from what comes back, and become the obvious person to call. Read it in twenty minutes. Use it without us.",
+  lead: "How expert-led businesses turn what they know into content the market wants, keep learning from what comes back, and become the obvious person to call. Read it in fifteen minutes. Use it without us.",
   chapters: [
     { slug: "expertise-is-the-raw-material", title: "Expertise is the raw material", summary: "Why the best content in your category is already in your head, and why it does not leave on its own.", scene: "crates", keyIdea: "Content is not created. It is extracted, then shaped. If the extraction step is 'the founder sits down to write', it will not happen at the cadence the market needs.", reveal: { prompt: "What counts as raw material?", answer: "Opinions you would defend. Stories with a number in them. Mistakes you have paid for. Questions clients ask twice. Frameworks you use without naming. The thing you say on every second call." }, practice: "Record a 20-minute conversation answering: what do clients keep getting wrong before they reach you? That recording is a month of material." },
     { slug: "positioning-is-a-decision", title: "Positioning is a decision, not a discovery", summary: "One problem, one buyer, one argument: before a single piece is made.", scene: "founder", keyIdea: "Content amplifies whatever position it is given. If the position is 'we do lots of things for lots of people', the content will be watched by nobody in particular.", reveal: { prompt: "The one-sentence test", answer: "'We help [a specific buyer] solve [an expensive problem] by [a mechanism they do not have].' If the sentence needs a comma-list, the position is not decided yet." }, practice: "Write the sentence. Show it to the last three people who bought. Ask which word they would change." },

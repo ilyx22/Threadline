@@ -1670,6 +1670,13 @@ model MarketWedge {
   notes           String?
   /// Set when the hypothesis was frozen for a controlled sales sample.
   frozenAt        DateTime?
+  /// A commercial test started before the interview evidence met the validation
+  /// thresholds. Allowed for an authorised operator, never silently: the
+  /// uncertainty is written down and shown on the wedge until it is validated.
+  testedBeforeValidation Boolean   @default(false)
+  uncertaintyNote        String?
+  uncertaintyAt          DateTime?
+  uncertaintyById        String?
   ownerId         String?
   nextAction      String?
   nextActionDueAt DateTime?
@@ -1760,6 +1767,14 @@ model Prospect {
   wedge  MarketWedge? @relation(fields: [wedgeId], references: [id], onDelete: SetNull)
   checks SopCheck[]
   calls  SalesCall[]
+  touches ProspectTouch[]
+
+  /// Where the demand came from: outbound | content_sourced | content_assisted |
+  /// referral | inbound_other. Null means not known yet. Content-sourced (they
+  /// found us through content) and content-assisted (content helped a
+  /// conversation that started elsewhere) are counted separately, never blended.
+  demandSource     String?
+  demandSourceNote String?
 
   // Discovery economics — every field nullable because "unknown" is a real answer.
   econCurrency           String        @default("GBP")
@@ -1866,11 +1881,36 @@ model AcquisitionTarget {
   assumedShowRatePct      Float    @default(0)
   assumedQualifiedRatePct Float    @default(0)
   assumedCloseRatePct     Float    @default(0)
+  /// Audience size (followers across Threadline's own channels) for the
+  /// audience-to-call diagnostic. A reading, never a target.
+  audienceSize            Int?
+  audienceAsOf            DateTime?
   notes                   String?
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 
   @@index([status, periodStart])
+}
+
+/// One outreach touch, recorded after a person sent it. Nothing here sends.
+///
+/// First touches also set Prospect.firstTouchAt; follow-ups, value sends and
+/// reply handling are touches too, so the funnel can report effort per prospect
+/// rather than only first contacts.
+model ProspectTouch {
+  id         String   @id @default(cuid())
+  prospectId String
+  at         DateTime
+  kind       String // first | follow_up | value_sent | reply | booking | other
+  channel    String?
+  note       String?
+  byId       String?
+  createdAt  DateTime @default(now())
+
+  prospect Prospect @relation(fields: [prospectId], references: [id], onDelete: Cascade)
+
+  @@index([at])
+  @@index([prospectId, at])
 }
 
 /// The weekly acquisition control loop.

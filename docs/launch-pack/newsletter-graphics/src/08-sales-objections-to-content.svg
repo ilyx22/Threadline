@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img" aria-labelledby="t8 d8">
+<title id="t8">Every objection is a brief for content</title><desc id="d8">Flow across the top: heard on a call, logged, becomes a piece, seen before the next call. A table of illustrative examples follows. &#x27;We tried content. It got likes, not clients.&#x27; is logged as proof and becomes &#x27;Why views mislead, and what to read instead&#x27;. &#x27;AI content all sounds the same.&#x27; is logged as AI and becomes &#x27;How a human check keeps your voice yours&#x27;. &#x27;I don&#x27;t have time for this.&#x27; is logged as time and becomes &#x27;What you actually do: talk, record, approve, sell&#x27;. &#x27;Can&#x27;t we just post more?&#x27; is logged as alternatives and becomes &#x27;Why more volume can amplify the wrong thing&#x27;.</desc>
+<defs><style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;600&amp;display=swap');</style><marker id="arr" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#17233a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="0" y="0" width="1200" height="1500" rx="0" fill="#e8f1f8"/>
+<text x="72" y="116" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#6b768a" text-anchor="start" letter-spacing="3"><tspan x="72" dy="0">THREADLINE FIELD NOTES · 08</tspan></text>
+<text x="72" y="206" font-family="&#x27;Instrument Serif&#x27;, &#x27;Iowan Old Style&#x27;, Georgia, serif" font-size="72" font-weight="400" fill="#17233a" text-anchor="start"><tspan x="72" dy="0">Every objection is</tspan><tspan x="72" dy="77.8">a brief for content</tspan></text>
+<rect x="72" y="352" width="232" height="96" rx="48" fill="#ffffff" stroke="#17233a" stroke-width="3"/>
+<text x="188.0" y="410" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="188.0" dy="0">Heard on a call</tspan></text>
+<rect x="352" y="352" width="160" height="96" rx="48" fill="#ffffff" stroke="#17233a" stroke-width="3"/>
+<text x="432.0" y="410" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="432.0" dy="0">Logged</tspan></text>
+<rect x="560" y="352" width="236" height="96" rx="48" fill="#ffffff" stroke="#17233a" stroke-width="3"/>
+<text x="678.0" y="410" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="678.0" dy="0">Becomes a piece</tspan></text>
+<rect x="844" y="352" width="284" height="96" rx="48" fill="#ffffff" stroke="#17233a" stroke-width="3"/>
+<text x="986.0" y="394" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="986.0" dy="0">Seen before the</tspan><tspan x="986.0" dy="27.6">next call</tspan></text>
+<line x1="312" y1="400" x2="344" y2="400" stroke="#17233a" stroke-width="3" stroke-linecap="round" marker-end="url(#arr)"/>
+<line x1="520" y1="400" x2="552" y2="400" stroke="#17233a" stroke-width="3" stroke-linecap="round" marker-end="url(#arr)"/>
+<line x1="804" y1="400" x2="836" y2="400" stroke="#17233a" stroke-width="3" stroke-linecap="round" marker-end="url(#arr)"/>
+<rect x="72" y="500" width="1056" height="780" rx="28" fill="#ffffff"/>
+<text x="100" y="552" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="22" font-weight="600" fill="#6b768a" text-anchor="start" letter-spacing="2"><tspan x="100" dy="0">WHAT THEY SAID</tspan></text>
+<text x="480" y="552" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="22" font-weight="600" fill="#6b768a" text-anchor="start" letter-spacing="2"><tspan x="480" dy="0">LOGGED AS</tspan></text>
+<text x="700" y="552" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="22" font-weight="600" fill="#6b768a" text-anchor="start" letter-spacing="2"><tspan x="700" dy="0">THE PIECE IT BECOMES</tspan></text>
+<line x1="96" y1="584" x2="1104" y2="584" stroke="#a9cdea" stroke-width="2"/>
+<text x="100" y="634" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="28" font-weight="500" fill="#17233a" text-anchor="start"><tspan x="100" dy="0">“We tried content.</tspan><tspan x="100" dy="33.6">It got likes,</tspan><tspan x="100" dy="33.6">not clients.”</tspan></text>
+<rect x="480" y="606" width="110" height="44" rx="22" fill="#ffe4d6" stroke="#17233a" stroke-width="2"/>
+<text x="535.0" y="636" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="22" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="535.0" dy="0">Proof</tspan></text>
+<text x="700" y="634" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="28" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="700" dy="0">Why views mislead, and</tspan><tspan x="700" dy="33.6">what to read instead</tspan></text>
+<line x1="96" y1="784" x2="1104" y2="784" stroke="#a9cdea" stroke-width="2"/>
+<text x="100" y="834" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="28" font-weight="500" fill="#17233a" text-anchor="start"><tspan x="100" dy="0">“AI content all</tspan><tspan x="100" dy="33.6">sounds the same.”</tspan></text>
+<rect x="480" y="806" width="110" height="44" rx="22" fill="#e6ddfa" stroke="#17233a" stroke-width="2"/>
+<text x="535.0" y="836" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="22" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="535.0" dy="0">AI</tspan></text>
+<text x="700" y="834" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="28" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="700" dy="0">How a human check keeps</tspan><tspan x="700" dy="33.6">your voice yours</tspan></text>
+<line x1="96" y1="948" x2="1104" y2="948" stroke="#a9cdea" stroke-width="2"/>
+<text x="100" y="998" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="28" font-weight="500" fill="#17233a" text-anchor="start"><tspan x="100" dy="0">“I don’t have time</tspan><tspan x="100" dy="33.6">for this.”</tspan></text>
+<rect x="480" y="970" width="110" height="44" rx="22" fill="#d9f0e3" stroke="#17233a" stroke-width="2"/>
+<text x="535.0" y="1000" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="22" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="535.0" dy="0">Time</tspan></text>
+<text x="700" y="998" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="28" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="700" dy="0">What you actually do:</tspan><tspan x="700" dy="33.6">talk, record, approve, sell</tspan></text>
+<line x1="96" y1="1112" x2="1104" y2="1112" stroke="#a9cdea" stroke-width="2"/>
+<text x="100" y="1162" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="28" font-weight="500" fill="#17233a" text-anchor="start"><tspan x="100" dy="0">“Can’t we just</tspan><tspan x="100" dy="33.6">post more?”</tspan></text>
+<rect x="480" y="1134" width="176" height="44" rx="22" fill="#dbeaf7" stroke="#17233a" stroke-width="2"/>
+<text x="568.0" y="1164" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="22" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="568.0" dy="0">Alternatives</tspan></text>
+<text x="700" y="1162" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="28" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="700" dy="0">Why more volume can</tspan><tspan x="700" dy="33.6">amplify the wrong thing</tspan></text>
+<g transform="translate(72,1404) scale(2.4)" fill="none"><path d="M3 17.5C5.5 17.5 6.2 6.5 9 6.5C11.8 6.5 12.2 17.5 15 17.5C17.8 17.5 18.5 6.5 21 6.5" stroke="#1f63d6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><circle cx="9" cy="6.5" r="1.9" fill="#1f63d6"/><circle cx="15" cy="17.5" r="1.9" fill="#1f63d6" opacity="0.55"/></g>
+<text x="146" y="1448" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="500" fill="#17233a" text-anchor="start" letter-spacing="5.5"><tspan x="146" dy="0">THREADLINE</tspan></text>
+<text x="1128" y="1448" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="500" fill="#6b768a" text-anchor="end"><tspan x="1128" dy="0">Examples are illustrative</tspan></text>
+</svg>

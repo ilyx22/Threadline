@@ -4,6 +4,7 @@ import {
   assumedRates,
   dailyTouches,
   EMPTY_COUNTS,
+  audienceToCallRatio,
   funnelRates,
   funnelSteps,
   inputFromCounts,
@@ -350,5 +351,33 @@ describe("small samples (ATT-04)", () => {
     const assumed = funnelRates({ firstTouches: 120, callsBooked: 9, showRatePct: 80, closeRatePct: 30, qualifiedRatePct: 50 }).find((r) => r.key === "qualified")!;
     assert.equal(assumed.measured, false);
     assert.equal(assumed.lowSample, undefined, "an assumption is labelled as one, not as a sample");
+  });
+});
+
+describe("targeted, touches and demand source", () => {
+  it("adds a targeted-to-contacted step only when the targeted count is known", () => {
+    assert.equal(funnelSteps(counts).some((s) => s.key === "contacted"), false);
+    const steps = funnelSteps({ ...counts, targeted: 800, touches: 1100 });
+    assert.equal(steps[0].key, "contacted");
+    assert.equal(steps[0].rate, 400 / 800);
+  });
+
+  it("names the offer steps as proposals", () => {
+    const labels = funnelSteps(counts).map((s) => s.label);
+    assert.ok(labels.includes("Qualified to proposal"));
+    assert.ok(labels.includes("Proposal to won"));
+  });
+});
+
+describe("audience-to-call ratio", () => {
+  it("is a reading with no benchmark and no verdict", () => {
+    const r = audienceToCallRatio(5_000, 20);
+    assert.equal(r.ratio, 250);
+    assert.doesNotMatch(r.reading, /50:1|good|bad|healthy|target/i);
+  });
+
+  it("refuses to read a ratio over nothing", () => {
+    assert.equal(audienceToCallRatio(null, 10).ratio, null);
+    assert.equal(audienceToCallRatio(5_000, 0).ratio, null);
   });
 });

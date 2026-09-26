@@ -12,7 +12,7 @@ import { Card, CardBody, CardHeader, SectionHeading } from "@/components/ui/card
 import { EmptyState, Notice } from "@/components/ui/feedback";
 import { StatCard } from "@/components/ui/data";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
-import { funnelSteps } from "@/lib/domain/funnel";
+import { audienceToCallRatio, DEMAND_SOURCE_LABELS, funnelSteps } from "@/lib/domain/funnel";
 import { formatDate, toDateInput } from "@/lib/utils/dates";
 import { percent } from "@/lib/utils/format";
 import { ReviewForm, TargetButton } from "./acquisition-client";
@@ -60,6 +60,7 @@ export default async function AcquisitionPage() {
                   ...plan.target,
                   periodStart: plan.target.periodStart.toISOString(),
                   periodEnd: plan.target.periodEnd.toISOString(),
+                  audienceAsOf: plan.target.audienceAsOf?.toISOString() ?? null,
                 }
               : null
           }
@@ -169,6 +170,48 @@ export default async function AcquisitionPage() {
             </TBody>
           </Table>
         </div>
+      </section>
+
+      <section className="grid gap-4 lg:grid-cols-2">
+        <Card>
+          <CardHeader
+            title="Effort and demand source"
+            description="Targeted prospects, every recorded touch, and where each win's demand came from. Content-sourced and content-assisted are counted separately."
+          />
+          <CardBody className="space-y-2 text-[12.5px]">
+            <div className="flex justify-between"><span className="text-muted">Targeted (added to the list)</span><span className="tabular text-ink">{plan.counts.targeted ?? 0}</span></div>
+            <div className="flex justify-between"><span className="text-muted">Touches recorded (first and follow-up)</span><span className="tabular text-ink">{plan.counts.touches ?? 0}</span></div>
+            <div className="flex justify-between"><span className="text-muted">Touches per contacted prospect</span><span className="tabular text-ink">{plan.counts.firstTouches > 0 ? ((plan.counts.touches ?? 0) / plan.counts.firstTouches).toFixed(1) : "—"}</span></div>
+            <div className="border-t border-line pt-2">
+              {(["content_sourced", "content_assisted", "outbound", "referral", "inbound_other", "unknown"] as const).map((k) => (
+                <div key={k} className="flex justify-between">
+                  <span className="text-muted">Wins: {DEMAND_SOURCE_LABELS[k]}</span>
+                  <span className="tabular text-ink">{plan.counts.wonBySource?.[k] ?? 0}</span>
+                </div>
+              ))}
+            </div>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardHeader
+            title="Audience to calls"
+            description="A diagnostic, not a target. Compare it with earlier periods of this business, not with another business's ratio."
+          />
+          <CardBody className="space-y-2 text-[12.5px]">
+            {(() => {
+              const r = audienceToCallRatio(plan.target?.audienceSize, plan.counts.booked);
+              return (
+                <>
+                  <p className="text-[20px] tabular text-ink">{r.ratio === null ? "—" : `${Math.round(r.ratio).toLocaleString("en-GB")} : 1`}</p>
+                  <p className="text-muted">{r.reading}</p>
+                  {plan.target?.audienceAsOf ? (
+                    <p className="text-faint">Audience recorded {formatDate(plan.target.audienceAsOf)}.</p>
+                  ) : null}
+                </>
+              );
+            })()}
+          </CardBody>
+        </Card>
       </section>
 
       {channels.length > 0 ? (

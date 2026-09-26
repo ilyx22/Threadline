@@ -84,7 +84,7 @@ export const MILESTONES: MilestoneDefinition[] = [
   },
   {
     key: "strategy_approved",
-    label: "30-day strategy approved",
+    label: "First four-week period strategy approved",
     clientDescription:
       "You have seen the themes and tests for the next 30 days, and signed them off.",
     operatorAction: "Walk the client through the approved signals and ranked tests, then record their sign-off.",

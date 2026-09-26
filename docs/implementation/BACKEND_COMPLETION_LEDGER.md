@@ -233,3 +233,23 @@ DATABASE_URL=... npm test && DATABASE_URL=... node scripts/qa/run.cjs run-all
 ```
 
 Next code work: none is outstanding against the ledger. Remaining work is configuration, provider approval and owner decisions (section above). After configuration: run the live checks in OWNER_ACTIVATION_CHECKLIST.md section 10 and move rows to LIVE_VERIFIED only on real evidence.
+
+## Section 18A: business launch asset pack (received and addressed 27 September 2026)
+
+These rows cover the brief's missing section 18A. Status words follow the ledger.
+
+**Assets.** Every asset is "production-complete" and none is owner-approved. Approval is tracked in `docs/launch-pack/MASTER_LAUNCH_CHECKLIST.md`.
+
+| ID | Requirement | Implementation | Status | Evidence |
+| --- | --- | --- | --- | --- |
+| LP-01 | Inventory of repo, app and Drive (reusable / needs revision / missing / awaiting approval) | `docs/launch-pack/INVENTORY.md` | IMPLEMENTED_TESTED | All 7 Drive sources read with the owner's account |
+| LP-02 | Research gate separated from outreach, testing and validation | `assertEarlyTestRecorded`; wedge `testedBeforeValidation` / `uncertaintyNote`; validation thresholds enforced on `→ validated` | IMPLEMENTED_TESTED | `sop.test.ts` (4 new tests); `suite-sales-validation` (3 new checks) |
+| LP-03 | Numerical time commitments traced; unsupported ones relabelled | Claims audit T-01…T-13. Public copy corrected. The in-app 60 min is an internal target, shown to staff only | IMPLEMENTED_TESTED | marketing-v9; freeze hashes re-recorded for 3 content files |
+| LP-04 | Proof claims audited; public claims qualified or removed | Claims audit P-01…P-04 | IMPLEMENTED_TESTED (owner substantiation O-01 open) | — |
+| LP-05 | Funnel: targeted → touches → … → proposals → wins; content-sourced and content-assisted kept separate; audience-to-call diagnostic with no benchmark | `ProspectTouch`, `Prospect.demandSource`, `AcquisitionTarget.audienceSize`; `logTouchAction`, `setDemandSourceAction`; Acquisition page cards | IMPLEMENTED_TESTED | `funnel.test.ts` (4 new tests); `suite-sales-validation` (4 new checks) |
+| LP-06 | Research provider audit; provider abstraction for supported APIs | `src/lib/research/apify.ts` (optional, off unless approved), scheduler fallback, configuration check | IMPLEMENTED_TESTED; EXTERNAL_CONFIGURATION_REQUIRED to run | `apify.test.ts` (6 tests); `docs/launch-pack/research/RESEARCH_PROVIDER_AUDIT.md` |
+| LP-07 | Agent workflows documented | `docs/launch-pack/research/AGENT_WORKFLOWS.md` | IMPLEMENTED_TESTED (documentation) | — |
+| LP-08 | Verbatim sales library in canonical resources and `/admin/scripts` | Repo SOP 03/04 updated from Drive; `blocksFromVerbatimLibrary` | IMPLEMENTED_TESTED | `canonical-library.test.ts` (13 passages; quotes exact) |
+| LP-09 | Usability verification | `docs/launch-pack/operations/USABILITY_VERIFICATION.md`; the "30-day strategy" label corrected to four-week wording; wedge convergence display fixed | IMPLEMENTED_TESTED | — |
+| LP-10 | Readiness matrix, owner dry run, RPO/RTO and retention options | `docs/launch-pack/operations/` | OWNER_DECISION_REQUIRED (RPO/RTO, retention) | — |
+| LP-11 | Brand kit, onboarding pack, sales and outreach resources, 10 newsletter graphics | `docs/launch-pack/*` | Production-complete; awaiting owner approval | Every render was inspected |

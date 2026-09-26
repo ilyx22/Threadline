@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1500" viewBox="0 0 1200 1500" role="img" aria-labelledby="t4 d4">
+<title id="t4">A content mix you tune, not a formula you split</title><desc id="d4">PESTO content mix, after Marcos Ruiz (Vantage): Personal (a story from your own experience), Expertise (how the work is actually done), Social proof (only with permission, never invented), Trending (a current event read through your lens) and Opinion (a position you would defend to peers). A dashed bar of five equal slices is marked &#x27;not the goal&#x27;; a second bar shows one client&#x27;s illustrative weighting, led by expertise and opinion. Weights follow the evidence for each client and change.</desc>
+<defs><style>@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&amp;family=Inter:wght@400;500;600&amp;display=swap');</style><marker id="arr" viewBox="0 0 12 12" refX="9" refY="6" markerWidth="12" markerHeight="12" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M1 1 L10 6 L1 11" fill="none" stroke="#17233a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+<rect x="0" y="0" width="1200" height="1500" rx="0" fill="#e8f1f8"/>
+<text x="72" y="116" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="600" fill="#6b768a" text-anchor="start" letter-spacing="3"><tspan x="72" dy="0">THREADLINE FIELD NOTES · 04</tspan></text>
+<text x="72" y="206" font-family="&#x27;Instrument Serif&#x27;, &#x27;Iowan Old Style&#x27;, Georgia, serif" font-size="72" font-weight="400" fill="#17233a" text-anchor="start"><tspan x="72" dy="0">A content mix you tune,</tspan><tspan x="72" dy="77.8">not a formula you split</tspan></text>
+<text x="72" y="392" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="500" fill="#6b768a" text-anchor="start"><tspan x="72" dy="0">Not the goal: five equal slices</tspan></text>
+<rect x="74" y="414" width="207.2" height="84" rx="14" fill="#ffffff" stroke="#a9cdea" stroke-width="3" stroke-dasharray="8 8"/>
+<text x="177.6" y="470" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="36" font-weight="600" fill="#6b768a" text-anchor="middle"><tspan x="177.6" dy="0">P</tspan></text>
+<rect x="285.2" y="414" width="207.2" height="84" rx="14" fill="#ffffff" stroke="#a9cdea" stroke-width="3" stroke-dasharray="8 8"/>
+<text x="388.8" y="470" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="36" font-weight="600" fill="#6b768a" text-anchor="middle"><tspan x="388.8" dy="0">E</tspan></text>
+<rect x="496.4" y="414" width="207.2" height="84" rx="14" fill="#ffffff" stroke="#a9cdea" stroke-width="3" stroke-dasharray="8 8"/>
+<text x="600.0" y="470" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="36" font-weight="600" fill="#6b768a" text-anchor="middle"><tspan x="600.0" dy="0">S</tspan></text>
+<rect x="707.6" y="414" width="207.2" height="84" rx="14" fill="#ffffff" stroke="#a9cdea" stroke-width="3" stroke-dasharray="8 8"/>
+<text x="811.2" y="470" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="36" font-weight="600" fill="#6b768a" text-anchor="middle"><tspan x="811.2" dy="0">T</tspan></text>
+<rect x="918.8" y="414" width="207.2" height="84" rx="14" fill="#ffffff" stroke="#a9cdea" stroke-width="3" stroke-dasharray="8 8"/>
+<text x="1022.4" y="470" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="36" font-weight="600" fill="#6b768a" text-anchor="middle"><tspan x="1022.4" dy="0">O</tspan></text>
+<text x="72" y="572" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="600" fill="#17233a" text-anchor="start"><tspan x="72" dy="0">One client’s weighting (illustrative)</tspan></text>
+<rect x="74" y="594" width="376.2" height="104" rx="14" fill="#dbeaf7" stroke="#17233a" stroke-width="3"/>
+<text x="262.1" y="660" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="40" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="262.1" dy="0">E</tspan></text>
+<rect x="454.2" y="594" width="291.7" height="104" rx="14" fill="#e6ddfa" stroke="#17233a" stroke-width="3"/>
+<text x="600.0" y="660" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="40" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="600.0" dy="0">O</tspan></text>
+<rect x="749.8" y="594" width="143.8" height="104" rx="14" fill="#ffe4d6" stroke="#17233a" stroke-width="3"/>
+<text x="821.8" y="660" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="40" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="821.8" dy="0">P</tspan></text>
+<rect x="897.7" y="594" width="122.7" height="104" rx="14" fill="#fff0c2" stroke="#17233a" stroke-width="3"/>
+<text x="959.0" y="660" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="40" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="959.0" dy="0">T</tspan></text>
+<rect x="1024.4" y="594" width="101.6" height="104" rx="14" fill="#d9f0e3" stroke="#17233a" stroke-width="3"/>
+<text x="1075.2" y="660" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="40" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="1075.2" dy="0">S</tspan></text>
+<text x="72" y="740" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="72" dy="0">Weights follow what the evidence shows for this client, and change.</tspan></text>
+<rect x="72" y="812" width="76" height="76" rx="18" fill="#ffe4d6" stroke="#17233a" stroke-width="3"/>
+<text x="110" y="864" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="38" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="110" dy="0">P</tspan></text>
+<text x="176" y="844" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="32" font-weight="600" fill="#17233a" text-anchor="start"><tspan x="176" dy="0">Personal</tspan></text>
+<text x="176" y="880" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="176" dy="0">a story from your own experience</tspan></text>
+<rect x="72" y="908" width="76" height="76" rx="18" fill="#dbeaf7" stroke="#17233a" stroke-width="3"/>
+<text x="110" y="960" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="38" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="110" dy="0">E</tspan></text>
+<text x="176" y="940" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="32" font-weight="600" fill="#17233a" text-anchor="start"><tspan x="176" dy="0">Expertise</tspan></text>
+<text x="176" y="976" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="176" dy="0">how the work is actually done</tspan></text>
+<rect x="72" y="1004" width="76" height="76" rx="18" fill="#d9f0e3" stroke="#17233a" stroke-width="3"/>
+<text x="110" y="1056" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="38" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="110" dy="0">S</tspan></text>
+<text x="176" y="1036" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="32" font-weight="600" fill="#17233a" text-anchor="start"><tspan x="176" dy="0">Social proof</tspan></text>
+<text x="176" y="1072" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="176" dy="0">only with permission, never invented</tspan></text>
+<rect x="72" y="1100" width="76" height="76" rx="18" fill="#fff0c2" stroke="#17233a" stroke-width="3"/>
+<text x="110" y="1152" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="38" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="110" dy="0">T</tspan></text>
+<text x="176" y="1132" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="32" font-weight="600" fill="#17233a" text-anchor="start"><tspan x="176" dy="0">Trending</tspan></text>
+<text x="176" y="1168" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="176" dy="0">a current event, read through your lens</tspan></text>
+<rect x="72" y="1196" width="76" height="76" rx="18" fill="#e6ddfa" stroke="#17233a" stroke-width="3"/>
+<text x="110" y="1248" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="38" font-weight="600" fill="#17233a" text-anchor="middle"><tspan x="110" dy="0">O</tspan></text>
+<text x="176" y="1228" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="32" font-weight="600" fill="#17233a" text-anchor="start"><tspan x="176" dy="0">Opinion</tspan></text>
+<text x="176" y="1264" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="400" fill="#3b475e" text-anchor="start"><tspan x="176" dy="0">a position you would defend to peers</tspan></text>
+<text x="72" y="1338" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="400" fill="#6b768a" text-anchor="start"><tspan x="72" dy="0">PESTO content mix, after Marcos Ruiz (Vantage).</tspan></text>
+<g transform="translate(72,1404) scale(2.4)" fill="none"><path d="M3 17.5C5.5 17.5 6.2 6.5 9 6.5C11.8 6.5 12.2 17.5 15 17.5C17.8 17.5 18.5 6.5 21 6.5" stroke="#1f63d6" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><circle cx="9" cy="6.5" r="1.9" fill="#1f63d6"/><circle cx="15" cy="17.5" r="1.9" fill="#1f63d6" opacity="0.55"/></g>
+<text x="146" y="1448" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="26" font-weight="500" fill="#17233a" text-anchor="start" letter-spacing="5.5"><tspan x="146" dy="0">THREADLINE</tspan></text>
+<text x="1128" y="1448" font-family="Inter, &#x27;Segoe UI&#x27;, system-ui, sans-serif" font-size="24" font-weight="500" fill="#6b768a" text-anchor="end"><tspan x="1128" dy="0">Weighting shown is illustrative</tspan></text>
+</svg>

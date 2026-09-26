@@ -91,6 +91,12 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   if (env.PROCESSING_SCAN === "true" && (env.PROCESSING_PROVIDER ?? "none") !== "webhook") add("error", "PROCESSING_SCAN", "Scanning is on but no processing worker is configured, so files would wait unscanned forever.");
   if (e === "production" && env.PROCESSING_SCAN !== "true") add("warning", "PROCESSING_SCAN", "Uploaded files are not malware-scanned. Configure a processing worker with a scanner and set PROCESSING_SCAN=true.");
 
+  // Optional external research provider (Apify). Off unless approved.
+  if ((env.RESEARCH_EXTERNAL_PROVIDERS ?? "").toLowerCase().includes("apify")) {
+    if (!set(env, "APIFY_TOKEN")) add("error", "APIFY_TOKEN", "RESEARCH_EXTERNAL_PROVIDERS includes apify but no token is set.");
+    if (!set(env, "APIFY_ACTOR_ID")) add("error", "APIFY_ACTOR_ID", "RESEARCH_EXTERNAL_PROVIDERS includes apify but no Actor is chosen.");
+  }
+
   // Rate limiting and client IP
   const rl = env.RATE_LIMIT_STORE ?? "memory";
   if (rl === "redis") {

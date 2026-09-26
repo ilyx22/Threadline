@@ -31,7 +31,7 @@ Recovery: an invitation expired or went astray → **Members → Invitations →
 - Contributors upload source material (call notes, voice notes, documents) in the Library. Only images, video, audio, PDF, text and Word files are accepted, and the file's content must match its type. Files over 10 MB go straight to storage in parts with a progress bar; each file shows where it came from.
 - Video and audio are processed (transcoded, transcribed, thumbnailed) when a processing worker is configured; a transcript is added to the Library and mined automatically for questions, objections, stories, proof, claims and ideas as exact quotes. Any text file can be mined with **Mine it**.
 - With scanning on, every file is scanned; an infected file is quarantined and cannot be downloaded.
-- **Your time**: founders and their team record the minutes they spend (recording, review, approval, calls). The page shows each week against the one-hour promise; weeks with nothing recorded say so.
+- **Your time**: founders and their team record the minutes they spend (recording, review, approval, calls). The page shows each week's recorded minutes; weeks with nothing recorded say so. Staff also see each week against the internal planning target (60 minutes of founder time), which is an estimate, not a client promise.
 - **Help**: anyone in the workspace can ask Threadline for help from the Help page and see where their requests stand.
 
 ## 4. Approving and revising (client approver)
@@ -80,6 +80,19 @@ An expectation can only be frozen before publication; after it, the last one fro
 - Leads arrive from **inbound sources** (Pipeline → inbound sources: a website form, Zapier or an import, each with its own token) or are added by hand for DMs. A repeat message from the same person joins their open lead.
 - Each lead has an owner (the primary contact by default), a thread, qualification evidence (location alone is refused) and a follow-up date that becomes a task on the day.
 - **Draft a reply** writes a suggested reply; approve or edit it, send it yourself on the channel, then **I sent it**. Speed to lead is shown on the Pipeline page.
+
+## 7a-bis. Threadline's own acquisition (operator)
+
+- **Touches.** On a prospect, **Record touch** after you have sent a message yourself: follow-up, promised observation sent, reply, booking or reminder. The first touch dates the funnel. Nothing is sent from Threadline, and a touch cannot be dated in the future.
+- **Demand source.** Set where the demand came from: outbound, content-sourced, content-assisted, referral or other inbound. Content-sourced and content-assisted need a note saying how we know. Wins are reported by source.
+- **Acquisition page.**
+  - The funnel runs targeted → contacted → reply → positive → booked → showed → qualified → proposal → won.
+  - **Effort and demand source** shows touches per contacted prospect.
+  - **Audience to calls** is a diagnostic reading from the audience size recorded on the target. It has no benchmark.
+- **Market wedges.**
+  - Outreach, discovery and paid pilots do not wait for validation.
+  - To start a commercial test before 10 conversations with more than 5 converging, write **What is still uncertain**. It stays on the wedge as a warning until validated.
+  - **Validated** always needs the full interview sample.
 
 ## 7b. Operator control
 

@@ -169,3 +169,25 @@ Scopes, versions and limits follow each platform's public documentation as of Se
 - **Processing without a worker**: tasks wait as queued and are submitted once a worker is configured; transcripts can be uploaded as text and mined.
 - **An uncertain or partly posted publish**: check the account; record the URL if it posted, send again if it did not, or resume a partly posted X thread (Distribution page).
 - **DMs from platforms without an API**: add the lead by hand in the Pipeline (manual entry), or send leads from a form or Zapier to an inbound source.
+
+## Changes for the launch asset pack (27 September 2026)
+
+- **Migrations:**
+  - `*_wedge_early_commercial_test`: MarketWedge `testedBeforeValidation`, `uncertaintyNote`, `uncertaintyAt`, `uncertaintyById`.
+  - `*_prospect_touches_demand_source`: new `ProspectTouch` table; Prospect `demandSource`, `demandSourceNote`; AcquisitionTarget `audienceSize`, `audienceAsOf`.
+  - Both are additive; apply them with `prisma migrate deploy`.
+- **Actions:**
+  - `logTouchAction` and `setDemandSourceAction` (`src/lib/actions/acquisition.ts`).
+  - `advanceWedgeAction` accepts `uncertainty`, enforces the interview sample on `→ validated`, and allows an early `→ commercial_test` with a written uncertainty.
+- **Domain:**
+  - `assertEarlyTestRecorded` and `interviewEvidenceMet` (`sop.ts`).
+  - `DEMAND_SOURCES`, `TOUCH_KINDS`, `audienceToCallRatio`, and the optional `targeted`, `touches` and `wonBySource` fields on `FunnelCounts` (`funnel.ts`). Older frozen reviews without them still read.
+- **Research:** `src/lib/research/apify.ts` is an optional provider, used by scheduled runs as the fallback when the public reader is refused.
+  - **Environment:** `RESEARCH_EXTERNAL_PROVIDERS` (must include `apify`), `APIFY_TOKEN` (secret, sent as a bearer header), `APIFY_ACTOR_ID`, `APIFY_INPUT_TEMPLATE` (JSON with `{{url}}`), `APIFY_MAX_ITEMS` (default 20, max 100).
+  - **Configuration check:** errors if the switch is on without the token or the Actor.
+- **Sales import:** `blocksFromVerbatimLibrary` imports SOP 03's approved library A–M as drafts.
+- **Copy:**
+  - The founder-time figure is an internal target, shown to staff only.
+  - The installation milestone is "First four-week period strategy approved".
+  - The PESTO prompt weights the mix to the client's evidence and never invents stories.
+- **Public content** (frozen-site exception for inaccurate claims): `src/content/home.ts`, `playbook.ts`, `public-site.ts`. The freeze hashes were re-recorded.

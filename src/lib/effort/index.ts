@@ -5,8 +5,8 @@ import { WorkflowError } from "@/lib/domain/workflow";
 /**
  * Effort records (CX-08, CAP-01).
  *
- * The offer promises the founder "under an hour a week"; the capacity model
- * needs operator minutes per client. Both come from minutes people record
+ * Founder time is planned against an internal target (see below); the
+ * capacity model needs operator minutes per client. Both come from minutes people record
  * against a step, by hand or from a timer. Nothing here is inferred from
  * activity, so a week with no entries shows as "not recorded", never as zero.
  */
@@ -15,7 +15,14 @@ export type EffortStep = (typeof EFFORT_STEPS)[number];
 export const ACTOR_KINDS = ["founder", "client_team", "operator", "editor"] as const;
 export type ActorKind = (typeof ACTOR_KINDS)[number];
 
-/** The founder-time promise, in minutes per week. */
+/**
+ * The internal planning target for founder time, in minutes per week.
+ *
+ * An estimate, not a client promise. No measured client data supports it yet,
+ * and the Master Blueprint rules out publishing a quantitative founder-hours
+ * claim until real Delivery Load validates one. It is shown to staff as a
+ * target to measure against, and never to clients as a commitment.
+ */
 export const FOUNDER_WEEKLY_BUDGET = 60;
 
 const DAY = 86_400_000;

@@ -24,6 +24,7 @@ import {
   resolveCheck,
 } from "@/lib/domain/sop";
 import { WorkflowError } from "@/lib/domain/workflow";
+import { DEMAND_SOURCES, TOUCH_KINDS } from "@/lib/domain/funnel";
 import {
   checkbox,
   cleanText,
@@ -262,6 +263,13 @@ export async function advanceProspectAction(
 
     const now = new Date();
     const terminal = ["won", "lost", "not_fit"].includes(input.to);
+    // Reaching "contacted" for the first time is the first touch; record it as a
+    // touch as well, so effort per prospect is counted from the same place.
+    if (input.to === "contacted" && !prospect.firstTouchAt) {
+      await prisma.prospectTouch.create({
+        data: { prospectId, at: now, kind: "first", channel: prospect.channel, byId: admin.user.id },
+      });
+    }
 
     await prisma.prospect.update({
       where: { id: prospectId },
@@ -351,6 +359,110 @@ export async function classifyReplyAction(
 
     revalidateAll(`/admin/prospects/${prospectId}`);
     return okVoid("Reply classified.");
+  });
+}
+
+/* --------------------------------- Touches --------------------------------- */
+
+const touchSchema = z.object({
+  kind: z.enum(TOUCH_KINDS),
+  channel: z.string().max(120).optional(),
+  at: optionalDate,
+  note: z.string().max(2000).optional(),
+});
+
+/**
+ * Record a touch a person has already sent by hand. Nothing is sent from here.
+ * A touch cannot be dated in the future: it records something that happened.
+ */
+export async function logTouchAction(
+  prospectId: string,
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  return guarded(async () => {
+    const admin = await requireInternalStrict("acquisition.manage");
+    const input = parseForm(touchSchema, formData);
+    const prospect = await prisma.prospect.findUnique({ where: { id: prospectId } });
+    if (!prospect) return err("That prospect no longer exists.", "not_found");
+
+    const now = new Date();
+    const at = input.at ?? now;
+    if (at.getTime() > now.getTime() + 60_000) {
+      throw new WorkflowError("A touch records something already sent, so it cannot be dated in the future.");
+    }
+    const firstEver = !prospect.firstTouchAt;
+    const kind = firstEver ? "first" : input.kind;
+
+    await prisma.$transaction([
+      prisma.prospectTouch.create({
+        data: {
+          prospectId,
+          at,
+          kind,
+          channel: input.channel ? cleanText(input.channel, 120) : prospect.channel,
+          note: input.note ? cleanText(input.note, 2000) : null,
+          byId: admin.user.id,
+        },
+      }),
+      ...(firstEver ? [prisma.prospect.update({ where: { id: prospectId }, data: { firstTouchAt: at } })] : []),
+    ]);
+
+    await auditInternal(admin.user.id, {
+      action: "prospect.touch",
+      entityType: "Prospect",
+      entityId: prospectId,
+      summary: `${prospect.company}: ${kind.replace(/_/g, " ")} touch recorded`,
+      meta: { kind, channel: input.channel ?? prospect.channel ?? null },
+    });
+
+    revalidateAll(`/admin/prospects/${prospectId}`);
+    return okVoid(firstEver ? "First touch recorded." : "Touch recorded.");
+  });
+}
+
+const demandSourceSchema = z.object({
+  demandSource: z.enum([...DEMAND_SOURCES, "unknown"] as [string, ...string[]]),
+  demandSourceNote: z.string().max(1000).optional(),
+});
+
+/**
+ * Record where this prospect's demand came from. Content-sourced needs a note
+ * saying how we know (the piece they named, the link they came through), so
+ * content is not credited on a guess.
+ */
+export async function setDemandSourceAction(
+  prospectId: string,
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  return guarded(async () => {
+    const admin = await requireInternalStrict("acquisition.manage");
+    const input = parseForm(demandSourceSchema, formData);
+    const prospect = await prisma.prospect.findUnique({ where: { id: prospectId } });
+    if (!prospect) return err("That prospect no longer exists.", "not_found");
+
+    const note = input.demandSourceNote?.trim() ? cleanText(input.demandSourceNote, 1000) : null;
+    if ((input.demandSource === "content_sourced" || input.demandSource === "content_assisted") && !note) {
+      throw new WorkflowError("Say how we know content played that part: the piece they named, the link they used, or what they said.");
+    }
+
+    await prisma.prospect.update({
+      where: { id: prospectId },
+      data: {
+        demandSource: input.demandSource === "unknown" ? null : input.demandSource,
+        demandSourceNote: note,
+      },
+    });
+    await auditInternal(admin.user.id, {
+      action: "prospect.demand_source",
+      entityType: "Prospect",
+      entityId: prospectId,
+      summary: `${prospect.company}: demand source ${input.demandSource.replace(/_/g, " ")}`,
+      meta: { demandSource: input.demandSource },
+    });
+    revalidateAll(`/admin/prospects/${prospectId}`);
+    return okVoid("Demand source saved.");
   });
 }
 
@@ -561,6 +673,7 @@ const targetSchema = z.object({
   assumedShowRatePct: z.coerce.number().min(0).max(100).default(0),
   assumedQualifiedRatePct: z.coerce.number().min(0).max(100).default(0),
   assumedCloseRatePct: z.coerce.number().min(0).max(100).default(0),
+  audienceSize: z.preprocess((v) => (v === "" || v === null ? undefined : v), z.coerce.number().int().min(0).optional()),
   notes: z.string().max(4000).optional(),
 });
 
@@ -589,6 +702,8 @@ export async function saveTargetAction(
       assumedShowRatePct: input.assumedShowRatePct,
       assumedQualifiedRatePct: input.assumedQualifiedRatePct,
       assumedCloseRatePct: input.assumedCloseRatePct,
+      audienceSize: input.audienceSize ?? null,
+      audienceAsOf: input.audienceSize !== undefined ? new Date() : null,
       notes: input.notes ? cleanText(input.notes) : null,
     };
 

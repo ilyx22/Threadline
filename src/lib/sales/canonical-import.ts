@@ -13,6 +13,31 @@ import { importScriptBlocks, type ImportBlock } from "./scripts";
 
 const DOC_DISCOVERY = "Threadline Final Working Resources/03 Acquisition and Sales/DRAFT_Sales_Discovery_and_Content_Diagnosis.md";
 const DOC_OBJECTIONS = "Threadline Final Working Resources/03 Acquisition and Sales/DRAFT_Answer_and_Objection_Vault.md";
+/** SOP 03, whose "Canonical operator script library" holds the founder-approved 8 September 2026 passages A–M. */
+const DOC_LIBRARY = "Threadline Final Working Resources/02 SOPs/SOP_03_DIAGNOSIS_SALES_CALL_V14.md";
+
+const LIBRARY_STAGE: Record<string, ImportBlock["stage"]> = {
+  A: "objection", B: "close", C: "offer", D: "offer", E: "offer", F: "offer", G: "objection",
+  H: "objection", I: "offer", J: "offer", K: "offer", L: "close", M: "offer",
+};
+
+/**
+ * The approved library, one block per lettered passage, text exactly as in the
+ * SOP. Imported as drafts like every other block: the wording is founder
+ * approved in the source, and a person confirms that by approving it here.
+ */
+export function blocksFromVerbatimLibrary(markdown: string): ImportBlock[] {
+  const at = markdown.indexOf("## Canonical operator script library");
+  if (at < 0) return [];
+  const parts = markdown.slice(at).split(/^## (?=[A-M]\. )/m).slice(1);
+  return parts.map((part) => {
+    const [headingLine, ...rest] = part.split("\n");
+    const letter = headingLine.slice(0, 1);
+    const title = headingLine.slice(3).trim();
+    const key = `library.${letter.toLowerCase()}_` + title.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, "").slice(0, 50);
+    return { key, stage: LIBRARY_STAGE[letter] ?? "offer", context: `Approved library ${letter}: ${title}`, exactText: rest.join("\n").trim() };
+  }).filter((b) => b.exactText.length > 0);
+}
 
 /** Split the discovery document into its numbered sections, keeping the text exactly as written. */
 export function blocksFromDiscoveryDoc(markdown: string): ImportBlock[] {
@@ -45,7 +70,7 @@ export function blocksFromObjectionDoc(markdown: string): ImportBlock[] {
 
 export async function importCanonicalDrafts(root = process.cwd()) {
   const results: { source: string; created: number; unchanged: number; missing?: boolean }[] = [];
-  for (const [file, parser] of [[DOC_DISCOVERY, blocksFromDiscoveryDoc], [DOC_OBJECTIONS, blocksFromObjectionDoc]] as const) {
+  for (const [file, parser] of [[DOC_DISCOVERY, blocksFromDiscoveryDoc], [DOC_OBJECTIONS, blocksFromObjectionDoc], [DOC_LIBRARY, blocksFromVerbatimLibrary]] as const) {
     const full = path.join(root, file);
     if (!existsSync(full)) { results.push({ source: file, created: 0, unchanged: 0, missing: true }); continue; }
     const blocks = parser(readFileSync(full, "utf8"));

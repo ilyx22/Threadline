@@ -1,0 +1,18 @@
+/* Threadline brand tokens for documents. Values from src/styles/marketing-v9/index.css and src/styles/marketing-v5/tokens.css. */
+:root {
+  --tl-canvas: #e8f1f8;   /* --v9-canvas */
+  --tl-panel: #ffffff;    /* --v9-panel */
+  --tl-ink: #17233a;      /* --v9-ink */
+  --tl-ink-soft: #3b475e; /* --v9-ink-soft */
+  --tl-ink-faint: #6b768a;/* --v9-ink-faint */
+  --tl-line: rgba(23, 35, 58, 0.12); /* --v9-line */
+  --tl-action: #1f63d6;   /* --v9-action (links and the one call to action) */
+  --tl-night: #101a33;    /* --v9-night */
+  --tl-sky: #dbeaf7;      /* --v9-sky */
+  --tl-mint: #d9f0e3;     /* --v9-mint */
+  --tl-peach: #ffe4d6;    /* --v9-peach */
+  --tl-gold: #c88b2d;     /* --v5-gold: the thread and the mark */
+  --tl-paper: #f5f2ea;    /* --v5-paper */
+  --tl-serif: "Instrument Serif", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --tl-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}

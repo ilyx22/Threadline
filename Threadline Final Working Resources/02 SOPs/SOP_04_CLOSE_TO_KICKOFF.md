@@ -37,3 +37,11 @@ If payment/signature stalls, keep the person in sales follow-up. Do not begin fu
 
 ## NEXT SOP
 When gate passes -> **SOP 05 - Client Installation / Day-7 Win**.
+
+## Expectation and optional proof milestone
+Confirm £2,500 implementation + £2,500 every 4 weeks, 12-week initial engagement / 3 service periods (£10,000 initial TCV), agreed scope/dependencies and actual payment schedule. Explain establish/calibrate -> correct/refine -> concentrate/compound. No guaranteed revenue, leads, views or fixed platform learning phase.
+
+Preserve this optional ask verbatim:
+“One thing I ask every client at the start: if at the end of the initial 12 weeks you feel we’ve genuinely created something worth talking about, would you be open to a short recorded success interview? Completely optional, and obviously only if you’re happy with the result.”
+
+Record testimonial_permission_if_successful = YES / MAYBE / NO, with exact wording. This is willingness to consider a later interview, not advance permission to publish. Seek separate approval for actual public proof. Respect NO and do not pressure clients with weak results.

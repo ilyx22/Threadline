@@ -114,3 +114,16 @@ Until a platform is approved, publishing is manual: approved packages are posted
 2. Visit `/api/health`: `status` should be `ok`.
 3. Sign in, open **Admin → System**: the configuration card should list no errors.
 4. Run one test application through to an accepted invitation with a colleague's address you control.
+
+## 11. Launch asset pack decisions (added 27 September 2026)
+
+Full list with IDs: `docs/launch-pack/MASTER_LAUNCH_CHECKLIST.md`. None of these is secret.
+
+| What | Exact action | Where | Verify | Blocks |
+| --- | --- | --- | --- | --- |
+| Proof figures (O-01) | Send the source, timeframe and meaning of "conversions" for "100m+ views / 10,000+ conversions", or say remove | Tell the maintainer | Claims audit P-01 closed | Public trust |
+| Booking events (O-05) | Create a 15-minute research event and a 45-minute diagnosis event. Put the diagnosis link in `NEXT_PUBLIC_BOOKING_URL` (threadline project only) | Calendar tool; Vercel env | The apply page shows the booking link | Acquisition |
+| Support owner (O-06) | Name who answers Help requests, and the response times you will state | Tell the maintainer | The onboarding pack's support section is filled in | First client |
+| Apify research (O-11, optional) | If approved: `RESEARCH_EXTERNAL_PROVIDERS=apify`, `APIFY_TOKEN` (secret), `APIFY_ACTOR_ID`, optional `APIFY_MAX_ITEMS`. Set a usage limit in the Apify console. **Primary project only** | Vercel → threadline → env | `npm run env:check` clean; a scheduled run over a login-walled URL records Apify provenance | Feature |
+| Asset approvals (O-08, O-09, O-16) | Review the brand kit, onboarding pack, sales and outreach resources, and graphics. In `/admin/scripts`, **Import canonical drafts**, then approve the library blocks A–M | `docs/launch-pack/` | Status updated in the launch-pack README | First client |
+| Favicon / OG image (O-07) | Approve replacing the old "T + wave" icon with the current mark | Tell the maintainer | New icon live | Brand consistency |

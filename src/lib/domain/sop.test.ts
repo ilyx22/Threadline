@@ -3,7 +3,9 @@ import { describe, it } from "node:test";
 import {
   assertActiveRecord,
   assertCallOutcome,
+  assertEarlyTestRecorded,
   assertInterviewEvidence,
+  interviewEvidenceMet,
   assertProspectTransition,
   assertWedgeTransition,
   callProgress,
@@ -490,5 +492,28 @@ describe("saving a check", () => {
       resolveCheck("set", { done: true, note: "Found it" }, { done: false, note: null }),
       { done: true, note: "Found it" },
     );
+  });
+});
+
+describe("early commercial test (research gate separated from outreach and pilots)", () => {
+  const note = "Only 4 of 10 interviews; the recurring problem is a hypothesis. Read replies as signal, not validation.";
+
+  it("needs no note once the evidence is in", () => {
+    assert.equal(interviewEvidenceMet(10, 6), true);
+    assert.doesNotThrow(() => assertEarlyTestRecorded(10, 6, null));
+  });
+
+  it("allows an early test when the uncertainty is written down", () => {
+    assert.equal(interviewEvidenceMet(4, 2), false);
+    assert.doesNotThrow(() => assertEarlyTestRecorded(4, 2, note));
+  });
+
+  it("refuses an early test without the uncertainty, or with a token one", () => {
+    assert.throws(() => assertEarlyTestRecorded(4, 2, undefined), /write down what is still uncertain/i);
+    assert.throws(() => assertEarlyTestRecorded(9, 9, "Founder says go."), /at least 40 characters/i);
+  });
+
+  it("still refuses to call the wedge validated early, with or without a note", () => {
+    assert.throws(() => assertInterviewEvidence(4, 2), /4 of 10/);
   });
 });

@@ -45,7 +45,7 @@ export function SignOffButton({
         size="sm"
         variant="ghost"
         action={() => clearSignOffAction(slug, milestoneKey)}
-        confirm="Withdraw the sign-off on the 30-day strategy?"
+        confirm="Withdraw the sign-off on the first-period strategy?"
         onDone={() => router.refresh()}
       >
         Withdraw sign-off

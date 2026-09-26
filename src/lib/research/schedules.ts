@@ -5,6 +5,7 @@ import { SOURCE_COLLECTION } from "@/lib/domain/intelligence";
 import { runSourceKindSchema } from "@/lib/domain/enums";
 import { fetchPublicPage } from "@/lib/integrations/fetch-url";
 import { collectInternal, hostOf, persistEvidence, researchKindForSource } from "./collect";
+import { apifyConfig, makeApifyProvider } from "./apify";
 
 /**
  * Scheduled research (AI-02). See the ResearchSchedule model for the rules.
@@ -75,11 +76,20 @@ export async function runSchedule(scheduleId: string, now = new Date()) {
       }
       const page = await fetchPublicPage(src.url);
       if (!page.ok) {
-        await prisma.runSource.update({ where: { id: rs.id }, data: { status: "unavailable", statusNote: page.reason, collectedAt: now } });
-        unavailable.push({ label: src.label, reason: page.reason });
-        continue;
+        // Fallback: the optional external provider, only when the owner has
+        // approved and configured it. Otherwise the refusal stands, visibly.
+        const fallback = apifyConfig().ok ? await makeApifyProvider().getPost!({ orgId: sch.orgId, ref: src.url }) : null;
+        if (fallback?.ok) {
+          items = fallback.items.map((it) => ({ kind: researchKindForSource(src.kind), title: it.title, body: it.body, url: it.url, sourceName: it.sourceName, collectedVia: "schedule", meta: { sourceType: src.kind, collectionMode: "adapter", provenance: it.provenance, injectionFlag: it.injectionFlag, runSourceId: rs.id, scheduleId: sch.id, publicReaderRefusal: page.reason } }));
+        } else {
+          const reason = fallback ? `${page.reason} The external provider also failed: ${fallback.reason}` : page.reason;
+          await prisma.runSource.update({ where: { id: rs.id }, data: { status: "unavailable", statusNote: reason.slice(0, 600), collectedAt: now } });
+          unavailable.push({ label: src.label, reason });
+          continue;
+        }
+      } else {
+        items = [{ kind: researchKindForSource(src.kind), title: page.title.slice(0, 300), body: page.text, url: page.url, sourceName: hostOf(page.url), collectedVia: "schedule", meta: { sourceType: src.kind, collectionMode: "url", contentType: page.contentType, fetchedAt: page.fetchedAt.toISOString(), runSourceId: rs.id, scheduleId: sch.id } }];
       }
-      items = [{ kind: researchKindForSource(src.kind), title: page.title.slice(0, 300), body: page.text, url: page.url, sourceName: hostOf(page.url), collectedVia: "schedule", meta: { sourceType: src.kind, collectionMode: "url", contentType: page.contentType, fetchedAt: page.fetchedAt.toISOString(), runSourceId: rs.id, scheduleId: sch.id } }];
     }
     const r = await persistEvidence(sch.orgId, run.id, items);
     collected += r.collected;

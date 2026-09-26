@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>{{deck_title}} · Threadline</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="_brand.css">
+<style>
+  /* 16:9 slide, authored at 1920 x 1080. */
+  @page { size: 1920px 1080px; margin: 0; }
+  html, body { margin: 0; background: #fff; }
+  .slide { position: relative; width: 1920px; height: 1080px; padding: 96px 120px; box-sizing: border-box; background: var(--tl-night); color: #fff; font: 400 28px/1.45 var(--tl-sans); display: flex; flex-direction: column; overflow: hidden; }
+  .slide img.logo { height: 44px; align-self: flex-start; }
+  .eyebrow { margin: auto 0 28px; font-size: 22px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #aab4c6; }
+  h1 { margin: 0; max-width: 1400px; font: 400 128px/.98 var(--tl-serif); letter-spacing: -.015em; }
+  h1 em { color: var(--tl-gold); }
+  .thread { display: block; width: 100%; height: 90px; margin: 56px 0 40px; }
+  .meta { display: flex; gap: 64px; color: #cfd6e2; font-size: 24px; }
+  .meta b { display: block; font-size: 16px; letter-spacing: .16em; text-transform: uppercase; color: #8894aa; font-weight: 600; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<section class="slide">
+  <img class="logo" src="../logo/svg/threadline-lockup-dark.svg" alt="Threadline">
+  <p class="eyebrow">{{eyebrow, e.g. Diagnosis call}}</p>
+  <h1>{{title_line_one}} <em>{{title_emphasis}}</em></h1>
+  <svg class="thread" viewBox="0 0 600 40" preserveAspectRatio="none" aria-hidden="true"><path d="M2 32 C60 32 70 8 120 8 C170 8 180 32 230 32 C280 32 290 8 340 8 C390 8 400 32 450 32 C500 32 520 20 598 20" fill="none" stroke="#c88b2d" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+  <div class="meta"><div><b>For</b>{{prospect_or_client}}</div><div><b>Date</b>{{date}}</div></div>
+</section>
+</body>
+</html>

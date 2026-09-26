@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>{{document_title}} · Threadline</title>
+<!-- Fonts: Instrument Serif and Inter (SIL Open Font License 1.1), loaded from Google Fonts; falls back to Georgia and the system sans. -->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="_brand.css">
+<style>
+  @page { size: A4; margin: 18mm 18mm 20mm; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #fff; color: var(--tl-ink); font: 400 10.5pt/1.55 var(--tl-sans); }
+  .page { width: 210mm; min-height: 297mm; padding: 18mm; margin: 0 auto; background: #fff; }
+  @media print { .page { width: auto; min-height: auto; padding: 0; } }
+  header.doc { display: flex; justify-content: space-between; align-items: center; padding-bottom: 6mm; border-bottom: 1px solid var(--tl-line); }
+  header.doc img { height: 7mm; }
+  header.doc .status { font-size: 8pt; letter-spacing: .14em; text-transform: uppercase; color: var(--tl-ink-faint); }
+  .eyebrow { margin: 10mm 0 2mm; font-size: 8.5pt; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--tl-ink-faint); }
+  h1 { margin: 0 0 4mm; font: 400 30pt/1.05 var(--tl-serif); letter-spacing: -.01em; }
+  h2 { margin: 9mm 0 2.5mm; font: 400 17pt/1.15 var(--tl-serif); }
+  h3 { margin: 6mm 0 1.5mm; font-size: 10.5pt; font-weight: 600; }
+  p { margin: 0 0 3mm; } .lead { font-size: 12pt; color: var(--tl-ink-soft); max-width: 150mm; }
+  dl.meta { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 6mm 0 0; padding: 4mm 0; border-top: 1px solid var(--tl-line); border-bottom: 1px solid var(--tl-line); }
+  dl.meta dt { font-size: 7.5pt; letter-spacing: .12em; text-transform: uppercase; color: var(--tl-ink-faint); } dl.meta dd { margin: 1mm 0 0; font-weight: 500; }
+  table { width: 100%; border-collapse: collapse; margin: 3mm 0 5mm; font-size: 9.5pt; }
+  th { text-align: left; font-weight: 600; font-size: 8pt; letter-spacing: .08em; text-transform: uppercase; color: var(--tl-ink-faint); border-bottom: 1px solid var(--tl-ink); padding: 2mm 2mm 1.5mm 0; }
+  td { border-bottom: 1px solid var(--tl-line); padding: 2mm 2mm 2mm 0; vertical-align: top; } th.num { text-align: right; padding-right: 6mm; } td.num { padding-right: 6mm; font-variant-numeric: tabular-nums; text-align: right; }
+  .evidence { display: inline-block; padding: .3mm 2mm; border-radius: 99px; font-size: 7.5pt; font-weight: 600; letter-spacing: .04em; }
+  .ev-measured { background: var(--tl-mint); } .ev-reported { background: var(--tl-sky); } .ev-inference { background: var(--tl-peach); }
+  .callout { margin: 5mm 0; padding: 4mm 5mm; border-left: 2px solid var(--tl-gold); background: var(--tl-paper); }
+  .callout strong { display: block; font-size: 8pt; letter-spacing: .12em; text-transform: uppercase; color: var(--tl-ink-faint); margin-bottom: 1mm; }
+  footer.doc { margin-top: 12mm; padding-top: 3mm; border-top: 1px solid var(--tl-line); display: flex; justify-content: space-between; font-size: 7.5pt; color: var(--tl-ink-faint); }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="doc">
+    <img src="../logo/svg/threadline-lockup-light.svg" alt="Threadline">
+    <span class="status">{{status: Draft / Final}} · v{{version}}</span>
+  </header>
+
+  <p class="eyebrow">{{document_type, e.g. Four-week review}}</p>
+  <h1>{{document_title}}</h1>
+  <p class="lead">{{one-sentence summary: what this document decides or reports}}</p>
+  <dl class="meta">
+    <div><dt>Client</dt><dd>{{client_name}}</dd></div>
+    <div><dt>Period</dt><dd>{{period, e.g. Period 2 of 3 (weeks 5 to 8)}}</dd></div>
+    <div><dt>Prepared by</dt><dd>Threadline</dd></div>
+    <div><dt>Date</dt><dd>{{date}}</dd></div>
+  </dl>
+
+  <h2>Action</h2>
+  <p>{{What shipped this period, from the records.}}</p>
+
+  <h2>Results</h2>
+  <table>
+    <thead><tr><th>Measure</th><th class="num">This period</th><th class="num">Previous</th><th>Evidence</th></tr></thead>
+    <tbody>
+      <tr><td>{{measure}}</td><td class="num">{{value}}</td><td class="num">{{value}}</td><td><span class="evidence ev-measured">Measured</span></td></tr>
+      <tr><td>{{measure}}</td><td class="num">{{value}}</td><td class="num">{{value}}</td><td><span class="evidence ev-reported">Client-reported</span></td></tr>
+      <tr><td>{{measure}}</td><td class="num">{{value}}</td><td class="num">{{value}}</td><td><span class="evidence ev-inference">Inference</span></td></tr>
+    </tbody>
+  </table>
+  <div class="callout"><strong>Expected vs actual</strong>{{What the system expected, what happened, which assumption failed, and the correction.}}</div>
+
+  <h2>Problems</h2>
+  <p>{{What did not work, stated plainly. A falling trajectory is shown and diagnosed, never smoothed.}}</p>
+
+  <h2>Future</h2>
+  <h3>Next intervention</h3>
+  <p>{{The one change being tested next, and when it will be read.}}</p>
+
+  <footer class="doc"><span>Threadline · Confidential to {{client_name}}</span><span>Figures are from records unless labelled otherwise. No outcome is guaranteed.</span></footer>
+</div>
+</body>
+</html>

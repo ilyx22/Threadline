@@ -16,7 +16,7 @@ import {
 import { missingCallStages } from "@/lib/domain/sop";
 import { parseStringArray } from "@/lib/db/json";
 import { NextActionCard, StatePanel } from "../../_components/state-panel";
-import { CallsPanel, DetailsPanel, ReplyPanel } from "./prospect-detail";
+import { CallsPanel, DetailsPanel, ReplyPanel, TouchesPanel } from "./prospect-detail";
 import { EconomicsPanel } from "./economics-panel";
 import { approvedScripts } from "@/lib/sales/scripts";
 
@@ -126,6 +126,13 @@ export default async function ProspectPage({ params }: { params: Promise<{ id: s
           {showReply ? (
             <ReplyPanel prospectId={prospect.id} current={prospect.replyClass} />
           ) : null}
+
+          <TouchesPanel
+            prospectId={prospect.id}
+            touches={prospect.touches.map((t) => ({ id: t.id, at: t.at.toISOString(), kind: t.kind, channel: t.channel, note: t.note }))}
+            demandSource={prospect.demandSource}
+            demandSourceNote={prospect.demandSourceNote}
+          />
 
           <EconomicsPanel
             prospectId={prospect.id}

@@ -24,13 +24,13 @@ import {
  * so there is deliberately no action here that marks a step done — the way to
  * complete a milestone is to do the work it describes.
  *
- * The one exception is the 30-day strategy, which is a client decision rather
+ * The one exception is the first-period strategy, which is a client decision rather
  * than a record, and therefore has an explicit sign-off.
  */
 
 const milestoneKeySchema = z.enum(MILESTONE_KEYS);
 
-/** Record the client's sign-off on the 30-day strategy. */
+/** Record the client's sign-off on the first four-week period's strategy. */
 export async function signOffMilestoneAction(
   orgSlug: string,
   key: string,

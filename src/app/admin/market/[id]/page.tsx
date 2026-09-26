@@ -9,7 +9,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { EmptyState, Notice } from "@/components/ui/feedback";
 import { WEDGE_STATES, WEDGE_STATE_META, metaOf } from "@/lib/domain/enums";
-import { INTERIM_CHECKPOINT, VALIDATION_DECISION_MINIMUM } from "@/lib/domain/sop";
+import {
+  CONVERGENCE_MINIMUM,
+  INTERIM_CHECKPOINT,
+  UNCERTAINTY_NOTE_MINIMUM,
+  VALIDATION_DECISION_MINIMUM,
+  interviewEvidenceMet,
+} from "@/lib/domain/sop";
 import { formatDate } from "@/lib/utils/dates";
 import { NextActionCard, StatePanel } from "../../_components/state-panel";
 import { ConversationForm, HypothesisForm } from "./wedge-detail";
@@ -98,6 +104,17 @@ export default async function WedgePage({ params }: { params: Promise<{ id: stri
         ) : null}
       </Notice>
 
+      {wedge.testedBeforeValidation && wedge.state !== "validated" ? (
+        <Notice tone="warning" title="Commercial test started before validation">
+          {wedge.uncertaintyNote}
+          <span className="mt-1 block text-[12px] text-faint">
+            Recorded {wedge.uncertaintyAt ? formatDate(wedge.uncertaintyAt) : ""}. Results from this
+            test are read against an unvalidated problem. Validated still needs{" "}
+            {VALIDATION_DECISION_MINIMUM} conversations with more than {INTERIM_CHECKPOINT} converging.
+          </span>
+        </Notice>
+      ) : null}
+
       <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,420px)]">
         <div className="space-y-6">
           <StatePanel
@@ -116,6 +133,16 @@ export default async function WedgePage({ params }: { params: Promise<{ id: stri
             toggleAction={toggleWedgeCheckAction.bind(null, wedge.id)}
             advanceAction={advanceWedgeAction.bind(null, wedge.id)}
             stateLabels={STATE_LABELS}
+            uncertainty={
+              wedge.state === "interviews" &&
+              !interviewEvidenceMet(wedge.reading.total, wedge.reading.convergence)
+                ? {
+                    to: "commercial_test",
+                    label: "What is still uncertain",
+                    hint: `The interviews have not reached ${VALIDATION_DECISION_MINIMUM} conversations with ${CONVERGENCE_MINIMUM} converging. Outreach, discovery and a paid pilot can still go ahead; write down what is not known yet (at least ${UNCERTAINTY_NOTE_MINIMUM} characters). The wedge cannot be called validated until the evidence is in.`,
+                  }
+                : undefined
+            }
           />
 
           <Card>

@@ -12,8 +12,9 @@ export const metadata: Metadata = { title: "Time" };
 const fmt = (m: number | null) => (m === null ? "not recorded" : m < 60 ? `${m} min` : `${Math.floor(m / 60)} h ${m % 60 ? `${m % 60} min` : ""}`.trim());
 
 /**
- * Time spent (CX-08). The founder's hour a week is the promise; this page is
- * where it is kept honest. Staff see operator and editor time too.
+ * Time spent (CX-08). Founder time is measured here against an internal
+ * planning target, which is shown to staff only: it is an estimate, not a
+ * client promise. Staff see operator and editor time too.
  */
 export default async function EffortPage({ params }: { params: Promise<{ org: string }> }) {
   const { org: slug } = await params;
@@ -36,7 +37,9 @@ export default async function EffortPage({ params }: { params: Promise<{ org: st
         <div className="max-w-2xl">
           <h1 className="text-section">Time</h1>
           <p className="mt-2 text-[14px] leading-relaxed text-muted">
-            The founder&apos;s time is meant to stay under {FOUNDER_WEEKLY_BUDGET} minutes a week. Record what it actually takes, so the promise is measured rather than assumed.
+            {ctx.isInternal
+              ? `Founder time is planned against an internal target of ${FOUNDER_WEEKLY_BUDGET} minutes a week. It is an estimate, not a client promise, until real weeks are measured here.`
+              : "Record the time the work actually takes you and your team. It shows where the process asks too much of you, so it can be changed."}
           </p>
         </div>
         <RecordTimeButton slug={slug} kinds={kinds} today={today} content={content} />
@@ -61,9 +64,9 @@ export default async function EffortPage({ params }: { params: Promise<{ org: st
               {weeks.map((w) => (
                 <tr key={w.weekStart} className="border-b border-line last:border-0">
                   <td className="px-3 py-2 tabular text-muted">{w.weekStart}</td>
-                  <td className={`px-3 py-2 tabular ${w.overBudget ? "text-negative" : w.founder === null ? "text-ghost" : "text-ink"}`}>
+                  <td className={`px-3 py-2 tabular ${ctx.isInternal && w.overBudget ? "text-negative" : w.founder === null ? "text-ghost" : "text-ink"}`}>
                     {fmt(w.founder)}
-                    {w.overBudget ? " · over the hour" : ""}
+                    {ctx.isInternal && w.overBudget ? " · above the internal target" : ""}
                   </td>
                   <td className={`px-3 py-2 tabular ${w.clientTeam === null ? "text-ghost" : "text-ink"}`}>{fmt(w.clientTeam)}</td>
                   {ctx.isInternal ? <td className={`px-3 py-2 tabular ${w.operator === null ? "text-ghost" : "text-ink"}`}>{fmt(w.operator)}</td> : null}
