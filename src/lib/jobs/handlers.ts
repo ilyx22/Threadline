@@ -65,6 +65,14 @@ registerHandler<{ exportId: string }>("export.build", async (payload) => {
   await buildExport(payload.exportId);
 });
 
+registerHandler<{ assetId: string; orgId: string }>("mine.asset", async (payload) => {
+  const { prisma } = await import("@/lib/db/client");
+  const { mineAsset } = await import("@/lib/research/miner");
+  // Mined on behalf of the workspace's owner, recorded on each item.
+  const owner = await prisma.membership.findFirst({ where: { orgId: payload.orgId, isOwner: true }, select: { userId: true } });
+  if (owner) await mineAsset(payload.orgId, owner.userId, payload.assetId);
+});
+
 /**
  * The daily housekeeping run (queued once per day by the cron runner): keep
  * every active engagement's service periods current, lapse old invitations,
@@ -123,4 +131,4 @@ registerHandler("daily.tick", async () => {
   await pruneExpiredSessions();
 });
 
-export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune", "crm.sync", "daily.tick", "processing.submit", "publish.run", "publish.poll", "export.build"] as const;
+export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune", "crm.sync", "daily.tick", "processing.submit", "publish.run", "publish.poll", "export.build", "mine.asset"] as const;

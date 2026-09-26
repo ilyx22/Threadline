@@ -153,6 +153,8 @@ export async function applyCallback(event: CallbackEvent) {
       });
       outputAssetId = a.id;
       await prisma.processingTask.update({ where: { id: task.id }, data: { outputAssetId } });
+      // AI-01: a new transcript is mined for questions, objections, stories and ideas.
+      await enqueue("mine.asset", { assetId: a.id, orgId: task.orgId }, { idempotencyKey: `mine.asset:${a.id}`, orgId: task.orgId });
     }
   } else {
     const changed = await prisma.processingTask.updateMany({

@@ -30,6 +30,7 @@ import {
   uploadLibraryAssetAction,
 } from "@/lib/actions/workspace";
 import { DIRECT_THRESHOLD, directUpload } from "@/lib/storage/direct-client";
+import { mineAssetAction } from "@/lib/actions/miner";
 
 const PROCESSING_LABEL: Record<string, string> = { queued: "Processing queued", processing: "Processing", ready: "Processed", failed: "Processing failed" };
 
@@ -66,10 +67,13 @@ export function LibraryGrid({
   slug,
   assets,
   canManage,
+  canMine = false,
 }: {
   slug: string;
   assets: AssetView[];
   canManage: boolean;
+  /** AI-01: whether this person can mine text files for evidence. */
+  canMine?: boolean;
 }) {
   return (
     <ul className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
@@ -147,6 +151,11 @@ export function LibraryGrid({
                         <Download className="size-3.5" />
                       )}
                     </a>
+                  ) : null}
+                  {canMine && asset.storagePath && asset.mimeType && /^text\/|application\/json/.test(asset.mimeType) ? (
+                    <ActionButton size="xs" variant="ghost" action={() => mineAssetAction(slug, asset.id)}>
+                      Mine it
+                    </ActionButton>
                   ) : null}
                   {canManage ? (
                     <ActionButton

@@ -61,6 +61,8 @@ export class MockProvider implements AiProvider {
         return buildNarrative(ctx);
       case "lead.reply":
         return buildLeadReply(ctx);
+      case "source.mine":
+        return JSON.stringify({ items: buildMined(ctx) });
       case "corpus.analyse":
         return JSON.stringify(buildExampleAnalysis(ctx));
       case "judge.evaluate":
@@ -127,6 +129,8 @@ type DemoContext = {
   inquiries?: number;
   calls?: number;
   bottleneck?: string;
+  /** Source miner (AI-01): the source text, so demo quotes are exact. */
+  mineSource?: string;
   /** Lead reply (AI-06). */
   leadName?: string;
   leadMessage?: string;
@@ -804,4 +808,16 @@ function buildLeadReply(ctx: DemoContext) {
   return `Hi ${first}, thanks for getting in touch${asked}. Would a 20-minute call next week work to see whether this is a fit? If so, tell me two times that suit you.
 
 ${ctx.founderName ?? ""}`.trim();
+}
+
+/** Demo miner: classifies real sentences from the source by simple cues, quoting them exactly. */
+function buildMined(ctx: DemoContext) {
+  const sentences = (ctx.mineSource ?? "").split(/(?<=[.?!])\s+/).map((x) => x.trim()).filter((x) => x.length >= 20);
+  const kindOf = (x: string) =>
+    x.endsWith("?") ? "question"
+    : /\b(worried|concern|but|expensive|risk|not sure|can't|cannot)\b/i.test(x) ? "objection"
+    : /\d/.test(x) ? "claim"
+    : /\b(when we|last year|I remember|once)\b/i.test(x) ? "story"
+    : "expertise";
+  return sentences.slice(0, 12).map((x) => ({ kind: kindOf(x), quote: x, note: "Demo classification; review before use." }));
 }

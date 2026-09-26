@@ -95,6 +95,7 @@ export default async function LibraryPage({
         <LibraryGrid
           slug={slug}
           canManage={canUpload}
+          canMine={ctx.can("signals.edit")}
           assets={assets.map((a) => ({
             id: a.id,
             title: a.title,
