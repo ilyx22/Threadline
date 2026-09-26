@@ -122,6 +122,10 @@ describe("direct uploads (FILE-02)", () => {
     assert.match(calls[1].body ?? "", /<Part><PartNumber>1<\/PartNumber><ETag>"e1"<\/ETag><\/Part>/);
     // nested content keys are valid storage paths
     assert.doesNotThrow(() => s3.signedGetUrl("org1/content/item1/f.mp4"));
+    // FILE-04: a signed download pins the safe response headers
+    const dl = new URL(s3.signedGetUrl("org1/library/f.pdf", 300, new Date(), { contentType: "application/octet-stream", contentDisposition: 'attachment; filename="f.pdf"' }));
+    assert.equal(dl.searchParams.get("response-content-disposition"), 'attachment; filename="f.pdf"');
+    assert.equal(dl.searchParams.get("X-Amz-Expires"), "300");
   });
 });
 

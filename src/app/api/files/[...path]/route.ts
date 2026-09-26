@@ -5,6 +5,9 @@ import { getStorage, orgIdFromStoragePath } from "@/lib/storage";
 import { servingHeaders } from "@/lib/storage/sniff";
 import { assetInScope } from "@/lib/team/scope";
 
+/** Above this, a download is served by the bucket through a signed URL (FILE-04). */
+const DIRECT_DOWNLOAD_BYTES = 4 * 1024 * 1024;
+
 /**
  * Private file access.
  *
@@ -34,7 +37,7 @@ export async function GET(
   // The asset row is the authority on ownership; the path alone is not trusted.
   const asset = await prisma.asset.findFirst({
     where: { orgId, storagePath },
-    select: { id: true, fileName: true, mimeType: true, orgId: true, contentItemId: true, uploadedById: true },
+    select: { id: true, fileName: true, mimeType: true, orgId: true, contentItemId: true, uploadedById: true, sizeBytes: true },
   });
   if (!asset) {
     return new NextResponse("Not found", { status: 404 });
@@ -58,6 +61,16 @@ export async function GET(
 
   if (!allowed) {
     return new NextResponse("Forbidden", { status: 403 });
+  }
+
+  // FILE-04: large files are not streamed through a server function (which has
+  // a response size limit); after the checks above, the caller is sent to a
+  // five-minute signed storage URL that serves the same safe headers.
+  const store = getStorage() as { signedGetUrl?: (p: string, s?: number, now?: Date, r?: { contentType?: string; contentDisposition?: string }) => string };
+  if (store.signedGetUrl && (asset.sizeBytes ?? 0) > DIRECT_DOWNLOAD_BYTES) {
+    const h = servingHeaders(asset.mimeType, asset.fileName, asset.sizeBytes ?? 0);
+    const url = store.signedGetUrl(storagePath, 300, new Date(), { contentType: h["Content-Type"], contentDisposition: h["Content-Disposition"] });
+    return NextResponse.redirect(url, { status: 302, headers: { "cache-control": "private, no-store", "referrer-policy": "no-referrer" } });
   }
 
   try {

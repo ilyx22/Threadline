@@ -160,9 +160,17 @@ export class S3StorageAdapter implements StorageAdapter {
     return new Uint8Array(await res.arrayBuffer());
   }
 
-  /** Short-lived pre-signed GET (query-string auth), e.g. for a processing worker to fetch a source file. */
-  signedGetUrl(storagePath: string, expiresSeconds = 120, now = new Date()) {
-    return this.presign("GET", storagePath, {}, expiresSeconds, now);
+  /**
+   * Short-lived pre-signed GET (query-string auth): for a processing worker, a
+   * platform fetching media to publish, or a large download (FILE-04). The
+   * response headers can be pinned, so the bucket serves the file with the
+   * same safe type and disposition the app would.
+   */
+  signedGetUrl(storagePath: string, expiresSeconds = 120, now = new Date(), response?: { contentType?: string; contentDisposition?: string }) {
+    const query: Record<string, string> = {};
+    if (response?.contentType) query["response-content-type"] = response.contentType;
+    if (response?.contentDisposition) query["response-content-disposition"] = response.contentDisposition;
+    return this.presign("GET", storagePath, query, expiresSeconds, now);
   }
 
   private presign(method: string, storagePath: string, query: Record<string, string>, expiresSeconds: number, now = new Date()) {
