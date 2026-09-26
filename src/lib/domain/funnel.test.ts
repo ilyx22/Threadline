@@ -336,3 +336,19 @@ describe("refusals read as sentences", () => {
     }
   });
 });
+
+describe("small samples (ATT-04)", () => {
+  it("marks a measured rate resting on few observations, and not an assumption", () => {
+    const few = funnelRates({ firstTouches: 12, callsBooked: 3, showRatePct: 80, closeRatePct: 30, qualifiedFromRecords: { showed: 4, qualified: 3 } });
+    const booking = few.find((r) => r.key === "booking")!;
+    const qualified = few.find((r) => r.key === "qualified")!;
+    assert.deepEqual([booking.sample, booking.lowSample], [12, true]);
+    assert.deepEqual([qualified.sample, qualified.lowSample], [4, true]);
+    const many = funnelRates({ firstTouches: 120, callsBooked: 9, showRatePct: 80, closeRatePct: 30, qualifiedFromRecords: { showed: 14, qualified: 9 } });
+    assert.equal(many.find((r) => r.key === "booking")!.lowSample, false);
+    assert.equal(many.find((r) => r.key === "qualified")!.lowSample, false);
+    const assumed = funnelRates({ firstTouches: 120, callsBooked: 9, showRatePct: 80, closeRatePct: 30, qualifiedRatePct: 50 }).find((r) => r.key === "qualified")!;
+    assert.equal(assumed.measured, false);
+    assert.equal(assumed.lowSample, undefined, "an assumption is labelled as one, not as a sample");
+  });
+});

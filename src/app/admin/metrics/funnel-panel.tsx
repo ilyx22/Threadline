@@ -94,6 +94,7 @@ export function FunnelPanel({
               <span className="tabular text-muted">
                 {rate.value === null ? "—" : `${(rate.value * 100).toFixed(1)}%`}
               </span>
+              {rate.lowSample ? <Badge tone="warning">Small sample (n={rate.sample})</Badge> : null}
               <Badge tone={rate.measured ? "info" : "warning"}>
                 {rate.measured ? "Measured" : "Assumed"}
               </Badge>

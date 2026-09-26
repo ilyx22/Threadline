@@ -59,7 +59,14 @@ export type Rate = {
   measured: boolean;
   /** What it was computed from, so a reader can check it. */
   basis: string;
+  /** ATT-04: how many observations the rate rests on, when it was counted here. */
+  sample?: number | null;
+  /** ATT-04: true when the rate rests on too few observations to plan on. */
+  lowSample?: boolean;
 };
+
+/** Below these counts a measured rate is shown as a small sample (ATT-04). */
+export const LOW_SAMPLE = { booking: 30, qualified: 10 } as const;
 
 export function funnelRates(input: FunnelInput): Rate[] {
   const bookingRate =
@@ -71,6 +78,8 @@ export function funnelRates(input: FunnelInput): Rate[] {
       label: "Booking rate",
       value: bookingRate,
       measured: true,
+      sample: input.firstTouches,
+      lowSample: input.firstTouches > 0 && input.firstTouches < LOW_SAMPLE.booking,
       basis:
         input.firstTouches > 0
           ? `${input.callsBooked} calls booked from ${input.firstTouches} first touches`
@@ -109,6 +118,8 @@ function qualifiedRate(input: FunnelInput): Rate {
       label: "Qualified rate",
       value: clamp01(records.qualified / records.showed),
       measured: true,
+      sample: records.showed,
+      lowSample: records.showed < LOW_SAMPLE.qualified,
       basis: `${records.qualified} of ${records.showed} attended ${records.showed === 1 ? "call was" : "calls were"} a genuine fit`,
     };
   }
