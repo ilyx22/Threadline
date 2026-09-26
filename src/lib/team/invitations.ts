@@ -177,9 +177,13 @@ export async function acceptInvitation(raw: string, signedIn: { id: string; emai
       userId = user.id;
       createdAccount = true;
     }
+    // The first admin to join a workspace with no owner becomes its owner and
+    // primary contact (a newly provisioned client's founder).
+    const firstAdmin = inv.role === "client_admin" && (await tx.membership.count({ where: { orgId: inv.orgId, isOwner: true } })) === 0;
+    const hasPrimary = (await tx.membership.count({ where: { orgId: inv.orgId, contactRole: "primary" } })) > 0;
     await tx.membership.upsert({
       where: { userId_orgId: { userId, orgId: inv.orgId } },
-      create: { userId, orgId: inv.orgId, role: inv.role, profiles: JSON.stringify(parseProfiles(inv.profiles)), isExpert: inv.isExpert },
+      create: { userId, orgId: inv.orgId, role: inv.role, profiles: JSON.stringify(parseProfiles(inv.profiles)), isExpert: inv.isExpert, isOwner: firstAdmin, isPrimary: firstAdmin, contactRole: firstAdmin && !hasPrimary ? "primary" : null },
       update: {},
     });
     await tx.invitation.update({ where: { id: inv.id }, data: { acceptedUserId: userId } });

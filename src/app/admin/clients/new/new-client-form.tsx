@@ -25,6 +25,7 @@ export function NewClientForm({ defaultCadence }: { defaultCadence: number }) {
   const [slug, setSlug] = React.useState("");
   const [slugTouched, setSlugTouched] = React.useState(false);
   const [seedTemplate, setSeedTemplate] = React.useState(true);
+  const [created, setCreated] = React.useState<{ slug: string; inviteLink: string } | null>(null);
 
   // Suggest a slug from the name until the operator edits it themselves.
   React.useEffect(() => {
@@ -38,10 +39,25 @@ export function NewClientForm({ defaultCadence }: { defaultCadence: number }) {
     );
   }, [name, slugTouched]);
 
+  if (created) {
+    return (
+      <Card>
+        <CardHeader title="Client created" eyebrow="Founder invitation" />
+        <CardBody className="space-y-4 pt-0">
+          <p className="text-[13px] text-muted">
+            Email is not configured on this deployment, so send the founder this invitation link yourself. It works once and expires in seven days; they choose their own password.
+          </p>
+          <code className="block break-all rounded-md border border-line px-3 py-2 text-[12px] text-ink">{created.inviteLink}</code>
+          <a href={`/app/${created.slug}`} className="inline-flex min-h-11 items-center text-accent">Open the workspace</a>
+        </CardBody>
+      </Card>
+    );
+  }
+
   return (
-    <ActionForm<{ slug: string }>
+    <ActionForm<{ slug: string; inviteLink: string | null }>
       action={createClientAction}
-      onSuccess={(data) => router.push(`/app/${data.slug}`)}
+      onSuccess={(data) => (data.inviteLink ? setCreated({ slug: data.slug, inviteLink: data.inviteLink }) : router.push(`/app/${data.slug}`))}
     >
       {({ fieldErrors, error }) => (
         <Card>
@@ -140,10 +156,10 @@ export function NewClientForm({ defaultCadence }: { defaultCadence: number }) {
             </div>
 
             <div className="border-t border-line pt-5">
-              <p className="text-[13px] font-medium text-ink">Founder account</p>
+              <p className="text-[13px] font-medium text-ink">Founder</p>
               <p className="mt-1 text-[12px] leading-relaxed text-muted">
-                Creates their login. No invitation email is sent in this version — you will share
-                these credentials with them directly.
+                The founder is invited by email and chooses their own password. They become the
+                workspace owner when they accept.
               </p>
               <div className="mt-4 grid gap-5 sm:grid-cols-2">
                 <Field label="Founder name" htmlFor="founderName" error={fieldErrors.founderName}>
@@ -151,21 +167,6 @@ export function NewClientForm({ defaultCadence }: { defaultCadence: number }) {
                 </Field>
                 <Field label="Founder email" htmlFor="founderEmail" error={fieldErrors.founderEmail}>
                   <Input id="founderEmail" name="founderEmail" type="email" required />
-                </Field>
-                <Field
-                  label="Initial password"
-                  htmlFor="founderPassword"
-                  hint="At least 10 characters."
-                  error={fieldErrors.founderPassword}
-                  className="sm:col-span-2"
-                >
-                  <Input
-                    id="founderPassword"
-                    name="founderPassword"
-                    type="text"
-                    required
-                    minLength={10}
-                  />
                 </Field>
               </div>
             </div>

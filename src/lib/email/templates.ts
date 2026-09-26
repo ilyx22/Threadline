@@ -11,6 +11,7 @@ export type TemplateMap = {
   password_reset: { name: string; link: string; expiresInMinutes: number };
   weekly_report: { name: string; workspaceName: string; periodLabel: string; link: string };
   application_received: { name: string };
+  application_operator_alert: { name: string; company: string; urgency: string; link: string };
 };
 
 export type EmailTemplateKey = keyof TemplateMap;
@@ -66,6 +67,13 @@ export function renderTemplate<K extends EmailTemplateKey>(key: K, data: Templat
       const title = "We have your application";
       const paragraphs = [`Hello ${d.name},`, `Thank you — your application has arrived and a person will read it. We reply either way, usually within two working days.`];
       return { subject: title, text: text(title, paragraphs), html: shell(title, paragraphs) };
+    }
+    case "application_operator_alert": {
+      const d = data as TemplateMap["application_operator_alert"];
+      const title = `New application: ${d.company}`;
+      const paragraphs = [`${d.name} at ${d.company} has applied (urgency: ${d.urgency}).`, `Open it to qualify it, set the next action and the owner.`];
+      const cta = { label: "Open the application", href: d.link };
+      return { subject: title, text: text(title, paragraphs, cta), html: shell(title, paragraphs, cta) };
     }
     default: {
       const never: never = key;

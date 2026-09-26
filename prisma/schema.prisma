@@ -136,6 +136,7 @@ model Organization {
 
   memberships          Membership[]
   invitations          Invitation[]
+  engagements          Engagement[]
   workAssignments      WorkAssignment[]
   auditLogs            AuditLog[]
   notifications        Notification[]
@@ -1450,6 +1451,19 @@ model Application {
   prospectId       String?
   prospect         Prospect? @relation(fields: [prospectId], references: [id], onDelete: SetNull)
 
+  /// Qualification (COM-02): who at Threadline owns it and what happens next.
+  ownerId             String?
+  nextAction          String?
+  nextActionDue       DateTime?
+  /// won | lost | not_a_fit | no_response | null while open
+  outcome             String?
+  outcomeReason       String?
+  /// Set when converted into a client workspace (COM-03).
+  orgId               String?
+  convertedAt         DateTime?
+  confirmationQueuedAt DateTime?
+  operatorNotifiedAt  DateTime?
+
   @@index([status, createdAt])
 }
 
@@ -1652,6 +1666,9 @@ model Prospect {
   economicConsequence    String?
   economicsUpdatedAt     DateTime?
   applications           Application[]
+  /// Set when this prospect became a client workspace (COM-03).
+  orgId                  String?
+  convertedAt            DateTime?
 
   @@index([state, nextActionDueAt])
   @@index([tier, state])
@@ -2647,4 +2664,145 @@ model WorkAssignment {
 
   @@unique([orgId, userId, kind, contentItemId])
   @@index([userId])
+}
+
+/// A commercial offer Threadline sells (ENG-02). Engagements copy its terms at
+/// signing, so changing an offer never rewrites a signed engagement.
+model OfferTemplate {
+  id             String   @id @default(cuid())
+  key            String   @unique
+  name           String
+  description    String?
+  currency       String   @default("GBP")
+  setupFeeMinor  Int
+  periodFeeMinor Int
+  periodDays     Int      @default(28)
+  initialPeriods Int      @default(3)
+  /// JSON: what each period includes (entitlements).
+  entitlements   String   @default("{}")
+  active         Boolean  @default(true)
+  version        Int      @default(1)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+
+  engagements Engagement[]
+}
+
+/// One client engagement (ENG-01): the signed terms, the calendar and the state.
+model Engagement {
+  id                  String    @id @default(cuid())
+  orgId               String
+  offerTemplateId     String?
+  /// The offer's terms exactly as signed (JSON), immune to later offer edits.
+  offerSnapshot       String    @default("{}")
+  agreementVersion    String?
+  agreementSignedAt   DateTime?
+  /// Where the signed agreement lives (a document id or storage path), never its content.
+  agreementEvidence   String?
+  currency            String    @default("GBP")
+  setupFeeMinor       Int
+  periodFeeMinor      Int
+  periodDays          Int       @default(28)
+  initialPeriods      Int       @default(3)
+  /// Calendar date the first period starts, in the workspace's timezone.
+  startDate           DateTime? @db.Date
+  timezone            String    @default("Europe/London")
+  /// draft | active | paused | ended | terminated
+  status              String    @default("draft")
+  activatedAt         DateTime?
+  pausedAt            DateTime?
+  endedAt             DateTime?
+  endReason           String?
+  entitlements        String    @default("{}")
+  earlyWinDueDate     DateTime? @db.Date
+  sourceApplicationId String?   @unique
+  sourceProspectId    String?
+  createdById         String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @default(now()) @updatedAt
+
+  org          Organization   @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  offer        OfferTemplate? @relation(fields: [offerTemplateId], references: [id], onDelete: SetNull)
+  periods      ServicePeriod[]
+  scopeChanges ScopeChange[]
+
+  @@index([orgId, status])
+}
+
+/// A 28-day service period (ENG-01, ENG-06). Dates are calendar dates in the
+/// engagement's timezone; the end date is exclusive.
+model ServicePeriod {
+  id           String   @id @default(cuid())
+  engagementId String
+  orgId        String
+  number       Int
+  startDate    DateTime @db.Date
+  endDate      DateTime @db.Date
+  feeMinor     Int
+  /// upcoming | current | complete | paused
+  status       String   @default("upcoming")
+  createdAt    DateTime @default(now())
+
+  engagement Engagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+
+  @@unique([engagementId, number])
+  @@index([orgId, startDate])
+}
+
+/// A change to what the engagement includes (ENG-05), approved before it applies.
+model ScopeChange {
+  id                  String    @id @default(cuid())
+  engagementId        String
+  orgId               String
+  summary             String
+  detail              String?
+  /// proposed | approved | rejected
+  state               String    @default("proposed")
+  requestedById       String?
+  decidedById         String?
+  decidedAt           DateTime?
+  effectiveFromPeriod Int?
+  feeChangeMinor      Int?
+  createdAt           DateTime  @default(now())
+
+  engagement Engagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+
+  @@index([engagementId, state])
+}
+
+/// Outbound CRM work (COM-04): each change Threadline must mirror into the CRM
+/// is a durable row, sent by a job, retried, and never lost if the CRM is down.
+model CrmOutbox {
+  id             String    @id @default(cuid())
+  provider       String
+  entityType     String
+  entityId       String
+  operation      String
+  payload        String
+  idempotencyKey String    @unique
+  /// pending | sent | failed | dead | needs_review
+  state          String    @default("pending")
+  attempts       Int       @default(0)
+  lastError      String?
+  remoteId       String?
+  createdAt      DateTime  @default(now())
+  sentAt         DateTime?
+
+  @@index([state, createdAt])
+  @@index([entityType, entityId])
+}
+
+/// The mapping between a Threadline record and its CRM record (COM-04).
+model CrmLink {
+  id           String   @id @default(cuid())
+  provider     String
+  entityType   String
+  entityId     String
+  remoteObject String
+  remoteId     String
+  remoteUrl    String?
+  lastSyncedAt DateTime @default(now())
+
+  @@unique([provider, entityType, entityId])
+  @@unique([provider, remoteObject, remoteId])
 }

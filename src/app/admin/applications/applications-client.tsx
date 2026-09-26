@@ -18,7 +18,10 @@ import {
 } from "@/components/ui/menu";
 import { ApplicationStatusBadge } from "@/components/ui/status";
 import { toast } from "@/components/ui/toast";
-import { updateApplicationStatusAction } from "@/lib/actions/admin";
+import { convertApplicationAction, qualifyApplicationAction, updateApplicationStatusAction } from "@/lib/actions/admin";
+import { ActionForm, FormError, SubmitButton } from "@/components/forms/action-form";
+import { Field } from "@/components/ui/field";
+import { Input, NativeSelect } from "@/components/ui/input";
 import { createProspectFromApplicationAction } from "@/lib/actions/economics";
 import { APPLICATION_STATUSES, APPLICATION_STATUS_META } from "@/lib/domain/enums";
 import { relativeTime } from "@/lib/utils/dates";
@@ -43,21 +46,29 @@ type Application = {
   status: string;
   reviewNotes: string | null;
   createdAt: string;
+  ownerId: string | null;
+  nextAction: string | null;
+  nextActionDue: string | null;
+  outcome: string | null;
+  outcomeReason: string | null;
+  clientSlug: string | null;
 };
 
-export function ApplicationList({ applications }: { applications: Application[] }) {
+type Staff = { id: string; name: string };
+
+export function ApplicationList({ applications, staff }: { applications: Application[]; staff: Staff[] }) {
   return (
     <ul className="space-y-3">
       {applications.map((application) => (
         <li key={application.id}>
-          <ApplicationCard application={application} />
+          <ApplicationCard application={application} staff={staff} />
         </li>
       ))}
     </ul>
   );
 }
 
-function ApplicationCard({ application }: { application: Application }) {
+function ApplicationCard({ application, staff }: { application: Application; staff: Staff[] }) {
   const router = useRouter();
   const [expanded, setExpanded] = React.useState(false);
   const [notes, setNotes] = React.useState(application.reviewNotes ?? "");
@@ -83,7 +94,17 @@ function ApplicationCard({ application }: { application: Application }) {
             <div className="flex flex-wrap items-center gap-2">
               <p className="text-[14px] font-medium text-ink">{application.company}</p>
               <ApplicationStatusBadge status={application.status} />
+              {application.clientSlug ? (
+                <a href={`/app/${application.clientSlug}`} className="text-[12px] text-accent hover:text-accent-bright">Client workspace</a>
+              ) : null}
             </div>
+            {application.nextAction ? (
+              <p className="mt-1 text-[12px] text-ink">
+                Next: {application.nextAction}
+                {application.nextActionDue ? <span className="text-ghost"> · due {application.nextActionDue}</span> : null}
+                {application.ownerId ? <span className="text-ghost"> · {staff.find((s) => s.id === application.ownerId)?.name ?? "owner"}</span> : null}
+              </p>
+            ) : null}
             <p className="mt-1 text-[12px] text-muted">
               {application.name} · {application.email}
               {application.website ? (
@@ -195,9 +216,113 @@ function ApplicationCard({ application }: { application: Application }) {
                 Notes are saved with the next status change.
               </p>
             </div>
+
+            <QualifyForm application={application} staff={staff} />
+            {!application.clientSlug ? <ConvertForm application={application} /> : null}
           </div>
         ) : null}
       </CardBody>
     </Card>
+  );
+}
+
+function QualifyForm({ application, staff }: { application: Application; staff: Staff[] }) {
+  const router = useRouter();
+  return (
+    <ActionForm action={qualifyApplicationAction.bind(null, application.id)} onSuccess={() => router.refresh()} className="space-y-3">
+      {({ error, fieldErrors }) => (
+        <>
+          <p className="text-eyebrow text-faint">Qualification</p>
+          <FormError error={error} />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field label="Owner" htmlFor={`owner-${application.id}`} error={fieldErrors.ownerId}>
+              <NativeSelect id={`owner-${application.id}`} name="ownerId" defaultValue={application.ownerId ?? ""}>
+                <option value="">Unassigned</option>
+                {staff.map((s) => (
+                  <option key={s.id} value={s.id}>
+                    {s.name}
+                  </option>
+                ))}
+              </NativeSelect>
+            </Field>
+            <Field label="Outcome" htmlFor={`outcome-${application.id}`}>
+              <NativeSelect id={`outcome-${application.id}`} name="outcome" defaultValue={application.outcome ?? "open"}>
+                <option value="open">Open</option>
+                <option value="won" disabled={!application.clientSlug}>
+                  Won (convert first)
+                </option>
+                <option value="lost">Lost</option>
+                <option value="not_a_fit">Not a fit</option>
+                <option value="no_response">No response</option>
+              </NativeSelect>
+            </Field>
+            <Field label="Next action" htmlFor={`next-${application.id}`}>
+              <Input id={`next-${application.id}`} name="nextAction" defaultValue={application.nextAction ?? ""} placeholder="Book the fit call" />
+            </Field>
+            <Field label="Due" htmlFor={`due-${application.id}`} error={fieldErrors.nextActionDue}>
+              <Input id={`due-${application.id}`} name="nextActionDue" type="date" defaultValue={application.nextActionDue ?? ""} />
+            </Field>
+            <Field label="Reason for the outcome" htmlFor={`reason-${application.id}`} className="sm:col-span-2" optional>
+              <Input id={`reason-${application.id}`} name="outcomeReason" defaultValue={application.outcomeReason ?? ""} />
+            </Field>
+          </div>
+          <SubmitButton size="sm" variant="secondary">
+            Save qualification
+          </SubmitButton>
+        </>
+      )}
+    </ActionForm>
+  );
+}
+
+function ConvertForm({ application }: { application: Application }) {
+  const [link, setLink] = React.useState<string | null>(null);
+  const [slug, setSlug] = React.useState<string | null>(null);
+  const router = useRouter();
+  const suggested = application.company.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40);
+  if (slug) {
+    return (
+      <div className="space-y-2 rounded-lg border border-line p-4">
+        <p className="text-[13px] text-ink">Converted. {link ? "Email is not configured here; send the founder this invitation link:" : "The founder has been invited."}</p>
+        {link ? <code className="block break-all rounded-md border border-line px-3 py-2 text-[12px] text-ink">{link}</code> : null}
+        <a href={`/app/${slug}`} className="text-[13px] text-accent">
+          Open the workspace
+        </a>
+      </div>
+    );
+  }
+  return (
+    <ActionForm
+      action={convertApplicationAction}
+      onSuccess={(d: unknown) => {
+        const r = d as { slug: string; inviteLink: string | null };
+        setLink(r.inviteLink);
+        setSlug(r.slug);
+        router.refresh();
+      }}
+      className="space-y-3 rounded-lg border border-line p-4"
+    >
+      {({ error, fieldErrors }) => (
+        <>
+          <p className="text-eyebrow text-faint">Convert into a client</p>
+          <p className="text-[12px] text-muted">
+            Creates the workspace and a draft engagement on the standard offer (£2,500 setup, £2,500 per 28-day period, three periods), invites the founder, and records the won deal in the CRM.
+          </p>
+          <FormError error={error} />
+          <input type="hidden" name="applicationId" value={application.id} />
+          <div className="grid gap-3 sm:grid-cols-2">
+            <Field label="Workspace name" htmlFor={`cname-${application.id}`}>
+              <Input id={`cname-${application.id}`} name="name" defaultValue={application.company} required />
+            </Field>
+            <Field label="Workspace address" htmlFor={`cslug-${application.id}`} error={fieldErrors.slug}>
+              <Input id={`cslug-${application.id}`} name="slug" defaultValue={suggested} required />
+            </Field>
+          </div>
+          <SubmitButton size="sm" variant="primary">
+            Convert and invite the founder
+          </SubmitButton>
+        </>
+      )}
+    </ActionForm>
   );
 }

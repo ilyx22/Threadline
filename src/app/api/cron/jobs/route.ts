@@ -1,7 +1,7 @@
 import { timingSafeEqual } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 import "@/lib/jobs/handlers";
-import { drainFor, jobSummary } from "@/lib/jobs";
+import { drainFor, enqueue, jobSummary } from "@/lib/jobs";
 import { log, reportError } from "@/lib/log";
 
 export const dynamic = "force-dynamic";
@@ -25,6 +25,8 @@ export async function GET(req: NextRequest) {
 
   const workerId = `cron-${crypto.randomUUID().slice(0, 8)}`;
   try {
+    // One housekeeping run per UTC day, however often the runner is called.
+    await enqueue("daily.tick", {}, { idempotencyKey: `daily.tick:${new Date().toISOString().slice(0, 10)}` });
     const results = await drainFor(workerId, 45_000);
     const summary = await jobSummary();
     const byOutcome = results.reduce<Record<string, number>>((a, r) => ((a[r.outcome] = (a[r.outcome] ?? 0) + 1), a), {});

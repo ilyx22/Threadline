@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ExternalLink } from "lucide-react";
 import { requireInternal } from "@/lib/auth/guard";
+import { prisma } from "@/lib/db/client";
 import { getClient, listAuditLog } from "@/lib/data/admin";
 import { diagnosisSummary } from "@/lib/data/diagnosis";
 import { installationView } from "@/lib/data/installation";
@@ -28,6 +29,8 @@ import { compactNumber, money } from "@/lib/utils/format";
 import { formatDate, relativeTime } from "@/lib/utils/dates";
 import { integrationByProvider } from "@/lib/integrations/registry";
 import { ClientConfigForm } from "./client-config-form";
+import { EngagementPanel } from "./engagement-panel";
+import { currentEngagement, ensurePeriods } from "@/lib/commercial/engagements";
 
 export const metadata: Metadata = { title: "Client" };
 
@@ -52,6 +55,12 @@ export default async function ClientDetailPage({
   ]);
   const scope = longFormScope(client.modulesEnabled);
   const proofView = await proofPermissionView(client.id);
+  const engagementRow = await currentEngagement(client.id);
+  if (engagementRow && (engagementRow.status === "active" || engagementRow.status === "paused")) await ensurePeriods(engagementRow.id);
+  const engagement = engagementRow ? await currentEngagement(client.id) : null;
+  const scopeChanges = engagement ? await prisma.scopeChange.findMany({ where: { engagementId: engagement.id }, orderBy: { createdAt: "desc" } }) : [];
+  const offerName = engagement ? ((JSON.parse(engagement.offerSnapshot) as { name?: string }).name ?? "Engagement") : "";
+
   const proofGate = testimonialGate(proofView);
   const configuredIntegrations = client.integrations.filter((i) => i.status === "configured");
 
@@ -118,6 +127,28 @@ export default async function ClientDetailPage({
 
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="space-y-6 lg:col-span-2">
+          <EngagementPanel
+            engagement={
+              engagement
+                ? {
+                    id: engagement.id,
+                    status: engagement.status,
+                    offerName,
+                    currency: engagement.currency,
+                    setupFeeMinor: engagement.setupFeeMinor,
+                    periodFeeMinor: engagement.periodFeeMinor,
+                    periodDays: engagement.periodDays,
+                    initialPeriods: engagement.initialPeriods,
+                    startDate: engagement.startDate ? engagement.startDate.toISOString().slice(0, 10) : null,
+                    earlyWinDueDate: engagement.earlyWinDueDate ? engagement.earlyWinDueDate.toISOString().slice(0, 10) : null,
+                    timezone: engagement.timezone,
+                    periods: engagement.periods.map((p) => ({ number: p.number, startDate: p.startDate.toISOString().slice(0, 10), endDate: p.endDate.toISOString().slice(0, 10), status: p.status, feeMinor: p.feeMinor })),
+                    scopeChanges: scopeChanges.map((c) => ({ id: c.id, summary: c.summary, state: c.state, effectiveFromPeriod: c.effectiveFromPeriod, feeChangeMinor: c.feeChangeMinor })),
+                  }
+                : null
+            }
+          />
+
           <ClientConfigForm
             orgId={client.id}
             defaults={{
