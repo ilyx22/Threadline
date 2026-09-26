@@ -187,6 +187,44 @@ export function can(role: Role, capability: Capability): boolean {
   return MATRIX[role]?.has(capability) ?? false;
 }
 
+/**
+ * Client permission profiles (TEAM-01), layered on a client role:
+ *   admin        mirrors the client_admin role (the role is the authority)
+ *   approver     may approve ideas, scripts and finished pieces
+ *   contributor  the default member: contributes input, uploads, records
+ *   viewer       read-only: every create/edit/upload/complete power removed
+ *   commercial   sees and updates the commercial side (pipeline, performance)
+ * Profiles never apply to staff roles and never grant workspace settings or
+ * member management; those stay with client_admin.
+ */
+export const CLIENT_PROFILES = ["admin", "approver", "contributor", "viewer", "commercial"] as const;
+export type ClientProfile = (typeof CLIENT_PROFILES)[number];
+
+const PROFILE_GRANTS: Partial<Record<ClientProfile, Capability[]>> = {
+  approver: ["ideas.approve", "scripts.approve", "production.approve"],
+  commercial: ["pipeline.view", "pipeline.edit", "performance.view", "performance.edit", "reports.view"],
+};
+const VIEW_ONLY = (c: Capability) => c.endsWith(".view");
+
+export function parseProfiles(raw: string | null | undefined): ClientProfile[] {
+  try {
+    const v = JSON.parse(raw ?? "[]");
+    return Array.isArray(v) ? v.filter((p): p is ClientProfile => (CLIENT_PROFILES as readonly string[]).includes(p)) : [];
+  } catch {
+    return [];
+  }
+}
+
+/** The capabilities a member actually holds: role, narrowed by viewer, widened by grants. */
+export function effectiveCapabilities(role: Role, profiles: ClientProfile[] = []): Set<Capability> {
+  const base = new Set(MATRIX[role] ?? []);
+  if (isInternalRole(role) || role === "client_admin") return base;
+  let caps = [...base];
+  if (profiles.includes("viewer")) caps = caps.filter(VIEW_ONLY);
+  for (const p of profiles) for (const c of PROFILE_GRANTS[p] ?? []) caps.push(c);
+  return new Set(caps);
+}
+
 export function canAny(role: Role, capabilities: Capability[]): boolean {
   return capabilities.some((c) => can(role, c));
 }

@@ -183,3 +183,29 @@ describe("staff roles are scoped to the internal organisation (SEC-01)", () => {
     assert.equal(canManageMemberWithRole("internal_operator", "internal_operator", "internal"), false);
   });
 });
+
+describe("client permission profiles (TEAM-01)", () => {
+  it("lets an approver member approve without admin powers", async () => {
+    const { effectiveCapabilities } = await import("./roles");
+    const caps = effectiveCapabilities("client_member", ["contributor", "approver"]);
+    assert.ok(caps.has("scripts.approve"));
+    assert.ok(!caps.has("workspace.members"));
+    assert.ok(!caps.has("workspace.settings"));
+  });
+  it("makes a viewer read-only", async () => {
+    const { effectiveCapabilities } = await import("./roles");
+    const caps = effectiveCapabilities("client_member", ["viewer"]);
+    assert.ok(caps.has("ideas.view"));
+    for (const c of ["ideas.create", "library.upload", "scripts.edit", "ai.generate", "tasks.complete"] as const) assert.ok(!caps.has(c), c);
+  });
+  it("never changes staff or client admin capabilities", async () => {
+    const { effectiveCapabilities, capabilitiesFor } = await import("./roles");
+    assert.equal(effectiveCapabilities("internal_operator", ["viewer"]).size, capabilitiesFor("internal_operator").length);
+    assert.equal(effectiveCapabilities("client_admin", ["viewer"]).size, capabilitiesFor("client_admin").length);
+  });
+  it("ignores unknown profile names", async () => {
+    const { parseProfiles } = await import("./roles");
+    assert.deepEqual(parseProfiles('["approver","root","viewer"]'), ["approver", "viewer"]);
+    assert.deepEqual(parseProfiles("not json"), []);
+  });
+});

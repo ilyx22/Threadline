@@ -18,6 +18,7 @@ import * as Ideas from "../../src/lib/actions/ideas";
 import * as Scripts from "../../src/lib/actions/scripts";
 import * as Content from "../../src/lib/actions/content";
 import * as Workspace from "../../src/lib/actions/workspace";
+import * as Team from "../../src/lib/actions/team";
 import * as Pipeline from "../../src/lib/actions/pipeline";
 import * as Reports from "../../src/lib/actions/reports";
 import * as Attribution from "../../src/lib/actions/attribution";
@@ -216,7 +217,9 @@ export async function runTenancy(fx: Fixture) {
     ["approve content diagnosis", (s) => Learning.approveDiagnosisAction(s, null, fd({ diagnosisId: rows.cdiag.id, failureClass: "none", explanation: "HACKED explanation text" })), async () => (await prisma.contentDiagnosis.findUnique({ where: { id: rows.cdiag.id } }))!.approvalState === "draft"],
     ["correction verdict", (s) => Learning.recordCorrectionVerdictAction(s, null, fd({ correctionId: rows.correction.id, worked: "yes", verdictNote: "HACKED verdict" })), async () => (await prisma.correctionEntry.findUnique({ where: { id: rows.correction.id } }))!.worked === null],
     ["change member role", (s) => Workspace.updateMemberRoleAction(s, users.aMember.id, "client_admin"), async () => (await prisma.membership.findUnique({ where: { userId_orgId: { userId: users.aMember.id, orgId: A } } }))!.role === "client_member"],
-    ["remove member", (s) => Workspace.removeMemberAction(s, users.aAdmin.id), async () => !!(await prisma.membership.findUnique({ where: { userId_orgId: { userId: users.aAdmin.id, orgId: A } } }))],
+    ["remove member", (s) => Team.removeMemberAction(s, users.aAdmin.id), async () => !!(await prisma.membership.findUnique({ where: { userId_orgId: { userId: users.aAdmin.id, orgId: A } } }))],
+    ["suspend member", (s) => Team.suspendMemberAction(s, users.aAdmin.id), async () => (await prisma.membership.findUnique({ where: { userId_orgId: { userId: users.aAdmin.id, orgId: A } } }))?.status === "active"],
+    ["transfer ownership", (s) => Team.transferOwnershipAction(s, users.aMember.id), async () => !(await prisma.membership.findUnique({ where: { userId_orgId: { userId: users.aMember.id, orgId: A } } }))?.isOwner],
   ];
   for (const [name, fn, intact] of attacks) {
     const idor = await attempt(() => fn(BETA));

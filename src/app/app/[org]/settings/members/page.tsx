@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import { requireOrgPage } from "@/lib/auth/guard";
-import { listMembers } from "@/lib/data/workspace";
+import { listInvitations, listMembers } from "@/lib/data/workspace";
 import { ASSIGNABLE_CLIENT_ROLES, capabilitiesFor } from "@/lib/auth/roles";
 import { ROLE_META, metaOf } from "@/lib/domain/enums";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { Notice } from "@/components/ui/feedback";
-import { MembersTable, AddMemberButton } from "./members-client";
+import { MembersTable, InviteButton, PendingInvitations } from "./members-client";
 
 export const metadata: Metadata = { title: "Members" };
 
 export default async function MembersPage({ params }: { params: Promise<{ org: string }> }) {
   const { org: slug } = await params;
   const ctx = await requireOrgPage(slug, "workspace.view");
-  const members = await listMembers(ctx.org.id);
   const canManage = ctx.can("workspace.members");
+  const [members, invitations] = await Promise.all([listMembers(ctx.org.id), canManage ? listInvitations(ctx.org.id) : Promise.resolve([])]);
+  const isClientWorkspace = ctx.org.kind === "client";
 
   // Client workspaces hold client roles only; staff roles live in the
   // internal organisation (SEC-01).
@@ -32,7 +33,7 @@ export default async function MembersPage({ params }: { params: Promise<{ org: s
           </p>
         </div>
         {canManage ? (
-          <AddMemberButton slug={slug} assignableRoles={[...assignable]} />
+          <InviteButton slug={slug} assignableRoles={[...assignable]} isClientWorkspace={isClientWorkspace} />
         ) : null}
       </header>
 
@@ -41,6 +42,7 @@ export default async function MembersPage({ params }: { params: Promise<{ org: s
         canManage={canManage}
         currentUserId={ctx.user.id}
         assignableRoles={[...assignable]}
+        isClientWorkspace={isClientWorkspace}
         members={members.map((m) => ({
           id: m.id,
           name: m.name,
@@ -48,9 +50,19 @@ export default async function MembersPage({ params }: { params: Promise<{ org: s
           title: m.title,
           role: m.role,
           avatarHue: m.avatarHue,
-          isActive: m.isActive,
           lastSeenAt: m.lastSeenAt ? m.lastSeenAt.toISOString() : null,
+          status: m.status,
+          isOwner: m.isOwner,
+          isExpert: m.isExpert,
+          contactRole: m.contactRole,
+          profiles: m.profiles,
         }))}
+      />
+
+      <PendingInvitations
+        slug={slug}
+        canManage={canManage}
+        invitations={invitations.map((i) => ({ ...i, expiresAt: i.expiresAt.toISOString() }))}
       />
 
       <Card>
@@ -81,8 +93,9 @@ export default async function MembersPage({ params }: { params: Promise<{ org: s
       </Card>
 
       <Notice tone="neutral" title="How access is provisioned">
-        Threadline has no self-serve signup and does not send invitation emails in this version.
-        Adding a member creates their account with an initial password you set and share securely.
+        Threadline has no self-serve signup. People join by invitation and choose their own
+        password when they accept. An invitation works once and expires after seven days;
+        suspending or removing someone ends their access on their next click.
       </Notice>
     </div>
   );

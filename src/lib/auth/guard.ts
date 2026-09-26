@@ -3,7 +3,7 @@ import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
 import { prisma } from "@/lib/db/client";
 import type { Role } from "@/lib/domain/enums";
-import { can, isInternalRole, type Capability } from "./roles";
+import { can, effectiveCapabilities, isInternalRole, parseProfiles, type Capability, type ClientProfile } from "./roles";
 import { getSessionState, getSessionUser, type SessionUser } from "./session";
 import { mfaRequiredForStaff } from "./mfa";
 
@@ -55,6 +55,8 @@ export type AuthContext = {
   role: Role;
   /** True when the caller is Threadline staff acting inside a client workspace. */
   isInternal: boolean;
+  /** Client permission profiles on the caller's membership (empty for staff). */
+  profiles: ClientProfile[];
   can: (capability: Capability) => boolean;
 };
 
@@ -106,7 +108,7 @@ const loadOrgBySlug = cache(async (slug: string) => {
 const loadMembership = cache(async (userId: string, orgId: string) => {
   return prisma.membership.findUnique({
     where: { userId_orgId: { userId, orgId } },
-    select: { role: true },
+    select: { role: true, profiles: true, status: true },
   });
 });
 
@@ -126,7 +128,10 @@ export async function requireOrgAccess(
 
   const membership = await loadMembership(user.id, org.id);
 
-  let role: Role | null = (membership?.role as Role) ?? null;
+  // TEAM-05: a suspended membership grants nothing; history stays intact.
+  const activeMembership = membership && membership.status === "active" ? membership : null;
+  let role: Role | null = (activeMembership?.role as Role) ?? null;
+  const profiles = role && !isInternalRole(role) ? parseProfiles(activeMembership?.profiles) : [];
 
   // SEC-01: a staff role only means something inside the internal
   // organisation. A staff role recorded on a client workspace (legacy data or a
@@ -149,7 +154,8 @@ export async function requireOrgAccess(
 
   if (!role) notFound();
 
-  if (capability && !can(role, capability)) {
+  const caps = effectiveCapabilities(role, profiles);
+  if (capability && !caps.has(capability)) {
     throw new AuthError(`Missing capability: ${capability}`);
   }
 
@@ -158,7 +164,8 @@ export async function requireOrgAccess(
     org,
     role,
     isInternal: isInternalRole(role),
-    can: (c: Capability) => can(role, c),
+    profiles,
+    can: (c: Capability) => caps.has(c),
   };
 }
 
@@ -187,7 +194,7 @@ export async function requireOrgPage(
  */
 const hasInternalOperatorRole = cache(async (userId: string) => {
   const membership = await prisma.membership.findFirst({
-    where: { userId, role: { in: ["internal_operator", "super_admin"] }, org: { kind: "internal" } },
+    where: { userId, role: { in: ["internal_operator", "super_admin"] }, status: "active", org: { kind: "internal" } },
     select: { id: true },
   });
   return Boolean(membership);
@@ -273,7 +280,7 @@ export async function accessibleOrgs(user: SessionUser) {
   }
 
   const memberships = await prisma.membership.findMany({
-    where: { userId: user.id },
+    where: { userId: user.id, status: "active" },
     include: {
       org: { select: { id: true, slug: true, name: true, status: true, kind: true } },
     },
