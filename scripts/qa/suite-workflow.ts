@@ -116,7 +116,13 @@ export async function runWorkflow(fx: Fixture) {
 
   /* --------------------------- publish transitions --------------------------- */
   section("distribution — publish record rules");
-  const live = await prisma.contentItem.create({ data: { orgId: A, title: "publish-me", stage: "approved", platform: "linkedin", format: "short_form" } });
+  // DEL-03: a stage flag alone is not an approval. Content forced to "approved"
+  // without an approval of its current version cannot be scheduled.
+  const forced = await prisma.contentItem.create({ data: { orgId: A, title: "forced-approved", stage: "approved", platform: "linkedin", format: "short_form" } });
+  const forcedTry = await attempt(() => Distribution.createPublishRecordAction(ALPHA, null, fd({ contentItemId: forced.id, platform: "linkedin" })));
+  record("gate:publish", "content marked approved without an approval of its current version is refused", forcedTry.outcome !== "ok" ? "PASS" : "FAIL", `${forcedTry.outcome}`, forcedTry.outcome === "ok" ? "GATE-APPROVAL" : undefined);
+  const live = await prisma.contentItem.create({ data: { orgId: A, title: "publish-me", stage: "in_review", platform: "linkedin", format: "short_form" } });
+  await attempt(() => Content.moveContentAction(ALPHA, live.id, "approved"));
   const cre = await attempt(() => Distribution.createPublishRecordAction(ALPHA, null, fd({ contentItemId: live.id, platform: "linkedin" })));
   const pid = cre.outcome === "ok" ? (cre.value as { data: { id: string } }).data.id : "";
   record("gate:publish", "create publish record for approved content", cre.outcome === "ok" ? "PASS" : "FAIL", `${cre.outcome}`);

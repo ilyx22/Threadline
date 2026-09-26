@@ -39,28 +39,28 @@ Status key per row. "Evidence" names the test or proof.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | INF-01 | App runs on managed PostgreSQL | schema was SQLite | provider switch + PG baseline | none | IMPLEMENTED_TESTED (local PG 18) | 634/634 unit tests on PG; baseline applies to empty PG | Managed PG (Neon) account + Vercel env | Owner: create Neon DB; set DATABASE_URL/DIRECT_URL in Vercel |
 | INF-02 | Existing data preserved | SQLite dev.db | transfer + reconciliation | INF-01 | IMPLEMENTED_TESTED | `scripts/db/sqlite-to-postgres.ts`; evidence JSON: 77 tables / 1,276 rows reconciled | none (no production data exists) | done |
-| INF-03 | PG used for DB-sensitive tests | tests hit dev.db | PG test DB + isolated fixtures | INF-01 | PARTIAL | unit tests run on PG | none | add `test:pg` script and isolated fixture DB |
-| INF-04 | Explicit migrations, safe seed | `setup` ran seed; seed wipes all data unguarded | guard seed; explicit migrate; no shared prod creds | INF-01 | PARTIAL (setup no longer seeds) | | none | guard seed (refuse production / non-empty real data; require password) |
-| INF-05 | Env separation prod/preview/test | none | env model + preview guards | INF-06 | MISSING | | Vercel env config | env module with APP_ENV; preview never runs prod jobs |
-| INF-06 | Validated env + health | none | env schema, `/api/health`, internal health | none | MISSING | | none | implement |
-| INF-07 | Email/storage/throttle/monitoring adapters | Resend, S3 (SigV4), Upstash exist; no Sentry | monitoring adapter; config visibility | INF-06 | PARTIAL | | Resend key/domain, R2 bucket, Upstash, Sentry DSN | error-reporting adapter (Sentry-compatible, no SDK lock-in) |
+| INF-03 | PG used for DB-sensitive tests | tests hit dev.db | PG test DB + isolated fixtures | INF-01 | IMPLEMENTED_TESTED | all unit tests and all QA suites run on embedded PostgreSQL 18 (npm run db:local); each test creates and removes its own synthetic tenant | none | done |
+| INF-04 | Explicit migrations, safe seed | `setup` ran seed; seed wipes all data unguarded | guard seed; explicit migrate; no shared prod creds | INF-01 | IMPLEMENTED_TESTED | src/lib/db/seed-guard.test.ts; seed refused on local PG without confirmation (exit 1, data intact) | none | done |
+| INF-05 | Env separation prod/preview/test | none | env model + preview guards | INF-06 | IMPLEMENTED_TESTED | src/lib/env.ts appEnv/sideEffectsAllowed; env.test.ts (preview sharing prod DB refused, seed flags refused on deployments); CRM, email-sensitive work production-only | Vercel env config | Owner: set APP_ENV/VERCEL_ENV-scoped variables in Vercel |
+| INF-06 | Validated env + health | none | env schema, `/api/health`, internal health | none | IMPLEMENTED_TESTED | npm run env:check; GET /api/health (db + config error count, no values); env.test.ts | none | Verify /api/health on the live deployment after PG is configured |
+| INF-07 | Email/storage/throttle/monitoring adapters | Resend, S3 (SigV4), Upstash exist; no Sentry | monitoring adapter; config visibility | INF-06 | IMPLEMENTED_TESTED | log.ts reportError sends Sentry-format envelopes (log.test.ts with mocked fetch); Resend/S3/Upstash adapters existed | Resend key/domain, R2 bucket, Upstash, Sentry DSN | Owner: ERROR_REPORTING_DSN, RESEND_API_KEY, S3_*, RATE_LIMIT_REDIS_* |
 | INF-08 | Backups + restore drill | none | backup/restore runbook + local restore test | INF-01 | MISSING | | Neon PITR config | local pg_dump/restore drill with reconciliation |
 | INF-09 | Recovery objectives, runbooks | none | RPO/RTO pending owner; deploy/rollback runbooks | INF-08 | MISSING | | OWNER_DECISION_REQUIRED (RPO/RTO) | write runbooks in TECHNICAL_HANDOFF |
-| INF-10 | Structured redacted logs + alerts | console only | logger with request/tenant/job IDs, redaction; alerts | INF-06 | MISSING | | alert destination | implement logger + alert hooks |
+| INF-10 | Structured redacted logs + alerts | console only | logger with request/tenant/job IDs, redaction; alerts | INF-06 | IMPLEMENTED_TESTED | log.ts JSON lines with redaction (secrets, emails); unhandled action errors reported with a support reference | alert destination | Alert destination is the error tracker (owner DSN) |
 
 ### Stage 1 · Security and identity (§4, §9 files, §17)
 
 | ID | User outcome | Existing code | Gap | Deps | Status | Tests / evidence | External gate | Next action |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| SEC-01 | Staff access only via the internal org | `hasInternalOperatorRole` accepts an internal role in ANY org | scope to `kind:"internal"`; block internal roles in client orgs | none | MISSING | | none | fix guard + login + invite/add/role schemas |
-| SEC-02 | Files readable only by authorised callers | `api/files` lets any-org operators read all files; SVG inline | scope by asset org + assignment; force download for active types; reject SVG | SEC-01 | MISSING | | none | fix route + upload validation (magic bytes) |
-| SEC-03 | Trusted client IP | first X-Forwarded-For | trusted-proxy handling (Vercel `x-vercel-forwarded-for` / platform IP) | none | MISSING | | none | implement |
-| SEC-04 | CSP + HSTS without breaking public site | none | headers + public regression check | none | MISSING | | none | implement with nonce-free strict-enough policy; run public QA |
-| SEC-05 | Webhook integrity | unverified events stored and claim the id | only verified events claim ids; replay windows per provider contract | none | MISSING | | provider secrets | fix |
-| SEC-06 | Per-account login throttle | per-IP only | account-key throttle | SEC-03 | MISSING | | none | implement |
-| SEC-07 | Session rotation, device list, revoke | no rotation/list | rotate on privilege change; list/revoke | none | MISSING | | none | implement |
-| SEC-08 | Staff MFA (TOTP + backup codes) | none | enrolment, verification, recovery, enforcement for staff | SEC-01 | MISSING | | none | implement RFC 6238 TOTP (mature algorithm, no SDK) |
-| SEC-09 | SESSION_SECRET dead config | unused | use or drop | none | MISSING | | none | drop from docs or use for cookie signing |
+| SEC-01 | Staff access only via the internal org | `hasInternalOperatorRole` accepts an internal role in ANY org | scope to `kind:"internal"`; block internal roles in client orgs | none | IMPLEMENTED_TESTED | roles.test.ts (staff roles never mintable in client orgs); guard ignores staff roles outside the internal org; tenancy suite 86/86 | none | done |
+| SEC-02 | Files readable only by authorised callers | `api/files` lets any-org operators read all files; SVG inline | scope by asset org + assignment; force download for active types; reject SVG | SEC-01 | IMPLEMENTED_TESTED | sniff.test.ts; hostile-input suite (SVG and HTML-as-PNG refused); file route serves only images/video/audio inline, sandboxed, no-store | none | done |
+| SEC-03 | Trusted client IP | first X-Forwarded-For | trusted-proxy handling (Vercel `x-vercel-forwarded-for` / platform IP) | none | IMPLEMENTED_TESTED | client-ip.test.ts; Vercel headers or TRUSTED_PROXY_HOPS only | none | done |
+| SEC-04 | CSP + HSTS without breaking public site | none | headers + public regression check | none | IMPLEMENTED_TESTED | next.config.ts CSP/HSTS/COOP; public marketing-v9 suite 62/62 on a production build with the headers | none | Recheck live headers after deploy |
+| SEC-05 | Webhook integrity | unverified events stored and claim the id | only verified events claim ids; replay windows per provider contract | none | IMPLEMENTED_TESTED | webhooks.test.ts: Stripe/HubSpot/Attio HMAC, Pipedrive basic auth, HighLevel Ed25519 + location, replay windows, forged event cannot block genuine, concurrent duplicate | provider secrets | Owner: store each client's webhook credential on Settings > Integrations (staff only) |
+| SEC-06 | Per-account login throttle | per-IP only | account-key throttle | SEC-03 | IMPLEMENTED_TESTED | per-account window keyed by email hash; tenancy suite login checks | none | done |
+| SEC-07 | Session rotation, device list, revoke | no rotation/list | rotate on privilege change; list/revoke | none | IMPLEMENTED_TESTED | rotateSession on second-factor verify and enrolment; /account lists and revokes sessions | none | done |
+| SEC-08 | Staff MFA (TOTP + backup codes) | none | enrolment, verification, recovery, enforcement for staff | SEC-01 | IMPLEMENTED_TESTED | totp.test.ts (RFC 6238 vectors), mfa.test.ts (sealed secret, replay refused, recovery codes single use); /login/verify; staff enforcement in production | none | Owner: enrol an authenticator on first staff sign-in in production |
+| SEC-09 | SESSION_SECRET dead config | unused | use or drop | none | IMPLEMENTED_TESTED | SESSION_SECRET removed from docs: sessions are random tokens stored as SHA-256 digests; nothing to sign | none | done |
 | SEC-10 | SSRF DNS pinning | resolve-then-fetch | pin resolved IP | none | PARTIAL | fetch-url tests | none | implement |
 | SEC-11 | Credential encryption with key versions | AES-GCM keyring | rotation command | none | EXISTING_VERIFIED | secret-box tests | key custody | add rotate script |
 | SEC-12 | Cache boundaries per user/tenant | dynamic pages | verify no shared caching of authed responses | none | PARTIAL | | none | audit `force-dynamic`/headers |
@@ -69,34 +69,34 @@ Status key per row. "Evidence" names the test or proof.
 
 | ID | Outcome | Existing | Gap | Deps | Status | Evidence | Gate | Next |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| TEAM-01 | Five client permission profiles (admin, approver, contributor, viewer, commercial) | roles client_admin/client_member/editor | profile flags on Membership, capability mapping | SEC-01 | MISSING | | none | extend Membership with profile set |
-| TEAM-02 | Invitation model (pending, hashed token, grant, inviter, expiry, state, audit) | AuthToken invite; user pre-created with fake hash | Invitation model; no user/membership before accept | TEAM-01 | MISSING | | none | implement |
-| TEAM-03 | Safe acceptance (existing vs new user, wrong account, single use, POST only, idempotent) | accept page | rework | TEAM-02 | MISSING | | none | implement |
-| TEAM-04 | Resend/revoke/expire, rate limit, no duplicates | none | implement | TEAM-02 | MISSING | | none | |
-| TEAM-05 | Role change, suspend, remove, transfer; immediate loss of access | partial actions | target-type checks, suspension, access cut | TEAM-01 | PARTIAL | | none | |
-| TEAM-06 | Last admin/owner protected, explicit ownership transfer, race-safe | count check on remove only | owner designation + transactional transfer | TEAM-01 | MISSING | | none | |
-| TEAM-07 | Reassign stranded tasks/approvals; operator sees stranded work | none | implement | TEAM-05 | MISSING | | none | |
-| TEAM-08 | Multiple experts with individual voice profiles; primary + backup contact | isPrimary unused | expert flag + voice link; primary/backup | TEAM-01 | MISSING | | none | |
+| TEAM-01 | Five client permission profiles (admin, approver, contributor, viewer, commercial) | roles client_admin/client_member/editor | profile flags on Membership, capability mapping | SEC-01 | IMPLEMENTED_TESTED | roles.test.ts effectiveCapabilities (approver, viewer, commercial); membership.profiles; backfilled from roles | none | done |
+| TEAM-02 | Invitation model (pending, hashed token, grant, inviter, expiry, state, audit) | AuthToken invite; user pre-created with fake hash | Invitation model; no user/membership before accept | TEAM-01 | IMPLEMENTED_TESTED | Invitation model; team.test.ts (no account before acceptance, one pending per address via partial unique index) | none | done |
+| TEAM-03 | Safe acceptance (existing vs new user, wrong account, single use, POST only, idempotent) | accept page | rework | TEAM-02 | IMPLEMENTED_TESTED | team.test.ts (existing account never has its password set by a link, wrong account refused, concurrent accept single winner, idempotent repeat); core-spine founder acceptance | none | done |
+| TEAM-04 | Resend/revoke/expire, rate limit, no duplicates | none | implement | TEAM-02 | IMPLEMENTED_TESTED | resend rotates token with cooldown and cap; revoke; daily expiry job | none | done |
+| TEAM-05 | Role change, suspend, remove, transfer; immediate loss of access | partial actions | target-type checks, suspension, access cut | TEAM-01 | IMPLEMENTED_TESTED | suspend/reinstate; guard ignores suspended memberships; team.test.ts | none | done |
+| TEAM-06 | Last admin/owner protected, explicit ownership transfer, race-safe | count check on remove only | owner designation + transactional transfer | TEAM-01 | IMPLEMENTED_TESTED | isOwner with one-owner partial unique index; transfer in a serialisable transaction; owner cannot be removed, suspended or demoted | none | done |
+| TEAM-07 | Reassign stranded tasks/approvals; operator sees stranded work | none | implement | TEAM-05 | IMPLEMENTED_TESTED | open tasks of a suspended/removed member return to the unassigned queue (team.test.ts); strandedWork() for the operator queue | none | Show strandedWork in the operator cockpit (OPS-01) |
+| TEAM-08 | Multiple experts with individual voice profiles; primary + backup contact | isPrimary unused | expert flag + voice link; primary/backup | TEAM-01 | PARTIAL | isExpert and primary/backup contact on memberships; founder invited as expert | none | Per-expert voice profiles in the Brand Brain (AI-03) |
 | TEAM-09 | Contractor/editor assignment-scoped access; QA reviewer | editor role (client membership) | assignment model; scoped reads | SEC-01 | MISSING | | none | |
-| TEAM-10 | Members UI without admin-typed passwords | members-client with password field | invite UI | TEAM-02 | MISSING | | none | |
+| TEAM-10 | Members UI without admin-typed passwords | members-client with password field | invite UI | TEAM-02 | IMPLEMENTED_TESTED | members screen rebuilt around invitations; addMemberAction and the admin-set founder password removed | none | done |
 
 ### Stage 3 · Commercial conversion and Attio (§6, §7)
 
 | ID | Outcome | Existing | Gap | Deps | Status | Evidence | Gate | Next |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| COM-01 | Application confirmation + operator notification (one each) | template unused | enqueue on submit | JOB-01 | MISSING | | Resend | |
-| COM-02 | Application qualification fields (owner, next action, due, outcome) | status only | fields + UI | none | PARTIAL | | none | |
-| COM-03 | Convert application/prospect → workspace + engagement + founder invitation (idempotent, returning clients) | createClientAction (password, non-atomic) | convert command | TEAM-02, ENG-01 | MISSING | | none | |
-| COM-04 | Attio sync: mapping, remote IDs, outbox, retries, reconciliation, dead letters, manual resolution | Attio webhook only (wrong signature scheme) | full sync | JOB-01 | MISSING | | Attio API key + workspace | read official docs; implement contract-tested |
+| COM-01 | Application confirmation + operator notification (one each) | template unused | enqueue on submit | JOB-01 | IMPLEMENTED_TESTED | one applicant confirmation and one operator alert per new application, idempotency keys | Resend | Owner: OPS_NOTIFY_EMAIL and Resend for real delivery |
+| COM-02 | Application qualification fields (owner, next action, due, outcome) | status only | fields + UI | none | IMPLEMENTED_TESTED | owner/next action/due/outcome/reason on applications; admin qualification form | none | done |
+| COM-03 | Convert application/prospect → workspace + engagement + founder invitation (idempotent, returning clients) | createClientAction (password, non-atomic) | convert command | TEAM-02, ENG-01 | IMPLEMENTED_TESTED | provisionClientWorkspace in one transaction, idempotent conversion, founder invited as owner (commercial.test.ts; core-spine) | none | done |
+| COM-04 | Attio sync: mapping, remote IDs, outbox, retries, reconciliation, dead letters, manual resolution | Attio webhook only (wrong signature scheme) | full sync | JOB-01 | IMPLEMENTED_TESTED | CrmOutbox/CrmLink; Attio client per documented API; commercial.test.ts with mocked Attio (dependency order, no double send, review parking); production-only sends | Attio API key + workspace | Owner: ATTIO_API_KEY (and ATTIO_STAGE_MAP if stages differ); first live sync is EXTERNAL_CONFIGURATION_REQUIRED |
 | COM-05 | Separate prospect research / deal stage / delivery status | Prospect state | explicit separation | COM-04 | PARTIAL | | none | |
 | COM-06 | Threadline deal value vs prospect economics stored separately | economics fields | verify | none | PARTIAL | | none | |
 | COM-07 | Acquisition: ICP research, briefs, script variants, objection logs, follow-up queues, human-reviewed drafts, no auto-send | sales scripts, calls | follow-up queue + drafts | none | PARTIAL | | none | |
-| ENG-01 | Engagement + agreement version, scope, entitlements, 28-day periods, activation date, pause/terminate | fees on Organization; periods computed from startedAt | Engagement + ServicePeriod models | none | MISSING | | none | |
-| ENG-02 | Offer config (£2,500 + £2,500/4 weeks × 3, £10,000) with preserved signed terms | fees on org | OfferTemplate + snapshot onto engagement | ENG-01 | MISSING | | owner confirms defaults | |
+| ENG-01 | Engagement + agreement version, scope, entitlements, 28-day periods, activation date, pause/terminate | fees on Organization; periods computed from startedAt | Engagement + ServicePeriod models | none | IMPLEMENTED_TESTED | Engagement/ServicePeriod; activate/pause/resume/end; commercial.test.ts | none | done |
+| ENG-02 | Offer config (£2,500 + £2,500/4 weeks × 3, £10,000) with preserved signed terms | fees on org | OfferTemplate + snapshot onto engagement | ENG-01 | IMPLEMENTED_TESTED | OfferTemplate standard £2,500 + £2,500/28 days x3 (= £10,000); terms frozen into offerSnapshot; live fees change only by scope change | owner confirms defaults | Owner confirms the defaults |
 | ENG-03 | Installation checklist + early win date | onboarding sessions | installation record | ENG-01 | PARTIAL | | none | |
 | ENG-04 | Versioned creative brief / per-person voice; invalidates downstream drafts | BrandBrain | versioning + invalidation | TEAM-08 | PARTIAL | | none | |
-| ENG-05 | Scope changes with approval and effective version | none | model + flow | ENG-01 | MISSING | | none | |
-| ENG-06 | DST-safe tenant timezone calendars | none | tz on org; storage in UTC; 28-day math | ENG-01 | MISSING | | none | |
+| ENG-05 | Scope changes with approval and effective version | none | model + flow | ENG-01 | IMPLEMENTED_TESTED | ScopeChange propose/decide with fee change from a named period (commercial.test.ts) | none | done |
+| ENG-06 | DST-safe tenant timezone calendars | none | tz on org; storage in UTC; 28-day math | ENG-01 | IMPLEMENTED_TESTED | calendar.test.ts (DST weekends, year end, leap day, local-date conversion) | none | done |
 
 ### Stage 4 · Client experience and delivery (§5, §8, §9)
 
@@ -111,14 +111,14 @@ Status key per row. "Evidence" names the test or proof.
 | CX-07 | Client help/recording guide + support request with owner/status | support page (admin) | client request path | none | PARTIAL | | none | |
 | CX-08 | Measure founder input time, approval time, revision rounds, operator effort | none | effort records | DEL-01 | MISSING | | none | |
 | DEL-01 | Connected pipeline with server-validated transitions, owner/due/deps/blocker/history on every item | workflow.ts transitions | owner/due/blocker uniformity; written path skips recording | none | PARTIAL | workflow tests | none | |
-| DEL-02 | Exact-version approvals (reviewer, authority, version/hash, reviewRequestedAt, scope, stale response) | approvedAt/approvedById only | Approval model | TEAM-01 | MISSING | | none | |
-| DEL-03 | Material edit invalidates approval; package bound to approved release | none | hash check at publish | DEL-02 | MISSING | | none | |
+| DEL-02 | Exact-version approvals (reviewer, authority, version/hash, reviewRequestedAt, scope, stale response) | approvedAt/approvedById only | Approval model | TEAM-01 | IMPLEMENTED_TESTED | Approval model with hash, label, reviewer, authority, scope; approvals.test.ts | none | done |
+| DEL-03 | Material edit invalidates approval; package bound to approved release | none | hash check at publish | DEL-02 | IMPLEMENTED_TESTED | edits supersede approvals; scheduling/publishing call assertReleasable; approvals.test.ts; core-spine publishes after approval | none | done |
 | DEL-04 | Designated approver + backup; extra reviewers optional; no auto-approve | none | routing | TEAM-01 | MISSING | | none | |
 | DEL-05 | Claims need evidence before release; AI cannot self-verify | script QA gate | extend to packages | none | PARTIAL | | none | |
 | DEL-06 | Production checklists, editor assignment/backup, internal QA, turnaround metrics | template tasks | assignment + QA records | TEAM-09 | PARTIAL | | none | |
 | FILE-01 | Tenant/assignment-scoped storage; fixed file route | see SEC-02 | | SEC-02 | MISSING | | none | |
 | FILE-02 | Direct-to-storage multipart uploads with verification, expiry, cancel, cleanup | server actions (12 MB cap) | presigned multipart (S3/R2) | FILE-01 | MISSING | | R2 bucket + CORS | implement against S3 API; contract test |
-| FILE-03 | MIME/magic-byte validation, SVG rejection, quarantine/scan states | client MIME trusted | validation + scan status (pending/clean/failed/unsupported) | FILE-01 | MISSING | | scanning provider | |
+| FILE-03 | MIME/magic-byte validation, SVG rejection, quarantine/scan states | client MIME trusted | validation + scan status (pending/clean/failed/unsupported) | FILE-01 | PARTIAL | magic-byte validation and SVG/HTML refusal done (SEC-02) | scanning provider | Malware-scan states need a scanning provider (EXTERNAL_CONFIGURATION_REQUIRED) |
 | FILE-04 | Short-lived signed reads; permission recheck; no URL logging | signed GET helper exists | wire | FILE-01 | PARTIAL | | none | |
 | FILE-05 | Long jobs (transcode/transcribe/scan) via suitable worker with checksummed callbacks | none | task model + callback | JOB-01 | MISSING | | provider | |
 | FILE-06 | Deliverables index + async exports with expiring downloads | none | index + export job | FILE-04 | MISSING | | none | |
@@ -127,7 +127,7 @@ Status key per row. "Evidence" names the test or proof.
 
 | ID | Outcome | Existing | Gap | Deps | Status | Evidence | Gate | Next |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| JOB-01 | Protected cron dispatch on Vercel, leases, time budget, concurrency, jitter, dead letters, replay | queue + worker (QA shims loaded) | cron route, jitter, cancellation, admin view; drop QA preload | INF-06 | PARTIAL | jobs tests | CRON_SECRET in Vercel | |
+| JOB-01 | Protected cron dispatch on Vercel, leases, time budget, concurrency, jitter, dead letters, replay | queue + worker (QA shims loaded) | cron route, jitter, cancellation, admin view; drop QA preload | INF-06 | IMPLEMENTED_TESTED | /api/cron/jobs (bearer CRON_SECRET, 45 s budget, route.test.ts); daily Vercel cron; jobs also run right after the request that queued them; worker without QA shims | CRON_SECRET in Vercel | Owner: CRON_SECRET in Vercel; Pro plan for a more frequent cron if wanted |
 | JOB-02 | At-least-once with business keys; uncertain external outcomes reconciled | idempotencyKey | uncertain state | JOB-01 | PARTIAL | | none | |
 | JOB-03 | Due-record scheduling (catch-up) + outbox | none | schedule table | JOB-01 | MISSING | | none | |
 | JOB-04 | All listed job types | email.send only enqueued | the rest | JOB-01 | MISSING | | various | |
