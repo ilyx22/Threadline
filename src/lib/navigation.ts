@@ -181,6 +181,7 @@ export function operatorNav(slug: string): NavItem[] {
           href: `${base}/settings/integrations`,
           capability: "workspace.view",
         },
+        { key: "billing", label: "Billing", href: `${base}/settings/billing`, capability: "billing.view" },
       ],
     },
   ];
@@ -309,6 +310,7 @@ export function clientNav(slug: string): NavItem[] {
           href: `${base}/settings/integrations`,
           capability: "workspace.view",
         },
+        { key: "billing", label: "Billing", href: `${base}/settings/billing`, capability: "billing.view" },
       ],
     },
   ];

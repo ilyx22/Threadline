@@ -13,6 +13,8 @@ export type TemplateMap = {
   application_received: { name: string };
   application_operator_alert: { name: string; company: string; urgency: string; link: string };
   period_review: { name: string; workspaceName: string; periodLabel: string; link: string };
+  /// BIL-04: written from a draft a person approved; sent as they approved it.
+  payment_reminder: { subject: string; body: string };
 };
 
 export type EmailTemplateKey = keyof TemplateMap;
@@ -82,6 +84,11 @@ export function renderTemplate<K extends EmailTemplateKey>(key: K, data: Templat
       const paragraphs = [`Hello ${d.name},`, `The review of ${d.periodLabel} for ${d.workspaceName} is ready: what we did, what happened, what got in the way, and what we do next.`];
       const cta = { label: "Read the review", href: d.link };
       return { subject: title, text: text(title, paragraphs, cta), html: shell(title, paragraphs, cta) };
+    }
+    case "payment_reminder": {
+      const d = data as TemplateMap["payment_reminder"];
+      const paragraphs = d.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+      return { subject: d.subject, text: text(d.subject, paragraphs), html: shell(d.subject, paragraphs) };
     }
     default: {
       const never: never = key;

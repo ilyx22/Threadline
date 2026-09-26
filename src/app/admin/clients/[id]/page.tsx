@@ -30,6 +30,8 @@ import { formatDate, relativeTime } from "@/lib/utils/dates";
 import { integrationByProvider } from "@/lib/integrations/registry";
 import { ClientConfigForm } from "./client-config-form";
 import { EngagementPanel } from "./engagement-panel";
+import { BillingPanel } from "./billing-panel";
+import { invoiceBalance } from "@/lib/billing/invoices";
 import { currentEngagement, ensurePeriods } from "@/lib/commercial/engagements";
 
 export const metadata: Metadata = { title: "Client" };
@@ -60,6 +62,27 @@ export default async function ClientDetailPage({
   const engagement = engagementRow ? await currentEngagement(client.id) : null;
   const scopeChanges = engagement ? await prisma.scopeChange.findMany({ where: { engagementId: engagement.id }, orderBy: { createdAt: "desc" } }) : [];
   const offerName = engagement ? ((JSON.parse(engagement.offerSnapshot) as { name?: string }).name ?? "Engagement") : "";
+  const [invoiceRows, reminderRows, agreementRows] = await Promise.all([
+    prisma.invoice.findMany({ where: { orgId: client.id }, orderBy: [{ createdAt: "desc" }], include: { disputes: { select: { id: true, state: true, reason: true } } } }),
+    prisma.paymentReminder.findMany({ where: { orgId: client.id, state: "draft" }, orderBy: { createdAt: "asc" } }),
+    prisma.agreementDocument.findMany({ where: { orgId: client.id }, orderBy: { signedAt: "desc" } }),
+  ]);
+  const todayIso = new Date().toISOString().slice(0, 10);
+  const billingView = {
+    orgId: client.id,
+    engagementId: engagement?.id ?? null,
+    provider: engagement?.billingProvider ?? "manual",
+    currency: client.currency,
+    invoices: await Promise.all(
+      invoiceRows.map(async (i) => {
+        const balanceMinor = i.status === "issued" || i.status === "paid" ? await invoiceBalance(i.id) : i.totalMinor;
+        const due = i.dueDate ? i.dueDate.toISOString().slice(0, 10) : null;
+        return { id: i.id, number: i.number, kind: i.kind, periodNumber: i.periodNumber, totalMinor: i.totalMinor, balanceMinor, status: i.status, dueDate: due, overdue: i.status === "issued" && !!due && due < todayIso && balanceMinor > 0, hostedUrl: i.hostedUrl, disputes: i.disputes };
+      }),
+    ),
+    reminders: reminderRows.map((r) => ({ id: r.id, toEmail: r.toEmail, subject: r.subject, body: r.body })),
+    agreements: agreementRows.map((a) => ({ id: a.id, kind: a.kind, version: a.version, signedAt: a.signedAt.toISOString().slice(0, 10), signedByName: a.signedByName })),
+  };
 
   const proofGate = testimonialGate(proofView);
   const configuredIntegrations = client.integrations.filter((i) => i.status === "configured");
@@ -148,6 +171,8 @@ export default async function ClientDetailPage({
                 : null
             }
           />
+
+          <BillingPanel view={billingView} />
 
           <ClientConfigForm
             orgId={client.id}

@@ -74,6 +74,8 @@ export const CAPABILITIES = [
   "reports.generate",
   /// REP-01: marking a report or review final is Threadline's call, never the client's.
   "reports.finalise",
+  /// BIL-01: invoices, balances and signed agreements.
+  "billing.view",
   // AI
   "ai.generate",
   // Threadline's own commercial operations. The Living SOP Engine, prospects,
@@ -149,6 +151,7 @@ const CLIENT_ADMIN: Capability[] = [
   "distribution.publish",
   "performance.edit",
   "pipeline.edit",
+  "billing.view",
 ];
 
 const INTERNAL_OPERATOR: Capability[] = [
@@ -206,7 +209,7 @@ export type ClientProfile = (typeof CLIENT_PROFILES)[number];
 
 const PROFILE_GRANTS: Partial<Record<ClientProfile, Capability[]>> = {
   approver: ["ideas.approve", "scripts.approve", "production.approve"],
-  commercial: ["pipeline.view", "pipeline.edit", "performance.view", "performance.edit", "reports.view"],
+  commercial: ["pipeline.view", "pipeline.edit", "performance.view", "performance.edit", "reports.view", "billing.view"],
 };
 const VIEW_ONLY = (c: Capability) => c.endsWith(".view");
 

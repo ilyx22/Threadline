@@ -81,6 +81,10 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   // AI
   if (!set(env, "ANTHROPIC_API_KEY")) add("warning", "ANTHROPIC_API_KEY", "Not set: generation runs in labelled mock mode.");
 
+  // Billing (BIL-02): test mode only in this build.
+  if (set(env, "STRIPE_SECRET_KEY") && !(env.STRIPE_SECRET_KEY ?? "").startsWith("sk_test_")) add("error", "STRIPE_SECRET_KEY", "Is not a test-mode key; live billing needs an explicit owner decision.");
+  if (set(env, "STRIPE_SECRET_KEY") && !set(env, "STRIPE_WEBHOOK_SECRET")) add("warning", "STRIPE_WEBHOOK_SECRET", "Not set: Stripe payments will not be recorded automatically.");
+
   // Monitoring
   if (e === "production" && !set(env, "ERROR_REPORTING_DSN")) add("warning", "ERROR_REPORTING_DSN", "Not set: errors are logged but not reported to an error tracker.");
 

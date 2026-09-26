@@ -2756,6 +2756,11 @@ model Engagement {
   endReason           String?
   entitlements        String    @default("{}")
   earlyWinDueDate     DateTime? @db.Date
+  /// BIL-02: exactly one invoice authority per engagement: manual | stripe.
+  billingProvider     String    @default("manual")
+  stripeCustomerId    String?
+  /// Days allowed to pay an issued invoice.
+  paymentTermsDays    Int       @default(14)
   sourceApplicationId String?   @unique
   sourceProspectId    String?
   createdById         String?
@@ -2914,5 +2919,134 @@ model ReviewBatchItem {
   batch ReviewBatch @relation(fields: [batchId], references: [id], onDelete: Cascade)
 
   @@unique([batchId, entityType, entityId])
+}
+
+/// An invoice (BIL-01). Issued invoices are never edited: a mistake is voided
+/// with a reason, or corrected with a credit note. Amounts in minor units.
+model Invoice {
+  id                String    @id @default(cuid())
+  orgId             String
+  engagementId      String?
+  number            String    @unique
+  /// setup | period | adjustment | credit_note
+  kind              String
+  periodNumber      Int?
+  currency          String    @default("GBP")
+  totalMinor        Int
+  /// draft | issued | paid | void
+  status            String    @default("draft")
+  issuedAt          DateTime?
+  dueDate           DateTime? @db.Date
+  paidAt            DateTime?
+  voidedAt          DateTime?
+  voidReason        String?
+  /// manual | stripe
+  provider          String    @default("manual")
+  providerInvoiceId String?   @unique
+  hostedUrl         String?
+  /// For a credit note: the invoice it credits.
+  creditsInvoiceId  String?
+  notes             String?
+  createdById       String?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now()) @updatedAt
+
+  lines    InvoiceLine[]
+  payments Payment[]
+  disputes Dispute[]
+
+  @@index([orgId, status])
+  @@index([engagementId, kind, periodNumber])
+}
+
+model InvoiceLine {
+  id          String @id @default(cuid())
+  invoiceId   String
+  description String
+  quantity    Int    @default(1)
+  unitMinor   Int
+  amountMinor Int
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+}
+
+/// Money in or out against an invoice (BIL-01): a payment (positive), a refund
+/// (negative). Partial payments are simply several rows. Provider ids are
+/// unique so a redelivered webhook cannot record the same payment twice.
+model Payment {
+  id                String   @id @default(cuid())
+  orgId             String
+  invoiceId         String
+  amountMinor       Int
+  /// payment | refund
+  kind              String   @default("payment")
+  /// bank_transfer | card | stripe | other
+  method            String
+  receivedAt        DateTime
+  reference         String?
+  /// Where the evidence is (bank statement line, remittance email), never the evidence itself.
+  evidence          String?
+  providerPaymentId String?  @unique
+  recordedById      String?
+  createdAt         DateTime @default(now())
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+
+  @@index([orgId, receivedAt])
+}
+
+model Dispute {
+  id                String    @id @default(cuid())
+  orgId             String
+  invoiceId         String
+  reason            String
+  /// open | won | lost | withdrawn
+  state             String    @default("open")
+  amountMinor       Int?
+  providerDisputeId String?   @unique
+  openedAt          DateTime  @default(now())
+  closedAt          DateTime?
+  note              String?
+
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+}
+
+/// A signed agreement (BIL-03): which document, which version, when and by whom.
+/// The file itself lives in storage; this row is the evidence trail.
+model AgreementDocument {
+  id           String   @id @default(cuid())
+  orgId        String
+  engagementId String?
+  /// msa | dpa | sow | order_form
+  kind         String
+  version      String
+  signedAt     DateTime
+  signedByName String
+  signedByRole String?
+  /// Storage path or e-signature envelope id.
+  evidence     String
+  recordedById String?
+  createdAt    DateTime @default(now())
+
+  @@index([orgId, kind])
+}
+
+/// A reminder about an overdue invoice (BIL-04), drafted by the system and
+/// sent only when a person approves it.
+model PaymentReminder {
+  id           String    @id @default(cuid())
+  orgId        String
+  invoiceId    String
+  toEmail      String
+  subject      String
+  body         String
+  /// draft | approved | sent | discarded
+  state        String    @default("draft")
+  approvedById String?
+  approvedAt   DateTime?
+  sentAt       DateTime?
+  createdAt    DateTime  @default(now())
+
+  @@index([orgId, state])
 }
 

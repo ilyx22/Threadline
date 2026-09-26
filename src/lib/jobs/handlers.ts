@@ -57,6 +57,11 @@ registerHandler("daily.tick", async () => {
   const { kickCrm } = await import("@/lib/crm/outbox");
   for (const e of await prisma.engagement.findMany({ where: { status: "active" }, select: { id: true } })) await ensurePeriods(e.id);
   await expireInvitations();
+  // BIL-01/BIL-04: draft due invoices and overdue reminders; issuing and
+  // sending remain a person's decision.
+  const { draftDueInvoices, draftOverdueReminders } = await import("@/lib/billing/invoices");
+  for (const e of await prisma.engagement.findMany({ where: { status: "active" }, select: { id: true } })) await draftDueInvoices(e.id);
+  await draftOverdueReminders();
   const held = await prisma.crmOutbox.findMany({ where: { state: { in: ["pending", "failed"] } }, select: { id: true }, take: 200 });
   await kickCrm(held.map((h) => h.id));
   const { pruneTokens } = await import("@/lib/auth/tokens");

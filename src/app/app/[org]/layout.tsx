@@ -6,7 +6,6 @@ import { TopBar } from "@/components/app/topbar";
 import { CommandMenu } from "@/components/app/command-menu";
 import { DemoTour } from "@/components/app/demo-tour";
 import { accessibleOrgs, requireOrgAccess, requireOrgPage } from "@/lib/auth/guard";
-import { can } from "@/lib/auth/roles";
 import { ROLE_META, metaOf } from "@/lib/domain/enums";
 import { workspaceNav } from "@/lib/navigation";
 import { seesOperatorSurface } from "@/lib/domain/visibility";
@@ -63,7 +62,7 @@ export default async function AppLayout({
   // Only the permitted keys are handed to the client chrome; the icon-bearing
   // definition is rebuilt there (see the note on Sidebar).
   const navKeys = workspaceNav(slug, surface)
-    .filter((item) => can(ctx.role, item.capability))
+    .filter((item) => ctx.can(item.capability)) // profiles narrow or widen a role (TEAM-01)
     .map((item) => item.key);
   const roleLabel = metaOf(ROLE_META, ctx.role).label;
 
