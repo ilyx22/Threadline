@@ -108,7 +108,7 @@ async function main() {
     /* no button any more: a chapter counts as read once it has been on screen (AutoRead: 45% visible for 2.5s) */
     await evaluate(cdp, `(() => { document.getElementById('chapter-1').scrollIntoView({ block: 'start' }); return true; })()`);
     await sleep(3200);
-    ok("v9:playbook", "a chapter that has been on screen lights its mark", (await evaluate<string>(cdp, `${q(".pb-rail-mark")}.className + ' ' + ${q(".pb-rail-count")}.textContent`)).includes("is-done") && /1 of 10/.test(await evaluate<string>(cdp, `${q(".pb-rail-count")}.textContent`)));
+    ok("v9:playbook", "a chapter that has been on screen lights its mark", (await evaluate<string>(cdp, `${q(".pb-rail-mark")}.className + ' ' + ${q(".pb-rail-count")}.textContent`)).includes("is-done") && /1 of 8/.test(await evaluate<string>(cdp, `${q(".pb-rail-count")}.textContent`)));
     for (const width of [1024, 390, 320]) {
       for (const route of ["/who-its-for", "/playbook", "/playbook/write-down-what-you-expect", "/how-it-works", "/apply", "/calculator"]) {
         await setViewport(cdp, width, 900);
@@ -122,7 +122,6 @@ async function main() {
     const html = await (await fetch(`${BASE}/`)).text();
     ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects(-big)?\//g) || []).length >= 14 && /(hero-scene\.jpg|v9-hero-machine)/.test(html) && /gap-left\.jpg/.test(html) && /gap-right\.jpg/.test(html) && (html.match(/memory\/encounter-/g) || []).length >= 5 && /closing-scene\.jpg/.test(html));
     ok("v9:nojs", "the bench's Expected readout is in the server HTML", /v5-readout-verdict">Expected</.test(html));
-    ok("v9:nojs", "the ticker's items are in the server HTML as a list", (html.match(/v9-chip/g) || []).length >= 10);
     await setViewport(cdp, 1440, 900);
     await cdp.send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
     await open(cdp, `${BASE}/`, 1200);

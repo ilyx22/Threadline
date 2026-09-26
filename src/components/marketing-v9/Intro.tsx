@@ -15,12 +15,7 @@ export default function Intro() {
   const [done, setDone] = React.useState(false);
   React.useEffect(() => {
     const root = document.documentElement;
-    const skip = root.hasAttribute("data-intro-seen") || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    try {
-      sessionStorage.setItem("tl-intro", "1");
-    } catch {
-      /* private mode: the intro simply plays again on the next page */
-    }
+    const skip = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (skip) {
       setDone(true);
       return;

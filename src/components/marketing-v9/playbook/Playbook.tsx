@@ -8,7 +8,6 @@ import { AcquisitionCalculator } from "@/components/marketing-v5/AcquisitionCalc
 import { Obj } from "../Obj";
 import { CountUp } from "./CountUp";
 import { Stepper } from "./Stepper";
-import { GrowthCurve } from "../GrowthCurve";
 import { CHAPTER_OBJECTS } from "./Chapter";
 import { ProgressRail } from "./Progress";
 import { Chapter } from "./Chapter";
@@ -81,12 +80,6 @@ export default function Playbook() {
           <Chapter key={i} index={i} />
         ))}
       </Stepper>
-
-      <section className="pb-curve" aria-label="Why it compounds">
-        <div className="v9-wrap">
-          <GrowthCurve note="What you give us in week one is still working in month six. Every idea, objection and reply goes into the system's memory, so each piece starts smarter than the last." />
-        </div>
-      </section>
 
       <section id="tools" className="pb-tools" data-scene aria-labelledby="tools-title">
         <div className="v9-panel">

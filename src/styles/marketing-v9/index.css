@@ -1490,8 +1490,8 @@
 /* ============================================================ pass 19 (26 September 2026) */
 /* the bench on desktop: zoomed and sliding between the blocks and the jars, like the phone view */
 @media (min-width: 600px) {
-  .v9-learning-bench .v5-bench-stage { overflow: hidden; border-radius: 24px; }
-  .v9-learning-bench .v5-bench-stage svg.v5-art { width: 135%; min-width: 135%; height: auto; display: block; }
+  .v9-learning-bench .v5-bench-stage, .pb-chapter-tool .v5-bench-stage { overflow: hidden; border-radius: 24px; }
+  .v9-learning-bench .v5-bench-stage svg.v5-art, .pb-chapter-tool .v5-bench-stage svg.v5-art { width: 135%; min-width: 135%; height: auto; display: block; }
 }
 /* the jar names and values on phones, larger than the block labels */
 @media (max-width: 599px) {
@@ -1541,4 +1541,47 @@ html.tl-intro-lock, html.tl-intro-lock body { overflow: hidden; }
 }
 @media (min-width: 992px) {
   .v9-faq-list { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 1120px; align-items: start; column-gap: 14px; }
+}
+
+/* ============================================================ pass 21 (26 September 2026) */
+/* the hero on phones: the whole picture, not a crop, with the thread loop running over it */
+@media (max-width: 759px) {
+  .v9-hero-scene.is-photo { aspect-ratio: auto; overflow: visible; }
+  .v9-hero-scene.is-photo img { width: 100%; height: auto; object-fit: fill; object-position: center; }
+  .v9-hero-loop { display: block; }
+}
+/* the curve's labels, centred in the thirds */
+.v9-curve-stages { text-align: center; gap: 0; }
+.v9-curve-stages li:first-child { padding-right: 0; }
+.v9-curve-stages li { justify-items: center; }
+/* the playbook: motion on every change */
+.pb-step.is-current { animation: pb-step-in 420ms var(--v9-ease) both; }
+@keyframes pb-step-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+.pb-drawer[open] > p, .pb-turn[open] > p { animation: pb-turn-in 360ms var(--v9-ease) both; }
+.pb-drawer summary i, .pb-turn summary i { transition: transform 300ms var(--v9-ease), background 300ms var(--v9-ease); }
+.pb-flip { transition: transform 260ms var(--v9-ease), box-shadow 260ms var(--v9-ease); }
+.pb-flip:active { transform: scale(0.97); }
+.pb-flip.is-open .pb-flip-back { animation: pb-pop 340ms var(--v9-ease) both; }
+@keyframes pb-pop { from { opacity: 0; transform: translateY(6px) scale(0.98); } to { opacity: 1; transform: none; } }
+.pb-card-feedback, .pb-verdict, .pb-expect-card, .pb-card-done { animation: pb-pop 340ms var(--v9-ease) both; }
+.pb-chip, .pb-card-actions button, .tl-tab, .v5-tab, .pb-rail-mark { transition: background 220ms var(--v9-ease), color 220ms var(--v9-ease), border-color 220ms var(--v9-ease), transform 160ms var(--v9-ease); }
+.pb-chip:active, .pb-card-actions button:active, .tl-tab:active, .v5-tab:active { transform: scale(0.96); }
+.pb-page #diag-panel { animation: pb-pop 360ms var(--v9-ease) both; }
+@media (prefers-reduced-motion: reduce) { .pb-step.is-current, .pb-flip.is-open .pb-flip-back, .pb-card-feedback, .pb-verdict, .pb-expect-card, .pb-card-done, .pb-page #diag-panel { animation: none; } }
+/* the model tool on phones: smaller boxes */
+@media (max-width: 599px) {
+  .tl-public .acq { gap: 16px; }
+  .tl-public .acq-inputs { gap: 8px; }
+  .tl-public .acq-field { padding: 10px 12px; gap: 2px 10px; }
+  .tl-public .acq-field label { font-size: 0.9rem; }
+  .tl-public .acq-field .acq-help { font-size: 0.78rem; line-height: 1.35; }
+  .tl-public .acq-field input[type="number"] { min-height: 38px; font-size: 15px; }
+  .tl-public .acq-field input[type="range"] { height: 22px; margin-top: 4px; }
+  .tl-public .acq-out { gap: 6px; }
+  .tl-public .acq-stage { padding: 9px 12px; gap: 10px; }
+  .tl-public .acq-stage-label { font-size: 0.85rem; }
+  .tl-public .acq-stage-label small { font-size: 0.72rem; }
+  .tl-public .acq-stage-value { font-size: 1.6rem; }
+  .tl-public .acq-verdict, .tl-public .acq-refusal { padding: 12px 14px; font-size: 0.85rem; }
+  .tl-public .pb-tool { padding: 18px 14px; }
 }

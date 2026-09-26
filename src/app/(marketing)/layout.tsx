@@ -16,12 +16,6 @@ import Intro from "@/components/marketing-v9/Intro";
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="tl-public v5 v9 flex min-h-dvh flex-col">
-      {/* before first paint: a page after the first in this session skips the intro */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: "try{if(sessionStorage.getItem('tl-intro'))document.documentElement.setAttribute('data-intro-seen','')}catch(e){}",
-        }}
-      />
       <Intro />
       <a href="#main" className="v5-skip">
         Skip to content

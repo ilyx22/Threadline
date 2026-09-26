@@ -43,7 +43,7 @@ export function Diagnostic({ categories, stages, symptoms, cta }: { categories: 
           </button>
         ))}
       </div>
-      <div id="diag-panel" role="tabpanel" aria-labelledby={tabId(sel)} className="tl-selector-cards">
+      <div key={sel} id="diag-panel" role="tabpanel" aria-labelledby={tabId(sel)} className="tl-selector-cards">
         <div className="tl-detail">
           <p className="tl-label">
             {String(sel + 1).padStart(2, "0")} · {cat.label}

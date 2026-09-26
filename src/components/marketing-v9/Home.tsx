@@ -322,7 +322,7 @@ function Engagement() {
           {PERIODS.map((p, i) => (
             <li key={p.label} className={`v9-tile ${PERIOD_TONES[i]}`} style={{ ["--i" as string]: i }}>
               <span className="v9-tag">
-                {p.label} · {p.weeks}
+                {p.weeks}
               </span>
               <h3 className="v9-h3">{p.title}</h3>
               <p>{p.body}</p>
