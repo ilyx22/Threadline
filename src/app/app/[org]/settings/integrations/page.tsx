@@ -5,6 +5,12 @@ import { INTEGRATIONS, accessOptionsFor } from "@/lib/integrations/registry";
 import { parseRecord } from "@/lib/db/json";
 import { Notice } from "@/components/ui/feedback";
 import { IntegrationList, AccountManager } from "./integrations-client";
+import { WebhookCredentials } from "./webhook-credentials";
+import { appUrl } from "@/lib/app-url";
+import { prisma } from "@/lib/db/client";
+import { listCredentialMeta } from "@/lib/integrations/credentials";
+import { credentialStorageConfigured } from "@/lib/security/secret-box";
+import { WEBHOOK_CREDENTIAL_LABEL, WEBHOOK_PROVIDERS } from "@/lib/integrations/webhooks";
 
 export const metadata: Metadata = { title: "Integrations" };
 
@@ -21,6 +27,29 @@ export default async function IntegrationsPage({ params }: { params: Promise<{ o
   const canEdit = ctx.can("workspace.settings");
 
   const available = INTEGRATIONS.filter((i) => i.implementation === "available").length;
+
+  // Staff only (SEC-05): inbound webhook endpoints and their verifying credential.
+  const canWebhooks = ctx.can("attribution.manage");
+  const webhookRows = canWebhooks ? await (async () => {
+    const origin = appUrl();
+    const [meta, deliveries] = await Promise.all([
+      listCredentialMeta(ctx.org.id),
+      prisma.webhookEvent.findMany({ where: { orgId: ctx.org.id }, orderBy: { receivedAt: "desc" }, take: 50, select: { provider: true, receivedAt: true, verified: true, error: true } }),
+    ]);
+    return WEBHOOK_PROVIDERS.map((p) => {
+      const cred = meta.find((m) => m.provider === p && m.purpose === "webhook_secret");
+      const last = deliveries.find((d) => d.provider === p);
+      return {
+        provider: p,
+        label: WEBHOOK_CREDENTIAL_LABEL[p],
+        endpoint: `${origin}/api/webhooks/${p}?org=${ctx.org.id}`,
+        stored: Boolean(cred),
+        setAt: cred ? cred.updatedAt.toISOString() : null,
+        lastUsedAt: cred?.lastUsedAt ? cred.lastUsedAt.toISOString() : null,
+        lastDelivery: last ? { at: last.receivedAt.toISOString(), verified: last.verified, error: last.error } : null,
+      };
+    });
+  })() : [];
 
   return (
     <div className="space-y-6">
@@ -71,6 +100,8 @@ export default async function IntegrationsPage({ params }: { params: Promise<{ o
           };
         })}
       />
+
+      {canWebhooks ? <WebhookCredentials slug={slug} rows={webhookRows} storageReady={credentialStorageConfigured()} /> : null}
 
       <AccountManager
         slug={slug}
