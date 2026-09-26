@@ -24,7 +24,7 @@ import { getStorage } from "@/lib/storage";
  * Without a configured provider, tasks wait as `queued` and are submitted by
  * the daily tick once one is configured.
  */
-export const PROCESSING_KINDS = ["transcode", "transcribe", "thumbnail"] as const;
+export const PROCESSING_KINDS = ["transcode", "transcribe", "thumbnail", "scan"] as const;
 export type ProcessingKind = (typeof PROCESSING_KINDS)[number];
 
 const RANK: Record<string, number> = { queued: 0, submitted: 1, processing: 2, succeeded: 3, failed: 3, cancelled: 3 };
@@ -39,11 +39,17 @@ export function processingConfig(env: Env = process.env) {
   return { endpoint, secret };
 }
 
-export function kindsFor(mimeType: string | null): ProcessingKind[] {
+/** FILE-03: every stored file is scanned when PROCESSING_SCAN=true (the worker runs the scanner). */
+export function scanEnabled(env: Env = process.env) {
+  return env.PROCESSING_SCAN === "true";
+}
+
+export function kindsFor(mimeType: string | null, env: Env = process.env): ProcessingKind[] {
+  const scan: ProcessingKind[] = scanEnabled(env) && mimeType ? ["scan"] : [];
   if (!mimeType) return [];
-  if (mimeType.startsWith("video/")) return ["transcode", "transcribe", "thumbnail"];
-  if (mimeType.startsWith("audio/")) return ["transcribe"];
-  return [];
+  if (mimeType.startsWith("video/")) return [...scan, "transcode", "transcribe", "thumbnail"];
+  if (mimeType.startsWith("audio/")) return [...scan, "transcribe"];
+  return scan;
 }
 
 export function sign(body: string, secret: string, now = Date.now()) {
@@ -106,7 +112,7 @@ export type CallbackEvent = {
   status: "processing" | "succeeded" | "failed";
   externalId?: string;
   error?: string;
-  output?: { transcript?: string; durationMs?: number; width?: number; height?: number; renditions?: { label: string; mimeType?: string }[] };
+  output?: { transcript?: string; durationMs?: number; width?: number; height?: number; renditions?: { label: string; mimeType?: string }[]; clean?: boolean; signature?: string };
 };
 
 export function parseCallback(raw: unknown): CallbackEvent | null {
@@ -145,6 +151,12 @@ export async function applyCallback(event: CallbackEvent) {
     // Claim the transition first, so two concurrent success callbacks store one transcript.
     const claimed = await prisma.processingTask.updateMany({ where: { id: task.id, status: { in: lower } }, data: { status: "succeeded", result, lastEventAt: now, completedAt: now, externalId: event.externalId ?? task.externalId, error: null } });
     if (claimed.count !== 1) return { applied: false, reason: "already final" };
+    // FILE-03: a scan result sets the file's state; an infected file is quarantined (never served).
+    if (task.kind === "scan") {
+      const clean = out.clean === true;
+      await prisma.asset.update({ where: { id: task.assetId }, data: { scanState: clean ? "clean" : "infected" } });
+      if (!clean) await prisma.processingTask.update({ where: { id: task.id }, data: { result: JSON.stringify({ clean: false, signature: typeof out.signature === "string" ? out.signature.slice(0, 200) : null }) } });
+    }
     if (task.kind === "transcribe" && transcript) {
       const file = new File([transcript], `${(task.asset.title || "transcript").slice(0, 80)}.txt`, { type: "text/plain" });
       const stored = await getStorage().put({ orgId: task.orgId, file, prefix: "transcripts" });

@@ -786,6 +786,8 @@ model Asset {
   uploadedBy  User?        @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
 
   storageProvider String @default("local") // local | s3
+  /// FILE-03: malware scan state: unscanned | clean | infected. An infected file is quarantined and never served.
+  scanState       String  @default("unscanned")
   /// CX-05: how the file arrived: upload | direct_upload | voice_note | link | test_clip | processing | export
   source          String  @default("upload")
   /// CX-05: provenance a person can read: where it came from and any permission attached.

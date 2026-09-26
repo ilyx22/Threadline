@@ -88,6 +88,8 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
     if ((env.PROCESSING_WEBHOOK_SECRET ?? "").length < 16) add("error", "PROCESSING_WEBHOOK_SECRET", "PROCESSING_PROVIDER=webhook but the shared secret is missing or shorter than 16 characters.");
     if (storage !== "s3") add("error", "PROCESSING_PROVIDER", "Needs STORAGE_PROVIDER=s3: the worker fetches files with a signed storage URL.");
   }
+  if (env.PROCESSING_SCAN === "true" && (env.PROCESSING_PROVIDER ?? "none") !== "webhook") add("error", "PROCESSING_SCAN", "Scanning is on but no processing worker is configured, so files would wait unscanned forever.");
+  if (e === "production" && env.PROCESSING_SCAN !== "true") add("warning", "PROCESSING_SCAN", "Uploaded files are not malware-scanned. Configure a processing worker with a scanner and set PROCESSING_SCAN=true.");
 
   // Rate limiting and client IP
   const rl = env.RATE_LIMIT_STORE ?? "memory";

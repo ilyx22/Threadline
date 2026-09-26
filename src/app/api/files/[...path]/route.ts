@@ -37,7 +37,7 @@ export async function GET(
   // The asset row is the authority on ownership; the path alone is not trusted.
   const asset = await prisma.asset.findFirst({
     where: { orgId, storagePath },
-    select: { id: true, fileName: true, mimeType: true, orgId: true, contentItemId: true, uploadedById: true, sizeBytes: true },
+    select: { id: true, fileName: true, mimeType: true, orgId: true, contentItemId: true, uploadedById: true, sizeBytes: true, scanState: true },
   });
   if (!asset) {
     return new NextResponse("Not found", { status: 404 });
@@ -61,6 +61,11 @@ export async function GET(
 
   if (!allowed) {
     return new NextResponse("Forbidden", { status: 403 });
+  }
+
+  // FILE-03: a file the scanner flagged is quarantined and never served.
+  if (asset.scanState === "infected") {
+    return new NextResponse("This file was flagged by the malware scan and is quarantined.", { status: 423 });
   }
 
   // FILE-04: large files are not streamed through a server function (which has
