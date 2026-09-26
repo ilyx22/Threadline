@@ -95,7 +95,7 @@ async function main() {
     await evaluate(cdp, "localStorage.removeItem('tl-playbook-read'); true");
     await open(cdp, `${BASE}/playbook`, 2000);
     const pb = await evaluate<{ chapters: number; marks: number; widgets: number; flips: number; tools: number; periods: number; text: string }>(cdp, `({ chapters: document.querySelectorAll('.pb-chapter').length, marks: document.querySelectorAll('.pb-rail-mark').length, widgets: document.querySelectorAll('.pb-chapter-tool').length, flips: document.querySelectorAll('.pb-flip').length, tools: document.querySelectorAll('.pb-tool').length, periods: document.querySelectorAll('.pb-period-line li').length, text: document.body.innerText })`);
-    ok("v9:playbook", "ten chapters, ten marks, ten things to do, two tools, three periods", pb.chapters === 10 && pb.marks === 10 && pb.widgets === 10 && pb.tools === 2 && pb.periods === 3, JSON.stringify({ chapters: pb.chapters, marks: pb.marks, widgets: pb.widgets, tools: pb.tools, periods: pb.periods }));
+    ok("v9:playbook", "ten chapters, ten marks, ten things to do, two tools, no periods (they live on the homepage)", pb.chapters === 10 && pb.marks === 10 && pb.widgets === 10 && pb.tools === 2 && pb.periods === 0, JSON.stringify({ chapters: pb.chapters, marks: pb.marks, widgets: pb.widgets, tools: pb.tools, periods: pb.periods }));
     ok("v9:playbook", "the start button promises a time, not a result", /fully interactive/i.test(pb.text) && !/guarantee[ds]? (leads|calls|revenue|results)/i.test(pb.text));
     const flipH = await evaluate<number>(cdp, `Math.round(${q(".pb-flip")}.getBoundingClientRect().height)`);
     ok("v9:playbook", "flip cards have room for their faces", flipH >= 120, `${flipH}px`);
@@ -120,7 +120,7 @@ async function main() {
 
     section("homepage v9 — without scripting, reduced motion, claims");
     const html = await (await fetch(`${BASE}/`)).text();
-    ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects(-big)?\//g) || []).length >= 18 && /hero-scene\.jpg/.test(html) && /gap-left\.jpg/.test(html) && /gap-right\.jpg/.test(html) && (html.match(/memory\/encounter-/g) || []).length >= 5 && /closing-scene\.jpg/.test(html));
+    ok("v9:nojs", "the six station objects and the three scenes are in the server HTML", (html.match(/\/marketing\/objects(-big)?\//g) || []).length >= 18 && /(hero-scene\.jpg|v9-hero-machine)/.test(html) && /gap-left\.jpg/.test(html) && /gap-right\.jpg/.test(html) && (html.match(/memory\/encounter-/g) || []).length >= 5 && /closing-scene\.jpg/.test(html));
     ok("v9:nojs", "the bench's Expected readout is in the server HTML", /v5-readout-verdict">Expected</.test(html));
     ok("v9:nojs", "the ticker's items are in the server HTML as a list", (html.match(/v9-chip/g) || []).length >= 10);
     await setViewport(cdp, 1440, 900);

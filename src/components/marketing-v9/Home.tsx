@@ -9,6 +9,7 @@ import Bench from "@/components/marketing-v5/Bench";
 import { Obj, type ObjName } from "./Obj";
 import { ExpressionsArt } from "./ExpressionsArt";
 import { WordmarkMarquee } from "./Marquee";
+import { HeroMachine } from "./HeroMachine";
 
 /**
  * The homepage, 24 September 2026 (second pass). The composition the owner
@@ -82,8 +83,8 @@ function Hero() {
             </Link>
           </div>
         </div>
-        <div className="v9-hero-scene is-photo">
-          <Image src="/marketing/hero-scene.jpg" alt="The firm's private archive on the left; one thread leaves it, passes through a small press and hangs four finished pieces on a line where four buyers stand looking up at them." width={1262} height={468} priority sizes="(max-width: 991px) 100vw, 58vw" />
+        <div className="v9-hero-scene is-machine">
+          <HeroMachine />
         </div>
       </div>
     </section>

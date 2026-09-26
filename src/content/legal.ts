@@ -5,7 +5,7 @@
  * number, registered address, privacy contact, retention period, governing
  * law). Nothing here is legal advice; the owner should have it checked.
  */
-export type LegalSection = { title: string; paras?: readonly string[]; items?: readonly string[]; table?: readonly (readonly string[])[] };
+export type LegalSection = { title: string; paras?: readonly string[]; items?: readonly string[]; table?: readonly (readonly string[])[]; /** kept in the content but not rendered until the owner supplies it (the legal entity does not exist yet) */ hidden?: boolean };
 export type LegalDoc = { slug: string; title: string; lead: string; updated: string; sections: readonly LegalSection[] };
 
 const UPDATED = "26 September 2026";
@@ -18,7 +18,8 @@ export const PRIVACY: LegalDoc = {
   lead: "What Threadline collects, why, where it goes and what you can ask us to do with it. Written to be read, not scrolled past.",
   updated: UPDATED,
   sections: [
-    { title: "Who we are", paras: [`Threadline is operated by ${OWNER}, company number [number], registered at [registered address]. We are the controller of the personal data described here. Questions and requests go to ${CONTACT}.`] },
+    { title: "Who we are", hidden: true, paras: [`Threadline is operated by ${OWNER}, company number [number], registered at [registered address]. We are the controller of the personal data described here. Questions and requests go to ${CONTACT}.`] },
+    { title: "Questions and requests", paras: ["Threadline is a founding-client programme and the operating company is being set up. Until then, questions and requests about your data go to the person who replies to your application, or through the application form. We treat every request as we would once the company exists."] },
     {
       title: "What we collect, and why",
       items: [
@@ -35,11 +36,11 @@ export const PRIVACY: LegalDoc = {
     {
       title: "Who else sees it",
       paras: ["We use a small number of providers to run the service, each under a contract that limits them to acting on our instructions:"],
-      items: ["Hosting and delivery: Vercel.", "Transactional email (application confirmations, invites, password resets and reports): Resend, when configured.", "File storage for client workspaces: [storage provider, when configured].", "Where a client connects a publishing or CRM platform to their workspace, the data that platform returns is held in the client's workspace and governed by the client's own agreement with that platform."],
+      items: ["Hosting and delivery: Vercel.", "Transactional email (application confirmations, invites, password resets and reports): Resend, when configured.", "File storage for client workspaces: our storage provider, when a workspace uses file storage.", "Where a client connects a publishing or CRM platform to their workspace, the data that platform returns is held in the client's workspace and governed by the client's own agreement with that platform."],
     },
     {
       title: "How long we keep it",
-      items: ["Applications: for the time it takes to assess them and reply, and then for [retention period] so that we can answer follow-up questions, after which they are deleted or anonymised.", "Client workspace data: for the life of the engagement and [retention period] after it ends, unless the client asks for earlier deletion.", "Tracked-link records: [retention period].", "Security and access logs: [retention period]."],
+      items: ["Applications: for the time it takes to assess them and reply, and for a short period afterwards so that we can answer follow-up questions, after which they are deleted or anonymised.", "Client workspace data: for the life of the engagement and for a short period after it ends so that records can be handed over, unless the client asks for earlier deletion.", "Tracked-link records: for as long as the piece of work they measure is being read, and then anonymised.", "Security and access logs: for a short, fixed period, then deleted."],
     },
     {
       title: "Where it is processed",
@@ -59,7 +60,7 @@ export const TERMS: LegalDoc = {
   lead: "The terms for using this website and the free material on it. Client engagements are governed by a separate written agreement.",
   updated: UPDATED,
   sections: [
-    { title: "Who these terms are between", paras: [`These terms are between you and ${OWNER} ("Threadline", "we"). By using threadline's public website you accept them. If you are a client, your engagement agreement takes precedence over anything here.`] },
+    { title: "Who these terms are between", paras: ["These terms are between you and Threadline (\"we\"). By using Threadline's public website you accept them. If you are a client, your engagement agreement takes precedence over anything here."] },
     {
       title: "What the site is",
       paras: ["The site describes a managed authority system for expert-led firms and offers free material, including the Founder Authority System playbook, a cost calculator and an application form."],
@@ -77,7 +78,7 @@ export const TERMS: LegalDoc = {
       title: "What we are not responsible for",
       paras: ["The site is provided as it is. We take care over it, but we do not promise it will be available without interruption or free of errors, and we are not liable for decisions you take on the strength of free material. Nothing in these terms limits liability that cannot be limited by law."],
     },
-    { title: "Law", paras: ["These terms are governed by the law of [England and Wales], and its courts have exclusive jurisdiction."] },
+    { title: "Law", hidden: true, paras: ["These terms are governed by the law of [England and Wales], and its courts have exclusive jurisdiction."] },
     { title: "Changes", paras: [`We may update these terms. The current version is dated ${UPDATED}.`] },
   ],
 };

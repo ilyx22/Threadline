@@ -17,7 +17,7 @@ export function LegalPage({ doc }: { doc: LegalDoc }) {
             <p className="v9-tag legal-updated">Last updated {doc.updated}</p>
           </header>
           <div className="legal-prose">
-            {doc.sections.map((s) => (
+            {doc.sections.filter((s) => !s.hidden).map((s) => (
               <section key={s.title} className="legal-section">
                 <h2 className="v9-h3">{s.title}</h2>
                 {s.paras?.map((p) => (

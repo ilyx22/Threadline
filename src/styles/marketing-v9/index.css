@@ -1335,3 +1335,15 @@
   .legal-table th, .legal-table td { padding: 10px 10px; }
   .legal-table td:first-child { white-space: normal; }
 }
+
+/* ============================================================ pass 10 (26 September 2026): the hero runs */
+.v9-hero-scene.is-machine { align-self: end; margin: 0 calc(-1 * clamp(24px, 5vw, 70px)) -6px 0; }
+.v9-hero-scene.is-machine svg { display: block; width: 100%; height: auto; overflow: visible; }
+@media (max-width: 991px) { .v9-hero-scene.is-machine { margin: 28px calc(-1 * clamp(12px, 5vw, 70px)) -6px; } }
+@media (max-width: 759px) { .v9-hero-scene.is-machine { margin: 20px -20px -6px; } }
+@media (max-width: 379px) { .v9-hero-scene.is-machine { margin-left: -16px; margin-right: -16px; } }
+@media (max-width: 759px) {
+  /* phones: the machine at 1.8 times, framed on the press, the line and the buyers (the archive sits off the left edge) */
+  .v9-hero-scene.is-machine { overflow: hidden; aspect-ratio: 16 / 10; }
+  .v9-hero-scene.is-machine svg { width: 180%; height: auto; margin-left: -66%; margin-top: -6%; }
+}

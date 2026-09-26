@@ -198,3 +198,10 @@ Uses the same panel and wordmark rules; inherits the width change.
 | "Remove the first-engagement section from the playbook" | playbook | Gone (it lives on the homepage) |
 | "Move the bottom CTA up 0.5cm and lengthen the footer" | everywhere | Closing sections sit 20px higher; the footer gains 20px at the top |
 | "Add the privacy policy and the other legal pages" | everywhere | Three new pages in the site's system, linked from the footer's Fine print column: /privacy, /terms, /cookies. Written from what the site does (application data, client sessions, the tracked-link cookie, browser storage, Resend, Vercel). Square-bracketed placeholders need the owner: legal entity, company number, registered address, privacy contact, retention periods, governing law, storage provider. Note for the owner: the tracked-link cookie `tl_v` is a first-party measurement cookie; under PECR it may need consent, which is a decision for the owner and their adviser |
+
+## Tenth pass (26 September 2026)
+
+| Note | Where it applies | What changed |
+| --- | --- | --- |
+| "Can the hero be a loop animation of the machine running?" | everywhere | Yes. The hero scene is now a drawn machine in the site's kit that loops every nine seconds: a card leaves the archive on the thread, passes between the press rollers, comes out as a finished sheet, is pegged to the line and travels to the three buyers, and a signal returns along the lower thread as the next card sets off. The motion is SMIL, so it runs without JavaScript in every browser; under reduced motion the static final frame renders. The rendered hero image is retired from the homepage (the file stays in the repo) |
+| "I don't have an entity yet, keep it as a hidden section" | legal pages | "Who we are" and "Law" stay in the content marked hidden and do not render; a short "Questions and requests" section explains that the operating company is being set up. Every other bracketed placeholder is replaced with plain wording, so nothing on the live pages reads as a template |
