@@ -6,6 +6,7 @@ import { parseRecord } from "@/lib/db/json";
 import { Notice } from "@/components/ui/feedback";
 import { IntegrationList, AccountManager } from "./integrations-client";
 import { WebhookCredentials } from "./webhook-credentials";
+import { connectorReadiness } from "@/lib/integrations/connectors";
 import { appUrl } from "@/lib/app-url";
 import { prisma } from "@/lib/db/client";
 import { listCredentialMeta } from "@/lib/integrations/credentials";
@@ -97,6 +98,7 @@ export default async function IntegrationsPage({ params }: { params: Promise<{ o
             config: record ? parseRecord(record.config) : {},
             connectedAt: record?.connectedAt ? record.connectedAt.toISOString() : null,
             notes: record?.notes ?? null,
+            connectHref: connectorReadiness(definition.provider).state === "AUTH_REQUIRED" ? `/api/oauth/${definition.provider}/start?org=${slug}` : null,
           };
         })}
       />

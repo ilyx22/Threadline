@@ -47,6 +47,8 @@ type IntegrationView = {
   config: Record<string, unknown>;
   connectedAt: string | null;
   notes: string | null;
+  /** INT-01: set when the platform app is configured, so an account can be connected. */
+  connectHref?: string | null;
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -168,6 +170,13 @@ export function IntegrationList({
                       ) : null}
                     </CardBody>
 
+                    {canEdit && integration.connectHref ? (
+                      <div className="flex items-center gap-2 border-t border-line px-5 py-2.5">
+                        <a href={integration.connectHref} className="text-[12.5px] font-medium text-accent hover:text-accent-bright">
+                          Connect an account
+                        </a>
+                      </div>
+                    ) : null}
                     {canEdit && integration.configFields.length > 0 ? (
                       <div className="flex items-center gap-2 border-t border-line px-5 py-2.5">
                         <Button
