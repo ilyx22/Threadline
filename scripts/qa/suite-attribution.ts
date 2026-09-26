@@ -119,7 +119,10 @@ export async function runAttribution(fx: Fixture) {
   const dupe = await attempt(() => Attribution.recordCommercialEventAction(ALPHA, null, fd({ kind: "booked_call", source: "manual", attribution: "buyer_named", inquiryId: inqId, note: "Same call, entered twice." })));
   const range = lastNDays(30);
   const aa = await assetAttribution(A, range, "linear");
-  record("attribution:events", "duplicate booked_call on one deal counts once in attribution", dupe.outcome === "ok" && aa.outcomes === 1 ? "PASS" : aa.outcomes > 1 ? "FAIL" : "PARTIAL", `events stored=${await prisma.commercialEvent.count({ where: { orgId: A, inquiryId: inqId } })} outcomes considered=${aa.outcomes}`, aa.outcomes > 1 ? "ATTR-DUP" : undefined);
+  // Asset attribution counts valued outcomes only, and a booked call carries no
+  // value, so the dedupe is observed where it happens: one stored event per deal.
+  const storedForDeal = await prisma.commercialEvent.count({ where: { orgId: A, inquiryId: inqId, kind: "booked_call" } });
+  record("attribution:events", "duplicate booked_call on one deal counts once in attribution (refused or merged at write)", storedForDeal === 1 && aa.outcomes <= 1 ? "PASS" : "FAIL", `dupe=${dupe.outcome} booked calls stored for the deal=${storedForDeal} events stored=${await prisma.commercialEvent.count({ where: { orgId: A, inquiryId: inqId } })} outcomes considered=${aa.outcomes}`, aa.outcomes > 1 ? "ATTR-DUP" : undefined);
   const journey = await journeyForInquiry(A, inqId);
   record("attribution:journey", "journey assembles touches + outcome for the inquiry", !!journey ? "PASS" : "FAIL", journey ? `touches=${(journey as { touches?: unknown[] }).touches?.length ?? "?"} evidence=${(journey as { outcome?: { evidence?: string } }).outcome?.evidence ?? "?"}` : "null");
   const badKind = await attempt(() => Attribution.recordCommercialEventAction(ALPHA, null, fd({ kind: "jackpot", note: "x" })));

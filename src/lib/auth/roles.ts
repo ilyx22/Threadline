@@ -72,6 +72,8 @@ export const CAPABILITIES = [
   "tasks.complete",
   "reports.view",
   "reports.generate",
+  /// REP-01: marking a report or review final is Threadline's call, never the client's.
+  "reports.finalise",
   // AI
   "ai.generate",
   // Threadline's own commercial operations. The Living SOP Engine, prospects,
@@ -147,7 +149,6 @@ const CLIENT_ADMIN: Capability[] = [
   "distribution.publish",
   "performance.edit",
   "pipeline.edit",
-  "reports.generate",
 ];
 
 const INTERNAL_OPERATOR: Capability[] = [
@@ -171,6 +172,9 @@ const INTERNAL_OPERATOR: Capability[] = [
   "admin.support",
   "admin.sops",
   "admin.applications",
+  // REP-01: drafting and finalising reports is operator work.
+  "reports.generate",
+  "reports.finalise",
 ];
 
 const SUPER_ADMIN: Capability[] = [...CAPABILITIES];

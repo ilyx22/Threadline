@@ -962,11 +962,50 @@ model WeeklyReport {
   generatedById String?
   generatedAt   DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  /// REP-01: each correction of a final report is a new version; a final
+  /// version is never edited, and clients read the latest final one.
+  version        Int       @default(1)
+  supersedesId   String?
+  revisionReason String?
+  finalisedAt    DateTime?
+  finalisedById  String?
+  supersededAt   DateTime?
 
   org         Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
   generatedBy User?        @relation(fields: [generatedById], references: [id], onDelete: SetNull)
 
-  @@unique([orgId, periodStart])
+  @@unique([orgId, periodStart, version])
+  @@index([orgId, periodStart])
+}
+
+/// The four-week review at the end of each service period (REP-02), in the
+/// order ACTION, RESULTS, PROBLEMS, FUTURE. Figures are computed from records
+/// and frozen; the operator writes the judgement. Versioned like reports.
+model PeriodReview {
+  id              String    @id @default(cuid())
+  orgId           String
+  engagementId    String
+  periodNumber    Int
+  periodStart     DateTime  @db.Date
+  periodEnd       DateTime  @db.Date
+  version         Int       @default(1)
+  /// draft | final
+  status          String    @default("draft")
+  /// JSON: figures computed from the period's records.
+  figures         String    @default("{}")
+  action          String    @default("")
+  results         String    @default("")
+  problems        String    @default("")
+  future          String    @default("")
+  createdById     String?
+  finalisedAt     DateTime?
+  finalisedById   String?
+  supersededAt    DateTime?
+  revisionReason  String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @default(now()) @updatedAt
+
+  @@unique([engagementId, periodNumber, version])
   @@index([orgId, periodStart])
 }
 

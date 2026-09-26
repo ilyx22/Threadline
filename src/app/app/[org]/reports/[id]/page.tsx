@@ -22,7 +22,7 @@ export default async function ReportDetailPage({
 }) {
   const { org: slug, id } = await params;
   const ctx = await requireOrgPage(slug, "reports.view");
-  const report = await getReport(ctx.org.id, id);
+  const report = await getReport(ctx.org.id, id, ctx.role);
   if (!report) notFound();
 
   const p = report.payload;
@@ -51,6 +51,8 @@ export default async function ReportDetailPage({
             <Badge tone={report.status === "final" ? "positive" : "outline"}>
               {report.status === "final" ? "Final" : "Draft"}
             </Badge>
+            {report.version > 1 ? <Badge tone="outline">Version {report.version}</Badge> : null}
+            {report.supersededAt ? <Badge tone="warning">Replaced by a corrected version</Badge> : null}
             <span className="text-[12px] text-faint print-muted">
               Generated {formatDate(report.generatedAt)}
               {report.generatedBy ? ` by ${report.generatedBy.name}` : ""}
@@ -62,8 +64,15 @@ export default async function ReportDetailPage({
           reportId={report.id}
           status={report.status}
           canManage={ctx.can("reports.generate")}
+          canFinalise={ctx.can("reports.finalise")}
+          isLatest={!report.supersededAt}
         />
       </header>
+      {report.revisionReason ? (
+        <p className="rounded-md border border-line bg-elevated px-4 py-3 text-[13px] text-muted">
+          Correction of an earlier version: {report.revisionReason}
+        </p>
+      ) : null}
 
       {/* ----------------------------- Executive summary --------------------------- */}
       {report.narrative ? (

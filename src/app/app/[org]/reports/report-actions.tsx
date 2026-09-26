@@ -11,7 +11,11 @@ import {
   deleteReportAction,
   finaliseReportAction,
   generateWeeklyReportAction,
+  reviseReportAction,
 } from "@/lib/actions/reports";
+import { ActionForm, FormError, SubmitButton } from "@/components/forms/action-form";
+import { Field } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 
 export function GenerateReportButton({ slug }: { slug: string }) {
   const [open, setOpen] = React.useState(false);
@@ -75,13 +79,18 @@ export function ReportDetailActions({
   reportId,
   status,
   canManage,
+  canFinalise = false,
+  isLatest = true,
 }: {
   slug: string;
   reportId: string;
   status: string;
   canManage: boolean;
+  canFinalise?: boolean;
+  isLatest?: boolean;
 }) {
   const [pending, startTransition] = React.useTransition();
+  const [revising, setRevising] = React.useState(false);
   const router = useRouter();
 
   return (
@@ -90,7 +99,43 @@ export function ReportDetailActions({
         Print
       </Button>
 
-      {canManage && status !== "final" ? (
+      {canFinalise && status === "final" && isLatest ? (
+        <Button variant="ghost" onClick={() => setRevising(true)}>
+          Start a correction
+        </Button>
+      ) : null}
+      <Dialog open={revising} onOpenChange={setRevising}>
+        <DialogContent>
+          <DialogHeader title="Correct a final report" description="Creates a new draft version. The client keeps seeing the current version until the correction is finalised, and both versions stay on record." />
+          <ActionForm
+            action={reviseReportAction.bind(null, slug, reportId)}
+            onSuccess={(d: unknown) => {
+              setRevising(false);
+              router.push(`/app/${slug}/reports/${(d as { id: string }).id}`);
+            }}
+            className="contents"
+          >
+            {({ error, fieldErrors }) => (
+              <>
+                <DialogBody className="space-y-3">
+                  <FormError error={error} />
+                  <Field label="What is being corrected, and why" htmlFor="revise-reason" error={fieldErrors.reason}>
+                    <Input id="revise-reason" name="reason" required />
+                  </Field>
+                </DialogBody>
+                <DialogFooter>
+                  <Button variant="ghost" onClick={() => setRevising(false)}>
+                    Cancel
+                  </Button>
+                  <SubmitButton variant="primary">Start correction</SubmitButton>
+                </DialogFooter>
+              </>
+            )}
+          </ActionForm>
+        </DialogContent>
+      </Dialog>
+
+      {canFinalise && status !== "final" ? (
         <Button
           variant="accent"
           icon={BadgeCheck}

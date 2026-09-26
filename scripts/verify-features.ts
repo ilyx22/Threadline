@@ -250,7 +250,7 @@ async function main() {
   /* -------------------------------- Reporting -------------------------------- */
 
   const Rep = await import("../src/lib/data/reports");
-  await check("Report", "Weekly reports", () => Rep.listReports(orgId));
+  await check("Report", "Weekly reports", () => Rep.listReports(orgId, "internal_operator"));
   await check("Report", "Latest report", () => Rep.latestReport(orgId));
 
   const Diag = await import("../src/lib/data/diagnosis");

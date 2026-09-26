@@ -15,7 +15,7 @@ export const metadata: Metadata = { title: "Reports" };
 export default async function ReportsPage({ params }: { params: Promise<{ org: string }> }) {
   const { org: slug } = await params;
   const ctx = await requireOrgPage(slug, "reports.view");
-  const reports = await listReports(ctx.org.id);
+  const reports = await listReports(ctx.org.id, ctx.role);
 
   return (
     <div className="space-y-6">

@@ -1786,9 +1786,9 @@ async function main() {
     const range = weekRangeFor(daysAgo(weekOffset * 7));
     const payload = await computeWeeklyReport(org.id, range);
 
-    await prisma.weeklyReport.upsert({
-      where: { orgId_periodStart: { orgId: org.id, periodStart: range.start } },
-      create: {
+    // The seed runs on an emptied database, so a plain create is enough.
+    await prisma.weeklyReport.create({
+      data: {
         orgId: org.id,
         periodStart: range.start,
         periodEnd: range.end,
@@ -1797,8 +1797,8 @@ async function main() {
         narrative: buildNarrative(payload, weekOffset),
         generatedById: operator.id,
         generatedAt: daysAgo(weekOffset * 7 - 1),
+        finalisedAt: daysAgo(weekOffset * 7 - 1),
       },
-      update: {},
     });
   }
 

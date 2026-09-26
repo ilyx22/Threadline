@@ -388,16 +388,16 @@ async function runEngagement(e: Engagement) {
   }
 
   /* ----- 11. Weekly report. ----- */
-  await actAs(e.founderEmail);
+  await actAs(OPERATOR); // REP-01: Threadline drafts and finalises; the founder reads
   const rep = await attempt(() => Reports.generateWeeklyReportAction(slug, -3));
   const repId = data<{ id: string }>(rep)?.id ?? "";
-  const repView = repId ? await getReport(org.id, repId) : null;
+  const repView = repId ? await getReport(org.id, repId, "internal_operator") : null;
   const payload = (repView as { payload?: Record<string, unknown> } | null)?.payload ?? {};
   const payloadText = JSON.stringify(payload);
   const shipped = (payload as { shipped?: { count: number; titles?: string[] } }).shipped;
   const repRow = repId ? await prisma.weeklyReport.findUnique({ where: { id: repId } }) : null;
   const wantShipped = repRow ? await prisma.contentItem.count({ where: { orgId: org.id, liveAt: { gte: repRow.periodStart, lte: repRow.periodEnd } } }) : -1;
-  record(area, "founder generates the weekly report for the week the piece went live: shipped matches, no overclaim", rep.outcome === "ok" && wantShipped >= 1 && shipped?.count === wantShipped && !/guarantee|will generate|ROI of/i.test(payloadText) ? "PASS" : "FAIL", `${msg(rep)} shipped=${shipped?.count} expected=${wantShipped} views=${(payload as { performance?: { views?: number } }).performance?.views}`);
+  record(area, "operator generates the weekly report for the week the piece went live: shipped matches, no overclaim", rep.outcome === "ok" && wantShipped >= 1 && shipped?.count === wantShipped && !/guarantee|will generate|ROI of/i.test(payloadText) ? "PASS" : "FAIL", `${msg(rep)} shipped=${shipped?.count} expected=${wantShipped} views=${(payload as { performance?: { views?: number } }).performance?.views}`);
   if (mode === "bad") {
     record(area, "bad outcome: report carries the miss and the learning, not just the retest win", ((payload as { misses?: unknown[] }).misses?.length ?? 0) > 0 && ((payload as { learnings?: unknown[] }).learnings?.length ?? 0) > 0 ? "PASS" : "PARTIAL", `misses=${(payload as { misses?: unknown[] }).misses?.length ?? 0} learnings=${(payload as { learnings?: unknown[] }).learnings?.length ?? 0}`);
   }

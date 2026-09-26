@@ -9,7 +9,7 @@
  */
 import { execSync } from "node:child_process";
 import { prisma } from "../../src/lib/db/client";
-import { actAs, attempt, record, section } from "./context";
+import { actAs, attempt, fd, record, section } from "./context";
 import { buildFixture, teardown, ALPHA, type Fixture } from "./suite-tenancy";
 import * as Reports from "../../src/lib/actions/reports";
 import { listReports, getReport } from "../../src/lib/data/reports";
@@ -29,11 +29,14 @@ export async function runReports(fx: Fixture) {
   const memberGen = await attempt(() => Reports.generateWeeklyReportAction(ALPHA));
   record("reports", "client member cannot generate", memberGen.outcome !== "ok" ? "PASS" : "FAIL", `${memberGen.outcome}`);
   await actAs(A_ADMIN);
+  const adminGen = await attempt(() => Reports.generateWeeklyReportAction(ALPHA));
+  record("reports", "client admin cannot draft reports (operator work, REP-01)", adminGen.outcome !== "ok" ? "PASS" : "FAIL", `${adminGen.outcome}`);
+  await actAs(OPERATOR);
   const gen = await attempt(() => Reports.generateWeeklyReportAction(ALPHA));
   const rid = gen.outcome === "ok" ? (gen.value as { data: { id: string; isDemo: boolean } }).data.id : "";
   const isDemo = gen.outcome === "ok" ? (gen.value as { data: { isDemo: boolean } }).data.isDemo : null;
-  record("reports", "admin generates a report (demo provider, labelled)", gen.outcome === "ok" && isDemo === true ? "PASS" : "FAIL", `${gen.outcome} isDemo=${isDemo} ${(gen as { message?: string }).message?.slice(0, 50) ?? ""}`);
-  const rep = await getReport(A, rid);
+  record("reports", "operator generates a report (demo provider, labelled)", gen.outcome === "ok" && isDemo === true ? "PASS" : "FAIL", `${gen.outcome} isDemo=${isDemo} ${(gen as { message?: string }).message?.slice(0, 50) ?? ""}`);
+  const rep = await getReport(A, rid, "internal_operator");
   const rawPayload = (rep as { payload?: unknown } | null)?.payload ?? {};
   const parsed = (typeof rawPayload === "string" ? JSON.parse(rawPayload) : rawPayload) as Record<string, unknown>;
   const payload = JSON.stringify(parsed);
@@ -44,7 +47,7 @@ export async function runReports(fx: Fixture) {
   const present = required.filter((r) => r in learning);
   record("reports", "brief §33 sections (learned / expected-vs-actual / weakest link / what changed / limitations / next test / unknown) frozen in the payload", present.length === required.length ? "PASS" : "FAIL", `present: ${present.join(", ") || "none"} — missing: ${required.filter((r) => !present.includes(r)).join(", ") || "none"}`);
   record("reports", "report does not overclaim commercial results", !/guarantee|will generate|ROI of/i.test(payload) ? "PASS" : "FAIL", "");
-  const drafts = await listReports(A);
+  const drafts = await listReports(A, "internal_operator");
   const draftRow = drafts.find((r) => r.id === rid);
   record("reports", "report starts as draft", draftRow?.status === "draft" ? "PASS" : "FAIL", `status=${draftRow?.status}`);
   const scope = clientScope.reports("client_member");
@@ -54,6 +57,9 @@ export async function runReports(fx: Fixture) {
   const memberFinal = await attempt(() => Reports.finaliseReportAction(ALPHA, rid));
   record("reports", "client member cannot finalise", memberFinal.outcome !== "ok" ? "PASS" : "FAIL", `${memberFinal.outcome}`);
   await actAs(A_ADMIN);
+  const adminFin = await attempt(() => Reports.finaliseReportAction(ALPHA, rid));
+  record("reports", "client admin cannot finalise (REP-01)", adminFin.outcome !== "ok" && (await prisma.weeklyReport.findUnique({ where: { id: rid } }))?.status === "draft" ? "PASS" : "FAIL", `${adminFin.outcome}`);
+  await actAs(OPERATOR);
   const fin = await attempt(() => Reports.finaliseReportAction(ALPHA, rid));
   const finRow = await prisma.weeklyReport.findUnique({ where: { id: rid } });
   record("reports", "finalise → status final", fin.outcome === "ok" && finRow?.status === "final" ? "PASS" : "FAIL", `${fin.outcome} status=${finRow?.status}`);
@@ -67,6 +73,19 @@ export async function runReports(fx: Fixture) {
   record("reports", "generating again refuses and never rewrites the finalised one (QA-008)", gen2.outcome === "refused" && after!.payload === frozenPayload && after!.status === "final" ? "PASS" : "FAIL", `${gen2.outcome} frozen intact=${after!.payload === frozenPayload}`, gen2.outcome === "ok" ? "REPORT-REGEN" : undefined);
   const nowVisible = await prisma.weeklyReport.findMany({ where: { orgId: A, ...scope } });
   record("reports", "final report becomes client-visible", nowVisible.some((r) => r.id === rid) ? "PASS" : "FAIL", `client sees ${nowVisible.length}`);
+  const sent = await prisma.job.count({ where: { type: "email.send", idempotencyKey: { startsWith: `report:${rid}:v1:` } } });
+  record("reports", "finalising sends the report once per reader (REP-03)", sent >= 1 ? "PASS" : "FAIL", `${sent} email job(s)`);
+
+  // REP-01: corrections are new versions; the client keeps the current final until the correction is final.
+  await actAs(OPERATOR);
+  const rev = await attempt(() => Reports.reviseReportAction(ALPHA, rid, null, fd({ reason: "Views were double counted on one post" })));
+  const revId = rev.outcome === "ok" ? (rev.value as { data: { id: string } }).data.id : "";
+  const clientDuring = await listReports(A, "client_member");
+  record("reports", "a correction starts as a new draft version; the client still sees version 1", rev.outcome === "ok" && clientDuring.some((r) => r.id === rid) && !clientDuring.some((r) => r.id === revId) ? "PASS" : "FAIL", `${rev.outcome}`);
+  const finRev = await attempt(() => Reports.finaliseReportAction(ALPHA, revId));
+  const clientAfter = await listReports(A, "client_member");
+  const v1 = await prisma.weeklyReport.findUnique({ where: { id: rid } });
+  record("reports", "finalising the correction replaces version 1 for the client and keeps it on record", finRev.outcome === "ok" && clientAfter.some((r) => r.id === revId) && !clientAfter.some((r) => r.id === rid) && !!v1?.supersededAt && v1.payload === frozenPayload ? "PASS" : "FAIL", `${finRev.outcome}`);
   await actAs(OPERATOR);
   const priorDraft = await prisma.weeklyReport.create({ data: { orgId: A, periodStart: new Date(Date.now() - 21 * 86_400_000), periodEnd: new Date(Date.now() - 14 * 86_400_000), status: "draft" } });
   const opDel = await attempt(() => Reports.deleteReportAction(ALPHA, priorDraft.id));

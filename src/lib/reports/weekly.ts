@@ -255,6 +255,32 @@ export async function computeWeeklyReport(
     confidence: l.confidence,
   }));
 
+  // LRN-02: what the learning loop concluded about pieces shipped this period
+  // (an approved diagnosis and the correction it led to), ahead of generic
+  // patterns. A miss explained is the most useful thing a report can carry.
+  const shippedIds = assets.map((a) => a.contentItemId).filter((x): x is string => Boolean(x));
+  if (shippedIds.length) {
+    const diagnoses = await prisma.contentDiagnosis.findMany({
+      where: { orgId, contentItemId: { in: shippedIds }, approvalState: "approved", failureClass: { notIn: ["none", "insufficient_data"] } },
+      select: { id: true, contentItemId: true, failureClass: true, explanation: true, failedAssumption: true, confidence: true },
+      take: 4,
+    });
+    const corrections = diagnoses.length
+      ? await prisma.correctionEntry.findMany({ where: { orgId, diagnosisId: { in: diagnoses.map((d) => d.id) } }, select: { diagnosisId: true, correction: true } })
+      : [];
+    const titles = new Map(assets.map((a) => [a.contentItemId, a.title]));
+    const fromLoop = diagnoses.map((d) => {
+      const fix = corrections.find((c) => c.diagnosisId === d.id);
+      return {
+        title: `${(d.contentItemId && titles.get(d.contentItemId)) || "A piece"}: ${d.failureClass.replace(/_/g, " ")}`,
+        detail: [d.failedAssumption ? `We assumed ${d.failedAssumption}` : d.explanation, fix ? `Next: ${fix.correction}` : null].filter(Boolean).join(". "),
+        kind: "learning",
+        confidence: d.confidence === "high" ? 0.8 : d.confidence === "moderate" ? 0.6 : 0.4,
+      };
+    });
+    learningEntries.unshift(...fromLoop);
+  }
+
   const hookLeader = b.byHookShape.filter((h) => h.count >= 2)[0];
   if (hookLeader && learningEntries.length < 4) {
     learningEntries.push({
