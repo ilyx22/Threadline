@@ -1,6 +1,6 @@
 # Personalisation fields and prospect research
 
-**Status:** drafted; owner approval pending (27 September 2026).
+**Status:** READY FOR OWNER REVIEW (26 September 2026).
 **Sources:** First US Playbook V1 (Drive `1km_ovpl0Zwn70AlQ0gHECdMhxC1SjONYwATx_qAZ_4s`): the business-model filter, the Authority-System Gap, the channel rule, and what to log before sending. SOP Router §3–4. `prisma/schema.prisma` (the Prospect fields).
 
 **The rule behind every field:** only a **verified observation** goes into a message. Every observation has a source URL you opened yourself within the last 7 days. If a field cannot be filled truthfully, drop the sentence that needs it. Never fill it with a plausible guess.
@@ -26,8 +26,10 @@
 | `{{recent_thing}}` | A genuine recent event (a launch, talk or hire) | Verified and dated | "the new governance report" |
 | `{{their_phrase}}` | An exact phrase from a call | From your notes | — |
 | `{{asset_title}}` / `{{asset_or_link}}` | The promised observation or sample | **Exists before you mention it** | "3 authority angles for Northgate" |
-| `{{booking_link}}` | The event matching the track | Research: 15 minutes, sent by hand. Diagnosis: 45 minutes (`NEXT_PUBLIC_BOOKING_URL`). | — |
-| `{{sender_name}}` | The real sender's name | Real | — |
+| `{{booking_link}}` | The event matching the track | Research: the live Calendly "Founder Research — 20 mins" event, sent by hand. Diagnosis: 45 minutes proposed, **event not yet created** (`NEXT_PUBLIC_BOOKING_URL` once it exists). | — |
+| `{{meeting_link}}` | The video-call link for a booked meeting | From the booking confirmation | — |
+| `{{sender_email}}` | The real sender's mailbox | On threadlinehq.com | — |
+| `{{sender_name}}` | The real sender's name | A real named person; never a persona. Founder-personal sending waits for employer clearance (`OUTREACH_SEQUENCES.md` §0.2). | — |
 | `{{postal_address}}` | Threadline's business postal address | **Owner decision, not set yet.** It is required before any commercial email. | — |
 
 **Never personalise with:**

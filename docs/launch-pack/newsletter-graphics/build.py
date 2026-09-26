@@ -226,12 +226,12 @@ def g03():
 
 # ---------------------------------------------------------------- 04 PESTO
 def g04():
-    # Letter meanings as defined in the product (src/lib/ai/generators.ts, prompts.ts).
+    # PESTO as Marcos Ruiz (Vantage) defines it in the transcript the owner supplied: Personal, Expertise, Social proof, Trending, Opinions.
     letters = [("P", "Personal", "a story from your own experience", C["peach"]),
                ("E", "Expertise", "how the work is actually done", C["sky"]),
                ("S", "Social proof", "only with permission, never invented", C["mint"]),
                ("T", "Trending", "a current event, read through your lens", C["butter"]),
-               ("O", "Opinion", "a position you would defend to peers", C["lilac"])]
+               ("O", "Opinions", "positions you would defend to peers", C["lilac"])]
     bw = W - 2 * M
     b = [t(M, 392, "Not the goal: five equal slices", size=26, weight=500, fill=C["faint"])]
     x = M
@@ -260,9 +260,9 @@ def g04():
         y += 96
     b.append(t(M, 1338, "PESTO content mix, after Marcos Ruiz (Vantage).", size=24, fill=C["faint"]))
     alt = ("PESTO content mix, after Marcos Ruiz (Vantage): Personal (a story from your own experience), Expertise (how the work is actually done), "
-           "Social proof (only with permission, never invented), Trending (a current event read through your lens) and Opinion "
-           "(a position you would defend to peers). A dashed bar of five equal slices is marked 'not the goal'; a second bar shows one "
-           "client's illustrative weighting, led by expertise and opinion. Weights follow the evidence for each client and change.")
+           "Social proof (only with permission, never invented), Trending (a current event read through your lens) and Opinions "
+           "(positions you would defend to peers). A dashed bar of five equal slices is marked 'not the goal'; a second bar shows one "
+           "client's illustrative weighting, led by expertise and opinions. Weights follow the evidence for each client and change.")
     return svg(4, ["A content mix you tune,", "not a formula you split"], b, alt, tag="Weighting shown is illustrative"), alt
 
 
@@ -338,7 +338,7 @@ def g07():
         ("LinkedIn", "a decision memo", C["mint"]),
         ("Threads", "a conversation opener", C["butter"]),
         ("Diagram", "the mechanism, drawn", C["lilac"]),
-        ("YouTube", "the full depth", C["panel"]),
+        ("YouTube", "the full depth (pilot)", C["panel"]),
     ]
     cw, ch = 490, 176
     for i, (name, sub, f) in enumerate(cards):
@@ -351,11 +351,12 @@ def g07():
         ex = x + cw if col == 0 else x
         b.append(line(600, y + ch / 2, ex + (6 if col == 0 else -6), y + ch / 2, arrow=True, color=C["action"]))
         b.append(circle(600, y + ch / 2, 9, C["action"]))
-    b.append(t(W / 2, 1336, "Every piece keeps its root idea’s ID, so the learning adds up.", size=26, fill=C["soft"], anchor="middle"))
+    b.append(t(W / 2, 1300, "Every piece keeps its root idea’s ID, so the learning adds up.", size=26, fill=C["soft"], anchor="middle"))
+    b.append(t(W / 2, 1352, "Illustrative. The mix is prescribed per client; long-form YouTube is a pilot.", size=24, weight=500, fill=C["faint"], anchor="middle"))
     alt = ("One root idea at the top, 'More content can't fix unclear positioning', branches along a single thread into six native formats: "
            "a short video that shows it in under a minute, an X post with the argument kept tight, a LinkedIn decision memo, "
-           "a Threads conversation opener, a diagram of the mechanism, and a YouTube piece with the full depth. "
-           "Every piece keeps its root idea's ID, so the learning adds up.")
+           "a Threads conversation opener, a diagram of the mechanism, and a YouTube piece with the full depth (a pilot). "
+           "Every piece keeps its root idea's ID, so the learning adds up. Illustrative: the mix is prescribed per client, and long-form YouTube is a pilot.")
     return svg(7, ["One idea, expressed", "natively, six ways"], b, alt), alt
 
 
@@ -431,9 +432,9 @@ def g09():
 # ---------------------------------------------------------------- 10 calendar
 def g10():
     bands = [
-        ("PERIOD 1", ["Establish,", "calibrate"], ["W1", "W2", "W3", "W4"], C["sky"]),
-        ("PERIOD 2", ["Refine,", "correct"], ["W5", "W6", "W7", "W8"], C["mint"]),
-        ("PERIOD 3", ["Compound,", "concentrate"], ["W9", "W10", "W11", "W12"], C["peach"]),
+        ("PERIOD 1", ["Establish /", "calibrate"], ["W1", "W2", "W3", "W4"], C["sky"]),
+        ("PERIOD 2", ["Refine /", "correct"], ["W5", "W6", "W7", "W8"], C["mint"]),
+        ("PERIOD 3", ["Compound /", "concentrate"], ["W9", "W10", "W11", "W12"], C["peach"]),
         ("PERIOD 4+", ["Compound", "harder"], ["W13", "W14", "W15", "W16"], C["lilac"]),
     ]
     b = []
@@ -461,11 +462,136 @@ def g10():
         if k < 3:
             b.append(line(x + 232, 1206, x + 272, 1206))
         x += 276
-    alt = ("A calendar of four-week periods. Period 1, weeks 1 to 4: establish and calibrate. Period 2, weeks 5 to 8: refine and correct. "
-           "Period 3, weeks 9 to 12: compound and concentrate. Period 4 onwards, dashed: compound harder. Each period ends in a four-week review. "
+    alt = ("A calendar of four-week periods. Period 1, weeks 1 to 4: establish / calibrate. Period 2, weeks 5 to 8: refine / correct. "
+           "Period 3, weeks 9 to 12: compound / concentrate. Period 4 onwards, dashed: compound harder. Each period ends in a four-week review. "
            "The first engagement is periods 1 to 3, twelve weeks. Every review follows the same four headings: action (what we did), "
            "results (what happened), problems (what went wrong) and future (what changes next).")
     return svg(10, ["The four-week", "review cycle"], b, alt), alt
+
+
+# ---------------------------------------------------------------- 11 masthead / cover
+MARK = ('<path d="M3 17.5C5.5 17.5 6.2 6.5 9 6.5C11.8 6.5 12.2 17.5 15 17.5C17.8 17.5 18.5 6.5 21 6.5" stroke="{c}" stroke-width="1.6" '
+        'stroke-linecap="round" stroke-linejoin="round" opacity="0.9"/><circle cx="9" cy="6.5" r="1.9" fill="{c}"/>'
+        '<circle cx="15" cy="17.5" r="1.9" fill="{c}" opacity="0.55"/>')
+
+
+def g11():
+    b = [
+        rect(M, 340, W - 2 * M, 560, C["night"], r=36),
+        f'<g transform="translate({W / 2 - 12 * 9},{400}) scale(9)" fill="none">' + MARK.format(c=C["skyd"]) + "</g>",
+        t(W / 2, 700, "Field Notes", size=120, family=SERIF, fill=C["panel"], anchor="middle"),
+        t(W / 2, 790, "ISSUE {{issue}}  ·  {{date}}", size=28, weight=600, fill=C["skyd"], anchor="middle", ls="4"),
+        t(W / 2, 850, "Notes from the workshop: what we tested, what happened, what changes next.", size=24, fill=C["sky"], anchor="middle"),
+        t(M, 986, "IN THIS ISSUE", size=22, weight=600, fill=C["faint"], ls="3"),
+    ]
+    y = 1030
+    for k in range(1, 4):
+        b.append(rect(M, y, W - 2 * M, 84, C["panel"], r=20, stroke=C["skyd"]))
+        b.append(t(M + 30, y + 54, f"{k:02d}", size=26, weight=600, fill=C["action"]))
+        b.append(t(M + 100, y + 54, "{{headline_%d}}" % k, size=28, fill=C["ink"]))
+        y += 102
+    alt = ("Newsletter masthead template: a dark panel with the Threadline thread mark, the title 'Field Notes', placeholders for issue "
+           "number and date, and the line 'Notes from the workshop: what we tested, what happened, what changes next.' Below, an "
+           "'In this issue' list with three headline placeholders.")
+    return svg(11, ["Threadline", "Field Notes"], b, alt, tag="TEMPLATE · placeholders in braces"), alt
+
+
+# ---------------------------------------------------------------- 12 bottleneck diagnostic grid
+def g12():
+    rows = [
+        ("Ideas", ["Blank page", "every week"], ["Nothing captured", "from calls"], ["Mine last month’s", "call notes"], C["sky"]),
+        ("Scripts", ["Drafts sound", "generic"], ["Voice and claims", "not written down"], ["Check the", "Brand Brain"], C["mint"]),
+        ("Recording", ["Sessions", "keep slipping"], ["Setup friction,", "no fixed slot"], ["Book one", "recurring slot"], C["peach"]),
+        ("Editing", ["Cuts come", "back wrong"], ["No agreed", "editing standard"], ["Agree examples", "before cutting"], C["butter"]),
+        ("Approvals", ["Pieces wait", "for sign-off"], ["One approver,", "no backup"], ["Name a", "backup approver"], C["lilac"]),
+        ("Publishing", ["Approved but", "not live"], ["Manual posting", "falls through"], ["Schedule when", "approved"], C["sky"]),
+        ("Learning", ["Same result", "every week"], ["No expected", "vs actual"], ["Freeze a forecast", "before posting"], C["mint"]),
+    ]
+    xs = [M, M + 232, M + 506, M + 780]
+    heads = ["WHERE IT STALLS", "WHAT YOU SEE", "LIKELY CAUSE", "FIRST CHECK"]
+    b = [t(xs[i] + 8, 356, h, size=20, weight=600, fill=C["faint"], ls="2") for i, h in enumerate(heads)]
+    y = 380
+    for name, see, cause, check, f in rows:
+        b.append(rect(M, y, W - 2 * M, 112, C["panel"], r=18, stroke=C["skyd"]))
+        b.append(rect(M + 10, y + 12, 206, 88, f, r=14, stroke=C["ink"], sw=2))
+        b.append(t(M + 113, y + 66, name, size=28, weight=600, anchor="middle"))
+        for i, cell in enumerate([see, cause, check]):
+            b.append(t(xs[i + 1] + 8, y + 48, cell, size=24, fill=C["ink"] if i < 2 else C["action"], weight=400 if i < 2 else 600, lh=1.2))
+        y += 124
+    b.append(t(M, 1286, "Find the first stage that stalls. Fix that one before adding volume.", size=26, fill=C["soft"]))
+    alt = ("A diagnostic grid for where content stalls, with four columns: where it stalls, what you see, the likely cause and the first check. "
+           "Ideas: blank page every week, nothing captured from calls, mine last month's call notes. Scripts: drafts sound generic, voice and claims "
+           "not written down, check the Brand Brain. Recording: sessions keep slipping, setup friction and no fixed slot, book one recurring slot. "
+           "Editing: cuts come back wrong, no agreed editing standard, agree examples before cutting. Approvals: pieces wait for sign-off, one "
+           "approver and no backup, name a backup approver. Publishing: approved but not live, manual posting falls through, schedule when approved. "
+           "Learning: same result every week, no expected versus actual, freeze a forecast before posting. Find the first stage that stalls and fix "
+           "that one before adding volume.")
+    return svg(12, ["Where content", "actually stalls"], b, alt, tag="A checklist, not data"), alt
+
+
+# ---------------------------------------------------------------- 13 attribution evidence ladder
+def g13():
+    rungs = [
+        ("DIRECTLY_TRACKED", "Directly tracked", "A tracked link or code ties the enquiry to the piece.", C["mint"]),
+        ("BUYER_NAMED_CLIENT_ATTRIBUTED", "Buyer named it", "The buyer told the client which piece brought them.", C["sky"]),
+        ("MULTI_TOUCH_INFLUENCED", "Multi-touch influenced", "Several pieces touched the path; none alone.", C["butter"]),
+        ("ASSOCIATED_CORRELATED", "Associated / correlated", "Moved together in time; cause not shown.", C["peach"]),
+        ("QUALITATIVE_ONLY", "Qualitative only", "A comment or impression, not counted.", C["lilac"]),
+    ]
+    b = [
+        line(M + 18, 1200, M + 18, 372, arrow=True, color=C["action"]),
+        t(M + 44, 364, "STRONGER EVIDENCE", size=20, weight=600, fill=C["action"], ls="2"),
+    ]
+    y = 404
+    for k, (code, name, meaning, f) in enumerate(rungs):
+        x = M + 60 + k * 36
+        w = W - M - x
+        b.append(rect(x, y, w, 146, f, r=22, stroke=C["ink"]))
+        b.append(t(x + 30, y + 44, code, size=20, weight=600, fill=C["soft"], ls="1.5"))
+        b.append(t(x + 30, y + 88, name, size=32, weight=600))
+        b.append(t(x + 30, y + 126, meaning, size=24, fill=C["soft"]))
+        y += 164
+    b.append(t(M, 1266, "Every result carries its class. Do not overclaim causality.", size=28, weight=600))
+    b.append(t(M, 1312, "Organic content is not paid media: most results sit on the lower rungs.", size=24, fill=C["soft"]))
+    alt = ("An evidence ladder from strongest to weakest. Directly tracked: a tracked link or code ties the enquiry to the piece. Buyer named it "
+           "(buyer-named, client-attributed): the buyer told the client which piece brought them. Multi-touch influenced: several pieces touched the "
+           "path, none alone. Associated or correlated: moved together in time, cause not shown. Qualitative only: a comment or impression, not counted. "
+           "Every result carries its class; do not overclaim causality. Organic content is not paid media, so most results sit on the lower rungs.")
+    return svg(13, ["How strong is", "the evidence?"], b, alt), alt
+
+
+# ---------------------------------------------------------------- 14 proof / case-study template
+def g14():
+    b = [
+        rect(M, 336, W - 2 * M, 944, C["panel"], r=32, stroke=C["ink"]),
+        rect(W - M - 250, 360, 220, 56, C["night"], r=28),
+        t(W - M - 140, 397, "TEMPLATE", size=22, weight=600, fill=C["panel"], anchor="middle", ls="3"),
+        t(M + 40, 398, "{{client}}  ·  {{sector}}", size=34, weight=600),
+        t(M + 40, 440, "Permission: {{permission status and date}}", size=24, fill=C["soft"]),
+    ]
+    blocks = [
+        ("BASELINE", "{{baseline, dated}}", "Where it started, before the engagement", C["sky"], None),
+        ("WHAT CHANGED", "{{what changed}}", "The intervention, in one or two lines", C["mint"], None),
+        ("MEASURED RESULT", "{{measured result}}", "Measured by the platform or tracking", C["butter"], "{{evidence class}}"),
+        ("CLIENT-REPORTED", "{{client-reported}}", "What the client says happened commercially", C["peach"], None),
+        ("INFERENCE", "{{inference}}", "Our reading, labelled as a reading, not a measurement", C["lilac"], None),
+    ]
+    y = 478
+    for lab, ph, sub, f, chip in blocks:
+        b.append(rect(M + 30, y, W - 2 * M - 60, 142, f, r=20, stroke=C["ink"], sw=2))
+        b.append(t(M + 60, y + 42, lab, size=20, weight=600, fill=C["soft"], ls="2"))
+        b.append(t(M + 60, y + 88, ph, size=30, weight=600))
+        b.append(t(M + 60, y + 124, sub, size=24, fill=C["soft"]))
+        if chip:
+            b.append(rect(W - M - 330, y + 22, 270, 48, C["panel"], r=24, stroke=C["ink"], sw=2))
+            b.append(t(W - M - 195, y + 54, chip, size=22, weight=600, anchor="middle"))
+        y += 156
+    b.append(t(M, 1340, "Publish only with written permission. Keep measured, reported and inferred apart.", size=24, fill=C["soft"]))
+    alt = ("A case-study layout template containing placeholders only, marked TEMPLATE: client and sector, permission status and date, then five "
+           "blocks: baseline (dated, before the engagement), what changed, measured result with its evidence class, client-reported commercial "
+           "outcome, and inference, labelled as a reading rather than a measurement. Publish only with written permission and keep measured, "
+           "reported and inferred results apart. It contains no real results.")
+    return svg(14, ["Case study layout", "(template)"], b, alt, tag="No real results: placeholders only"), alt
 
 
 GRAPHICS = [
@@ -479,6 +605,10 @@ GRAPHICS = [
     ("08-sales-objections-to-content", g08),
     ("09-what-implementation-establishes", g09),
     ("10-four-week-review-cycle", g10),
+    ("11-newsletter-masthead-template", g11),
+    ("12-content-bottleneck-diagnostic", g12),
+    ("13-attribution-evidence-ladder", g13),
+    ("14-case-study-layout-template", g14),
 ]
 
 FONTS = "https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap"
@@ -497,4 +627,16 @@ if __name__ == "__main__":
         io.open(os.path.join(HERE, "render", name + ".html"), "w", encoding="utf-8", newline="\n").write(html)
         alts[name] = alt
     io.open(os.path.join(HERE, "render", "alt.json"), "w", encoding="utf-8").write(json.dumps(alts, indent=1, ensure_ascii=False))
+
+    # Contact sheet: every graphic, two rows of seven.
+    figs = "".join(
+        f"<figure><img src='export/{n}-1200.png' alt='{escape(alts[n], quote=True)}'><figcaption>{n}</figcaption></figure>"
+        for n, _ in GRAPHICS)
+    cs = ("<!doctype html><html><head><meta charset='utf-8'><title>Threadline newsletter graphics: contact sheet</title><style>"
+          "body{margin:0;padding:20px;background:#fff;font:14px/1.3 Inter,system-ui,sans-serif;color:#17233a}"
+          "main{display:grid;grid-template-columns:repeat(7,300px);gap:20px}figure{margin:0}"
+          "img{width:300px;height:375px;display:block;border:1px solid rgba(23,35,58,.12)}"
+          "figcaption{margin-top:6px;font-size:13px;color:#3b475e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
+          "</style></head><body><main>" + figs + "</main></body></html>")
+    io.open(os.path.join(HERE, "contact-sheet.html"), "w", encoding="utf-8", newline="\n").write(cs)
     print("wrote", len(GRAPHICS))

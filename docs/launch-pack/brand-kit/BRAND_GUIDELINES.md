@@ -93,10 +93,15 @@ These are the exact values from the site code: `--v9-*` for the live public pale
 - lilac `#E6DDFA`
 - butter `#FFF0C2`
 
-**Evidence colours in reports** are fixed so readers learn them:
-- **mint:** measured
-- **sky:** client-reported
-- **peach:** inference
+**Evidence colours in reports** are fixed so readers learn them. They map onto the five canonical evidence classes (Master Blueprint, SOP Router):
+
+| Colour | Evidence classes |
+| --- | --- |
+| **mint** (measured) | DIRECTLY_TRACKED |
+| **sky** (client-reported) | BUYER_NAMED_CLIENT_ATTRIBUTED; MULTI_TOUCH_INFLUENCED |
+| **peach** (inference) | ASSOCIATED_CORRELATED; QUALITATIVE_ONLY |
+
+Always print the class name beside the colour; colour alone never carries the meaning.
 
 ## 3. Typography
 
@@ -152,7 +157,7 @@ These rules follow `docs/design/ART_DIRECTION_2026-09-25.md`, which is itself st
 ### Photography
 - No photographs of people.
 - No stock imagery of teams, handshakes or laptops.
-- Threadline is presented as a brand. There is no founder face and no invented spokesperson.
+- Threadline is presented as a company-led brand initially. There is no founder face and no invented spokesperson.
 - Product screenshots are allowed, with any demo data labelled.
 
 ### Charts
@@ -163,7 +168,11 @@ These rules follow `docs/design/ART_DIRECTION_2026-09-25.md`, which is itself st
 
 ## 6. Voice and messaging
 
-**Name the buyer before the promise**, for example "For expert-led B2B firms".
+**What Threadline is:** a managed founder-authority / qualified-demand system (Master Blueprint). Not a "content service", an agency retainer or an AI tool.
+
+**Name the buyer before the promise, and name the wedge, not the umbrella.** "Expert-led B2B" is the umbrella category, not a validated niche. The initial wedge (a hypothesis, configurable per campaign) is founder- or principal-led AI transformation, AI strategy, fractional CAIO and specialist AI advisory firms (GTM SOP §25), for example "For founder-led AI advisory firms".
+
+**Content mix vocabulary:** PESTO = **Personal, Expertise, Social proof, Trending, Opinions**, after Marcos Ruiz (Vantage), per the transcript the owner supplied. It is a mix weighted to each client's evidence, not an equal split, and never a licence to invent a story or proof.
 
 **Canonical lines** (use them word for word):
 - "We are not trying to make you famous. We are trying to make you familiar to the people who matter."
@@ -188,7 +197,8 @@ These rules follow `docs/design/ART_DIRECTION_2026-09-25.md`, which is itself st
 - **Four-week periods, never "monthly":**
   - say "every four weeks", "service period" and "12-week initial engagement";
   - a four-week figure is never labelled monthly.
-- **Brand-led, not founder-named.** Public material speaks as Threadline.
+- **Company-led initially, not founder-named.** Public material speaks as Threadline for now (master to-do: "Use a Threadline-led identity initially. Do not create a fabricated founder"). This is an interim rule, not a permanent one: founder-personal presence waits on the owner's employer clearance. Sales conversations and contracts always name a real person.
+- **Domain and contact.** The main domain is **threadlinehq.com** ("Public brand says Threadline; 'HQ' is plumbing", chat handoff 16 September). It is not yet connected to the website. Use `{{contact_email}}` and `{{postal_address}}` placeholders until the owner confirms them; never invent an address.
 - **Cadence and platforms:**
   - no posting frequency is promised;
   - the platform mix is prescribed after diagnosis;
@@ -205,6 +215,8 @@ These rules follow `docs/design/ART_DIRECTION_2026-09-25.md`, which is itself st
 | `templates/report-document.html` | A4 report or working document. Structured as Action / Results / Problems / Future, with evidence chips and an expected-vs-actual callout |
 | `templates/report-cover.html` | A4 client report cover |
 | `templates/presentation-cover.html` | 16:9 cover slide (1920×1080) |
+| `social/threadline-linkedin-banner-1128x191.svg/.png` | LinkedIn company page banner; content sits right of the logo overlap |
+| `social/threadline-x-header-1500x500.svg/.png` | X header with the canonical line |
 | `templates/email-signature.html` | Table-based signature with inline styles, Threadline-branded only |
 
 All the templates share `templates/_brand.css`. To print to PDF, use Chrome with "Background graphics" on. Replace every `{{placeholder}}` before use.

@@ -115,15 +115,22 @@ Until a platform is approved, publishing is manual: approved packages are posted
 3. Sign in, open **Admin → System**: the configuration card should list no errors.
 4. Run one test application through to an accepted invitation with a colleague's address you control.
 
-## 11. Launch asset pack decisions (added 27 September 2026)
+## 11. Launch decisions and asset review (updated 26 September 2026)
 
-Full list with IDs: `docs/launch-pack/MASTER_LAUNCH_CHECKLIST.md`. None of these is secret.
+- Decisions with sources, recommendations and dependencies: `docs/launch-pack/OWNER_DECISIONS.md` (D-01…D-09).
+- What to review: `docs/launch-pack/REVIEW_INDEX.md`.
+- Nothing here is secret.
+
+**Live facts (26 Sept):**
+- threadlinex serves the same build but is inert: no database, and cron answers 503 without its secret.
+- threadlinehq.com has Google mail DNS and DMARC, but no web record.
+- The Calendly "Founder Research — 20 mins" event is recorded live in Drive.
 
 | What | Exact action | Where | Verify | Blocks |
 | --- | --- | --- | --- | --- |
-| Proof figures (O-01) | Send the source, timeframe and meaning of "conversions" for "100m+ views / 10,000+ conversions", or say remove | Tell the maintainer | Claims audit P-01 closed | Public trust |
-| Booking events (O-05) | Create a 15-minute research event and a 45-minute diagnosis event. Put the diagnosis link in `NEXT_PUBLIC_BOOKING_URL` (threadline project only) | Calendar tool; Vercel env | The apply page shows the booking link | Acquisition |
-| Support owner (O-06) | Name who answers Help requests, and the response times you will state | Tell the maintainer | The onboarding pack's support section is filled in | First client |
-| Apify research (O-11, optional) | If approved: `RESEARCH_EXTERNAL_PROVIDERS=apify`, `APIFY_TOKEN` (secret), `APIFY_ACTOR_ID`, optional `APIFY_MAX_ITEMS`. Set a usage limit in the Apify console. **Primary project only** | Vercel → threadline → env | `npm run env:check` clean; a scheduled run over a login-walled URL records Apify provenance | Feature |
-| Asset approvals (O-08, O-09, O-16) | Review the brand kit, onboarding pack, sales and outreach resources, and graphics. In `/admin/scripts`, **Import canonical drafts**, then approve the library blocks A–M | `docs/launch-pack/` | Status updated in the launch-pack README | First client |
-| Favicon / OG image (O-07) | Approve replacing the old "T + wave" icon with the current mark | Tell the maintainer | New icon live | Brand consistency |
+| Retire the mirror (D-04) | Settings → Git → Disconnect on project `threadlinex`. If you keep it instead, add `DEPLOYMENT_ROLE`=`mirror` there **before** any secret | Vercel | No new threadlinex deployments after the next push; or `/api/cron/jobs` on it answers `{"skipped":"mirror deployment"}` once it has a cron secret | Safe configuration |
+| Mark the primary | `DEPLOYMENT_ROLE`=`primary` (Production) on `threadline` | Vercel → threadline → Environment Variables | `/api/health` shows no role warning | First client |
+| Canonical domain (D-02) | Add `threadlinehq.com` and `www` to project `threadline`, then create the A/CNAME records Vercel shows at Namecheap. Keep the existing MX, SPF, DKIM and DMARC records | Vercel → Domains; Namecheap → Advanced DNS | `https://threadlinehq.com/api/health` answers with commit and status | Content CTAs, signatures |
+| Booking links (D-02) | Copy the Calendly "Founder Research — 20 mins" link into the outreach placeholders `{{research_booking_link}}`. Create a "Diagnosis call" event (45 minutes proposed) with booking questions, and set its link as `NEXT_PUBLIC_BOOKING_URL` (threadline only) | Calendly; Vercel | The apply page shows the booking link after a redeploy | Send-ready outreach |
+| Asset review | Work through `docs/launch-pack/REVIEW_INDEX.md`. In `/admin/scripts` (once the database exists), **Import canonical drafts**, then approve library A–M | Drive launch-pack folder; the app | Each item's status changes from READY FOR OWNER REVIEW to APPROVED in the manifest | First client |
+| Owner dry run | Run `docs/launch-pack/operations/OWNER_DRY_RUN.md` | Local or primary | `DRY_RUN_RESULTS_<date>.md` written | First client |

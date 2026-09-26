@@ -1,86 +1,60 @@
-# Master launch checklist (27 September 2026)
+# Master launch checklist (26 September 2026)
 
-Launch-ready means every row is ✓ in the **owner-approved** sense. Passing tests alone does not make it launch-ready.
+**Status words:**
 
 | Status | Meaning |
 | --- | --- |
-| ✓ | done and verified |
-| ◐ | produced, awaiting owner review |
-| ✗ | not done |
-| ⛔ | blocked by an external gate |
+| Implemented | The code exists |
+| Tested (simulated) | Checked against a local database and mock providers |
+| Configured | Production settings are present |
+| Verified live | Checked on the running deployment |
+| Drafted, awaiting owner review | Produced; the owner has not reviewed it |
+| Owner-approved | Signed off by the owner |
+| Externally blocked | Waiting on an owner input or an outside service |
 
-## 1. Business
+Launch-ready means the business items are owner-approved, production is verified live, and the owner dry run is done. Passing tests alone does not make it launch-ready.
 
-| # | Item | Status | Owner action → verification |
-| --- | --- | --- | --- |
-| B-1 | Offer confirmed: £2,500 implementation + £2,500 every four weeks, 12 weeks / 3 periods, £10,000 | ◐ (in code and SOP 04; defaults unconfirmed) | O-02: confirm, or change per client → a test engagement shows the terms |
-| B-2 | Proof claims substantiated or removed | ◐ | O-01: source, timeframe and definition for "100m+ / 10,000+", or delete the home band |
-| B-3 | Legal: terms, privacy, DPA template, counsel review of ownership wording, postal address for commercial email | ✗ | O-14 |
-| B-4 | Retention periods, RPO/RTO | ✗ | O-03: choose from operations/RPO_RTO_RETENTION_OPTIONS.md |
-| B-5 | Support owner, response times, escalation contact | ✗ | O-06 |
-| B-6 | Research-before-validation rule accepted (early tests with the uncertainty recorded) | ◐ | Review strategy §2 |
+**Related files:** decisions are in `OWNER_DECISIONS.md` (D-01…D-09), what to review is in `REVIEW_INDEX.md`, and canonical sources are in `SOURCE_REGISTER.md`.
 
-## 2. Assets
+## Business
 
-| # | Item | Status | Owner action |
-| --- | --- | --- | --- |
-| A-1 | Brand kit (logos, icons, guidelines, templates) | ◐ | O-08: approve, or mark changes |
-| A-2 | Live favicon / OG image on the current mark | ✗ (frontend freeze) | O-07: approve replacement → then swap `src/app/icon.svg`, `opengraph-image.tsx` |
-| A-3 | Onboarding pack | ◐ | O-16 |
-| A-4 | Sales call guide, one-pager, verbatim library | ◐ (library founder-approved in source; adaptations pending) | O-09: approve adaptations; approve the library blocks in `/admin/scripts` after **Import canonical drafts** |
-| A-5 | Outreach sequences, personalisation, examples | ◐ | O-09 |
-| A-6 | Ten newsletter graphics | ◐ | O-16; O-10: confirm the PESTO expansion |
-| A-7 | Brand-led content launch pack (Drive) | ◐ "drafted; owner review pending" | O-13: review; replace the `threadlinehq.com` CTA with the live domain |
-| A-8 | Objection vault LinkedIn answer | ✗ stale | O-12 |
+| Item | Status |
+| --- | --- |
+| Founding offer (£2,500 + £2,500 every four weeks × 3) | Implemented; offer approval pending (D-01) |
+| Public site and proof band | **Owner-approved, frozen**. The three content files were restored to the approved baseline after an unapproved edit in commit 5b9fd64 |
+| Canonical domain threadlinehq.com, and its redirect | Mail configured and verified live (MX, DMARC). Website not connected: externally blocked (D-02) |
+| Legal identity pack | Externally blocked (D-09) |
+| Recovery objectives and retention | Decision pending (D-03) |
+| Support owner and response times | Decision pending (D-07) |
+| Founder identity for commercial activity | Employer clearance pending (D-05) |
 
-## 3. Acquisition
+## Assets
 
-| # | Item | Status | Owner action → verification |
-| --- | --- | --- | --- |
-| Q-1 | Booking events: 15-minute research, 45-minute diagnosis | ✗ | O-05: create the events; set `NEXT_PUBLIC_BOOKING_URL` (primary only) → the apply page links to it |
-| Q-2 | Branded inbox with SPF/DKIM/DMARC | ✓ as reported earlier (not re-verified; not reset) | — |
-| Q-3 | Real LinkedIn profile truthful; no automation; no duplicate identities | owner | O-18 |
-| Q-4 | First A-tier micro-assets produced before any "want me to send it?" message | ✗ | Owner; never imply an asset exists before it does |
-| Q-5 | Funnel tracking in use: targeted, touches, replies, booked, attended, proposals, wins, demand source | ✓ implemented and tested locally | Needs the production DB |
-| Q-6 | Apify research fallback | off | O-11 |
+| Item | Status |
+| --- | --- |
+| Brand kit, including social headers | Drafted, awaiting owner review |
+| Onboarding pack (13 files, including pre-kickoff, kickoff agenda, first-period roadmap, results guide) | Drafted, awaiting owner review |
+| Sales: call guide, one-pager, research interview script, close-to-kickoff card | Drafted, awaiting owner review |
+| Verbatim library A–M | Owner-approved in its source (SOP 03). Needs import and approval in `/admin/scripts` once the database exists |
+| Outreach sequences and the client email lifecycle | Drafted, awaiting owner review. **Not send-ready**: the booking link, the 15-vs-20-minute wording and identity (D-02, D-05) are open |
+| 14 newsletter graphics and a sample newsletter layout | Drafted, awaiting owner review |
+| Brand-led content launch pack (Drive) | Drafted, awaiting owner review (unchanged) |
+| A-tier micro-assets (Drive) | Drafted; not sent |
 
-## 4. Delivery
+## Acquisition
 
-| # | Item | Status | Owner action |
-| --- | --- | --- | --- |
-| D-1 | Owner dry run (12 steps, stopwatch) | ✗ | Run operations/OWNER_DRY_RUN.md; record results |
-| D-2 | Founder time target validated | ✗ (internal estimate only) | From the dry run and client #1 |
-| D-3 | Processing worker, scanning | ⛔ | Owner checklist §4 |
-| D-4 | Social platforms connected (each is a feature) | ⛔ | Owner checklist §7 |
+| Item | Status |
+| --- | --- |
+| Research booking: Calendly "Founder Research — 20 mins" | Configured (recorded live in Drive); not verifiable from here |
+| Commercial diagnosis booking event | Externally blocked (D-02) |
+| Funnel tracking: targeted, touches, demand source | Implemented; tested (simulated) |
+| Early commercial test with recorded uncertainty | Implemented; tested (simulated); owner review (D-06) |
 
-## 5. Software and operations
+## Delivery and operations
 
-| # | Item | Status | Owner action → verification |
-| --- | --- | --- | --- |
-| S-1 | Code complete against the ledger | ✓ | — |
-| S-2 | Unit 824/824; QA run-all; marketing-v9; freeze hashes | ✓ this pass (see README → Verification) | — |
-| S-3 | threadline = primary; threadlinex = mirror or disconnected | ✗ | Owner checklist §0 |
-| S-4 | Production database and migrations | ⛔ | §1 → health `database:true` |
-| S-5 | Secrets, email, storage, cron, monitoring, backups | ⛔ | §2–§5 → health `configErrors:0`; drill on a Neon branch |
-| S-6 | Vercel quota (Hobby: 100 deployments a day) | decision | §0 |
-
-## Owner decisions and review tasks (index)
-
-- **O-01** Substantiate or remove the proof figures.
-- **O-02** Offer defaults and payment terms.
-- **O-03** Retention and RPO/RTO.
-- **O-04** threadlinex as a mirror or retired.
-- **O-05** Booking events.
-- **O-06** Support ownership.
-- **O-07** Favicon / OG image.
-- **O-08** Brand kit.
-- **O-09** Sales and outreach adaptations; approve the imported library blocks.
-- **O-10** PESTO expansion.
-- **O-11** Apify.
-- **O-12** Objection vault update.
-- **O-13** Content launch pack review and CTA domain.
-- **O-14** Legal pack.
-- **O-15** Founder time target from the dry run.
-- **O-16** Onboarding pack and graphics.
-- **O-17** "Inevitable by day ninety" wording.
-- **O-18** Research outreach from the owner's own real profile (strategy K-11).
+| Item | Status |
+| --- | --- |
+| Owner dry run (14 steps, with a real deliverable) | **Pending: the owner performs it** |
+| Production database, secrets, email, storage, cron, monitoring, backups | Implemented and tested (simulated). Externally blocked (owner checklist §0–§5) |
+| threadlinex isolation | Verified live: inert (no database, cron refused). Retire it or mark it as a mirror (D-04) |
+| Unit and QA tests | Unit 824/824; QA run-all 623 passed + 2 external gate; marketing-v9 62/62 (26 Sept) |

@@ -17,7 +17,7 @@ for f in render/*.html; do
 done
 if [ -f contact-sheet.html ]; then
   "$CHROME" --headless=new --disable-gpu --hide-scrollbars --user-data-dir="$PROFILE" \
-    --window-size=1620,860 --virtual-time-budget=8000 --screenshot="$DIR/contact-sheet.png" "file:///$DIR/contact-sheet.html" >/dev/null 2>&1
+    --window-size=2260,860 --virtual-time-budget=8000 --screenshot="$DIR/contact-sheet.png" "file:///$DIR/contact-sheet.html" >/dev/null 2>&1
 fi
 rm -rf "$PROFILE"
 ls export

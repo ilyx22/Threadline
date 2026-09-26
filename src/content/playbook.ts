@@ -14,9 +14,9 @@ export const PLAYBOOK_HERO = {
   start: { label: "Start the playbook", href: "#chapter-1" },
   meta: "15 minutes, fully interactive",
   facts: [
+    ["100m+", "views"],
+    ["10,000+", "conversions"],
     ["8", "chapters"],
-    ["8", "things to do"],
-    ["0", "email walls"],
     ["0", "vanity metrics"],
   ],
 } as const;

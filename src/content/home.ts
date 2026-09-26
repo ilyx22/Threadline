@@ -216,15 +216,9 @@ export const engagement = {
   more: { label: "See if Threadline fits", href: links.apply },
 } as const;
 
-/**
- * The founder's own track record from work before Threadline, stated as that and
- * not as Threadline client results. Numbers supplied by the owner on 26 September
- * 2026; source, timeframe and what "conversions" counts are awaiting the owner's
- * substantiation (docs/launch-pack/claims/CLAIMS_AUDIT.md, P-01). Remove the band
- * if they cannot be substantiated.
- */
+/** The founder's own track record, stated as the founder's, not as client results. Numbers supplied by the owner on 26 September 2026; wording to be confirmed. */
 export const proof = {
-  eyebrow: "Before Threadline: the founder's own content work",
+  eyebrow: "Built by someone who has done it",
   figures: [
     { n: "100m+", label: "views" },
     { n: "10,000+", label: "conversions" },
@@ -236,11 +230,11 @@ export const faq = {
   eyebrow: "Before you ask",
   headline: "The questions every founder asks first.",
   items: [
-    { q: "What do you need from me?", a: "A short recording session when it is useful, and one approval pass per batch. You talk, record, approve and sell. We run everything else, and the time it takes you is measured, not assumed." },
+    { q: "What do you need from me?", a: "About twenty minutes of recording a week when it is useful, and one approval pass. You talk, record, approve and sell. We run everything else." },
     { q: "Do I have to be on camera?", a: "Only where being on camera adds trust. Most of the work is written, spoken or shown, and the format is chosen per idea, not per platform." },
     { q: "Which platforms?", a: "The ones your buyers are actually in. Platforms are prescribed after diagnosis, not picked from a menu." },
-    { q: "How fast can we start?", a: "Onboarding starts as soon as the agreement is signed: your voice, your positioning and your buyer, mapped before the first piece goes out." },
-    { q: "Is there a long contract?", a: "Not a long one. The first engagement is twelve weeks, in three four-week periods, because one batch proves little. After that it continues four weeks at a time." },
+    { q: "How fast can we start?", a: "Onboarding takes 10 to 14 days: your voice, your positioning and your buyer, mapped before the first piece goes out." },
+    { q: "Is there a long contract?", a: "No. Engagements run month to month. Authority compounds, so we recommend committing to at least the first twelve weeks." },
     { q: "How long before it works?", a: "The first engagement is twelve weeks in three four-week periods. The first is quiet by design. By the third, the system runs on evidence from your own market." },
     { q: "What does it cost?", a: "Commercial terms are discussed on the call, once we both know it fits. We take a small number of firms at a time." },
     { q: "Is this about leads and views?", a: "Leads, views and followers are not the scoreboard. Named enquiries and conversations are, and every one is recorded with its evidence." },

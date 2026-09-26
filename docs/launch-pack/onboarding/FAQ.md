@@ -1,6 +1,6 @@
 # Client FAQ
 
-> Status: drafted; owner review pending. Client-facing.
+> Status: READY FOR OWNER REVIEW (not approved). Client-facing.
 
 **How much of my time will this take?**
 There's no fixed number. Onboarding, a kickoff conversation, recording sessions and approval passes are the core of it. Your team records the time spent on **Your time**, so we both see what it actually takes and can reduce it.
@@ -24,7 +24,7 @@ Use **Request changes** with a note. Comments stay attached to the version they 
 Only claims that are in your Brand Brain as cleared proof. Packaging with an unverified figure or promise language can't be approved.
 
 **What results should I expect, and when?**
-We don't guarantee views, leads or revenue. The first four-week period sets the baseline. By the third, the work concentrates on what your market has responded to. Every weekly report shows what we expected and what happened, even when the result is poor.
+We don't guarantee views, leads or revenue. The first four-week period sets the baseline. By the third (Compound / Concentrate), the work concentrates on what your market has responded to. Every weekly report shows what we expected and what happened, even when the result is poor.
 
 **How long is the engagement?**
 The first engagement is twelve weeks, in three four-week periods. After that it continues four weeks at a time.

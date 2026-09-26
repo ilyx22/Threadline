@@ -1,6 +1,6 @@
 # Team and access
 
-> Status: drafted; owner review pending. Client-facing. Source: `src/lib/auth/roles.ts`, **Settings → People**.
+> Status: READY FOR OWNER REVIEW (not approved). Client-facing. Source: `src/lib/auth/roles.ts`, **Settings → People**.
 
 ## Inviting someone
 

@@ -64,7 +64,7 @@ Rules for this task:
   a piece of customer language, a competitor observation, a founder belief, or a performance learning.
 - Do not repeat angles listed under "Recently covered".
 - Vary the shape: beliefs, mechanisms, objection handling, stories, teardowns, frameworks.
-- Weight the mix across PESTO (Personal, Expertise, Social proof, Trending, Opinion) and funnel roles to this
+- Weight the mix across PESTO (Personal, Expertise, Social proof, Trending, Opinions) and funnel roles to this
   client's evidence and goals. It is not an equal split. Never invent a personal story, a proof point or a
   trend: a Personal or Social-proof idea needs a real source in the context, or it is left out.
 - Prefer angles only THIS founder could credibly publish.

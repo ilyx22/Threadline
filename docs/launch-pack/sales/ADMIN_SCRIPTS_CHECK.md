@@ -1,6 +1,6 @@
 # `/admin/scripts` against the approved verbatim library
 
-**Checked:** 27 September 2026, by reading code and documents. No code was changed and no script row was created or approved. The live `SalesScript` table in production has not been inspected: production has no database configured yet.
+**Checked:** 26 September 2026, by reading code and documents. No code was changed and no script row was created or approved. The live `SalesScript` table in production has not been inspected: production has no database configured yet.
 **Status:** findings for the owner. Actions are marked **Owner** or **Maintainer**.
 
 ## What `/admin/scripts` imports today

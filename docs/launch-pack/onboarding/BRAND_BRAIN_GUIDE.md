@@ -1,6 +1,6 @@
 # Brand Brain
 
-> Status: drafted; owner review pending. Client-facing. The page is **Intelligence → Brand Brain**.
+> Status: READY FOR OWNER REVIEW (not approved). Client-facing. The page is **Intelligence → Brand Brain**.
 
 The Brand Brain is what Threadline writes from. It holds:
 

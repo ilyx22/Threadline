@@ -170,7 +170,7 @@ Scopes, versions and limits follow each platform's public documentation as of Se
 - **An uncertain or partly posted publish**: check the account; record the URL if it posted, send again if it did not, or resume a partly posted X thread (Distribution page).
 - **DMs from platforms without an API**: add the lead by hand in the Pipeline (manual entry), or send leads from a form or Zapier to an inbound source.
 
-## Changes for the launch asset pack (27 September 2026)
+## Changes for the launch asset pack (26 September 2026)
 
 - **Migrations:**
   - `*_wedge_early_commercial_test`: MarketWedge `testedBeforeValidation`, `uncertaintyNote`, `uncertaintyAt`, `uncertaintyById`.
@@ -190,4 +190,6 @@ Scopes, versions and limits follow each platform's public documentation as of Se
   - The founder-time figure is an internal target, shown to staff only.
   - The installation milestone is "First four-week period strategy approved".
   - The PESTO prompt weights the mix to the client's evidence and never invents stories.
-- **Public content** (frozen-site exception for inaccurate claims): `src/content/home.ts`, `playbook.ts`, `public-site.ts`. The freeze hashes were re-recorded.
+- **Public content:** commit 5b9fd64 edited `src/content/home.ts`, `playbook.ts` and `public-site.ts`. That edit was **reverted on 26 September 2026** under the owner's absolute frontend freeze. The three files and `evidence-public-freeze.txt` are byte-identical to the approved baseline b344360, and all 104 hashes verify. Any concerns about public claims are reported in `docs/launch-pack/claims/CLAIMS_AUDIT.md` only.
+- **PESTO label:** "Opinions" (the prompt only; the enum key stays `opinion`).
+- **Brief:** `docs/implementation/BACKEND_COMPLETION_BRIEF.md` is now the Drive version with section 18A. The older repo copy is in `docs/implementation/history/`.

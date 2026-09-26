@@ -1,6 +1,6 @@
 # Worked examples
 
-**Status:** drafted; owner approval pending (27 September 2026).
+**Status:** READY FOR OWNER REVIEW (26 September 2026). The research-track example stays DRAFT until the 15 versus 20 minute mismatch is resolved (`OUTREACH_SEQUENCES.md` §0.1).
 **Every firm, person, URL and observation below is FICTIONAL,** invented only to show how the fields and rules are applied. None of them is a real prospect, and no real person's details are used. The real first batch is in the First US Playbook V1 in Drive and is not reproduced here.
 **No message in this file has been sent.** The message wording is ADAPTATION (draft, owner approval pending) unless it is marked VERBATIM (playbook V1).
 
@@ -25,7 +25,7 @@
 
 (Only the bracketed fields were filled. The rest of the wording is unchanged.)
 
-**If Dana says yes:** send the one-pager, then the VERBATIM step 2 asking for **15 minutes**. Log the touch, the reply class **INTERESTED**, and the next action "book research call" with a date.
+**If Dana says yes:** send the one-pager, then the VERBATIM step 2 (which asks for **15 minutes**; the booked event is 20 minutes, so this waits for the owner's reconciliation, §0.1). Log the touch, the reply class **INTERESTED**, and the next action "book research call" with a date.
 
 **What not to write:** "I did a full audit of your content", because no audit exists; or "our clients in insurance see…", because there are no such clients.
 
@@ -51,7 +51,7 @@
 >
 > Threadline runs the authority system around expert-led firms: research, scripts, production, publishing and a weekly read of what the market responded to. You talk, record, approve and sell; we run the rest.
 >
-> Worth a 45-minute diagnosis call to see whether it fits Brightwater? If it isn't a fit I'll say so.
+> Worth a diagnosis call to see whether it fits Brightwater? If it isn't a fit I'll say so.
 >
 > {{sender_name}}, Threadline
 > {{postal_address}} · Not interested? Reply "no thanks" and I won't email again.
@@ -69,17 +69,17 @@
 | Track | Sales. The introducer said Priya is actively looking. |
 
 **Introduction reply (ADAPTATION, draft; fictional):**
-> "Thanks for the introduction, Alex (moving you to Bcc). Priya — Alex mentioned you're rethinking how Kestrel shows up before sales calls. Would a 45-minute call next week work? {{booking_link}}. If it's not relevant, just say."
+> "Thanks for the introduction, Alex (moving you to Bcc). Priya — Alex mentioned you're rethinking how Kestrel shows up before sales calls. Would a diagnosis call next week work? {{booking_link}}. If it's not relevant, just say."
 
 **Content influence:** the prospect first came through a referral (so the source is **referral**). The introducer and Priya both mention the Playbook, so record it as **content-assisted**, with the buyer's words as evidence: "Alex sent me your playbook chapter." It is **not** content-sourced.
 
-**At the call:** 45 minutes, following `../sales/SALES_CALL_GUIDE.md`. Outcome **PROPOSAL_PROCESS**, because the other co-founder must agree. Next action: send the proposal by an agreed date and book the decision conversation.
+**At the call:** 45 minutes (proposed length), following `../sales/SALES_CALL_GUIDE.md`. Outcome **PROPOSAL_PROCESS**, because the other co-founder must agree. Next action: send the proposal by an agreed date and book the decision conversation.
 
 ---
 
 ## Example 4: no-show, then opt-out (fictional example)
 
-- *Harbour & Finch*. Fictional. A research call was booked for 15 minutes; the contact did not join.
+- *Harbour & Finch*. Fictional. A 20-minute research call was booked; the contact did not join.
 - After 10 minutes, send the no-show message from sequences §9, once.
 - The reply comes: "Please take me off your list."
 - Action:

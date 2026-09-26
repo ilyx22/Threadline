@@ -2,7 +2,7 @@
 
 Date: 26 September 2026. Branch `backend/completion` (see `git log main..backend/completion`). This is a checkpoint audit of a large brief: it states what is done and tested, what is partial, and what is missing, without rounding up. The per-requirement record is `docs/implementation/BACKEND_COMPLETION_LEDGER.md`.
 
-## 1. Verdict (updated 27 September 2026)
+## 1. Verdict (updated 26 September 2026)
 
 - **Code against the requirement ledger: COMPLETE.**
   - 101 requirements are implemented and tested, and 5 were verified as already correct.
@@ -10,7 +10,8 @@ Date: 26 September 2026. Branch `backend/completion` (see `git log main..backend
   - 2 await an owner decision: INF-09 and PRV-01.
   - None is partial or missing, and none is blocked by unfinished code.
   - None is LIVE_VERIFIED: no production service is configured yet.
-  - Section 18A (the business launch asset pack) was received and addressed on 27 September 2026. See ledger rows LP-01…LP-11 and `docs/launch-pack/README.md`.
+  - Section 18A (the business launch asset pack) was received and addressed on 26 September 2026. See ledger rows LP-01…LP-14 and `docs/launch-pack/README.md`.
+  - Correction, 26 September 2026: commit 5b9fd64 had edited frozen public copy and re-recorded its hashes. This broke the owner's frontend freeze. The edit is reverted, the freeze is verified against baseline b344360, and claim concerns are now only reported.
     - Three more defects were found and fixed along the way:
       - the wedge page ignored conversation themes, so it always showed 0 converging;
       - "30-day strategy" clashed with the four-week periods;

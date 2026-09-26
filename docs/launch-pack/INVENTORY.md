@@ -1,4 +1,4 @@
-# Launch asset inventory (27 September 2026)
+# Launch asset inventory (26 September 2026)
 
 This inventory covers the repository, the app and Google Drive. Every item carries one class:
 
@@ -11,7 +11,7 @@ The "after this pass" column says what was done. Nothing here is owner-approved 
 
 ## Sources read, and precedence
 
-**Google Drive.** Access was confirmed and the files were read on 27 September 2026 with the owner's account. All seven files are owned by the owner.
+**Google Drive.** Access was confirmed and the files were read on 26 September 2026 with the owner's account. All seven files are owned by the owner.
 
 | Source | Drive id | What it governs | State |
 | --- | --- | --- | --- |
@@ -50,7 +50,7 @@ Where they conflicted, the conflict is recorded in `strategy/STRATEGY_RECONCILIA
 | Logo mark (drawn in code) | `src/components/brand/logo.tsx` | REUSABLE | Unchanged. Reproduced exactly as vector masters |
 | Vector logo masters (light, dark, mono) | none | MISSING | `brand-kit/logo/svg/` (23 files): outlined masters and live-text versions. AWAITING OWNER APPROVAL |
 | Transparent PNGs 512/1024/2048 | none | MISSING | `brand-kit/logo/png/` (27 files). AWAITING OWNER APPROVAL |
-| Avatar, app icon, favicon set, apple-touch | Live favicon `src/app/icon.svg` uses an older "T + cobalt wave" identity | NEEDS REVISION | New set in `brand-kit/icons/`. The live favicon and OG image are **not** replaced (frontend freeze): owner decision O-07 |
+| Avatar, app icon, favicon set, apple-touch | Live favicon `src/app/icon.svg` uses an older "T + cobalt wave" identity | NEEDS REVISION | New set in `brand-kit/icons/`. The live favicon and OG image stay as approved (frontend frozen; no action) |
 | Colour, type, spacing, clear space, minimum sizes | spread across `marketing-v9/index.css`, `marketing-v5/tokens.css`, the design DNA | NEEDS REVISION (scattered, partly stale) | `brand-kit/BRAND_GUIDELINES.md`, with values taken from code tokens. AWAITING OWNER APPROVAL |
 | Illustration, photo and chart guidance | `docs/design/ART_DIRECTION_2026-09-25.md` | REUSABLE | Summarised in the guidelines |
 | Voice, messaging and claims rules | Blueprint, Router, `docs/site/BRAND_SOURCE_OF_TRUTH.md` (stale typography) | NEEDS REVISION | Guidelines §voice plus `claims/CLAIMS_AUDIT.md` |
@@ -90,7 +90,7 @@ Where they conflicted, the conflict is recorded in `strategy/STRATEGY_RECONCILIA
 
 | Item | Before | Class | After |
 | --- | --- | --- | --- |
-| Ten newsletter graphics | none | MISSING | `newsletter-graphics/`: 10 editable SVGs, 20 PNG exports, contact sheet, alt text, suggested use. AWAITING OWNER APPROVAL. The PESTO expansion needs owner confirmation (O-10) |
+| Ten newsletter graphics, plus the Drive 18A extras | none | MISSING | `newsletter-graphics/`: 14 editable SVGs (the chat's ten, plus masthead, bottleneck diagnostic, attribution ladder, case-study template), 28 PNG exports, sample newsletter layout, contact sheet, alt text. READY FOR OWNER REVIEW. PESTO = Personal, Expertise, Social proof, Trending, Opinions |
 
 ## F. Social and content
 
@@ -105,8 +105,8 @@ Where they conflicted, the conflict is recorded in `strategy/STRATEGY_RECONCILIA
 | --- | --- | --- |
 | Research gate | 10 interviews / 6 converging blocked any commercial test | Commercial tests may start early with the uncertainty written down. "Validated" still needs the full sample |
 | Founder time "promise" (60 min/week) | Shown to clients as a promise | Shown to staff only, as an internal planning target (estimate) |
-| Public time claims ("twenty minutes", "10 to 14 days") and "month to month" | public copy | Corrected (inaccurate claims; frozen-site exception) |
-| "100m+ views / 10,000+ conversions" | unattributed on the home page and the Playbook hero | Home: attributed to the founder's work before Threadline, pending substantiation. Playbook hero: removed |
+| Public time claims ("twenty minutes", "10 to 14 days") and "month to month" | public copy | **Not changed** (frontend frozen by the owner). Briefly edited in 5b9fd64, reverted on 26 Sept. Reported in the claims audit |
+| "100m+ views / 10,000+ conversions" | home proof band and Playbook hero | Kept exactly as approved (the proof band is not reopened). The 5b9fd64 edit was reverted |
 | Funnel stages | first touch → … → offer → won | Adds targeted and touches (a touch log), proposals, and wins by demand source (content-sourced and content-assisted kept apart), plus an audience-to-call diagnostic with no benchmark |
 | Research providers | internal, pasted, public URL | Adds an optional Apify adapter (off unless approved), used as the fallback for refused public URLs |
 | Wedge convergence display | ignored themes (always 0) | Fixed |

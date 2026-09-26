@@ -1,6 +1,6 @@
 # Offboarding and export
 
-> Status: drafted; owner review pending. Client-facing, with retention an open owner decision.
+> Status: READY FOR OWNER REVIEW (not approved). Client-facing, with retention an open owner decision.
 
 ## Exporting your data at any time
 

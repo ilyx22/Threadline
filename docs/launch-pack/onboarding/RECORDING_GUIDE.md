@@ -1,6 +1,6 @@
 # Recording guide
 
-> Status: drafted; owner review pending. Client-facing. Pages: **Recording → Your setup** and **Recording → Recording Room**. Adapted from the Recording Readiness Install V2 draft.
+> Status: READY FOR OWNER REVIEW (not approved). Client-facing. Pages: **Recording → Your setup** and **Recording → Recording Room**. Adapted from the Recording Readiness Install V2 draft.
 
 ## 1. Set up once (Your setup)
 
@@ -11,7 +11,8 @@ Send Threadline:
 - **What you record on:** camera or phone, microphone, lights and tripod. Use what you already own.
 - **The room:** where you sit, what's behind you, what the light is doing, and whether it's quiet.
 - **Formats you need:**
-  - **Vertical short-form (9:16)** is the default for every engagement.
+  - Formats are prescribed per client after diagnosis. Delivery is video-led where video helps and text-native where it doesn't; a text-led engagement may need little or no recording setup.
+  - **Vertical short-form (9:16)** is the default *when video is prescribed*.
   - **Horizontal long-form (16:9)** is only for an agreed long-form pilot.
 
 Then press **Send for review**. Threadline checks:
@@ -24,7 +25,7 @@ Then press **Send for review**. Threadline checks:
 - repeatability (can you set it up alone next time?);
 - format.
 
-We tell you the single most important change. Recording setup problems show at the top of **This week** until they're fixed.
+Each item is graded **KEEP**, **MOVE**, **CHANGE** or **BUY**, and the setup as a whole is **READY**, **READY WITH LIMITATION** or **BLOCKED**. We tell you the single most important change. Recording setup problems show at the top of **This week** until they're fixed.
 
 **Upgrade in this order:**
 

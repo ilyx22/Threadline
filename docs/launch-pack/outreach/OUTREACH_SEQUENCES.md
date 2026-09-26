@@ -1,6 +1,6 @@
 # Outreach and follow-up sequences
 
-**Status:** drafted; owner approval pending (27 September 2026). No message has been sent and nobody has been enrolled. Everything here is sent **manually by a person**, one prospect at a time. Nothing is automated.
+**Status:** READY FOR OWNER REVIEW (26 September 2026), except where a section is marked DRAFT (blocked by the booking-length or identity decisions in §0). No message has been sent and nobody has been enrolled. Everything here is sent **manually by a person**, one prospect at a time. Nothing is automated.
 
 **Labels used in this file:**
 - **VERBATIM (playbook V1):** copied exactly from `THREADLINE_FIRST_US_RESEARCH_PROSPECT_BATCH_AND_OUTREACH_PLAYBOOK_V1` (Drive `1km_ovpl0Zwn70AlQ0gHECdMhxC1SjONYwATx_qAZ_4s`), which the SOP Router names as a script authority. Do not edit.
@@ -10,28 +10,32 @@ The personalisation fields (`{{…}}`) and research rules are in `PERSONALISATIO
 
 ---
 
-## 0. Meeting lengths: the 15 versus 20 minute question
+## 0. Meeting lengths, booking, sender identity and domain
 
-**What is actually configured (evidence from the repo, 27 September 2026):**
-- **No booking event is configured anywhere.**
-- The product holds one public booking link, `NEXT_PUBLIC_BOOKING_URL`. It is empty in `.env.example` and shown on `/apply` after an application (`src/lib/actions/booking.ts`). Each client workspace can also store its own booking link (onboarding and Settings).
-- None of these carries a meeting length.
+### 0.1 Meeting lengths (checked against Drive, 26 September 2026)
 
-**Where each number comes from:**
+| Meeting | Length | Evidence | State |
+|---|---|---|---|
+| **Research conversation** (research track) | **20 minutes** | Calendly event **"Founder Research — 20 mins"**, recorded as live in THREADLINE_CHAT_HANDOFF_2026-09-16 (Drive `12UjpNtrzUzklBM6jBf77HyDT162bW_ueQBUKW4bUv5k`) and in the master TODO (Drive `1lRHytJCSFBJpMbqYXGrljQVjgE1vbs0V`) | **Exists** (not opened from here: the Calendly account is not connected to this session) |
+| **Diagnosis sales call** (sales track) | **45 minutes, proposed** | Discovery structure in `src/lib/templates/master.ts`; no event recorded in Drive or any account checked | **Does not exist yet.** Owner to create |
+| Brand Brain / kickoff (after WON) | 60–90 minutes | SOP 04; Execution Manual V14.3 | Booked per client |
 
-| Length | Source | What it is for |
-|---|---|---|
-| **15 minutes** | Playbook V1, step 2 and the explicit-exchange variant ("15 minutes of market perspective"); the 6 September chat handoff | **Research conversation** (research track) |
-| **20 minutes** | Only in `src/lib/ai/mock.ts:820`. The offline demo provider suggests "a 20-minute call" when it drafts a reply to a **client's** inbound lead. | Not a Threadline booking length. It is a placeholder in demo output. |
-| **45 minutes** | `src/lib/templates/master.ts` ("Structure (45 minutes)") | **Diagnosis sales call** (sales track) |
-| **60–90 minutes** | SOP 04 | Brand Brain and kickoff, after WON |
+**Source defect to reconcile before any research script is send-ready.** The approved playbook scripts (§2.2 and §2.3, VERBATIM) ask for "15 minutes", but the booked event is 20 minutes. The Drive 18A brief flags exactly this. The verbatim text is kept unchanged here; the owner decides whether to change the event to 15 minutes or approve a 20-minute version of the scripts. Until then §2.2 and §2.3 are **DRAFT, not send-ready**. Never ask for 15 minutes and then book 20.
 
-**Resolution (recommended; owner decision to create the events):**
-1. **Research conversation: 15 minutes**, as the approved scripts promise. The playbook's 23 research questions do not fit in 15 minutes. Use the core subset in §2.4, and offer more time only if they volunteer it. Never ask for 15 minutes and then take 30.
-2. **Diagnosis call: 45 minutes.**
-3. Create two event types in the booking tool you choose. Put the 45-minute diagnosis event in `NEXT_PUBLIC_BOOKING_URL`, because it is the link shown on `/apply`. Send the 15-minute research link by hand; never publish it on the site.
-4. **Verify:** open `/apply`, submit a test application, confirm the booking link that appears opens the 45-minute event, then cancel the test booking.
-5. **Maintainer (optional):** change the demo wording in `src/lib/ai/mock.ts:820` so that demo output does not suggest a length that has not been configured. This is outside this pack.
+**Open in the master TODO:** "test the research path invitation → Founder Research 20-minute event" and "Finalise commercial booking questions".
+
+**Booking link on the site.** `NEXT_PUBLIC_BOOKING_URL` (shown on `/apply`) is not set in the repo. Put the diagnosis event there once it exists; send the research link by hand and never publish it on the site. **Verify:** submit a test application, confirm the link opens the diagnosis event, then cancel the test booking.
+
+### 0.2 Sender identity
+
+- The Drive master TODO: "Use a Threadline-led identity initially. Do not create a fabricated founder", and "Confirm the applicable Deloitte outside-business/conflict requirements before founder-personal commercial activity." The transcript audit (24 September): "Keep the brand company-led and covert initially."
+- So: messages are signed by a **real named person** ({{sender_name}}), never a persona. Outreach from the founder's **personal LinkedIn** and any founder-first-person line (library passage A) wait for that employer clearance. **Owner decision:** who signs research and sales messages until then.
+- Sender placeholders: {{sender_name}}, {{sender_email}}. Do not hard-code a person.
+
+### 0.3 Domain and inbox
+
+- Drive (chat handoff, 16 September): "Main domain: threadlinehq.com Defensive: threadlinehq.co". "Public brand says Threadline; 'HQ' is plumbing." A founder mailbox on threadlinehq.com is recorded there.
+- DNS check (26 September 2026): threadlinehq.com has Google Workspace mail (MX) and a DMARC record, but **no website record yet**, so links to threadlinehq.com do not open a page. Do not put a website link in a message until the owner connects the domain to the approved site. Do **not** replace threadlinehq.com with a Vercel address.
 
 ---
 
@@ -40,7 +44,7 @@ The personalisation fields (`{{…}}`) and research rules are in `PERSONALISATIO
 | | **Research track** | **Sales track** |
 |---|---|---|
 | Purpose | Understand how firms like theirs win work and where content breaks. This builds the interview evidence (10+ conversations, more than 5 converging). | Offer the Threadline engagement to a firm that may fit |
-| Ask | 15 minutes of their perspective | A 45-minute diagnosis call |
+| Ask | A 20-minute research conversation (the live Calendly event; see §0.1 on the scripts' "15 minutes") | A diagnosis call (45 minutes proposed; event not yet created) |
 | Pitch? | **No.** Do not pitch unless the prospect asks for commercial detail on their own (playbook "Do not do"). | Yes, honestly, with no guarantees |
 | Record | In `/admin/market/[id]`, research conversations, with "they raised it" versus "we named it" | In `/admin/prospects/[id]`: state, reply class, next action |
 | Move from research to sales | Only when the prospect asks about working together. Say so plainly: "Happy to talk about that separately — this call was research, so let me not blur the two." Book a separate diagnosis call. | — |
@@ -76,15 +80,19 @@ After a "yes": send the short asset directly (2–3 ideas at most; A-tier gets t
 **VERBATIM (playbook V1)**
 > “Sent below — hope at least one is useful. I’m currently researching how senior founder-led AI advisory firms are handling founder content / authority internally as the category gets noisier. I’m not trying to turn this into a pitch. Would you be up for 15 minutes sometime this week so I can understand where the process actually works or breaks on your side?”
 
+**Operator note (DRAFT until reconciled):** the booked research event is 20 minutes (§0.1). Do not send this wording with the 20-minute link until the owner resolves the mismatch.
+
 ### 2.3 The explicit-exchange variant (one message)
 
 **VERBATIM (playbook V1)**
 > “Hey [Name] — I’m researching how senior AI advisory firms are turning founder expertise into authority and demand. I had a look at [specific thing] and spotted [specific gap]. I’ve got 2–3 concrete ideas I’d happily share in exchange for 15 minutes of your perspective. No pitch — I’m trying to understand what the real bottleneck is before I build around assumptions.”
 
-### 2.4 The research call (15 minutes)
+**Operator note (DRAFT until reconciled):** same 15 versus 20 minute mismatch as §2.2.
 
-- **Open:** use the playbook's "RESEARCH-CALL OPEN" verbatim. It says: "I'm not going to pitch you."
-- **Core subset for 15 minutes.** These are playbook questions, by number: 3 (how clients find you), 5 (how content gets made today), 7 (what makes it stop), 8 (how important founder visibility is), 11 (the most frustrating part), 12 (what you have tried), 13 (what it costs), 14 (what "working commercially" would mean).
+### 2.4 The research call (20-minute event)
+
+- **Open:** use the playbook's "RESEARCH-CALL OPEN" verbatim (full text in `../sales/RESEARCH_INTERVIEW_SCRIPT.md`). It says: “I’m not going to pitch you.”
+- **Core subset for a 20-minute call.** These are playbook questions, by number: 3 (how clients find you), 5 (how content gets made today), 7 (what makes it stop), 8 (how important founder visibility is), 11 (the most frustrating part), 12 (what you have tried), 13 (what it costs), 14 (what "working commercially" would mean).
 - **Only if time allows and the conversation is commercially literate:** questions 18–23, including the price-sensitivity test, which comes after neutral discovery and never at the start.
 - **Record:** the exact phrases, the VOC fields, and whether *they* raised the problem or you named it. Record problem energy on a 0–5 scale.
 
@@ -118,7 +126,9 @@ Use this only once the prospect passes the business-model filter and the message
   - **Sole traders and some partnerships count as individuals.** Emailing them needs prior consent (or the soft opt-in, which does not apply to cold prospects). Check how the firm is constituted before emailing.
   - Keep a record of the legitimate-interests basis for processing the contact data, and honour objections.
 - **Postal address:** Threadline's business postal address has not been set in the repo. **Owner decision:** choose the address or registered-office service to use before any commercial email is sent.
-- Use the single branded Threadline inbox with SPF, DKIM and DMARC. Do not set up a multi-inbox or multi-domain sending stack before validation (playbook).
+- Use the single branded Threadline inbox on threadlinehq.com (Google Workspace; SPF, DKIM and DMARC recorded complete on 15 September in the master TODO). Do not set up a multi-inbox or multi-domain sending stack before validation (playbook).
+- **Wording rule** (Execution Manual V14.3): do not market generic "AI / Content OS / repurposing / authority / pipeline" language as unique. Lead with the specific observation and the closed learning loop, not category buzzwords.
+- The quoted line “You talk. You record. You approve. You sell. Threadline handles the machine.” is **verbatim from Execution Manual V14.3** (§2).
 
 **Cold email 1.** ADAPTATION (draft, owner approval pending):
 > Subject: {{firm}} — {{observed_evidence_short}}
@@ -127,11 +137,13 @@ Use this only once the prospect passes the business-model filter and the message
 >
 > I read {{source_title}} ({{source_url}}). {{observed_evidence}} is a stronger point of view than most {{category}} firms put in front of buyers — but from the outside it only shows up {{where_it_shows_up}}.
 >
-> Threadline runs the authority system around expert-led firms: research, scripts, production, publishing and a weekly read of what the market responded to. You talk, record, approve and sell; we run the rest.
+> Threadline does the research, scripting, production and publishing around expert-led firms, and each week reads back what your market actually responded to.
 >
-> Worth a 45-minute diagnosis call to see whether it fits {{firm}}? If it isn't a fit I'll say so.
+> “You talk. You record. You approve. You sell. Threadline handles the machine.”
 >
-> {{sender_name}}, Threadline
+> Worth a diagnosis call to see whether it fits {{firm}}? If it isn't a fit I'll say so.
+>
+> {{sender_name}}, Threadline · {{sender_email}}
 > {{postal_address}} · Not interested? Reply "no thanks" and I won't email again.
 
 **Follow-up (3–4 business days later).** ADAPTATION (draft): add one new, specific observation. Do not "bump".
@@ -144,29 +156,36 @@ Use this only once the prospect passes the business-model filter and the message
 
 ## 4. LinkedIn and X messages (manual, real profile only)
 
-- Send from the founder's **real** LinkedIn profile, improved truthfully first (playbook). Never from a new or duplicate identity. Threadline's public brand is company-led; the person sending is who they really are.
+- **LinkedIn outbound is the launch acquisition channel** (Drive master TODO).
+- Send from a **real** person's own LinkedIn profile, improved truthfully first (playbook). Never from a new, duplicate or fabricated identity. Outreach from the **founder's personal profile** waits for the employer-clearance decision in §0.2 (owner decision). Threadline's public brand is company-led; the person sending is who they really are.
 - No automation: no connection-request tools, no auto-follow-ups, no scraping. LinkedIn prohibits unauthorised automated messaging.
 - Engage with a recent post only when you have something genuinely useful to add. No engagement theatre, no pods.
 - **Research:** use the §2.1 LinkedIn step 1 (VERBATIM).
 - **Sales, connection note (under 300 characters).** ADAPTATION (draft):
-> "{{first_name}} — your point on {{observed_evidence_short}} was the sharpest thing I've read on {{topic}} this month. I run Threadline (authority systems for expert-led firms). Would be glad to connect."
+> "{{first_name}} — your point on {{observed_evidence_short}} was the sharpest thing I've read on {{topic}} this month. I work on Threadline; we build the content engine around expert-led advisory firms. Would be glad to connect."
 - **Sales, after they accept.** ADAPTATION (draft): send the cold email body in §3 as a DM, without the compliance footer. Keep the "if it isn't a fit I'll say so" line. Do not pitch in the connection note itself.
 - **X DMs:** only where the person has open DMs and is active. Use the same research or sales wording, shortened. Do not cold-DM people who have closed their DMs.
+
+### 4.1 Phone, and choosing one Primary system (Execution Manual V14.3)
+
+- "One Primary system first; direct phone gets priority testing if legitimate founder numbers are readily available; otherwise LinkedIn/email can be Primary. Email matures in parallel. Build Secondary/Tertiary only after Primary proof." (verbatim). "Do not hard-code cold email as primary." (verbatim)
+- **Phone, ADAPTATION (draft):** call only a number the firm publishes for business contact. Open with who you are and why you are calling in one sentence, ask if now is a bad time, and offer to send the observation instead. Research calls say they are research; sales calls say they are sales. UK: screen against the Corporate TPS before calling a business number; US: business-to-business calls to a published business line are generally permitted, but honour any do-not-call request immediately and record it.
+- Record the channel on every first touch and compare reply and booking quality before choosing the scaled mix (playbook).
 
 ---
 
 ## 5. Warm introductions and referrals
 
 **Asking a mutual contact for an introduction.** ADAPTATION (draft):
-> "Would you be comfortable introducing me to {{first_name}} at {{firm}}? I'm {{research: 'researching how senior advisory firms turn expertise into demand and would value 15 minutes of their view' | sales: 'running Threadline and think the way they talk about {{topic}} could reach far more of the right buyers'}}. Only if you think they'd welcome it — here's a two-line blurb you can forward: {{blurb}}."
+> "Would you be comfortable introducing me to {{first_name}} at {{firm}}? I'm {{research: 'researching how senior advisory firms turn expertise into demand and would value 20 minutes of their view' | sales: 'working on Threadline and think the way they talk about {{topic}} could reach far more of the right buyers'}}. Only if you think they'd welcome it — here's a two-line blurb you can forward: {{blurb}}."
 
 **Blurb to forward.** ADAPTATION (draft):
-> "{{sender_name}} runs Threadline, which builds the content and authority system around expert-led firms. They asked to meet you because of {{observed_evidence_short}}. No obligation."
+> "{{sender_name}} works on Threadline, which runs the content engine around expert-led advisory firms. They asked to meet you because of {{observed_evidence_short}}. No obligation."
 
-**After the introduction.** ADAPTATION (draft): reply within one business day. Move the introducer to Bcc. Ask for the call length that matches the track: 15 minutes for research, 45 for a diagnosis.
+**After the introduction.** ADAPTATION (draft): reply within one business day. Move the introducer to Bcc. Ask for the call length that matches the track: 20 minutes for research (the live event), a diagnosis call for sales (45 minutes proposed, once the event exists).
 
 **A client or contact refers someone.** ADAPTATION (draft):
-> "{{referrer}} suggested we speak — thank you for being open to it. {{one_line_reason}}. Would a {{15|45}}-minute call next week work? If it's not relevant, just say and I'll close it off."
+> "{{referrer}} suggested we speak — thank you for being open to it. {{one_line_reason}}. Would a {{20|45}}-minute call next week work? If it's not relevant, just say and I'll close it off."
 
 Record the prospect's source as a referral, and its content influence where it is known (see `PERSONALISATION_AND_RESEARCH.md` §5).
 
@@ -207,10 +226,12 @@ B-tier prospects get truthful personalisation, not a bespoke asset, until they s
 
 Every reply gets one class, a next action and a due date, recorded on `/admin/prospects/[id]`.
 
+**These reply templates are provisional.** The Execution Manual says: "Build reply templates only from repeated real conversations. Do not over-script early." Replace each one with wording drawn from real replies once patterns repeat.
+
 | Class | Meaning | Response (ADAPTATION, draft) | Next action |
 |---|---|---|---|
-| **INTERESTED** | Wants to talk | "Great — here's a link for a {{15|45}}-minute slot: {{booking_link}}. If none of those work, send me two times." | Booked within 2 business days |
-| **CURIOUS** | Asks what this is | Two sentences on what Threadline does, then: "Easiest is a short call — would {{15|45}} minutes work?" | Follow up in 3 business days |
+| **INTERESTED** | Wants to talk | "Great — here's a link for a {{20|45}}-minute slot: {{booking_link}}. If none of those work, send me two times." | Booked within 2 business days |
+| **CURIOUS** | Asks what this is | Two sentences on what Threadline does, then: "Easiest is a short call — would {{20|45}} minutes work?" | Follow up in 3 business days |
 | **SEND_INFO** | "Send me something" | Send only what exists: the relevant Playbook chapter link or the promised observation. "Happy to walk through it live if useful." | Follow up in 5 business days |
 | **NOT_NOW** | Timing | "Understood. Is there a better time to check back, or would you rather I didn't?" | Their date, or close |
 | **OBJECTION** | A specific concern | Answer honestly and briefly with the matching response from `../sales/SALES_CALL_GUIDE.md` §10. Never argue twice. | Their reply, or close in 7 days |
@@ -224,11 +245,16 @@ Every reply gets one class, a next action and a due date, recorded on `/admin/pr
 
 ## 9. Booking, reminders, no-shows, post-call
 
-**Booking confirmation** (the booking tool's own confirmation is enough; add a line only if it helps). ADAPTATION (draft):
-> "Booked for {{date_time}} ({{15|45}} minutes). {{research: 'I'll bring the notes I mentioned.' | sales: 'I'll come with a couple of hypotheses about {{firm}} — tell me if anything's changed.'}}"
+**Booking touches: three, every time** (Execution Manual V14.3 §14, verbatim): "Immediate confirmation: what the diagnosis will cover + exact meeting details." "Day-before reminder: concise reminder plus useful context/proof where appropriate." "Day-of reminder: short exact link/time." The booking tool's automatic emails do not replace these; send them by hand (or confirm the tool sends exactly these). "If booking rate is good and show rate is poor, fix this stage instead of increasing outreach." (verbatim)
 
-**Reminder** (only if the booking tool does not send one; send it by hand the day before). ADAPTATION (draft):
-> "Looking forward to tomorrow at {{time}}, {{first_name}}. If anything's come up, just reply and we'll move it."
+**1. Immediate confirmation.** ADAPTATION (draft):
+> "Booked for {{date_time}} ({{20|45}} minutes, {{meeting_link}}). {{research: 'This is a research conversation: how work comes in for you and where content helps or breaks. No pitch.' | sales: 'We'll cover how work comes in today, where content fits, and whether the problem Threadline solves is yours. If it isn't a fit I'll say so.'}}"
+
+**2. Day-before reminder.** ADAPTATION (draft):
+> "Looking forward to tomorrow at {{time}}, {{first_name}}. {{sales: 'One thing worth having to hand: roughly what a typical engagement is worth to you.'}} If anything's come up, just reply and we'll move it."
+
+**3. Day-of reminder.** ADAPTATION (draft):
+> "Today at {{time}}: {{meeting_link}}"
 
 **No-show.** Wait 10 minutes, then send once. ADAPTATION (draft):
 > "Looks like today didn't work out — no problem at all. Here's the link if you'd like to pick another time: {{booking_link}}."
@@ -238,7 +264,7 @@ If there is no response after 3 business days, send one close-the-loop message (
 
 **After a diagnosis call** (within 24 hours). ADAPTATION (draft):
 > "Thanks, {{first_name}}. What I heard: {{problem_in_their_words}}. What you want in 90 days: {{desired_in_their_words}}. What we agreed: {{next_step}} by {{date}}. {{if_proposal: 'The proposal will be with you by {{date}}.'}} If I've got any of that wrong, tell me."
-Send nothing that was not promised on the call. One reminder before the agreed decision date, one close-the-loop message after it, then record the final state (WON / FOLLOW_UP / PROPOSAL_PROCESS / NOT_FIT / LOST).
+Send nothing that was not promised on the call. One reminder before the agreed decision date, one close-the-loop message after it, then record the final state (NOT_FIT / FOLLOW_UP / PROPOSAL_PROCESS / WON; LOST if a follow-up or proposal ends without a yes).
 
 ---
 

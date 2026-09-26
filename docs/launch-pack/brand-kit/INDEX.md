@@ -90,6 +90,17 @@ Avatars, app icon, favicon set
 | [icons/favicon.ico](icons/favicon.ico) | ICO | 3.7 KB | — |
 | [icons/favicon.svg](icons/favicon.svg) | SVG | 0.6 KB | — |
 
+## social
+
+Social headers (LinkedIn company banner, X header). Content sits right of the profile-image overlap.
+
+| File | Format | Size | Pixels |
+| --- | --- | --- | --- |
+| [social/threadline-linkedin-banner-1128x191.svg](social/threadline-linkedin-banner-1128x191.svg) | SVG | 6.6 KB | — |
+| [social/threadline-linkedin-banner-1128x191.png](social/threadline-linkedin-banner-1128x191.png) | PNG | 17.3 KB | 1128×191 |
+| [social/threadline-x-header-1500x500.svg](social/threadline-x-header-1500x500.svg) | SVG | 7.0 KB | — |
+| [social/threadline-x-header-1500x500.png](social/threadline-x-header-1500x500.png) | PNG | 60.5 KB | 1500×500 |
+
 ## templates
 
 Print-ready HTML templates (A4, 16:9, email)

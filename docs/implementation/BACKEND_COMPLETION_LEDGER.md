@@ -193,7 +193,7 @@ Status key per row. "Evidence" names the test or proof.
 | DOC-03 | TECHNICAL_HANDOFF.md | IMPLEMENTED_TESTED | docs/TECHNICAL_HANDOFF.md |
 | DOC-04 | CLIENT_AND_OPERATOR_RUNBOOK.md | IMPLEMENTED_TESTED | docs/CLIENT_AND_OPERATOR_RUNBOOK.md |
 
-## Remaining requirements by blocker (27 September 2026)
+## Remaining requirements by blocker (26 September 2026)
 
 Every row not IMPLEMENTED_TESTED or EXISTING_VERIFIED, with the kind of blocker. **No row is blocked by unfinished code.**
 
@@ -234,7 +234,7 @@ DATABASE_URL=... npm test && DATABASE_URL=... node scripts/qa/run.cjs run-all
 
 Next code work: none is outstanding against the ledger. Remaining work is configuration, provider approval and owner decisions (section above). After configuration: run the live checks in OWNER_ACTIVATION_CHECKLIST.md section 10 and move rows to LIVE_VERIFIED only on real evidence.
 
-## Section 18A: business launch asset pack (received and addressed 27 September 2026)
+## Section 18A: business launch asset pack (received and addressed 26 September 2026)
 
 These rows cover the brief's missing section 18A. Status words follow the ledger.
 
@@ -244,12 +244,15 @@ These rows cover the brief's missing section 18A. Status words follow the ledger
 | --- | --- | --- | --- | --- |
 | LP-01 | Inventory of repo, app and Drive (reusable / needs revision / missing / awaiting approval) | `docs/launch-pack/INVENTORY.md` | IMPLEMENTED_TESTED | All 7 Drive sources read with the owner's account |
 | LP-02 | Research gate separated from outreach, testing and validation | `assertEarlyTestRecorded`; wedge `testedBeforeValidation` / `uncertaintyNote`; validation thresholds enforced on `→ validated` | IMPLEMENTED_TESTED | `sop.test.ts` (4 new tests); `suite-sales-validation` (3 new checks) |
-| LP-03 | Numerical time commitments traced; unsupported ones relabelled | Claims audit T-01…T-13. Public copy corrected. The in-app 60 min is an internal target, shown to staff only | IMPLEMENTED_TESTED | marketing-v9; freeze hashes re-recorded for 3 content files |
-| LP-04 | Proof claims audited; public claims qualified or removed | Claims audit P-01…P-04 | IMPLEMENTED_TESTED (owner substantiation O-01 open) | — |
+| LP-03 | Numerical time commitments traced; unsupported ones relabelled | Claims audit T-01…T-13. The in-app 60 min is an internal staff-only estimate. Public copy is **not changed**: frontend frozen, and the 5b9fd64 edit was reverted on 26 Sept | IMPLEMENTED_TESTED | 104 freeze hashes match baseline b344360 |
+| LP-04 | Proof claims audited | Claims audit; public proof band kept as approved by the owner (not reopened) | IMPLEMENTED_TESTED | — |
 | LP-05 | Funnel: targeted → touches → … → proposals → wins; content-sourced and content-assisted kept separate; audience-to-call diagnostic with no benchmark | `ProspectTouch`, `Prospect.demandSource`, `AcquisitionTarget.audienceSize`; `logTouchAction`, `setDemandSourceAction`; Acquisition page cards | IMPLEMENTED_TESTED | `funnel.test.ts` (4 new tests); `suite-sales-validation` (4 new checks) |
 | LP-06 | Research provider audit; provider abstraction for supported APIs | `src/lib/research/apify.ts` (optional, off unless approved), scheduler fallback, configuration check | IMPLEMENTED_TESTED; EXTERNAL_CONFIGURATION_REQUIRED to run | `apify.test.ts` (6 tests); `docs/launch-pack/research/RESEARCH_PROVIDER_AUDIT.md` |
 | LP-07 | Agent workflows documented | `docs/launch-pack/research/AGENT_WORKFLOWS.md` | IMPLEMENTED_TESTED (documentation) | — |
 | LP-08 | Verbatim sales library in canonical resources and `/admin/scripts` | Repo SOP 03/04 updated from Drive; `blocksFromVerbatimLibrary` | IMPLEMENTED_TESTED | `canonical-library.test.ts` (13 passages; quotes exact) |
 | LP-09 | Usability verification | `docs/launch-pack/operations/USABILITY_VERIFICATION.md`; the "30-day strategy" label corrected to four-week wording; wedge convergence display fixed | IMPLEMENTED_TESTED | — |
 | LP-10 | Readiness matrix, owner dry run, RPO/RTO and retention options | `docs/launch-pack/operations/` | OWNER_DECISION_REQUIRED (RPO/RTO, retention) | — |
-| LP-11 | Brand kit, onboarding pack, sales and outreach resources, 10 newsletter graphics | `docs/launch-pack/*` | Production-complete; awaiting owner approval | Every render was inspected |
+| LP-11 | Brand kit (with social headers), onboarding pack (13), sales (7), outreach and email lifecycle (4), 14 newsletter graphics and a sample layout | `docs/launch-pack/*` | Drafted, awaiting owner review | Every render inspected |
+| LP-12 | Reconciliation with current Drive sources (26 Sept) | `docs/launch-pack/SOURCE_REGISTER.md`; corrections recorded in `strategy/STRATEGY_RECONCILIATION.md` §6–7 | IMPLEMENTED_TESTED (documentation) | Four agents read the canonical Drive documents in full; verbatim check: 31 of 31 exact |
+| LP-13 | Drive delivery of the full pack | Folder `Threadline Launch Pack 2026-09-27` (id 14Yn_BrojRjwJcEz9va-EHM8PXjUY1Sff), subfolders mirroring `docs/launch-pack/` | Delivered; inventory verified (see `docs/launch-pack/README.md`) | Counts, sizes and checksums |
+| LP-14 | Frontend freeze restored | The 3 public content files and the freeze evidence were reverted to b344360 | Verified | `sha256sum -c` passes for all 104 protected files |

@@ -1,4 +1,4 @@
-# Client and operator usability verification (27 September 2026)
+# Client and operator usability verification (26 September 2026)
 
 Each requirement is checked against existing features. The "evidence" column names the code path and the automated check. Where only local verification exists, it says so: production has no database, so none of this is verified live.
 

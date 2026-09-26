@@ -1,6 +1,6 @@
 # Review and approval
 
-> Status: drafted; owner review pending. Client-facing. Page: **Approvals**.
+> Status: READY FOR OWNER REVIEW (not approved). Client-facing. Page: **Approvals**.
 
 Nothing goes out without your approval.
 

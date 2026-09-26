@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Threadline Field Notes: sample newsletter layout (template)</title>
+<!--
+  TEMPLATE. Placeholders are in {{double braces}}; replace every one before sending.
+  Built as a 600px single-column email layout with table markup and inline styles.
+  Not inbox-tested: no email client or spam test has been run on this file.
+  Images are hosted copies of the 1200px exports shown at 600px (2x).
+  Everything essential is in the body copy, so the email still reads with images off.
+-->
+</head>
+<body style="margin:0;padding:0;background:#e8f1f8;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#e8f1f8;">
+<tr><td align="center" style="padding:24px 12px;">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:100%;background:#ffffff;border-radius:12px;font-family:Inter,'Segoe UI',Arial,sans-serif;color:#17233a;">
+
+  <!-- Preheader (hidden preview text) -->
+  <tr><td style="display:none;font-size:1px;line-height:1px;max-height:0;overflow:hidden;">{{preheader: one sentence on this issue's idea}}</td></tr>
+
+  <!-- Masthead -->
+  <tr><td style="padding:0;">
+    <img src="{{image_host}}/11-newsletter-masthead-template-1200.png" width="600" alt="Threadline Field Notes, issue {{issue}}, {{date}}" style="display:block;width:100%;height:auto;border-radius:12px 12px 0 0;">
+  </td></tr>
+
+  <!-- Body section -->
+  <tr><td style="padding:32px 36px 8px;">
+    <p style="margin:0 0 8px;font-size:12px;font-weight:600;letter-spacing:2px;color:#6b768a;">THIS ISSUE</p>
+    <h1 style="margin:0 0 16px;font-family:'Instrument Serif',Georgia,serif;font-weight:400;font-size:34px;line-height:1.1;color:#17233a;">Every piece is a test. Read it honestly.</h1>
+    <p style="margin:0 0 14px;font-size:16px;line-height:1.55;color:#3b475e;">Before a piece goes out, write down what you expect it to do and why. After it has had time to be read, compare what happened with what you expected. The useful part is not the score; it is the reason.</p>
+    <p style="margin:0 0 14px;font-size:16px;line-height:1.55;color:#3b475e;">We run the same five steps every time: <strong>score</strong> the piece against a stated rubric, <strong>explain</strong> which parts carried it, <strong>diagnose</strong> whether the idea, the packaging or the distribution was the weak link, <strong>prescribe</strong> one change, and <strong>retest</strong> on the same root idea.</p>
+  </td></tr>
+
+  <!-- Graphic, with the same information above in text -->
+  <tr><td style="padding:8px 36px 8px;">
+    <img src="{{image_host}}/02-diagnosis-improvement-loop-1200.png" width="528" alt="A loop of five steps: score, explain, diagnose, prescribe, retest, around expected versus actual." style="display:block;width:100%;height:auto;border-radius:8px;">
+    <p style="margin:10px 0 0;font-size:13px;line-height:1.5;color:#6b768a;">The loop: score, explain, diagnose, prescribe, retest. Expected against actual sits in the middle.</p>
+  </td></tr>
+
+  <tr><td style="padding:16px 36px 8px;">
+    <p style="margin:0 0 14px;font-size:16px;line-height:1.55;color:#3b475e;">{{body_paragraph: one concrete example, labelled as illustrative unless it is a permissioned client result with its evidence class}}</p>
+  </td></tr>
+
+  <!-- CTA -->
+  <tr><td style="padding:8px 36px 32px;">
+    <table role="presentation" cellpadding="0" cellspacing="0"><tr><td style="background:#1f63d6;border-radius:999px;">
+      <a href="{{cta_url}}" style="display:inline-block;padding:14px 26px;font-size:15px;font-weight:600;color:#ffffff;text-decoration:none;">{{cta_label}}</a>
+    </td></tr></table>
+    <p style="margin:12px 0 0;font-size:13px;line-height:1.5;color:#6b768a;">Or copy this link: {{cta_url}}</p>
+  </td></tr>
+
+  <!-- Footer -->
+  <tr><td style="padding:20px 36px 28px;border-top:1px solid #dbeaf7;font-size:12px;line-height:1.6;color:#6b768a;">
+    Threadline · {{legal_entity_name}} · {{postal_address}}<br>
+    You are receiving this because {{reason_for_receiving}}. <a href="{{unsubscribe_url}}" style="color:#1f63d6;">Unsubscribe</a> · <a href="{{web_version_url}}" style="color:#1f63d6;">View in a browser</a>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
+</body>
+</html>

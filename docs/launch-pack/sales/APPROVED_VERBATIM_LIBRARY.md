@@ -1,7 +1,7 @@
 # Approved verbatim sales library (8 September 2026)
 
 > **Founder-approved wording. Do not edit.**
-> **Source:** `SOP_03_DIAGNOSIS_SALES_CALL_V14.md` in Google Drive (file id `11q7dbVBUAs0noq7hoNV2jEyHU6C9eElX`), section "Canonical operator script library" (read 27 September 2026). The same passages also appear in `THREADLINE_FIRST_US_RESEARCH_PROSPECT_BATCH_AND_OUTREACH_PLAYBOOK_V1` (Drive `1km_ovpl0Zwn70AlQ0gHECdMhxC1SjONYwATx_qAZ_4s`) and the Execution Manual V14.3, which the SOP Router names as the primary script authority.
+> **Source:** `SOP_03_DIAGNOSIS_SALES_CALL_V14.md` in Google Drive (file id `11q7dbVBUAs0noq7hoNV2jEyHU6C9eElX`), section "Canonical operator script library" (read 26 September 2026; re-checked word for word against Execution Manual V14.3, Drive `1EhDghb6YVA28Zus0yQRniRHtB-x0TB5Q2oduj-duAY0`, on 26 September 2026: all passages identical). The same passages also appear in `THREADLINE_FIRST_US_RESEARCH_PROSPECT_BATCH_AND_OUTREACH_PLAYBOOK_V1` (Drive `1km_ovpl0Zwn70AlQ0gHECdMhxC1SjONYwATx_qAZ_4s`) and the Execution Manual V14.3, which the SOP Router names as the primary script authority.
 > **Status:** approved by the founder, as the source documents record. This file is a copy for operators. If the founder changes a passage, update the Drive source first and then re-copy it here. Adaptations are kept in other files, labelled **ADAPTATION (draft, owner approval pending)**, and never in this one.
 > The passages keep the original quotation marks: curly quotes, and straight apostrophes where the source uses them.
 
@@ -143,5 +143,6 @@ SOP 04's rule, as written: "This is willingness to consider a later interview, n
 ### Operator notes (not part of the approved wording)
 
 - **Month/Period labels** in J mean four-week service periods. Never say "monthly" about billing or cadence on a call; say "every four weeks".
-- **The TikTok partner line (A)** is the founder speaking in the first person. On a call run by someone other than the founder, do not use it; use the adaptation in `SALES_CALL_GUIDE.md` instead. The public brand never names or shows the founder.
+- **The TikTok partner line (A)** is the founder speaking in the first person. Use it only once the founder's identity is cleared for commercial use (the Drive master TODO requires confirming the employer's outside-business/conflict requirements first, and keeps a Threadline-led identity initially). Until then, or on a call run by someone else, use the adaptation in `SALES_CALL_GUIDE.md`. The public brand does not name or show the founder.
+- **Status vocabulary:** passages A–M are **APPROVED** in their source. Nothing else in the launch pack is approved.
 - **The 82/100 example (I)** is an illustration of how a score is explained. Never present it as a real client's score.

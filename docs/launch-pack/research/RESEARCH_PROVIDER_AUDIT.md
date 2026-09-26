@@ -1,4 +1,4 @@
-# Research provider audit: scheduled runs against real ingestion (27 September 2026)
+# Research provider audit: scheduled runs against real ingestion (26 September 2026)
 
 **Question:** when a scheduled research run fires, what actually enters the workspace, from where, and what happens when a source fails?
 
