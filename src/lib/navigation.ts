@@ -248,6 +248,13 @@ export function clientNav(slug: string): NavItem[] {
       capability: "workspace.view",
     },
     {
+      key: "help",
+      label: "Help",
+      href: `${base}/help`,
+      icon: LifeBuoy,
+      capability: "workspace.view",
+    },
+    {
       key: "content",
       label: "Content",
       href: `${base}/production`,

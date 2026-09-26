@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
 import { contentScope } from "@/lib/team/scope";
+import { fingerprint } from "@/lib/delivery/approvals";
 import { prisma } from "@/lib/db/client";
 import { CORRECTION_LEVERS, FAILURE_CLASSES } from "@/lib/domain/content-diagnosis";
 import { LearningPanel } from "./learning-panel";
@@ -49,6 +50,7 @@ export default async function ContentDetailPage({
   ]);
 
   if (!item || !lineage) notFound();
+  const currentVersion = (await fingerprint(ctx.org.id, { type: "content_item", id }))?.label ?? null;
 
   const totalViews = item.publishRecords.reduce((a, r) => a + (r.snapshots[0]?.views ?? 0), 0);
 
@@ -135,6 +137,8 @@ export default async function ContentDetailPage({
           authorName: c.author?.name ?? "Threadline",
           authorHue: c.author?.avatarHue ?? 210,
           createdAt: c.createdAt.toISOString(),
+          version: c.version,
+          earlierVersion: Boolean(c.version && currentVersion && c.version !== currentVersion),
         }))}
         packages={item.packageList.map((p) => ({
           id: p.id,

@@ -55,6 +55,8 @@ type Comment = {
   authorName: string;
   authorHue: number;
   createdAt: string;
+  version?: string | null;
+  earlierVersion?: boolean;
 };
 
 type PackageView = {
@@ -264,7 +266,9 @@ export function ContentWorkspace({
                           {comment.resolved ? <Badge tone="positive">Resolved</Badge> : null}
                           <span className="text-[11px] text-ghost">
                             {relativeTime(new Date(comment.createdAt))}
+                            {comment.version ? ` · on ${comment.version}` : ""}
                           </span>
+                          {comment.earlierVersion ? <Badge tone="outline">Earlier version</Badge> : null}
                         </div>
                         <p
                           className={cn(

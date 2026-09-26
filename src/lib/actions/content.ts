@@ -11,7 +11,7 @@ import { stringify, stringifyArray } from "@/lib/db/json";
 import { contentStageSchema, prioritySchema, platformSchema } from "@/lib/domain/enums";
 import { canMoveContent, requiresNote, WorkflowError } from "@/lib/domain/workflow";
 import { assertPackageApprovable } from "@/lib/domain/longform";
-import { recordDecision, supersedeApprovals } from "@/lib/delivery/approvals";
+import { recordDecision, supersedeApprovals, fingerprint } from "@/lib/delivery/approvals";
 import { notify } from "@/lib/notify";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import { queueProcessingFor } from "@/lib/processing";
@@ -151,6 +151,8 @@ export async function moveContentAction(
           body: cleanText(input.note, 2000),
           kind: "revision_request",
           authorId: ctx.user.id,
+          // CX-06: the version the feedback is about.
+          version: (await fingerprint(ctx.org.id, { type: "content_item", id: contentItemId }))?.label ?? null,
         },
       });
     }
@@ -332,6 +334,8 @@ export async function addCommentAction(
         body: cleanText(input.body, 4000),
         kind: input.kind,
         authorId: ctx.user.id,
+        // CX-06: the version the comment is about, so feedback on an earlier cut is marked as such.
+        version: (await fingerprint(ctx.org.id, { type: "content_item", id: contentItemId }))?.label ?? null,
       },
     });
 
