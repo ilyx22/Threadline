@@ -33,7 +33,7 @@ function Widget({ slug }: { slug: string }) {
     case "change-one-thing-and-retest":
       return <Bench />;
     case "what-we-do-not-promise":
-      return <FlipGrid items={PROMISES} hint="Flip each card. Three cannot be promised; three can." />;
+      return <FlipGrid items={PROMISES} hint="Flip each card. Three are proxies; three are the job." />;
     default:
       return null;
   }

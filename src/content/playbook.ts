@@ -17,7 +17,7 @@ export const PLAYBOOK_HERO = {
     ["10", "chapters"],
     ["9", "things to try"],
     ["2", "tools"],
-    ["0", "promises"],
+    ["0", "vanity metrics"],
   ],
 } as const;
 
@@ -99,20 +99,20 @@ export const EXPECTATION = {
   note: "Read it in fourteen days, against what actually happened. Not before.",
 } as const;
 
-/** Chapter 10: what can and cannot be promised. Flip each card. */
+/** Chapter 10: what is a proxy and what is the job. Flip each card. */
 export const PROMISES = [
-  { front: "Leads?", back: "Not promised. The market decides, and the market is not a machine." },
-  { front: "Views?", back: "Not promised. Reach is a proxy; a named enquiry is a result." },
-  { front: "Followers?", back: "Not promised. Familiar with the right forty beats famous with everyone." },
-  { front: "Research done?", back: "Promised. Every idea starts from what buyers actually ask." },
-  { front: "Every claim checked?", back: "Promised. Nothing with an unverified fact can be recorded." },
-  { front: "A bad month shown?", back: "Promised. The report shows a bad week as a bad week." },
+  { front: "Leads?", back: "Not the scoreboard. The market decides, and the market is not a machine." },
+  { front: "Views?", back: "Not the scoreboard. Reach is a proxy; a named enquiry is a result." },
+  { front: "Followers?", back: "Not the scoreboard. Familiar with the right forty beats famous with everyone." },
+  { front: "Research done?", back: "Always. Every idea starts from what buyers actually ask." },
+  { front: "Every claim checked?", back: "Always. Nothing with an unverified fact can be recorded." },
+  { front: "A bad month shown?", back: "Always. The report shows a bad week as a bad week." },
 ] as const;
 
 /** The three periods of a first engagement, stated without promises. */
 export const PERIODS = [
-  { label: "Period 1", weeks: "Weeks 1–4", title: "It feels quiet.", body: "The founder, one buyer and one content combination are being learned. Root ideas go out; the expectations are written down; most evidence is still too early to read." },
-  { label: "Period 2", weeks: "Weeks 5–8", title: "The evidence arrives, mostly weak.", body: "Visits, saves, a reply. Read against expectation, one thing is changed and the same idea goes out again. This is where the operation starts getting smarter." },
-  { label: "Period 3", weeks: "Weeks 9–12", title: "The loop is running.", body: "The weekly report shows what is true for your market: which idea travels, which room answers, which opening line loses readers. From here the system compounds or it is stopped honestly." },
+  { label: "Period 1", weeks: "Weeks 1–4", title: "It starts quietly.", body: "We learn you, one buyer and one content combination. Root ideas go out, expectations are written down, and the first readings come in." },
+  { label: "Period 2", weeks: "Weeks 5–8", title: "The evidence starts arriving.", body: "Visits, saves, replies. Each is read against what we expected, one thing is changed and the same idea goes out again. The operation gets sharper every week." },
+  { label: "Period 3", weeks: "Weeks 9–12", title: "The loop is running.", body: "The weekly report shows what is true for your market: which idea travels, which room answers, which opening line lands. From here the system compounds." },
 ] as const;
 export const PERIODS_NOTE = "Three four-week periods, because that is how long it takes to learn a founder, a buyer and a content combination honestly. No result is promised for any of them."; // claim:C-CADENCE, C-NO-PROMISES

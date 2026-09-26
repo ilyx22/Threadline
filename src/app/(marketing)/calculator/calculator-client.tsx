@@ -209,7 +209,7 @@ export function CalculatorClient() {
         ) : null}
 
         <p className="calc-notice">
-          <strong>What this is and is not.</strong> These are estimates built from the numbers you entered. They describe the operation you have today and one scenario for a different workflow. Threadline does not guarantee a saving, a reach figure or a revenue outcome, and no honest calculator could.
+          <strong>What this is and is not.</strong> These are estimates built from the numbers you entered. They describe the operation you have today and one scenario for a different workflow. It does not show a saving, a reach figure or a revenue outcome, because those are not things a calculator can know.
         </p>
 
         <Link href="/apply" className="v9-btn calc-cta">

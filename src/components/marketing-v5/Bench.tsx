@@ -136,7 +136,7 @@ export default function Bench() {
                   <g transform={`translate(${COMPONENT_X[i]} 0)`}>
                     <image href={replaced ? "/marketing/bench/block-new.png" : "/marketing/bench/block.png"} x={-33} y={-70} width={66} height={70} preserveAspectRatio="xMidYMax meet" />
                     {failed && !replaced ? <rect x={-30} y={-64} width={60} height={62} rx={6} fill={C.coral} opacity={0.55} /> : null}
-                    <text x={0} y={16} textAnchor="middle" className="v5-label is-xs" textLength={Math.min(64, name.length * 6.6)} lengthAdjust="spacingAndGlyphs">
+                    <text x={0} y={16} textAnchor="middle" className="v5-label is-xs">
                       {name.toUpperCase()}
                     </text>
                   </g>

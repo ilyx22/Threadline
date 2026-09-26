@@ -1,7 +1,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { DIAGNOSTIC, HOME_V3, HOW_IT_WORKS, PLAYBOOK, PLAYBOOK_TOOLS } from "@/content/public-site";
-import { MAXIMS, PERIODS, PLAYBOOK_HERO } from "@/content/playbook";
+import { MAXIMS, PLAYBOOK_HERO } from "@/content/playbook";
 import Motion from "@/components/marketing-v5/Motion";
 import { Diagnostic } from "@/components/public/diagnostic";
 import { AcquisitionCalculator } from "@/components/marketing-v5/AcquisitionCalculator";
@@ -117,28 +117,6 @@ export default function Playbook() {
             </div>
             <AcquisitionCalculator />
           </div>
-        </div>
-      </section>
-
-      <section className="pb-periods" data-scene aria-labelledby="periods-title">
-        <div className="v9-wrap">
-          <header className="v9-head is-center v9-reveal">
-            <p className="v9-eyebrow">What a first engagement feels like</p>
-            <h2 id="periods-title" className="v9-h2">
-              Period one is quiet. Period three is honest.
-            </h2>
-          </header>
-          <ol className="pb-period-line v9-reveal">
-            {PERIODS.map((p, i) => (
-              <li key={p.label} className={`v9-tile ${["is-sky", "is-peach", "is-mint"][i]}`} style={{ ["--i" as string]: i }}>
-                <span className="v9-tag">
-                  {p.label} · {p.weeks}
-                </span>
-                <h3 className="v9-h3">{p.title}</h3>
-                <p>{p.body}</p>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 

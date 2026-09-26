@@ -30,7 +30,7 @@ export const FOOTER = {
   columns: [
     { title: "Product", links: [{ href: "/how-it-works", label: "How it works" }, { href: "/who-its-for", label: "Who it is for" }, { href: "/calculator", label: "Cost of the status quo" }, { href: "/playbook", label: "The Founder Authority System" }] },
     { title: "Company", links: [{ href: "/apply", label: "Apply" }, { href: "/login", label: "Client sign in" }] },
-    { title: "Fine print", links: [{ href: "/playbook/what-we-do-not-promise", label: "What we do not promise" }] },
+    { title: "Fine print", links: [{ href: "/playbook/what-we-do-not-promise", label: "What actually matters" }, { href: "/privacy", label: "Privacy" }, { href: "/terms", label: "Terms" }, { href: "/cookies", label: "Cookies" }] },
   ],
   small: "Founding client programme. 12-week initial engagement, run in 4-week service periods. Commercial terms are discussed during the qualified sales process.", // claim:C-CADENCE: exact pricing is not published (DEC-017)
 };
@@ -138,7 +138,7 @@ export const HOME = {
   },
   twelveWeeks: {
     eyebrow: "The first 12 weeks",
-    title: "Three service periods. Real market evidence, not a promise about algorithms.",
+    title: "Three service periods. Quiet at first, then it compounds.",
     lead: "Threadline runs in 4-week service periods. The initial engagement is three of them.", // claim:C-CADENCE
     periods: [
       { label: "Period 1", title: "Establish and calibrate", body: "Brand Brain, research, first signals, first pieces out. We learn what your market responds to, and record what we expected first." },
@@ -221,7 +221,7 @@ export const WHO_ITS_FOR = {
     { label: "Offer maturity", body: "An offer that has been sold more than once, with a price, a scope and a customer who can describe what they got." },
     { label: "Economics", body: "Meaningful value per client. If one additional good customer is worth four figures or more, content that starts one conversation a month pays for itself. If it is worth forty pounds, this is the wrong tool." },
     { label: "The founder's role", body: "Twenty minutes of recording and one approval pass a week. If that is not available, no system can manufacture your voice." },
-    { label: "Expectations", body: "Three 4-week periods before anyone can say what works for your market. No promised leads, views or revenue. A report every week that shows what shipped, what we expected, what happened and what we are testing next." },
+    { label: "Expectations", body: "Three 4-week periods before anyone can say what works for your market. Leads, views and follower counts are not the measure; named enquiries are. A report every week that shows what shipped, what we expected, what happened and what we are testing next." },
     { label: "What Threadline is", body: "A managed authority system: market intelligence, expertise extraction, the right expressions, distribution, commercial signal, diagnosis and learning, run for you, with you keeping the four things only you can do." },
     { label: "What it is not", body: "Not a tool you learn. Not a ghostwriting retainer. Not an audience-growth hack. Not an agency that stops at publish." },
   ],
@@ -256,7 +256,7 @@ export const PLAYBOOK = {
     { slug: "measure-what-the-buyer-did", title: "Measure what the buyer did", summary: "Reach is a proxy. A named enquiry is a result.", scene: "attention", keyIdea: "Views tell you a piece travelled. They do not tell you where. The signals that matter are the ones with a buyer attached: a tracked click, a form, a booked call, a person saying 'I saw your post'. Weak evidence should never be counted as strong.", reveal: { prompt: "Evidence classes, in order", answer: "Directly tracked → buyer named the piece → multi-touch → associated in time → qualitative only. A report that sums these into one number is hiding the difference." }, practice: "Next time someone gets in touch, ask what they saw. Write the answer down with the date." },
     { slug: "write-down-what-you-expect", title: "Write down what you expect", summary: "The learning loop starts before the piece goes out.", scene: "inspector", keyIdea: "If you do not record what you expected, every result looks like what you expected. Write it down first, a sentence and a rough band, and read the result against it after two weeks.", reveal: { prompt: "What a diagnosis is", answer: "A named, checkable hypothesis about why the gap exists: idea, targeting, hook, delivery, retention, proof, distribution, call-to-action. Or 'too early to read'. Never 'the algorithm'." }, practice: "For your next piece, write one line: 'I expect this to do about X because Y.' Read it in 14 days." },
     { slug: "change-one-thing-and-retest", title: "Change one thing, then retest", summary: "Corrections are how a content operation gets smarter instead of busier.", scene: "pipe", keyIdea: "A piece that missed is not a failed thesis; it is a thesis with one wrong component. Change the component, the opening, the proof, the format, and run it again. Record whether the change worked. That record is the asset.", reveal: { prompt: "Why one lever", answer: "Change three things and you learn nothing, because you cannot tell which one mattered. Change one and you learn something you can use on every future piece." }, practice: "Pick your best-argued piece that underperformed. Rewrite only the first line. Post it again." },
-    { slug: "what-we-do-not-promise", title: "What we do not promise", summary: "The honest limits of any content system, including this one.", scene: "stamp", keyIdea: "No system can promise leads, revenue, followers, views or virality, because the market decides and the market is not a machine. What can be promised is the process: evidence before ideas, expectations before publishing, diagnosis before the next batch, and a report that shows a bad week as a bad week.", reveal: { prompt: "So what is the guarantee?", answer: "Controllable things: the research is done, the pieces ship, every claim is checked, every result is read against an expectation, and you are never shown a number that flatters. Everything else is evidence, collected honestly." }, practice: "Ask any provider, including us, to show you a report from a bad month. If they cannot, they are not measuring." },
+    { slug: "what-we-do-not-promise", title: "What actually matters", summary: "Why leads, views and followers are the wrong scoreboard, and what we keep instead.", scene: "stamp", keyIdea: "Leads, followers, views and virality are not the point. They are proxies, and chasing them is how good firms end up famous in the wrong room. What matters is the process: evidence before ideas, expectations before publishing, diagnosis before the next batch, and a report that shows a bad week as a bad week.", reveal: { prompt: "So what do we hold ourselves to?", answer: "The controllable things: the research is done, the pieces ship, every claim is checked, every result is read against an expectation, and you are never shown a number that flatters. Everything else is evidence, collected honestly." }, practice: "Ask any provider, including us, to show you a report from a bad month. If they cannot, they are not measuring." },
   ],
   closing: { title: "Want us to run the machine?", lead: "Threadline runs this system for a small number of expert-led businesses at a time. Apply and we will tell you honestly whether it fits.", cta: { label: "Apply", href: "/apply" } },
 };
@@ -283,7 +283,7 @@ export const PLAYBOOK_TOOLS = {
     leverLine: "is the rate to work on: ten points there and the same target needs about",
     leverTail: "first touches instead. Everything else being equal, which it never quite is.",
     leverNone: "Every rate is already high; the lever is the target itself.",
-    note: "A model of your assumptions, not a forecast. It shows what your own numbers imply; it does not know your market, and it cannot promise any of these conversions will hold.",
+    note: "A model of your assumptions, not a forecast. It shows what your own numbers imply; it does not know your market, and your market will set its own rates.",
   },
 } as const;
 
@@ -393,7 +393,7 @@ export const HOME_V3 = {
     steps: ["Content", "The right buyer notices", "Repeated familiarity", "Profile and proof inspection", "A practical asset or CTA, where useful", "Response or permission", "Human conversation", "Commercial event", "Learning"],
     left: { ...HOME.attention.left, number: "1,204,000", reading: "A viral piece in the wrong room. High reach, no buyer, nothing to learn from commercially." },
     right: { ...HOME.attention.right, number: "1,900", reading: "A modest piece in the right room. One named enquiry that says which post they saw. That is the result the route is built for." },
-    honesty: "No leads are promised. Threadline improves the route from expertise to commercial movement and records each step with its evidence class.",
+    honesty: "Leads are not the scoreboard. Threadline improves the route from expertise to commercial movement and records each step with its evidence class.",
     illustrative: "Numbers illustrative: no client figures are shown on this site.",
   },
   learning: {

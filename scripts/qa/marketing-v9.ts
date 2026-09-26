@@ -33,7 +33,7 @@ async function main() {
       hidden: [...document.querySelectorAll('.v9-home h1, .v9-home h2, .v9-home .v5-art')].filter(e => parseFloat(getComputedStyle(e).opacity) < 0.99 && !e.closest('[data-scene]:not([data-seen])')).length
     })`);
     ok("v9:story", "ten sections: hero, ticker, gap, memory, roles, workshop, expressions, learning, engagement, closing", s.sections === 10, `${s.sections}`);
-    ok("v9:copy", "approved hero proposition", /expertise that wins the work visible before the sales call/i.test(s.h1), s.h1);
+    ok("v9:copy", "approved hero proposition", /expertise that wins you work visible before the sales call/i.test(s.h1), s.h1);
     ok("v9:copy", "inside the firm and what the market sees", /inside the firm/i.test(s.text) && /what the market sees/i.test(s.text));
     ok("v9:copy", "market memory idea", /familiar to the people who matter/i.test(s.text));
     ok("v9:copy", "founder role", /talk, record when useful, approve and sell/i.test(s.text));

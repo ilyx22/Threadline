@@ -185,3 +185,16 @@ Uses the same panel and wordmark rules; inherits the width change.
 | Final copy update | everywhere | Hero lead, workshop body, How it works lead, Who it is for lead, Apply lead and calculator lead rewritten to be sharper and shorter. Approved and suite-protected lines unchanged. No promises, no em dashes |
 | Body font | everywhere | Left as Inter, on purpose: against the Instrument Serif headings it is the quietest, most legible body face at 17px on a phone, and a serif body or a geometric sans would either drop legibility or make the site read as a generic startup. Reopen if you have a face in mind |
 | "The jars are drawn poorly" | everywhere | The jars are now drawn in code rather than pasted from a render: clean glass with a rim, a highlight, a scale, a level that rises and changes colour, and a pegged expected mark. Same behaviour, same labels |
+
+## Ninth pass (26 September 2026)
+
+| Note | Where it applies | What changed |
+| --- | --- | --- |
+| "Idea, hook, distribution are not centred; letter spacing differs" | everywhere | The labels were being stretched to a fixed length, which changed their spacing and pulled long ones off centre. Now one size (9.5px), one letter spacing, each centred under its block |
+| "Be less defensive about the twelve weeks" | homepage and playbook data | Period titles and bodies rewritten: "It starts quietly", "The evidence starts arriving", "The loop is running"; "or it is stopped honestly" removed; the homepage headline is "Twelve weeks. Quiet at first, then it compounds." |
+| "Wins you work" | homepage | Hero and closing headlines |
+| "Reframe the no-promises language" | everywhere | Chapter 10 is now "What actually matters" (same URL); its cards say "Not the scoreboard" and "Always"; the profile row, the calculator notice, the acquisition model note and the playbook honesty line are reframed around what matters rather than what is not promised. The not-a-fit items about clients who want guarantees stay, because they describe the client |
+| "Fix the formatting within Diagnose" | playbook | The widget now uses the site's own type and tiles: Inter labels, the chip tabs, the seven stations as a row of small pills, a white card and a night card with serif titles, the blue button |
+| "Remove the first-engagement section from the playbook" | playbook | Gone (it lives on the homepage) |
+| "Move the bottom CTA up 0.5cm and lengthen the footer" | everywhere | Closing sections sit 20px higher; the footer gains 20px at the top |
+| "Add the privacy policy and the other legal pages" | everywhere | Three new pages in the site's system, linked from the footer's Fine print column: /privacy, /terms, /cookies. Written from what the site does (application data, client sessions, the tracked-link cookie, browser storage, Resend, Vercel). Square-bracketed placeholders need the owner: legal entity, company number, registered address, privacy contact, retention periods, governing law, storage provider. Note for the owner: the tracked-link cookie `tl_v` is a first-party measurement cookie; under PECR it may need consent, which is a decision for the owner and their adviser |
