@@ -137,6 +137,8 @@ model Organization {
   accessEndsAt    DateTime?
   retentionUntil  DateTime?
   legalHold       Boolean   @default(false)
+  /// AI-08: monthly AI spend ceiling in millionths of a US dollar; null = no ceiling.
+  aiBudgetMicroUsd Int?
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
@@ -1534,6 +1536,11 @@ model AiGeneration {
   entityType   String?
   entityId     String?
   createdAt    DateTime @default(now())
+  /// AI-08: estimated cost in millionths of a US dollar, from configured
+  /// prices; null when no price is configured (never guessed).
+  costMicroUsd Int?
+  /// Labelled mock output, never counted as model work.
+  isDemo       Boolean  @default(false)
 
   org  Organization? @relation(fields: [orgId], references: [id], onDelete: Cascade)
   user User?         @relation(fields: [userId], references: [id], onDelete: SetNull)

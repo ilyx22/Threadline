@@ -1,3 +1,4 @@
+import { costMicroUsd, monthStartUtc } from "./cost";
 import "server-only";
 import { prisma } from "@/lib/db/client";
 import { AnthropicProvider } from "./anthropic";
@@ -71,6 +72,17 @@ export async function runGeneration(
     expectsJson: true,
     demoContext: options.demoContext,
   };
+
+  // AI-08: a workspace with a monthly ceiling stops generating once it is spent.
+  if (options.orgId && provider.name !== "demo") {
+    const org = await prisma.organization.findUnique({ where: { id: options.orgId }, select: { aiBudgetMicroUsd: true } });
+    if (org?.aiBudgetMicroUsd != null) {
+      const spent = await prisma.aiGeneration.aggregate({ where: { orgId: options.orgId, createdAt: { gte: monthStartUtc() } }, _sum: { costMicroUsd: true } });
+      if ((spent._sum.costMicroUsd ?? 0) >= org.aiBudgetMicroUsd) {
+        throw new AiError("This workspace has used its AI budget for the month. Raise the budget or wait for the next month.", { retryable: false });
+      }
+    }
+  }
 
   const started = Date.now();
   let lastError: unknown;
@@ -162,6 +174,8 @@ async function recordGeneration(
         latencyMs,
         inputTokens: result?.inputTokens ?? 0,
         outputTokens: result?.outputTokens ?? 0,
+        isDemo: result?.isDemo ?? false,
+        costMicroUsd: result && !result.isDemo ? costMicroUsd(result.inputTokens ?? 0, result.outputTokens ?? 0) : result?.isDemo ? 0 : null,
         error: error?.slice(0, 500) ?? null,
         entityType: options.entityType ?? null,
         entityId: options.entityId ?? null,
