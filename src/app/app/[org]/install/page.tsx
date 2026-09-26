@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, CircleDashed, Loader, TriangleAlert } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { prisma } from "@/lib/db/client";
+import { InstallSignoff } from "./install-signoff";
 import { installationView } from "@/lib/data/installation";
 import { MILESTONE_STATUS_META, type MilestoneState } from "@/lib/domain/installation";
 import { Badge } from "@/components/ui/badge";
@@ -29,6 +31,7 @@ export default async function InstallPage({ params }: { params: Promise<{ org: s
   const canManage = ctx.can("install.signoff");
 
   const done = view.milestones.filter((m) => m.status === "complete").length;
+  const engagement = await prisma.engagement.findFirst({ where: { orgId: ctx.org.id, status: { in: ["draft", "active", "paused"] } }, orderBy: { createdAt: "desc" }, select: { installationSignedOffAt: true, earlyWinDefinition: true, earlyWinAchievedOn: true, earlyWinEvidence: true } });
 
   return (
     <div className="space-y-6">
@@ -119,6 +122,16 @@ export default async function InstallPage({ params }: { params: Promise<{ org: s
           </li>
         ))}
       </ol>
+      {engagement ? (
+        <InstallSignoff
+          slug={slug}
+          complete={view.complete}
+          signedOffAt={engagement.installationSignedOffAt?.toISOString() ?? null}
+          earlyWin={{ definition: engagement.earlyWinDefinition, achievedOn: engagement.earlyWinAchievedOn?.toISOString().slice(0, 10) ?? null, evidence: engagement.earlyWinEvidence }}
+          canSignOff={canManage}
+          isStaff={ctx.isInternal}
+        />
+      ) : null}
     </div>
   );
 }

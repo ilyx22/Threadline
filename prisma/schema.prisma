@@ -2809,6 +2809,13 @@ model Engagement {
   endReason           String?
   entitlements        String    @default("{}")
   earlyWinDueDate     DateTime? @db.Date
+  /// ENG-03: the concrete early win agreed at kickoff, and when it actually happened (with evidence).
+  earlyWinDefinition  String?
+  earlyWinAchievedOn  DateTime? @db.Date
+  earlyWinEvidence    String?
+  /// ENG-03: the client's sign-off that installation is done; refused until every checklist item is complete.
+  installationSignedOffAt   DateTime?
+  installationSignedOffById String?
   /// BIL-02: exactly one invoice authority per engagement: manual | stripe.
   billingProvider     String    @default("manual")
   stripeCustomerId    String?
