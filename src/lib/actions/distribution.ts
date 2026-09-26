@@ -10,6 +10,7 @@ import { platformSchema, publishStatusSchema } from "@/lib/domain/enums";
 import { assertPublishTransition } from "@/lib/domain/workflow";
 import { assertReleasable } from "@/lib/delivery/approvals";
 import { getAdapter } from "@/lib/integrations/adapter";
+import { resolveUncertain, schedulePublish } from "@/lib/publishing";
 import { integrationByProvider } from "@/lib/integrations/registry";
 import { cleanUrl, err, guarded, ok, okVoid, parseForm, type ActionResult } from "./shared";
 
@@ -30,6 +31,8 @@ const createRecordSchema = z.object({
     .transform((v) => (v ? new Date(v) : null)),
   packageId: z.string().optional(),
   distributionMode: z.enum(["organic", "paid_amplified"]).default("organic"),
+  /** "integration" publishes through the platform connector at the scheduled time (INT-03). */
+  method: z.enum(["manual", "integration"]).default("manual"),
 });
 
 export async function createPublishRecordAction(
@@ -68,6 +71,12 @@ export async function createPublishRecordAction(
       if (!pkg) return err("That package is not in this workspace.", "validation");
     }
 
+    if (input.method === "integration") {
+      const integration = await prisma.integration.findUnique({ where: { orgId_provider: { orgId: ctx.org.id, provider: input.platform } }, select: { authStatus: true } });
+      if (integration?.authStatus !== "connected") return err(`Connect ${input.platform} before publishing through it.`, "validation");
+      if (!input.scheduledFor) return err("Pick a time to publish.", "validation");
+    }
+
     const record = await prisma.publishRecord.create({
       data: {
         orgId: ctx.org.id,
@@ -77,10 +86,11 @@ export async function createPublishRecordAction(
         packageId: input.packageId ?? null,
         scheduledFor: input.scheduledFor,
         status: input.scheduledFor ? "scheduled" : "draft",
-        method: "manual",
+        method: input.method,
         distributionMode: input.distributionMode,
       },
     });
+    if (input.method === "integration") await schedulePublish(record.id);
 
     if (input.scheduledFor) {
       await prisma.contentItem.update({
@@ -169,6 +179,9 @@ export async function updatePublishRecordAction(
         publishedAt: nextStatus === "published" ? (record.publishedAt ?? new Date()) : record.publishedAt,
       },
     });
+
+    // INT-03: a scheduled record set to publish through the connector gets its job.
+    if (nextStatus === "scheduled" && record.method === "integration") await schedulePublish(recordId);
 
     // Publishing the first record takes the content item live.
     if (nextStatus === "published" && record.contentItem.stage !== "live") {
@@ -408,4 +421,18 @@ export async function getBookingUrl(orgId: string): Promise<string | null> {
   if (!integration || integration.status !== "configured") return null;
   const config = parseRecord(integration.config);
   return typeof config.url === "string" ? config.url : null;
+}
+
+/** INT-03/JOB-02: record what actually happened to a publish the platform never answered. */
+export async function resolveUncertainPublishAction(orgSlug: string, recordId: string, url: string | null): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug, "distribution.publish");
+    const clean = url ? cleanUrl(url) : null;
+    if (url && !clean) return err("Enter the post URL.", "validation");
+    const done = await resolveUncertain(ctx.org.id, recordId, clean ? { posted: true, url: clean } : { posted: false });
+    if (!done) return err("That record is not waiting for a check.", "validation");
+    await audit(ctx, { action: "publish.resolve_uncertain", entityType: "publish_record", entityId: recordId, summary: clean ? "Confirmed an uncertain post was published" : "Confirmed an uncertain post did not publish; sent again" });
+    revalidateDistribution(orgSlug);
+    return okVoid(clean ? "Recorded as published." : "Queued again.");
+  });
 }

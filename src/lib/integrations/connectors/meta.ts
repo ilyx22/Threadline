@@ -39,9 +39,19 @@ export const instagram: Connector = {
     const res = await http(`${GRAPH}/${input.externalId}?fields=status_code,status&access_token=${encodeURIComponent(input.accessToken)}`);
     if (res.status !== 200) return { ok: false, ...mapHttpError(res.status, res.headers, res.json ?? res.text, "Instagram") };
     const code = (res.json as { status_code?: string } | null)?.status_code;
-    if (code === "FINISHED") return { ok: true, status: "published", externalId: input.externalId };
+    // A finished container is not yet a post: it still needs media_publish (finalize).
+    if (code === "FINISHED") return { ok: true, status: "ready", externalId: input.externalId };
+    if (code === "PUBLISHED") return { ok: true, status: "published", externalId: input.externalId };
     if (code === "ERROR" || code === "EXPIRED") return { ok: true, status: "failed", message: `Instagram container ${code}` };
     return { ok: true, status: "processing" };
+  },
+
+  async finalize(input) {
+    const pub = await http(`${GRAPH}/${input.externalAccountId}/media_publish`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ creation_id: input.externalId, access_token: input.accessToken }) });
+    if (pub.status !== 200) return { ok: false, ...mapHttpError(pub.status, pub.headers, pub.json ?? pub.text, "Instagram") };
+    const mediaId = (pub.json as { id?: string } | null)?.id;
+    if (!mediaId) return { ok: false, code: "provider_error", message: "Instagram returned no media id.", retryable: true };
+    return { ok: true, externalId: mediaId, url: null, providerStatus: "PUBLISHED", raw: pub.json };
   },
 
   async fetchMetrics(input) {

@@ -102,7 +102,7 @@ describe("publish and metrics through the mocked boundary", () => {
     const pub = await ig.publish({ accessToken: "t", externalAccountId: "178", text: "cap", mediaUrl: "https://cdn.example/x.mp4", mediaKind: "video" });
     assert.ok(pub.ok && pub.providerStatus === "CONTAINER_PROCESSING");
     const st = await ig.publishStatus!({ accessToken: "t", externalId: "container1" });
-    assert.ok(st.ok && st.status === "published");
+    assert.ok(st.ok && st.status === "ready", "a finished container still needs media_publish");
   });
 
   test("TikTok posts SELF_ONLY until the app is audited and says so on the outcome", async () => {

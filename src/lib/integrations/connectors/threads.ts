@@ -56,10 +56,12 @@ export const threads: Connector = {
     if (res.status !== 200) return { ok: false, ...mapHttpError(res.status, res.headers, res.json ?? res.text, "Threads") };
     const j = res.json as { status?: string; error_message?: string } | null;
     if (j?.status === "PUBLISHED") return { ok: true, status: "published", externalId: input.externalId };
-    if (j?.status === "FINISHED") return { ok: true, status: "processing", message: "Container ready to publish" };
+    if (j?.status === "FINISHED") return { ok: true, status: "ready", externalId: input.externalId };
     if (j?.status === "ERROR" || j?.status === "EXPIRED") return { ok: true, status: "failed", message: j.error_message ?? `Threads container ${j.status}` };
     return { ok: true, status: "processing" };
   },
+
+  finalize: (input) => publishContainer(input.externalAccountId, input.externalId, input.accessToken),
 
   async fetchMetrics(input) {
     const res = await http(`${API}/${input.externalId}/insights?metric=views,likes,replies,reposts,quotes,shares&access_token=${encodeURIComponent(input.accessToken)}`);

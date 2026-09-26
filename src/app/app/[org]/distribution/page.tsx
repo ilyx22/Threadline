@@ -129,6 +129,8 @@ export default async function DistributionPage({
             url: r.url,
             accountHandle: r.account?.handle ?? null,
             hasPackage: Boolean(r.package),
+            providerStatus: r.providerStatus,
+            failureReason: r.failureReason,
             views: r.snapshots[0]?.views ?? null,
           }))}
           queue={queue.map((item) => ({

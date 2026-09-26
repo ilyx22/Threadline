@@ -26,7 +26,8 @@ export type MetricsOutcome =
   | { ok: true; metrics: Record<string, number | null>; measuredAt: Date | null; endpoint: string; raw?: unknown }
   | { ok: false; code: ConnectorErrorCode; message: string; retryAfterSec?: number };
 
-export type StatusOutcome = { ok: true; status: "processing" | "published" | "failed"; externalId?: string; url?: string | null; message?: string } | { ok: false; code: ConnectorErrorCode; message: string };
+/** `ready`: a processed container that still needs its publish call (`finalize`). */
+export type StatusOutcome = { ok: true; status: "processing" | "ready" | "published" | "failed"; externalId?: string; url?: string | null; message?: string } | { ok: false; code: ConnectorErrorCode; message: string };
 
 export type PublishInput = {
   accessToken: string;
@@ -51,6 +52,8 @@ export type Connector = {
   externalIdFromUrl?(url: string): string | null;
   publish(input: PublishInput): Promise<PublishOutcome>;
   publishStatus?(input: { accessToken: string; externalId: string }): Promise<StatusOutcome>;
+  /** Publish a processed container (Instagram, Threads). Returns the final media id. */
+  finalize?(input: { accessToken: string; externalAccountId: string; externalId: string }): Promise<PublishOutcome>;
   fetchMetrics(input: { accessToken: string; externalId: string }): Promise<MetricsOutcome>;
 };
 

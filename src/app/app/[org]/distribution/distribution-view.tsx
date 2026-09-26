@@ -16,9 +16,10 @@ import { Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader } from "@
 import { Notice } from "@/components/ui/feedback";
 import { PublishStatusBadge } from "@/components/ui/status";
 import { toast } from "@/components/ui/toast";
-import { ActionForm, FormError, SubmitButton } from "@/components/forms/action-form";
+import { ActionButton, ActionForm, FormError, SubmitButton } from "@/components/forms/action-form";
 import {
   createPublishRecordAction,
+  resolveUncertainPublishAction,
   deletePublishRecordAction,
   updatePublishRecordAction,
 } from "@/lib/actions/distribution";
@@ -39,7 +40,29 @@ type RecordView = {
   accountHandle: string | null;
   hasPackage: boolean;
   views: number | null;
+  providerStatus?: string | null;
+  failureReason?: string | null;
 };
+
+/** INT-03/JOB-02: the platform may or may not have posted; a person checks and says which. */
+function UncertainResolver({ slug, recordId }: { slug: string; recordId: string }) {
+  const router = useRouter();
+  const [url, setUrl] = React.useState("");
+  return (
+    <div className="mt-1 max-w-[18rem] space-y-1 text-[11px] text-ghost">
+      <p>No answer from the platform. Check the account: did it post?</p>
+      <input value={url} onChange={(e) => setUrl(e.target.value)} placeholder="Post URL, if it posted" className="w-full rounded border border-line bg-transparent px-1.5 py-0.5 text-[11px]" aria-label="Post URL" />
+      <div className="flex gap-1">
+        <ActionButton size="xs" variant="ghost" disabled={!url.trim()} action={() => resolveUncertainPublishAction(slug, recordId, url.trim())} onDone={() => router.refresh()}>
+          It posted
+        </ActionButton>
+        <ActionButton size="xs" variant="ghost" action={() => resolveUncertainPublishAction(slug, recordId, null)} onDone={() => router.refresh()} confirm="Send it again now?">
+          It did not; send again
+        </ActionButton>
+      </div>
+    </div>
+  );
+}
 
 export function DistributionView({
   slug,
@@ -243,6 +266,7 @@ export function DistributionView({
                   <TD>{metaOf(PLATFORM_META, record.platform).label}</TD>
                   <TD>
                     <PublishStatusBadge status={record.status} />
+                    {record.providerStatus === "UNCERTAIN" && canPublish ? <UncertainResolver slug={slug} recordId={record.id} /> : record.failureReason && record.status === "failed" ? <p className="mt-1 max-w-[16rem] text-[11px] text-ghost">{record.failureReason}</p> : null}
                   </TD>
                   <TD>
                     {record.publishedAt
@@ -409,6 +433,12 @@ export function DistributionView({
                       <NativeSelect id="distributionMode" name="distributionMode" defaultValue="organic">
                         <option value="organic">Organic</option>
                         <option value="paid_amplified">Paid amplification</option>
+                      </NativeSelect>
+                    </Field>
+                    <Field label="How it goes out" htmlFor="publishMethod" hint="Through the connected account needs the platform connected and a publish time; it is re-checked for approval at that time.">
+                      <NativeSelect id="publishMethod" name="method" defaultValue="manual">
+                        <option value="manual">Posted by a person</option>
+                        <option value="integration">Through the connected account</option>
                       </NativeSelect>
                     </Field>
                     <Field
