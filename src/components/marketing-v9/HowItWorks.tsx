@@ -56,7 +56,7 @@ export default function HowItWorks() {
       <section id="line" className="hw-line-section" data-scene aria-labelledby="hw-line-title">
         <div className="v9-panel is-night hw-line-panel">
           <header className="v9-head is-light v9-reveal">
-            <p className="v9-eyebrow">The line, station by station</p>
+            <p className="v9-eyebrow">The system, station by station</p>
             <h2 id="hw-line-title" className="v9-h2">
               {workshop.headline}
             </h2>
@@ -71,7 +71,7 @@ export default function HowItWorks() {
       <section id="stages" className="hw-stages" data-scene aria-labelledby="hw-stages-title">
         <div className="v9-wrap">
           <header className="v9-head v9-reveal">
-            <p className="v9-eyebrow">Stage by stage</p>
+            <p className="v9-eyebrow">Who does what</p>
             <h2 id="hw-stages-title" className="v9-h2">
               What happens at each stage, and who does it.
             </h2>
@@ -98,7 +98,7 @@ export default function HowItWorks() {
       <section id="gates" className="hw-gates" data-scene aria-labelledby="hw-gates-title">
         <div className="v9-panel">
           <header className="v9-head is-center v9-reveal">
-            <p className="v9-eyebrow">Gates</p>
+            <p className="v9-eyebrow">What we refuse to do</p>
             <h2 id="hw-gates-title" className="v9-h2">
               Four things the machine refuses to do.
             </h2>
@@ -124,7 +124,7 @@ export default function HowItWorks() {
       <section id="proof" className="hw-proof" data-scene aria-labelledby="hw-proof-title">
         <div className="v9-wrap">
           <header className="v9-head v9-reveal">
-            <p className="v9-eyebrow">Step by step</p>
+            <p className="v9-eyebrow">One idea, start to finish</p>
             <h2 id="hw-proof-title" className="v9-h2">
               How one idea moves through a service period.
             </h2>

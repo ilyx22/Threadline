@@ -37,8 +37,8 @@ export const hero = {
 export const gap = {
   index: "02",
   eyebrow: "The visibility gap",
-  headline: "Strong firms know far more than the market can see.",
-  body: "Inside the firm there are years of judgement, hundreds of client conversations and a method that works. Outside there is a website, a few posts and a buyer who has to take your word for it. The gap is not a marketing problem. It is a visibility problem, and it costs the firm every time a buyer decides without meeting the thinking.",
+  headline: "Strong firms know far more than the market does.",
+  body: "Inside the firm: years of judgement, hundreds of client conversations and a method that works. Outside: a website, a few posts and a buyer taking your word for it. That is not a marketing problem. It is a visibility problem, and it costs you every time a buyer decides without meeting your thinking.",
   inside: {
     label: "Inside the firm",
     note: "Private, uneven, mostly unwritten",
@@ -54,9 +54,9 @@ export const gap = {
 
 export const memory = {
   index: "03",
-  eyebrow: "Market memory",
+  eyebrow: "What we build instead",
   headline: ["We are not trying to make you famous.", "We are trying to make you familiar to the people who matter."], // claim:C-MEMORY
-  body: "The goal is a small pool of the right buyers who keep meeting your clear thinking until, when their problem arrives, it is obvious who to call. Familiarity earns attention. Repeated useful attention builds authority. Authority makes every other acquisition channel work harder.",
+  body: "A small pool of the right buyers keeps meeting your clear thinking, so when their problem arrives it is obvious who to call. Familiarity earns attention. Repeated useful attention builds authority. Authority makes every other channel work harder.",
   encounters: [
     { n: "01", state: "Stranger", piece: "A post", where: "read on the train, half-remembered" },
     { n: "02", state: "Recognised", piece: "A note", where: "kept at the desk for the argument in it" },
@@ -69,9 +69,9 @@ export const memory = {
 
 export const roles = {
   index: "04",
-  eyebrow: "The working relationship",
+  eyebrow: "How we'll work together",
   headline: "You talk, record when useful, approve and sell. Threadline runs the system around you.", // claim:C-DIVISION
-  body: "The part we need from you is the part nobody else can do. Everything around it is run, recorded and read back to you.",
+  body: "We ask only for the part nobody else can do. Everything around it is run, recorded and read back to you.",
   you: {
     label: "You",
     rows: [
@@ -158,9 +158,9 @@ export const workshop = {
 
 export const expressions = {
   index: "06",
-  eyebrow: "One idea, the right expressions",
-  headline: "One idea, the right expressions.",
-  body: "A root idea is not a post. It is an argument that can be met in several forms, each prescribed for the buyer and the room, each carrying the same thinking. Platforms are components we prescribe after diagnosis, not packages you have to choose.",
+  eyebrow: "One idea, multiple formats",
+  headline: "One idea, multiple formats.",
+  body: "A root idea is not a post. It is an argument met in several formats, each chosen for the buyer and the room, each carrying the same thinking. Platforms are prescribed after diagnosis, not picked from a menu.",
   root: { label: "Root idea", title: "Transformation programmes fail before the technology is chosen.", stamp: "Illustrative" }, // claim:C-THESIS-ILLUSTRATIVE
   forms: [
     { kind: "Written post", role: "Makes the argument easy to meet", room: "Where the buyer reads" },
@@ -174,25 +174,25 @@ export const expressions = {
 
 export const learning = {
   index: "07",
-  eyebrow: "Commercial learning",
+  eyebrow: "How we test and perfect",
   headline: "Expected. Actual. Why. Change. Retest.",
-  body: "Before a piece goes out we write down what we expect. After it has travelled we read what happened against that expectation, name the most likely reason for the gap, change one thing, and run it again. This is the difference between a content calendar and a system that gets smarter.",
+  body: "Before a piece goes out we write down what we expect it to do. Once it has travelled we read what it did, name the likeliest reason for any gap, change one thing and send it again. A calendar posts. This gets smarter.",
   illustrative: "Illustrative cases. Not client results.", // claim:C-LEARNING-ILLUSTRATIVE
   note: "Inference is labelled as inference. A bad week reads as a bad week. No leads, views or revenue are promised.", // claim:C-NO-PROMISES
   more: { label: "Read how a service period runs", href: links.how },
   /** The phone digest of `body`: one line per step, shown under 760px in place of the paragraph. */
   steps: [
-    { step: "Expected.", note: "Written down before the piece goes out." },
-    { step: "Actual.", note: "What happened, read against it." },
-    { step: "Why.", note: "The most likely reason for the gap." },
-    { step: "Change.", note: "One thing, not everything." },
-    { step: "Retest.", note: "The same idea, sent again. A calendar posts; this gets smarter." },
+    { step: "Expected.", note: "What we think the piece will do, written before it goes out." },
+    { step: "Actual.", note: "What it did, read against that." },
+    { step: "Why.", note: "The single likeliest reason for the gap." },
+    { step: "Change.", note: "One part replaced. The idea kept." },
+    { step: "Retest.", note: "The same idea, sent again and read again." },
   ],
 } as const;
 
 export const fit = {
   index: "08",
-  eyebrow: "Fit",
+  eyebrow: "Who this is for",
   headline: "Built for a specific kind of firm.",
   body: "Threadline works where judgement is what clients buy, one conversation is worth a lot, and the firm can take on more of the right work. It is not a ghostwriting service, a content agency or a self-serve tool.",
   good: { label: "A good fit", items: ["Expert-led, where judgement is what clients buy", "Deal value that makes one conversation matter", "Proven expertise with a real offer behind it", "Senior people willing to talk and approve", "Wants authority, not virality"] },

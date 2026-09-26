@@ -92,7 +92,7 @@ export const burden = {
 } as const;
 
 export const workshop = {
-  eyebrow: "How the work is done",
+  eyebrow: "Our curated system",
   headline: "Your expertise goes in. A visible authority system comes out.",
   body: "One root idea travels the whole bench. Six stations, each with one job. Nothing is duplicated; everything is decided by a person and read back against what we expected.",
   stations: [

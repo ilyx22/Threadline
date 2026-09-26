@@ -56,7 +56,7 @@ export default function WhoItsFor() {
       <section className="wf-profile" data-scene aria-labelledby="wf-profile-title">
         <div className="v9-wrap">
           <header className="v9-head v9-reveal">
-            <p className="v9-eyebrow">The profile</p>
+            <p className="v9-eyebrow">Seven signs it fits</p>
             <h2 id="wf-profile-title" className="v9-h2">
               Seven things that are usually true of the firms it works for.
             </h2>
@@ -81,7 +81,7 @@ export default function WhoItsFor() {
       <section className="wf-fit" data-scene aria-labelledby="wf-fit-title">
         <div className="v9-panel">
           <header className="v9-head is-center v9-reveal">
-            <p className="v9-eyebrow">Plainly</p>
+            <p className="v9-eyebrow">The fit, plainly</p>
             <h2 id="wf-fit-title" className="v9-h2">
               The fit, in one look.
             </h2>

@@ -3,7 +3,7 @@ import { PLAYBOOK } from "@/content/public-site";
 import { LANGUAGE_SOURCES, PROMISES, RAW_MATERIAL } from "@/content/playbook";
 import Bench from "@/components/marketing-v5/Bench";
 import { Drawers, EvidenceLadder, ExpectationCard, FlipGrid, MemoryScrubber, RoomPicker, SentenceBuilder, Sorter } from "./Widgets";
-import { AutoRead, MarkRead } from "./Progress";
+import { AutoRead } from "./Progress";
 import { Obj, type ObjName } from "../Obj";
 
 /** One object per chapter, the same set as the homepage, so the chapters read as stations of the same workshop. */
@@ -86,7 +86,6 @@ export function Chapter({ index, standalone = false }: { index: number; standalo
               <p className="v9-tag">Do this today</p>
               <p>{ch.practice}</p>
             </div>
-            <MarkRead slug={ch.slug} />
           </div>
           <div className={`pb-chapter-tool v9-tile ${TONES[index]} v9-reveal`} style={{ ["--d" as string]: "120ms" }}>
             <Widget slug={ch.slug} />

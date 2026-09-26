@@ -1242,3 +1242,8 @@
   /* the rail a touch higher */
   .tl-public.v9 .pb-rail { margin-top: -4px; padding-top: 6px; }
 }
+
+/* ============================================================ pass 7 (26 September 2026): a rule between chapters */
+.pb-chapter + .pb-chapter::before { content: ""; display: block; max-width: var(--v9-max); margin: 0 auto var(--v9-section); border-top: 1px solid var(--v9-line); }
+.pb-chapter + .pb-chapter { padding-top: 0; }
+@media (max-width: 759px) { .pb-chapter + .pb-chapter::before { margin-inline: 16px; } }

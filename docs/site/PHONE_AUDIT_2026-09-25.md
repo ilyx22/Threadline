@@ -165,3 +165,12 @@ Uses the same panel and wordmark rules; inherits the width change.
 | "Move the ten boxes up by 0.3cm on phone" | phone | The rail sits 10px higher |
 | "Animate the card turn, and remove the 'Turn the card' label" | everywhere | The answer fades and settles in over 360ms and the card tints; the label is gone, the plus icon and the question remain |
 | "The 1 to 10 bar should not scroll with the page" | everywhere | The rail is no longer sticky |
+
+## Seventh pass (26 September 2026): copy as a story, the playbook chapters
+
+| Note | Where it applies | What changed |
+| --- | --- | --- |
+| "Remove the read button in the playbook" | everywhere | The "Mark as read" button is gone; chapters still count as read when they have been on screen (the automatic reader stays), so the rail's tally and the "read" marks keep working |
+| "A line divider between each chapter" | everywhere | A hairline rule between chapters, with the section space below it |
+| Titles and copy as one story, no longer than before | homepage | Section eyebrows now read in sequence: The visibility gap; What we build instead; How we'll work together; Our curated system; One idea, multiple formats; How we test and perfect; Who this is for. Headlines: "Strong firms know far more than the market does." and "One idea, multiple formats." Bodies shortened in the gap, memory, roles, expressions and learning sections; the five learning steps rewritten as one clear line each. The hero, the memory headline, the founder-role headline and the five-word learning headline are unchanged (approved copy). No promises added, no em dashes |
+| The inner pages' eyebrows | How it works, Who it is for | "The system, station by station", "Who does what", "What we refuse to do", "One idea, start to finish"; "Seven signs it fits", "The fit, plainly" |
