@@ -9,6 +9,7 @@ import { Obj } from "../Obj";
 import { CHAPTER_OBJECTS } from "./Chapter";
 import { ProgressRail } from "./Progress";
 import { Chapter } from "./Chapter";
+import { WordmarkMarquee } from "../Marquee";
 
 /**
  * The Playbook as a single interactive page: a statement panel with a start
@@ -162,6 +163,7 @@ export default function Playbook() {
             </div>
           </div>
         </div>
+        <WordmarkMarquee />
       </section>
     </div>
   );

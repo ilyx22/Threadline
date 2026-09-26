@@ -28,7 +28,7 @@ async function main() {
       scenes: document.querySelectorAll('.v9-home svg[role=img][aria-label], .v9-home img[alt]:not([alt=""])').length,
       objects: [...document.querySelectorAll('.v9-home .v9-obj img')].filter(i => i.complete && i.naturalWidth > 0).length,
       tabs: document.querySelectorAll('.v5-tabs [role=tab]').length,
-      cases: document.querySelectorAll('.v5-cases .v5-chip').length,
+      cases: document.querySelectorAll('.v5-bench-case').length,
       js: document.documentElement.dataset.js || '',
       hidden: [...document.querySelectorAll('.v9-home h1, .v9-home h2, .v9-home .v5-art')].filter(e => parseFloat(getComputedStyle(e).opacity) < 0.99 && !e.closest('[data-scene]:not([data-seen])')).length
     })`);
@@ -39,7 +39,7 @@ async function main() {
     ok("v9:copy", "founder role", /talk, record when useful, approve and sell/i.test(s.text));
     ok("v9:copy", "the workshop and the loop", /six stations/i.test(s.text) && /Expected\. Actual\.\s+Why\. Change\. Retest\./.test(s.text));
     ok("v9:copy", "one idea, the right expressions", /One idea, the right expressions/.test(s.text));
-    ok("v9:design", "six mosaic tiles, five bench states, three cases", s.tiles === 6 && s.tabs === 5 && s.cases === 3, JSON.stringify({ tiles: s.tiles, tabs: s.tabs, cases: s.cases }));
+    ok("v9:design", "six mosaic tiles, five bench states, one labelled case", s.tiles === 6 && s.tabs === 5 && s.cases === 1, JSON.stringify({ tiles: s.tiles, tabs: s.tabs, cases: s.cases }));
     ok("v9:design", "every scene is a labelled illustration (three generated scenes, the frieze, the line, the bench)", s.scenes >= 6, `${s.scenes}`);
     ok("v9:design", "the object set is loaded: four capsules, eight tools, six stations", s.objects >= 18, `${s.objects}`);
     ok("v9:design", "scripting flag set by the observer", s.js === "1");
@@ -55,9 +55,7 @@ async function main() {
     await evaluate(cdp, `(() => { const t = ${q(".v5-tabs [role=tab][aria-selected=true]")}; t.focus(); t.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true })); return true; })()`);
     await sleep(150);
     ok("v9:bench", "arrow key moves the state and focus", (await evaluate<string>(cdp, `${q(".v5-bench")}.dataset.state + ':' + (document.activeElement?.id || '')`)) === "2:bench-tab-2");
-    await evaluate(cdp, `${q(".v5-cases .v5-chip:nth-child(3)")}.click(); true`);
     await sleep(150);
-    ok("v9:bench", "choosing a case resets to Expected", (await evaluate<string>(cdp, `${q(".v5-bench")}.dataset.state`)) === "0");
 
     section("homepage v9 — widths and clipping");
     for (const width of [1440, 1024, 768, 390, 320]) {

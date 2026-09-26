@@ -5,6 +5,7 @@ import { fit } from "@/content/home";
 import Motion from "@/components/marketing-v5/Motion";
 import Image from "next/image";
 import { FitTable } from "./FitTable";
+import { WordmarkMarquee } from "./Marquee";
 import { Obj, type ObjName } from "./Obj";
 
 const PROFILE_OBJECTS: ObjName[] = ["folder", "sheet-tick", "ledger", "microphone", "stamp", "press", "crate"];
@@ -74,7 +75,6 @@ export default function WhoItsFor() {
               </div>
             ))}
           </dl>
-          <p className="v9-note">{c.wedgeNote}</p>
         </div>
       </section>
 
@@ -113,6 +113,7 @@ export default function WhoItsFor() {
             <Image src="/marketing/closing-scene.jpg" alt="At night, six finished pieces hang on a marigold line between two poles; the thread returns underneath to a spool on the ground." width={1376} height={768} sizes="(max-width: 991px) 100vw, 54vw" loading="eager" />
           </div>
         </div>
+        <WordmarkMarquee />
       </section>
     </div>
   );

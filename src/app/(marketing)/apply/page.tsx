@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ApplicationForm } from "./application-form";
 import { publicBookingUrl } from "@/lib/actions/booking";
 import { APPLY } from "@/content/public-site";
+import { WordmarkMarquee } from "@/components/marketing-v9/Marquee";
 
 export const metadata: Metadata = {
   title: "Apply for a diagnosis, not a pitch",
@@ -31,6 +32,8 @@ export default async function ApplyPage() {
           </div>
         </div>
       </section>
+      <WordmarkMarquee />
+
     </div>
   );
 }

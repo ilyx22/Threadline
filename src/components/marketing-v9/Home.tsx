@@ -8,6 +8,7 @@ import Bench from "@/components/marketing-v5/Bench";
 import { Obj, type ObjName } from "./Obj";
 import { ExpressionsArt } from "./ExpressionsArt";
 import { FitTable } from "./FitTable";
+import { WordmarkMarquee } from "./Marquee";
 
 /**
  * The homepage, 24 September 2026 (second pass). The composition the owner
@@ -246,7 +247,6 @@ function Workshop() {
             </li>
           ))}
         </ol>
-        <p className="v9-note is-center">{workshop.loop}</p>
       </div>
     </section>
   );
@@ -280,7 +280,6 @@ function Expressions() {
             </span>
           ))}
         </p>
-        <p className="v9-note">{e.routeNote}</p>
       </div>
     </section>
   );
@@ -362,13 +361,7 @@ function Closing() {
           <Image src="/marketing/closing-scene.jpg" alt="At night, six finished pieces hang on a marigold line between two poles; the thread returns underneath to a spool on the ground." width={1376} height={768} sizes="(max-width: 991px) 100vw, 54vw" loading="eager" />
         </div>
       </div>
-      <div className="v9-wordmark-marquee" aria-hidden="true">
-        <div className="v9-wordmark-track">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <span key={i}>Threadline</span>
-          ))}
-        </div>
-      </div>
+      <WordmarkMarquee />
     </section>
   );
 }

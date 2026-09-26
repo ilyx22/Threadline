@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { CalculatorClient } from "./calculator-client";
 import { CALCULATOR } from "@/content/public-site";
+import { WordmarkMarquee } from "@/components/marketing-v9/Marquee";
 
 export const metadata: Metadata = {
   title: "The cost of the status quo",
@@ -31,6 +32,8 @@ export default function CalculatorPage() {
           </div>
         </div>
       </section>
+      <WordmarkMarquee />
+
     </div>
   );
 }

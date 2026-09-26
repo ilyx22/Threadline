@@ -5,6 +5,7 @@ import { workshop } from "@/content/marketing-v5";
 import Motion from "@/components/marketing-v5/Motion";
 import Image from "next/image";
 import StationLine from "./StationLine";
+import { WordmarkMarquee } from "./Marquee";
 
 /**
  * How it works, in the homepage's system: a statement panel with the busy
@@ -74,7 +75,7 @@ export default function HowItWorks() {
             <h2 id="hw-stages-title" className="v9-h2">
               What happens at each stage, and who does it.
             </h2>
-            <p className="v9-body">Seven stages every service period. You are needed at three of them, briefly. Everything else belongs to Threadline, and the last stage feeds the first.</p>
+            <p className="v9-body">Seven stages every service period. You are needed at three of them, briefly. Everything else belongs to Threadline.</p>
           </header>
           <ol className="hw-stage-list">
             {c.stages.map((s, i) => {
@@ -172,6 +173,7 @@ export default function HowItWorks() {
             <Image src="/marketing/closing-scene.jpg" alt="At night, six finished pieces hang on a marigold line between two poles; the thread returns underneath to a spool on the ground." width={1376} height={768} sizes="(max-width: 991px) 100vw, 54vw" loading="eager" />
           </div>
         </div>
+        <WordmarkMarquee />
       </section>
     </div>
   );

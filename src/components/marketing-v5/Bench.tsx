@@ -12,51 +12,56 @@ import { At, C, LINE, outline as O } from "./art/kit";
  * slides in; the jars are read again. Keyboard, touch and reduced motion all
  * land on the same states. Cases and values are illustrative and labelled so.
  */
-const STEP_MS = 1600;
 const COMPONENT_X = [-148, -74, 0, 74, 148];
 
 export default function Bench() {
   const d = diagnosis;
-  const [caseKey, setCaseKey] = React.useState<string>(d.cases[0].key);
   const [state, setState] = React.useState(0);
   const [lever, setLever] = React.useState(0);
-  const [running, setRunning] = React.useState(false);
-  const timer = React.useRef<number | null>(null);
-  const c = d.cases.find((x) => x.key === caseKey) ?? d.cases[0];
+  const [paused, setPaused] = React.useState(false);
+  const [seen, setSeen] = React.useState(false);
+  const root = React.useRef<HTMLDivElement>(null);
+  const c = d.cases[0];
   const applied = lever >= 60;
   const failIdx = d.components.indexOf(c.failing as (typeof d.components)[number]);
 
+  /* the loop plays itself once the bench is in view: each state holds long enough to read, the change is applied a beat
+     after the block lifts, and after the retest it starts again. Hover, focus or a tap on a step pauses it; reduced motion never starts it. */
   React.useEffect(() => {
-    if (!running) return;
-    if (state >= 4) {
-      setRunning(false);
+    const el = root.current;
+    if (!el || typeof IntersectionObserver === "undefined") {
+      setSeen(true);
       return;
     }
-    timer.current = window.setTimeout(() => {
-      if (state === 3) setLever(100);
-      setState((s) => s + 1);
-    }, state === 3 ? 1100 : STEP_MS);
-    return () => {
-      if (timer.current) window.clearTimeout(timer.current);
-    };
-  }, [running, state]);
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => e.isIntersecting && setSeen(true)), { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  React.useEffect(() => {
+    if (!seen || paused) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timers: number[] = [];
+    if (state === 3) timers.push(window.setTimeout(() => setLever(100), 1100));
+    timers.push(
+      window.setTimeout(
+        () => {
+          if (state === 4) {
+            setLever(0);
+            setState(0);
+          } else {
+            setState(state + 1);
+          }
+        },
+        state === 3 ? 2800 : state === 4 ? 3400 : 2600,
+      ),
+    );
+    return () => timers.forEach((t) => window.clearTimeout(t));
+  }, [seen, paused, state]);
 
-  const pick = (key: string) => {
-    setRunning(false);
-    setCaseKey(key);
-    setState(0);
-    setLever(0);
-  };
   const go = (s: number) => {
-    setRunning(false);
     if (s < 3) setLever(0);
     if (s === 4 && !applied) setLever(100);
     setState(s);
-  };
-  const run = () => {
-    setState(0);
-    setLever(0);
-    setRunning(true);
   };
 
   /* phones: the drawing is wider than the screen, so the stage slides to the part each step talks about (jars for the readings, blocks for the fault and the fix) */
@@ -85,16 +90,28 @@ export default function Bench() {
   };
 
   return (
-    <div className="v5-bench" data-state={state} data-applied={applied ? "true" : "false"}>
-      <div className="v5-bench-top">
-        <p className="v5-tag">{d.illustrative}</p>
-        <div className="v5-cases" role="group" aria-label="Illustrative cases">
-          {d.cases.map((x) => (
-            <button key={x.key} type="button" className="v5-chip" aria-pressed={x.key === caseKey} onClick={() => pick(x.key)}>
-              {x.title}
-            </button>
-          ))}
-        </div>
+    <div
+      ref={root}
+      className="v5-bench"
+      data-state={state}
+      data-applied={applied ? "true" : "false"}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setPaused(false);
+      }}
+    >
+      <p className="v5-bench-case">
+        <span className="pb-stamp">Illustrative</span>
+        <span>{c.title}. Not a client result.</span>
+      </p>
+      <div className="v5-tabs v5-bench-steps" role="tablist" aria-label="Loop states" onKeyDown={onTabKey}>
+        {d.states.map((st, i) => (
+          <button key={st} id={`bench-tab-${i}`} type="button" role="tab" aria-selected={i === state} aria-controls="bench-readout" tabIndex={i === state ? 0 : -1} className="v5-tab" onClick={() => go(i)}>
+            <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span> {st}
+          </button>
+        ))}
       </div>
 
       <div className="v5-bench-stage" ref={stage}>
@@ -151,40 +168,17 @@ export default function Bench() {
       </div>
 
       <div className="v5-bench-panel">
-        <div className="v5-tabs" role="tablist" aria-label="Loop states" onKeyDown={onTabKey}>
-          {d.states.map((s, i) => (
-            <button key={s} id={`bench-tab-${i}`} type="button" role="tab" aria-selected={i === state} aria-controls="bench-readout" tabIndex={i === state ? 0 : -1} className="v5-tab" onClick={() => go(i)}>
-              <span aria-hidden="true">{String(i + 1).padStart(2, "0")}</span> {s}
-            </button>
-          ))}
-        </div>
         <div id="bench-readout" role="tabpanel" aria-labelledby={`bench-tab-${state}`} className="v5-readout" aria-live="polite">
+          <p className="v5-readout-step">
+            {String(state + 1).padStart(2, "0")} of 05
+          </p>
           <p className="v5-readout-verdict">{readout.verdict}</p>
           <ul>
             {readout.lines.map((l) => (
               <li key={l}>{l}</li>
             ))}
           </ul>
-          {changing ? (
-            <div className="v5-lever">
-              <label htmlFor="bench-lever">{d.controls.lever}</label>
-              <input id="bench-lever" type="range" min={0} max={100} value={lever} onChange={(e) => setLever(Number(e.target.value))} aria-valuetext={applied ? "Change applied" : "Not yet applied"} />
-              <p className="v5-lever-note">{applied ? c.change.control : "Drag past the mark, or press Retest, to swap the part."}</p>
-            </div>
-          ) : null}
         </div>
-        <div className="v5-bench-actions">
-          <button type="button" className="v5-btn is-ghost" onClick={() => go(Math.max(0, state - 1))} disabled={state === 0}>
-            {d.controls.back}
-          </button>
-          <button type="button" className="v5-btn is-ghost" onClick={() => go(Math.min(4, state + 1))} disabled={state === 4}>
-            {d.controls.next}
-          </button>
-          <button type="button" className="v5-btn" onClick={run}>
-            {d.controls.run}
-          </button>
-        </div>
-        <p className="v5-note">{d.note}</p>
       </div>
     </div>
   );

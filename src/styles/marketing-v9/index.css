@@ -1126,3 +1126,70 @@
   /* chapter 1's crates: shorter tiles on phones (they were 140px of mostly empty box) */
   .tl-public.v9 .pb-flip { min-height: 96px; }
 }
+
+/* ============================================================ phone pass 4 (26 September 2026): rhythm, notes, the self-playing bench, gates, footer */
+/* one section rhythm on every page: sections carry top space only, the closing carries its own, nothing carries bottom space */
+.tl-public.v9 { --v9-section: clamp(64px, 7vw, 96px); }
+.v9-burden, .v9-workshop, .v9-expressions, .v9-learning, .v9-fit, .hw-line-section, .hw-stages, .hw-gates, .hw-proof, .wf-profile, .wf-fit, .pb-chapter { padding: var(--v9-section) 0 0; }
+.v9-closing, .hw-closing, .pb-closing { padding: var(--v9-section) 0 0; }
+.v9-more { margin-top: 28px; }
+/* the two rooms sit closer to their heading */
+.v9-gap .v9-head { padding-bottom: 16px; }
+.v9-band.is-photo.is-contained { margin-top: 8px; }
+/* the four gates: a mark beside the title, not above it */
+.hw-gate-list { margin-top: 28px; gap: 12px; }
+.hw-gate { display: grid; grid-template-columns: 28px minmax(0, 1fr); column-gap: 12px; row-gap: 2px; padding: 16px 18px 18px; border-radius: 20px; }
+.hw-gate-mark { grid-row: 1 / 4; width: 28px; height: 28px; margin: 2px 0 0; }
+.hw-gate-mark svg { width: 13px; height: 13px; }
+.hw-gate .v9-tag, .hw-gate strong, .hw-gate p { grid-column: 2; }
+.hw-gate strong { font-size: 1.2rem; }
+.hw-gate p { font-size: 14px; margin-top: 2px; }
+/* the bench plays itself: a labelled case, five step headings above the stage, the reading below it */
+.tl-public.v9 .v5-bench-case { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0 0 14px; font-size: 14px; color: var(--v9-ink-soft); }
+.tl-public.v9 .v5-bench-steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin: 0 0 12px; }
+.tl-public.v9 .v5-bench-steps .v5-tab { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 52px; padding: 8px 6px; border-radius: 14px; border: 1px solid var(--v9-line); background: #fff; color: var(--v9-ink-soft); font-size: 14px; font-weight: 600; text-align: center; transition: background 300ms var(--v9-ease), border-color 300ms var(--v9-ease), color 300ms var(--v9-ease); }
+.tl-public.v9 .v5-bench-steps .v5-tab span { font-size: 11px; letter-spacing: 0.08em; color: var(--v9-ink-faint); }
+.tl-public.v9 .v5-bench-steps .v5-tab[aria-selected="true"] { background: var(--v9-ink); border-color: var(--v9-ink); color: #fff; }
+.tl-public.v9 .v5-bench-steps .v5-tab[aria-selected="true"] span { color: var(--v5-gold); }
+.tl-public.v9 .v5-readout { margin-top: 12px; min-height: 0; border: 0; border-radius: 18px; background: var(--v9-sky); padding: 16px 20px 18px; }
+.tl-public.v9 .v5-readout-verdict { font-size: 1.4rem; }
+.tl-public.v9 .v5-readout-step { margin: 0 0 4px; font-family: var(--v9-sans); font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--v9-action); }
+.tl-public.v9 .v5-readout ul { font-size: 15px; }
+/* the moving wordmark ends every page */
+.v9-wordmark-marquee { margin-top: 32px; }
+.ap-page .v9-wordmark-marquee { margin-top: 0; }
+@media (max-width: 759px) {
+  .tl-public.v9 { --v9-section: 40px; }
+  .v9-more { margin-top: 20px; }
+  /* section titles centred on phones, like the hero */
+  .tl-public.v9 .v9-head, .tl-public.v9 .ap-head, .tl-public.v9 .pb-chapter-head { text-align: center; margin-inline: auto; padding-left: 0; }
+  .tl-public.v9 .v9-head .v9-h2, .tl-public.v9 .v9-head .v9-body, .tl-public.v9 .v9-head .v9-h3, .tl-public.v9 .ap-head .v9-h1, .tl-public.v9 .ap-head .v9-lead, .tl-public.v9 .pb-chapter-head .v9-h2, .tl-public.v9 .pb-chapter-head .v9-body { margin-inline: auto; }
+  .tl-public.v9 .pb-chapter-obj { margin: 0 auto 4px; }
+  .tl-public.v9 .v9-more, .tl-public.v9 .hw-synthetic { justify-content: center; text-align: center; }
+  .tl-public.v9 .v9-note { margin-inline: auto; text-align: center; }
+  /* the two rooms right under their heading */
+  .v9-gap .v9-head { padding-bottom: 8px; }
+  .v9-band.is-photo.is-contained { margin-top: 0; padding-bottom: 20px; }
+  /* the bench steps at phone width */
+  .tl-public.v9 .v5-bench-steps { gap: 5px; }
+  .tl-public.v9 .v5-bench-steps .v5-tab { min-height: 48px; padding: 6px 3px; font-size: 12.5px; border-radius: 12px; }
+  .tl-public.v9 .v5-bench-steps .v5-tab span { font-size: 10px; }
+  .tl-public.v9 .v5-readout { padding: 14px 16px 16px; }
+  .tl-public.v9 .v5-readout-verdict { font-size: 1.25rem; }
+  /* the gates: compact rows */
+  .hw-gate-list { margin-top: 20px; gap: 8px; }
+  .hw-gate { padding: 12px 14px 14px; }
+  /* the marquee closer to the panel above it */
+  .v9-wordmark-marquee { margin-top: 20px; }
+}
+/* the footer on phones: the three columns side by side, shorter rows */
+@media (max-width: 599px) {
+  .tl-public.v9 .v5-footer { padding: 32px 0 18px; }
+  .tl-public.v9 .v5-footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 10px; }
+  .tl-public.v9 .v5-footer-brand { grid-column: 1 / -1; }
+  .tl-public.v9 .v5-footer-line { margin-top: 12px; font-size: 15.5px; max-width: none; }
+  .tl-public.v9 .v5-footer-small { margin-top: 8px; font-size: 13px; max-width: none; }
+  .tl-public.v9 .v5-footer-col .v5-tag { margin-bottom: 2px; }
+  .tl-public.v9 .v5-footer-link { min-height: 36px; font-size: 14px; line-height: 1.25; }
+  .tl-public.v9 .v5-footer-end { flex-direction: column; gap: 4px; margin-top: 20px; padding-top: 14px; font-size: 12.5px; }
+}
