@@ -64,7 +64,13 @@ export async function GET(
     });
   }
 
-  const existingToken = request.cookies.get(VISITOR_COOKIE)?.value;
+  // ATT-02: the visitor cookie is a non-essential identifier, so it fails
+  // closed. It is set only when consent is evidenced (a tl_consent=1 cookie on
+  // Threadline's domain) or the owner has documented a lawful basis in
+  // configuration, and never when the browser sends Global Privacy Control.
+  // Without it, each click still counts, under a one-off identifier.
+  const mayIdentify = visitorCookieAllowed(request);
+  const existingToken = mayIdentify ? request.cookies.get(VISITOR_COOKIE)?.value : undefined;
   const token = isPlausibleToken(existingToken) ? existingToken : randomBytes(16).toString("base64url");
 
   const response = NextResponse.redirect(link.destinationUrl, {
@@ -73,13 +79,15 @@ export async function GET(
     // change, and a 301 would be cached by browsers past that change.
   });
 
-  response.cookies.set(VISITOR_COOKIE, token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: COOKIE_MAX_AGE,
-  });
+  if (mayIdentify) {
+    response.cookies.set(VISITOR_COOKIE, token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: COOKIE_MAX_AGE,
+    });
+  }
 
   // Never let a measurement failure break somebody else's audience experience.
   try {
@@ -132,3 +140,11 @@ async function record(
     },
   });
 }
+
+/** ATT-02: may this click carry a persistent visitor identifier? */
+function visitorCookieAllowed(request: NextRequest): boolean {
+  if (request.headers.get("sec-gpc") === "1") return false;
+  if (request.cookies.get("tl_consent")?.value === "1") return true;
+  return process.env.TRACKED_LINK_VISITOR_COOKIE === "lawful-basis-documented";
+}
+

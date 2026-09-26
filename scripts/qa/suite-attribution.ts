@@ -25,7 +25,7 @@ const OPS = "ops@threadline.com";
 
 async function follow(slug: string, cookie?: string, referer?: string) {
   const req = new NextRequest(`http://localhost:3000/t/${slug}`, {
-    headers: { ...(cookie ? { cookie: `tl_v=${cookie}` } : {}), ...(referer ? { referer } : {}) },
+    headers: { cookie: `tl_consent=1${cookie ? `; tl_v=${cookie}` : ""}`, ...(referer ? { referer } : {}) },
   });
   const res = await redirectGET(req, { params: Promise.resolve({ slug }) });
   const setCookie = res.headers.get("set-cookie") ?? "";
@@ -35,6 +35,16 @@ async function follow(slug: string, cookie?: string, referer?: string) {
 
 export async function runAttribution(fx: Fixture) {
   const A = fx.alpha.id;
+
+  // ATT-02: without consent evidence, or under Global Privacy Control, no identifier is set.
+  const consentCheck = async (slug: string) => {
+    const was = await prisma.trackedLink.findUnique({ where: { slug }, select: { active: true } });
+    await prisma.trackedLink.update({ where: { slug }, data: { active: true } });
+    const bare = await redirectGET(new NextRequest(`http://localhost:3000/t/${slug}`), { params: Promise.resolve({ slug }) });
+    const gpc = await redirectGET(new NextRequest(`http://localhost:3000/t/${slug}`, { headers: { cookie: "tl_consent=1", "sec-gpc": "1" } }), { params: Promise.resolve({ slug }) });
+    await prisma.trackedLink.update({ where: { slug }, data: { active: was?.active ?? false } });
+    return !/tl_v=/.test(bare.headers.get("set-cookie") ?? "") && !/tl_v=/.test(gpc.headers.get("set-cookie") ?? "") && bare.status === 302;
+  };
 
   section("tracked links — creation and destination validation");
   await actAs(OPERATOR);
@@ -84,6 +94,7 @@ export async function runAttribution(fx: Fixture) {
   record("attribution:redirect", "retired slug → 404 and records nothing", retired.status === 404 && (await prisma.touchpoint.count({ where: { orgId: A, kind: "click" } })) === 3 ? "PASS" : "FAIL", `${retired.status}`);
   const links = await listTrackedLinks(A);
   record("attribution:redirect", "listTrackedLinks reports clicks", links.some((l) => l.slug === slug && (l as { _count?: { touchpoints: number } })._count?.touchpoints === 3) ? "PASS" : "PARTIAL", `${links.map((l) => `${l.slug}:${(l as { _count?: { touchpoints: number } })._count?.touchpoints}`).join(",")}`);
+  record("attribution:consent", "no visitor cookie without consent evidence or under Global Privacy Control (the click still redirects)", (await consentCheck(slug)) ? "PASS" : "FAIL", "");
 
   section("attribution — models and evidence");
   const now = new Date();
