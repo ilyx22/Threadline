@@ -139,6 +139,8 @@ export async function addReadinessReferenceAction(
         description: input.description ? cleanText(input.description, 1000) : null,
         externalUrl: url,
         uploadedById: ctx.user.id,
+        source: "link",
+        sourceNote: `Linked from ${new URL(url).hostname} by ${ctx.user.name}`,
       },
     });
 

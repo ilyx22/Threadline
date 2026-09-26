@@ -50,6 +50,7 @@ type AssetView = {
   contentTitle: string | null;
   createdAt: string;
   processingState?: string;
+  sourceNote?: string | null;
 };
 
 function iconFor(mimeType: string | null, externalUrl: string | null) {
@@ -99,6 +100,8 @@ export function LibraryGrid({
                     </p>
                   </div>
                 </div>
+
+                {asset.sourceNote ? <p className="mt-2 text-[11px] text-ghost">{asset.sourceNote}</p> : null}
 
                 {asset.description ? (
                   <p className="mt-3 line-clamp-3 text-[12px] leading-relaxed text-muted">

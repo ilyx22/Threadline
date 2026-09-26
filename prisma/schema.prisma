@@ -768,6 +768,12 @@ model Asset {
   uploadedBy  User?        @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
 
   storageProvider String @default("local") // local | s3
+  /// CX-05: how the file arrived: upload | direct_upload | voice_note | link | test_clip | processing | export
+  source          String  @default("upload")
+  /// CX-05: provenance a person can read: where it came from and any permission attached.
+  sourceNote      String?
+  /// CX-05: the content root (lineage) the file belongs to, inherited from its piece.
+  rootId          String?
   /// Media processing (FILE-05): none | queued | processing | ready | failed. Aggregated from ProcessingTask rows.
   processingState String @default("none")
   processingTasks ProcessingTask[]

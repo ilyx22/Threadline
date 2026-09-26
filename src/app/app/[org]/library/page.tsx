@@ -105,6 +105,7 @@ export default async function LibraryPage({
             sizeBytes: a.sizeBytes,
             storagePath: a.storagePath,
             processingState: a.processingState,
+            sourceNote: a.sourceNote,
             externalUrl: a.externalUrl,
             version: a.version,
             tags: a.tagList,

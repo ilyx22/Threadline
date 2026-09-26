@@ -73,6 +73,8 @@ describe("direct uploads (FILE-02)", () => {
     assert.equal(asset.sizeBytes, size);
     assert.equal(asset.title, "Take 1");
     assert.equal(asset.processingState, "queued");
+    assert.equal(asset.source, "direct_upload", "CX-05: provenance recorded");
+    assert.match(asset.sourceNote ?? "", /Raw take\.mp4/);
     assert.equal(await prisma.processingTask.count({ where: { assetId } }), 3, "transcode, transcribe, thumbnail");
     assert.deepEqual(await completeDirectUpload(owner, s.id, parts), { assetId });
     assert.equal(await prisma.asset.count({ where: { orgId, storagePath: asset.storagePath } }), 1);

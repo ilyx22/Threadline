@@ -824,6 +824,8 @@ export async function uploadLibraryAssetAction(
         storageProvider: storageProviderName(),
         tags: stringifyArray(input.tags),
         uploadedById: ctx.user.id,
+        source: "upload",
+        sourceNote: `Uploaded to the library by ${ctx.user.name} as ${stored.fileName}`,
       },
     });
     await queueProcessingFor(asset);
@@ -873,6 +875,9 @@ export async function linkLibraryAssetAction(
         externalUrl: url,
         tags: stringifyArray(input.tags),
         uploadedById: ctx.user.id,
+        // CX-05: provenance a person can read later.
+        source: "link",
+        sourceNote: `Linked from ${new URL(url).hostname} by ${ctx.user.name}`,
       },
     });
 

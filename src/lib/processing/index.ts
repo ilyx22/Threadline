@@ -124,7 +124,7 @@ export function parseCallback(raw: unknown): CallbackEvent | null {
 
 /** Apply a verified callback. Returns whether it changed anything. */
 export async function applyCallback(event: CallbackEvent) {
-  const task = await prisma.processingTask.findUnique({ where: { id: event.taskId }, include: { asset: { select: { id: true, orgId: true, contentItemId: true, title: true } } } });
+  const task = await prisma.processingTask.findUnique({ where: { id: event.taskId }, include: { asset: { select: { id: true, orgId: true, contentItemId: true, title: true, rootId: true } } } });
   if (!task) return { applied: false, reason: "unknown task" };
   const lower = Object.keys(RANK).filter((s) => RANK[s] < RANK[event.status]);
   const now = new Date();
@@ -149,7 +149,7 @@ export async function applyCallback(event: CallbackEvent) {
       const file = new File([transcript], `${(task.asset.title || "transcript").slice(0, 80)}.txt`, { type: "text/plain" });
       const stored = await getStorage().put({ orgId: task.orgId, file, prefix: "transcripts" });
       const a = await prisma.asset.create({
-        data: { orgId: task.orgId, contentItemId: task.asset.contentItemId, category: "transcript", title: `Transcript: ${task.asset.title}`.slice(0, 240), fileName: stored.fileName, mimeType: stored.mimeType, sizeBytes: stored.sizeBytes, storagePath: stored.storagePath, storageProvider: (getStorage() as { name?: string }).name ?? "local" },
+        data: { orgId: task.orgId, contentItemId: task.asset.contentItemId, category: "transcript", title: `Transcript: ${task.asset.title}`.slice(0, 240), fileName: stored.fileName, mimeType: stored.mimeType, sizeBytes: stored.sizeBytes, storagePath: stored.storagePath, storageProvider: (getStorage() as { name?: string }).name ?? "local", source: "processing", sourceNote: `Transcribed from "${task.asset.title}" (asset ${task.asset.id}) by the processing worker`, rootId: task.asset.rootId },
       });
       outputAssetId = a.id;
       await prisma.processingTask.update({ where: { id: task.id }, data: { outputAssetId } });

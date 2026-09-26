@@ -159,6 +159,9 @@ export async function completeDirectUpload(owner: Owner, sessionId: string, part
         storagePath: s.storagePath,
         storageProvider: s.storageProvider,
         uploadedById: s.userId,
+        source: "direct_upload",
+        sourceNote: `Uploaded directly as ${s.fileName}`,
+        rootId: s.contentItemId ? ((await tx.contentItem.findUnique({ where: { id: s.contentItemId }, select: { rootId: true } }))?.rootId ?? null) : null,
       },
     });
     await tx.uploadSession.update({ where: { id: s.id }, data: { status: "complete", assetId: a.id, completedAt: new Date() } });

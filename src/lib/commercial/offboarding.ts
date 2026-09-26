@@ -92,7 +92,7 @@ export async function startOffboarding(orgId: string, staffId: string, opts: { r
   const file = new File([JSON.stringify(data, null, 2)], `${org.slug}-export.json`, { type: "application/json" });
   const stored = await getStorage().put({ orgId, file, prefix: "exports" });
   const asset = await prisma.asset.create({
-    data: { orgId, category: "report", title: `Workspace export ${now.toISOString().slice(0, 10)}`, fileName: stored.fileName, mimeType: stored.mimeType, sizeBytes: stored.sizeBytes, storagePath: stored.storagePath, storageProvider: storageProviderName(), version: 1, uploadedById: staffId },
+    data: { orgId, category: "report", title: `Workspace export ${now.toISOString().slice(0, 10)}`, fileName: stored.fileName, mimeType: stored.mimeType, sizeBytes: stored.sizeBytes, storagePath: stored.storagePath, storageProvider: storageProviderName(), version: 1, uploadedById: staffId, source: "export", sourceNote: "Offboarding export" },
   });
   log("export", `written (${stored.sizeBytes} bytes)`);
 

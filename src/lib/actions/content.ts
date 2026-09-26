@@ -392,7 +392,7 @@ export async function uploadContentAssetAction(
 
     const item = await prisma.contentItem.findFirst({
       where: { id: contentItemId, orgId: ctx.org.id },
-      select: { id: true, title: true, stage: true, recordedAt: true },
+      select: { id: true, title: true, stage: true, recordedAt: true, rootId: true },
     });
     if (!item) return err("That content item no longer exists.", "not_found");
 
@@ -419,6 +419,10 @@ export async function uploadContentAssetAction(
         storageProvider: storageProviderName(),
         version: existingVersions + 1,
         uploadedById: ctx.user.id,
+        // CX-05: a recording from the founder is a voice note; the piece's lineage travels with it.
+        source: stored.mimeType.startsWith("audio/") ? "voice_note" : "upload",
+        sourceNote: `Uploaded to "${item.title}" by ${ctx.user.name} as ${stored.fileName}`,
+        rootId: item.rootId,
       },
     });
     await queueProcessingFor(asset);

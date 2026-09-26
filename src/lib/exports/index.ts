@@ -32,7 +32,7 @@ export async function buildExport(exportId: string, now = new Date()) {
     const file = new File([JSON.stringify(data, null, 2)], `${org.slug}-export-${now.toISOString().slice(0, 10)}.json`, { type: "application/json" });
     const stored = await getStorage().put({ orgId: e.orgId, file, prefix: "exports" });
     const asset = await prisma.asset.create({
-      data: { orgId: e.orgId, category: "report", title: `Data export ${now.toISOString().slice(0, 10)}`, fileName: stored.fileName, mimeType: stored.mimeType, sizeBytes: stored.sizeBytes, storagePath: stored.storagePath, storageProvider: storageProviderName(), uploadedById: e.requestedById, tags: '["export"]' },
+      data: { orgId: e.orgId, category: "report", title: `Data export ${now.toISOString().slice(0, 10)}`, fileName: stored.fileName, mimeType: stored.mimeType, sizeBytes: stored.sizeBytes, storagePath: stored.storagePath, storageProvider: storageProviderName(), uploadedById: e.requestedById, tags: '["export"]', source: "export", sourceNote: "Data export requested from workspace settings" },
     });
     const moved = await prisma.dataExport.updateMany({ where: { id: e.id, status: "queued" }, data: { status: "ready", assetId: asset.id, sizeBytes: stored.sizeBytes, readyAt: now, expiresAt: new Date(now.getTime() + KEEP_MS) } });
     if (moved.count !== 1) {
