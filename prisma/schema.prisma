@@ -3362,3 +3362,26 @@ model BrandBrainVersion {
 
   @@unique([orgId, version])
 }
+
+/// A lesson that generation must follow (LRN-02). It comes from a correction a
+/// retest confirmed, or is written by staff with a stated basis. It applies to
+/// the whole workspace or to one platform, is shown in the AI context as
+/// "lessons in force", and is retired (never deleted) to roll it back.
+model GenerationLesson {
+  id           String    @id @default(cuid())
+  orgId        String
+  text         String
+  /// workspace | platform
+  scope        String    @default("workspace")
+  platform     String?
+  basis        String
+  correctionId String?
+  status       String    @default("active") // active | retired
+  activatedById String?
+  activatedAt  DateTime  @default(now())
+  retiredById  String?
+  retiredAt    DateTime?
+  retiredReason String?
+
+  @@index([orgId, status])
+}

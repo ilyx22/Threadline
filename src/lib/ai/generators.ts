@@ -73,6 +73,7 @@ const IDEA_BLOCKS: ContextBlock[] = [
   "MARKET_CONTEXT",
   "PERFORMANCE_CONTEXT",
   "CONTENT_HISTORY",
+  "LESSONS",
 ];
 
 export async function generateIdeas(input: {
@@ -143,6 +144,7 @@ const SCRIPT_BLOCKS: ContextBlock[] = [
   "MARKET_CONTEXT",
   "PERFORMANCE_CONTEXT",
   "CONTENT_HISTORY",
+  "LESSONS",
 ];
 
 export async function generateScript(input: {
@@ -157,7 +159,7 @@ export async function generateScript(input: {
   cta?: string;
   entityId?: string;
 }): Promise<{ script: GeneratedScript; meta: GenerationMeta }> {
-  const context = await loadWorkspaceContext(input.orgId, { blocks: SCRIPT_BLOCKS });
+  const context = await loadWorkspaceContext(input.orgId, { blocks: SCRIPT_BLOCKS, platform: input.platform });
 
   const template = scriptPrompt({
     context: renderContext(context, SCRIPT_BLOCKS),

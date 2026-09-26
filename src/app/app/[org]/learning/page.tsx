@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { GitBranch } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { listLessons } from "@/lib/learning/lessons";
+import { LessonsPanel } from "./lessons-panel";
 import { learningTrajectory, listCorrections, listRoots } from "@/lib/data/content-learning";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader, SectionHeading } from "@/components/ui/card";
@@ -35,6 +37,7 @@ export default async function LearningPage({ params }: { params: Promise<{ org: 
   ]);
 
   const isOperator = can(ctx.role, "learning.manage");
+  const lessons = isOperator ? await listLessons(ctx.org.id) : [];
   const scored = periods.filter((p) => p.meanScore !== null);
   const open = roots.filter((r) => r.status === "open");
 
@@ -271,6 +274,14 @@ export default async function LearningPage({ params }: { params: Promise<{ org: 
           </div>
         )}
       </section>
+
+      {isOperator ? (
+        <LessonsPanel
+          slug={slug}
+          lessons={lessons.map((l) => ({ id: l.id, text: l.text, basis: l.basis, status: l.status, platform: l.platform, retiredReason: l.retiredReason }))}
+          worked={corrections.filter((c) => c.worked === true && !lessons.some((l) => l.correctionId === c.id)).map((c) => ({ id: c.id, correction: c.correction }))}
+        />
+      ) : null}
     </div>
   );
 }

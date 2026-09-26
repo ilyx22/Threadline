@@ -33,6 +33,7 @@ export const CONTEXT_BLOCKS = [
   "PERFORMANCE_CONTEXT",
   "CONTENT_HISTORY",
   "TASK_CONTEXT",
+  "LESSONS",
 ] as const;
 
 export type ContextBlock = (typeof CONTEXT_BLOCKS)[number];
@@ -47,6 +48,8 @@ export type WorkspaceContext = {
 
 type LoadOptions = {
   blocks?: ContextBlock[];
+  /** The platform the output is for; platform-scoped lessons apply only there. */
+  platform?: string;
   /** Extra task-specific instruction appended as TASK_CONTEXT. */
   task?: string;
 };
@@ -285,6 +288,21 @@ export async function loadWorkspaceContext(
     ].filter(Boolean);
     blocks.CONTENT_HISTORY = section("CONTENT HISTORY AND RULES", lines);
     if (lines.length > 0) used.push("CONTENT_HISTORY");
+  }
+
+  /* --------------------------------- LESSONS --------------------------------- */
+  // LRN-02: lessons in force for this workspace (and this platform, when known).
+  if (wanted.has("LESSONS")) {
+    const lessons = await prisma.generationLesson.findMany({
+      where: { orgId, status: "active", OR: [{ scope: "workspace" }, ...(options.platform ? [{ scope: "platform", platform: options.platform }] : [])] },
+      orderBy: { activatedAt: "asc" },
+      take: 20,
+      select: { text: true, scope: true, platform: true },
+    });
+    if (lessons.length) {
+      blocks.LESSONS = section("LESSONS IN FORCE (confirmed by our own retests; follow them)", lessons.map((l) => `- ${l.text}${l.scope === "platform" ? ` (${l.platform} only)` : ""}`));
+      used.push("LESSONS");
+    }
   }
 
   /* ------------------------------- TASK_CONTEXT ------------------------------ */
