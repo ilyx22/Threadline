@@ -2586,14 +2586,20 @@ model EmailMessage {
   textBody   String
   htmlBody   String
   provider   String // capture | resend | smtp
-  status     String    @default("queued") // queued | sent | failed | captured
+  status     String    @default("queued") // queued | sent | failed | captured | suppressed
   providerId String?
   error      String?
   jobId      String?
   sentAt     DateTime?
   createdAt  DateTime  @default(now())
+  /// Delivery events from the provider's webhook (NOT-02).
+  deliveredAt   DateTime?
+  bouncedAt     DateTime?
+  complainedAt  DateTime?
+  deliveryError String?
 
   @@index([toEmail, createdAt])
+  @@index([providerId])
   @@index([status])
 }
 
@@ -3320,4 +3326,15 @@ model InboundSource {
   org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
 
   @@index([orgId])
+}
+
+/// Addresses that must not be mailed (NOT-02): a permanent bounce or a spam
+/// complaint adds one automatically; staff can add or lift one by hand.
+model EmailSuppression {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  reason    String // bounce | complaint | manual
+  detail    String?
+  createdAt DateTime @default(now())
+  liftedAt  DateTime?
 }

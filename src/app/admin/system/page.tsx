@@ -5,6 +5,7 @@ import { configReport } from "@/lib/env";
 import { jobSummary } from "@/lib/jobs";
 import { crmBacklog } from "@/lib/crm/outbox";
 import { strandedWork } from "@/lib/team/members";
+import { operatorLoad } from "@/lib/effort";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { ResetMfaForm, SystemButton } from "./system-client";
@@ -30,6 +31,12 @@ export default async function SystemPage() {
     prisma.emailMessage.findMany({ where: { status: "failed" }, orderBy: { createdAt: "desc" }, take: 20, select: { id: true, toEmail: true, template: true, error: true, createdAt: true } }),
     strandedWork(),
     prisma.auditLog.findMany({ orderBy: { createdAt: "desc" }, take: 20, select: { id: true, action: true, summary: true, createdAt: true } }),
+  ]);
+  const [suppressed, uncertain, processingFailed, load] = await Promise.all([
+    prisma.emailSuppression.findMany({ where: { liftedAt: null }, orderBy: { createdAt: "desc" }, take: 50 }),
+    prisma.publishRecord.findMany({ where: { providerStatus: "UNCERTAIN" }, select: { id: true, platform: true, org: { select: { name: true, slug: true } } }, take: 50 }),
+    prisma.processingTask.count({ where: { status: "failed" } }),
+    operatorLoad(),
   ]);
   const errors = issues.filter((i) => i.level === "error");
 
@@ -121,6 +128,44 @@ export default async function SystemPage() {
             <p key={t.id} className="text-[12.5px] text-muted">{t.title}</p>
           ))}
           {!stranded.length ? <p className="text-[13px] text-muted">None.</p> : null}
+        </CardBody>
+      </Card>
+
+      <Card>
+        <CardHeader title="Needs a person" description="Posts the platform never answered (check before resending), failed media processing." />
+        <CardBody className="space-y-1 pt-0 text-[12.5px] text-muted">
+          {uncertain.map((u) => (
+            <p key={u.id}>
+              Uncertain {u.platform} post · <a className="text-accent hover:underline" href={`/app/${u.org.slug}/distribution`}>{u.org.name}</a>
+            </p>
+          ))}
+          <p>Failed processing steps: {processingFailed}</p>
+        </CardBody>
+      </Card>
+
+      <Card>
+        <CardHeader title="Suppressed email addresses" description="Added by permanent bounces and spam complaints; nothing is sent to them. Lift one only when you know it works again." />
+        <CardBody className="space-y-1 pt-0">
+          {suppressed.map((s) => (
+            <div key={s.id} className="flex items-center justify-between gap-2 text-[12.5px] text-muted">
+              <span>
+                {s.email} · {s.reason} · {when(s.createdAt)}
+              </span>
+              <SystemButton kind="suppression" id={s.email} />
+            </div>
+          ))}
+          {!suppressed.length ? <p className="text-[13px] text-muted">None.</p> : null}
+        </CardBody>
+      </Card>
+
+      <Card>
+        <CardHeader title="Operator load (last four weeks)" description="Recorded operator and editor minutes per client. Not recorded means nobody logged time, not that no time was spent." />
+        <CardBody className="space-y-1 pt-0 text-[12.5px] text-muted">
+          {load.map((l) => (
+            <p key={l.orgId}>
+              {l.name}: {l.perWeek === null ? "not recorded" : `${l.perWeek} min a week`}
+            </p>
+          ))}
         </CardBody>
       </Card>
 

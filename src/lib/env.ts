@@ -69,6 +69,7 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   if (email === "resend") {
     if (!set(env, "RESEND_API_KEY")) add("error", "RESEND_API_KEY", "EMAIL_PROVIDER=resend but no API key.");
     if (!set(env, "EMAIL_FROM")) add("error", "EMAIL_FROM", "EMAIL_PROVIDER=resend but no sender address.");
+    if (!set(env, "RESEND_WEBHOOK_SECRET")) add("warning", "RESEND_WEBHOOK_SECRET", "Not set: bounces and spam complaints are not recorded, so bad addresses keep being mailed.");
   } else if (e === "production") {
     add("warning", "EMAIL_PROVIDER", `Is "${email}": no email leaves the system (invitations, confirmations and resets show links on screen instead).`);
   }

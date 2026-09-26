@@ -1,5 +1,6 @@
 import "server-only";
 import { prisma } from "@/lib/db/client";
+import { isSuppressed } from "./delivery";
 import { renderTemplate, type EmailTemplateKey, type TemplateInput } from "./templates";
 
 /**
@@ -103,6 +104,11 @@ export async function sendEmail<K extends EmailTemplateKey>(input: {
       jobId: input.jobId ?? null,
     },
   });
+  // NOT-02: a suppressed address (permanent bounce, complaint) is never mailed.
+  if (await isSuppressed(input.to)) {
+    await prisma.emailMessage.update({ where: { id: row.id }, data: { status: "suppressed", error: "Address is suppressed after a bounce or complaint." } });
+    return { id: row.id, status: "suppressed" as const };
+  }
   const result = await p.send({ to: input.to, template: input.template, ...rendered });
   await prisma.emailMessage.update({
     where: { id: row.id },

@@ -8,6 +8,7 @@ import { retryOutboxRow } from "@/lib/crm/outbox";
 import { err, guarded, okVoid, type ActionResult } from "./shared";
 import { prisma } from "@/lib/db/client";
 import { resetMfaForUser } from "@/lib/auth/mfa";
+import { liftSuppression } from "@/lib/email/delivery";
 
 /** Operator recovery for background work (OPS-02). Audited. */
 export async function requeueJobAction(jobId: string): Promise<ActionResult> {
@@ -27,6 +28,17 @@ export async function retryCrmAction(outboxId: string): Promise<ActionResult> {
     await auditInternal(admin.user.id, { action: "system.crm_retry", entityType: "crm_outbox", entityId: outboxId, summary: "Retried a CRM sync row" });
     revalidatePath("/admin/system");
     return okVoid("Queued for another attempt.");
+  });
+}
+
+/** NOT-02: lift an email suppression once the address is known to work again. */
+export async function liftSuppressionAction(email: string): Promise<ActionResult> {
+  return guarded(async () => {
+    const admin = await requireInternalStrict("admin.view");
+    await liftSuppression(email);
+    await auditInternal(admin.user.id, { action: "system.email_unsuppress", entityType: "email", entityId: email, summary: `Lifted the email suppression for ${email}` });
+    revalidatePath("/admin/system");
+    return okVoid("Suppression lifted.");
   });
 }
 
