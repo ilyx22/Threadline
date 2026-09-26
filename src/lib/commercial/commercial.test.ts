@@ -57,9 +57,10 @@ describe("conversion (COM-03)", () => {
   });
 
   it("refuses a taken slug without leaving a half-made workspace", async () => {
-    const before = await prisma.organization.count();
+    // Scoped to this test's own records: other test files create workspaces in parallel.
     await assert.rejects(provisionClientWorkspace(staff, { name: "Clash", slug: `qa-halden-${stamp}`, founder: { name: "X", email: `x-${stamp}@example.com` } }), /slug is already taken/);
-    assert.equal(await prisma.organization.count(), before);
+    assert.equal(await prisma.organization.count({ where: { name: "Clash" } }), 0, "no half-made workspace");
+    assert.equal(await prisma.invitation.count({ where: { email: `x-${stamp}@example.com` } }), 0, "no invitation for the refused workspace");
   });
 });
 
