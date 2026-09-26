@@ -9,6 +9,7 @@ import {
   Flag,
   FolderOpen,
   Gauge,
+  Activity,
   Grid2X2,
   BadgeCheck,
   Home,
@@ -412,6 +413,7 @@ export const ADMIN_NAV: NavItem[] = [
     capability: "admin.support",
   },
   { key: "sops", label: "SOPs", href: "/admin/sops", icon: ScrollText, capability: "admin.sops" },
+  { key: "system", label: "System", href: "/admin/system", icon: Activity, capability: "admin.view" },
   {
     key: "metrics",
     label: "Business metrics",
