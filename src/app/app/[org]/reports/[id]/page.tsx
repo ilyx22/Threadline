@@ -53,6 +53,9 @@ export default async function ReportDetailPage({
             </Badge>
             {report.version > 1 ? <Badge tone="outline">Version {report.version}</Badge> : null}
             {report.supersededAt ? <Badge tone="warning">Replaced by a corrected version</Badge> : null}
+            <a href={`/app/${slug}/reports/${report.id}/pdf`} className="text-[12px] text-accent hover:underline print:hidden">
+              Download PDF
+            </a>
             <span className="text-[12px] text-faint print-muted">
               Generated {formatDate(report.generatedAt)}
               {report.generatedBy ? ` by ${report.generatedBy.name}` : ""}
