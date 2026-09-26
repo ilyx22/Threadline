@@ -3,6 +3,8 @@
  * wrong stage. Every gate is attacked through the real server action with a
  * real session, and the database is checked afterwards.
  */
+import * as Review from "../../src/lib/actions/review";
+import { fingerprint } from "../../src/lib/delivery/approvals";
 import { prisma } from "../../src/lib/db/client";
 import { actAs, attempt, fd, record, section } from "./context";
 import { buildFixture, teardown, ALPHA, type Fixture } from "./suite-tenancy";
@@ -113,6 +115,24 @@ export async function runWorkflow(fx: Fixture) {
   await Promise.all([attempt(() => Content.moveContentAction(ALPHA, cc.id, "approved")), attempt(() => Content.moveContentAction(ALPHA, cc.id, "approved"))]);
   const events = await prisma.contentEvent.count({ where: { contentItemId: cc.id, toStage: "approved" } as never });
   record("concurrency", "double-click approve logs one event", events === 1 ? "PASS" : events === 2 ? "PARTIAL" : "FAIL", `${events} approval events`, events > 1 ? "CONC-APPROVE" : undefined);
+
+  /* ------------------------------ bulk approval ------------------------------ */
+  section("approvals — bulk decisions on the versions shown (CX-02)");
+  const b1 = await prisma.contentItem.create({ data: { orgId: A, title: "bulk-one", stage: "in_review", platform: "linkedin", format: "short_form" } });
+  const b2 = await prisma.contentItem.create({ data: { orgId: A, title: "bulk-two", stage: "in_review", platform: "linkedin", format: "short_form" } });
+  const h1 = (await fingerprint(A, { type: "content_item", id: b1.id }))!.hash;
+  const h2 = (await fingerprint(A, { type: "content_item", id: b2.id }))!.hash;
+  await prisma.contentItem.update({ where: { id: b2.id }, data: { title: "bulk-two (retitled after the page loaded)" } });
+  const bulk = await attempt(() => Review.bulkApproveAction(ALPHA, [{ kind: "content", id: b1.id, hash: h1 }, { kind: "content", id: b2.id, hash: h2 }]));
+  const s1 = (await prisma.contentItem.findUnique({ where: { id: b1.id } }))!.stage;
+  const s2 = (await prisma.contentItem.findUnique({ where: { id: b2.id } }))!.stage;
+  record("approvals:bulk", "bulk approve applies to unchanged items and skips one that changed", bulk.outcome === "ok" && s1 === "approved" && s2 === "in_review" ? "PASS" : "FAIL", `${bulk.outcome} · ${s1}/${s2}`, s2 === "approved" ? "BULK-STALE" : undefined);
+  await actAs(A_MEMBER);
+  const b3 = await prisma.contentItem.create({ data: { orgId: A, title: "bulk-member", stage: "in_review", platform: "linkedin", format: "short_form" } });
+  const h3 = (await fingerprint(A, { type: "content_item", id: b3.id }))!.hash;
+  const memberBulk = await attempt(() => Review.bulkApproveAction(ALPHA, [{ kind: "content", id: b3.id, hash: h3 }]));
+  record("approvals:bulk", "bulk approve cannot bypass the approval capability", memberBulk.outcome !== "ok" && (await prisma.contentItem.findUnique({ where: { id: b3.id } }))!.stage === "in_review" ? "PASS" : "FAIL", `${memberBulk.outcome}`);
+  await actAs(A_ADMIN);
 
   /* --------------------------- publish transitions --------------------------- */
   section("distribution — publish record rules");
