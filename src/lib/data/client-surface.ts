@@ -238,3 +238,47 @@ export async function approvalCount(orgId: string): Promise<number> {
   ]);
   return scripts + content + packages;
 }
+
+export type ColleagueWait = { who: string; what: string; count: number; href: string };
+
+/**
+ * Work waiting on someone else in the client's team (CX-01): approvals the
+ * viewer cannot give (with the names of the people who can), and open tasks
+ * assigned to other members. Counted from real records.
+ */
+export async function waitingOnColleagues(orgId: string, slug: string, viewerId: string, viewerCanApprove: boolean): Promise<ColleagueWait[]> {
+  const out: ColleagueWait[] = [];
+  if (!viewerCanApprove) {
+    const [content, scripts, packages] = await Promise.all([
+      prisma.contentItem.count({ where: { orgId, stage: "in_review" } }),
+      prisma.script.count({ where: { orgId, qaState: "ready_to_record" } }),
+      prisma.platformPackage.count({ where: { orgId, status: "ready" } }),
+    ]);
+    const pending = content + scripts + packages;
+    if (pending) {
+      const approvers = await prisma.membership.findMany({
+        where: { orgId, status: "active", OR: [{ role: "client_admin" }, { profiles: { contains: '"approver"' } }] },
+        select: { user: { select: { name: true } }, contactRole: true },
+        orderBy: [{ contactRole: "asc" }],
+      });
+      const names = approvers.map((a) => a.user.name.split(" ")[0]).slice(0, 3);
+      out.push({ who: names.length ? names.join(", ") : "your approver", what: "approvals", count: pending, href: `/app/${slug}/approvals` });
+    }
+  }
+  const tasks = await prisma.task.groupBy({
+    by: ["assigneeId"],
+    where: { orgId, status: { in: ["open", "in_progress"] }, assigneeId: { not: null }, NOT: { assigneeId: viewerId } },
+    _count: { _all: true },
+  });
+  if (tasks.length) {
+    const members = await prisma.membership.findMany({
+      where: { orgId, userId: { in: tasks.map((t) => t.assigneeId!) }, role: { in: ["client_admin", "client_member", "editor"] } },
+      select: { userId: true, user: { select: { name: true } } },
+    });
+    for (const t of tasks) {
+      const m = members.find((x) => x.userId === t.assigneeId);
+      if (m) out.push({ who: m.user.name.split(" ")[0], what: "tasks", count: t._count._all, href: `/app/${slug}/tasks` });
+    }
+  }
+  return out;
+}

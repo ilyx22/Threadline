@@ -67,7 +67,7 @@ export function EngagementPanel({ engagement }: { engagement: EngagementView | n
     <Card>
       <CardHeader
         title="Engagement"
-        eyebrow={e.offerName}
+        eyebrow={e.offerName && e.offerName !== "Engagement" ? e.offerName : undefined}
         description={`${money(e.setupFeeMinor, e.currency)} setup, ${money(e.periodFeeMinor, e.currency)} per ${e.periodDays}-day period, ${e.initialPeriods} periods initially (${money(total, e.currency)}). Dates are ${e.timezone} calendar dates.`}
       />
       <CardBody className="space-y-5 pt-0">

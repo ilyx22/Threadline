@@ -56,21 +56,21 @@ type Application = {
 
 type Staff = { id: string; name: string };
 
-export function ApplicationList({ applications, staff }: { applications: Application[]; staff: Staff[] }) {
+export function ApplicationList({ applications, staff, openId }: { applications: Application[]; staff: Staff[]; openId?: string | null }) {
   return (
     <ul className="space-y-3">
       {applications.map((application) => (
         <li key={application.id}>
-          <ApplicationCard application={application} staff={staff} />
+          <ApplicationCard application={application} staff={staff} startOpen={application.id === openId} />
         </li>
       ))}
     </ul>
   );
 }
 
-function ApplicationCard({ application, staff }: { application: Application; staff: Staff[] }) {
+function ApplicationCard({ application, staff, startOpen = false }: { application: Application; staff: Staff[]; startOpen?: boolean }) {
   const router = useRouter();
-  const [expanded, setExpanded] = React.useState(false);
+  const [expanded, setExpanded] = React.useState(startOpen);
   const [notes, setNotes] = React.useState(application.reviewNotes ?? "");
   const [pending, startTransition] = React.useTransition();
 

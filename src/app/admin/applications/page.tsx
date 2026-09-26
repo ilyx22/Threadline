@@ -81,6 +81,7 @@ export default async function ApplicationsPage({
       ) : (
         <ApplicationList
           staff={staff}
+          openId={typeof query.open === "string" ? query.open : null}
           applications={applications.map((a) => ({
             id: a.id,
             name: a.name,

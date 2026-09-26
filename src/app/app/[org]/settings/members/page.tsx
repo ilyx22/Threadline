@@ -43,6 +43,7 @@ export default async function MembersPage({ params }: { params: Promise<{ org: s
         currentUserId={ctx.user.id}
         assignableRoles={[...assignable]}
         isClientWorkspace={isClientWorkspace}
+        viewerIsStaff={ctx.isInternal}
         members={members.map((m) => ({
           id: m.id,
           name: m.name,

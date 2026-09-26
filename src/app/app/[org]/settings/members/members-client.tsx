@@ -77,6 +77,7 @@ export function MembersTable({
   currentUserId,
   assignableRoles,
   isClientWorkspace,
+  viewerIsStaff,
 }: {
   slug: string;
   members: Member[];
@@ -84,7 +85,11 @@ export function MembersTable({
   currentUserId: string;
   assignableRoles: string[];
   isClientWorkspace: boolean;
+  viewerIsStaff: boolean;
 }) {
+  // A client admin cannot change a Threadline staff membership (the server
+  // refuses it), so no menu is offered for one.
+  const manageable = (m: Member) => m.id !== currentUserId && (viewerIsStaff || !["internal_operator", "super_admin"].includes(m.role));
   const { pending, run } = useRun();
   const [editing, setEditing] = React.useState<Member | null>(null);
 
@@ -126,7 +131,7 @@ export function MembersTable({
               <TD>{m.lastSeenAt ? relativeTime(new Date(m.lastSeenAt)) : "Never"}</TD>
               {canManage ? (
                 <TD align="right">
-                  {m.id === currentUserId ? (
+                  {!manageable(m) ? (
                     <span className="text-[12px] text-ghost">—</span>
                   ) : (
                     <DropdownMenu>

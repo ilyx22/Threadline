@@ -1,7 +1,7 @@
 /**
  * Full-page screenshots of public routes on the running server, for inspection.
  *
- *   node scripts/qa/run.cjs shoot --out=<dir> [--widths=1440,390] [--routes=/,/how-it-works]
+ *   node scripts/qa/run.cjs shoot --out=<dir> [--widths=1440,390] [--routes=/,/how-it-works] [--session=<token from mint-session.ts>]
  *
  * Scrolls each page first so every reveal has fired, then captures the whole
  * document. Writes <out>/<width>-<slug>.jpg. Not a QA gate — a viewing aid.
@@ -24,6 +24,11 @@ async function main() {
   try {
     await cdp.send("Page.enable");
     await cdp.send("Runtime.enable");
+    const session = flag("session");
+    if (session) {
+      await cdp.send("Network.enable");
+      await cdp.send("Network.setCookie", { name: "threadline_session", value: session, url: BASE, httpOnly: true, path: "/" });
+    }
     for (const width of WIDTHS) {
       await setViewport(cdp, width, 900);
       for (const route of ROUTES) {
