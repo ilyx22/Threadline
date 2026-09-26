@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Route } from "lucide-react";
 import { requireInternal } from "@/lib/auth/guard";
+import { followUpQueue } from "@/lib/sales/follow-ups";
 import { listProspects, listWedges } from "@/lib/data/acquisition";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/ui/feedback";
@@ -31,6 +32,7 @@ export default async function ProspectsPage({
   searchParams: Promise<{ state?: string; tier?: string }>;
 }) {
   await requireInternal("acquisition.view");
+  const queue = await followUpQueue();
   const params = await searchParams;
 
   const [prospects, wedges] = await Promise.all([
@@ -55,6 +57,23 @@ export default async function ProspectsPage({
         </div>
         <AddProspectButton wedges={wedges.map((w) => ({ id: w.id, label: w.label }))} />
       </header>
+      {queue.length ? (
+        <section className="rounded-md border border-line p-3 text-[12.5px]" aria-label="Follow-ups due">
+          <p className="mb-1 font-medium text-ink">Follow-ups due (COM-07)</p>
+          <ul className="space-y-0.5 text-muted">
+            {queue.map((q) => (
+              <li key={q.id}>
+                <a href={`/admin/prospects/${q.id}`} className="text-accent hover:underline">
+                  {q.contactName ? `${q.contactName}, ` : ""}
+                  {q.company}
+                </a>
+                {q.nextAction ? ` · ${q.nextAction}` : ""} · {q.nextActionDueAt ? relativeTime(q.nextActionDueAt) : ""}
+                {q.owner ? ` · ${q.owner.name}` : " · no owner"}
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       <nav className="flex flex-wrap items-center gap-1.5">
         <FilterChip href="/admin/prospects" active={!params.state} label="All" />
