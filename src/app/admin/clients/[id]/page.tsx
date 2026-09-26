@@ -31,6 +31,7 @@ import { integrationByProvider } from "@/lib/integrations/registry";
 import { ClientConfigForm } from "./client-config-form";
 import { EngagementPanel } from "./engagement-panel";
 import { BillingPanel } from "./billing-panel";
+import { OffboardingPanel } from "./offboarding-panel";
 import { invoiceBalance } from "@/lib/billing/invoices";
 import { currentEngagement, ensurePeriods } from "@/lib/commercial/engagements";
 
@@ -67,6 +68,18 @@ export default async function ClientDetailPage({
     prisma.paymentReminder.findMany({ where: { orgId: client.id, state: "draft" }, orderBy: { createdAt: "asc" } }),
     prisma.agreementDocument.findMany({ where: { orgId: client.id }, orderBy: { signedAt: "desc" } }),
   ]);
+  const offRecord = await prisma.offboardingRecord.findUnique({ where: { orgId: client.id } });
+  const orgRow = await prisma.organization.findUniqueOrThrow({ where: { id: client.id }, select: { slug: true, offboardedAt: true, accessEndsAt: true, retentionUntil: true, legalHold: true } });
+  const offboardingView = {
+    orgId: client.id,
+    slug: orgRow.slug,
+    offboarded: Boolean(orgRow.offboardedAt),
+    accessEndsAt: orgRow.accessEndsAt ? orgRow.accessEndsAt.toISOString().slice(0, 10) : null,
+    retentionUntil: orgRow.retentionUntil ? orgRow.retentionUntil.toISOString().slice(0, 10) : null,
+    legalHold: orgRow.legalHold,
+    deletable: Boolean(orgRow.retentionUntil && orgRow.retentionUntil < new Date() && !orgRow.legalHold && admin.can("workspace.delete")),
+    steps: offRecord ? (JSON.parse(offRecord.steps) as { step: string; outcome: string }[]) : [],
+  };
   const todayIso = new Date().toISOString().slice(0, 10);
   const billingView = {
     orgId: client.id,
@@ -173,6 +186,8 @@ export default async function ClientDetailPage({
           />
 
           <BillingPanel view={billingView} />
+
+          <OffboardingPanel view={offboardingView} />
 
           <ClientConfigForm
             orgId={client.id}

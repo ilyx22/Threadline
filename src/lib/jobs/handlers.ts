@@ -62,6 +62,9 @@ registerHandler("daily.tick", async () => {
   const { draftDueInvoices, draftOverdueReminders } = await import("@/lib/billing/invoices");
   for (const e of await prisma.engagement.findMany({ where: { status: "active" }, select: { id: true } })) await draftDueInvoices(e.id);
   await draftOverdueReminders();
+  // OFF-01: end client access when an offboarding export window closes.
+  const { closeExpiredAccess } = await import("@/lib/commercial/offboarding");
+  await closeExpiredAccess();
   const held = await prisma.crmOutbox.findMany({ where: { state: { in: ["pending", "failed"] } }, select: { id: true }, take: 200 });
   await kickCrm(held.map((h) => h.id));
   const { pruneTokens } = await import("@/lib/auth/tokens");

@@ -22,6 +22,7 @@ import {
   Video,
 } from "lucide-react";
 import { requireOrgPage } from "@/lib/auth/guard";
+import { prisma } from "@/lib/db/client";
 import { cadenceTarget, loadDashboard, sortActions } from "@/lib/data/dashboard";
 import { installationView } from "@/lib/data/installation";
 import { diagnosisSummary } from "@/lib/data/diagnosis";
@@ -65,6 +66,12 @@ export default async function HomePage({ params }: { params: Promise<{ org: stri
       recordingReadinessSummary(ctx.org.id),
       waitingOnColleagues(ctx.org.id, slug, ctx.user.id, canApprove),
     ]);
+
+  // OFF-01: an ending engagement tells the client where their export is and when access ends.
+  const ending = await prisma.organization.findUnique({ where: { id: ctx.org.id }, select: { offboardedAt: true, accessEndsAt: true } });
+  const exportFile = ending?.offboardedAt
+    ? await prisma.offboardingRecord.findUnique({ where: { orgId: ctx.org.id }, select: { exportAssetId: true } }).then((r) => (r?.exportAssetId ? prisma.asset.findUnique({ where: { id: r.exportAssetId }, select: { storagePath: true } }) : null))
+    : null;
 
   const trend = viewsTrend(
     assets.filter(
@@ -112,6 +119,19 @@ export default async function HomePage({ params }: { params: Promise<{ org: stri
           )}
         </p>
       </header>
+
+      {ending?.offboardedAt ? (
+        <Notice tone="info" title="This engagement has ended">
+          Your full export is ready
+          {exportFile?.storagePath ? (
+            <>
+              {" "}
+              <a href={`/api/files/${exportFile.storagePath}`} className="text-accent underline">to download here</a>
+            </>
+          ) : null}
+          . Access to this workspace ends on {ending.accessEndsAt ? ending.accessEndsAt.toISOString().slice(0, 10) : "the date we agreed"}.
+        </Notice>
+      ) : null}
 
       {/* --------------------------- Recording readiness --------------------------- */}
       {/*

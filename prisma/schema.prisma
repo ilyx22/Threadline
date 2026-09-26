@@ -131,6 +131,12 @@ model Organization {
   synthetic       Boolean   @default(false)
   startedAt       DateTime?
   lastActivityAt  DateTime?
+  /// OFF-01: offboarding. Client access ends at accessEndsAt (after the export
+  /// window); tenant data is deleted after retentionUntil unless on legal hold.
+  offboardedAt    DateTime?
+  accessEndsAt    DateTime?
+  retentionUntil  DateTime?
+  legalHold       Boolean   @default(false)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 
@@ -3048,5 +3054,25 @@ model PaymentReminder {
   createdAt    DateTime  @default(now())
 
   @@index([orgId, state])
+}
+
+/// The permanent record of an offboarding (OFF-01, PRV-01). Deliberately not
+/// linked to the organisation, so it survives the tenant's deletion as the
+/// evidence of what was done, when, and by whom.
+model OffboardingRecord {
+  id             String    @id @default(cuid())
+  orgId          String    @unique
+  orgName        String
+  reason         String
+  /// JSON: each step with its outcome and time.
+  steps          String    @default("[]")
+  startedById    String?
+  startedAt      DateTime  @default(now())
+  accessEndsAt   DateTime
+  retentionUntil DateTime
+  exportAssetId  String?
+  deletedAt      DateTime?
+  /// JSON: row counts removed, per table, at deletion.
+  deletionCounts String?
 }
 
