@@ -141,6 +141,31 @@ export const INTEGRATIONS: IntegrationDefinition[] = [
     configFields: [{ key: "handle", label: "Handle", placeholder: "@alexmorgan" }],
   },
   {
+    provider: "facebook",
+    name: "Facebook Page",
+    category: "publishing",
+    summary: "Publish Page posts and videos, and import engagement.",
+    capabilities: ["Publish to a Page", "Import engagement and video views"],
+    implementation: "adapter_only",
+    blockedReason:
+      "The connector is built against the Graph API; live use needs a Meta app approved in App Review for pages_manage_posts, pages_read_engagement and read_insights, and business verification.",
+    manualFallback:
+      "Publish from Meta Business Suite using the generated copy. Paste the post URL back into Threadline and log engagement weekly.",
+    configFields: [{ key: "profileUrl", label: "Page URL", type: "url" }],
+  },
+  {
+    provider: "threads",
+    name: "Threads",
+    category: "publishing",
+    summary: "Publish posts and import insights.",
+    capabilities: ["Publish text, image and video posts", "Import insights"],
+    implementation: "adapter_only",
+    blockedReason:
+      "The connector is built against the Threads API; live use needs a Meta app approved in App Review for threads_content_publish and threads_manage_insights.",
+    manualFallback: "Post from the Threads app using the generated copy (500 characters). Paste the URL back and log insights weekly.",
+    configFields: [{ key: "handle", label: "Handle", placeholder: "@alexmorgan" }],
+  },
+  {
     provider: "tiktok",
     name: "TikTok",
     category: "publishing",
@@ -266,4 +291,4 @@ export const IMPLEMENTATION_META: Record<
   },
 };
 
-export const PUBLISHABLE_PLATFORMS = ["youtube", "linkedin", "instagram", "tiktok", "x"] as const;
+export const PUBLISHABLE_PLATFORMS = ["youtube", "linkedin", "instagram", "tiktok", "x", "facebook", "threads"] as const;

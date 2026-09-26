@@ -85,7 +85,7 @@ Leases are five minutes; completion and failure are conditional on the lease hol
 | Stripe | customers, invoices, items, finalise, void; billing webhook | contract with mocked HTTP; test mode only | test keys, webhook secret |
 | Webhooks in | Stripe, HubSpot (v3), Pipedrive (basic auth), Attio (HMAC), HighLevel (Ed25519 + location) | unit tests with real signatures | per-client credentials |
 | LinkedIn, YouTube, Instagram, TikTok, X | OAuth start/callback, publish and metrics connectors | contract with mocks | platform app review |
-| Facebook / Threads | not built | — | Meta app review |
+| Facebook Page, Threads | OAuth, publish (text, image, video with processing), status and insights connectors | contract with mocks | Meta App Review + business verification |
 | Anthropic | generation with cost records and budgets | demo provider in tests | API key |
 
 ## 8. Deployment and rollback

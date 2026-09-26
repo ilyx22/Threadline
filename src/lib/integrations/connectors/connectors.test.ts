@@ -8,8 +8,8 @@ const respond = (status: number, body: unknown, headers: Record<string, string> 
 afterEach(() => __setConnectorFetch(null));
 
 describe("connector registry and readiness", () => {
-  test("five platforms register, each with scopes and named gates", () => {
-    assert.deepEqual(listConnectors().map((c) => c.provider).sort(), ["instagram", "linkedin", "tiktok", "x", "youtube"]);
+  test("seven platforms register, each with scopes and named gates", () => {
+    assert.deepEqual(listConnectors().map((c) => c.provider).sort(), ["facebook", "instagram", "linkedin", "threads", "tiktok", "x", "youtube"]);
     for (const c of listConnectors()) {
       assert.ok(c.scopes.publish.length > 0);
       assert.ok(c.gates.length > 0);
@@ -124,5 +124,55 @@ describe("publish and metrics through the mocked boundary", () => {
     __setConnectorFetch(async () => respond(201, "", { "x-restli-id": "urn:li:share:99" }));
     const pub = await li.publish({ accessToken: "t", text: "x", externalAccountId: "abc" });
     assert.ok(pub.ok && pub.externalId === "urn:li:share:99");
+  });
+});
+
+describe("Facebook Pages and Threads (INT-06)", () => {
+  test("Facebook: text to /feed, video to /videos with processing, engagement from post summaries", async () => {
+    const calls: { url: string; body: string }[] = [];
+    __setConnectorFetch((async (u: string | URL, init?: RequestInit) => {
+      const url = String(u);
+      calls.push({ url, body: String(init?.body ?? "") });
+      if (url.includes("/feed")) return respond(200, { id: "123_456" });
+      if (url.includes("/videos")) return respond(200, { id: "789" });
+      if (url.includes("video_insights")) return respond(200, { data: [{ values: [{ value: 1200 }] }] });
+      if (url.includes("fields=status")) return respond(200, { status: { video_status: "processing" } });
+      return respond(200, { shares: { count: 3 }, comments: { summary: { total_count: 4 } }, reactions: { summary: { total_count: 50 } } });
+    }) as typeof fetch);
+    const fb = getConnector("facebook")!;
+    assert.equal((await fb.publish({ accessToken: "t", text: "Hi", mediaKind: "none" })).ok, false, "needs the page id");
+    const text = await fb.publish({ accessToken: "t", externalAccountId: "page1", text: "Hello", mediaKind: "none" });
+    assert.deepEqual(text.ok && [text.externalId, text.providerStatus], ["123_456", "PUBLISHED"]);
+    assert.match(calls[0].url, /\/page1\/feed$/);
+    const video = await fb.publish({ accessToken: "t", externalAccountId: "page1", text: "Cut", mediaKind: "video", mediaUrl: "https://cdn.example/v.mp4" });
+    assert.deepEqual(video.ok && video.providerStatus, "VIDEO_PROCESSING");
+    assert.match(calls[1].body, /file_url/);
+    assert.deepEqual(await fb.publishStatus!({ accessToken: "t", externalId: "789" }), { ok: true, status: "processing" });
+    const m = await fb.fetchMetrics({ accessToken: "t", externalId: "789" });
+    assert.deepEqual(m.ok && [m.metrics.views, m.metrics.likes, m.metrics.comments, m.metrics.shares], [1200, 50, 4, 3]);
+    assert.equal(getConnector("facebook")!.authConfig({ FACEBOOK_CLIENT_ID: "a", FACEBOOK_CLIENT_SECRET: "b" })?.scopes.includes("pages_manage_posts"), true);
+  });
+
+  test("Threads: container then publish for text; video waits for processing; 500-character limit; insights mapped", async () => {
+    const calls: string[] = [];
+    __setConnectorFetch((async (u: string | URL) => {
+      const url = String(u);
+      calls.push(url);
+      if (url.endsWith("/threads")) return respond(200, { id: "c1" });
+      if (url.endsWith("/threads_publish")) return respond(200, { id: "m1" });
+      if (url.includes("fields=status")) return respond(200, { status: "ERROR", error_message: "bad video" });
+      return respond(200, { data: [{ name: "views", values: [{ value: 900 }] }, { name: "likes", values: [{ value: 20 }] }, { name: "replies", values: [{ value: 2 }] }, { name: "reposts", values: [{ value: 1 }] }] });
+    }) as typeof fetch);
+    const th = getConnector("threads")!;
+    const r = await th.publish({ accessToken: "t", externalAccountId: "u1", text: "Short post", mediaKind: "none" });
+    assert.deepEqual(r.ok && r.externalId, "m1");
+    assert.deepEqual(calls.slice(0, 2).map((c) => c.split("/").pop()), ["threads", "threads_publish"]);
+    const long = await th.publish({ accessToken: "t", externalAccountId: "u1", text: "x".repeat(501) });
+    assert.equal(long.ok, false);
+    const v = await th.publish({ accessToken: "t", externalAccountId: "u1", text: "Clip", mediaKind: "video", mediaUrl: "https://cdn.example/v.mp4" });
+    assert.deepEqual(v.ok && v.providerStatus, "CONTAINER_PROCESSING");
+    assert.deepEqual(await th.publishStatus!({ accessToken: "t", externalId: "c1" }), { ok: true, status: "failed", message: "bad video" });
+    const m = await th.fetchMetrics({ accessToken: "t", externalId: "m1" });
+    assert.deepEqual(m.ok && [m.metrics.views, m.metrics.likes, m.metrics.comments, m.metrics.shares], [900, 20, 2, 1]);
   });
 });

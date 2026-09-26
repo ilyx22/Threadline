@@ -193,6 +193,24 @@ and a rejection restarts the clock.
 
 Sources: [Overview of the Instagram API](https://developers.facebook.com/docs/instagram-platform/overview/)
 
+### 4b. Facebook Pages and Threads: supported APIs, built, gated by the same review
+
+Both have official publishing and insights APIs, so neither is a provider limitation. The
+connectors are built (`src/lib/integrations/connectors/facebook.ts` and `threads.ts`) and tested
+against the documented request and response shapes. What stands between them and live use is the
+same Meta process as Instagram:
+
+- **Facebook Page**: Graph API `/{page-id}/feed`, `/photos` and `/videos`, published with the Page
+  token. App Review for `pages_manage_posts`, `pages_read_engagement` and `read_insights`, plus
+  business verification. The founder must be an admin of the Page.
+- **Threads**: the Threads API (`graph.threads.net`), container then `threads_publish`, 500-character
+  posts, video containers processed first. App Review for `threads_content_publish` and
+  `threads_manage_insights`. Threads uses its own OAuth (`threads.net/oauth/authorize`) and its own
+  app credentials (`THREADS_CLIENT_ID`, `THREADS_CLIENT_SECRET`).
+
+One Meta business verification covers all three (Instagram, Facebook, Threads). File the three
+permission sets in one App Review submission.
+
 ---
 
 ## The order to file in

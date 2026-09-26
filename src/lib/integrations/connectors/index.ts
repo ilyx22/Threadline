@@ -107,8 +107,10 @@ import { youtube } from "./youtube";
 import { instagram } from "./meta";
 import { tiktok } from "./tiktok";
 import { x } from "./x";
+import { facebook } from "./facebook";
+import { threads } from "./threads";
 
-const CONNECTORS: Record<string, Connector> = { linkedin, youtube, instagram, tiktok, x };
+const CONNECTORS: Record<string, Connector> = { linkedin, youtube, instagram, tiktok, x, facebook, threads };
 
 export function getConnector(provider: string): Connector | null {
   return CONNECTORS[provider] ?? null;
