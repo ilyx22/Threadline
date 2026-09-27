@@ -28,6 +28,14 @@ See the [first-period roadmap](FIRST_PERIOD_ROADMAP.md).
 
 Early pieces are data, not a verdict.
 
+## How we stay in touch
+
+You have one named Threadline contact, initially Ilyas. We agree your preferred contact route, meeting time, approver and recording owner at kickoff. The workspace is where your team sees the current recording and approval requests, decisions and reports. We use email for the conversation around those items and put material decisions back in the workspace, so you do not have to manage several separate threads.
+
+We plan a short check-in call each week for the first four weeks. The first four-week review takes the place of that week's call. In weeks 5–12, we plan a check-in about every two weeks; the reviews at weeks 8 and 12 take the place of a normal check-in. We also check in personally between meetings when there is a useful update or a decision to make: roughly every 4–7 days early on, then every 7–10 days. At kickoff we put the actual times on the calendar and agree how to adapt them to your availability. We agree the rhythm for any continuation at the end of the initial engagement.
+
+Each week you receive a concise update on what shipped, what we learned, what is next and what needs your decision. Approval and recording requests are consolidated in **This week** and **Approvals** where possible. A blocker is raised by your named contact with a clear action and date; we will not keep sending generic chasers. Use **Help** for support requests. Your contact address and response times are confirmed in the welcome email and agreement before the first invitation.
+
 ## Who does what
 
 | You (client) | Threadline |
