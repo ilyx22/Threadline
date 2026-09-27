@@ -85,6 +85,9 @@ registerHandler("daily.tick", async () => {
   const { kickCrm } = await import("@/lib/crm/outbox");
   for (const e of await prisma.engagement.findMany({ where: { status: "active" }, select: { id: true } })) await ensurePeriods(e.id);
   await expireInvitations();
+  // Storage spending cap: alert staff as R2 usage crosses the free tier and the budget.
+  const { checkStorageBudget } = await import("@/lib/storage/budget");
+  await checkStorageBudget();
   // RNW-01: open renewal reviews ahead of the end of the initial term.
   const { openDueRenewals } = await import("@/lib/commercial/renewals");
   await openDueRenewals();

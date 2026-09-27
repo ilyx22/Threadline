@@ -820,6 +820,8 @@ export async function uploadLibraryAssetAction(
       if (!item) return err("That content item is not in this workspace.", "validation");
     }
 
+    const { assertStorageBudget } = await import("@/lib/storage/budget");
+    await assertStorageBudget(input.file.size);
     const stored = await getStorage().put({
       orgId: ctx.org.id,
       file: input.file,

@@ -49,6 +49,7 @@ Every database, cron and key setting below goes on **`threadline`**. `threadline
 
 | What | Why | Exact setting | Where | Verify | Cost / gate | Blocks |
 | --- | --- | --- | --- | --- | --- | --- |
+| Storage spending cap (R2 has no hard limit) | Keeps the R2 bill under a monthly budget without a capped card | Optional: `STORAGE_BUDGET_GBP` (default 50) and `STORAGE_USD_PER_GBP` (default 1.20). Uploads are refused past the derived ceiling (about 3,600 GB at £50); staff are alerted at 8 GB, 10 GB, 50% and 90% | Vercel → `threadline` → Environment Variables (Production) | Admin → Notifications show storage alerts once thresholds are crossed | None | Advisory |
 | Cloudflare R2 (or any S3-compatible) bucket, private | Uploads cannot live on Vercel's disk | Create a private bucket and an API token with read/write on it only | `STORAGE_PROVIDER=s3`, `S3_BUCKET`, `S3_REGION=auto`, `S3_ENDPOINT=https://<account>.r2.cloudflarestorage.com`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_FORCE_PATH_STYLE=true` | Upload a file in Library, download it | R2 has no egress fees | First client |
 
 | Bucket CORS for direct uploads | Large recordings go straight from the browser to the bucket in parts | In the R2 bucket's CORS policy allow `PUT` from `https://<site>` (and the other project's address if used), allowed header `content-type`, **expose header `ETag`** | R2 dashboard → bucket → Settings → CORS | Upload a file over 10 MB in the Library; it shows progress and appears | Included | First large upload |

@@ -4,6 +4,7 @@ import path from "node:path";
 import { prisma } from "@/lib/db/client";
 import { getStorage, sanitiseFileName, StorageError, supportsMultipart, storageProviderName } from "./index";
 import { ACCEPTED, contentProblem } from "./sniff";
+import { assertStorageBudget } from "./budget";
 import { queueProcessingFor } from "@/lib/processing";
 
 /**
@@ -49,6 +50,7 @@ export async function startDirectUpload(
   if (!ACCEPTED[mimeType]) throw new StorageError(contentProblem(mimeType, new Uint8Array()) ?? `Files of type "${mimeType}" are not accepted.`);
   if (!Number.isInteger(input.sizeBytes) || input.sizeBytes <= 0) throw new StorageError("The file is empty.");
   if (input.sizeBytes > DIRECT_MAX_BYTES) throw new StorageError(`Files must be smaller than ${DIRECT_MAX_BYTES / 1024 / 1024} MB.`);
+  await assertStorageBudget(input.sizeBytes);
   if (input.contentItemId) {
     const item = await prisma.contentItem.findFirst({ where: { id: input.contentItemId, orgId: owner.orgId }, select: { id: true } });
     if (!item) throw new StorageError("That content item is not in this workspace.");

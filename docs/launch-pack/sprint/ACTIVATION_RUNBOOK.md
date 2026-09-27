@@ -70,7 +70,12 @@ Generate each value in a terminal, paste it straight into Vercel, and keep a cop
    - `S3_SECRET_ACCESS_KEY`
    - `S3_FORCE_PATH_STYLE` = `true`
 3. Set the bucket CORS policy: allow `PUT` and `GET` from your site's origin, allow the `content-type` header, and **expose `ETag`**.
-4. Leave the processing worker for later. Uploads work without it; transcripts and scans wait until you add one.
+4. **Spending cap.** R2 has no hard limit, so Threadline enforces one itself (owner decision, 27 Sept):
+   - `STORAGE_BUDGET_GBP` (optional, default `50`) is the most you will pay R2 a month. The app turns it into a storage ceiling: £50 is about 3,600 GB, after a 10% safety margin and a conservative exchange rate (`STORAGE_USD_PER_GBP`, default 1.20).
+   - New uploads are refused past the ceiling. Data exports are never blocked.
+   - The daily job alerts staff (in-app, and by email to `OPS_NOTIFY_EMAIL`) once a month per threshold: at 8 GB, when the free 10 GB is passed, at half the budget, and at 90%.
+   - Also add a Cloudflare lifecycle rule that aborts unfinished multipart uploads after 1 day.
+5. Leave the processing worker for later. Uploads work without it; transcripts and scans wait until you add one.
 
 ## 5. Domain (20 min)
 
