@@ -38,7 +38,7 @@ export function ResetMfaForm() {
         <>
           <div className="flex-1">
             <FormError error={error} />
-            <Input name="email" type="email" placeholder="colleague@threadline.com" aria-label="Email of the person to reset" />
+            <Input name="email" type="email" placeholder="name@threadlinehq.com" aria-label="Email of the person to reset" />
           </div>
           <SubmitButton size="sm" variant="secondary">
             Reset two-factor
