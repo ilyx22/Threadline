@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { ActionButton, ActionForm, FormError, SubmitButton } from "@/components/forms/action-form";
-import { beginMfaEnrolmentAction, confirmMfaEnrolmentAction, disableMfaAction, revokeOtherSessionsAction, revokeSessionAction, saveNotificationPreferenceAction } from "@/lib/actions/security";
+import { beginMfaEnrolmentAction, confirmMfaEnrolmentAction, disableMfaAction, regenerateRecoveryCodesAction, revokeOtherSessionsAction, revokeSessionAction, saveNotificationPreferenceAction } from "@/lib/actions/security";
 
 const panel = "mt-8 rounded-xl border border-line bg-elevated p-6";
 
@@ -39,6 +39,7 @@ export function MfaPanel({ enabled, required, storageReady }: { enabled: boolean
           icon={Check}
           onClick={() => {
             setCodes(null);
+            setSetup(null);
             router.refresh();
           }}
         >
@@ -48,7 +49,11 @@ export function MfaPanel({ enabled, required, storageReady }: { enabled: boolean
     );
   }
 
-  if (enabled) {
+  // While an enrolment is in progress, stay on it even after the server reports
+  // two-factor as on: the refreshed page arrives in the same response as the
+  // recovery codes, and switching to the "on" panel here would unmount the form
+  // before it hands the codes over, so they would never be shown.
+  if (enabled && !setup) {
     return (
       <section className={panel}>
         <h2 className="flex items-center gap-2 text-[16px] font-medium text-ink">
@@ -57,6 +62,21 @@ export function MfaPanel({ enabled, required, storageReady }: { enabled: boolean
         <p className="mt-2 text-[13px] text-muted">
           Sign-in asks for a code from your authenticator app.{required ? " It is required for staff accounts." : ""}
         </p>
+        <ActionForm action={regenerateRecoveryCodesAction} onSuccess={(d) => setCodes(d.recoveryCodes)} className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end">
+          {({ error, fieldErrors }) => (
+            <>
+              <div className="flex-1">
+                <FormError error={error} />
+                <Field label="Current code, to get new recovery codes" htmlFor="regen-code" error={fieldErrors.code} hint="Lost or never saved your recovery codes? This replaces them; the old ones stop working.">
+                  <Input id="regen-code" name="code" inputMode="numeric" autoComplete="one-time-code" maxLength={6} />
+                </Field>
+              </div>
+              <SubmitButton variant="secondary" icon={KeyRound}>
+                Show new recovery codes
+              </SubmitButton>
+            </>
+          )}
+        </ActionForm>
         {!required ? (
           <ActionForm action={disableMfaAction} onSuccess={() => router.refresh()} className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-end">
             {({ error }) => (

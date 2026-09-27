@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { randomBytes } from "node:crypto";
 import { after, before, describe, it } from "node:test";
 import { prisma } from "@/lib/db/client";
-import { beginEnrolment, confirmEnrolment, disableMfa, mfaRequiredForStaff, verifySecondFactor } from "./mfa";
+import { beginEnrolment, confirmEnrolment, disableMfa, mfaRequiredForStaff, regenerateRecoveryCodes, verifySecondFactor } from "./mfa";
 import { codeAt, stepAt } from "./totp";
 
 const saved = process.env.CREDENTIAL_ENCRYPTION_KEYS;
@@ -49,6 +49,18 @@ describe("staff two-factor (SEC-08)", () => {
     const r = await verifySecondFactor(userId, recovery[0]);
     assert.deepEqual([r.ok, r.usedRecovery, r.remainingRecovery], [true, true, 9]);
     assert.equal((await verifySecondFactor(userId, recovery[0])).ok, false);
+  });
+
+  it("replaces the recovery codes only with a current authenticator code", async () => {
+    assert.equal(await regenerateRecoveryCodes(userId, recovery[1]), null, "a recovery code cannot mint more");
+    assert.equal(await regenerateRecoveryCodes(userId, "000000"), null);
+    // Earlier tests used up the codes in the ±1-step window; simulate the next 30 seconds passing.
+    await prisma.user.update({ where: { id: userId }, data: { mfaLastStep: stepAt(Date.now()) - 1 } });
+    const fresh = await regenerateRecoveryCodes(userId, codeAt(secret, stepAt(Date.now())));
+    assert.equal(fresh?.length, 10);
+    assert.equal((await verifySecondFactor(userId, recovery[2])).ok, false, "old codes stop working");
+    assert.equal((await verifySecondFactor(userId, fresh![0])).ok, true, "new codes work");
+    recovery = fresh!;
   });
 
   it("turns off only with a valid code", async () => {

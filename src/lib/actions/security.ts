@@ -5,7 +5,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/db/client";
 import { auditInternal } from "@/lib/auth/audit";
 import { requireUser } from "@/lib/auth/guard";
-import { beginEnrolment, confirmEnrolment, disableMfa } from "@/lib/auth/mfa";
+import { beginEnrolment, confirmEnrolment, disableMfa, regenerateRecoveryCodes } from "@/lib/auth/mfa";
 import { revokeOtherSessions, revokeSession, rotateSession } from "@/lib/auth/session";
 import { err, guarded, ok, okVoid, parseForm, type ActionResult } from "./shared";
 
@@ -35,6 +35,21 @@ export async function confirmMfaEnrolmentAction(_prev: ActionResult<{ recoveryCo
     await auditInternal(user.id, { action: "auth.mfa_enabled", entityType: "user", entityId: user.id, summary: `${user.name} turned on two-factor authentication` });
     revalidatePath("/account");
     return ok({ recoveryCodes: codes }, "Two-factor is on. Save the recovery codes now; they are not shown again.");
+  });
+}
+
+/**
+ * New recovery codes, shown once. No revalidatePath: the panel shows the codes
+ * from this action's result, and a page refresh arriving with it is what lost
+ * them at enrolment.
+ */
+export async function regenerateRecoveryCodesAction(_prev: ActionResult<{ recoveryCodes: string[] }> | null, formData: FormData): Promise<ActionResult<{ recoveryCodes: string[] }>> {
+  return guarded(async () => {
+    const user = await requireUser("/account");
+    const codes = await regenerateRecoveryCodes(user.id, String(formData.get("code") ?? ""));
+    if (!codes) return err("Enter the current six-digit code from your authenticator app (a recovery code will not work here).", "validation", { code: "Not accepted." });
+    await auditInternal(user.id, { action: "auth.mfa_recovery_regenerated", entityType: "user", entityId: user.id, summary: `${user.name} replaced their two-factor recovery codes` });
+    return ok({ recoveryCodes: codes }, "New recovery codes created. Save them now; the old ones no longer work.");
   });
 }
 

@@ -81,6 +81,20 @@ export async function verifySecondFactor(userId: string, input: string): Promise
   return { ok: claimed.count === 1, usedRecovery: true, remainingRecovery: left.length };
 }
 
+/**
+ * Replace the recovery codes and return the new set once. Requires a current
+ * authenticator code: a recovery code is refused, so a leaked recovery code
+ * cannot be used to mint more. The old codes stop working immediately.
+ */
+export async function regenerateRecoveryCodes(userId: string, code: string): Promise<string[] | null> {
+  if (!/^\d{6}$/.test(code.replace(/\s/g, ""))) return null;
+  const check = await verifySecondFactor(userId, code);
+  if (!check.ok) return null;
+  const codes = generateRecoveryCodes();
+  await prisma.user.update({ where: { id: userId }, data: { mfaRecoveryHashes: JSON.stringify(codes.map(hashRecoveryCode)) } });
+  return codes;
+}
+
 /** Turn two-factor off (requires a valid current code). */
 export async function disableMfa(userId: string, code: string): Promise<boolean> {
   const check = await verifySecondFactor(userId, code);
