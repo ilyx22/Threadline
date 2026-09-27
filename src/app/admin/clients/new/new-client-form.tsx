@@ -180,7 +180,6 @@ export function NewClientForm({ defaultCadence }: { defaultCadence: number }) {
               checked={seedTemplate}
               onCheckedChange={(checked) => setSeedTemplate(checked === true)}
             />
-            {seedTemplate ? <input type="hidden" name="seedTemplate" value="on" /> : null}
 
             <Notice tone="neutral">
               After creating the client, send the founder to their onboarding. It writes the Brand

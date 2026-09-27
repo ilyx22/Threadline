@@ -188,10 +188,7 @@ export const optionalDate = z
     return new Date(y, m - 1, d, 12, 0, 0, 0);
   });
 
-export const checkbox = z
-  .union([z.literal("on"), z.literal("true"), z.literal("false"), z.boolean()])
-  .optional()
-  .transform((v) => v === "on" || v === "true" || v === true);
+export { checkbox } from "./checkbox-field";
 
 /**
  * Sanitise free text before storage.

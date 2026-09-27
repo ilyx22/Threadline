@@ -134,6 +134,13 @@ export function ActionForm<T>({
       setFormVersion((v) => v + 1);
     } else if (!state.fieldErrors) {
       toast.error(state.error);
+    } else {
+      // A field error with no place on the page to show it would otherwise be
+      // silent: the form "does nothing". Found 27 Sept 2026 on New client, where
+      // the template checkbox was refused with no visible message.
+      const form = formRef.current;
+      const unshown = Object.entries(state.fieldErrors).filter(([k]) => !form?.querySelector(`[id="${CSS.escape(k)}-error"]`));
+      if (unshown.length) toast.error(`${state.error} ${unshown.map(([k, v]) => `${k}: ${v}`).join("; ")}`);
     }
   }, [state, onSuccess, successMessage, resetOnSuccess]);
 
