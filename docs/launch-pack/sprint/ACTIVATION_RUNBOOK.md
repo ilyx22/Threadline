@@ -55,6 +55,7 @@ Generate each value in a terminal, paste it straight into Vercel, and keep a cop
    - `RESEND_API_KEY` = your Resend key
    - `EMAIL_FROM` = `Threadline <hello@mail.threadlinehq.com>`
    - `OPS_NOTIFY_EMAIL` = your inbox (new variable)
+   - `EMAIL_REPLY_TO` = a real Google Workspace inbox, e.g. `hello@threadlinehq.com` (new variable). `mail.threadlinehq.com` sends only and has no mailbox, so without this, client replies bounce
    - Email is only a *warning* on the health check, but invitations never arrive without it, so it's required for the journey test.
 3. In Resend → Webhooks, add `https://<site>/api/email/resend` for delivered, delayed, bounced and complained, then put its signing secret in `RESEND_WEBHOOK_SECRET`.
 

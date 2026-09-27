@@ -40,14 +40,19 @@ export const captureProvider: EmailProvider = {
   },
 };
 
-export function resendProvider(apiKey: string, from: string, fetchImpl: typeof fetch = fetch): EmailProvider {
+/**
+ * `replyTo` routes replies to a real inbox. The sender is a sending-only
+ * subdomain (mail.threadlinehq.com) with no mailbox, so without it a client's
+ * reply to an invitation or report would bounce.
+ */
+export function resendProvider(apiKey: string, from: string, fetchImpl: typeof fetch = fetch, replyTo?: string): EmailProvider {
   return {
     name: "resend",
     async send(message) {
       const res = await fetchImpl("https://api.resend.com/emails", {
         method: "POST",
         headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json", ...(message.idempotencyKey ? { "Idempotency-Key": message.idempotencyKey } : {}) },
-        body: JSON.stringify({ from, to: [message.to], subject: message.subject, text: message.text, html: message.html }),
+        body: JSON.stringify({ from, to: [message.to], subject: message.subject, text: message.text, html: message.html, ...(replyTo ? { reply_to: [replyTo] } : {}) }),
       });
       if (!res.ok) {
         const body = await res.text().catch(() => "");
@@ -68,7 +73,7 @@ export function configuredEmailProvider(): EmailProvider {
     const key = process.env.RESEND_API_KEY?.trim();
     const from = process.env.EMAIL_FROM?.trim();
     if (!key || !from) throw new Error("EMAIL_PROVIDER=resend needs RESEND_API_KEY and EMAIL_FROM");
-    provider = resendProvider(key, from);
+    provider = resendProvider(key, from, fetch, process.env.EMAIL_REPLY_TO?.trim() || undefined);
   } else {
     provider = captureProvider;
   }
