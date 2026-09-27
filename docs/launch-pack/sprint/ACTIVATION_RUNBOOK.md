@@ -27,9 +27,12 @@ This runbook takes the live app from "database: false" to "ok", in order. It tak
      set -a; . ./.env.activation.local; set +a; export DATABASE_URL="$DIRECT_URL"; npm run db:deploy; npx prisma migrate status
      ```
    - `migrate status` should say "Database schema is up to date" (31 migrations).
-5. Create your staff account in the same shell (the demo seed refuses to run in production):
+5. Create your staff account (the demo seed refuses to run in production). Use **Windows PowerShell**, not Git Bash: Git Bash cannot pass a hidden password to the script (it now stops with that message instead of hanging).
    ```
-   OWNER_EMAIL="you@threadlinehq.com" OWNER_NAME="Your Name" npm run owner:create
+   cd "$HOME\OneDrive\Desktop\THREADLINE"
+   $env:DATABASE_URL = ((Get-Content .env.activation.local | Where-Object { $_ -like "DIRECT_URL=*" } | Select-Object -First 1) -replace "^DIRECT_URL='(.*)'\s*$", '$1')
+   $env:OWNER_EMAIL = "you@threadlinehq.com"; $env:OWNER_NAME = "Your Name"
+   npx tsx scripts/ops/create-owner.ts
    ```
    It asks for a password (12+ characters, hidden) and creates the internal workspace plus your super-admin account. It never overwrites anything.
 6. Delete `.env.activation.local` when activation is finished.

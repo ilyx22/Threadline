@@ -51,6 +51,12 @@ async function main() {
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error("Set OWNER_EMAIL to a valid address.");
   if (name.length < 2) throw new Error("Set OWNER_NAME.");
 
+  // Git Bash (mintty) is not a Windows console: Node cannot read keystrokes
+  // from it, so the prompt would wait forever and typed text may be echoed.
+  if (!process.stdin.isTTY && process.env.MSYSTEM) {
+    throw new Error("Git Bash cannot pass a hidden password to this script. Run it from Windows PowerShell instead (see docs/launch-pack/sprint/ACTIVATION_RUNBOOK.md §1). Nothing was changed.");
+  }
+
   const prisma = new PrismaClient();
   try {
     if (await prisma.user.findUnique({ where: { email } })) {
