@@ -43,14 +43,24 @@ export function inQuietHours(pref: { quietStart: number | null; quietEnd: number
   return pref.quietStart <= pref.quietEnd ? h >= pref.quietStart && h < pref.quietEnd : h >= pref.quietStart || h < pref.quietEnd;
 }
 
-export async function notify(input: { orgId: string; audience: Audience; kind: string; title: string; body?: string | null; href?: string | null; severity?: "info" | "success" | "warning" | "critical"; dedupeKey: string; now?: Date }) {
+/**
+ * Email default when a person has not chosen: client users get the daily
+ * action digest (communication playbook, 27 Sept 2026); staff get nothing by
+ * email unless they opt in. A saved preference always wins.
+ */
+export const CLIENT_ROLES = ["client_admin", "client_member"];
+export function defaultEmailPreference(role: string) {
+  return CLIENT_ROLES.includes(role) ? "digest" : "off";
+}
+
+export async function notify(input: { orgId: string; audience: Audience; kind: string; title: string; body?: string | null; href?: string | null; severity?: "info" | "success" | "warning" | "critical"; dedupeKey: string; subject?: { type: "content_item"; id: string }; now?: Date }) {
   const now = input.now ?? new Date();
   const ids = [...new Set(await recipients(input.orgId, input.audience))];
   const created: string[] = [];
   for (const userId of ids) {
     try {
       const n = await prisma.notification.create({
-        data: { orgId: input.orgId, userId, kind: input.kind, title: input.title.slice(0, 200), body: input.body?.slice(0, 1000) ?? null, href: input.href ?? null, severity: input.severity ?? "info", dedupeKey: input.dedupeKey },
+        data: { orgId: input.orgId, userId, kind: input.kind, title: input.title.slice(0, 200), body: input.body?.slice(0, 1000) ?? null, href: input.href ?? null, severity: input.severity ?? "info", dedupeKey: input.dedupeKey, subjectType: input.subject?.type ?? null, subjectId: input.subject?.id ?? null },
       });
       created.push(n.id);
       const pref = await prisma.notificationPreference.findUnique({ where: { userId_orgId: { userId, orgId: input.orgId } } });
@@ -69,11 +79,14 @@ export async function notify(input: { orgId: string; audience: Audience; kind: s
   return created;
 }
 
-/** Daily: approvals waiting three days or more go to the backup approver and the owner. */
-export async function escalateStaleApprovals(now = new Date()) {
+/**
+ * Daily: approvals waiting three days or more go to the backup approver and
+ * the owner, once per item per revision (one overdue reminder, not a daily
+ * chaser; the relationship owner handles it personally after that).
+ */
+export async function escalateStaleApprovals(now = new Date(), scope: { orgId?: string } = {}) {
   const cutoff = new Date(now.getTime() - 3 * 86_400_000);
-  const day = now.toISOString().slice(0, 10);
-  const items = await prisma.contentItem.findMany({ where: { stage: "in_review", updatedAt: { lt: cutoff } }, select: { id: true, orgId: true, title: true, org: { select: { slug: true } } } });
+  const items = await prisma.contentItem.findMany({ where: { stage: "in_review", updatedAt: { lt: cutoff }, ...(scope.orgId ? { orgId: scope.orgId } : {}) }, select: { id: true, orgId: true, title: true, revisionCount: true, org: { select: { slug: true } } } });
   let sent = 0;
   for (const item of items) {
     const people = await prisma.membership.findMany({ where: { orgId: item.orgId, status: "active", OR: [{ contactRole: "backup" }, { isOwner: true }] }, select: { userId: true } });
@@ -87,7 +100,8 @@ export async function escalateStaleApprovals(now = new Date()) {
         body: "This piece is holding up a publishing slot. Approve it or send it back with a note.",
         href: `/app/${item.org.slug}/production/${item.id}`,
         severity: "warning",
-        dedupeKey: `escalate:${item.id}:${day}`,
+        dedupeKey: `escalate:${item.id}:r${item.revisionCount ?? 0}`,
+        subject: { type: "content_item", id: item.id },
         now,
       })
     ).length;
@@ -95,28 +109,73 @@ export async function escalateStaleApprovals(now = new Date()) {
   return sent;
 }
 
-/** Daily digest for people who chose it: unread notifications since their last digest. */
-export async function sendDigests(now = new Date()) {
-  const prefs = await prisma.notificationPreference.findMany({ where: { email: "digest", OR: [{ snoozedUntil: null }, { snoozedUntil: { lt: now } }] } });
+/** True while the thing a notification points at still needs someone to act. */
+async function stillActionable(n: { subjectType: string | null; subjectId: string | null; orgId: string }) {
+  if (n.subjectType === "content_item" && n.subjectId) {
+    const item = await prisma.contentItem.findFirst({ where: { id: n.subjectId, orgId: n.orgId }, select: { stage: true } });
+    return item?.stage === "in_review";
+  }
+  return true;
+}
+
+/**
+ * Daily action digest. Goes to people who chose it and, by default, to client
+ * users who have not chosen (see defaultEmailPreference). Only for an active
+ * member of the workspace; only unread items not already emailed; items whose
+ * subject no longer needs action (approved, sent back, deleted) are dropped;
+ * several notices about the same item collapse to one line; and nothing is
+ * sent when nothing is left. At most one digest per person per day.
+ */
+export async function sendDigests(now = new Date(), scope: { orgId?: string } = {}) {
+  const inScope = scope.orgId ? { orgId: scope.orgId } : {};
+  const chosen = await prisma.notificationPreference.findMany({ where: { ...inScope, email: "digest", OR: [{ snoozedUntil: null }, { snoozedUntil: { lt: now } }] } });
+  const all = await prisma.notificationPreference.findMany({ where: inScope, select: { userId: true, orgId: true } });
+  const hasPref = new Set(all.map((p) => `${p.userId}:${p.orgId}`));
+  const defaults = (await prisma.membership.findMany({ where: { ...inScope, status: "active", role: { in: CLIENT_ROLES } }, select: { userId: true, orgId: true, role: true } })).filter(
+    (m) => !hasPref.has(`${m.userId}:${m.orgId}`) && defaultEmailPreference(m.role) === "digest",
+  );
+  const candidates = [
+    ...chosen.map((p) => ({ userId: p.userId, orgId: p.orgId, pref: p as typeof p | null })),
+    ...defaults.map((m) => ({ userId: m.userId, orgId: m.orgId, pref: null })),
+  ];
   let sent = 0;
-  for (const p of prefs) {
-    if (inQuietHours(p, now)) continue;
-    const since = p.lastDigestAt ?? new Date(now.getTime() - 86_400_000);
-    const items = await prisma.notification.findMany({ where: { userId: p.userId, orgId: p.orgId, readAt: null, emailedAt: null, createdAt: { gt: since } }, orderBy: { createdAt: "asc" }, take: 30 });
-    if (!items.length) continue;
-    const user = await prisma.user.findUnique({ where: { id: p.userId }, select: { email: true, name: true, isActive: true } });
-    const org = await prisma.organization.findUnique({ where: { id: p.orgId }, select: { name: true, slug: true } });
+  for (const c of candidates) {
+    if (c.pref && inQuietHours(c.pref, now)) continue;
+    const member = await prisma.membership.findFirst({ where: { userId: c.userId, orgId: c.orgId, status: "active" }, select: { id: true } });
+    if (!member) continue;
+    const since = c.pref?.lastDigestAt ?? new Date(now.getTime() - 86_400_000);
+    const pending = await prisma.notification.findMany({ where: { userId: c.userId, orgId: c.orgId, readAt: null, emailedAt: null, createdAt: { gt: since } }, orderBy: { createdAt: "asc" }, take: 60 });
+    if (!pending.length) continue;
+    const keep: typeof pending = [];
+    const seen = new Set<string>();
+    for (const n of [...pending].reverse()) {
+      const subject = n.subjectType && n.subjectId ? `${n.subjectType}:${n.subjectId}` : null;
+      if (subject && seen.has(subject)) continue;
+      if (!(await stillActionable(n))) continue;
+      if (subject) seen.add(subject);
+      keep.unshift(n);
+    }
+    const user = await prisma.user.findUnique({ where: { id: c.userId }, select: { email: true, name: true, isActive: true } });
+    const org = await prisma.organization.findUnique({ where: { id: c.orgId }, select: { name: true, slug: true } });
     if (!user?.isActive || !org) continue;
-    await enqueue(
-      "email.send",
-      { to: user.email, template: "digest", data: { name: user.name.split(" ")[0], workspaceName: org.name, items: items.map((i) => i.title), link: `${appUrl()}/app/${org.slug}` }, orgId: p.orgId },
-      { idempotencyKey: `digest:${p.id}:${now.toISOString().slice(0, 10)}`, orgId: p.orgId },
-    );
+    const pref = await prisma.notificationPreference.upsert({
+      where: { userId_orgId: { userId: c.userId, orgId: c.orgId } },
+      create: { userId: c.userId, orgId: c.orgId, email: "digest" },
+      update: {},
+    });
+    if (keep.length) {
+      const { created } = await enqueue(
+        "email.send",
+        { to: user.email, template: "digest", data: { name: user.name.split(" ")[0], workspaceName: org.name, items: keep.slice(0, 30).map((i) => i.title), link: `${appUrl()}/app/${org.slug}` }, orgId: c.orgId },
+        { idempotencyKey: `digest:${pref.id}:${now.toISOString().slice(0, 10)}`, orgId: c.orgId },
+      );
+      if (created) sent++;
+    }
+    // Everything looked at is settled: sent, collapsed into a line, or no longer actionable.
     await prisma.$transaction([
-      prisma.notification.updateMany({ where: { id: { in: items.map((i) => i.id) } }, data: { emailedAt: now } }),
-      prisma.notificationPreference.update({ where: { id: p.id }, data: { lastDigestAt: now } }),
+      prisma.notification.updateMany({ where: { id: { in: pending.map((i) => i.id) } }, data: { emailedAt: now } }),
+      prisma.notificationPreference.update({ where: { id: pref.id }, data: { lastDigestAt: now } }),
     ]);
-    sent++;
   }
   return sent;
 }

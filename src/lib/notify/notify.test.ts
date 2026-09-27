@@ -48,17 +48,17 @@ describe("notifications (NOT-01)", () => {
     await prisma.notificationPreference.create({ data: { userId: users.member, orgId, email: "digest" } });
     await notify({ orgId, audience: { userIds: [users.member] }, kind: "report", title: "Report ready", dedupeKey: "rep" });
     const noon = new Date(Date.now() + 60_000);
-    assert.ok((await sendDigests(noon)) >= 1);
-    assert.equal(await sendDigests(noon), 0, "nothing new since the last digest");
+    assert.ok((await sendDigests(noon, { orgId })) >= 1);
+    assert.equal(await sendDigests(noon, { orgId }), 0, "nothing new since the last digest");
   });
 
   it("escalates approvals waiting three days to the backup approver and the owner", async () => {
     const item = await prisma.contentItem.create({ data: { orgId, title: "Stale piece", stage: "in_review" } as never });
     await prisma.$executeRaw`UPDATE "ContentItem" SET "updatedAt" = NOW() - INTERVAL '5 days' WHERE "id" = ${item.id}`;
-    const n = await escalateStaleApprovals();
+    const n = await escalateStaleApprovals(new Date(), { orgId });
     assert.ok(n >= 2);
     const to = await prisma.notification.findMany({ where: { orgId, dedupeKey: { startsWith: `escalate:${item.id}` } }, select: { userId: true } });
     assert.deepEqual(to.map((t) => t.userId).sort(), [users.backup, users.owner].sort());
-    assert.equal(await escalateStaleApprovals(), 0, "once per item per day");
+    assert.equal(await escalateStaleApprovals(new Date(), { orgId }), 0, "once per item per revision, not a daily chaser");
   });
 });

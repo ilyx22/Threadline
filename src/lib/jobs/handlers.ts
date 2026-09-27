@@ -1,5 +1,5 @@
 import "server-only";
-import { registerHandler } from "./index";
+import { enqueue, registerHandler } from "./index";
 import { sendEmail } from "@/lib/email";
 import type { EmailTemplateKey, TemplateInput } from "@/lib/email/templates";
 
@@ -45,6 +45,11 @@ registerHandler<{ outboxId: string }>("crm.sync", async (payload) => {
   await sendOutboxRow(payload.outboxId);
 });
 
+registerHandler<{ engagementId: string }>("crm.cadence", async (payload) => {
+  const { pushCadence } = await import("@/lib/crm/cadence-sync");
+  await pushCadence(payload.engagementId);
+});
+
 registerHandler<{ taskId: string }>("processing.submit", async (payload) => {
   const { submitTask } = await import("@/lib/processing");
   await submitTask(payload.taskId);
@@ -85,6 +90,12 @@ registerHandler("daily.tick", async () => {
   const { kickCrm } = await import("@/lib/crm/outbox");
   for (const e of await prisma.engagement.findMany({ where: { status: "active" }, select: { id: true } })) await ensurePeriods(e.id);
   await expireInvitations();
+  // Relationship cadence: re-plan, and reconcile with Attio (tasks ticked there become done).
+  const { syncCadence } = await import("@/lib/commercial/relationship");
+  for (const e of await prisma.engagement.findMany({ where: { OR: [{ status: "active" }, { touches: { some: { status: "cancelled", remoteClosed: false } } }] }, select: { id: true } })) {
+    await syncCadence(e.id);
+    await enqueue("crm.cadence", { engagementId: e.id }, { idempotencyKey: `crm.cadence:${e.id}:daily:${new Date().toISOString().slice(0, 10)}` });
+  }
   // Storage spending cap: alert staff as R2 usage crosses the free tier and the budget.
   const { checkStorageBudget } = await import("@/lib/storage/budget");
   await checkStorageBudget();
@@ -137,4 +148,4 @@ registerHandler("daily.tick", async () => {
   await pruneExpiredSessions();
 });
 
-export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune", "crm.sync", "daily.tick", "processing.submit", "publish.run", "publish.poll", "export.build", "mine.asset"] as const;
+export const JOB_TYPES = ["email.send", "metrics.refresh", "metrics.refresh_org", "maintenance.prune", "crm.sync", "crm.cadence", "daily.tick", "processing.submit", "publish.run", "publish.poll", "export.build", "mine.asset"] as const;

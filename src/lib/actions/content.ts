@@ -162,7 +162,7 @@ export async function moveContentAction(
 
     // NOT-01: a piece entering review tells the people who approve.
     if (input.stage === "in_review") {
-      await notify({ orgId: ctx.org.id, audience: { orgRole: "approvers" }, kind: "approval", title: `Ready for your review: ${item.title}`, href: `/app/${orgSlug}/production/${contentItemId}`, dedupeKey: `review:${contentItemId}:${item.revisionCount ?? 0}` });
+      await notify({ orgId: ctx.org.id, audience: { orgRole: "approvers" }, kind: "approval", title: `Ready for your review: ${item.title}`, href: `/app/${orgSlug}/production/${contentItemId}`, dedupeKey: `review:${contentItemId}:${item.revisionCount ?? 0}`, subject: { type: "content_item", id: contentItemId } });
     }
 
     // DEL-02: the decision is recorded against the exact version reviewed.

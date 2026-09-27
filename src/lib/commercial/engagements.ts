@@ -1,7 +1,9 @@
 import "server-only";
 import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db/client";
-import { addDays, dbDateFromIso, isoFromDbDate, periodStatus, todayIn, type IsoDate } from "./calendar";
+import { addDays, daysBetween, dbDateFromIso, isoFromDbDate, periodStatus, todayIn, type IsoDate } from "./calendar";
+import { validSlot } from "./cadence";
+import { syncCadence } from "./relationship";
 
 /**
  * Engagements and their service periods (ENG-01, ENG-02, ENG-05).
@@ -101,7 +103,48 @@ export async function activateEngagement(engagementId: string, startDate?: IsoDa
   });
   if (claimed.count !== 1) throw new EngagementError("That engagement was activated by someone else just now.");
   await prisma.organization.update({ where: { id: e.orgId }, data: { startedAt: dbDateFromIso(start), setupFee: e.setupFeeMinor, periodFee: e.periodFeeMinor, status: "active" } });
-  return ensurePeriods(e.id, now);
+  const periods = await ensurePeriods(e.id, now);
+  await syncCadence(e.id, now);
+  return periods;
+}
+
+/**
+ * Move the active service start before work has begun (a delayed launch). The
+ * periods, early-win date and relationship cadence all rebase; nothing that has
+ * started can be moved this way (pause and resume instead).
+ */
+export async function rescheduleStart(engagementId: string, newStart: IsoDate, now = new Date()) {
+  const e = await prisma.engagement.findUniqueOrThrow({ where: { id: engagementId }, include: { periods: true } });
+  if (e.status !== "active" || !e.startDate) throw new EngagementError("Only an active engagement's start date can be moved.");
+  const today = todayIn(e.timezone, now);
+  const oldStart = isoFromDbDate(e.startDate);
+  if (daysBetween(today, oldStart) <= 0) throw new EngagementError("Work has already started. Pause and resume the engagement instead of moving its start.");
+  if (daysBetween(today, newStart) < 0) throw new EngagementError("The new start date is in the past.");
+  const shift = daysBetween(oldStart, newStart);
+  if (shift === 0) return;
+  await prisma.$transaction(async (tx) => {
+    for (const p of e.periods) {
+      await tx.servicePeriod.update({ where: { id: p.id }, data: { startDate: dbDateFromIso(addDays(isoFromDbDate(p.startDate), shift)), endDate: dbDateFromIso(addDays(isoFromDbDate(p.endDate), shift)) } });
+    }
+    await tx.engagement.update({ where: { id: e.id }, data: { startDate: dbDateFromIso(newStart), earlyWinDueDate: dbDateFromIso(addDays(newStart, 14)) } });
+    await tx.organization.update({ where: { id: e.orgId }, data: { startedAt: dbDateFromIso(newStart) } });
+  });
+  await syncCadence(e.id, now);
+}
+
+/** Record the kickoff, the weekly check-in slot and the relationship owner agreed with the client. */
+export async function setRelationshipPlan(engagementId: string, input: { kickoffAt?: Date | null; checkInWeekday?: number | null; checkInTime?: string | null; relationshipOwnerId?: string | null }, now = new Date()) {
+  if (!validSlot(input.checkInWeekday, input.checkInTime)) throw new EngagementError("Choose a weekday and a time like 10:00.");
+  await prisma.engagement.update({
+    where: { id: engagementId },
+    data: {
+      ...(input.kickoffAt !== undefined ? { kickoffAt: input.kickoffAt } : {}),
+      ...(input.checkInWeekday !== undefined ? { checkInWeekday: input.checkInWeekday } : {}),
+      ...(input.checkInTime !== undefined ? { checkInTime: input.checkInTime || null } : {}),
+      ...(input.relationshipOwnerId !== undefined ? { relationshipOwnerId: input.relationshipOwnerId } : {}),
+    },
+  });
+  await syncCadence(engagementId, now);
 }
 
 export async function pauseEngagement(engagementId: string, now = new Date()) {
@@ -125,15 +168,19 @@ export async function resumeEngagement(engagementId: string, now = new Date()) {
   const lastRun = [...e.periods].reverse().find((p) => p.status !== "paused");
   const lastRunEnd = lastRun ? isoFromDbDate(lastRun.endDate) : today;
   let cursor: IsoDate = lastRunEnd > today ? lastRunEnd : today;
+  // The relationship cadence moves by the days spent paused.
+  const pausedDays = e.pausedAt ? Math.max(0, daysBetween(todayIn(e.timezone, e.pausedAt), today)) : 0;
   await prisma.$transaction(async (tx) => {
     for (const p of held) {
       await tx.servicePeriod.update({ where: { id: p.id }, data: { startDate: dbDateFromIso(cursor), endDate: dbDateFromIso(addDays(cursor, e.periodDays)), status: "upcoming" } });
       cursor = addDays(cursor, e.periodDays);
     }
-    await tx.engagement.update({ where: { id: e.id }, data: { status: "active", pausedAt: null } });
+    await tx.engagement.update({ where: { id: e.id }, data: { status: "active", pausedAt: null, cadenceOffsetDays: { increment: pausedDays } } });
     await tx.organization.update({ where: { id: e.orgId }, data: { status: "active" } });
   });
-  return ensurePeriods(e.id, now);
+  const periods = await ensurePeriods(e.id, now);
+  await syncCadence(e.id, now);
+  return periods;
 }
 
 export async function endEngagement(engagementId: string, kind: "ended" | "terminated", reason: string, now = new Date()) {
@@ -146,6 +193,8 @@ export async function endEngagement(engagementId: string, kind: "ended" | "termi
     prisma.servicePeriod.deleteMany({ where: { engagementId: e.id, startDate: { gt: dbDateFromIso(today) } } }),
     prisma.organization.update({ where: { id: e.orgId }, data: { status: "churned" } }),
   ]);
+  // Stop the relationship cadence: planned touches are cancelled and their open Attio tasks removed.
+  await syncCadence(e.id, now);
 }
 
 /** Scope changes (ENG-05): proposed, then approved or rejected; approval applies a fee change from a named period. */

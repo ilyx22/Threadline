@@ -30,6 +30,9 @@ import { formatDate, relativeTime } from "@/lib/utils/dates";
 import { integrationByProvider } from "@/lib/integrations/registry";
 import { ClientConfigForm } from "./client-config-form";
 import { EngagementPanel } from "./engagement-panel";
+import { RelationshipPanel } from "./relationship-panel";
+import { cadenceFor } from "@/lib/commercial/relationship";
+import { todayIn } from "@/lib/commercial/calendar";
 import { BillingPanel } from "./billing-panel";
 import { OffboardingPanel } from "./offboarding-panel";
 import { PlacementsPanel } from "./placements-panel";
@@ -66,6 +69,36 @@ export default async function ClientDetailPage({
   const scopeChanges = engagement ? await prisma.scopeChange.findMany({ where: { engagementId: engagement.id }, orderBy: { createdAt: "desc" } }) : [];
   const renewals = engagement ? await prisma.renewalReview.findMany({ where: { engagementId: engagement.id }, orderBy: { createdAt: "desc" } }) : [];
   const offerName = engagement ? ((JSON.parse(engagement.offerSnapshot) as { name?: string }).name ?? "Engagement") : "";
+  const touches = engagement ? await cadenceFor(engagement.id) : [];
+  const ownerUserId = engagement ? (engagement.relationshipOwnerId ?? engagement.createdById) : null;
+  const ownerUser = ownerUserId ? await prisma.user.findUnique({ where: { id: ownerUserId }, select: { name: true } }) : null;
+  const localParts = (d: Date, tz: string) => {
+    const s = new Intl.DateTimeFormat("en-CA", { timeZone: tz, year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(d);
+    const [date, time] = s.split(", ");
+    return { date, time };
+  };
+  const relationshipView = engagement
+    ? {
+        engagementId: engagement.id,
+        status: engagement.status,
+        timezone: engagement.timezone,
+        startDate: engagement.startDate ? engagement.startDate.toISOString().slice(0, 10) : null,
+        started: engagement.startDate ? engagement.startDate.toISOString().slice(0, 10) <= todayIn(engagement.timezone) : false,
+        owner: ownerUser?.name ?? null,
+        checkInWeekday: engagement.checkInWeekday,
+        checkInTime: engagement.checkInTime,
+        kickoffLocal: engagement.kickoffAt ? localParts(engagement.kickoffAt, engagement.timezone) : null,
+        touches: touches.map((t) => ({
+          id: t.id,
+          key: t.key,
+          title: t.title,
+          dueLocal: new Intl.DateTimeFormat("en-GB", { timeZone: engagement.timezone, weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(t.dueAt),
+          status: t.status,
+          inAttio: Boolean(t.attioTaskId),
+          syncError: t.syncError,
+        })),
+      }
+    : null;
   const [invoiceRows, reminderRows, agreementRows] = await Promise.all([
     prisma.invoice.findMany({ where: { orgId: client.id }, orderBy: [{ createdAt: "desc" }], include: { disputes: { select: { id: true, state: true, reason: true } } } }),
     prisma.paymentReminder.findMany({ where: { orgId: client.id, state: "draft" }, orderBy: { createdAt: "asc" } }),
@@ -193,6 +226,8 @@ export default async function ClientDetailPage({
                 : null
             }
           />
+
+          <RelationshipPanel view={relationshipView} />
 
           <BillingPanel view={billingView} />
 

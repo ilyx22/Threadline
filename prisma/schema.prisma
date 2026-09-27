@@ -23,15 +23,15 @@ datasource db {
 // ---------------------------------------------------------------------------
 
 model User {
-  id           String    @id @default(cuid())
-  email        String    @unique
-  name         String
-  passwordHash String
-  title        String?
-  avatarHue    Int       @default(210)
-  isSuperAdmin Boolean   @default(false)
-  isActive     Boolean   @default(true)
-  lastSeenAt   DateTime?
+  id                String    @id @default(cuid())
+  email             String    @unique
+  name              String
+  passwordHash      String
+  title             String?
+  avatarHue         Int       @default(210)
+  isSuperAdmin      Boolean   @default(false)
+  isActive          Boolean   @default(true)
+  lastSeenAt        DateTime?
   /// Staff two-factor (SEC-08). The TOTP secret is sealed with the credential
   /// keyring (never stored in the clear); recovery codes are stored as hashes.
   mfaSecret         String?
@@ -39,8 +39,8 @@ model User {
   /// Last accepted TOTP time step, so a code cannot be replayed.
   mfaLastStep       Int?
   mfaRecoveryHashes String    @default("[]")
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
 
   sessions             Session[]
   memberships          Membership[]
@@ -85,14 +85,14 @@ model User {
 }
 
 model Session {
-  id        String   @id @default(cuid())
-  token     String   @unique
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userAgent String?
-  ipHash    String?
-  expiresAt DateTime
-  createdAt DateTime @default(now())
+  id            String    @id @default(cuid())
+  token         String    @unique
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userAgent     String?
+  ipHash        String?
+  expiresAt     DateTime
+  createdAt     DateTime  @default(now())
   /// Set when the second factor was verified for this session (SEC-08).
   mfaVerifiedAt DateTime?
   lastSeenAt    DateTime?
@@ -103,44 +103,44 @@ model Session {
 
 /// A tenant. `kind` = "client" for customer workspaces, "internal" for the Threadline team org.
 model Organization {
-  id              String    @id @default(cuid())
-  slug            String    @unique
-  name            String
-  kind            String    @default("client")
-  status          String    @default("active") // active | onboarding | paused | churned
-  packageTier     String    @default("install") // install | operate | scale
-  onboardingStage String    @default("not_started") // not_started | in_progress | complete
-  industry        String?
-  website         String?
-  geography       String?
-  timezone        String    @default("Europe/London")
-  currency        String    @default("GBP")
-  setupFee        Int       @default(0) // minor units
+  id               String    @id @default(cuid())
+  slug             String    @unique
+  name             String
+  kind             String    @default("client")
+  status           String    @default("active") // active | onboarding | paused | churned
+  packageTier      String    @default("install") // install | operate | scale
+  onboardingStage  String    @default("not_started") // not_started | in_progress | complete
+  industry         String?
+  website          String?
+  geography        String?
+  timezone         String    @default("Europe/London")
+  currency         String    @default("GBP")
+  setupFee         Int       @default(0) // minor units
   /// Fee for one four-week service period, in minor units.
   ///
   /// Not a monthly fee: four-week periods produce thirteen invoices a year, not
   /// twelve. See src/lib/domain/service-period.ts.
-  periodFee       Int       @default(0)
-  healthScore     Int       @default(80)
-  accentHex       String?
-  modulesEnabled  String    @default("[]") // JSON string[]
-  supportNotes    String?
+  periodFee        Int       @default(0)
+  healthScore      Int       @default(80)
+  accentHex        String?
+  modulesEnabled   String    @default("[]") // JSON string[]
+  supportNotes     String?
   /// A dry-run workspace that exercises the real fulfilment path without being
   /// a real client. Excluded from every portfolio and proof aggregate, and
   /// labelled wherever it appears. See src/lib/domain/synthetic.ts.
-  synthetic       Boolean   @default(false)
-  startedAt       DateTime?
-  lastActivityAt  DateTime?
+  synthetic        Boolean   @default(false)
+  startedAt        DateTime?
+  lastActivityAt   DateTime?
   /// OFF-01: offboarding. Client access ends at accessEndsAt (after the export
   /// window); tenant data is deleted after retentionUntil unless on legal hold.
-  offboardedAt    DateTime?
-  accessEndsAt    DateTime?
-  retentionUntil  DateTime?
-  legalHold       Boolean   @default(false)
+  offboardedAt     DateTime?
+  accessEndsAt     DateTime?
+  retentionUntil   DateTime?
+  legalHold        Boolean   @default(false)
   /// AI-08: monthly AI spend ceiling in millionths of a US dollar; null = no ceiling.
   aiBudgetMicroUsd Int?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
 
   memberships          Membership[]
   invitations          Invitation[]
@@ -205,13 +205,13 @@ model Organization {
 }
 
 model Membership {
-  id        String   @id @default(cuid())
-  userId    String
-  orgId     String
-  role      String // super_admin | internal_operator | client_admin | client_member | editor
-  isPrimary Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
+  id          String    @id @default(cuid())
+  userId      String
+  orgId       String
+  role        String // super_admin | internal_operator | client_admin | client_member | editor
+  isPrimary   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @default(now()) @updatedAt
   /// Client permission profiles layered on the role (TEAM-01): JSON array of
   /// admin | approver | contributor | viewer | commercial.
   profiles    String    @default("[]")
@@ -223,7 +223,7 @@ model Membership {
   /// A named expert whose voice Threadline writes in (TEAM-08).
   isExpert    Boolean   @default(false)
   /// TEAM-08: how this expert speaks, for writing in their voice (tone, phrases, what they would never say).
-  voiceNotes String?
+  voiceNotes  String?
   /// primary | backup | null: the client contact for decisions.
   contactRole String?
 
@@ -253,26 +253,30 @@ model AuditLog {
 }
 
 model Notification {
-  id        String    @id @default(cuid())
-  orgId     String
-  userId    String?
-  kind      String // approval | recording | report | alert | system | pipeline | intelligence_brief
-  title     String
-  body      String?
-  href      String?
-  severity  String    @default("info") // info | success | warning | critical
-  readAt    DateTime?
-  createdAt DateTime  @default(now())
+  id          String    @id @default(cuid())
+  orgId       String
+  userId      String?
+  kind        String // approval | recording | report | alert | system | pipeline | intelligence_brief
+  title       String
+  body        String?
+  href        String?
+  severity    String    @default("info") // info | success | warning | critical
+  readAt      DateTime?
+  createdAt   DateTime  @default(now())
   /// NOT-01: the same event never notifies the same person twice.
-  dedupeKey String?
-  emailedAt DateTime?
+  dedupeKey   String?
+  emailedAt   DateTime?
+  /// What the notification asks someone to act on (e.g. content_item + id), so
+  /// a digest can drop it once the item no longer needs that person.
+  subjectType String?
+  subjectId   String?
 
   org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
   user User?        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, dedupeKey])
   @@index([orgId, createdAt])
   @@index([userId, readAt])
-  @@unique([userId, dedupeKey])
 }
 
 model Task {
@@ -318,21 +322,21 @@ model Task {
 // ---------------------------------------------------------------------------
 
 model BrandBrain {
-  id           String   @id @default(cuid())
-  orgId        String   @unique
-  company      String   @default("{}") // JSON CompanyProfile
-  founder      String   @default("{}") // JSON FounderProfile
-  voice        String   @default("{}") // JSON VoiceProfile
-  contentRules String   @default("{}") // JSON ContentRules
-  completeness Int      @default(0)
+  id            String   @id @default(cuid())
+  orgId         String   @unique
+  company       String   @default("{}") // JSON CompanyProfile
+  founder       String   @default("{}") // JSON FounderProfile
+  voice         String   @default("{}") // JSON VoiceProfile
+  contentRules  String   @default("{}") // JSON ContentRules
+  completeness  Int      @default(0)
   /// AI-03/ENG-04: bumped by a database trigger on every change to the four
   /// sections; each version's content is kept in BrandBrainVersion.
-  version      Int      @default(1)
+  version       Int      @default(1)
   /// CX-04: per section, whether Threadline prefilled it and the client has
   /// confirmed it: JSON { [section]: { state: "prefilled" | "confirmed", by, at, version } }.
-  confirmations String  @default("{}")
-  updatedAt    DateTime @updatedAt
-  createdAt    DateTime @default(now())
+  confirmations String   @default("{}")
+  updatedAt     DateTime @updatedAt
+  createdAt     DateTime @default(now())
 
   org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
 }
@@ -785,17 +789,17 @@ model Asset {
   contentItem ContentItem? @relation(fields: [contentItemId], references: [id], onDelete: SetNull)
   uploadedBy  User?        @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
 
-  storageProvider String @default("local") // local | s3
+  storageProvider String           @default("local") // local | s3
   /// FILE-03: malware scan state: unscanned | clean | infected. An infected file is quarantined and never served.
-  scanState       String  @default("unscanned")
+  scanState       String           @default("unscanned")
   /// CX-05: how the file arrived: upload | direct_upload | voice_note | link | test_clip | processing | export
-  source          String  @default("upload")
+  source          String           @default("upload")
   /// CX-05: provenance a person can read: where it came from and any permission attached.
   sourceNote      String?
   /// CX-05: the content root (lineage) the file belongs to, inherited from its piece.
   rootId          String?
   /// Media processing (FILE-05): none | queued | processing | ready | failed. Aggregated from ProcessingTask rows.
-  processingState String @default("none")
+  processingState String           @default("none")
   processingTasks ProcessingTask[]
 
   @@index([orgId, category])
@@ -989,7 +993,7 @@ model Inquiry {
 
   /// Lead inbox (AI-06): where the lead came in, the key used to merge repeats,
   /// who owns the response, and when a person first replied.
-  channel         String    @default("manual") // manual | email | website_form | linkedin_dm | x_dm | instagram_dm | phone | referral | other
+  channel         String        @default("manual") // manual | email | website_form | linkedin_dm | x_dm | instagram_dm | phone | referral | other
   dedupeKey       String?
   ownerId         String?
   firstResponseAt DateTime?
@@ -1015,16 +1019,16 @@ model Inquiry {
 // ---------------------------------------------------------------------------
 
 model WeeklyReport {
-  id            String   @id @default(cuid())
-  orgId         String
-  periodStart   DateTime
-  periodEnd     DateTime
-  status        String   @default("draft") // draft | final
-  payload       String   @default("{}") // JSON WeeklyReportPayload
-  narrative     String? // optional AI-written executive narrative
-  generatedById String?
-  generatedAt   DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String    @id @default(cuid())
+  orgId          String
+  periodStart    DateTime
+  periodEnd      DateTime
+  status         String    @default("draft") // draft | final
+  payload        String    @default("{}") // JSON WeeklyReportPayload
+  narrative      String? // optional AI-written executive narrative
+  generatedById  String?
+  generatedAt    DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
   /// REP-01: each correction of a final report is a new version; a final
   /// version is never edited, and clients read the latest final one.
   version        Int       @default(1)
@@ -1045,28 +1049,28 @@ model WeeklyReport {
 /// order ACTION, RESULTS, PROBLEMS, FUTURE. Figures are computed from records
 /// and frozen; the operator writes the judgement. Versioned like reports.
 model PeriodReview {
-  id              String    @id @default(cuid())
-  orgId           String
-  engagementId    String
-  periodNumber    Int
-  periodStart     DateTime  @db.Date
-  periodEnd       DateTime  @db.Date
-  version         Int       @default(1)
+  id             String    @id @default(cuid())
+  orgId          String
+  engagementId   String
+  periodNumber   Int
+  periodStart    DateTime  @db.Date
+  periodEnd      DateTime  @db.Date
+  version        Int       @default(1)
   /// draft | final
-  status          String    @default("draft")
+  status         String    @default("draft")
   /// JSON: figures computed from the period's records.
-  figures         String    @default("{}")
-  action          String    @default("")
-  results         String    @default("")
-  problems        String    @default("")
-  future          String    @default("")
-  createdById     String?
-  finalisedAt     DateTime?
-  finalisedById   String?
-  supersededAt    DateTime?
-  revisionReason  String?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @default(now()) @updatedAt
+  figures        String    @default("{}")
+  action         String    @default("")
+  results        String    @default("")
+  problems       String    @default("")
+  future         String    @default("")
+  createdById    String?
+  finalisedAt    DateTime?
+  finalisedById  String?
+  supersededAt   DateTime?
+  revisionReason String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
 
   @@unique([engagementId, periodNumber, version])
   @@index([orgId, periodStart])
@@ -1556,17 +1560,17 @@ model Application {
   prospect         Prospect? @relation(fields: [prospectId], references: [id], onDelete: SetNull)
 
   /// Qualification (COM-02): who at Threadline owns it and what happens next.
-  ownerId             String?
-  nextAction          String?
-  nextActionDue       DateTime?
+  ownerId              String?
+  nextAction           String?
+  nextActionDue        DateTime?
   /// won | lost | not_a_fit | no_response | null while open
-  outcome             String?
-  outcomeReason       String?
+  outcome              String?
+  outcomeReason        String?
   /// Set when converted into a client workspace (COM-03).
-  orgId               String?
-  convertedAt         DateTime?
+  orgId                String?
+  convertedAt          DateTime?
   confirmationQueuedAt DateTime?
-  operatorNotifiedAt  DateTime?
+  operatorNotifiedAt   DateTime?
 
   @@index([status, createdAt])
 }
@@ -1652,24 +1656,24 @@ model InternalMetric {
 /// currently being sold against, held as a record precisely because it is a
 /// belief that changes on evidence.
 model MarketWedge {
-  id              String    @id @default(cuid())
-  label           String
-  state           String    @default("candidate") // candidate | immersion | interviews | commercial_test | validated | revised
+  id                     String    @id @default(cuid())
+  label                  String
+  state                  String    @default("candidate") // candidate | immersion | interviews | commercial_test | validated | revised
   /// True for the single wedge currently being sold against.
-  active          Boolean   @default(false)
-  summary         String? // exactly who this is
-  problem         String? // the expensive recurring problem, in their language
-  outcome         String? // the outcome hypothesis
-  qualification   String? // what must already be true for them to succeed here
-  mechanism       String?
+  active                 Boolean   @default(false)
+  summary                String? // exactly who this is
+  problem                String? // the expensive recurring problem, in their language
+  outcome                String? // the outcome hypothesis
+  qualification          String? // what must already be true for them to succeed here
+  mechanism              String?
   // Candidate scoring, 0-5. Used to choose between wedges, not to prove one.
-  scoreEconomics  Int       @default(0)
-  scorePain       Int       @default(0)
-  scoreReach      Int       @default(0)
-  scorePrecedent  Int       @default(0)
-  notes           String?
+  scoreEconomics         Int       @default(0)
+  scorePain              Int       @default(0)
+  scoreReach             Int       @default(0)
+  scorePrecedent         Int       @default(0)
+  notes                  String?
   /// Set when the hypothesis was frozen for a controlled sales sample.
-  frozenAt        DateTime?
+  frozenAt               DateTime?
   /// A commercial test started before the interview evidence met the validation
   /// thresholds. Allowed for an authorised operator, never silently: the
   /// uncertainty is written down and shown on the wedge until it is validated.
@@ -1677,11 +1681,11 @@ model MarketWedge {
   uncertaintyNote        String?
   uncertaintyAt          DateTime?
   uncertaintyById        String?
-  ownerId         String?
-  nextAction      String?
-  nextActionDueAt DateTime?
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  ownerId                String?
+  nextAction             String?
+  nextActionDueAt        DateTime?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
 
   owner         User?                    @relation("WedgeOwner", fields: [ownerId], references: [id], onDelete: SetNull)
   checks        SopCheck[]
@@ -1767,10 +1771,10 @@ model Prospect {
   createdAt            DateTime  @default(now())
   updatedAt            DateTime  @updatedAt
 
-  owner  User?        @relation("ProspectOwner", fields: [ownerId], references: [id], onDelete: SetNull)
-  wedge  MarketWedge? @relation(fields: [wedgeId], references: [id], onDelete: SetNull)
-  checks SopCheck[]
-  calls  SalesCall[]
+  owner   User?           @relation("ProspectOwner", fields: [ownerId], references: [id], onDelete: SetNull)
+  wedge   MarketWedge?    @relation(fields: [wedgeId], references: [id], onDelete: SetNull)
+  checks  SopCheck[]
+  calls   SalesCall[]
   touches ProspectTouch[]
 
   /// Where the demand came from: outbound | content_sourced | content_assisted |
@@ -1875,23 +1879,23 @@ model SalesCall {
 /// instead and the assumptions stay visible beside them so one win or one
 /// no-show cannot silently rewrite the plan.
 model AcquisitionTarget {
-  id                      String   @id @default(cuid())
+  id                      String    @id @default(cuid())
   label                   String
-  targetWins              Int      @default(2)
+  targetWins              Int       @default(2)
   periodStart             DateTime
   periodEnd               DateTime
-  status                  String   @default("active") // active | closed
-  assumedBookingRatePct   Float    @default(0)
-  assumedShowRatePct      Float    @default(0)
-  assumedQualifiedRatePct Float    @default(0)
-  assumedCloseRatePct     Float    @default(0)
+  status                  String    @default("active") // active | closed
+  assumedBookingRatePct   Float     @default(0)
+  assumedShowRatePct      Float     @default(0)
+  assumedQualifiedRatePct Float     @default(0)
+  assumedCloseRatePct     Float     @default(0)
   /// Audience size (followers across Threadline's own channels) for the
   /// audience-to-call diagnostic. A reading, never a target.
   audienceSize            Int?
   audienceAsOf            DateTime?
   notes                   String?
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
 
   @@index([status, periodStart])
 }
@@ -1902,16 +1906,16 @@ model AcquisitionTarget {
 /// reply handling are touches too, so the funnel can report effort per prospect
 /// rather than only first contacts.
 model ProspectTouch {
-  id         String   @id @default(cuid())
-  prospectId String
-  at         DateTime
-  kind       String // first | follow_up | value_sent | reply | booking | other
+  id             String   @id @default(cuid())
+  prospectId     String
+  at             DateTime
+  kind           String // first | follow_up | value_sent | reply | booking | other
   /// Which message variant was sent (e.g. S2-E1-A), so A/B results are countable.
   messageVersion String?
-  channel    String?
-  note       String?
-  byId       String?
-  createdAt  DateTime @default(now())
+  channel        String?
+  note           String?
+  byId           String?
+  createdAt      DateTime @default(now())
 
   prospect Prospect @relation(fields: [prospectId], references: [id], onDelete: Cascade)
 
@@ -2657,20 +2661,20 @@ model AuthToken {
 }
 
 model EmailMessage {
-  id         String    @id @default(cuid())
-  orgId      String?
-  toEmail    String
-  template   String
-  subject    String
-  textBody   String
-  htmlBody   String
-  provider   String // capture | resend | smtp
-  status     String    @default("queued") // queued | sent | failed | captured | suppressed
-  providerId String?
-  error      String?
-  jobId      String?
-  sentAt     DateTime?
-  createdAt  DateTime  @default(now())
+  id            String    @id @default(cuid())
+  orgId         String?
+  toEmail       String
+  template      String
+  subject       String
+  textBody      String
+  htmlBody      String
+  provider      String // capture | resend | smtp
+  status        String    @default("queued") // queued | sent | failed | captured | suppressed
+  providerId    String?
+  error         String?
+  jobId         String?
+  sentAt        DateTime?
+  createdAt     DateTime  @default(now())
   /// Delivery events from the provider's webhook (NOT-02).
   deliveredAt   DateTime?
   bouncedAt     DateTime?
@@ -2856,54 +2860,95 @@ model OfferTemplate {
 
 /// One client engagement (ENG-01): the signed terms, the calendar and the state.
 model Engagement {
-  id                  String    @id @default(cuid())
-  orgId               String
-  offerTemplateId     String?
+  id                        String    @id @default(cuid())
+  orgId                     String
+  offerTemplateId           String?
   /// The offer's terms exactly as signed (JSON), immune to later offer edits.
-  offerSnapshot       String    @default("{}")
-  agreementVersion    String?
-  agreementSignedAt   DateTime?
+  offerSnapshot             String    @default("{}")
+  agreementVersion          String?
+  agreementSignedAt         DateTime?
   /// Where the signed agreement lives (a document id or storage path), never its content.
-  agreementEvidence   String?
-  currency            String    @default("GBP")
-  setupFeeMinor       Int
-  periodFeeMinor      Int
-  periodDays          Int       @default(28)
-  initialPeriods      Int       @default(3)
+  agreementEvidence         String?
+  currency                  String    @default("GBP")
+  setupFeeMinor             Int
+  periodFeeMinor            Int
+  periodDays                Int       @default(28)
+  initialPeriods            Int       @default(3)
   /// Calendar date the first period starts, in the workspace's timezone.
-  startDate           DateTime? @db.Date
-  timezone            String    @default("Europe/London")
+  startDate                 DateTime? @db.Date
+  timezone                  String    @default("Europe/London")
+  /// Relationship cadence (client communication playbook, 27 Sept 2026): the
+  /// agreed kickoff instant, the weekly check-in slot in `timezone`
+  /// (0 = Sunday .. 6 = Saturday, "HH:MM"), the named relationship owner (a
+  /// staff user id) and the days added to the cadence by pauses.
+  kickoffAt                 DateTime?
+  checkInWeekday            Int?
+  checkInTime               String?
+  relationshipOwnerId       String?
+  cadenceOffsetDays         Int       @default(0)
   /// draft | active | paused | ended | terminated
-  status              String    @default("draft")
-  activatedAt         DateTime?
-  pausedAt            DateTime?
-  endedAt             DateTime?
-  endReason           String?
-  entitlements        String    @default("{}")
-  earlyWinDueDate     DateTime? @db.Date
+  status                    String    @default("draft")
+  activatedAt               DateTime?
+  pausedAt                  DateTime?
+  endedAt                   DateTime?
+  endReason                 String?
+  entitlements              String    @default("{}")
+  earlyWinDueDate           DateTime? @db.Date
   /// ENG-03: the concrete early win agreed at kickoff, and when it actually happened (with evidence).
-  earlyWinDefinition  String?
-  earlyWinAchievedOn  DateTime? @db.Date
-  earlyWinEvidence    String?
+  earlyWinDefinition        String?
+  earlyWinAchievedOn        DateTime? @db.Date
+  earlyWinEvidence          String?
   /// ENG-03: the client's sign-off that installation is done; refused until every checklist item is complete.
   installationSignedOffAt   DateTime?
   installationSignedOffById String?
   /// BIL-02: exactly one invoice authority per engagement: manual | stripe.
-  billingProvider     String    @default("manual")
-  stripeCustomerId    String?
+  billingProvider           String    @default("manual")
+  stripeCustomerId          String?
   /// Days allowed to pay an issued invoice.
-  paymentTermsDays    Int       @default(14)
-  sourceApplicationId String?   @unique
-  sourceProspectId    String?
-  createdById         String?
-  createdAt           DateTime  @default(now())
-  updatedAt           DateTime  @default(now()) @updatedAt
+  paymentTermsDays          Int       @default(14)
+  sourceApplicationId       String?   @unique
+  sourceProspectId          String?
+  createdById               String?
+  createdAt                 DateTime  @default(now())
+  updatedAt                 DateTime  @default(now()) @updatedAt
 
-  org          Organization   @relation(fields: [orgId], references: [id], onDelete: Cascade)
-  offer        OfferTemplate? @relation(fields: [offerTemplateId], references: [id], onDelete: SetNull)
+  org          Organization        @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  offer        OfferTemplate?      @relation(fields: [offerTemplateId], references: [id], onDelete: SetNull)
   periods      ServicePeriod[]
   scopeChanges ScopeChange[]
+  touches      RelationshipTouch[]
 
+  @@index([orgId, status])
+}
+
+/// One planned relationship contact on an engagement's clock (kickoff, the
+/// day-2/3 personal check, weekly/fortnightly calls, the four-week reviews and
+/// the week-12 renewal review). The app plans them; Attio holds them as tasks
+/// for the relationship owner. `key` is stable, so re-planning never
+/// duplicates; a touch done in Attio is never moved.
+model RelationshipTouch {
+  id           String    @id @default(cuid())
+  engagementId String
+  orgId        String
+  /// kickoff | day3 | w1 | w2 | w3 | review1 | w6 | review2 | w10 | review3
+  key          String
+  title        String
+  dueAt        DateTime
+  /// planned | done | cancelled
+  status       String    @default("planned")
+  completedAt  DateTime?
+  attioTaskId  String?
+  /// The due time last written to Attio; differs from dueAt when a rebase is waiting to sync.
+  syncedDueAt  DateTime?
+  /// True once a cancelled touch's Attio task has been removed (or found completed).
+  remoteClosed Boolean   @default(false)
+  syncError    String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @default(now()) @updatedAt
+
+  engagement Engagement @relation(fields: [engagementId], references: [id], onDelete: Cascade)
+
+  @@unique([engagementId, key])
   @@index([orgId, status])
 }
 
@@ -3245,24 +3290,23 @@ model RenewalReview {
 /// on and where it appears. Withdrawing or expiring the permission flags every
 /// placement that relies on it, for a person to take down.
 model ProofPlacement {
-  id           String    @id @default(cuid())
-  orgId        String
+  id         String    @id @default(cuid())
+  orgId      String
   /// The ProofPermission flag this relies on, e.g. allowPublicTestimonial.
-  permission   String
+  permission String
   /// What is used: the quote, figure or logo, as placed.
-  content      String
+  content    String
   /// Where it appears (page URL, deck name, proposal).
-  location     String
-  evidence     String?
-  placedById   String?
-  placedAt     DateTime  @default(now())
-  flaggedAt    DateTime?
-  flagReason   String?
-  removedAt    DateTime?
+  location   String
+  evidence   String?
+  placedById String?
+  placedAt   DateTime  @default(now())
+  flaggedAt  DateTime?
+  flagReason String?
+  removedAt  DateTime?
 
   @@index([orgId, permission])
 }
-
 
 /// A direct-to-storage upload in progress (FILE-02). The browser sends parts
 /// straight to the bucket with short-lived signed URLs; the server verifies the
@@ -3399,15 +3443,15 @@ model ReplyDraft {
 /// An authorised inbound lead source for a workspace (a website form, a
 /// Zapier step, an import). The token is shown once and stored only as a hash.
 model InboundSource {
-  id         String    @id @default(cuid())
-  orgId      String
-  label      String
-  channel    String    @default("website_form")
-  tokenHash  String    @unique
+  id          String    @id @default(cuid())
+  orgId       String
+  label       String
+  channel     String    @default("website_form")
+  tokenHash   String    @unique
   createdById String?
-  createdAt  DateTime  @default(now())
-  lastUsedAt DateTime?
-  revokedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  lastUsedAt  DateTime?
+  revokedAt   DateTime?
 
   org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
 
@@ -3417,11 +3461,11 @@ model InboundSource {
 /// Addresses that must not be mailed (NOT-02): a permanent bounce or a spam
 /// complaint adds one automatically; staff can add or lift one by hand.
 model EmailSuppression {
-  id        String   @id @default(cuid())
-  email     String   @unique
+  id        String    @id @default(cuid())
+  email     String    @unique
   reason    String // bounce | complaint | manual
   detail    String?
-  createdAt DateTime @default(now())
+  createdAt DateTime  @default(now())
   liftedAt  DateTime?
 }
 
@@ -3447,19 +3491,19 @@ model BrandBrainVersion {
 /// the whole workspace or to one platform, is shown in the AI context as
 /// "lessons in force", and is retired (never deleted) to roll it back.
 model GenerationLesson {
-  id           String    @id @default(cuid())
-  orgId        String
-  text         String
+  id            String    @id @default(cuid())
+  orgId         String
+  text          String
   /// workspace | platform
-  scope        String    @default("workspace")
-  platform     String?
-  basis        String
-  correctionId String?
-  status       String    @default("active") // active | retired
+  scope         String    @default("workspace")
+  platform      String?
+  basis         String
+  correctionId  String?
+  status        String    @default("active") // active | retired
   activatedById String?
-  activatedAt  DateTime  @default(now())
-  retiredById  String?
-  retiredAt    DateTime?
+  activatedAt   DateTime  @default(now())
+  retiredById   String?
+  retiredAt     DateTime?
   retiredReason String?
 
   @@index([orgId, status])
@@ -3529,12 +3573,12 @@ model ResearchSchedule {
 /// A held-out evaluation of the Judge's variants (LRN-03): the results per
 /// variant on the same held-out share, frozen when run.
 model JudgeEvaluation {
-  id          String   @id @default(cuid())
-  fraction    Float
+  id        String   @id @default(cuid())
+  fraction  Float
   /// JSON VariantResult[]
-  results     String
-  runById     String?
-  createdAt   DateTime @default(now())
+  results   String
+  runById   String?
+  createdAt DateTime @default(now())
 }
 
 /// Which Judge variant a person has promoted (LRN-03). The newest row that is

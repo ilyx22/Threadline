@@ -5,7 +5,9 @@ import { z } from "zod";
 import { prisma } from "@/lib/db/client";
 import { auditInternal } from "@/lib/auth/audit";
 import { requireInternalStrict } from "@/lib/auth/guard";
-import { activateEngagement, decideScopeChange, EngagementError, endEngagement, pauseEngagement, proposeScopeChange, resumeEngagement } from "@/lib/commercial/engagements";
+import { activateEngagement, decideScopeChange, EngagementError, endEngagement, pauseEngagement, proposeScopeChange, rescheduleStart, resumeEngagement, setRelationshipPlan } from "@/lib/commercial/engagements";
+import { zonedTime } from "@/lib/commercial/cadence";
+import { markTouchDone } from "@/lib/commercial/relationship";
 import { kickCrm, queueCrm } from "@/lib/crm/outbox";
 import { decideRenewal } from "@/lib/commercial/renewals";
 import { WorkflowError } from "@/lib/domain/workflow";
@@ -36,6 +38,62 @@ export async function activateEngagementAction(engagementId: string, _prev: Acti
     } catch (x) {
       return handle(x) ?? Promise.reject(x);
     }
+  });
+}
+
+/**
+ * Relationship cadence (communication playbook, 27 Sept 2026): the kickoff and
+ * weekly check-in slot agreed with the client, in the client's timezone. The
+ * person saving becomes the relationship owner the Attio tasks are assigned to.
+ */
+export async function setRelationshipPlanAction(engagementId: string, _prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  return guarded(async () => {
+    const admin = await requireInternalStrict("admin.clients.manage");
+    const input = parseForm(
+      z.object({
+        kickoffDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional().or(z.literal("")),
+        kickoffTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/).optional().or(z.literal("")),
+        checkInWeekday: z.string().regex(/^[0-6]?$/).optional(),
+        checkInTime: z.string().regex(/^(([01]\d|2[0-3]):[0-5]\d)?$/, "Use a time like 10:00.").optional(),
+      }),
+      formData,
+    );
+    try {
+      const e = await load(engagementId);
+      const kickoffAt = input.kickoffDate ? zonedTime(input.kickoffDate, input.kickoffTime || "10:00", e.timezone) : null;
+      await setRelationshipPlan(e.id, { kickoffAt, checkInWeekday: input.checkInWeekday ? Number(input.checkInWeekday) : null, checkInTime: input.checkInTime || null, relationshipOwnerId: admin.user.id });
+      await auditInternal(admin.user.id, { orgId: e.orgId, action: "engagement.cadence", entityType: "engagement", entityId: e.id, summary: `Set ${e.org.name}'s relationship cadence (kickoff, check-in slot, owner)` });
+      refresh(e.orgId);
+      return okVoid("Cadence saved. Open touches were re-planned; Attio follows.");
+    } catch (x) {
+      return handle(x) ?? Promise.reject(x);
+    }
+  });
+}
+
+export async function rescheduleStartAction(engagementId: string, _prev: ActionResult | null, formData: FormData): Promise<ActionResult> {
+  return guarded(async () => {
+    const admin = await requireInternalStrict("admin.clients.manage");
+    const { startDate } = parseForm(z.object({ startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Choose a start date.") }), formData);
+    try {
+      const e = await load(engagementId);
+      await rescheduleStart(e.id, startDate);
+      await auditInternal(admin.user.id, { orgId: e.orgId, action: "engagement.reschedule", entityType: "engagement", entityId: e.id, summary: `Moved ${e.org.name}'s start to ${startDate}` });
+      refresh(e.orgId);
+      return okVoid("Start moved. Periods and relationship touches were rebased; tell the client the new dates.");
+    } catch (x) {
+      return handle(x) ?? Promise.reject(x);
+    }
+  });
+}
+
+export async function markTouchDoneAction(touchId: string): Promise<ActionResult> {
+  return guarded(async () => {
+    const admin = await requireInternalStrict("admin.clients.manage");
+    const t = await markTouchDone(touchId);
+    await auditInternal(admin.user.id, { orgId: t.orgId, action: "engagement.touch_done", entityType: "relationship_touch", entityId: t.id, summary: `Marked "${t.title}" done` });
+    refresh(t.orgId);
+    return okVoid("Marked done. Record the recap and commitments in the workspace.");
   });
 }
 

@@ -88,6 +88,73 @@ export class AttioClient {
   updateDeal(recordId: string, values: Record<string, unknown>) {
     return this.call("PATCH", `/objects/deals/records/${encodeURIComponent(recordId)}`, values);
   }
+
+  /*
+   * Tasks (docs.attio.com, checked 27 September 2026):
+   *   POST   /v2/tasks            { data: { content, format: "plaintext", deadline_at, is_completed, linked_records, assignees } }
+   *   GET    /v2/tasks?linked_object=companies&linked_record_id={id}
+   *   PATCH  /v2/tasks/{task_id}  { data: { deadline_at?, is_completed?, linked_records?, assignees? } } (content cannot change)
+   *   DELETE /v2/tasks/{task_id}
+   * Replies carry data.id.task_id, content_plaintext, deadline_at, is_completed.
+   */
+  private async taskCall(method: string, path: string, data?: Record<string, unknown>): Promise<unknown> {
+    let res: Response;
+    try {
+      res = await this.fetchImpl(`${BASE}${path}`, {
+        method,
+        headers: { authorization: `Bearer ${this.token}`, ...(data ? { "content-type": "application/json" } : {}) },
+        ...(data ? { body: JSON.stringify({ data }) } : {}),
+        signal: AbortSignal.timeout(15_000),
+      });
+    } catch (e) {
+      throw new AttioError(`Attio unreachable: ${e instanceof Error ? e.message : String(e)}`, "retry");
+    }
+    if (res.status === 429 || res.status >= 500) throw new AttioError(`Attio ${res.status}`, "retry", res.status);
+    const body = (await res.json().catch(() => null)) as { data?: unknown; message?: string } | null;
+    if (res.status === 404) return null;
+    if (!res.ok) throw new AttioError(`Attio refused the request (${res.status}): ${body?.message ?? "no detail"}`, "review", res.status);
+    return body?.data ?? null;
+  }
+
+  async createTask(input: { content: string; deadlineAt: Date; companyRecordId: string; assigneeEmail: string | null }): Promise<AttioTask> {
+    const data = await this.taskCall("POST", "/tasks", {
+      content: input.content.slice(0, 2000),
+      format: "plaintext",
+      deadline_at: input.deadlineAt.toISOString(),
+      is_completed: false,
+      linked_records: [{ target_object: "companies", target_record_id: input.companyRecordId }],
+      assignees: input.assigneeEmail ? [{ workspace_member_email_address: input.assigneeEmail }] : [],
+    });
+    const task = toTask(data);
+    if (!task) throw new AttioError("Attio replied without a task id.", "review");
+    return task;
+  }
+
+  async listCompanyTasks(companyRecordId: string): Promise<AttioTask[]> {
+    const data = await this.taskCall("GET", `/tasks?linked_object=companies&linked_record_id=${encodeURIComponent(companyRecordId)}&limit=500`);
+    return Array.isArray(data) ? data.map(toTask).filter((t): t is AttioTask => t !== null) : [];
+  }
+
+  /** Returns null when the task no longer exists in Attio. */
+  async updateTaskDeadline(taskId: string, deadlineAt: Date): Promise<AttioTask | null> {
+    return toTask(await this.taskCall("PATCH", `/tasks/${encodeURIComponent(taskId)}`, { deadline_at: deadlineAt.toISOString() }));
+  }
+
+  async completeTask(taskId: string): Promise<void> {
+    await this.taskCall("PATCH", `/tasks/${encodeURIComponent(taskId)}`, { is_completed: true });
+  }
+
+  async deleteTask(taskId: string): Promise<void> {
+    await this.taskCall("DELETE", `/tasks/${encodeURIComponent(taskId)}`);
+  }
+}
+
+export type AttioTask = { id: string; content: string; deadlineAt: string | null; isCompleted: boolean };
+
+function toTask(raw: unknown): AttioTask | null {
+  const t = raw as { id?: { task_id?: string }; content_plaintext?: string; deadline_at?: string | null; is_completed?: boolean } | null;
+  if (!t?.id?.task_id) return null;
+  return { id: t.id.task_id, content: t.content_plaintext ?? "", deadlineAt: t.deadline_at ?? null, isCompleted: t.is_completed === true };
 }
 
 /** Normalise a website into the bare domain Attio matches on. */
