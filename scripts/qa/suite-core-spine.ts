@@ -244,6 +244,8 @@ async function runEngagement(e: Engagement) {
     commercial: { attentionToInquiry: "Profile → site → discovery call" },
   };
   const start = await attempt(() => Onboarding.goToOnboardingStepAction(slug, "welcome"));
+  // The spine drives the flow where the founder fills every section alone.
+  await prisma.onboardingSession.updateMany({ where: { org: { slug } }, data: { mode: "self" } });
   const stepResults: string[] = [];
   for (const step of ONBOARDING_STEPS.map((s) => s.key)) {
     if (step === "welcome") continue;

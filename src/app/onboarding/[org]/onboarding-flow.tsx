@@ -11,6 +11,9 @@ import {
   Clock,
   Loader2,
   Pencil,
+  Phone,
+  Send,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils/cn";
 import { Badge } from "@/components/ui/badge";
@@ -22,14 +25,25 @@ import { Notice } from "@/components/ui/feedback";
 import { Wordmark, ThreadMark } from "@/components/brand/logo";
 import { toast } from "@/components/ui/toast";
 import {
+  ANSWER_LABELS,
+  CLIENT_PREP_STEPS,
   ONBOARDING_STEPS,
   onboardingProgress,
-  stepIndex,
+  prepEstimateMinutes,
   stepMeta,
+  stepsForPhase,
   totalEstimateMinutes,
+  type FieldSource,
   type OnboardingData,
+  type OnboardingPhase,
 } from "@/lib/domain/onboarding";
-import { buildWorkspaceAction, saveOnboardingStepAction } from "@/lib/actions/onboarding";
+import {
+  buildWorkspaceAction,
+  draftOnboardingFromTranscriptAction,
+  saveOnboardingStepAction,
+  sendOnboardingForReviewAction,
+  setOnboardingModeAction,
+} from "@/lib/actions/onboarding";
 import { PLATFORM_OPTIONS } from "@/lib/domain/enums";
 import { minutes } from "@/lib/utils/format";
 
@@ -47,6 +61,10 @@ export function OnboardingFlow({
   currentStep,
   completedSteps,
   data: initialData,
+  phase,
+  mode,
+  fieldSources,
+  aiLive,
 }: {
   slug: string;
   orgName: string;
@@ -54,9 +72,16 @@ export function OnboardingFlow({
   currentStep: string;
   completedSteps: string[];
   data: OnboardingData;
+  phase: OnboardingPhase;
+  mode: string;
+  fieldSources: Record<string, FieldSource>;
+  aiLive: boolean;
 }) {
   const router = useRouter();
-  const [step, setStep] = React.useState(currentStep);
+  const sequence = stepsForPhase(phase) as string[];
+  const [step, setStep] = React.useState(
+    sequence.includes(currentStep) ? currentStep : phase === "prep" ? "review" : currentStep,
+  );
   const [data, setData] = React.useState<OnboardingData>(initialData);
   const [completed, setCompleted] = React.useState<string[]>(completedSteps);
   const [errors, setErrors] = React.useState<Record<string, string>>({});
@@ -64,7 +89,10 @@ export function OnboardingFlow({
   const [saving, setSaving] = React.useState<"idle" | "saving" | "saved">("idle");
 
   const meta = stepMeta(step);
-  const index = stepIndex(step);
+  const index = Math.max(0, sequence.indexOf(step));
+  const isStaff = phase === "call";
+  // The client's prep is finished: nothing more until the kickoff call.
+  const prepDone = phase === "prep" && step === "review";
   const progress = onboardingProgress(completed);
 
   const set = <K extends keyof OnboardingData>(key: K, value: OnboardingData[K]) => {
@@ -111,7 +139,7 @@ export function OnboardingFlow({
   };
 
   const goBack = () => {
-    const previous = ONBOARDING_STEPS[Math.max(0, index - 1)]!.key;
+    const previous = sequence[Math.max(0, index - 1)]!;
     setSaving("saving");
     startTransition(async () => {
       // Save without validating, so going back never loses a partial answer.
@@ -166,17 +194,19 @@ export function OnboardingFlow({
             {ONBOARDING_STEPS.filter((s) => s.key !== "build" && s.key !== "done").map((s) => {
               const isDone = completed.includes(s.key);
               const isCurrent = s.key === step;
+              const onCall = phase === "prep" && !(CLIENT_PREP_STEPS as string[]).includes(s.key) && s.key !== "review";
+              const canJump = !onCall && (isStaff || isDone || isCurrent);
               return (
                 <li key={s.key}>
                   <button
                     type="button"
-                    onClick={() => (isDone || isCurrent ? jumpTo(s.key) : undefined)}
-                    disabled={!isDone && !isCurrent}
+                    onClick={() => (canJump ? jumpTo(s.key) : undefined)}
+                    disabled={!canJump}
                     className={cn(
                       "flex w-full items-center gap-2.5 rounded-md px-2.5 py-1.5 text-left text-[12.5px] transition-colors",
                       isCurrent
                         ? "bg-raised text-ink"
-                        : isDone
+                        : isDone || canJump
                           ? "text-muted hover:bg-raised/60"
                           : "cursor-default text-ghost",
                     )}
@@ -189,7 +219,11 @@ export function OnboardingFlow({
                       <Circle className="size-3.5 shrink-0" aria-hidden />
                     )}
                     <span className="flex-1 truncate">{s.title}</span>
-                    {s.optional ? <span className="text-[10px] text-ghost">opt</span> : null}
+                    {onCall ? (
+                      <span className="text-[10px] text-ghost">on call</span>
+                    ) : s.optional ? (
+                      <span className="text-[10px] text-ghost">opt</span>
+                    ) : null}
                   </button>
                 </li>
               );
@@ -199,21 +233,35 @@ export function OnboardingFlow({
 
         {/* --------------------------------- Content -------------------------------- */}
         <main className="min-w-0 flex-1">
+          {isStaff ? (
+            <StaffCallPanel
+              slug={slug}
+              orgName={orgName}
+              mode={mode}
+              aiLive={aiLive}
+              data={data}
+              onApply={(draft) => {
+                setData((prev) => ({ ...prev, ...draft }));
+                toast.success("Applied. Saved when you move on.");
+              }}
+            />
+          ) : null}
           <div className="mb-8">
             <div className="flex items-center gap-3">
               <span className="text-eyebrow text-accent">{meta.number}</span>
               <span className="text-eyebrow text-faint">{meta.title}</span>
               {meta.optional ? <Badge tone="outline">Optional</Badge> : null}
             </div>
-            <h1 className="mt-3 text-hero">{meta.subtitle}</h1>
-            {meta.why ? (
+            <h1 className="mt-3 text-hero">{prepDone ? "Ready for your kickoff call" : meta.subtitle}</h1>
+            {meta.why && !prepDone ? (
               <p className="mt-3 max-w-xl text-[14px] leading-relaxed text-muted">{meta.why}</p>
             ) : null}
           </div>
 
           <div className="space-y-6">
             {step === "welcome" ? (
-              <WelcomeStep founderName={founderName} orgName={orgName} />
+              <WelcomeStep
+                phase={phase} founderName={founderName} orgName={orgName} />
             ) : null}
 
             {step === "business" ? (
@@ -915,7 +963,13 @@ export function OnboardingFlow({
               </>
             ) : null}
 
-            {step === "review" ? <ReviewStep data={data} onEdit={jumpTo} /> : null}
+            {step === "review" ? (
+              prepDone ? (
+                <ReadyForCallStep orgName={orgName} onEdit={jumpTo} />
+              ) : (
+                <ReviewStep data={data} onEdit={jumpTo} phase={phase} sources={fieldSources} />
+              )
+            ) : null}
 
             {step === "build" ? <BuildStep slug={slug} onDone={() => setStep("done")} /> : null}
 
@@ -925,7 +979,7 @@ export function OnboardingFlow({
           </div>
 
           {/* -------------------------------- Footer -------------------------------- */}
-          {step !== "build" && step !== "done" ? (
+          {step !== "build" && step !== "done" && !prepDone ? (
             <div className="mt-10 flex items-center justify-between gap-4 border-t border-line pt-6">
               <Button
                 variant="ghost"
@@ -938,10 +992,13 @@ export function OnboardingFlow({
 
               <div className="flex items-center gap-3">
                 <span className="hidden text-[11.5px] text-ghost sm:inline">
-                  Step {index + 1} of {ONBOARDING_STEPS.length - 2}
+                  Step {index + 1} of {sequence.filter((k) => k !== "build" && k !== "done").length}
                 </span>
+                {isStaff && step === "review" ? (
+                  <SendForReviewButton slug={slug} data={data} disabled={pending} onSent={() => router.refresh()} />
+                ) : null}
                 <Button
-                  variant={step === "review" ? "accent" : "primary"}
+                  variant={step === "review" && !isStaff ? "accent" : isStaff && step === "review" ? "ghost" : "primary"}
                   iconRight={ArrowRight}
                   loading={pending}
                   onClick={advance}
@@ -949,7 +1006,11 @@ export function OnboardingFlow({
                   {step === "welcome"
                     ? "Begin"
                     : step === "review"
-                      ? "Build my workspace"
+                      ? isStaff
+                        ? "Build now without the client check"
+                        : phase === "confirm"
+                          ? "Confirm and build my workspace"
+                          : "Build my workspace"
                       : "Continue"}
                 </Button>
               </div>
@@ -963,8 +1024,43 @@ export function OnboardingFlow({
 
 /* --------------------------------- Steps ---------------------------------- */
 
-function WelcomeStep({ founderName, orgName }: { founderName: string; orgName: string }) {
+function WelcomeStep({ phase, founderName, orgName }: { phase: OnboardingPhase; founderName: string; orgName: string }) {
   const firstName = founderName.split(" ")[0] ?? founderName;
+  if (phase === "call") {
+    return (
+      <div className="space-y-4">
+        <p className="text-[15px] leading-relaxed text-muted">
+          Work through the sections with {orgName} on the call, in any order the conversation goes.
+          Type as they talk; nothing needs to be perfect, because they check it all afterwards.
+        </p>
+        <ul className="space-y-1.5 text-[13.5px] text-muted">
+          <li>Spend the time on Customer, Founder and Voice. Ask for examples and use their words.</li>
+          <li>Record the call. If you have the transcript, “Draft from call transcript” fills the gaps for you to check.</li>
+          <li>When you are done, go to Review and send it to the client to check.</li>
+        </ul>
+      </div>
+    );
+  }
+  if (phase === "prep") {
+    return (
+      <div className="space-y-6">
+        <p className="text-[15px] leading-relaxed text-muted">
+          {firstName}, before your kickoff call there are just two short sections: the basics about{" "}
+          {orgName}, and what we can access. It takes about{" "}
+          <span className="text-ink">{minutes(prepEstimateMinutes())}</span> and saves as you go.
+        </p>
+        <Notice tone="neutral" title="We do the rest together on the call">
+          Your offer, customers, story, voice and goals are much easier to talk through than to
+          type. We fill those in with you on the kickoff call, then send everything back for you to
+          check before your workspace is built.
+        </Notice>
+        <p className="flex items-center gap-2 text-[12.5px] text-ghost">
+          <Clock className="size-3.5" aria-hidden />
+          Roughly {minutes(prepEstimateMinutes())}, saved automatically.
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="space-y-6">
       <p className="text-[15px] leading-relaxed text-muted">
@@ -1013,88 +1109,105 @@ function WelcomeStep({ founderName, orgName }: { founderName: string; orgName: s
 function ReviewStep({
   data,
   onEdit,
+  phase,
+  sources,
 }: {
   data: OnboardingData;
   onEdit: (step: string) => void;
+  phase: OnboardingPhase;
+  sources: Record<string, FieldSource>;
 }) {
-  const sections: { step: string; title: string; rows: { label: string; value: string }[] }[] = [
+  const sections: { step: string; title: string; rows: { label: string; value: string; field?: keyof OnboardingData }[] }[] = [
     {
       step: "business",
       title: "Business",
       rows: [
-        { label: "Company", value: data.companyName ?? "—" },
-        { label: "What it does", value: data.description ?? "—" },
-        { label: "Website", value: data.website ?? "—" },
+        { field: "companyName", label: "Company", value: data.companyName ?? "—" },
+        { field: "description", label: "What it does", value: data.description ?? "—" },
+        { field: "website", label: "Website", value: data.website ?? "—" },
       ],
     },
     {
       step: "offer",
       title: "Offer",
       rows: [
-        { label: "Offer", value: data.offerName ?? "—" },
-        { label: "Outcome", value: data.offerOutcome ?? "—" },
-        { label: "Mechanism", value: data.offerMechanism ?? "—" },
-        { label: "CTAs", value: (data.offerCtas ?? []).join(" · ") || "—" },
+        { field: "offerName", label: "Offer", value: data.offerName ?? "—" },
+        { field: "offerOutcome", label: "Outcome", value: data.offerOutcome ?? "—" },
+        { field: "offerMechanism", label: "Mechanism", value: data.offerMechanism ?? "—" },
+        { field: "offerCtas", label: "CTAs", value: (data.offerCtas ?? []).join(" · ") || "—" },
       ],
     },
     {
       step: "customer",
       title: "Customer",
       rows: [
-        { label: "Audience", value: data.icpName ?? "—" },
-        { label: "Pains", value: (data.icpPains ?? []).join(" · ") || "—" },
-        { label: "Objections", value: (data.icpObjections ?? []).join(" · ") || "—" },
+        { field: "icpName", label: "Audience", value: data.icpName ?? "—" },
+        { field: "icpPains", label: "Pains", value: (data.icpPains ?? []).join(" · ") || "—" },
+        { field: "icpObjections", label: "Objections", value: (data.icpObjections ?? []).join(" · ") || "—" },
       ],
     },
     {
       step: "founder",
       title: "Founder",
       rows: [
-        { label: "Name", value: data.founderName ?? "—" },
-        { label: "Background", value: data.founderBio ?? "—" },
-        { label: "Beliefs", value: (data.founderBeliefs ?? []).join(" · ") || "—" },
-        { label: "Stories", value: (data.founderStories ?? []).join(" · ") || "—" },
+        { field: "founderName", label: "Name", value: data.founderName ?? "—" },
+        { field: "founderBio", label: "Background", value: data.founderBio ?? "—" },
+        { field: "founderBeliefs", label: "Beliefs", value: (data.founderBeliefs ?? []).join(" · ") || "—" },
+        { field: "founderStories", label: "Stories", value: (data.founderStories ?? []).join(" · ") || "—" },
       ],
     },
     {
       step: "voice",
       title: "Voice",
       rows: [
-        { label: "Tone", value: data.voiceTone ?? "—" },
-        { label: "Sounds like me", value: (data.voiceSoundsLikeMe ?? []).join(" · ") || "—" },
-        { label: "Never use", value: (data.voicePhrasesAvoided ?? []).join(" · ") || "—" },
+        { field: "voiceTone", label: "Tone", value: data.voiceTone ?? "—" },
+        { field: "voiceSoundsLikeMe", label: "Sounds like me", value: (data.voiceSoundsLikeMe ?? []).join(" · ") || "—" },
+        { field: "voicePhrasesAvoided", label: "Never use", value: (data.voicePhrasesAvoided ?? []).join(" · ") || "—" },
       ],
     },
     {
       step: "operation",
       title: "Current operation",
       rows: [
-        { label: "Founder hours per week", value: String(data.hoursPerWeek ?? "—") },
-        { label: "Pieces per 4-week period", value: String(data.monthlyOutput ?? "—") },
+        { field: "hoursPerWeek", label: "Founder hours per week", value: String(data.hoursPerWeek ?? "—") },
+        { field: "monthlyOutput", label: "Pieces per 4-week period", value: String(data.monthlyOutput ?? "—") },
       ],
     },
     {
       step: "goals",
       title: "Goals",
       rows: [
-        { label: "Platforms", value: (data.targetPlatforms ?? []).join(", ") || "—" },
-        { label: "Cadence", value: `${data.targetCadence ?? "—"} per week` },
-        { label: "Banned topics", value: (data.bannedTopics ?? []).join(" · ") || "None" },
+        { field: "targetPlatforms", label: "Platforms", value: (data.targetPlatforms ?? []).join(", ") || "—" },
+        { field: "targetCadence", label: "Cadence", value: `${data.targetCadence ?? "—"} per week` },
+        { field: "bannedTopics", label: "Banned topics", value: (data.bannedTopics ?? []).join(" · ") || "None" },
       ],
     },
     {
       step: "commercial",
       title: "Commercial path",
-      rows: [{ label: "Attention to inquiry", value: data.attentionToInquiry ?? "—" }],
+      rows: [{ field: "attentionToInquiry", label: "Attention to inquiry", value: data.attentionToInquiry ?? "—" }],
     },
   ];
 
   return (
     <div className="space-y-4">
-      <Notice tone="neutral">
-        Check this over. Anything here can still be edited, and everything remains editable in the
-        Brand Brain afterwards.
-      </Notice>
+      {phase === "confirm" ? (
+        <Notice tone="neutral" title="What we captured on your kickoff call">
+          Read it through and correct anything we got wrong: answers marked “From your call” were
+          typed in by Threadline while we talked. When it reads right, confirm and we build your
+          workspace. Everything stays editable in the Brand Brain afterwards.
+        </Notice>
+      ) : phase === "call" ? (
+        <Notice tone="neutral" title="Before you send it">
+          Empty rows are still open. Send it to the client to check when the call is done; they
+          land here, correct anything, and confirm, which builds the workspace.
+        </Notice>
+      ) : (
+        <Notice tone="neutral">
+          Check this over. Anything here can still be edited, and everything remains editable in the
+          Brand Brain afterwards.
+        </Notice>
+      )}
 
       {sections.map((section) => (
         <div key={section.step} className="rounded-lg border border-line bg-elevated">
@@ -1107,7 +1220,14 @@ function ReviewStep({
           <dl className="divide-y divide-line">
             {section.rows.map((row) => (
               <div key={row.label} className="flex flex-col gap-1 px-5 py-3 sm:flex-row sm:gap-6">
-                <dt className="w-44 shrink-0 text-[12px] text-faint">{row.label}</dt>
+                <dt className="w-44 shrink-0 text-[12px] text-faint">
+                  {row.label}
+                  {phase === "confirm" && row.field && sources[row.field] === "threadline" && row.value !== "—" ? (
+                    <span className="mt-1 block">
+                      <Badge tone="outline">From your call</Badge>
+                    </span>
+                  ) : null}
+                </dt>
                 <dd className="min-w-0 flex-1 whitespace-pre-wrap text-[13px] leading-relaxed text-ink">
                   {row.value}
                 </dd>
@@ -1258,6 +1378,216 @@ function DoneStep({
         Everything you entered stays editable in the Brand Brain.
       </p>
       <input type="hidden" value={slug} readOnly />
+    </div>
+  );
+}
+
+/* ---------------------------- Kickoff-call mode ---------------------------- */
+
+function ReadyForCallStep({ orgName, onEdit }: { orgName: string; onEdit: (step: string) => void }) {
+  return (
+    <div className="space-y-6">
+      <div className="rounded-lg border border-line bg-elevated p-6">
+        <div className="flex items-center gap-2 text-[13px] font-medium text-ink">
+          <CheckCircle2 className="size-4 text-positive" aria-hidden />
+          You are ready for your kickoff call
+        </div>
+        <p className="mt-3 text-[13.5px] leading-relaxed text-muted">
+          That is everything we need from {orgName} before we talk. On the call we go through your
+          offer, your customers, your story, how you sound and what you want from this, and fill it
+          in together. Afterwards we send it back here for you to check, and your workspace is built
+          once you confirm.
+        </p>
+        <ul className="mt-4 space-y-1.5 text-[13px] text-muted">
+          <li>Have two or three pieces of your own content to hand that you think are your best.</li>
+          <li>Think of one or two customer stories you are happy to talk about.</li>
+          <li>Bring whoever signs off content, if that is not you.</li>
+        </ul>
+      </div>
+      <div className="flex flex-wrap gap-2">
+        <Button size="sm" variant="ghost" icon={Pencil} onClick={() => onEdit("business")}>
+          Edit the business basics
+        </Button>
+        <Button size="sm" variant="ghost" icon={Pencil} onClick={() => onEdit("integrations")}>
+          Edit access
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+function SendForReviewButton({
+  slug,
+  data,
+  disabled,
+  onSent,
+}: {
+  slug: string;
+  data: OnboardingData;
+  disabled: boolean;
+  onSent: () => void;
+}) {
+  const [pending, startTransition] = React.useTransition();
+  return (
+    <Button
+      variant="accent"
+      icon={Send}
+      loading={pending}
+      disabled={disabled}
+      onClick={() =>
+        startTransition(async () => {
+          // Save what is on screen first, so the client checks the latest answers.
+          const saved = await saveOnboardingStepAction(slug, "review", data as Record<string, unknown>, false);
+          if (!saved.ok) return void toast.error(saved.error);
+          const r = await sendOnboardingForReviewAction(slug);
+          if (r.ok) {
+            toast.success(r.message ?? "Sent.");
+            onSent();
+          } else toast.error(r.error);
+        })
+      }
+    >
+      Send to client to check
+    </Button>
+  );
+}
+
+/**
+ * Shown only to Threadline staff: fill the client's onboarding in with them on
+ * the kickoff call. Answers entered here are marked as filled on the call, and
+ * a call transcript can draft them (checked field by field; nothing is saved
+ * until you apply and move on).
+ */
+function StaffCallPanel({
+  slug,
+  orgName,
+  mode,
+  aiLive,
+  data,
+  onApply,
+}: {
+  slug: string;
+  orgName: string;
+  mode: string;
+  aiLive: boolean;
+  data: OnboardingData;
+  onApply: (draft: Partial<OnboardingData>) => void;
+}) {
+  const router = useRouter();
+  const [pending, startTransition] = React.useTransition();
+  const [open, setOpen] = React.useState(false);
+  const [transcript, setTranscript] = React.useState("");
+  const [draft, setDraft] = React.useState<Partial<OnboardingData> | null>(null);
+  const [picked, setPicked] = React.useState<Record<string, boolean>>({});
+
+  const show = (v: unknown) => (Array.isArray(v) ? v.join(" · ") : v === undefined || v === null || v === "" ? "—" : String(v));
+
+  const runDraft = () =>
+    startTransition(async () => {
+      const r = await draftOnboardingFromTranscriptAction(slug, transcript);
+      if (!r.ok) return void toast.error(r.error);
+      setDraft(r.data.draft);
+      // Pre-tick only answers that are still empty; never silently replace one.
+      setPicked(
+        Object.fromEntries(
+          Object.keys(r.data.draft).map((k) => {
+            const cur = data[k as keyof OnboardingData];
+            return [k, cur === undefined || cur === "" || (Array.isArray(cur) && cur.length === 0)];
+          }),
+        ),
+      );
+      toast.success(r.message ?? "Drafted.");
+    });
+
+  const changeMode = (next: string) =>
+    startTransition(async () => {
+      const r = await setOnboardingModeAction(slug, next);
+      if (r.ok) {
+        toast.success(r.message ?? "Saved.");
+        router.refresh();
+      } else toast.error(r.error);
+    });
+
+  return (
+    <div className="mb-8 rounded-lg border border-accent/40 bg-elevated p-4">
+      <p className="flex items-start gap-2 text-[13px] text-ink">
+        <Phone className="mt-0.5 size-4 shrink-0 text-accent" aria-hidden />
+        <span>
+          Staff view: you are filling this in for {orgName}. Jump to any section; answers you enter
+          are shown to the client as “From your call”.
+        </span>
+      </p>
+      <div className="mt-3 flex flex-wrap items-center gap-3">
+        <NativeSelect
+          aria-label="Who fills in onboarding"
+          value={mode}
+          disabled={pending}
+          onChange={(e) => changeMode(e.target.value)}
+          className="w-auto"
+        >
+          <option value="kickoff">Kickoff call: client does a short prep</option>
+          <option value="self">Client fills it all in alone</option>
+        </NativeSelect>
+        <Button size="sm" variant="ghost" icon={Sparkles} onClick={() => setOpen((o) => !o)}>
+          {open ? "Hide transcript draft" : "Draft from call transcript"}
+        </Button>
+      </div>
+
+      {open ? (
+        <div className="mt-4 space-y-3 border-t border-line pt-4">
+          {!aiLive ? (
+            <Notice tone="warning" title="Needs the Anthropic key">
+              Drafting from a transcript runs only with the live model (ANTHROPIC_API_KEY), which is not
+              set yet. Fill the answers in by hand for now.
+            </Notice>
+          ) : null}
+          <Field label="Call transcript" hint="Paste the transcript from your call recorder. Nothing is saved until you apply the answers you choose.">
+            <Textarea rows={8} value={transcript} onChange={(e) => setTranscript(e.target.value)} />
+          </Field>
+          <Button size="sm" icon={Sparkles} loading={pending} disabled={!aiLive || transcript.trim().length < 200} onClick={runDraft}>
+            Draft answers
+          </Button>
+
+          {draft && Object.keys(draft).length > 0 ? (
+            <div className="space-y-2">
+              <p className="text-[12px] text-faint">
+                Ticked answers replace what is on screen. Answers already filled in start unticked.
+              </p>
+              <ul className="divide-y divide-line rounded-md border border-line">
+                {Object.entries(draft).map(([k, v]) => (
+                  <li key={k} className="flex gap-3 px-3 py-2">
+                    <input
+                      type="checkbox"
+                      className="mt-1"
+                      checked={Boolean(picked[k])}
+                      onChange={(e) => setPicked((p) => ({ ...p, [k]: e.target.checked }))}
+                      aria-label={`Use the drafted ${ANSWER_LABELS[k as keyof OnboardingData]}`}
+                    />
+                    <div className="min-w-0 flex-1 text-[12.5px]">
+                      <p className="text-faint">{ANSWER_LABELS[k as keyof OnboardingData]}</p>
+                      <p className="whitespace-pre-wrap text-ink">{show(v)}</p>
+                      {show(data[k as keyof OnboardingData]) !== "—" ? (
+                        <p className="mt-1 text-ghost">Now: {show(data[k as keyof OnboardingData])}</p>
+                      ) : null}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              <Button
+                size="sm"
+                variant="accent"
+                onClick={() => {
+                  const chosen = Object.fromEntries(Object.entries(draft).filter(([k]) => picked[k]));
+                  onApply(chosen as Partial<OnboardingData>);
+                  setDraft(null);
+                }}
+              >
+                Apply ticked answers
+              </Button>
+            </div>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }

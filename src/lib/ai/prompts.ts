@@ -660,3 +660,36 @@ Draft the reply.
     temperature: 0.5,
   };
 }
+
+/* ------------------------- Onboarding from a call ------------------------- */
+
+/**
+ * Draft onboarding answers from a kickoff-call transcript. Output is a
+ * proposal for a person to check field by field before anything is saved.
+ */
+export function onboardingDraftPrompt(input: { transcript: string; fields: string }): PromptTemplate {
+  return {
+    key: "onboarding.draft",
+    system: `You help Threadline staff record a client's onboarding answers from their kickoff call.
+Use only what the client actually said in the transcript. Never infer, embellish or fill gaps:
+a field nobody spoke to is left out. Keep the client's own words where you can, especially for
+voice, beliefs, opinions and stories. Numbers only when the client stated them.
+
+${UNTRUSTED_RULE}
+
+${JSON_RULE}`,
+    user: `
+## FIELDS YOU MAY FILL
+Each line is: key (type): meaning. "list" means an array of short strings.
+${input.fields}
+
+## KICKOFF CALL TRANSCRIPT
+${input.transcript}
+
+## TASK
+Return {"fields": {...}} containing only the keys above that the client clearly answered.
+`.trim(),
+    maxTokens: 4000,
+    temperature: 0.1,
+  };
+}

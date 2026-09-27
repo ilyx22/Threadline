@@ -24,7 +24,7 @@ Recovery: an invitation expired or went astray → **Members → Invitations →
 
 ## 3. Onboarding and recording (client, operator)
 
-- The founder works through onboarding at their own pace; progress saves. Operators can prefill the Brand Brain; each section they write shows on the Brand Brain page as **waiting for your confirmation** until the client confirms it (editing a section also confirms it).
+- Onboarding runs on the kickoff call by default: the founder fills in only the business basics and access beforehand; the operator opens the client's onboarding on the call (staff banner: jump anywhere, never blocked, optional transcript draft that a person checks), then clicks **Send to client to check** on Review. The founder checks the answers marked **From your call**, corrects them and confirms, which builds the workspace. Staff can switch a client to **Client fills it all in alone** (the original flow, at their own pace; progress saves). Operators can prefill the Brand Brain; each section they write shows on the Brand Brain page as **waiting for your confirmation** until the client confirms it (editing a section also confirms it).
 - **Installation**: when every step is complete, the client admin **signs off installation** on the Installation page (it is refused while a step is open). Threadline records the agreed **early win** in words at kickoff and, when it happens, the date and what shows it.
 - Every change to the Brand Brain is kept as a version. Drafts written against an older version are listed on the Brand Brain page for a check; any version can be restored (as a new version).
 - Recording readiness problems appear at the top of the client's home screen until fixed.

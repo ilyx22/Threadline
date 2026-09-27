@@ -1522,6 +1522,12 @@ model OnboardingSession {
   completedSteps String    @default("[]") // JSON string[]
   data           String    @default("{}") // JSON OnboardingData
   status         String    @default("in_progress") // in_progress | building | complete
+  /// kickoff: the client does the short prep before the call and Threadline fills the rest with them on it; self: the client fills it all alone
+  mode              String    @default("kickoff")
+  /// JSON { field: "threadline" | "client" }: who last entered each answer
+  fieldSources      String    @default("{}")
+  /// Threadline finished the kickoff call and handed the answers to the client to check
+  sentForReviewAt   DateTime?
   startedAt      DateTime  @default(now())
   completedAt    DateTime?
   updatedAt      DateTime  @updatedAt

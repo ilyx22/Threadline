@@ -25,10 +25,49 @@ export async function runOnboarding(fx: Fixture) {
   const A = fx.alpha.id;
   await actAs(A_ADMIN);
 
+  section("onboarding — kickoff-call mode (the default)");
+  await prisma.onboardingSession.deleteMany({ where: { orgId: A } });
+  await attempt(() => Onboarding.goToOnboardingStepAction(ALPHA, "welcome"));
+  let k = await prisma.onboardingSession.findFirst({ where: { orgId: A } });
+  record("onboarding:kickoff", "a new session defaults to kickoff mode", k?.mode === "kickoff" ? "PASS" : "FAIL", `mode=${k?.mode}`);
+  await attempt(() => Onboarding.saveOnboardingStepAction(ALPHA, "business", { companyName: "Kickoff Co", description: "Prep answer" }, true));
+  k = await prisma.onboardingSession.findFirst({ where: { orgId: A } });
+  record("onboarding:kickoff", "client prep skips from business straight to access", k?.currentStep === "integrations" ? "PASS" : "FAIL", `current=${k?.currentStep}`);
+  await attempt(() => Onboarding.saveOnboardingStepAction(ALPHA, "integrations", {}, true));
+  k = await prisma.onboardingSession.findFirst({ where: { orgId: A } });
+  const early = await attempt(() => Onboarding.buildWorkspaceAction(ALPHA));
+  record("onboarding:kickoff", "after prep the client waits at the ready screen and cannot build before the call", k?.currentStep === "review" && early.outcome !== "ok" ? "PASS" : "FAIL", `current=${k?.currentStep} build=${early.outcome}`);
+  const clientMode = await attempt(() => Onboarding.setOnboardingModeAction(ALPHA, "self"));
+  const clientSend = await attempt(() => Onboarding.sendOnboardingForReviewAction(ALPHA));
+  record("onboarding:kickoff", "the client cannot change the mode or send for review", clientMode.outcome !== "ok" && clientSend.outcome !== "ok" ? "PASS" : "FAIL", `mode=${clientMode.outcome} send=${clientSend.outcome}`);
+  const clientDraft = await attempt(() => Onboarding.draftOnboardingFromTranscriptAction(ALPHA, "x".repeat(400)));
+  record("onboarding:kickoff", "the client cannot draft from a transcript", clientDraft.outcome !== "ok" ? "PASS" : "FAIL", `${clientDraft.outcome}`);
+
+  await actAs(OPERATOR);
+  const staffStep = await attempt(() => Onboarding.saveOnboardingStepAction(ALPHA, "offer", { offerName: "Said on the call" }, true));
+  k = await prisma.onboardingSession.findFirst({ where: { orgId: A } });
+  const src = JSON.parse(k?.fieldSources ?? "{}");
+  record("onboarding:kickoff", "staff on the call are not blocked by empty required fields, and their answers are marked", staffStep.outcome === "ok" && src.offerName === "threadline" && src.companyName === "client" ? "PASS" : "FAIL", `${staffStep.outcome} sources=${JSON.stringify(src)}`);
+  await attempt(() => Onboarding.saveOnboardingStepAction(ALPHA, "founder", { founderName: "Named on the call" }, false));
+  const draftNoKey = await attempt(() => Onboarding.draftOnboardingFromTranscriptAction(ALPHA, "The client said a lot of things about their business. ".repeat(10)));
+  record("onboarding:kickoff", "transcript drafting refuses honestly without the live model (nothing invented)", process.env.ANTHROPIC_API_KEY?.trim() ? "NA" : draftNoKey.outcome !== "ok" && /ANTHROPIC_API_KEY/.test((draftNoKey as { message?: string }).message ?? "") ? "PASS" : "FAIL", `${draftNoKey.outcome} ${(draftNoKey as { message?: string }).message?.slice(0, 60) ?? ""}`);
+  const sent = await attempt(() => Onboarding.sendOnboardingForReviewAction(ALPHA));
+  k = await prisma.onboardingSession.findFirst({ where: { orgId: A } });
+  const told = await prisma.notification.count({ where: { orgId: A, kind: "onboarding.review" } });
+  record("onboarding:kickoff", "staff send it back: client lands on Review and is notified", sent.outcome === "ok" && !!k?.sentForReviewAt && k.currentStep === "review" && told > 0 ? "PASS" : "FAIL", `${sent.outcome} sent=${!!k?.sentForReviewAt} current=${k?.currentStep} notified=${told}`);
+
+  await actAs(A_ADMIN);
+  await attempt(() => Onboarding.saveOnboardingStepAction(ALPHA, "business", { companyName: "Kickoff Co", description: "Corrected by the client" }, true));
+  k = await prisma.onboardingSession.findFirst({ where: { orgId: A } });
+  record("onboarding:kickoff", "after the call the client walks every section and their corrections are marked as theirs", k?.currentStep === "offer" && JSON.parse(k.fieldSources).description === "client" ? "PASS" : "FAIL", `current=${k?.currentStep}`);
+  await prisma.notification.deleteMany({ where: { orgId: A, kind: "onboarding.review" } });
+
   section("onboarding — step progression with founder-shaped input");
   await prisma.onboardingSession.deleteMany({ where: { orgId: A } });
   // Ensure a session exists the way the page would create it.
   const started = await attempt(() => Onboarding.goToOnboardingStepAction(ALPHA, "welcome"));
+  // This suite drives the original flow, where the client fills every section alone.
+  await prisma.onboardingSession.update({ where: { orgId: A }, data: { mode: "self" } });
   record("onboarding", "session starts", started.outcome === "ok" ? "PASS" : "FAIL", `${started.outcome} ${(started as { message?: string }).message ?? ""}`);
 
   const messy = {

@@ -13,4 +13,6 @@ Send what you already have. Nothing here needs to be written specially, and anyt
 - [ ] **Your approver:** who approves content, and a backup for when they're away.
 - [ ] **Who records:** who will be on camera or voice, if video is part of the plan.
 
-Upload files in your workspace (**Content → Library**), or send links. Most of the business questions are in the in-app onboarding; this list doesn't repeat them.
+Upload files in your workspace (**Content → Library**), or send links.
+
+**In your workspace, before the call (about 10 minutes):** the onboarding asks for only two short sections now, your **business basics** and **access**. The rest (offer, customers, story, voice, goals) is filled in with you on the kickoff call, so please don't write it up in advance; bring it to the conversation instead.

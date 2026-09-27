@@ -4,6 +4,8 @@
 
 The kickoff is a conversation, not homework. Threadline prefills the Brand Brain from what you've sent; this session corrects and deepens it.
 
+**How it runs:** before the call you only fill in your business basics and access. During the call Threadline has your onboarding open and types as you talk, so you never fill in the long form yourself. The call is recorded, and the transcript can be used to fill any gaps; every drafted answer is checked by a person before it's saved. Afterwards you get a notice to check it: answers we typed are marked **From your call**, you correct anything, then confirm, and your workspace is built.
+
 | Part | What we cover | Output |
 | --- | --- | --- |
 | 1. Business and economics | What you sell, to whom, what a good client is worth, how you win work today, capacity for more | Commercial baseline and start date recorded |
@@ -23,4 +25,4 @@ The kickoff is a conversation, not homework. Threadline prefills the Brand Brain
 
 **Optional:** the success-interview question (see the [welcome guide](WELCOME_GUIDE.md#proof-only-if-you-want-to)), with your answer recorded as YES, MAYBE or NO.
 
-After the session, everything Threadline wrote shows in the Brand Brain as **waiting for your confirmation** until you confirm it.
+After the session, you check and confirm the onboarding answers (about 10 minutes). Anything Threadline writes to the Brand Brain later shows as **waiting for your confirmation** until you confirm it.

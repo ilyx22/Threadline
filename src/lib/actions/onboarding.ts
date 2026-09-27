@@ -4,7 +4,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db/client";
 import { audit, touchOrg } from "@/lib/auth/audit";
-import { requireOrgAccess } from "@/lib/auth/guard";
+import { AuthError, requireOrgAccess } from "@/lib/auth/guard";
 import { generateIdeas } from "@/lib/ai/generators";
 import { parseWith, stringify, stringifyArray } from "@/lib/db/json";
 import { ideaPriority } from "@/lib/domain/scoring";
@@ -14,7 +14,19 @@ import {
   FIELD_LABELS,
   type OnboardingData,
   ONBOARDING_STEPS,
+  ONBOARDING_MODES,
+  cleanTranscriptDraft,
+  draftFieldList,
+  nextStepIn,
+  onboardingPhase,
+  trackSources,
+  type FieldSource,
+  type OnboardingMode,
 } from "@/lib/domain/onboarding";
+import { isLiveAi, runStructured } from "@/lib/ai";
+import { onboardingDraftPrompt } from "@/lib/ai/prompts";
+import { fence, neutralise } from "@/lib/ai/untrusted";
+import { notify } from "@/lib/notify";
 import { cleanText, cleanUrl, err, guarded, ok, okVoid, type ActionResult } from "./shared";
 
 /**
@@ -57,14 +69,23 @@ export async function saveOnboardingStepAction(
     }
 
     const merged: OnboardingData = { ...current, ...incoming.data };
+    const phase = onboardingPhase({ mode: session.mode, isStaff: ctx.isInternal, sentForReview: Boolean(session.sentForReviewAt) });
+    const sources = trackSources(
+      parseWith(session.fieldSources, z.record(z.string(), z.enum(["threadline", "client"])), {} as Record<string, FieldSource>),
+      current,
+      incoming.data,
+      ctx.isInternal ? "threadline" : "client",
+    );
 
     // Validate only when moving forward, so back-navigation never blocks.
-    const missing = advance ? missingFields(step, merged) : [];
+    // Staff filling it in on the call are never blocked: the conversation
+    // jumps around, and Review shows what is still empty.
+    const missing = advance && phase !== "call" ? missingFields(step, merged) : [];
     if (missing.length > 0) {
       // Save anyway — progress is never lost because a required field is blank.
       await prisma.onboardingSession.update({
         where: { orgId: ctx.org.id },
-        data: { data: stringify(merged) },
+        data: { data: stringify(merged), fieldSources: stringify(sources) },
       });
       return err(
         `Still needed: ${missing.map((f) => FIELD_LABELS[f as keyof OnboardingData] ?? f).join(", ")}.`,
@@ -78,13 +99,13 @@ export async function saveOnboardingStepAction(
     );
     if (advance) completed.add(step);
 
-    const { nextStep } = await import("@/lib/domain/onboarding");
-    const target = advance ? nextStep(step) : step;
+    const target = advance ? nextStepIn(phase, step) : step;
 
     await prisma.onboardingSession.update({
       where: { orgId: ctx.org.id },
       data: {
         data: stringify(merged),
+        fieldSources: stringify(sources),
         completedSteps: stringifyArray([...completed]),
         currentStep: target,
       },
@@ -140,6 +161,9 @@ export async function buildWorkspaceAction(
 
     if (!data.companyName || !data.founderName) {
       return err("Complete the earlier steps before building the workspace.", "workflow");
+    }
+    if (onboardingPhase({ mode: session.mode, isStaff: ctx.isInternal, sentForReview: Boolean(session.sentForReviewAt) }) === "prep") {
+      return err("The rest of onboarding is filled in with you on your kickoff call. Your workspace is built after that.", "workflow");
     }
 
     await prisma.onboardingSession.update({
@@ -621,5 +645,90 @@ export async function resetOnboardingAction(orgSlug: string): Promise<ActionResu
     revalidatePath(`/onboarding/${orgSlug}`);
 
     return okVoid("Onboarding restarted. Your answers were kept.");
+  });
+}
+
+/* ----------------------------- Kickoff-call mode ----------------------------- */
+
+async function requireStaffOnboarding(orgSlug: string) {
+  const ctx = await requireOrgAccess(orgSlug, "brain.edit");
+  if (!ctx.isInternal) throw new AuthError("Only Threadline staff can do this.");
+  return ctx;
+}
+
+/** Staff: choose whether the client fills onboarding alone or with us on the kickoff call. */
+export async function setOnboardingModeAction(orgSlug: string, mode: string): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireStaffOnboarding(orgSlug);
+    if (!ONBOARDING_MODES.includes(mode as OnboardingMode)) return err("Unknown onboarding mode.", "validation");
+    await loadSession(ctx.org.id);
+    await prisma.onboardingSession.update({ where: { orgId: ctx.org.id }, data: { mode } });
+    await audit(ctx, { action: "onboarding.mode", entityType: "organization", entityId: ctx.org.id, summary: mode === "kickoff" ? "Onboarding: filled in on the kickoff call" : "Onboarding: client fills it in alone" });
+    revalidatePath(`/onboarding/${orgSlug}`);
+    return okVoid(mode === "kickoff" ? "The client now does only the short prep; the rest is filled in on the call." : "The client now fills in every section alone.");
+  });
+}
+
+/**
+ * Staff, after the kickoff call: hand the answers to the client to check. They
+ * land on Review, see what was filled in on the call, and confirm (which builds
+ * the workspace).
+ */
+export async function sendOnboardingForReviewAction(orgSlug: string): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireStaffOnboarding(orgSlug);
+    const session = await loadSession(ctx.org.id);
+    const data = parseWith(session.data, onboardingDataSchema, EMPTY_DATA);
+    if (!data.companyName || !data.founderName) {
+      return err("Fill in at least the company and the founder before sending it to the client.", "workflow");
+    }
+    const now = new Date();
+    await prisma.onboardingSession.update({ where: { orgId: ctx.org.id }, data: { sentForReviewAt: now, currentStep: "review" } });
+    await notify({
+      orgId: ctx.org.id,
+      audience: { orgRole: "admins" },
+      kind: "onboarding.review",
+      title: "Check what we captured on your kickoff call",
+      body: "We filled in your onboarding with you on the call. Read it through, correct anything we got wrong, then confirm to build your workspace.",
+      href: `/onboarding/${orgSlug}`,
+      dedupeKey: `onboarding-review:${ctx.org.id}:${now.toISOString().slice(0, 10)}`,
+    });
+    await audit(ctx, { action: "onboarding.sent_for_review", entityType: "organization", entityId: ctx.org.id, summary: "Sent kickoff-call onboarding answers to the client to check" });
+    revalidatePath(`/onboarding/${orgSlug}`);
+    return okVoid("Sent. The client lands on Review and gets it in their daily email.");
+  });
+}
+
+/**
+ * Staff: draft answers from the kickoff-call transcript. Nothing is saved;
+ * the draft comes back for a person to accept field by field. Needs the live
+ * model: the demo composer never invents a client's answers.
+ */
+export async function draftOnboardingFromTranscriptAction(
+  orgSlug: string,
+  transcript: string,
+): Promise<ActionResult<{ draft: Partial<OnboardingData>; withheld: number }>> {
+  return guarded(async () => {
+    const ctx = await requireStaffOnboarding(orgSlug);
+    const text = String(transcript ?? "").trim();
+    if (text.length < 200) return err("Paste the call transcript (at least a few paragraphs).", "validation");
+    if (text.length > 150_000) return err("That transcript is too long. Paste the parts where the client talks about their business, customers, voice and goals.", "validation");
+    if (!isLiveAi()) {
+      return err("Drafting from a transcript needs the Anthropic key (ANTHROPIC_API_KEY), which is not set yet. Nothing was drafted; fill the answers in by hand for now.", "workflow");
+    }
+    const session = await loadSession(ctx.org.id);
+    const current = parseWith(session.data, onboardingDataSchema, EMPTY_DATA);
+    const clean = neutralise(text, 150_000);
+    const { data } = await runStructured(
+      onboardingDraftPrompt({ transcript: fence("call", clean.text), fields: draftFieldList() }),
+      { orgId: ctx.org.id, userId: ctx.user.id, kind: "onboarding.draft", timeoutMs: 180_000 },
+      (value) => {
+        const fields = (value as { fields?: unknown } | null)?.fields;
+        return fields && typeof fields === "object" ? { success: true as const, data: fields } : { success: false as const, error: "missing fields" };
+      },
+    );
+    const draft = cleanTranscriptDraft(data, current);
+    const n = Object.keys(draft).length;
+    return ok({ draft, withheld: clean.withheld }, n ? `Drafted ${n} answers. Check each one before applying.` : "Nothing new found in that transcript.");
   });
 }

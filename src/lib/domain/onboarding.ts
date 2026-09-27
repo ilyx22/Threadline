@@ -322,3 +322,124 @@ export function onboardingProgress(completedSteps: string[]) {
   const done = substantive.filter((k) => completedSteps.includes(k)).length;
   return Math.round((done / substantive.length) * 100);
 }
+
+/* ----------------------------- Kickoff-call mode ----------------------------- */
+
+/**
+ * Onboarding on the kickoff call (27 Sept 2026).
+ *
+ * In "kickoff" mode the client only does a short prep before the call (the
+ * business basics and what we can access); Threadline fills the rest with them
+ * on the call, then sends it back for the client to check and confirm. "self"
+ * is the original flow: the client fills every section alone.
+ */
+export type OnboardingMode = "kickoff" | "self";
+export const ONBOARDING_MODES: OnboardingMode[] = ["kickoff", "self"];
+
+/** Sections the client completes before the kickoff call. */
+export const CLIENT_PREP_STEPS: OnboardingStepKey[] = ["welcome", "business", "integrations"];
+
+export type OnboardingPhase = "prep" | "call" | "confirm" | "self";
+
+/**
+ * Who is looking and where the session stands decides what they see:
+ * - prep: the client before the call; only the prep sections, then a "ready for the call" screen.
+ * - call: Threadline staff, on or after the call; every section, jump anywhere.
+ * - confirm: the client after the call; every section, checked and confirmed at Review.
+ * - self: the client filling it alone.
+ */
+export function onboardingPhase(input: { mode: string; isStaff: boolean; sentForReview: boolean }): OnboardingPhase {
+  if (input.isStaff) return "call";
+  if (input.mode !== "kickoff") return "self";
+  return input.sentForReview ? "confirm" : "prep";
+}
+
+/** The steps this phase walks through, in order. */
+export function stepsForPhase(phase: OnboardingPhase): OnboardingStepKey[] {
+  if (phase === "prep") return [...CLIENT_PREP_STEPS, "review"];
+  return STEP_KEYS;
+}
+
+/** The next step within this phase. */
+export function nextStepIn(phase: OnboardingPhase, key: string): OnboardingStepKey {
+  const seq = stepsForPhase(phase);
+  const i = seq.indexOf(key as OnboardingStepKey);
+  if (i === -1) return nextStep(key);
+  return seq[Math.min(i + 1, seq.length - 1)]!;
+}
+
+/** Minutes the client spends before the kickoff call. */
+export function prepEstimateMinutes() {
+  return ONBOARDING_STEPS.filter((s) => (CLIENT_PREP_STEPS as string[]).includes(s.key)).reduce((a, s) => a + s.estimateMin, 0);
+}
+
+export type FieldSource = "threadline" | "client";
+
+function sameValue(a: unknown, b: unknown) {
+  return JSON.stringify(a ?? null) === JSON.stringify(b ?? null);
+}
+
+/** Record who entered each answer that changed in this save. */
+export function trackSources(
+  sources: Record<string, FieldSource>,
+  before: OnboardingData,
+  incoming: Partial<OnboardingData>,
+  by: FieldSource,
+): Record<string, FieldSource> {
+  const next = { ...sources };
+  for (const [key, value] of Object.entries(incoming)) {
+    if (!sameValue(before[key as keyof OnboardingData], value)) next[key] = by;
+  }
+  return next;
+}
+
+/**
+ * Clean a model's draft of onboarding answers taken from a call transcript:
+ * keep only known fields that parse, drop empty values, and never propose a
+ * value identical to what is already saved.
+ */
+export function cleanTranscriptDraft(raw: unknown, current: OnboardingData): Partial<OnboardingData> {
+  if (!raw || typeof raw !== "object") return {};
+  const out: Record<string, unknown> = {};
+  const shape = onboardingDataSchema.shape;
+  for (const [key, value] of Object.entries(raw as Record<string, unknown>)) {
+    if (!(key in shape)) continue;
+    let v: unknown = value;
+    if (typeof v === "string") v = v.trim();
+    if (Array.isArray(v)) v = v.filter((x) => typeof x === "string" && x.trim()).map((x) => (x as string).trim());
+    if (v === "" || v === null || v === undefined || (Array.isArray(v) && v.length === 0)) continue;
+    const parsed = shape[key as keyof typeof shape].safeParse(v);
+    if (!parsed.success || parsed.data === undefined) continue;
+    if (sameValue(current[key as keyof OnboardingData], parsed.data)) continue;
+    out[key] = parsed.data;
+  }
+  return out as Partial<OnboardingData>;
+}
+
+/** Plain labels for every answer, used when reviewing a transcript draft. */
+export const ANSWER_LABELS: Record<keyof OnboardingData, string> = {
+  companyName: "Company name", website: "Website", industry: "Industry", geography: "Geography", description: "What the company does", teamSize: "Team size", revenueRange: "Revenue range",
+  offerName: "Offer name", offerPrice: "Offer price", offerPriceModel: "Pricing model", offerMechanism: "How the offer works", offerOutcome: "The outcome you deliver", offerDifferentiators: "Differentiators", offerGuarantee: "Guarantee", offerCtas: "Calls to action", offerExclusions: "What is not included",
+  icpName: "Who you serve", icpDescription: "Customer description", icpFirmographics: "Company profile", icpPains: "Their pains", icpDesires: "What they want", icpObjections: "Their objections", icpTriggers: "Buying triggers", icpSophistication: "How much they already know",
+  founderName: "Founder name", founderTitle: "Founder title", founderBio: "Founder background", founderExperience: "Experience", founderBeliefs: "Beliefs", founderOpinions: "Opinions", founderStories: "Stories", founderCredentials: "Credentials",
+  voiceTone: "Tone", voiceVocabulary: "Vocabulary", voiceStructure: "Structure", voiceHumour: "Humour", voicePhrasesUsed: "Phrases they use", voicePhrasesAvoided: "Phrases to avoid", voiceSoundsLikeMe: "Sounds like me", voiceNotMe: "Not me",
+  bestContent: "Best content", worstContent: "Content that fell flat", admiredContent: "Content they admire",
+  competitors: "Competitors", monitoredAccounts: "Accounts to watch", customerQuestions: "Customer questions",
+  whoResearches: "Who researches", whoIdeates: "Who comes up with ideas", whoScripts: "Who scripts", whoRecords: "Who records", whoEdits: "Who edits", whoApproves: "Who approves", whoPublishes: "Who publishes", whoAnalyses: "Who analyses",
+  hoursPerWeek: "Founder hours per week", peopleInvolved: "People involved", monthlySpend: "Monthly spend", monthlyOutput: "Pieces per 4-week period", turnaroundDays: "Turnaround in days",
+  targetPlatforms: "Target platforms", targetCadence: "Posts per week", businessObjectives: "Business objectives", contentPillars: "Content pillars", bannedTopics: "Banned topics", complianceNotes: "Compliance notes",
+  attentionToInquiry: "How attention becomes an inquiry", leadMagnets: "Lead magnets", bookingUrl: "Booking link", averageDealValue: "Average deal value",
+  requestedIntegrations: "Requested integrations", integrationNotes: "Access notes",
+  proofItems: "Proof",
+};
+
+/** The answer fields a transcript draft may fill, one per line, for the prompt. */
+export function draftFieldList() {
+  return Object.entries(onboardingDataSchema.shape)
+    .map(([key, schema]) => {
+      const inner = schema instanceof z.ZodOptional ? schema.unwrap() : schema;
+      const type = inner instanceof z.ZodArray ? "list" : inner instanceof z.ZodNumber ? "number" : "text";
+      return `${key} (${type}): ${ANSWER_LABELS[key as keyof OnboardingData]}`;
+    })
+    .join("\n");
+}

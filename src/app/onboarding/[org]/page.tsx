@@ -4,7 +4,8 @@ import { requireOrgPage } from "@/lib/auth/guard";
 import { prisma } from "@/lib/db/client";
 import { parseWith } from "@/lib/db/json";
 import { z } from "zod";
-import { onboardingDataSchema } from "@/lib/domain/onboarding";
+import { onboardingDataSchema, onboardingPhase, type FieldSource } from "@/lib/domain/onboarding";
+import { isLiveAi } from "@/lib/ai";
 import { OnboardingFlow } from "./onboarding-flow";
 
 export const metadata: Metadata = {
@@ -30,6 +31,8 @@ export default async function OnboardingPage({ params }: { params: Promise<{ org
 
   const data = parseWith(session.data, onboardingDataSchema, onboardingDataSchema.parse({}));
   const completed = parseWith(session.completedSteps, z.array(z.string()), [] as string[]);
+  const fieldSources = parseWith(session.fieldSources, z.record(z.string(), z.enum(["threadline", "client"])), {} as Record<string, FieldSource>);
+  const phase = onboardingPhase({ mode: session.mode, isStaff: ctx.isInternal, sentForReview: Boolean(session.sentForReviewAt) });
 
   return (
     <OnboardingFlow
@@ -39,6 +42,10 @@ export default async function OnboardingPage({ params }: { params: Promise<{ org
       currentStep={session.currentStep}
       completedSteps={completed}
       data={data}
+      phase={phase}
+      mode={session.mode}
+      fieldSources={fieldSources}
+      aiLive={ctx.isInternal && isLiveAi()}
     />
   );
 }

@@ -67,6 +67,9 @@ export class MockProvider implements AiProvider {
         return JSON.stringify({ items: buildMined(ctx) });
       case "corpus.analyse":
         return JSON.stringify(buildExampleAnalysis(ctx));
+      case "onboarding.draft":
+        // The demo composer never invents a client's answers.
+        return JSON.stringify({ fields: {} });
       case "judge.evaluate":
         return JSON.stringify({ scores: buildJudgeScores(ctx) });
       default:
