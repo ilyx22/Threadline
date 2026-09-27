@@ -123,6 +123,9 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   // AI
   if (!set(env, "ANTHROPIC_API_KEY")) add("warning", "ANTHROPIC_API_KEY", "Not set: generation runs in labelled mock mode.");
 
+  // CRM: Attio is optional to run the app, but until it is connected nothing reaches the CRM.
+  if (e === "production" && !set(env, "ATTIO_API_KEY")) add("warning", "ATTIO_API_KEY", "Not set: CRM updates and client relationship tasks wait in the queue and do not reach Attio.");
+
   // Billing (BIL-02): test mode only in this build.
   if (set(env, "STRIPE_SECRET_KEY") && !(env.STRIPE_SECRET_KEY ?? "").startsWith("sk_test_")) add("error", "STRIPE_SECRET_KEY", "Is not a test-mode key; live billing needs an explicit owner decision.");
   if (set(env, "STRIPE_SECRET_KEY") && !set(env, "STRIPE_WEBHOOK_SECRET")) add("warning", "STRIPE_WEBHOOK_SECRET", "Not set: Stripe payments will not be recorded automatically.");

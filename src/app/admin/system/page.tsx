@@ -32,6 +32,9 @@ export default async function SystemPage() {
     strandedWork(),
     prisma.auditLog.findMany({ orderBy: { createdAt: "desc" }, take: 20, select: { id: true, action: true, summary: true, createdAt: true } }),
   ]);
+  // Attio stays visibly pending until its key is set (owner decision, 27 Sept 2026).
+  const attioConnected = Boolean(process.env.ATTIO_API_KEY?.trim());
+  const heldTouches = await prisma.relationshipTouch.count({ where: { status: "planned", attioTaskId: null } });
   const [suppressed, uncertain, processingFailed, load] = await Promise.all([
     prisma.emailSuppression.findMany({ where: { liftedAt: null }, orderBy: { createdAt: "desc" }, take: 50 }),
     prisma.publishRecord.findMany({ where: { providerStatus: "UNCERTAIN" }, select: { id: true, platform: true, org: { select: { name: true, slug: true } } }, take: 50 }),
@@ -83,7 +86,16 @@ export default async function SystemPage() {
       </Card>
 
       <Card>
-        <CardHeader title="CRM sync" description={crm.length ? `${crm.length} change(s) not yet in the CRM.` : "Everything is in the CRM."} />
+        <CardHeader
+          title="CRM sync"
+          description={
+            !attioConnected
+              ? `Attio is not connected (ATTIO_API_KEY is not set). Nothing reaches the CRM yet: ${crm.length} change(s) and ${heldTouches} relationship task(s) are waiting and will sync once the key is set and one real record has been tested.`
+              : crm.length || heldTouches
+                ? `${crm.length} change(s) and ${heldTouches} relationship task(s) not yet in the CRM.`
+                : "Everything is in the CRM."
+          }
+        />
         <CardBody className="space-y-2 pt-0">
           {crm.map((c) => (
             <div key={c.id} className="flex flex-wrap items-center gap-2 text-[12.5px]">
