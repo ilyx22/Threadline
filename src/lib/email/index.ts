@@ -1,5 +1,6 @@
 import "server-only";
 import { prisma } from "@/lib/db/client";
+import { envChoice } from "@/lib/env";
 import { isSuppressed } from "./delivery";
 import { renderTemplate, type EmailTemplateKey, type TemplateInput } from "./templates";
 
@@ -62,10 +63,10 @@ let provider: EmailProvider | null = null;
 
 export function configuredEmailProvider(): EmailProvider {
   if (provider) return provider;
-  const mode = process.env.EMAIL_PROVIDER ?? "capture";
+  const mode = envChoice(process.env.EMAIL_PROVIDER, "capture");
   if (mode === "resend") {
-    const key = process.env.RESEND_API_KEY;
-    const from = process.env.EMAIL_FROM;
+    const key = process.env.RESEND_API_KEY?.trim();
+    const from = process.env.EMAIL_FROM?.trim();
     if (!key || !from) throw new Error("EMAIL_PROVIDER=resend needs RESEND_API_KEY and EMAIL_FROM");
     provider = resendProvider(key, from);
   } else {
@@ -80,8 +81,8 @@ export function __setEmailProvider(next: EmailProvider | null) {
 }
 
 /** Whether real delivery is configured — surfaced in the UI so nobody waits for an email that was only captured. */
-export function emailDeliveryConfigured() {
-  return (process.env.EMAIL_PROVIDER ?? "capture") !== "capture";
+export function emailDeliveryConfigured(env: Record<string, string | undefined> = process.env) {
+  return envChoice(env.EMAIL_PROVIDER, "capture") !== "capture";
 }
 
 export async function sendEmail<K extends EmailTemplateKey>(input: {

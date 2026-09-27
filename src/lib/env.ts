@@ -17,6 +17,15 @@ export type AppEnv = "production" | "preview" | "development" | "test";
 type Env = Record<string, string | undefined>;
 const set = (env: Env, k: string) => Boolean((env[k] ?? "").trim());
 
+/**
+ * A provider or mode setting (EMAIL_PROVIDER, STORAGE_PROVIDER, ...). Hosting
+ * dashboards happily save empty values, and `??` alone would treat "" as a
+ * choice, so blank and whitespace-only count as unset and get the default.
+ */
+export function envChoice(value: string | undefined, fallback: string): string {
+  return (value ?? "").trim() || fallback;
+}
+
 export function appEnv(env: Env = process.env): AppEnv {
   const v = (env.APP_ENV ?? env.VERCEL_ENV ?? env.NODE_ENV ?? "development").trim();
   return v === "production" || v === "preview" || v === "test" ? v : "development";
@@ -65,7 +74,7 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   if (!set(env, "CREDENTIAL_ENCRYPTION_KEYS")) add(e === "production" ? "error" : "warning", "CREDENTIAL_ENCRYPTION_KEYS", "Not set; no integration credential, webhook secret or staff two-factor secret can be stored.");
 
   // Email
-  const email = env.EMAIL_PROVIDER ?? "capture";
+  const email = envChoice(env.EMAIL_PROVIDER, "capture");
   if (email === "resend") {
     if (!set(env, "RESEND_API_KEY")) add("error", "RESEND_API_KEY", "EMAIL_PROVIDER=resend but no API key.");
     if (!set(env, "EMAIL_FROM")) add("error", "EMAIL_FROM", "EMAIL_PROVIDER=resend but no sender address.");
@@ -75,7 +84,7 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   }
 
   // Storage
-  const storage = env.STORAGE_PROVIDER ?? "local";
+  const storage = envChoice(env.STORAGE_PROVIDER, "local");
   if (storage === "s3") {
     for (const k of ["S3_BUCKET", "S3_REGION", "S3_ENDPOINT", "S3_ACCESS_KEY_ID", "S3_SECRET_ACCESS_KEY"]) if (!set(env, k)) add("error", k, "STORAGE_PROVIDER=s3 but this is missing.");
   } else if (onVercel && deployed) {
@@ -83,12 +92,13 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   }
 
   // Media processing (FILE-05)
-  if ((env.PROCESSING_PROVIDER ?? "none") === "webhook") {
+  const processing = envChoice(env.PROCESSING_PROVIDER, "none");
+  if (processing === "webhook") {
     if (!/^https:\/\//.test(env.PROCESSING_ENDPOINT ?? "")) add("error", "PROCESSING_ENDPOINT", "PROCESSING_PROVIDER=webhook but no https endpoint.");
     if ((env.PROCESSING_WEBHOOK_SECRET ?? "").length < 16) add("error", "PROCESSING_WEBHOOK_SECRET", "PROCESSING_PROVIDER=webhook but the shared secret is missing or shorter than 16 characters.");
     if (storage !== "s3") add("error", "PROCESSING_PROVIDER", "Needs STORAGE_PROVIDER=s3: the worker fetches files with a signed storage URL.");
   }
-  if (env.PROCESSING_SCAN === "true" && (env.PROCESSING_PROVIDER ?? "none") !== "webhook") add("error", "PROCESSING_SCAN", "Scanning is on but no processing worker is configured, so files would wait unscanned forever.");
+  if (env.PROCESSING_SCAN === "true" && processing !== "webhook") add("error", "PROCESSING_SCAN", "Scanning is on but no processing worker is configured, so files would wait unscanned forever.");
   if (e === "production" && env.PROCESSING_SCAN !== "true") add("warning", "PROCESSING_SCAN", "Uploaded files are not malware-scanned. Configure a processing worker with a scanner and set PROCESSING_SCAN=true.");
 
   // Optional external research provider (Apify). Off unless approved.
@@ -98,7 +108,7 @@ export function configReport(env: Env = process.env): { env: AppEnv; issues: Con
   }
 
   // Rate limiting and client IP
-  const rl = env.RATE_LIMIT_STORE ?? "memory";
+  const rl = envChoice(env.RATE_LIMIT_STORE, "memory");
   if (rl === "redis") {
     for (const k of ["RATE_LIMIT_REDIS_URL", "RATE_LIMIT_REDIS_TOKEN"]) if (!set(env, k)) add("error", k, "RATE_LIMIT_STORE=redis but this is missing.");
   } else if (deployed && onVercel) {

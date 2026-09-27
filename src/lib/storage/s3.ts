@@ -27,7 +27,8 @@ export type S3Config = {
 };
 
 export function s3ConfigFromEnv(env: NodeJS.ProcessEnv = process.env): S3Config | null {
-  const { S3_BUCKET, S3_REGION, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, S3_ENDPOINT } = env;
+  const v = (k: string) => (env[k] ?? "").trim();
+  const [S3_BUCKET, S3_REGION, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, S3_ENDPOINT] = ["S3_BUCKET", "S3_REGION", "S3_ACCESS_KEY_ID", "S3_SECRET_ACCESS_KEY", "S3_ENDPOINT"].map(v);
   if (!S3_BUCKET || !S3_REGION || !S3_ACCESS_KEY_ID || !S3_SECRET_ACCESS_KEY || !S3_ENDPOINT) return null;
   return { bucket: S3_BUCKET, region: S3_REGION, accessKeyId: S3_ACCESS_KEY_ID, secretAccessKey: S3_SECRET_ACCESS_KEY, endpoint: S3_ENDPOINT.replace(/\/$/, ""), forcePathStyle: env.S3_FORCE_PATH_STYLE !== "false" };
 }

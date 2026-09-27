@@ -8,6 +8,8 @@ Legend for "Blocks": **First client** means the first real client cannot be onbo
 
 Evidence and reasoning: `docs/implementation/DEPLOYMENT_INVESTIGATION.md`. The canonical production project is **`threadline`** (https://threadline-fawn.vercel.app). `threadlinex` builds the same branch.
 
+**Checked live on 27 September 2026:** both projects hold the same 28 variables, saved **blank** on 12 September and scoped "Production and Preview". The runtime log confirms `DATABASE_URL` resolves to an empty string. A blank value counts as unset. Edit each existing variable (⋯ → Edit), paste the value, and untick **Preview** so previews never share production secrets. Never put real values on `threadlinex`. Remove `SEED_DEMO_PASSWORD`, `SESSION_SECRET` (unused), `STORAGE_ROOT`, `JOBS_POLL_MS`, `RATE_LIMIT_FAIL_OPEN`, and the blank LinkedIn/YouTube placeholders from `threadline`.
+
 | What | Exact setting | Where | Verify | Blocks |
 | --- | --- | --- | --- | --- |
 | Mark the canonical project | `DEPLOYMENT_ROLE` = `primary` (Production) | Vercel → `threadline` → Settings → Environment Variables | `/api/health` shows no DEPLOYMENT_ROLE warning | First client |
@@ -22,8 +24,8 @@ Every database, cron and key setting below goes on **`threadline`**. `threadline
 | What | Why | Exact setting | Where | Verify | Cost / gate | Blocks |
 | --- | --- | --- | --- | --- | --- | --- |
 | A managed PostgreSQL database (Neon recommended; the code is standard PostgreSQL) | Vercel's filesystem is read-only, so nothing persists today; the app is built for PostgreSQL | Create a project in the EU (London or Frankfurt). Copy the **pooled** connection string and the **direct** one | `DATABASE_URL` = pooled URL, `DIRECT_URL` = direct URL (Production). A **separate** Neon branch for Preview | `https://<site>/api/health` shows `"database": true` | Free tier suffices for the first clients | First client |
-| Run the migrations once | Creates the 97 tables | From a machine with the direct URL: `DATABASE_URL=<direct> DIRECT_URL=<direct> npx prisma migrate deploy` | Terminal | `npx prisma migrate status` reports "Database schema is up to date" | None | First client |
-| Point-in-time recovery | Recovery from mistakes | Neon: keep history retention at 7 days or more | Neon console | `npm run db:drill` against a Neon branch passes | Included / paid by retention | First client |
+| Run the migrations once | Applies all 31 migrations (the full schema) | Put `DIRECT_URL='<direct>'` in the git-ignored `.env.activation.local` (Next.js does not load it), then: `set -a; . ./.env.activation.local; set +a; export DATABASE_URL="$DIRECT_URL"; npm run db:deploy`. See `docs/launch-pack/sprint/ACTIVATION_RUNBOOK.md` §1 | Terminal | `npx prisma migrate status` reports "Database schema is up to date" | None | First client |
+| Point-in-time recovery | Recovery from mistakes | Neon: keep history retention at 7 days or more | Neon console | `npm run db:drill` against a Neon branch passes | The Free plan's restore window is shorter than 7 days; 7+ days needs a paid plan (owner billing decision, D-03) | First client |
 | Recovery objectives | How much data you can afford to lose, and how fast you must be back | Decide RPO (e.g. 24 h) and RTO (e.g. 4 h) | Tell the maintainer; recorded in TECHNICAL_HANDOFF.md | — | Decision | Advisory |
 
 ## 2. Security keys (blocks first client)
@@ -39,7 +41,7 @@ Every database, cron and key setting below goes on **`threadline`**. `threadline
 
 | What | Why | Exact setting | Where | Verify | Cost / gate | Blocks |
 | --- | --- | --- | --- | --- | --- | --- |
-| Resend account and a verified sending domain | Invitations, confirmations, reports; without it links are shown on screen for you to send by hand | Verify `threadline.<your domain>` with the DNS records Resend gives you | `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM="Threadline <hello@yourdomain>"` | Send yourself an invitation from Members; it arrives | Free tier: 3,000 emails/month | First client (manual links work meanwhile) |
+| Resend account and a verified sending domain | Invitations, confirmations, reports; without it links are shown on screen for you to send by hand | Verify `mail.threadlinehq.com` with the DNS records Resend gives you (keep the Google Workspace MX/SPF/DKIM/DMARC) | `EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, `EMAIL_FROM="Threadline <hello@mail.threadlinehq.com>"`. The sender's domain **must** be the verified domain | Send yourself an invitation from Members; it arrives | Free tier: 3,000 emails/month | First client (manual links work meanwhile) |
 | Where application alerts go | You hear about new applications | Your inbox address | `OPS_NOTIFY_EMAIL` | Submit a test application on /apply | None | Advisory |
 | Resend delivery webhook | Bounces and spam complaints stop further mail to that address | In Resend → Webhooks, add `https://<site>/api/email/resend` for delivered, delivery delayed, bounced, complained; copy its signing secret | `RESEND_WEBHOOK_SECRET` | Suppressed addresses appear on Admin → System after a test bounce | Included | Advisory |
 

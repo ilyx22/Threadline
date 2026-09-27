@@ -1,5 +1,6 @@
 import "server-only";
 import { headers } from "next/headers";
+import { envChoice } from "@/lib/env";
 import { clientIpFrom } from "./client-ip";
 
 /**
@@ -106,7 +107,7 @@ let store: RateLimitStore | null = null;
 
 export function configuredStore(): RateLimitStore {
   if (store) return store;
-  const mode = process.env.RATE_LIMIT_STORE ?? "memory";
+  const mode = envChoice(process.env.RATE_LIMIT_STORE, "memory");
   if (mode === "redis") {
     const url = process.env.RATE_LIMIT_REDIS_URL;
     const token = process.env.RATE_LIMIT_REDIS_TOKEN;

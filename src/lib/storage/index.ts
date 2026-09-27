@@ -2,6 +2,7 @@ import "server-only";
 import { createHash, randomUUID } from "node:crypto";
 import fs from "node:fs/promises";
 import path from "node:path";
+import { envChoice } from "@/lib/env";
 import { ACCEPTED, contentProblem } from "./sniff";
 
 /**
@@ -268,7 +269,7 @@ let adapter: StorageAdapter | null = null;
  */
 export function getStorage(): StorageAdapter {
   if (adapter) return adapter;
-  const provider = process.env.STORAGE_PROVIDER ?? "local";
+  const provider = envChoice(process.env.STORAGE_PROVIDER, "local");
   if (provider === "s3") {
     // Lazy import keeps the local path free of the signer.
     // eslint-disable-next-line @typescript-eslint/no-require-imports
