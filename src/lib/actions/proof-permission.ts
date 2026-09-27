@@ -7,6 +7,7 @@ import { requireOrgAccess } from "@/lib/auth/guard";
 import { audit } from "@/lib/auth/audit";
 import { flagWithdrawnPlacements, recordPlacement, PROOF_PERMISSIONS } from "@/lib/proof/placements";
 import { checkbox, cleanText, err, guarded, okVoid, parseForm, type ActionResult } from "./shared";
+import { PERMISSION_KEYS } from "@/lib/proof/permission-labels";
 
 /**
  * Testimonial / proof permissions.
@@ -18,7 +19,6 @@ import { checkbox, cleanText, err, guarded, okVoid, parseForm, type ActionResult
  * positive outcome — never by the calendar.
  */
 
-const PERMISSION_KEYS = ["allowInterview", "allowInternalUse", "allowTestimonial", "allowPublicTestimonial", "allowNamedCaseStudy", "allowAnonCaseStudy", "allowPublishMetrics", "allowLogo"] as const;
 
 const willingnessSchema = z.object({ interviewWillingness: z.enum(["unknown", "yes", "maybe", "no"]) });
 
@@ -92,17 +92,6 @@ export async function requestTestimonialAction(orgSlug: string): Promise<ActionR
     return okVoid("Recorded. Make the ask personally; the system only records that it is now appropriate.");
   });
 }
-
-export const PROOF_PERMISSION_LABELS: Record<(typeof PERMISSION_KEYS)[number], string> = {
-  allowInterview: "Take part in a success interview",
-  allowInternalUse: "Threadline may use the outcome internally (calibration, training)",
-  allowTestimonial: "A written testimonial, shown privately to prospects",
-  allowPublicTestimonial: "A public testimonial on threadline.com",
-  allowNamedCaseStudy: "A named case study",
-  allowAnonCaseStudy: "An anonymised case study",
-  allowPublishMetrics: "Publish specific numbers",
-  allowLogo: "Show the company logo",
-};
 
 const placementSchema = z.object({ permission: z.enum(PROOF_PERMISSIONS), content: z.string().trim().min(3).max(2000), location: z.string().trim().min(3).max(500), evidence: z.string().max(500).optional() });
 

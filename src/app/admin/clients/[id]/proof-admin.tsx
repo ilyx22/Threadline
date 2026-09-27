@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Field } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/input";
 import { toast } from "@/components/ui/toast";
-import { confirmSuccessAction, requestTestimonialAction, PROOF_PERMISSION_LABELS } from "@/lib/actions/proof-permission";
+import { confirmSuccessAction, requestTestimonialAction } from "@/lib/actions/proof-permission";
+import { PROOF_PERMISSION_LABELS } from "@/lib/proof/permission-labels";
 import type { ProofPermissionView } from "@/components/app/proof-permissions";
 
 /** Operator side: confirm a positive outcome, then (and only then) record that a testimonial ask is appropriate. */

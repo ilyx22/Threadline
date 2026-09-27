@@ -5,7 +5,8 @@ import { CheckboxField } from "@/components/ui/controls";
 import { Field } from "@/components/ui/field";
 import { NativeSelect, Textarea } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { grantProofPermissionsAction, setInterviewWillingnessAction, PROOF_PERMISSION_LABELS } from "@/lib/actions/proof-permission";
+import { grantProofPermissionsAction, setInterviewWillingnessAction } from "@/lib/actions/proof-permission";
+import { PROOF_PERMISSION_LABELS } from "@/lib/proof/permission-labels";
 
 export type ProofPermissionView = {
   interviewWillingness: string;
