@@ -172,7 +172,7 @@ These rules follow `docs/design/ART_DIRECTION_2026-09-25.md`, which is itself st
 
 **Name the buyer before the promise, and name the wedge, not the umbrella.** "Expert-led B2B" is the umbrella category, not a validated niche. The initial wedge (a hypothesis, configurable per campaign) is founder- or principal-led AI transformation, AI strategy, fractional CAIO and specialist AI advisory firms (GTM SOP §25), for example "For founder-led AI advisory firms".
 
-**Content mix vocabulary:** PESTO = **Personal, Expertise, Social proof, Trending, Opinions**, after Marcos Ruiz (Vantage), per the transcript the owner supplied. It is a mix weighted to each client's evidence, not an equal split, and never a licence to invent a story or proof.
+**Content mix vocabulary:** PESTO = **Personal, Expertise, Social proof, Trending, Opinions**, after Marcos Ruiz (Birdhouse), per the transcript the owner supplied. It is a mix weighted to each client's evidence, not an equal split, and never a licence to invent a story or proof.
 
 **Canonical lines** (use them word for word):
 - "We are not trying to make you famous. We are trying to make you familiar to the people who matter."

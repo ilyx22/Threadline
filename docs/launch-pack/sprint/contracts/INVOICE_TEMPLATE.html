@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Invoice {{invoice_number}} · Threadline</title>
+<!--
+  Due date = issue date + 14 days. Delete line items that do not apply (the app issues implementation and each period as separate invoices).
+  Threadline invoice template (DRAFT v0.1, 26 September 2026). Not reviewed by an accountant or solicitor.
+  Replace every {{placeholder}}. Keep only the line items that apply (implementation, one service period, or split instalment).
+  Terms: payable within 14 days of the issue date (matches src/lib/billing/invoices.ts paymentTermsDays default).
+  Fees are "every four weeks" (28-day service periods). Never write "monthly".
+  VAT: show the VAT row and VAT number only if Threadline is VAT registered (owner decision C-12); otherwise keep the "not registered" note.
+  A UK invoice should show: a unique sequential number, the supplier's name and address, the customer's name and address,
+  the issue date, a description of what is supplied, the amount, and (if VAT registered) the VAT number, rate and VAT amount.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="../../brand-kit/templates/_brand.css">
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: #fff; color: var(--tl-ink); font: 400 10pt/1.5 var(--tl-sans); }
+  .page { width: 210mm; height: 297mm; overflow: hidden; padding: 15mm 18mm 12mm; margin: 0 auto; background: #fff; display: flex; flex-direction: column; }
+  header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 6mm; border-bottom: 2px solid var(--tl-gold); }
+  header img { height: 8mm; display: block; }
+  header .from { text-align: right; font-size: 8.5pt; line-height: 1.5; color: var(--tl-ink-soft); }
+  header .from strong { color: var(--tl-ink); font-weight: 600; }
+  .title { display: flex; justify-content: space-between; align-items: flex-end; margin: 7mm 0 5mm; }
+  h1 { margin: 0; font: 400 30pt/1 var(--tl-serif); letter-spacing: -.01em; }
+  .status { display: inline-block; padding: 1mm 3mm; border-radius: 99px; background: var(--tl-sky); font-size: 8pt; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+  .label { font-size: 7.5pt; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--tl-ink-faint); margin-bottom: 1.5mm; }
+  .billto { font-size: 9.5pt; line-height: 1.55; }
+  .billto strong { font-weight: 600; }
+  dl.meta { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 1.2mm 4mm; font-size: 9pt; }
+  dl.meta dt { color: var(--tl-ink-faint); }
+  dl.meta dd { margin: 0; font-weight: 500; text-align: right; font-variant-numeric: tabular-nums; }
+  dl.meta dd.due { color: var(--tl-ink); font-weight: 700; }
+  table { width: 100%; border-collapse: collapse; margin: 7mm 0 0; font-size: 9.5pt; }
+  th { text-align: left; font-size: 7.5pt; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--tl-ink-faint); border-bottom: 1px solid var(--tl-ink); padding: 0 3mm 2mm 0; }
+  td { border-bottom: 1px solid var(--tl-line); padding: 2.4mm 3mm 2.4mm 0; vertical-align: top; }
+  td .sub { display: block; font-size: 8.5pt; color: var(--tl-ink-faint); margin-top: .6mm; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; padding-right: 0; }
+  tr.optional td { color: var(--tl-ink-soft); }
+  .totals { margin-left: auto; width: 82mm; margin-top: 3mm; font-size: 9.5pt; }
+  .totals div { display: flex; justify-content: space-between; padding: 1.6mm 0; border-bottom: 1px solid var(--tl-line); font-variant-numeric: tabular-nums; }
+  .totals .vatnote { font-size: 8pt; color: var(--tl-ink-faint); border-bottom: 0; }
+  .totals .grand { border-bottom: 0; border-top: 1px solid var(--tl-ink); margin-top: 1mm; padding-top: 3mm; font: 400 18pt/1 var(--tl-serif); }
+  .pay { margin-top: 6mm; display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; }
+  .box { padding: 4.5mm 5mm; border-radius: 3mm; background: var(--tl-canvas); font-size: 9pt; line-height: 1.6; }
+  .box.paper { background: var(--tl-paper); border-left: 2px solid var(--tl-gold); border-radius: 0 3mm 3mm 0; }
+  .box a { color: var(--tl-action); text-decoration: none; font-weight: 600; word-break: break-all; }
+  .box dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: .6mm 4mm; }
+  .box dt { color: var(--tl-ink-faint); } .box dd { margin: 0; font-weight: 500; }
+  .terms { margin-top: 5mm; font-size: 8.5pt; color: var(--tl-ink-soft); line-height: 1.6; }
+  .terms p { margin: 0 0 1.6mm; }
+  footer { margin-top: auto; padding-top: 4mm; border-top: 1px solid var(--tl-line); display: flex; justify-content: space-between; gap: 6mm; font-size: 7.5pt; color: var(--tl-ink-faint); }
+  footer span:last-child { white-space: nowrap; }
+  @media print { .page { margin: 0; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <img src="../../brand-kit/logo/svg/threadline-lockup-light.svg" alt="Threadline">
+    <div class="from">
+      <strong>{{threadline_legal_entity}}</strong><br>
+      {{threadline_address_line_1}}, {{threadline_address_line_2}}<br>
+      {{threadline_postcode}} · {{company_number_if_any}}<br>
+      {{billing_email}}
+    </div>
+  </header>
+
+  <div class="title">
+    <h1>Invoice</h1>
+    <span class="status">{{Issued / Paid}}</span>
+  </div>
+
+  <div class="grid">
+    <div>
+      <div class="label">Billed to</div>
+      <div class="billto">
+        <strong>{{client_legal_name}}</strong><br>
+        Company number {{client_company_number}}<br>
+        {{client_address_line_1}}, {{client_address_line_2}}<br>
+        {{client_postcode}}<br>
+        Attn: {{client_billing_name}} · {{client_billing_email}}<br>
+        {{client_po_or_reference_if_any}}
+      </div>
+    </div>
+    <dl class="meta">
+      <dt>Invoice number</dt><dd>{{invoice_number}}</dd>
+      <dt>Issue date</dt><dd>{{issue_date}}</dd>
+      <dt>Due date</dt><dd class="due">{{due_date}}</dd>
+      <dt>Service period</dt><dd>{{N}}: {{period_start}} to {{period_end}}</dd>
+      <dt>Order Form</dt><dd>{{order_form_ref}}</dd>
+    </dl>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th style="width:62%">Description</th><th>Qty</th><th class="num">Amount</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Implementation<span class="sub">One-off installation: positioning and core messages, Brand Brain, voice guide, workflow and approvals, measurement set-up, first researched scripts</span></td>
+        <td>1</td><td class="num">£2,500.00</td>
+      </tr>
+      <tr>
+        <td>Service period {{N}} ({{period_start}} to {{period_end}})<span class="sub">Four-week managed service: research, strategy, scripts, production, publishing, measurement and review</span></td>
+        <td>1</td><td class="num">£2,500.00</td>
+      </tr>
+      <tr class="optional">
+        <td>Implementation, instalment {{1 or 2}} of 2 (agreed split)<span class="sub">Only when a split is recorded in the Order Form, in place of the full implementation line</span></td>
+        <td>1</td><td class="num">£{{1,250.00}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="totals">
+    <div><span>Subtotal</span><span>£{{subtotal}}</span></div>
+    <div><span>VAT at {{rate}}%</span><span>£{{vat_amount}}</span></div>
+    <div class="vatnote"><span>{{Either: "VAT number {{vat_number}}" or: "Not VAT registered. No VAT charged."}}</span></div>
+    <div class="grand"><span>Total due</span><span>£{{total}}</span></div>
+  </div>
+
+  <div class="pay">
+    <div class="box">
+      <div class="label">Pay by bank transfer</div>
+      <dl>
+        <dt>Account name</dt><dd>{{bank_account_name}}</dd>
+        <dt>Sort code</dt><dd>{{sort_code}}</dd>
+        <dt>Account no.</dt><dd>{{account_number}}</dd>
+        <dt>Reference</dt><dd>{{invoice_number}}</dd>
+      </dl>
+    </div>
+    <div class="box paper">
+      <div class="label">Or pay online</div>
+      Card or bank payment through Stripe:<br>
+      <a href="{{stripe_hosted_invoice_url}}">{{stripe_hosted_invoice_url}}</a>
+    </div>
+  </div>
+
+  <div class="terms">
+    <p><strong>Payment terms:</strong> payable within 14 days of the issue date. Please quote the invoice number as your reference.</p>
+    <p>Fees are charged every four weeks for 28-day service periods, under the Threadline Client Services Agreement and your Order Form. Late payment may pause the service and may carry statutory interest under the Late Payment of Commercial Debts (Interest) Act 1998.</p>
+  </div>
+
+  <footer>
+    <span>{{threadline_legal_entity}} · {{company_registration_note}} · {{registered_address}}</span>
+    <span>Invoice {{invoice_number}} · Page 1 of 1</span>
+  </footer>
+
+</div>
+</body>
+</html>

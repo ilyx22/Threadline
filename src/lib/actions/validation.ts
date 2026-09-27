@@ -326,6 +326,8 @@ const conversationSchema = z.object({
   triedBefore: z.string().max(4000).optional(),
   consequence: z.string().max(4000).optional(),
   notes: z.string().max(8000).optional(),
+  problemEnergy: z.preprocess((v) => (v === "" || v == null ? undefined : v), z.coerce.number().int().min(0).max(5).optional()),
+  awarenessState: z.enum(["unaware", "problem_aware", "solution_aware", "product_aware", "most_aware"]).optional().or(z.literal("").transform(() => undefined)),
 });
 
 export async function addConversationAction(
@@ -354,6 +356,8 @@ export async function addConversationAction(
         triedBefore: input.triedBefore ? cleanText(input.triedBefore) : null,
         consequence: input.consequence ? cleanText(input.consequence) : null,
         notes: input.notes ? cleanText(input.notes) : null,
+        problemEnergy: input.problemEnergy ?? null,
+        awarenessState: input.awarenessState ?? null,
       },
     });
 

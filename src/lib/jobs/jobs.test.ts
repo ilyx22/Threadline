@@ -73,7 +73,8 @@ describe("durable jobs", () => {
 
   test("a job with no handler dies loudly instead of looping", async () => {
     await enqueue("qa.orphan", {}, { idempotencyKey: "qa-orphan" });
-    const results = await drain("w1", 5);
+    // Drain the whole queue: other due jobs left in a shared test database may be claimed first.
+    const results = await drain("w1", 500);
     const orphan = results.find((r) => r.type === "qa.orphan");
     assert.equal(orphan?.outcome, "no_handler");
   });

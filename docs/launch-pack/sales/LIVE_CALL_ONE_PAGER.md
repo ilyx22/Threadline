@@ -1,7 +1,8 @@
 # Live call: one page
 
 **Status:** READY FOR OWNER REVIEW (26 September 2026). Internal only. A print version is in `LIVE_CALL_ONE_PAGER.html` (A4, one page).
-**Call:** 45 minutes, proposed (no diagnosis booking event exists yet; owner to create). Stage map: Execution Manual V14.3 §15. It ends in one state: NOT_FIT / FOLLOW_UP / PROPOSAL_PROCESS / WON, each active state with a dated next action.
+**Call:** 45–60 minutes, aiming for a one-call close (no diagnosis booking event exists yet; owner to create). Stage map: Execution Manual V14.3 §15 (unchanged). It ends in one state: NOT_FIT / FOLLOW_UP / PROPOSAL_PROCESS / WON, each active state with a dated next action.
+**Authority:** law and platform terms → EasyGrow / Acquisition Nirvana → Imperium Academy-level SOPs → live evidence → Fazio (`../sprint/authority/AUTHORITY_ADDENDUM.md` §B). Rows and blocks marked ADAPTATION are drafts for owner review.
 **[V-X]** means read passage X word for word from `APPROVED_VERBATIM_LIBRARY.md`.
 
 | # | Stage | Min | Ask or do | Use |
@@ -15,9 +16,16 @@
 | 7 | **VERIFY DIAGNOSIS** | 2 | Summarise in their words; they confirm or correct. No prescription until they agree. |  |
 | 8 | **PRESCRIPTION** | 3 | Standard 80% process + their configured 20%. “You talk. You record. You approve. You sell. Threadline handles the machine.” | [V-I] |
 | 9 | **RELEVANT DEMO** | 5 | One path matched to the constraint. Synthetic workspace only; say so. | [V-H] |
-| 10 | **COMMERCIALS** | 6 | £2,500 implementation + £2,500 every four weeks; initial 12 weeks = 3 periods = £10,000. One offer. No guarantees. Exclusions; YouTube = pilot/custom. Show standard editing examples. | [V-D] [V-E] [V-G] [V-J] |
-| 11 | **ACTUAL BLOCKER / DECISION** | 3 | Name the one blocker to a yes today, then ask plainly. No fake urgency. | [V-B] if WON |
-| 12 | **NEXT STATE** | 1 | NOT_FIT / FOLLOW_UP / PROPOSAL_PROCESS / WON. FOLLOW_UP: blocker, next action, due date, owner, exact open question. |  |
+| 10 | **COMMERCIALS** | 6 | £2,500 implementation + £2,500 every four weeks; initial 12 weeks = 3 periods = £10,000. One offer. No outcome guarantees. Exclusions; YouTube = pilot/custom. Show standard editing examples. Say the price, then **“How do you feel about that?”** and wait. | [V-D] [V-E] [V-G] [V-J] |
+| 11 | **ACTUAL BLOCKER / DECISION** | 3–10 | Clear the room in order: re-tie and value → money → timing → partner → fear. One at a time; “Anything else stopping you?” No fake urgency. | [V-D] [V-C] [V-H] |
+| 12 | **NEXT STATE** | 1–10 | Leave with a yes (payment + signature on the call), a no, or a refundable deposit + dated decision. FOLLOW_UP: blocker, next action, due date, owner, exact open question. | [V-B] if WON |
+
+**Close and payment (ADAPTATION, draft, owner review; guide §9.1, §11.1).**
+- Start with **£2,500 implementation in full**. Concede only if money *timing* is the isolated blocker, one step at a time: **2 parts** (£1,250 today, £1,250 in 30 days) → **3 parts** (about £834, then two of about £833, four weeks apart) → **refundable deposit of about 10% (£250)** with a dated decision. The £2,500 every four weeks never changes. No discounts.
+- WON = payment and signature taken **on the call** (order of the two awaits legal review), kickoff booked, [V-B] asked, access the next working day.
+- Risk reversal: **DECISION PENDING**. Use only the owner-approved milestone wording; otherwise say nothing about refunds.
+
+**Before the call (guide §0.1).** Booked 2–4 days out, never more than 5 · one confirmation 24 h before · “Still good for our call in an hour?” · no-show: call at start, +5, +10 min, then a reschedule link · read show rate only after 30 bookings.
 
 **Objections.** Proof → [V-A] only once founder identity is cleared; otherwise the adaptation in the guide · AI → Manual “Threadline does not use a generic ChatGPT workflow…” · In-housing → Manual “You can build this internally…” · Heavy editing → Manual “We can absolutely do the heavier creator-style edit…” · Time → no hours figure; "measured, not assumed" · Price → [V-D] with their own numbers, then compare against the real alternative · Alternatives → Vault "compare the full…" · Speed → [V-C], [V-H] · One month → [V-G] · Guarantee → Vault "Not responsibly…"
 

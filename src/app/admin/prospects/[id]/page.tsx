@@ -129,7 +129,7 @@ export default async function ProspectPage({ params }: { params: Promise<{ id: s
 
           <TouchesPanel
             prospectId={prospect.id}
-            touches={prospect.touches.map((t) => ({ id: t.id, at: t.at.toISOString(), kind: t.kind, channel: t.channel, note: t.note }))}
+            touches={prospect.touches.map((t) => ({ id: t.id, at: t.at.toISOString(), kind: t.kind, channel: t.channel, note: t.note, messageVersion: t.messageVersion }))}
             demandSource={prospect.demandSource}
             demandSourceNote={prospect.demandSourceNote}
           />

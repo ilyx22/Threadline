@@ -12,31 +12,31 @@
     --canvas: #e8f1f8; --panel: #ffffff; --ink: #17233a; --ink-soft: #3b475e;
     --ink-faint: #6b768a; --action: #1f63d6; --line: #d3dde8; --warn: #fff0c2;
   }
-  @page { size: A4; margin: 10mm; }
+  @page { size: A4; margin: 8mm; }
   * { box-sizing: border-box; }
   html, body { margin: 0; background: var(--panel); color: var(--ink); }
-  body { font: 400 8.6pt/1.35 Inter, Arial, Helvetica, sans-serif; }
-  .page { width: 190mm; margin: 0 auto; padding: 4mm 0; }
+  body { font: 400 7.8pt/1.28 Inter, Arial, Helvetica, sans-serif; }
+  .page { width: 190mm; margin: 0 auto; padding: 2mm 0; }
   header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1.5pt solid var(--ink); padding-bottom: 2mm; }
   h1 { font: 400 20pt/1 "Instrument Serif", Georgia, serif; margin: 0; }
   .meta { color: var(--ink-faint); font-size: 7.4pt; text-align: right; }
   .states { margin: 2mm 0; font-size: 7.8pt; color: var(--ink-soft); }
   .states b { color: var(--ink); }
   table { width: 100%; border-collapse: collapse; margin-top: 1.5mm; }
-  th, td { text-align: left; vertical-align: top; padding: 1.3mm 1.5mm; border-bottom: 0.5pt solid var(--line); }
+  th, td { text-align: left; vertical-align: top; padding: 0.9mm 1.4mm; border-bottom: 0.5pt solid var(--line); }
   th { font-size: 7pt; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-faint); font-weight: 500; }
   td.n { width: 5mm; color: var(--ink-faint); }
   td.s { width: 26mm; font-weight: 600; }
-  td.m { width: 8mm; color: var(--ink-faint); }
+  td.m { width: 10mm; white-space: nowrap; color: var(--ink-faint); }
   td.u { width: 31mm; color: var(--action); font-weight: 500; }
   .price { background: var(--canvas); }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; margin-top: 3mm; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; margin-top: 2mm; }
   .box { border: 0.6pt solid var(--line); border-radius: 2mm; padding: 2mm 2.5mm; }
   .box h2 { font: 600 7.6pt/1.2 Inter, sans-serif; text-transform: uppercase; letter-spacing: .05em; margin: 0 0 1.2mm; color: var(--ink-soft); }
-  .box p, .box li { margin: 0 0 .8mm; }
+  .box p, .box li { margin: 0 0 .4mm; }
   .box ul { margin: 0; padding-left: 3.5mm; }
   .never { background: var(--warn); }
-  .headline { margin-top: 3mm; font: 400 12pt/1.25 "Instrument Serif", Georgia, serif; text-align: center; }
+  .headline { margin-top: 2mm; font: 400 12pt/1.25 "Instrument Serif", Georgia, serif; text-align: center; }
   footer { gap: 4mm; margin-top: 2.5mm; font-size: 6.8pt; color: var(--ink-faint); display: flex; justify-content: space-between; }
 </style>
 </head>
@@ -44,9 +44,9 @@
 <div class="page">
   <header>
     <h1>Threadline: live diagnosis call</h1>
-    <div class="meta">45 minutes (proposed; event not yet created) · internal only · READY FOR OWNER REVIEW<br>[V-X] = read passage X exactly from APPROVED_VERBATIM_LIBRARY.md</div>
+    <div class="meta">45–60 minutes, aim for a one-call close (event not yet created) · internal only · READY FOR OWNER REVIEW<br>[V-X] = read passage X exactly from APPROVED_VERBATIM_LIBRARY.md</div>
   </header>
-  <p class="states">Execution Manual §15 map. Ends in exactly one state, with a dated next action: <b>NOT_FIT</b> · <b>FOLLOW_UP</b> · <b>PROPOSAL_PROCESS</b> · <b>WON</b></p>
+  <p class="states">Execution Manual §15 map (unchanged). Authority: law and platform terms → EasyGrow / Acquisition Nirvana → Academy-level SOPs → evidence → Fazio. Ends in exactly one state, with a dated next action: <b>NOT_FIT</b> · <b>FOLLOW_UP</b> · <b>PROPOSAL_PROCESS</b> · <b>WON</b></p>
   <table>
     <thead><tr><th>#</th><th>Stage</th><th>Min</th><th>Ask or do</th><th>Use</th></tr></thead>
     <tbody>
@@ -59,9 +59,9 @@
       <tr><td class="n">7</td><td class="s">VERIFY DIAGNOSIS</td><td class="m">2</td><td>Summarise in their words; they confirm or correct. No prescription until they agree.</td><td class="u"></td></tr>
       <tr><td class="n">8</td><td class="s">PRESCRIPTION</td><td class="m">3</td><td>Standard 80% process + their configured 20%. “You talk. You record. You approve. You sell. Threadline handles the machine.”</td><td class="u">[V-I]</td></tr>
       <tr><td class="n">9</td><td class="s">RELEVANT DEMO</td><td class="m">5</td><td>One path matched to the constraint. Synthetic workspace only; say so.</td><td class="u">[V-H]</td></tr>
-      <tr class="price"><td class="n">10</td><td class="s">COMMERCIALS</td><td class="m">6</td><td><b>£2,500 implementation + £2,500 every four weeks</b>; initial 12 weeks = 3 periods = £10,000. One offer. No guarantees. Exclusions; YouTube = pilot/custom. Show standard editing examples.</td><td class="u">[V-D] [V-E] [V-G] [V-J]</td></tr>
-      <tr><td class="n">11</td><td class="s">ACTUAL BLOCKER / DECISION</td><td class="m">3</td><td>Name the one blocker to a yes today, then ask plainly. No fake urgency.</td><td class="u">[V-B] if WON</td></tr>
-      <tr><td class="n">12</td><td class="s">NEXT STATE</td><td class="m">1</td><td>NOT_FIT / FOLLOW_UP / PROPOSAL_PROCESS / WON. FOLLOW_UP: blocker, next action, due date, owner, exact open question.</td><td class="u"></td></tr>
+      <tr class="price"><td class="n">10</td><td class="s">COMMERCIALS</td><td class="m">6</td><td><b>£2,500 implementation + £2,500 every four weeks</b>; initial 12 weeks = 3 periods = £10,000. One offer. No guarantees. Exclusions; YouTube = pilot/custom. Show standard editing examples. Price, then <b>“How do you feel about that?”</b> and wait.</td><td class="u">[V-D] [V-E] [V-G] [V-J]</td></tr>
+      <tr><td class="n">11</td><td class="s">ACTUAL BLOCKER / DECISION</td><td class="m">3–10</td><td>Clear the room in order: re-tie &amp; value → money → timing → partner → fear. One at a time. No fake urgency.</td><td class="u">[V-D] [V-C] [V-H]</td></tr>
+      <tr><td class="n">12</td><td class="s">NEXT STATE</td><td class="m">1–10</td><td>Leave with a yes (payment + signature on the call), a no, or a refundable deposit + dated decision. FOLLOW_UP: blocker, next action, due date, owner, exact open question.</td><td class="u">[V-B] if WON</td></tr>
     </tbody>
   </table>
   <div class="grid">
@@ -87,6 +87,27 @@
         <li>a number of founder hours per week</li>
         <li>anything that implies case studies exist privately</li>
         <li>“our AI is trained on $100m of in-house data”</li>
+      </ul>
+    </div>
+  </div>
+  <div class="grid">
+    <div class="box">
+      <h2>Close and payment · ADAPTATION (owner review)</h2>
+      <ul>
+        <li><b>Start:</b> £2,500 implementation in full. Concede only if money <i>timing</i> is the isolated blocker.</li>
+        <li><b>Ladder:</b> 2 parts (£1,250 now, £1,250 in 30 days) → 3 parts (~£834, then 2 × ~£833, four weeks apart) → refundable ~10% deposit (£250) + dated decision</li>
+        <li>£2,500 every four weeks never changes. No discounts.</li>
+        <li><b>WON:</b> payment + signature on the call (order awaits legal review) · kickoff booked · [V-B] · access next working day</li>
+        <li><b>Risk reversal:</b> DECISION PENDING — approved wording only</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h2>Before the call · ADAPTATION</h2>
+      <ul>
+        <li>Book 2–4 days out, never more than 5; 10+ slots visible</li>
+        <li>One confirmation 24 h before; “Still good for our call in an hour?”</li>
+        <li><b>No-show:</b> call at start, +5, +10 min, then a reschedule link</li>
+        <li>Read show rate only after 30 bookings</li>
       </ul>
     </div>
   </div>

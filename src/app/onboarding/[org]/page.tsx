@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { requireOrgAccess } from "@/lib/auth/guard";
+import { requireOrgPage } from "@/lib/auth/guard";
 import { prisma } from "@/lib/db/client";
 import { parseWith } from "@/lib/db/json";
 import { z } from "zod";
@@ -14,7 +14,8 @@ export const metadata: Metadata = {
 
 export default async function OnboardingPage({ params }: { params: Promise<{ org: string }> }) {
   const { org: slug } = await params;
-  const ctx = await requireOrgAccess(slug, "brain.edit");
+  // A teammate without Brand Brain rights gets a plain explanation, not an error page.
+  const ctx = await requireOrgPage(slug, "brain.edit");
 
   const session = await prisma.onboardingSession.upsert({
     where: { orgId: ctx.org.id },

@@ -53,7 +53,7 @@ The canonical sources are listed in `../SOURCE_REGISTER.md`. The public frontend
 - **Channels:** LinkedIn outbound is the launch acquisition channel. Do not launch two unmeasured primary channels at once.
 - **PESTO:** Personal, Expertise, Social proof, Trending, **Opinions**, plus objection and decision content. It comes from the Marcos Ruiz transcript (owner-confirmed). It is weighted to the client's evidence and never invented. The prompt and graphic 04 are corrected.
 
-## 5. Marcos Ruiz / Vantage lessons (hypotheses)
+## 5. Marcos Ruiz (Birdhouse) and Thomas Murray (Vantage) lessons (hypotheses)
 
 - **Content and outbound:** outbound creates predictable conversations quickly (Vantage), and content compounds authority (Marcos).
 - **Funnel measurement:** first touch → reply → positive → booked → attended → qualified → proposal → won → cash, plus targeted and touches. The Acquisition page implements this.

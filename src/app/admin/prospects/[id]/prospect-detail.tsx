@@ -144,7 +144,7 @@ export function TouchesPanel({
   demandSourceNote,
 }: {
   prospectId: string;
-  touches: { id: string; at: string; kind: string; channel: string | null; note: string | null }[];
+  touches: { id: string; at: string; kind: string; channel: string | null; note: string | null; messageVersion?: string | null }[];
   demandSource: string | null;
   demandSourceNote: string | null;
 }) {
@@ -176,6 +176,9 @@ export function TouchesPanel({
                 </Field>
               </div>
               <div className="flex items-end gap-3">
+                <Field label="Message version" htmlFor="touch-version" optional hint="e.g. S2-E1-A">
+                  <Input id="touch-version" name="messageVersion" placeholder="S2-E1-A" />
+                </Field>
                 <Field label="Note" htmlFor="touch-note" optional className="flex-1">
                   <Input id="touch-note" name="note" placeholder="What it said or added" />
                 </Field>
@@ -192,6 +195,7 @@ export function TouchesPanel({
                 <span className="tabular text-faint">{t.at.slice(0, 10)}</span>
                 <span className="text-ink">{t.kind.replace(/_/g, " ")}</span>
                 {t.channel ? <span>{t.channel}</span> : null}
+                {t.messageVersion ? <span className="tabular text-faint">{t.messageVersion}</span> : null}
                 {t.note ? <span className="text-faint">{t.note}</span> : null}
               </li>
             ))}

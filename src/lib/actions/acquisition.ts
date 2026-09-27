@@ -369,6 +369,7 @@ const touchSchema = z.object({
   channel: z.string().max(120).optional(),
   at: optionalDate,
   note: z.string().max(2000).optional(),
+  messageVersion: z.string().max(60).optional(),
 });
 
 /**
@@ -402,6 +403,7 @@ export async function logTouchAction(
           kind,
           channel: input.channel ? cleanText(input.channel, 120) : prospect.channel,
           note: input.note ? cleanText(input.note, 2000) : null,
+          messageVersion: input.messageVersion ? cleanText(input.messageVersion, 60) : null,
           byId: admin.user.id,
         },
       }),

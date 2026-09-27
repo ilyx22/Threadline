@@ -6,7 +6,7 @@ import { ActionForm, FormError, SubmitButton } from "@/components/forms/action-f
 import { Card, CardBody, CardHeader } from "@/components/ui/card";
 import { CheckboxField } from "@/components/ui/controls";
 import { Field } from "@/components/ui/field";
-import { Input, Textarea } from "@/components/ui/input";
+import { Input, NativeSelect, Textarea } from "@/components/ui/input";
 import { addConversationAction, saveWedgeAction } from "@/lib/actions/validation";
 import { toDateInput } from "@/lib/utils/dates";
 
@@ -88,6 +88,22 @@ export function ConversationForm({
             </Field>
             <Field label="What they have already tried" htmlFor="triedBefore" optional>
               <Textarea id="triedBefore" name="triedBefore" rows={2} />
+            </Field>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Problem energy (0–5)" htmlFor="problemEnergy" optional hint="0 = no real pain; 5 = actively spending to fix it now.">
+              <Input id="problemEnergy" name="problemEnergy" type="number" min={0} max={5} />
+            </Field>
+            <Field label="Awareness" htmlFor="awarenessState" optional>
+              <NativeSelect id="awarenessState" name="awarenessState" defaultValue="">
+                <option value="">Not assessed</option>
+                <option value="unaware">Unaware of the problem</option>
+                <option value="problem_aware">Aware of the problem</option>
+                <option value="solution_aware">Aware of solutions</option>
+                <option value="product_aware">Aware of offers like ours</option>
+                <option value="most_aware">Ready to choose</option>
+              </NativeSelect>
             </Field>
           </div>
 

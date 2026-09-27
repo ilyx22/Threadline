@@ -115,6 +115,8 @@ Then stop, unless a genuinely new trigger (a new post, launch or role) gives a r
 
 Use this only once the prospect passes the business-model filter and the message is openly commercial.
 
+> **Superseded for the commercial cold-email system (27 September 2026).** The revised authority order (`../sprint/authority/AUTHORITY_ADDENDUM.md` §B: EasyGrow 2.0 and Acquisition Nirvana rank above Imperium Academy) makes `../sprint/emails/CAMPAIGN_PACK.md` the source for commercial cold email. That covers the sequence (4 steps at Day 0, +2, +4 and +7 business days, §4), the copy (§5.3–5.5), the channel priority (Loom OS cold email first, manual LinkedIn second, phone only after a reply, §0.2 item 4) and the sending infrastructure (a separate outbound domain set, never `threadlinehq.com`, §0.4). The compliance notes below still apply. The email 1 draft and its follow-ups below are kept for reference only; for commercial sends, use the campaign pack. ADAPTATION (draft, owner review).
+
 **Compliance notes.** These are not legal advice; confirm with counsel before sending at any volume.
 - **US (CAN-SPAM, which applies to B2B too):**
   - The From and Subject lines must be truthful and not misleading.
@@ -126,7 +128,7 @@ Use this only once the prospect passes the business-model filter and the message
   - **Sole traders and some partnerships count as individuals.** Emailing them needs prior consent (or the soft opt-in, which does not apply to cold prospects). Check how the firm is constituted before emailing.
   - Keep a record of the legitimate-interests basis for processing the contact data, and honour objections.
 - **Postal address:** Threadline's business postal address has not been set in the repo. **Owner decision:** choose the address or registered-office service to use before any commercial email is sent.
-- Use the single branded Threadline inbox on threadlinehq.com (Google Workspace; SPF, DKIM and DMARC recorded complete on 15 September in the master TODO). Do not set up a multi-inbox or multi-domain sending stack before validation (playbook).
+- The branded Threadline inbox on threadlinehq.com (Google Workspace; SPF, DKIM and DMARC recorded complete on 15 September in the master TODO) handles research-track and one-to-one mail. Commercial cold email goes out from the separate outbound domain set in `../sprint/emails/CAMPAIGN_PACK.md` §0.4 (ADD D2, awaiting owner approval, OD-2). `threadlinehq.com` is never used for cold email.
 - **Wording rule** (Execution Manual V14.3): do not market generic "AI / Content OS / repurposing / authority / pipeline" language as unique. Lead with the specific observation and the closed learning loop, not category buzzwords.
 - The quoted line “You talk. You record. You approve. You sell. Threadline handles the machine.” is **verbatim from Execution Manual V14.3** (§2).
 
@@ -146,17 +148,17 @@ Use this only once the prospect passes the business-model filter and the message
 > {{sender_name}}, Threadline · {{sender_email}}
 > {{postal_address}} · Not interested? Reply "no thanks" and I won't email again.
 
-**Follow-up (3–4 business days later).** ADAPTATION (draft): add one new, specific observation. Do not "bump".
+**Follow-up (reference only; commercial steps 2–4 now go at +2, +4 and +7 business days as bumps, per `CAMPAIGN_PACK.md` §4 and §5.5).** ADAPTATION (draft): add one new, specific observation. Do not "bump".
 > "One more thing I noticed, {{first_name}}: {{second_observation}}. That's the kind of idea that tends to get lost between a delivery call and a post. Happy to show you how we'd handle it — or leave it there if the timing's wrong."
 
-**Close the loop (7–10 days).** ADAPTATION (draft):
+**Close the loop (reference only; commercial sequence stops after step 4, `CAMPAIGN_PACK.md` §4).** ADAPTATION (draft):
 > "I'll leave this here, {{first_name}}. If building visible authority around {{topic}} becomes a priority, I'm easy to find. Either way, good luck with {{recent_thing}}."
 
 ---
 
 ## 4. LinkedIn and X messages (manual, real profile only)
 
-- **LinkedIn outbound is the launch acquisition channel** (Drive master TODO).
+- **LinkedIn outbound is the launch acquisition channel** (Drive master TODO). *Under the revised authority order, the commercial track now runs Loom OS cold email first and manual LinkedIn second (`../sprint/emails/CAMPAIGN_PACK.md` §0.2 item 4, ADD D4). LinkedIn stays primary for the research track.*
 - Send from a **real** person's own LinkedIn profile, improved truthfully first (playbook). Never from a new, duplicate or fabricated identity. Outreach from the **founder's personal profile** waits for the employer-clearance decision in §0.2 (owner decision). Threadline's public brand is company-led; the person sending is who they really are.
 - No automation: no connection-request tools, no auto-follow-ups, no scraping. LinkedIn prohibits unauthorised automated messaging.
 - Engage with a recent post only when you have something genuinely useful to add. No engagement theatre, no pods.
@@ -171,6 +173,7 @@ Use this only once the prospect passes the business-model filter and the message
 - "One Primary system first; direct phone gets priority testing if legitimate founder numbers are readily available; otherwise LinkedIn/email can be Primary. Email matures in parallel. Build Secondary/Tertiary only after Primary proof." (verbatim). "Do not hard-code cold email as primary." (verbatim)
 - **Phone, ADAPTATION (draft):** call only a number the firm publishes for business contact. Open with who you are and why you are calling in one sentence, ask if now is a bad time, and offer to send the observation instead. Research calls say they are research; sales calls say they are sales. UK: screen against the Corporate TPS before calling a business number; US: business-to-business calls to a published business line are generally permitted, but honour any do-not-call request immediately and record it.
 - Record the channel on every first touch and compare reply and booking quality before choosing the scaled mix (playbook).
+- **Revised authority order (ADAPTATION, draft, owner review):** the Execution Manual lines above are kept verbatim. For the commercial track, EasyGrow now ranks above them (`../sprint/authority/AUTHORITY_ADDENDUM.md` §B, D4). The Primary system is therefore Loom OS cold email, manual LinkedIn is second, and phone is used only after a reply (`../sprint/emails/REPLY_PLAYBOOK.md` §4.2), never for cold calls (`CAMPAIGN_PACK.md` §0.2 item 4).
 
 ---
 
@@ -182,7 +185,7 @@ Use this only once the prospect passes the business-model filter and the message
 **Blurb to forward.** ADAPTATION (draft):
 > "{{sender_name}} works on Threadline, which runs the content engine around expert-led advisory firms. They asked to meet you because of {{observed_evidence_short}}. No obligation."
 
-**After the introduction.** ADAPTATION (draft): reply within one business day. Move the introducer to Bcc. Ask for the call length that matches the track: 20 minutes for research (the live event), a diagnosis call for sales (45 minutes proposed, once the event exists).
+**After the introduction.** ADAPTATION (draft): reply the same business day, target under 6 hours (`../sprint/emails/CAMPAIGN_PACK.md` B7). Move the introducer to Bcc. Ask for the call length that matches the track: 20 minutes for research (the live event), a diagnosis call for sales (45 minutes proposed, once the event exists).
 
 **A client or contact refers someone.** ADAPTATION (draft):
 > "{{referrer}} suggested we speak — thank you for being open to it. {{one_line_reason}}. Would a {{20|45}}-minute call next week work? If it's not relevant, just say and I'll close it off."
@@ -208,16 +211,20 @@ B-tier prospects get truthful personalisation, not a bespoke asset, until they s
 
 ---
 
-## 7. Follow-up cadence (both tracks)
+## 7. Follow-up cadence
+
+**Research track (§2):**
 
 | Day | Action |
 |---|---|
-| 0 | First touch (§2 or §3) |
+| 0 | First touch (§2) |
 | 3–4 business days | One light follow-up, adding a second specific observation |
 | 7–10 days | Close the loop |
 | After that | Stop. Re-contact only on a genuine new trigger. |
 
-- Treat Monday to Thursday as the main B2B window. Do not read weekend silence as a "no" until the Monday–Tuesday window has passed (playbook).
+**Sales track, commercial cold email:** follow `../sprint/emails/CAMPAIGN_PACK.md` §4. There are 4 steps, at Day 0, +2, +4 and +7 business days, then stop. Any reply ends the sequence, and positive or neutral replies move to the Engaged track: 8 touches, one every 2 business days, each with the booking link (`CAMPAIGN_PACK.md` §7; `REPLY_PLAYBOOK.md` §4).
+
+- Research track: treat Monday to Thursday as the main B2B window. Commercial cold email goes out **every weekday**, Monday to Friday (`CAMPAIGN_PACK.md` §4). Do not read weekend silence as a "no" until the Monday–Tuesday window has passed (playbook).
 - Log every touch on the prospect, with its channel and date.
 
 ---
@@ -225,6 +232,8 @@ B-tier prospects get truthful personalisation, not a bespoke asset, until they s
 ## 8. Replies: classify, then act (SOP Router §4)
 
 Every reply gets one class, a next action and a due date, recorded on `/admin/prospects/[id]`.
+
+**Reply speed:** answer the same business day, target under 6 hours (`../sprint/emails/CAMPAIGN_PACK.md` B7; `REPLY_PLAYBOOK.md`). **Commercial-track replies** also carry exactly one label (Not Interested / Engaged / Booked / No-Show) and follow `../sprint/emails/REPLY_PLAYBOOK.md`. Where that playbook differs from the table below (curiosity-first handling, the Engaged track, booking 2–4 days out), the playbook wins for commercial replies.
 
 **These reply templates are provisional.** The Execution Manual says: "Build reply templates only from repeated real conversations. Do not over-script early." Replace each one with wording drawn from real replies once patterns repeat.
 
@@ -258,7 +267,7 @@ Every reply gets one class, a next action and a due date, recorded on `/admin/pr
 
 **No-show.** Wait 10 minutes, then send once. ADAPTATION (draft):
 > "Looks like today didn't work out — no problem at all. Here's the link if you'd like to pick another time: {{booking_link}}."
-If there is no response after 3 business days, send one close-the-loop message (§7), then stop.
+If there is no response after 3 business days, send one close-the-loop message (§7), then stop. **Commercial track:** follow the no-show protocol in `../sprint/emails/REPLY_PLAYBOOK.md` §5 instead (message at the start time and at +5 and +10 minutes, then the rebooking link every 2 business days, at most 3 times). Commercial bookings go 2–4 days out and never more than 5, with one 24-hour confirmation and a one-hour message (`../sales/SALES_CALL_GUIDE.md` §0.1).
 
 **After a research call:** the thank-you in §2.5. Nothing commercial.
 

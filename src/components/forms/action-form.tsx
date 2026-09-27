@@ -62,6 +62,14 @@ function isControlFlowSignal(error: unknown): boolean {
   return typeof digest === "string" && (digest.startsWith("NEXT_") || digest === "DYNAMIC_SERVER_USAGE");
 }
 
+/**
+ * Pending state shared with nested submit buttons.
+ *
+ * The form submits through `onSubmit` rather than the `action` prop, so React's
+ * own `useFormStatus` never sees it; this context carries the pending flag instead.
+ */
+const ActionFormPending = React.createContext(false);
+
 export type ActionFormRenderProps = {
   pending: boolean;
   fieldErrors: Record<string, string>;
@@ -105,6 +113,7 @@ export function ActionForm<T>({
     null,
   );
   const formRef = React.useRef<HTMLFormElement>(null);
+  const [formVersion, setFormVersion] = React.useState(0);
   const handled = React.useRef<ActionResult<T> | null>(null);
 
   React.useEffect(() => {
@@ -115,7 +124,14 @@ export function ActionForm<T>({
       const message = successMessage ?? state.message;
       if (message) toast.success(message);
       onSuccess?.(state.data);
-      if (resetOnSuccess) formRef.current?.reset();
+      // A successful submit starts the form afresh, so a sent note or comment
+      // cannot be resubmitted by accident. It remounts rather than calling
+      // reset(): reset() restores the values from the first render, and a
+      // <select> keeps its original default even after the saved value changed.
+      // A refused submit keeps what the person typed. (resetOnSuccess is kept
+      // for callers that set it; the behaviour is now the default.)
+      void resetOnSuccess;
+      setFormVersion((v) => v + 1);
     } else if (!state.fieldErrors) {
       toast.error(state.error);
     }
@@ -124,10 +140,28 @@ export function ActionForm<T>({
   const fieldErrors = (state && !state.ok && state.fieldErrors) || {};
   const error = state && !state.ok && !state.fieldErrors ? state.error : null;
 
+  // Submitted through onSubmit, not the `action` prop. With `action`, React 19
+  // resets every uncontrolled field once the action settles, including when it
+  // returns a validation error, so a person who made one mistake lost everything
+  // they had typed and could resubmit the wrong values. Found in browser QA on
+  // 2026-09-26: a refused demand source reset its select to the default.
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (pending) return;
+    const submitter = (event.nativeEvent as SubmitEvent).submitter as HTMLElement | null;
+    const formData = new FormData(event.currentTarget, submitter);
+    React.startTransition(() => formAction(formData));
+  };
+
   return (
-    <form ref={formRef} id={id} action={formAction} className={className} noValidate>
-      {typeof children === "function" ? children({ pending, fieldErrors, error }) : children}
-    </form>
+    <ActionFormPending.Provider value={pending}>
+      {/* `action` stays for submits before hydration (a POST to the server
+          action, never a GET that would put field values in the URL); once
+          hydrated, onSubmit cancels the default and dispatches itself. */}
+      <form key={formVersion} ref={formRef} id={id} action={formAction} onSubmit={onSubmit} className={className} noValidate>
+        {typeof children === "function" ? children({ pending, fieldErrors, error }) : children}
+      </form>
+    </ActionFormPending.Provider>
   );
 }
 
@@ -151,7 +185,9 @@ export function SubmitButton({
   pendingLabel,
   ...props
 }: ButtonProps & { pendingLabel?: string }) {
-  const { pending } = useFormStatus();
+  const status = useFormStatus();
+  const contextPending = React.useContext(ActionFormPending);
+  const pending = status.pending || contextPending;
   return (
     <Button type="submit" loading={pending} {...props}>
       {pending && pendingLabel ? pendingLabel : children}

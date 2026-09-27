@@ -43,8 +43,8 @@ The owner's chat brief (launch pack prompt) also asked for PESTO (04), content p
   - Graphics 02, 05 and 10 follow the approved sales-script library (SOP 03, sections I, J and K).
   - 13 uses the five attribution classes from the Master Blueprint and the Living SOP Engine.
   - The root idea in 07 is thesis 2 from the Brand-Led Content Launch Pack V1 (a draft pending founder review).
-- **PESTO** (graphic 04): Personal, Expertise, Social proof, Trending and Opinions, as defined by Marcos Ruiz (Vantage) in the transcript the owner supplied.
-  - Attributed as "PESTO content mix, after Marcos Ruiz (Vantage)".
+- **PESTO** (graphic 04): Personal, Expertise, Social proof, Trending and Opinions, as defined by Marcos Ruiz (Birdhouse) in the transcript the owner supplied.
+  - Attributed as "PESTO content mix, after Marcos Ruiz (Birdhouse)".
   - Shown as an adjustable mix, not an equal split.
 - **Vector and code only.** No image generation was used. All text and diagrams are SVG. The Threadline mark is reproduced from `src/components/brand/logo.tsx`, not redrawn.
 - **Brand tokens.** Palette from `src/styles/marketing-v9/index.css`; Instrument Serif headings and Inter text; one 3-unit line weight.
@@ -101,7 +101,7 @@ The owner's chat brief (launch pack prompt) also asked for PESTO (04), content p
 - **Covers:** Chat brief only (PESTO)
 - **Source (editable):** [`src/04-pesto-content-mix.svg`](src/04-pesto-content-mix.svg)
 - **Exports:** [`export/04-pesto-content-mix-1200.png`](export/04-pesto-content-mix-1200.png) (1200 x 1500; web and email, display at 600 px wide) · [`export/04-pesto-content-mix-1080.png`](export/04-pesto-content-mix-1080.png) (1080 x 1350; LinkedIn and mobile feeds)
-- **Alt text:** PESTO content mix, after Marcos Ruiz (Vantage): Personal (a story from your own experience), Expertise (how the work is actually done), Social proof (only with permission, never invented), Trending (a current event read through your lens) and Opinions (positions you would defend to peers). A dashed bar of five equal slices is marked 'not the goal'; a second bar shows one client's illustrative weighting, led by expertise and opinions. Weights follow the evidence for each client and change.
+- **Alt text:** PESTO content mix, after Marcos Ruiz (Birdhouse): Personal (a story from your own experience), Expertise (how the work is actually done), Social proof (only with permission, never invented), Trending (a current event read through your lens) and Opinions (positions you would defend to peers). A dashed bar of five equal slices is marked 'not the goal'; a second bar shows one client's illustrative weighting, led by expertise and opinions. Weights follow the evidence for each client and change.
 - **Suggested use:** Newsletter section on content mix; client onboarding on how the mix is chosen. Keep the 'illustrative' footer tag.
 - **Status:** READY FOR OWNER REVIEW
 

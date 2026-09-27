@@ -226,7 +226,7 @@ def g03():
 
 # ---------------------------------------------------------------- 04 PESTO
 def g04():
-    # PESTO as Marcos Ruiz (Vantage) defines it in the transcript the owner supplied: Personal, Expertise, Social proof, Trending, Opinions.
+    # PESTO as Marcos Ruiz (Birdhouse) defines it in the transcript the owner supplied: Personal, Expertise, Social proof, Trending, Opinions.
     letters = [("P", "Personal", "a story from your own experience", C["peach"]),
                ("E", "Expertise", "how the work is actually done", C["sky"]),
                ("S", "Social proof", "only with permission, never invented", C["mint"]),
@@ -258,8 +258,8 @@ def g04():
         b.append(t(M + 104, y + 32, name, size=32, weight=600))
         b.append(t(M + 104, y + 68, sub, size=26, fill=C["soft"]))
         y += 96
-    b.append(t(M, 1338, "PESTO content mix, after Marcos Ruiz (Vantage).", size=24, fill=C["faint"]))
-    alt = ("PESTO content mix, after Marcos Ruiz (Vantage): Personal (a story from your own experience), Expertise (how the work is actually done), "
+    b.append(t(M, 1338, "PESTO content mix, after Marcos Ruiz (Birdhouse).", size=24, fill=C["faint"]))
+    alt = ("PESTO content mix, after Marcos Ruiz (Birdhouse): Personal (a story from your own experience), Expertise (how the work is actually done), "
            "Social proof (only with permission, never invented), Trending (a current event read through your lens) and Opinions "
            "(positions you would defend to peers). A dashed bar of five equal slices is marked 'not the goal'; a second bar shows one "
            "client's illustrative weighting, led by expertise and opinions. Weights follow the evidence for each client and change.")

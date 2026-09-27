@@ -205,7 +205,7 @@ export default async function DiagnosisPage({ params }: { params: Promise<{ org:
           {overdue && diagnosis.status === "active" ? (
             <Notice tone="warning" title="This diagnosis is due a review">
               A constraint that is never revisited quietly turns into an assumption. Record the
-              monthly review even when nothing has changed.
+              four-week review even when nothing has changed.
             </Notice>
           ) : null}
 

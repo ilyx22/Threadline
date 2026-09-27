@@ -100,34 +100,51 @@ A viewer profile removes every create, edit, upload and complete power. A suspen
 | The CRM | Threadline's database, mirrored to Attio through `CrmOutbox`; never the reverse |
 | Evidence of an exit | `OffboardingRecord` (survives tenant deletion) |
 
-## 6. Verification evidence
+## 6. Verification evidence (updated 26 September 2026 to match the ledger)
+
+Earlier figures in this section (727 unit tests, 526 QA checks, "1 partial") were from the first checkpoint and are superseded. Current evidence, from `docs/launch-pack/MASTER_LAUNCH_CHECKLIST.md` and the ledger's checkpoint log:
 
 | Check | Result |
 | --- | --- |
-| `npm test` on PostgreSQL 18 | 727 passed, 0 failed |
-| `node scripts/qa/run.cjs run-all` | 526 passed, 0 failed, 1 partial (no server-side PDF export) |
+| `npm test` on local PostgreSQL 18 | 824 passed, 0 failed (after the frontend-freeze correction; the §1 checkpoint table recorded 808 at the earlier checkpoint) |
+| `node scripts/qa/run.cjs run-all` | 623 passed, 2 passed with an external gate, 0 partial, 0 failed (server-side PDF export now exists: REP-03) |
 | Acceptance journeys 1, 2 and 8 (`suite-journeys`) | 19 of 19 |
-| Public site regression (`marketing-v9`) on a production build with the new headers | 62 of 62 |
-| Backup and restore drill | passed: 97 tables, 1,916 rows reconciled |
-| SQLite to PostgreSQL transfer | 77 tables, 1,276 rows reconciled |
-| Types and lint | clean |
+| Acceptance journeys 3, 4, 5, 6, 7, 9 and 10 (`suite-journeys-more`) | 87 of 87, through real actions, route handlers and jobs, with providers mocked at their boundaries |
+| Public site regression (`marketing-v9`) on a production build with the headers | 62 of 62; 104 protected public files match the approved baseline |
+| Backup and restore drill (`npm run db:drill`) | passed: 113 tables, 2,928 rows reconciled |
+| SQLite to PostgreSQL transfer (one-off, INF-02) | 77 tables, 1,276 rows reconciled |
+| Types and lint (`tsc`, `eslint src`) | clean |
+| Production smoke (`npm run smoke:prod`, 26 September) | 6 of 10: health 503, `database:false`, 5 configuration errors, cron 503 (`CRON_SECRET` not set). Configuration, not code; see OWNER_ACTIVATION_CHECKLIST sections 0 to 5 |
 
-Acceptance journeys 3 to 7, 9 and 10 are covered in parts by the core-spine, tenancy, workflow, hostile-input and unit suites (see the ledger's VER row); journey 6's resumable large uploads and partial X threads, journey 7's effort measurement and journey 9's injection test set are not built.
+All ten acceptance journeys (VER-01..10) are now built and pass in simulation; journey 6's resumable large uploads and partial X threads, journey 7's effort measurement and journey 9's injection test set, listed here earlier as not built, are implemented (FILE-02, INT-03, CX-08, AI-09). None is LIVE_VERIFIED.
 
 ## 7. Public freeze proof
 
 `docs/implementation/evidence-public-freeze.txt` holds SHA-256 hashes of the 104 public-site files at the approved revision (6e00e4a). `sha256sum -c` reports all 104 unchanged, and `git diff 6e00e4a -- <public paths>` is empty. Shared changes that reach public pages (security headers, the application form's confirmation emails) were checked with the public regression suite on a production build: 62 of 62.
 
-## 8. Remaining risks
+## 8. Remaining risks (updated 26 September 2026 to match the ledger)
 
-1. **Nothing is live-verified.** Every external integration is contract-tested with mocks only.
+1. **Nothing is live-verified.** Every external integration is contract-tested with mocks only, and production has no database, keys, email, storage or scheduler configured (smoke 6 of 10).
 2. **CSP allows inline scripts** (required by the Next.js App Router on static pages without nonces); other directives still block third-party scripts, framing and plugins.
-3. **Daily cron only on the Hobby plan**: jobs also run right after the request that queued them, but a failed send waits until the next day's run.
-4. **Contractors see the whole production board** (assignment scoping is modelled, not enforced).
-5. **SSRF DNS rebinding window** remains between resolution and fetch.
-6. **No malware scanning** of uploads (needs a provider).
-7. **Public commercial claims** ("100m+ views", "10,000+ conversions") need the owner's substantiation.
+3. **Daily cron only on the Hobby plan**: jobs also run right after the request that queued them, but a failed send, a due scheduled publish or a research schedule waits until the next day's run unless an external scheduler calls `/api/cron/jobs` more often (INT-03).
+4. **No malware scanning until a processing worker is chosen.** The scan states and quarantine are built (FILE-03), but nothing scans until the owner picks a worker and sets `PROCESSING_SCAN=true` (FILE-05).
+5. **Public commercial claims** ("100m+ views", "10,000+ conversions"): the owner has decided the proof band stays and the frontend is frozen (O-01 closed). The remaining action is to keep the source, timeframe and definition on file privately. Other frozen public-copy conflicts (month to month, twenty minutes a week, 10 to 14 days onboarding, content ownership) are reported in `docs/launch-pack/claims/CLAIMS_AUDIT.md` and not changed.
+6. **Second deployment (`threadlinex`)** serves the same commit. It is inert today (no database, cron refused), but it must be retired or marked `DEPLOYMENT_ROLE=mirror` before any secret is added (D-04, INF-05).
+7. **Verified provider limitations**: personal DMs on LinkedIn, Instagram and X stay manual entry (AI-06); TikTok posts stay private until the app is audited; LinkedIn member-post impressions need the Marketing Developer Platform.
 
-## 9. Missing or partial requirements
+Resolved since the first checkpoint (listed here earlier as open):
+- Contractors seeing the whole production board: fixed by assignment-scoped access (TEAM-09, `team/scope.test.ts`, journey 4).
+- SSRF DNS rebinding window: fixed by connecting to the checked address (SEC-10, `fetch-url.test.ts`).
 
-Missing: CX-08 effort records, FILE-02 direct multipart uploads, FILE-05 media processing callbacks, AI-06 inbox/lead assist, and the unmet parts of the acceptance journeys. Partial: SEC-10, SEC-12, TEAM-08, TEAM-09, COM-07, ENG-03, ENG-04, CX-04 to CX-07, DEL-01, DEL-05, DEL-06, FILE-03, FILE-04, FILE-06, JOB-02, JOB-04, NOT-02, INT-02, INT-03, INT-07, INT-09, ATT-04, AI-01 to AI-05, AI-07, AI-09, LRN-02, LRN-03, OPS-01, REP-03, CAP-01. Unsupported: INT-06 (Facebook/Threads, needs a Meta app). Owner decisions: INF-09, PRV-01. The ledger gives the next action for each.
+## 9. Missing or partial requirements (updated 26 September 2026 to match the ledger)
+
+**Missing: none. Partial: none.** No ledger row is blocked by unfinished code. The earlier list here (CX-08, FILE-02, FILE-05 and AI-06 missing; SEC-10, SEC-12, TEAM-08, TEAM-09, COM-07, ENG-03, ENG-04, CX-04 to CX-07, DEL-01, DEL-05, DEL-06, FILE-03, FILE-04, FILE-06, JOB-02, JOB-04, NOT-02, INT-02, INT-03, INT-07, INT-09, ATT-04, AI-01 to AI-05, AI-07, AI-09, LRN-02, LRN-03, OPS-01, REP-03 and CAP-01 partial; INT-06 unsupported) is superseded: each of those rows is now IMPLEMENTED_TESTED or EXTERNAL_CONFIGURATION_REQUIRED with code done.
+
+| Ledger status | Rows | What unblocks them |
+| --- | --- | --- |
+| EXTERNAL_CONFIGURATION_REQUIRED (code done) | FILE-02, FILE-03, FILE-05, NOT-02, INT-02, INT-03, INT-06 (Facebook Page and Threads, corrected from PROVIDER_UNSUPPORTED) | R2 bucket and CORS; a processing worker; the Resend webhook secret; platform app reviews (one Meta business verification covers Instagram, Facebook and Threads) |
+| OWNER_DECISION_REQUIRED | INF-09 (RPO/RTO), PRV-01 (retention, DPA, privacy contact) | Decision D-03 and the legal identity pack (D-09) |
+| IMPLEMENTED_TESTED, needs configuration to run live | INF-01, INF-05, INF-07, INF-08, JOB-01, COM-04, BIL-02, AI-04 (live model) | OWNER_ACTIVATION_CHECKLIST sections 0 to 8 |
+| IMPLEMENTED_TESTED, live use waits on an owner decision | ATT-02 (tracked-link consent basis), BIL-03/BIL-04 (legal terms, reminder policy), OFF-01 (retention periods), CAP-01 (availability per person), ENG-02 (offer defaults, D-01) | OWNER_ACTIVATION_CHECKLIST section 9 |
+
+The ledger's "Remaining requirements by blocker" is the authority; this section mirrors it.

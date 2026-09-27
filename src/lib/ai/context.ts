@@ -145,7 +145,13 @@ export async function loadWorkspaceContext(
       founder.experience && `Experience: ${founder.experience}`,
       bullets("Stated beliefs", founder.beliefs),
       bullets("Strong opinions", founder.opinions),
-      bullets("Stories cleared for use", founder.approvedAnecdotes.length ? founder.approvedAnecdotes : founder.stories),
+      // Only stories the founder has approved are "cleared". Others are context
+      // for understanding the founder and must not be retold in published work.
+      bullets("Stories cleared for use", founder.approvedAnecdotes),
+      bullets(
+        "Stories mentioned but NOT cleared (background only; never retell in published work without the founder's approval)",
+        founder.stories.filter((s) => !founder.approvedAnecdotes.includes(s)),
+      ),
       bullets("Credentials", founder.credentials),
       voice.tone && `Tone: ${voice.tone}`,
       voice.vocabulary && `Vocabulary: ${voice.vocabulary}`,

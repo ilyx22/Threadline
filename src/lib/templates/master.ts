@@ -466,7 +466,7 @@ Weekly report delivered, recording queue ready for Monday.`,
   },
   {
     key: "monthly-review",
-    title: "Monthly strategy review",
+    title: "Four-week strategy review",
     category: "account",
     summary: "Sixty minutes on what the data changed our mind about.",
     body: `## Preparation
@@ -480,7 +480,7 @@ Weekly report delivered, recording queue ready for Monday.`,
 3. **What did not** — the two weakest, and whether the cause was concept, hook or distribution.
 4. **Commercial** — inquiries and calls attributed to content.
 5. **Constraint** — where the operation is slowest, and what we are changing.
-6. **Next month** — pillar weighting, formats, tests.
+6. **Next period** — pillar weighting, formats, tests.
 
 ## Rules
 - Lead with the commercial read, not the reach numbers.

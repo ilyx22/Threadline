@@ -1718,6 +1718,10 @@ model ValidationConversation {
   currentProcess String?
   triedBefore    String?
   consequence    String?
+  /// Problem Energy 0-5: how much the pain showed (5 = actively spending to fix it).
+  problemEnergy  Int?
+  /// unaware | problem_aware | solution_aware | product_aware | most_aware
+  awarenessState String?
   notes          String?
   createdAt      DateTime @default(now())
 
@@ -1902,6 +1906,8 @@ model ProspectTouch {
   prospectId String
   at         DateTime
   kind       String // first | follow_up | value_sent | reply | booking | other
+  /// Which message variant was sent (e.g. S2-E1-A), so A/B results are countable.
+  messageVersion String?
   channel    String?
   note       String?
   byId       String?

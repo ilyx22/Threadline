@@ -30,7 +30,7 @@ import {
   Stethoscope,
   Telescope,
   Video,
-  Workflow, Timer } from "lucide-react";
+  Workflow, Timer, ListChecks } from "lucide-react";
 import type { Capability } from "@/lib/auth/roles";
 
 /**
@@ -210,6 +210,15 @@ export function clientNav(slug: string): NavItem[] {
       label: "This week",
       href: base,
       icon: Home,
+      capability: "workspace.view",
+    },
+    {
+      // Installation was reachable only from This week and Recording → Your
+      // setup; clients looking for "what's left to set up" had no direct way in.
+      key: "install",
+      label: "Getting set up",
+      href: `${base}/install`,
+      icon: ListChecks,
       capability: "workspace.view",
     },
     {

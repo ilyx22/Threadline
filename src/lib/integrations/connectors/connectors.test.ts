@@ -107,14 +107,54 @@ describe("publish and metrics through the mocked boundary", () => {
 
   test("TikTok posts SELF_ONLY until the app is audited and says so on the outcome", async () => {
     delete process.env.TIKTOK_APP_AUDITED;
-    __setConnectorFetch(async (_input, init) => {
-      const body = JSON.parse(String(init?.body)) as { post_info: { privacy_level: string } };
+    const calls: string[] = [];
+    __setConnectorFetch((async (u: string | URL, init?: RequestInit) => {
+      const url = String(u);
+      calls.push(url);
+      if (url.includes("creator_info")) return respond(200, { data: { privacy_level_options: ["PUBLIC_TO_EVERYONE", "SELF_ONLY"] }, error: { code: "ok" } });
+      const body = JSON.parse(String(init?.body)) as { post_info: { privacy_level: string; disable_comment: boolean; disable_duet: boolean; disable_stitch: boolean } };
       assert.equal(body.post_info.privacy_level, "SELF_ONLY");
+      assert.deepEqual([body.post_info.disable_comment, body.post_info.disable_duet, body.post_info.disable_stitch], [true, true, true], "interactions stay off unless turned on");
       return respond(200, { data: { publish_id: "p1" }, error: { code: "ok" } });
-    });
+    }) as typeof fetch);
     const tt = getConnector("tiktok")!;
     const pub = await tt.publish({ accessToken: "t", text: "hi", mediaUrl: "https://verified.example/v.mp4", mediaKind: "video" });
     assert.ok(pub.ok && pub.providerStatus === "PROCESSING_SELF_ONLY");
+    assert.match(calls[0], /creator_info\/query/, "creator settings are queried before posting");
+  });
+
+  test("TikTok, once audited, posts only with the person's own privacy choice and the creator's limits", async () => {
+    process.env.TIKTOK_APP_AUDITED = "true";
+    let sent: { post_info: Record<string, unknown> } | null = null;
+    __setConnectorFetch((async (u: string | URL, init?: RequestInit) => {
+      if (String(u).includes("creator_info")) return respond(200, { data: { privacy_level_options: ["FOLLOWER_OF_CREATOR", "SELF_ONLY"], duet_disabled: true }, error: { code: "ok" } });
+      sent = JSON.parse(String(init?.body));
+      return respond(200, { data: { publish_id: "p2" }, error: { code: "ok" } });
+    }) as typeof fetch);
+    const tt = getConnector("tiktok")!;
+    const base = { accessToken: "t", text: "hi", mediaUrl: "https://verified.example/v.mp4", mediaKind: "video" as const };
+    const noChoice = await tt.publish(base);
+    assert.ok(!noChoice.ok && /Choose who can see/.test(noChoice.message), "never defaults privacy once audited");
+    const notAllowed = await tt.publish({ ...base, platformOptions: { privacyLevel: "PUBLIC_TO_EVERYONE" } });
+    assert.ok(!notAllowed.ok && /does not allow/.test(notAllowed.message));
+    const ok = await tt.publish({ ...base, platformOptions: { privacyLevel: "FOLLOWER_OF_CREATOR", allowComment: true, allowDuet: true, brandContent: true } });
+    assert.ok(ok.ok);
+    const info = sent!.post_info;
+    assert.equal(info.privacy_level, "FOLLOWER_OF_CREATOR");
+    assert.equal(info.disable_comment, false);
+    assert.equal(info.disable_duet, true, "the creator's disabled duet wins over the person's choice");
+    assert.equal(info.disable_stitch, true);
+    assert.equal(info.brand_content_toggle, true);
+    assert.equal(info.brand_organic_toggle, false);
+    delete process.env.TIKTOK_APP_AUDITED;
+  });
+
+  test("LinkedIn uses a supported API version, overridable by environment", async () => {
+    const { linkedinVersion } = await import("./linkedin");
+    assert.match(linkedinVersion({}), /^\d{6}$/);
+    assert.notEqual(linkedinVersion({}), "202409", "202409 is retired");
+    assert.equal(linkedinVersion({ LINKEDIN_API_VERSION: "202610" }), "202610");
+    assert.equal(linkedinVersion({ LINKEDIN_API_VERSION: "bad" }), linkedinVersion({}));
   });
 
   test("LinkedIn refuses to post without an author URN and parses the restli id on success", async () => {

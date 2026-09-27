@@ -5,8 +5,23 @@ import { envAuthConfig, http, mapHttpError, type Connector } from "./index";
  * and the Display/Research surfaces for metrics. Unaudited apps can only
  * post privately (SELF_ONLY) — the connector never pretends otherwise and
  * records that state on the publish outcome.
+ *
+ * TikTok's Direct Post guidelines, enforced here rather than left to the UI:
+ * the creator's current settings are queried before every post; privacy is
+ * the person's explicit choice from the options TikTok returns (never a
+ * default once audited); comments, duets and stitches stay off unless the
+ * person turned them on and the creator allows them; commercial-content
+ * disclosure is passed through as chosen.
  */
 const OPEN = "https://open.tiktokapis.com/v2";
+
+type CreatorInfo = {
+  creator_nickname?: string;
+  privacy_level_options?: string[];
+  comment_disabled?: boolean;
+  duet_disabled?: boolean;
+  stitch_disabled?: boolean;
+};
 
 export const tiktok: Connector = {
   provider: "tiktok",
@@ -19,11 +34,44 @@ export const tiktok: Connector = {
   async publish(input) {
     if (!input.mediaUrl) return { ok: false, code: "invalid_request", message: "TikTok needs a video URL on a verified domain.", retryable: false };
     const audited = process.env.TIKTOK_APP_AUDITED === "true";
+    const opts = input.platformOptions ?? {};
+
+    // 1. The creator's current posting settings, queried before every post.
+    const info = await http(`${OPEN}/post/publish/creator_info/query/`, {
+      method: "POST",
+      headers: { Authorization: `Bearer ${input.accessToken}`, "Content-Type": "application/json; charset=UTF-8" },
+    });
+    if (info.status !== 200) return { ok: false, ...mapHttpError(info.status, info.headers, info.json ?? info.text, "TikTok") };
+    const creator = ((info.json as { data?: CreatorInfo } | null)?.data ?? {}) as CreatorInfo;
+
+    // 2. Privacy: private until audited; after that, only the person's explicit choice.
+    let privacy = "SELF_ONLY";
+    if (audited) {
+      const chosen = typeof opts.privacyLevel === "string" ? opts.privacyLevel : null;
+      if (!chosen) return { ok: false, code: "invalid_request", message: "Choose who can see this TikTok before posting.", retryable: false };
+      if (creator.privacy_level_options && !creator.privacy_level_options.includes(chosen)) {
+        return { ok: false, code: "invalid_request", message: `This TikTok account does not allow "${chosen}". Choose one of: ${creator.privacy_level_options.join(", ")}.`, retryable: false };
+      }
+      privacy = chosen;
+    }
+
+    // 3. Interactions off unless turned on and allowed by the creator.
+    const off = (allowed: unknown, creatorDisabled?: boolean) => allowed !== true || creatorDisabled === true;
+
     const res = await http(`${OPEN}/post/publish/video/init/`, {
       method: "POST",
       headers: { Authorization: `Bearer ${input.accessToken}`, "Content-Type": "application/json; charset=UTF-8" },
       body: JSON.stringify({
-        post_info: { title: (input.title ?? input.text).slice(0, 2200), privacy_level: audited ? "PUBLIC_TO_EVERYONE" : "SELF_ONLY", disable_duet: false, disable_comment: false, disable_stitch: false },
+        post_info: {
+          title: (input.title ?? input.text).slice(0, 2200),
+          privacy_level: privacy,
+          disable_comment: off(opts.allowComment, creator.comment_disabled),
+          disable_duet: off(opts.allowDuet, creator.duet_disabled),
+          disable_stitch: off(opts.allowStitch, creator.stitch_disabled),
+          // 4. Commercial content disclosure, exactly as chosen.
+          brand_content_toggle: opts.brandContent === true,
+          brand_organic_toggle: opts.brandOrganic === true,
+        },
         source_info: { source: "PULL_FROM_URL", video_url: input.mediaUrl },
       }),
     });

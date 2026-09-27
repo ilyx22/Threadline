@@ -331,7 +331,7 @@ export function ReviewDiagnosis({ slug, diagnosisId }: { slug: string; diagnosis
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent>
           <DialogHeader
-            title="Monthly strategy review"
+            title="Four-week strategy review"
             description="Appended to the record, never overwritten — the history of what was believed and when is the thing that makes a diagnosis worth keeping."
           />
           <ActionForm

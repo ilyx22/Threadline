@@ -138,11 +138,14 @@ export function missingDimensions(ratings: DimensionRating[]): ConstraintDimensi
   return CONSTRAINT_DIMENSIONS.filter((d) => !seen.has(d));
 }
 
-/** Review cadence: a constraint that is never revisited becomes an assumption. */
+/**
+ * Review cadence: a constraint that is never revisited becomes an assumption.
+ * Reviews follow the four-week service period (28 days), not the calendar month.
+ */
+export const REVIEW_INTERVAL_DAYS = 28;
+
 export function defaultReviewDate(from = new Date()): Date {
-  const date = new Date(from);
-  date.setMonth(date.getMonth() + 1);
-  return date;
+  return new Date(from.getTime() + REVIEW_INTERVAL_DAYS * 86_400_000);
 }
 
 export function isReviewOverdue(reviewDate: Date | null | undefined, now = new Date()): boolean {

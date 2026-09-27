@@ -128,6 +128,15 @@ export async function runSales(fx: Fixture) {
   const fc = await (await import("../../src/lib/data/acquisition")).funnelCounts({ start: new Date(Date.now() - 86_400_000), end: new Date(Date.now() + 60_000) });
   record("touches", "funnel counts carry targeted and touches", (fc.targeted ?? 0) >= 1 && (fc.touches ?? 0) >= 2 ? "PASS" : "FAIL", `targeted=${fc.targeted} touches=${fc.touches}`);
 
+  const tv = await attempt(() => Acq.logTouchAction(tp.id, null, fd({ kind: "follow_up", messageVersion: "S2-E2-B" })));
+  const tvRow = await prisma.prospectTouch.findFirst({ where: { prospectId: tp.id, messageVersion: "S2-E2-B" } });
+  record("touches", "the message version sent is recorded on the touch (A/B countable)", tv.outcome === "ok" && !!tvRow ? "PASS" : "FAIL", `${tv.outcome}`);
+  const ew = await prisma.marketWedge.create({ data: { label: `${QA}energy-wedge`, state: "interviews", active: false, nextAction: "Interview", nextActionDueAt: new Date() } });
+  const ce = await attempt(() => Val.addConversationAction(ew.id, null, fd({ person: "Energy Test", problem: "Expertise is invisible before the call.", problemEnergy: "4", awarenessState: "problem_aware" })));
+  const bad = await attempt(() => Val.addConversationAction(ew.id, null, fd({ person: "Energy Test 2", problem: "Expertise is invisible before the call.", problemEnergy: "9" })));
+  const energyConv = await prisma.validationConversation.findFirst({ where: { wedgeId: ew.id, person: "Energy Test" } });
+  record("validation", "interviews record problem energy (0–5) and awareness; out-of-range energy is refused", ce.outcome === "ok" && energyConv?.problemEnergy === 4 && energyConv?.awarenessState === "problem_aware" && bad.outcome !== "ok" ? "PASS" : "FAIL", `${ce.outcome} ${bad.outcome} energy=${energyConv?.problemEnergy}`);
+
   section("acquisition arithmetic — refuses to project from unknowable rates");
   const target = await attempt(() => Acq.saveTargetAction(null, null, fd({ label: `${QA}target`, targetWins: 2, periodStart: new Date().toISOString().slice(0, 10), periodEnd: new Date(Date.now() + 84 * 86_400_000).toISOString().slice(0, 10) })));
   record("acquisition", "target with no assumed rates saves", target.outcome === "ok" ? "PASS" : "FAIL", `${target.outcome} ${(target as { message?: string }).message?.slice(0, 60) ?? ""}`);

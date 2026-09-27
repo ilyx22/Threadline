@@ -4,6 +4,7 @@
 **Governs:** SOP 03 (Drive `11q7dbVBUAs0noq7hoNV2jEyHU6C9eElX`), the Execution Manual V14.3 (Drive `1EhDghb6YVA28Zus0yQRniRHtB-x0TB5Q2oduj-duAY0`) §15 sales state map and §3 offer, and the SOP Router. Where they differ on stage names, the Execution Manual (the Router's primary script authority) is followed. This guide arranges them for use on a live call; it does not replace them.
 **Approved wording:** every passage marked **[VERBATIM X]** is in `APPROVED_VERBATIM_LIBRARY.md` and must be read from there exactly. Everything marked **ADAPTATION (draft, owner approval pending)** is new wording that has not been approved yet.
 **Internal only.** This guide contains the commercial terms. Pricing never appears on the public site.
+**Authority order (revised 26 September 2026, `../sprint/authority/AUTHORITY_ADDENDUM.md` §B):** (1) founder-locked decisions plus law and platform terms; (2) Acquisition Nirvana and EasyGrow 2.0 (Charlie Morgan's Imperium acquisition programmes), which now govern call structure, closing, payment concessions, booking and show rate; (3) the general Imperium Academy material and the Threadline SOPs built on it; (4) live Threadline evidence; (5) Daniel Fazio, tactical only. The Execution Manual §15 **state map is kept unchanged**; the EasyGrow material changes how each state is run, not the states. Sections marked **ADAPTATION (draft, owner review)** with an **Authority basis** note were added under this order; the owner must confirm that law and platform terms stay above the programmes (ADD §F.1).
 
 ---
 
@@ -13,7 +14,8 @@ This is a diagnosis. Threadline has one defined, productised service. The call d
 
 | Item | Setting |
 |---|---|
-| Length | **45 minutes, proposed.** No diagnosis-call booking event was found in Drive or in any account checked (26 September 2026); 45 minutes is the discovery template in `src/lib/templates/master.ts`. The owner creates the event (see `../outreach/OUTREACH_SEQUENCES.md` §0). Only the 20-minute Calendly research event is recorded as live. |
+| Length | **45–60 minutes** (ADAPTATION, draft, owner review; was "45 minutes, proposed"). EasyGrow: "Calls typically run for 45-60 minutes", "aiming for a one call close", "No more bullshit 'proposals'" (Sales Bedrock `1XEm…`). Book the event at 60 minutes so the close is never rushed; most diagnosis-only calls end sooner. No diagnosis-call booking event exists yet (checked 26 September 2026); the owner creates it (see §0.1 and `../outreach/OUTREACH_SEQUENCES.md` §0). Only the 20-minute Calendly research event is recorded as live. |
+| Aim | **A one-call close**: the call ends with a yes (payment and signature on the call), a no, or a refundable deposit with a dated decision. **No proposal documents**; the standard order form is the only paperwork. The only planned second conversation is for a genuine second decision-maker (the "Partner" objection, §10.1), booked with a date before this call ends. |
 | Who | The prospect's decision-maker: a founder, partner or principal. If the decision needs a second person, find that out in OPEN. |
 | Prep | 15–30 minutes (SOP 03) |
 | Record | Log fit, exact language, problem severity, desired state, objections, offer reaction, value maths, scope requests, next action and date, and the win or loss reason. Log them on the prospect (`/admin/prospects/[id]`) and the SalesCall straight after the call. |
@@ -23,6 +25,40 @@ State map (Execution Manual §15; the SOP Router §5 uses the same order with sh
 **OPEN → BUSINESS ECONOMICS → CURRENT STATE → DESIRED STATE → PRIMARY CONSTRAINT → CONSEQUENCE → VERIFY DIAGNOSIS → PRESCRIPTION → RELEVANT DEMO → COMMERCIALS → ACTUAL BLOCKER / DECISION → NEXT STATE**
 
 Rules (Execution Manual §15): use flexible conversation but fixed information states; never fake certainty; do not ask the client to design the service; never pitch before diagnosis; never feature-dump Threadline OS; only demo modules that support the diagnosed constraint or resolve an objection; quantify economic context, not fictional ROI; do not fight a legitimate NOT_FIT; log exact VOC and objections; version scripts from patterns, not one emotional call.
+
+### How the EasyGrow call structure sits on the state map
+
+**ADAPTATION (draft, owner review).** The Execution Manual state map above is unchanged. EasyGrow's five steps and question flow run inside it:
+
+| EasyGrow step and time budget | Execution Manual states | EasyGrow question flow inside it |
+|---|---|---|
+| **Line of questioning**, 20–40 min; set the frame in the first 30–60 seconds | OPEN → BUSINESS ECONOMICS → CURRENT STATE → PRIMARY CONSTRAINT → CONSEQUENCE → DESIRED STATE → VERIFY DIAGNOSIS | current situation (CURRENT STATE, BUSINESS ECONOMICS) → problems (PRIMARY CONSTRAINT) → emotional impact (CONSEQUENCE: "what does this cost you, and how does it feel to keep carrying it?") → desired situation (DESIRED STATE) → consequence of no change (CONSEQUENCE) → urgency ("why now?", asked again before VERIFY) |
+| **Pitch** and **answering their questions**, 5–15 min | PRESCRIPTION → RELEVANT DEMO | outcome, method, risk reversal (DECISION PENDING), "think of us like…" (§8) |
+| **Conquering objections**, 2–10 min | COMMERCIALS → ACTUAL BLOCKER | price, then "How do you feel about that?"; room-clearing order (§9.1, §10.1) |
+| **Closing** and payment, 5–10 min | ACTUAL BLOCKER / DECISION → NEXT STATE | yes (payment and signature on the call), no, or deposit plus a dated decision (§11) |
+
+Note on order: EasyGrow asks the desired situation **before** the consequence of no change. Run DESIRED STATE before the second half of CONSEQUENCE (the cost of staying where they are) so the gap is clear; the state names and the information captured do not change.
+
+**Authority basis:** EasyGrow Sales Bedrock (`1XEm…`: five steps, 45–60 minutes, one-call close); Conquering Objections P1 (`1hWk…`: phase lengths); Sales Principles (`1wMN…`: "current situation → problems → emotional impact → desired situation → consequence → urgency", frame in "the first 30 to 60 seconds"); ADD C.8, E.3.1–E.3.2. Execution Manual §15 for the states (kept).
+
+---
+
+## 0.1 Pre-call: booking, reminders and no-shows
+
+**ADAPTATION (draft, owner review).**
+
+| Item | Rule |
+|---|---|
+| Booking window | Book **2–4 days out, never more than 5**. Minimum notice 4 hours. |
+| Availability | At least **24 hours of bookable time a week**, with **10 or more slots visible**; do not over-qualify before booking. |
+| Source tracking | One booking event per sending system (Loom OS email, LinkedIn, research), so every booking records its source and campaign cell. |
+| Format | Offer phone or video. EasyGrow finds phone meetings show up better than video; the demo needs a screen, so if they choose phone, offer to share the screen only for the demo segment. |
+| Confirmation | **One** confirmation contact about **24 hours before** (a call if they gave a number and the checks in `../sprint/emails/REPLY_PLAYBOOK.md` §4.2 pass, otherwise email). After they confirm, no more confirmation calls. |
+| One hour before | "Still good for our call in an hour?" sent about 1 hour before (EasyGrow uses 56 minutes). |
+| No-show | At the start time: call once (if allowed) and email the meeting link. **+5 minutes:** call again. **+10 minutes:** send a reschedule link. Label No-Show; at most 3 rebooking follow-ups, 2 business days apart. |
+| Reading the show rate | Only after **30 bookings**. EasyGrow expects no-shows 10–20% of the time. |
+
+**Authority basis:** EasyGrow Theory of Show Rate (`1gYEyOre…`: "NEVER book someone more than 5 days out"; "2-4 days"; "at least 24 hours of availability every week"; phone beats video on show rate; "Get to 30 appointments…"); Show Rate Tactics (`1Q35VAzC…`: one confirmation call, the "Are You Still Good For Our Call in An Hour?" message, the no-show protocol); Loom Doctor (`1zTcCZN4G6wYwiIB_puMXeDHzwVieWWQM`: "10+ slots", separate booking events); "10_ Managing Prospects" (`1_DJsPQ_dVQIQQQaaCF_1ZJNkLck_NQb9`: no-shows 10–20%); ADD C.7, D12, E.3.8. **Not adopted:** "call twice a day, every day for another 7 days" after a no-show (rank 1: nuisance-call risk; TPS/CTPS). Execution Manual §14 booking touches are kept as the content of these messages.
 
 ---
 
@@ -165,6 +201,14 @@ A separate stage, not a courtesy. Summarise the problem in their own words: the 
 **Prescription.** Explain how the standard Threadline process addresses the constraint you diagnosed, and which parts are configured to their business. Threadline owns a defined 80% process; their business, voice, market and proof make up the configured 20% (SOP 03). Explain the division of labour with the Execution Manual's line, **verbatim from Execution Manual V14.3** (§2):
 > “You talk. You record. You approve. You sell. Threadline handles the machine.”
 
+**ADAPTATION (draft, owner review): the pitch, 5–15 minutes, in four beats.**
+1. **Outcome (their words, not a forecast):** "You said you want {their desired state}. What we'd be building is the machine that puts your thinking in front of those buyers every week." No views, leads or revenue numbers.
+2. **Method:** the prescription above, tied to the constraint they confirmed.
+3. **Risk reversal: DECISION PENDING (owner).** Only once approved, in the approved words: "If we miss the production and publishing milestones we agree for your first four weeks, while you've kept to your recording and approval slots, we refund the implementation fee in full." If the owner declines, leave this beat out; never improvise a guarantee. (Same line as `../sprint/emails/CAMPAIGN_PACK.md` §1.3.)
+4. **"Think of us like…" packaging:** "Think of us as the content team a firm like yours would hire if it had the time to manage one: research, scripts, production and reporting, with you only talking, recording and approving." Choose one comparison and keep it true.
+
+**Authority basis:** EasyGrow Conquering Objections P1 (`1hWk…`: pitch and Q&A 5–15 minutes); Offer Architect (`1Oo6rIsHhowhzY9KDMErRzQBRe0E6aBVX`: niche, outcome, timeframe, risk reversal, methodology); Nirvanan Pricing & Guarantees (`1O7x8C4pt93Zait_RvCpiZ_vEHFmCBiNi`: refund conditional on both sides doing the work; "never go into the red"); ADD D6, E.3.3. Objection Vault approved answer ("We guarantee controllable implementation/output milestones") is the existing Threadline basis for a milestone-only promise.
+
 **Demo: one path, tied to the constraint.** No tours. Use a demo workspace that holds only synthetic data, and say that it is synthetic.
 
 | Diagnosed constraint | Show (Threadline OS route in the client workspace, `/app/[org]/…`) | Say |
@@ -231,6 +275,33 @@ Use the prospect's own numbers with **[VERBATIM D]**: the main phrasing, the alt
 
 To finish, use **[VERBATIM E]**, the downside-asset frame.
 
+### 9.1 Price, then "How do you feel?", then the payment concession ladder
+
+**ADAPTATION (draft, owner review).** Consistent with the one offer: **£2,500 implementation, then £2,500 every four weeks; initial 12 weeks = £10,000.** Nothing on this ladder changes the price, the scope or the total. Only the **implementation fee** is ever split, and only when money timing is the isolated blocker (the Execution Manual rule, verbatim above: "Custom split-payment only when a qualified prospect is sold and money timing is isolated; usually split implementation, preserve total economics.").
+
+**1. State the price plainly, then stop talking.**
+> "The initial engagement is twelve weeks. It's £2,500 to implement, then £2,500 every four weeks: £10,000 in total for the first twelve weeks. How do you feel about that?"
+
+Then wait. Their answer tells you which objection is real (§10.1). Do not pre-empt it with a discount or a payment plan.
+
+**2. If the answer is yes:** go straight to payment and signature on the call (§11, WON). **Always start with payment in full.**
+
+**3. If money timing (not value) is the isolated blocker, concede one step at a time, only as far as needed:**
+
+| Step | Implementation fee | Four-weekly fee | Offer it when |
+|---|---|---|---|
+| 1 | **£2,500 in full** today | Unchanged | Always first |
+| 2 | **Two parts:** £1,250 today, £1,250 in 30 days | Unchanged | "The value's there; the timing this month is the issue" |
+| 3 | **Three parts:** about £834 today, then two parts of about £833 at four-week intervals | Unchanged | Step 2 still does not fit their cash timing |
+| 4 | **Refundable deposit of about 10% (£250)** today to hold a start date, with a **dated decision** on the remaining balance | Unchanged | They want to go ahead but cannot commit the fee on the call (for example, waiting for a client payment) |
+
+- **No discounting at any step** (the price follows value and economics, not hours; §9 rules). Total economics are preserved.
+- **Deposit terms (owner and counsel to confirm):** refundable in full if they decide no by the dated decision; applied to the implementation fee if they go ahead; recorded on the prospect with the date.
+- **Split parts are written into the order form** (`../sprint/contracts/ORDER_FORM_SOW.md`) with dates, so the client and Threadline see the same schedule.
+- **Never "monthly".** Say "every four weeks" and "in 30 days".
+
+**Authority basis:** EasyGrow The Close 1–9 (Imperium Acquisition: the close "starts the second you drop the price and ask, 'How do you feel?'"; concession order pay in full → 50% now and 50% in 30 days → 3 payments → 4–5 payments → refundable deposit of about 10%; "The deal isn't done until the cash is collected"); Nirvanan Pricing & Guarantees (`1O7x8C4pt93Zait_RvCpiZ_vEHFmCBiNi`: "Always start with the pay in full and concession your way down"; 2- and 3-part plans collect "80-90%+"); ADD C.8, C.9, D11, E.3.4. **4–5 part plans are not used**: they would split a £2,500 fee past the initial twelve weeks (AN: longer plans collect worst). Execution Manual V14.3 split-payment rule (kept, verbatim above).
+
 ---
 
 ## 10. Objections: honest responses
@@ -258,15 +329,32 @@ The Playbook's and SOP 03's approved passages come first. Adaptations are labell
 
 Log the exact wording of every objection, how often it comes up, the response used and the result (Objection Vault rule).
 
+### 10.1 Clearing the room: the order to work through objections
+
+**ADAPTATION (draft, owner review).** After "How do you feel about that?", clear objections in this order, one at a time, and confirm each is resolved before the next ("Is that the only thing stopping you, or is there something else?"). The answers in the table above still apply; this adds the order and Threadline's own bridge lines. Course wording is not copied.
+
+| Order | Objection family | Threadline bridge (own wording) | Then use |
+|---|---|---|---|
+| 1 | **Re-tie and value** (not yet convinced it solves their problem) | "Let's go back to what you told me: {constraint in their words}, and it's costing you {their consequence}. Does what I've shown you actually fix that? If not, tell me where it falls short." | VERIFY DIAGNOSIS again; [VERBATIM I]; the relevant demo path |
+| 2 | **Money** (value or affordability) | "Is it the amount, or when it has to be paid?" If the amount: [VERBATIM D] with their numbers and the price row above. If the timing: the concession ladder (§9.1). | [VERBATIM D], [VERBATIM E]; never a discount |
+| 3 | **Time / timing** ("not now", "after the quarter") | "What changes between now and then? If nothing does, the same problem will be waiting, just later." If there is a real dated reason, agree a dated decision (§11). | [VERBATIM G] if it is about length |
+| 4 | **Partner** (another decision-maker) | "What will they want to know? Let's book a time with both of you now, within a few days, and I'll come ready for their questions." | FOLLOW_UP with the date booked on this call |
+| 5 | **Fear** ("what if it doesn't work?") | "That's a fair worry, and I'm not going to promise results I can't control." Then [VERBATIM C], [VERBATIM H], and the milestone risk reversal **only if approved** (§8, DECISION PENDING). | Objection Vault guarantee answer |
+
+- **Honesty limits stay:** no invented deadlines, no fake scarcity, no outcome guarantees, no private case studies. EasyGrow's own "in or out" is a real decision request, not a manufactured one.
+- If a family is a genuine NOT_FIT (for example, the economics truly do not work), say so and end with NOT_FIT.
+
+**Authority basis:** EasyGrow The Close 1–9 (room-clearing order "Re-Tie & Value, Money, Time, Partner, Fear"); Objection Handling Vault (`1tmN…`) and Handling Replies & Objections (`1MB2…`) for the principle of isolating the real objection; ADD C.8, D10, E.3.5. Approved honest answers from SOP 03, the Execution Manual and the Objection Vault are kept unchanged in the table above.
+
 ---
 
 ## 11. ACTUAL BLOCKER / DECISION, then NEXT STATE
 
-Before asking for a decision, name the **actual blocker** (Execution Manual §15): the one thing that would stop a yes today (budget timing, another decision-maker, a scope question, trust). Deal with that, not a generic objection. A one-call close is allowed when fit, trust and the decision process support it. It is not a forced doctrine. **No fake urgency**: no invented deadlines, no "only two spots left" unless that is literally true and recorded.
+Before asking for a decision, name the **actual blocker** (Execution Manual §15): the one thing that would stop a yes today (budget timing, another decision-maker, a scope question, trust). Deal with that, not a generic objection. **ADAPTATION (draft, owner review; replaces "a one-call close is allowed … not a forced doctrine"):** aim for a one-call close on every qualified call (§11.1). The only planned exception is a genuine second decision-maker, handled with a dated follow-up booked before the call ends. **No fake urgency**: no invented deadlines, no "only two spots left" unless that is literally true and recorded.
 
 | End state | Criteria | Next action (always dated) |
 |---|---|---|
-| **WON** | Verbal yes to the one offer | Start SOP 04 the same day: confirm legal and billing details → agreement or order form with only the agreed scope → payment instructions → welcome note → workspace → book the 60–90 minute Brand Brain kickoff. Ask **[VERBATIM B]** and record `testimonial_permission_if_successful` as YES / MAYBE / NO with the exact wording. |
+| **WON** | Verbal yes to the one offer, **with payment and signature taken on the call** (§11.1; ADAPTATION) | Start SOP 04 on the call (§11.1), then the same day: confirm legal and billing details → agreement or order form with only the agreed scope → payment instructions → welcome note → workspace → book the 60–90 minute Brand Brain kickoff. Ask **[VERBATIM B]** and record `testimonial_permission_if_successful` as YES / MAYBE / NO with the exact wording. |
 | **PROPOSAL_PROCESS** | Fit confirmed, but a formal proposal or another decision-maker is needed | Send the proposal (repo `DRAFT_Proposal_SOW_Commercial_Checklist.md`, with its "Monthly fee" field read as "fee every four weeks") by an agreed date; book the decision conversation now |
 | **FOLLOW_UP** | Interested; timing or information outstanding | Always record (Execution Manual §15): the **blocker or reason**, the **next action**, its **due date**, its **owner**, and the **exact outstanding question or decision**. Send only what was promised. |
 | **NOT_FIT** | A filter or disqualifier failed | Say why, thank them, and suggest an alternative if you honestly have one. Close the record with the reason. |
@@ -275,6 +363,22 @@ LOST is recorded later, when a FOLLOW_UP or PROPOSAL_PROCESS ends without a yes:
 
 **ADAPTATION (draft), close question:**
 > "Based on what you've told me, I think this is a fit, and the economics you described make it worth testing. Do you want to go ahead with the initial twelve weeks?"
+
+### 11.1 One-call close: leave with a decision
+
+**ADAPTATION (draft, owner review).**
+
+- **Target outcome of every qualified call:** a **yes** (payment and signature during the call), a **no** (NOT_FIT, or LOST later), or a **refundable deposit plus a dated decision** (§9.1 step 4). "Maybe, send me something" is not an outcome: ask what exactly they need to decide and put a date on it. Open loops kill deals.
+- **PROPOSAL_PROCESS stays in the state map** (Execution Manual §15), but no bespoke proposal document is written. If a partner or procurement genuinely needs something in writing, send the standard order form with only the agreed scope, and book the decision conversation before the call ends.
+- **WON, on the call** (EasyGrow "All onboarding steps are to be taken while on the call"):
+  1. Confirm the legal and billing details while you are still talking.
+  2. **Take payment and signature in the same call:** send the order form for e-signature and the payment link together, and stay on while they complete both. **The order of payment versus terms waits for legal review** (EasyGrow's "ALWAYS GET PAYMENT BEFORE SENDING TERMS" needs a check under UK contract law before it is adopted; ADD §F.5). Until then, neither is sent without the other.
+  3. Book the 60–90 minute Brand Brain kickoff before hanging up.
+  4. Ask **[VERBATIM B]** and record `testimonial_permission_if_successful` (YES / MAYBE / NO) with the exact wording.
+  5. **Access the next working day:** the welcome note and workspace go out the next working day (SOP 04 sequence otherwise unchanged).
+- **"The deal isn't done until the cash is collected."** A verbal yes without payment is recorded as FOLLOW_UP with a dated payment action, not WON.
+
+**Authority basis:** EasyGrow Sales Bedrock (`1XEm…`: one-call close, no proposals); The Close 1–9 ("Always Leave with a Decision"; "The deal isn't done until the cash is collected"); Program Onboarding SOP (`1jCz…`: onboarding on the call; payment before terms; next-day access); ADD C.8, D10, E.3.6–E.3.7. SOP 04 (Drive `1iwAKxQaxZ981bfgraKjwfrrWbacB03EQ`) and the Execution Manual §15 states are kept.
 
 ---
 
@@ -298,5 +402,10 @@ The drafts are in `../outreach/OUTREACH_SEQUENCES.md` §9 (post-call). Rules:
 - Drive First US Playbook V1 (`1km_ovpl0Zwn70AlQ0gHECdMhxC1SjONYwATx_qAZ_4s`)
 - Repo `Threadline Final Working Resources/03 Acquisition and Sales/DRAFT_*.md`
 - `src/lib/templates/master.ts` (discovery structure, 45 minutes)
+- **Added 26 September 2026 (revised authority order, `../sprint/authority/AUTHORITY_ADDENDUM.md`):**
+  - EasyGrow / Imperium Acquisition sales material: Sales Bedrock slides (`1XEm…`), Conquering Objections P1/P2 (`1hWk…`, `1ggT…`), Sales Principles (`1wMN…`), Objection Handling Vault (`1tmN…`), Handling Replies & Objections (`1MB2…`), The Close 1–9, Program Onboarding SOP (`1jCz…`)
+  - EasyGrow show-rate material: Theory of Show Rate (`1gYEyOre…`), Show Rate Tactics (`1Q35VAzC…`), The Loom Doctor (`1zTcCZN4G6wYwiIB_puMXeDHzwVieWWQM`), 10_ Managing Prospects (`1_DJsPQ_dVQIQQQaaCF_1ZJNkLck_NQb9`)
+  - Acquisition Nirvana pricing and offer: 2.3 Nirvanan Pricing & Guarantees (`1O7x8C4pt93Zait_RvCpiZ_vEHFmCBiNi`), 6. Outstanding Offer Architect (`1Oo6rIsHhowhzY9KDMErRzQBRe0E6aBVX`), 1.3 Transition Checklist (`1ignw755gtm5XqbPjTVhzIJaaa_nGKBoq`)
+  - Shortened ids are prefixes of the files listed in ADD §A.3. Principles only; no course text is reproduced (Imperium licence notice, ADD §A.2).
 - `prisma/schema.prisma` (the Prospect economics fields)
 - App routes under `src/app/app/[org]/`

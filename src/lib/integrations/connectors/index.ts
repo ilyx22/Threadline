@@ -39,6 +39,12 @@ export type PublishInput = {
   mediaKind?: "video" | "image" | "none";
   /** Client-supplied key so a retried publish cannot post twice where the provider supports it. */
   idempotencyKey?: string;
+  /**
+   * Choices the person made on the publish screen for this platform, e.g. for
+   * TikTok: privacyLevel, allowComment, allowDuet, allowStitch, brandContent,
+   * brandOrganic. Absent means "not chosen"; connectors never invent a choice.
+   */
+  platformOptions?: Record<string, unknown>;
 };
 
 export type Connector = {

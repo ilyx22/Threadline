@@ -138,11 +138,10 @@ describe("completeness gate", () => {
 });
 
 describe("review cadence", () => {
-  it("defaults a review a month out", () => {
+  it("defaults a review one four-week service period (28 days) out", () => {
     const from = new Date("2026-03-15T12:00:00Z");
     const next = defaultReviewDate(from);
-    assert.ok(next > from);
-    assert.equal(next.getMonth(), (from.getMonth() + 1) % 12);
+    assert.equal(next.getTime() - from.getTime(), 28 * 86_400_000);
   });
 
   it("flags an overdue review", () => {

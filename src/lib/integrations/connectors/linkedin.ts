@@ -7,6 +7,15 @@ import { envAuthConfig, http, mapHttpError, type Connector } from "./index";
  * unsupported rather than guessed from likes.
  */
 const API = "https://api.linkedin.com";
+/**
+ * LinkedIn versions its REST API monthly (YYYYMM) and retires each version
+ * after about a year. 202409 had been retired by September 2026; override
+ * with LINKEDIN_API_VERSION when LinkedIn retires this one.
+ */
+export function linkedinVersion(env: Record<string, string | undefined> = process.env) {
+  const v = env.LINKEDIN_API_VERSION?.trim();
+  return v && /^\d{6}$/.test(v) ? v : "202606";
+}
 
 export const linkedin: Connector = {
   provider: "linkedin",
@@ -34,7 +43,7 @@ export const linkedin: Connector = {
     };
     const res = await http(`${API}/rest/posts`, {
       method: "POST",
-      headers: { Authorization: `Bearer ${input.accessToken}`, "Content-Type": "application/json", "LinkedIn-Version": "202409", "X-Restli-Protocol-Version": "2.0.0" },
+      headers: { Authorization: `Bearer ${input.accessToken}`, "Content-Type": "application/json", "LinkedIn-Version": linkedinVersion(), "X-Restli-Protocol-Version": "2.0.0" },
       body: JSON.stringify(body),
     });
     if (res.status === 201 || res.status === 200) {
@@ -46,7 +55,7 @@ export const linkedin: Connector = {
 
   async fetchMetrics(input) {
     const endpoint = `${API}/rest/socialActions/${encodeURIComponent(input.externalId)}`;
-    const res = await http(endpoint, { headers: { Authorization: `Bearer ${input.accessToken}`, "LinkedIn-Version": "202409", "X-Restli-Protocol-Version": "2.0.0" } });
+    const res = await http(endpoint, { headers: { Authorization: `Bearer ${input.accessToken}`, "LinkedIn-Version": linkedinVersion(), "X-Restli-Protocol-Version": "2.0.0" } });
     if (res.status !== 200) return { ok: false, ...mapHttpError(res.status, res.headers, res.json ?? res.text, "LinkedIn") };
     const j = res.json as { likesSummary?: { totalLikes?: number }; commentsSummary?: { totalFirstLevelComments?: number } } | null;
     return {
