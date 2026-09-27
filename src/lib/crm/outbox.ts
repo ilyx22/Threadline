@@ -42,6 +42,20 @@ export async function kickCrm(rowIds: string[]) {
 
 const MAX_ATTEMPTS = 8;
 
+/** The workspace a CRM row is about, if any (to keep test workspaces out of the CRM). */
+async function orgOfRow(entityType: string, entityId: string): Promise<string | null> {
+  if (entityType === "organization" || entityType === "membership") return entityId; // membership-type people are keyed by org id
+  if (entityType === "engagement") return (await prisma.engagement.findUnique({ where: { id: entityId.split(":")[0] }, select: { orgId: true } }))?.orgId ?? null;
+  if (entityType === "application") return (await prisma.application.findUnique({ where: { id: entityId }, select: { orgId: true } }))?.orgId ?? null;
+  return null;
+}
+
+/** A synthetic (test / dry-run) workspace never reaches the live CRM. */
+export async function isSyntheticWorkspace(orgId: string | null) {
+  if (!orgId) return false;
+  return (await prisma.organization.findUnique({ where: { id: orgId }, select: { synthetic: true } }))?.synthetic === true;
+}
+
 async function linkFor(entity: { type: string; id: string } | null, remoteObject: string) {
   if (!entity) return null;
   const l = await prisma.crmLink.findUnique({ where: { provider_entityType_entityId: { provider: "attio", entityType: entity.type, entityId: entity.id } } });
@@ -54,7 +68,11 @@ async function linkFor(entity: { type: string; id: string } | null, remoteObject
  */
 export async function sendOutboxRow(id: string, opts: { client?: AttioClient; env?: Record<string, string | undefined> } = {}) {
   const row = await prisma.crmOutbox.findUniqueOrThrow({ where: { id } });
-  if (row.state === "sent" || row.state === "dead" || row.state === "needs_review") return row.state;
+  if (row.state === "sent" || row.state === "dead" || row.state === "needs_review" || row.state === "skipped") return row.state;
+  if (await isSyntheticWorkspace(await orgOfRow(row.entityType, row.entityId))) {
+    await prisma.crmOutbox.update({ where: { id }, data: { state: "skipped", lastError: "Not sent: synthetic (test) workspace." } });
+    return "skipped";
+  }
   const env = opts.env ?? process.env;
   const token = env.ATTIO_API_KEY;
   if (!opts.client && (!token || !sideEffectsAllowed(env))) {
@@ -110,7 +128,7 @@ export async function sendOutboxRow(id: string, opts: { client?: AttioClient; en
 
 /** Operator view: everything not yet in the CRM, oldest first. */
 export async function crmBacklog() {
-  return prisma.crmOutbox.findMany({ where: { state: { not: "sent" } }, orderBy: { createdAt: "asc" }, take: 100 });
+  return prisma.crmOutbox.findMany({ where: { state: { notIn: ["sent", "skipped"] } }, orderBy: { createdAt: "asc" }, take: 100 });
 }
 
 /** Operator action: try a parked row again (after fixing the cause). */

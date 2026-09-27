@@ -64,7 +64,7 @@ const touch = (key: string) => prisma.relationshipTouch.findUniqueOrThrow({ wher
 
 before(async () => {
   ownerId = (await prisma.user.create({ data: { email: `ilyas-${stamp}@threadline.example`, name: "Relationship Owner", passwordHash: "x" } })).id;
-  orgId = (await prisma.organization.create({ data: { slug: `qa-cadence-${stamp}`, name: "Disposable Client LLC", kind: "client", synthetic: true } })).id;
+  orgId = (await prisma.organization.create({ data: { slug: `qa-cadence-${stamp}`, name: "Disposable Client LLC", kind: "client", synthetic: false } })).id;
   engagementId = (await prisma.engagement.create({ data: { orgId, setupFeeMinor: 250000, periodFeeMinor: 250000, timezone: "America/New_York", createdById: ownerId } })).id;
   await prisma.crmLink.create({ data: { provider: "attio", entityType: "organization", entityId: orgId, remoteObject: "companies", remoteId: `rec_company_${stamp}` } });
 });
@@ -174,6 +174,16 @@ describe("relationship cadence: disposable client, 12-week sequence", () => {
     assert.equal(r.created, 0);
     assert.ok(r.flagged >= 1);
     assert.match((await touch("w10")).syncError ?? "", /removed in Attio/);
+  });
+
+  it("a synthetic (test) workspace never reaches Attio", async () => {
+    await prisma.organization.update({ where: { id: orgId }, data: { synthetic: true } });
+    const before = attio.tasks.size;
+    await prisma.relationshipTouch.updateMany({ where: { engagementId, key: "review3" }, data: { dueAt: new Date("2027-03-01T15:00:00Z") } });
+    const r = await pushCadence(engagementId, { client: attio.client, env: {} });
+    assert.match(r.held ?? "", /synthetic/);
+    assert.equal(attio.tasks.size, before, "nothing created");
+    await prisma.organization.update({ where: { id: orgId }, data: { synthetic: false } });
   });
 
   it("ending the engagement cancels every planned touch and removes the open Attio tasks, keeping completed ones", async () => {

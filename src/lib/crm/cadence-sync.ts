@@ -3,6 +3,7 @@ import { prisma } from "@/lib/db/client";
 import { sideEffectsAllowed } from "@/lib/env";
 import { appUrl } from "@/lib/app-url";
 import { AttioClient, AttioError, type AttioTask } from "./attio";
+import { isSyntheticWorkspace } from "./outbox";
 
 /**
  * Mirror an engagement's relationship touches into Attio as tasks linked to
@@ -32,6 +33,12 @@ export async function pushCadence(engagementId: string, opts: { client?: AttioCl
   const now = opts.now ?? new Date();
   const result: PushResult = { created: 0, moved: 0, completedFromAttio: 0, completedInAttio: 0, deleted: 0, flagged: 0 };
   const token = env.ATTIO_API_KEY?.trim();
+  const eng = await prisma.engagement.findUnique({ where: { id: engagementId }, select: { orgId: true } });
+  if (eng && (await isSyntheticWorkspace(eng.orgId))) {
+    result.held = "Not synced: synthetic (test) workspace.";
+    await prisma.relationshipTouch.updateMany({ where: { engagementId, attioTaskId: null }, data: { syncError: result.held } });
+    return result;
+  }
   if (!opts.client && (!token || !sideEffectsAllowed(env))) {
     result.held = token ? "Held: CRM writes run only in production." : "Held: ATTIO_API_KEY is not configured.";
     await prisma.relationshipTouch.updateMany({ where: { engagementId, attioTaskId: null, status: "planned" }, data: { syncError: result.held } });
