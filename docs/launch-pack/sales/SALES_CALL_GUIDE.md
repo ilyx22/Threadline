@@ -116,6 +116,11 @@ A disqualifier is not a failure. End with NOT_FIT, say why plainly, and suggest 
 
 Purpose: agree the agenda and the decision process, and find out why they are here now.
 
+**ADAPTATION (draft), recording consent, said before anything else:**
+> "Before we start: I use a notetaker so I can listen properly instead of scribbling. It records and transcribes the call, and the notes stay with me. Is that OK? If you'd rather not, I'll switch it off."
+
+If they say no, remove the notetaker from the call straight away and take notes by hand. Never record without a clear yes: several US states require every party's consent, and UK data protection requires telling people. The notetaker appearing as a participant is not consent.
+
 **ADAPTATION (draft, owner approval pending), agenda:**
 > "Here's what I'd suggest for the time. I'd like to understand how work comes in today and how content fits into that. Then we'll see whether the problem Threadline solves is actually your problem. If it is, I'll show you the one part of the system that's relevant, and we'll decide the next step together. If it isn't a fit, I'll say so. Does that work?"
 

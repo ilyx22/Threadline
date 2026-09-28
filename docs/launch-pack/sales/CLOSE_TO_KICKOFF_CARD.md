@@ -27,7 +27,7 @@
 New workspaces default to **kickoff mode**: the client fills in only the business basics and access before the call (about 10 minutes); you fill in the rest with them on it.
 
 1. **Before the call:** tell the client to do only the two short sections; don't ask them to write up the rest.
-2. **On the call:** open **Admin → client → Onboarding** (or `/onboarding/<workspace>`). The staff banner lets you jump to any section; empty required fields never block you. Type as they talk, in their words. Spend the time on Customer, Founder and Voice. Record the call.
+2. **On the call:** open **Admin → client → Onboarding** (or `/onboarding/<workspace>`). The staff banner lets you jump to any section; empty required fields never block you. Type as they talk, in their words. Spend the time on Customer, Founder and Voice. Record the call only after asking at the start and getting a clear yes (the consent line in `SALES_CALL_GUIDE.md` §3).
 3. **Gaps:** with the Anthropic key set, **Draft from call transcript** proposes answers from the transcript. Tick the ones that are right (answers already filled start unticked), apply, then move on to save. Without the key it refuses and drafts nothing.
 4. **After the call:** on **Review**, click **Send to client to check**. The client gets a notice (and their daily email), lands on Review with your answers marked **From your call**, corrects them, and confirms, which builds the workspace. If the client asks you to, **Build now without the client check** is available.
 5. For a client who prefers to fill it in alone, switch the banner's mode to **Client fills it all in alone**.

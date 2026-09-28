@@ -78,6 +78,7 @@ The playbook's question list is malformed. Line "16." runs straight into questio
 
 ## 3. Operator notes (READY FOR OWNER REVIEW)
 
+- **Recording consent (ADAPTATION, draft).** Before the verbatim opener, ask: "Before we start: I use a notetaker so I can listen properly instead of scribbling. It records and transcribes the call, and the notes stay with me. Is that OK? If you'd rather not, I'll switch it off." No clear yes means no recording: remove the notetaker and take notes by hand. The notetaker appearing as a participant is not consent.
 - **Time.** The event is 20 minutes. All 23 questions will not fit. Core subset: 3, 5, 7, 8, 11, 12, 13, 14. Use 18–23 (economics and the price test) only when time allows and the conversation is commercially literate, and never at the start.
 - **Price test (22–23).** Only after neutral discovery. Log exact language and ranges separately from the root-problem score. One enthusiastic answer is not pricing validation.
 - **Identity.** The opener is first-person ("I'm building/researching…"). It must be said by the real person running the call. Founder-personal research outreach waits for the employer-clearance decision (`../outreach/OUTREACH_SEQUENCES.md` §0.2).
