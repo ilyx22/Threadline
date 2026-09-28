@@ -274,7 +274,10 @@ The six operating shifts and the offer-framing test (installation-first framing 
   - **OWNER:** import it, add the owner column, spot-check.
 - [ ] **OWNER.** Test invitation → 20-minute event → confirmation → CRM (morning step 3).
 - [x] **DONE.** Research and commercial booking are kept separate (`outreach/OUTREACH_SEQUENCES.md` §1, `sprint/emails/CAMPAIGN_PACK.md`).
-  - **OWNER:** create the Diagnosis event.
+  - **DONE (28 Sept).** Diagnosis call event created to `sprint/sales-extra/BOOKING_QUESTIONS_AND_REMINDERS.md`: https://calendly.com/ilyas-threadlinehq/diagnosis-call
+- [ ] **OWNER.** Outbound sending domains: buy a separate outbound domain **plus a backup**, set SPF, DKIM and DMARC on both, and warm both for 2–4 weeks before any cold email batch. Never send cold volume from threadlinehq.com (Blueprint: a separate outbound domain for cold volume). The backup keeps sending running if one domain is burnt, instead of pausing operations for weeks.
+  - Until the domains are warm, only personal A-tier messages and LinkedIn go out; cold email batches wait.
+  - **CLAUDE-QUEUED:** plan the warm-up with the owner (tool, daily ramp, inbox checks) and the domain names.
 - [~] **IN PROGRESS TONIGHT.** The promised one-page asset per A-tier account (`sprint/a-tier-assets/`, 23 accounts plus INDEX).
   - **OWNER:** approve each one immediately before sending.
 - [ ] **OWNER.** Rehearse the research call and the VOC fields. The script is ready.
