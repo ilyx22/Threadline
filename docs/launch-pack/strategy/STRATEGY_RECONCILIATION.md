@@ -67,7 +67,7 @@ The canonical sources are listed in `../SOURCE_REGISTER.md`. The public frontend
 | --- | --- | --- |
 | K-01…K-03 | Public FAQ wording ("month to month", "10 to 14 days", "twenty minutes") vs the commercial doctrine | **Frontend frozen and approved: not changed.** Reported in the claims audit. Sales and onboarding materials state the real terms. |
 | K-04 | "30-day strategy" in the app vs four-week periods | Renamed in the app (not a public page). |
-| K-05 | Research call 15 vs 20 minutes | The live Calendly event is 20 minutes (Drive). The playbook's verbatim "15 minutes" is a flagged source defect for the owner. The diagnosis event is not configured; 45 minutes is proposed. |
+| K-05 | Research call 15 vs 20 minutes | The live Calendly event is 20 minutes (Drive). The playbook's "15 minutes" became 20 by owner decision (28 Sept 2026). The diagnosis event is not configured; 45 minutes is proposed. |
 | K-06/K-07 | Stale repo SOPs and "monthly" drafts | Corrected in commit 5b9fd64 |
 | K-08 | `HANDOFF.md` and the old repo brief | Marked historical. The Drive brief with 18A is now the repo copy. |
 | K-09 | Older favicon/OG identity vs the brand kit | **Frozen: no change.** The brand kit documents the mark as built. No owner action requested. |

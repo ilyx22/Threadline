@@ -99,7 +99,7 @@ All rows: the site status is **reported; owner decision**. The "Reuse elsewhere"
 | C-04 | "We guarantee controllable implementation/output milestones" | SALES_CALL_GUIDE (Objection Vault) | E5 | Needs substantiation. It must match the contract's risk-reversal wording, after legal review, and depends on the client meeting its recording and approval obligations | — |
 | C-05 | "Threadline scored this 82/100 under the current Authority Content rubric" | Verbatim library | E4 (advisory) | Needs substantiation: the Judge is uncalibrated. Always show the rubric version and call it advisory | AG5, R10 |
 | C-06 | £2,500 implementation + £2,500 every four weeks; 12 weeks = £10,000 | LIVE_CALL_ONE_PAGER | E5 | Usable **in the qualified sales conversation only**. Never on public material | Pricing stays private |
-| C-07 | "Founder Research — 20 mins" vs the scripts' "15 minutes" | OUTREACH_SEQUENCES §0.1 | E5 | Needs reconciliation before any research script is sent | CLAIMS_AUDIT T-11 |
+| C-07 | "Founder Research — 20 mins" vs the scripts' "15 minutes" | OUTREACH_SEQUENCES §0.1 | E5 | Resolved 28 Sept: 20 minutes everywhere | CLAIMS_AUDIT T-11 |
 | C-08 | "~12–16 core assets per four-week period" | SALES_CALL_GUIDE §10 | E8 | Usable only as "working hypothesis" | CLAIMS_AUDIT T-13 |
 | C-09 | "Threadline does not use a generic ChatGPT workflow…" | LIVE_CALL_ONE_PAGER (objections) | E4 | Needs substantiation. Be ready to describe the actual human→AI→human route | — |
 | C-10 | "…the positioning, content library, market intelligence and performance history don't disappear." | Verbatim §E | E5 | Needs substantiation against the ownership and IP terms (see A-08) | — |

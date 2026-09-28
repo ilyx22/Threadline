@@ -147,7 +147,7 @@ Never blame the prospect; never invent a reason.
 
 This event exists (per Drive: THREADLINE_CHAT_HANDOFF_2026-09-16 and the master TODO). It stays **genuinely research**: no pitch, no commercial link, no qualifying questions, and no follow-up into sales unless the person asks (`OUTREACH_SEQUENCES.md` §1; research-call open, playbook V1: “I’m not going to pitch you.”).
 
-**Open issue carried forward:** the approved playbook invitation asks for "15 minutes" and the event is 20. Do not send research invitations until the owner resolves it (`OUTREACH_SEQUENCES.md` §0.1; TODO audit §19 item 8). The copy below says 20 minutes to match the event.
+**Resolved:** the invitation now asks for 20 minutes, matching the event (owner decision, 28 Sept 2026; `OUTREACH_SEQUENCES.md` §0.1).
 
 ### 2.1 Booking questions (ADAPTATION)
 

@@ -461,7 +461,7 @@ DF1–DF13 are all **DEFER**, exactly as the TODO says:
    - C-02: IP ownership.
 
    The TODO's own wording is four-week throughout (lines 329–333) apart from the "300-post/month" do-not-copy note.
-8. **15 versus 20 minutes.** The TODO correctly records the 20-minute Calendly event (lines 51 and 218). The canonical playbook's verbatim script still asks for "15 minutes" (K-05, T-11). It is unresolved, so outreach is not send-ready.
+8. **15 versus 20 minutes.** The TODO correctly records the 20-minute Calendly event (lines 51 and 218). The canonical playbook's verbatim script still asks for "15 minutes" (K-05, T-11). Resolved 28 Sept 2026: the owner chose 20 minutes everywhere.
 9. **Scope override versus deferrals.**
    - Line 23 says the advanced backend stays in scope without a cut-off. Line 63, J10 and DF12 say OAuth, auto-publishing and extra integrations are not launch gates.
    - Both are now true: the connectors are built but gated.

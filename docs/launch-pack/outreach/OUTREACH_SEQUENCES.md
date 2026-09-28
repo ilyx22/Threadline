@@ -20,7 +20,7 @@ The personalisation fields (`{{…}}`) and research rules are in `PERSONALISATIO
 | **Diagnosis sales call** (sales track) | **45 minutes, proposed** | Discovery structure in `src/lib/templates/master.ts`; no event recorded in Drive or any account checked | **Does not exist yet.** Owner to create |
 | Brand Brain / kickoff (after WON) | 60–90 minutes | SOP 04; Execution Manual V14.3 | Booked per client |
 
-**Source defect to reconcile before any research script is send-ready.** The approved playbook scripts (§2.2 and §2.3, VERBATIM) ask for "15 minutes", but the booked event is 20 minutes. The Drive 18A brief flags exactly this. The verbatim text is kept unchanged here; the owner decides whether to change the event to 15 minutes or approve a 20-minute version of the scripts. Until then §2.2 and §2.3 are **DRAFT, not send-ready**. Never ask for 15 minutes and then book 20.
+**Research call length: resolved.** The approved playbook scripts (§2.2 and §2.3) originally asked for "15 minutes" while the booked event is 20. Resolved 28 Sept 2026: the owner approved 20 minutes everywhere, matching the live Calendly event. §2.2 and §2.3 below are the owner-approved 20-minute version; the only change from the playbook text is "15" to "20". Never ask for one length and book another.
 
 **Open in the master TODO:** "test the research path invitation → Founder Research 20-minute event" and "Finalise commercial booking questions".
 
@@ -44,7 +44,7 @@ The personalisation fields (`{{…}}`) and research rules are in `PERSONALISATIO
 | | **Research track** | **Sales track** |
 |---|---|---|
 | Purpose | Understand how firms like theirs win work and where content breaks. This builds the interview evidence (10+ conversations, more than 5 converging). | Offer the Threadline engagement to a firm that may fit |
-| Ask | A 20-minute research conversation (the live Calendly event; see §0.1 on the scripts' "15 minutes") | A diagnosis call (45 minutes proposed; event not yet created) |
+| Ask | A 20-minute research conversation (the live Calendly event; the scripts say 20 minutes, §0.1) | A diagnosis call (45 minutes proposed; event not yet created) |
 | Pitch? | **No.** Do not pitch unless the prospect asks for commercial detail on their own (playbook "Do not do"). | Yes, honestly, with no guarantees |
 | Record | In `/admin/market/[id]`, research conversations, with "they raised it" versus "we named it" | In `/admin/prospects/[id]`: state, reply class, next action |
 | Move from research to sales | Only when the prospect asks about working together. Say so plainly: "Happy to talk about that separately — this call was research, so let me not blur the two." Book a separate diagnosis call. | — |
@@ -78,14 +78,14 @@ Structure (playbook): one specific piece of evidence you actually noticed → on
 After a "yes": send the short asset directly (2–3 ideas at most; A-tier gets the one-page format in §6), then ask:
 
 **VERBATIM (playbook V1)**
-> “Sent below — hope at least one is useful. I’m currently researching how senior founder-led AI advisory firms are handling founder content / authority internally as the category gets noisier. I’m not trying to turn this into a pitch. Would you be up for 15 minutes sometime this week so I can understand where the process actually works or breaks on your side?”
+> “Sent below — hope at least one is useful. I’m currently researching how senior founder-led AI advisory firms are handling founder content / authority internally as the category gets noisier. I’m not trying to turn this into a pitch. Would you be up for 20 minutes sometime this week so I can understand where the process actually works or breaks on your side?”
 
 **Operator note (DRAFT until reconciled):** the booked research event is 20 minutes (§0.1). Do not send this wording with the 20-minute link until the owner resolves the mismatch.
 
 ### 2.3 The explicit-exchange variant (one message)
 
 **VERBATIM (playbook V1)**
-> “Hey [Name] — I’m researching how senior AI advisory firms are turning founder expertise into authority and demand. I had a look at [specific thing] and spotted [specific gap]. I’ve got 2–3 concrete ideas I’d happily share in exchange for 15 minutes of your perspective. No pitch — I’m trying to understand what the real bottleneck is before I build around assumptions.”
+> “Hey [Name] — I’m researching how senior AI advisory firms are turning founder expertise into authority and demand. I had a look at [specific thing] and spotted [specific gap]. I’ve got 2–3 concrete ideas I’d happily share in exchange for 20 minutes of your perspective. No pitch — I’m trying to understand what the real bottleneck is before I build around assumptions.”
 
 **Operator note (DRAFT until reconciled):** same 15 versus 20 minute mismatch as §2.2.
 

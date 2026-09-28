@@ -44,7 +44,7 @@
 - [ ] The protected passages are unchanged, and adaptations are clearly labelled.
 - [ ] The call map follows the Execution Manual §15.
 - [ ] Research and sales tracks are separate, and research invitations are genuinely research.
-- [ ] Booking: decide whether the playbook's "15 minutes" becomes 20, to match the live Calendly event (D-02).
+- [x] Booking: the playbook's "15 minutes" becomes 20, to match the live Calendly event (owner decision, 28 Sept 2026).
 - [ ] Sender identity is decided (D-05) before anything is sent.
 
 ## 4. Commercial and operational decisions

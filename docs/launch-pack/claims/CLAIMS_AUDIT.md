@@ -25,7 +25,7 @@ The public site at https://threadline-fawn.vercel.app is owner-approved. The own
 | ID | Claim | Verdict |
 | --- | --- | --- |
 | T-05 | In-app "under 60 minutes a week … the promise" | Now an internal staff-only planning estimate with **no Drive source** (the Blueprint forbids the claim). Clients see "record the time the work actually takes". |
-| T-11 | Research call length | The live Calendly event is **"Founder Research — 20 mins"** (Drive, 16 Sept handoff and TODO). The playbook's verbatim script asks for "15 minutes", a source defect the owner must reconcile before the scripts are send-ready. The diagnosis call is proposed at 45 minutes (discovery template), but no event is configured. |
+| T-11 | Research call length | The live Calendly event is **"Founder Research — 20 mins"** (Drive, 16 Sept handoff and TODO). The playbook's script asked for "15 minutes"; the owner decided on 28 Sept 2026 to use 20 everywhere. The diagnosis call is proposed at 45 minutes (discovery template), but no event is configured. |
 | T-12 | "30-day strategy approved" (in-app) | Renamed "First four-week period strategy approved". |
 | T-13 | ~12–16 core assets per four-week period | A V1 hypothesis, not a fixed promise. Derivatives do not count towards it. |
 | C-04 | CTA `threadlinehq.com/...` in the Drive content launch pack | threadlinehq.com **is the intended main domain** (16 Sept handoff). The earlier advice to replace it was withdrawn. Before posting, the domain must point to the site: it has no web DNS record today. |

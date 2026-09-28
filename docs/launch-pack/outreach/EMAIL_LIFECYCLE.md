@@ -57,7 +57,7 @@
     > Thanks for the time today, {{first_name}}. Genuinely useful, especially {{their_phrase}}. As promised: {{asset_or_link}}. If anything I'm working on becomes relevant to you later, I'll ask first; I won't add you to anything.
 - **CTA:** none.
 - **Stop conditions:** after the thanks, no further contact without a genuine new reason.
-- **Status:** DRAFT. The booked event is the live 20-minute Calendly event, but the approved invitation still says 15 minutes; see `OUTREACH_SEQUENCES.md` §0.1.
+- **Status:** DRAFT. The booked event is the live 20-minute Calendly event, and the invitation now says 20 minutes (owner decision, 28 Sept 2026; `OUTREACH_SEQUENCES.md` §0.1).
 
 ## 3. Explicitly commercial invitation
 

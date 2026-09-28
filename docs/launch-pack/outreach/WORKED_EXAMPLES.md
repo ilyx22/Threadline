@@ -25,7 +25,7 @@
 
 (Only the bracketed fields were filled. The rest of the wording is unchanged.)
 
-**If Dana says yes:** send the one-pager, then the VERBATIM step 2 (which asks for **15 minutes**; the booked event is 20 minutes, so this waits for the owner's reconciliation, §0.1). Log the touch, the reply class **INTERESTED**, and the next action "book research call" with a date.
+**If Dana says yes:** send the one-pager, then the VERBATIM step 2 (which asks for **20 minutes**, matching the booked event; §0.1). Log the touch, the reply class **INTERESTED**, and the next action "book research call" with a date.
 
 **What not to write:** "I did a full audit of your content", because no audit exists; or "our clients in insurance see…", because there are no such clients.
 
