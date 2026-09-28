@@ -346,6 +346,7 @@ The six operating shifts and the offer-framing test (installation-first framing 
 
 ## P1: Commercial and Client #1 readiness
 
+- [ ] **OWNER DECISION.** The offer's guarantee (risk reversal). Approve or decline the milestone-only version drafted in `sales/SALES_CALL_GUIDE.md` §8 and `sprint/emails/CAMPAIGN_PACK.md` §1.3: "If we miss the production and publishing milestones we agree for your first four weeks, while you've kept to your recording and approval slots, we refund the implementation fee in full." Basis: Offer Architect (risk reversal), Nirvana Pricing & Guarantees (refund only when both sides do the work; "never go into the red"), and the Objection Vault's milestone-only answer. Never guarantee views, leads or revenue. Until decided, the pitch leaves this beat out; never improvise one. Once decided, it goes into the agreement wording for the solicitor.
 - [~] **IN PROGRESS TONIGHT.** Sales-extra templates in `sprint/sales-extra/`. Confirm each item on delivery:
   - `MINIMUM_VIABLE_METHOD.md`: the Client #1 minimum viable method page (Diagnose → Position → Create → Record → Produce/Distribute → Measure → Improve, mapped to app routes);
   - `INSTALLATION_LED_FIRST_TOUCH.md`: the installation-led first-touch variant, with the full 12-week terms beside the current framing;
