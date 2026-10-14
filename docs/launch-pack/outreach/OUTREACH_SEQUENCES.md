@@ -80,14 +80,14 @@ After a "yes": send the short asset directly (2–3 ideas at most; A-tier gets t
 **VERBATIM (playbook V1)**
 > “Sent below — hope at least one is useful. I’m currently researching how senior founder-led AI advisory firms are handling founder content / authority internally as the category gets noisier. I’m not trying to turn this into a pitch. Would you be up for 20 minutes sometime this week so I can understand where the process actually works or breaks on your side?”
 
-**Operator note (DRAFT until reconciled):** the booked research event is 20 minutes (§0.1). Do not send this wording with the 20-minute link until the owner resolves the mismatch.
+**Operator note:** matches the 20-minute research event (resolved 28 Sept 2026, §0.1).
 
 ### 2.3 The explicit-exchange variant (one message)
 
 **VERBATIM (playbook V1)**
 > “Hey [Name] — I’m researching how senior AI advisory firms are turning founder expertise into authority and demand. I had a look at [specific thing] and spotted [specific gap]. I’ve got 2–3 concrete ideas I’d happily share in exchange for 20 minutes of your perspective. No pitch — I’m trying to understand what the real bottleneck is before I build around assumptions.”
 
-**Operator note (DRAFT until reconciled):** same 15 versus 20 minute mismatch as §2.2.
+**Operator note:** matches the 20-minute research event (resolved 28 Sept 2026, §0.1).
 
 ### 2.4 The research call (20-minute event)
 
