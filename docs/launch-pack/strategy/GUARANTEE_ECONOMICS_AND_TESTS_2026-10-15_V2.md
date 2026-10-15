@@ -7,7 +7,9 @@
 2. The "above 5p is not viable" rule is removed. Viability depends on organic results, media cap, delivery cost and the remedy together.
 3. Holding £10,000 per client untouched is now labelled a conservative reserve *policy* (an owner choice), not a rule from Charlie or Fazio. Refund liability, cash collected, cash available and cash already spent are separated.
 4. Founder editing time is now explicit. A £0 editor cost means the owner edits, which adds hours.
-5. CPV is described as a key input, not the only one. No spend, publishing, outreach or purchase is authorised by this document. Companion to `OFFER_BRIEF_2026-10-14_V2_SOURCE_AUDITED.md` (Drive) and the 13 October handoff.
+5. CPV is described as a key input, not the only one.
+
+No spend, publishing, outreach or purchase is authorised by this document. Companion to `OFFER_BRIEF_2026-10-14_V2_SOURCE_AUDITED.md` (Drive) and the 13 October handoff.
 
 **Rules used:** amounts exclude VAT. **UNKNOWN** marks an input with no Threadline data yet. No refund rate or likelihood of a miss is assumed anywhere; every scenario simply shows what happens *if* it occurs.
 
