@@ -27,7 +27,7 @@ Source: "100 per day = 10 Domains, 20 sending accounts"; "The daily limit is set
 **Readiness requirements for the full configuration**, in place of a timeline:
 1. 10 secondary domains and 20 mailboxes set up and warmed. The course files read give no warm-up duration ("connect them to Instantly to warm up"). Threadline's campaign pack uses "at least 2 weeks (3–4 weeks is better)", citing EG Cold Email Mastery, which wasn't among the files read.
 2. Budget: 20 mailboxes plus domains, a verifier and any sending/Loom tooling. **Costs UNKNOWN until quoted; owner approval needed.**
-3. A verified list of about **2,000 new prospects per 20 sending days**. **This is a real constraint:** LEAD_GEN_SYSTEM's placeholder sizing puts AI advisory at ~4,000 firms, which is fewer than 2 cycles at 100 a day (§6).
+3. A verified list of about **2,000 new prospects per 20 sending days**. **This is a real constraint:** LEAD_GEN_SYSTEM's placeholder sizing puts AI advisory at ~4,000 firms, which is fewer than 2 cycles at 100 a day (§7).
 4. Loom production at volume (§4) and reply handling "within 12 hours (ideally 1-6 hours)" (Loom OS).
 5. The sending method decided (§3).
 
