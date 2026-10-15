@@ -98,7 +98,7 @@ Competitor research (Viral Coach, Viewz.gg) is correctly filed as research and m
 
 **Decisions first**
 1. Offer and guarantee (the 4 decisions in the brief).
-2. Cold email under the owner's own name: is that OK with the Deloitte clearance (currently posting only)?
+2. ~~Cold email under the owner's own name: is that OK with the Deloitte clearance (currently posting only)?~~ ✅ **Cleared by the owner, 16 Oct 2026.**
 3. Diagnosis link as a button on the public /apply page (`NEXT_PUBLIC_BOOKING_URL`)?
 
 **Acquisition setup**

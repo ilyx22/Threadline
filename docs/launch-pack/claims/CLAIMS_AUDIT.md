@@ -30,4 +30,4 @@ The public site at https://threadline-fawn.vercel.app is owner-approved. The own
 | T-13 | ~12–16 core assets per four-week period | A V1 hypothesis, not a fixed promise. Derivatives do not count towards it. |
 | C-04 | CTA `threadlinehq.com/...` in the Drive content launch pack | threadlinehq.com **is the intended main domain** (16 Sept handoff). The earlier advice to replace it was withdrawn. Before posting, the domain must point to the site: it has no web DNS record today. |
 | PESTO | Personal, Expertise, Social proof, Trending, **Opinions**, after Marcos Ruiz | The prompt and graphic 04 are corrected from "Opinion". |
-| Proof in sales | TikTok-partner line (library A) | Founder first person. Use it only once the founder's identity is cleared for commercial use (employer clearance, per the Drive TODO). The brand stays company-led initially. |
+| Proof in sales | TikTok-partner line (library A) | Founder first person. ~~Use it only once the founder's identity is cleared for commercial use (employer clearance, per the Drive TODO).~~ ✅ **Cleared by the owner, 16 Oct 2026.** Still needs its own proof check. The brand stays company-led initially. |

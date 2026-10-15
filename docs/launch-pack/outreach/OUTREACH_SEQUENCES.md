@@ -29,7 +29,7 @@ The personalisation fields (`{{…}}`) and research rules are in `PERSONALISATIO
 ### 0.2 Sender identity
 
 - The Drive master TODO: "Use a Threadline-led identity initially. Do not create a fabricated founder", and "Confirm the applicable Deloitte outside-business/conflict requirements before founder-personal commercial activity." The transcript audit (24 September): "Keep the brand company-led and covert initially."
-- So: messages are signed by a **real named person** ({{sender_name}}), never a persona. Outreach from the founder's **personal LinkedIn** and any founder-first-person line (library passage A) wait for that employer clearance. **Owner decision:** who signs research and sales messages until then.
+- So: messages are signed by a **real named person** ({{sender_name}}), never a persona. ~~Outreach from the founder's **personal LinkedIn** and any founder-first-person line (library passage A) wait for that employer clearance. **Owner decision:** who signs research and sales messages until then.~~ ✅ **Cleared by the owner, 16 Oct 2026.** Named outreach from the owner can proceed.
 - Sender placeholders: {{sender_name}}, {{sender_email}}. Do not hard-code a person.
 
 ### 0.3 Domain and inbox

@@ -20,7 +20,7 @@ The product is live and tested on **threadlinehq.com**. Booking, scripts, contra
 - [ ] **OWNER. Guarantee:** full refund (A) vs proportional (C); target (100,000 views is a candidate); media cap per client; refund reserve policy. Economics in GUARANTEE_ECONOMICS V2. Solicitor review before any use.
 - [ ] **OWNER. Channels:** LinkedIn + Shorts + Reels default, TikTok optional.
 - [ ] **OWNER. Paid-view test:** approve the exact £ (£50–100 proposed), platform and clips; publishing it is public.
-- [ ] **OWNER. Deloitte:** is research and cold outreach under your own name OK with your clearance (posting only so far)?
+- [x] ~~**OWNER. Deloitte:** is research and cold outreach under your own name OK with your clearance (posting only so far)?~~ ✅ **Cleared by the owner, 16 Oct 2026.**
 - [ ] **OWNER. Outreach configuration:** starter (2 domains / 4 mailboxes ≈ 20 new/day) or full (≈100 new/day); pick ONE documented course configuration (the reconciliation shows several); budget once quoted.
 - [ ] **OWNER. Evergreen-audio wording:** reusable Loom narration is fine, but never imply it was recorded live or personally.
 - [ ] **OWNER. First campaign test:** baseline first (recommended) or a labelled comparison of two full sequences.
@@ -32,7 +32,7 @@ The product is live and tested on **threadlinehq.com**. Booking, scripts, contra
 
 ## 1. Research track: first conversations (can start now)
 
-- [ ] **OWNER. Send the Sesen AI step-1 research message** (contact form, then LinkedIn). Draft ready; sources re-verified 14 Oct. **WAIT** on the Deloitte decision.
+- [ ] **OWNER. Send the Sesen AI step-1 research message** (contact form, then LinkedIn). Draft ready; sources re-verified 14 Oct. ~~**WAIT** on the Deloitte decision.~~ Cleared 16 Oct.
 - [ ] **OWNER.** Then the other A-tier firms: 5–10 genuine research touches per working day; log each touch (message version is recorded).
 - [ ] **OWNER.** Rehearse the 20-minute research call once (`sales/RESEARCH_INTERVIEW_SCRIPT.md`, consent line first).
 - [ ] **OWNER.** ~10 substantive founder interviews; record VOC, problem energy 0–5 and awareness (fields exist).

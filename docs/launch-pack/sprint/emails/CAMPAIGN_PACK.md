@@ -57,7 +57,7 @@
 |---|---|---|---|
 | B1 | Legal entity name, company number (if a company), **postal address** and a **privacy notice URL** | Required in every commercial email (PECR, UK GDPR Art. 14, CAN-SPAM; UK Companies Act trading disclosures if Threadline is a UK company) | `OWNER_DECISIONS.md` D-09 |
 | B2 | A diagnosis call booking event: 45–60 minutes, bookable 4 hours to 5 days ahead, at least 24 hours of availability a week, one event per sending system so the source is tracked | Every email asks for a call; the Engaged track sends the link. Not yet created (`OUTREACH_SEQUENCES.md` §0.1). Do not call a 45–60 minute call "quick". | Sales event |
-| B3 | Who signs as `{{sender_name}}` and appears in the Looms | A real named person, never a persona; founder-personal sending waits for employer clearance (`OUTREACH_SEQUENCES.md` §0.2). Every inbox and the Loom account carry that real person's name. | Identity |
+| B3 | Who signs as `{{sender_name}}` and appears in the Looms | A real named person, never a persona; ~~founder-personal sending waits for employer clearance (`OUTREACH_SEQUENCES.md` §0.2).~~ ✅ **Cleared by the owner, 16 Oct 2026.** Every inbox and the Loom account carry that real person's name. | Identity |
 | B4 | A working opt-out: a monitored reply inbox and a one-click unsubscribe link in the sending tool | Legal requirement in both markets | Tooling |
 | B5 | Dedupe and suppression done (research list, opt-outs, existing prospects) | Never both tracks; never re-contact an opt-out | `BULK_LIST_FILTER_SPEC.md` §5 |
 | B6 | Uncertainty recorded on the wedge in `/admin/market` | §0.2 item 1 | — |

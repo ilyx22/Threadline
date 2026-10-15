@@ -29,7 +29,7 @@
 | `{{booking_link}}` | The event matching the track | Research: the live Calendly "Founder Research — 20 mins" event, sent by hand. Diagnosis: 45 minutes proposed, **event not yet created** (`NEXT_PUBLIC_BOOKING_URL` once it exists). | — |
 | `{{meeting_link}}` | The video-call link for a booked meeting | From the booking confirmation | — |
 | `{{sender_email}}` | The real sender's mailbox | On threadlinehq.com | — |
-| `{{sender_name}}` | The real sender's name | A real named person; never a persona. Founder-personal sending waits for employer clearance (`OUTREACH_SEQUENCES.md` §0.2). | — |
+| `{{sender_name}}` | The real sender's name | A real named person; never a persona. ~~Founder-personal sending waits for employer clearance (`OUTREACH_SEQUENCES.md` §0.2).~~ ✅ **Cleared by the owner, 16 Oct 2026.** | — |
 | `{{postal_address}}` | Threadline's business postal address | **Owner decision, not set yet.** It is required before any commercial email. | — |
 
 **Never personalise with:**

@@ -13,7 +13,7 @@ Everything below is **drafted, awaiting owner review**, except where marked. Not
 
 1. **Decisions (30 min).** `ops/THREADLINE_MASTER_TODO_2026-09-27_PROPOSED.md` has the morning checklist at the top. `stack/STACK_SETUP_CHECKLIST.md` Phase 0 covers the warm-up choice, the sending domains, Vercel Pro and the legal details.
    - **Warm-up:** Smartlead's built-in warm-up **or** Lemwarm, **not both** on the same mailboxes.
-2. **Employer clearance request (D-05).** Send it today.
+2. ~~**Employer clearance request (D-05).** Send it today.~~ ✅ **Cleared by the owner, 16 Oct 2026.**
 3. **Production activation (2–3 h).** Follow `ACTIVATION_RUNBOOK.md` step by step.
    - Create your staff account with `npm run owner:create`.
    - Verify with `npm run smoke:prod`. It passes 6 of 10 today, and the target is 10 of 10.
@@ -21,7 +21,7 @@ Everything below is **drafted, awaiting owner review**, except where marked. Not
    - Connect threadlinehq.com.
    - Settle 15 vs 20 minutes for research calls.
    - Create the "Diagnosis call" event, using `sales-extra/BOOKING_QUESTIONS_AND_REMINDERS.md`.
-5. **Accounts (1–1.5 h).** Use `social/PROFILES.md` and `social/ASSET_REGISTER_TEMPLATE.csv`. The LinkedIn page waits on employer clearance.
+5. **Accounts (1–1.5 h).** Use `social/PROFILES.md` and `social/ASSET_REGISTER_TEMPLATE.csv`. ~~The LinkedIn page waits on employer clearance.~~ ✅ **Cleared by the owner, 16 Oct 2026.**
 6. **Outreach setup (1–2 h).**
    - Sending tool, list pull using `emails/BULK_LIST_FILTER_SPEC.md`, verification.
    - The recommended first segment is **strategy/GTM**.

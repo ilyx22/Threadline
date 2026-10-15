@@ -88,7 +88,7 @@ LEAD_GEN_SYSTEM §6.1's base, pessimistic and strong cases (e.g. "1.85" closes p
 
 ### Owner decisions
 - [ ] The offer and guarantee (the 4 decisions in OFFER_BRIEF V2; economics in GUARANTEE_ECONOMICS V2).
-- [ ] The Deloitte question: research and cold outreach under your own name.
+- [x] ~~The Deloitte question: research and cold outreach under your own name.~~ ✅ **Cleared by the owner, 16 Oct 2026.**
 - [ ] **Sending method:** manual per the course, or software (§3).
 - [ ] **Evergreen-audio honesty wording** (§4).
 - [ ] **Test design:** baseline first, or a labelled sequence comparison (§6).
@@ -103,7 +103,7 @@ LEAD_GEN_SYSTEM §6.1's base, pessimistic and strong cases (e.g. "1.85" closes p
 - [ ] Evergreen-audio script drafts, **after** the offer decision (they depend on it).
 
 ### Owner, can start now
-- [ ] Research track: the Sesen AI message (after the Deloitte answer); 5–10 touches a day.
+- [ ] Research track: the Sesen AI message (~~after the Deloitte answer~~ cleared 16 Oct); 5–10 touches a day.
 - [ ] Reserve the social handles.
 - [ ] The editing dry run on 3–5 clips (GUARANTEE_ECONOMICS V2, Part 2).
 

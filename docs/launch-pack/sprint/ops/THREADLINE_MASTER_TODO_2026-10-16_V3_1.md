@@ -36,7 +36,7 @@
 ## A. Start the slow setup clocks now, alongside product work
 
 - [~] **A01 — Define one launch tool/account register.** List owned, proposed, paid, configured and tested separately; budget, owner, renewal and secure credential location for each. *Claude 16 Oct:* The Drive LIVE TOOLS & SUBSCRIPTIONS REGISTER exists (28 Sept) but is out of date: no capability/test columns, and Calendly is missing.
-- [ ] **A02 — Confirm named-outreach clearance.** Posting permission is already done; resolve the separate employer/outside-business question for research and sales.
+- [x] ~~**A02 — Confirm named-outreach clearance.**~~ ✅ **Cleared by the owner, 16 Oct 2026.** Posting permission is already done; resolve the separate employer/outside-business question for research and sales.
 - [ ] **A03 — Select and approve one email configuration.** Quote domains/mailboxes/sender, total/new/follow-up caps and budget; choose one coherent configuration, not mixed course numbers.
 - [~] **A04 — Check owned domain and acquire only approved additions.** threadlinehq.co reported owned; meetthreadline.com proposed only. Verify ownership/availability and approve purchases before action. *Claude 16 Oct:* threadlinehq.co ownership confirmed by the owner (12 Oct); DNS and Workspace are not set up on .co yet. meetthreadline.com NOT bought.
 - [ ] **A05 — Create sending mailboxes and authenticate domains.** SPF/DKIM/DMARC, identity, reply inbox and signature; keep cold volume separate from core app mail.
@@ -158,7 +158,7 @@
 - [ ] **H05 — Record email narration and prepare relevant visuals.** Reusable audio truthfully described, context-relevant visuals and spot QA; not 95 bespoke daily videos.
 - [ ] **H06 — Prepare DM presentation assets separately.** Short personalised entry as applicable and reusable presentation later; landing-page VSL, email Loom and native DM VSL are separate uses, not mandatory copies.
 - [ ] **H07 — Approve LinkedIn, X and Instagram DM sequences.** Platform-specific opener, engagement, presentation, qualification, booking, follow-ups and opt-out; no link blast.
-- [ ] **H08 — Approve genuine research invitations and promised assets.** Sesen and prepared A-tier observations rechecked before use; never disguise sales as research or enrol automatically. *Claude 16 Oct:* Sesen AI step-1 message drafted and sources re-verified live 14 Oct; waiting on A02.
+- [ ] **H08 — Approve genuine research invitations and promised assets.** Sesen and prepared A-tier observations rechecked before use; never disguise sales as research or enrol automatically. *Claude 16 Oct:* Sesen AI step-1 message drafted and sources re-verified live 14 Oct; A02 cleared 16 Oct, so it's ready for owner approval.
 - [ ] **H09 — Prepare response and no-show playbook.** Human review, same-day coverage, interested/curious/not-now/not-fit/opt-out, next actions and dated follow-up.
 - [ ] **H10 — Set daily workload and first test limits.** One primary outbound experiment, bounded three-platform DM blocks, content/calls/replies and client capacity; explicit owner-approved starting volume.
 - [ ] **H11 — Complete asset acceptance beyond social posts.** Use REVIEW_INDEX for brand kit/rights, onboarding pack, all lifecycle emails, sales one-pagers and existing graphics. Creation is done; owner acceptance/current links/terms/trigger/CTA/stop conditions remain. Newsletter layout testing only before actual newsletter use, not a mandatory new channel.
@@ -389,7 +389,7 @@ The Daily Cockpit's nonblank lines add no unique task text beyond the 21 Septemb
 | A21 | If evidence converges, run small Commercial Response Validation batches on 2–3 differentiated framings. | RETAINED — later/external | J02 |
 | A22 | Track first touch → reply → positive → booked → attended → qualified → offered → won → cash. | [x] DONE — historical build/test | E14 |
 | A23 | Freeze the launch problem, outcome and positioning only when qualitative and behavioural evidence align. | RETAINED — later/external | J01/J02 |
-| C1 | Confirm the applicable Deloitte outside-business/conflict requirements before founder-personal commercial activity. | [~] PARTIAL | A02 |
+| C1 | ~~Confirm the applicable Deloitte outside-business/conflict requirements before founder-personal commercial activity.~~ | [x] DONE — cleared by the owner, 16 Oct 2026 | A02 |
 | C2 | Reserve consistent `Threadline` / `threadlinehq` handles on justified platforms. | [ ] OPEN | E01 |
 | C3 | Create/reserve the Threadline LinkedIn Company Page where permissible. | [ ] OPEN | E02 |
 | C4 | Standardise logo/avatar, display name, bio, link and CTA. | [x] DONE — draft asset | E03 |

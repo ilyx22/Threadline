@@ -14,7 +14,7 @@
    - If `https://threadlinehq.com/how-it-works` does not load by 30 September, move the start date. Do not post with an empty profile link.
    - The alternative, which is the owner's call: run the posts below, which carry no links, while the profile link fields stay empty. Record that choice in the register.
 2. **Profiles pass the three-second test** (`PROFILES.md`).
-3. **Employer clearance.** The LinkedIn rows need the Company Page, which needs clearance (`PROFILES.md` gate 1). If the page is not live, drop the LinkedIn rows and run the rest.
+3. ~~**Employer clearance.** The LinkedIn rows need the Company Page, which needs clearance (`PROFILES.md` gate 1).~~ ✅ **Cleared by the owner, 16 Oct 2026.** The Company Page itself is still needed. If the page is not live, drop the LinkedIn rows and run the rest.
 4. **Owner review.** Each item is marked approved, rewrite or reject (master to-do P1: "Review the content pack for positioning, factual claims, anonymity, tone and platform fit").
 5. **Human edit and anti-slop pass on every item** (transcript audit §2, "AI sandwich"). No direct model output is published.
 

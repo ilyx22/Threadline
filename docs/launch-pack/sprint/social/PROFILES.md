@@ -12,7 +12,7 @@ Companion files in this folder:
 
 These gates apply to every platform. If one is not met, stop and record why in the asset register.
 
-1. **Employer clearance.** The master to-do (P1, brand and content engine) says brand-led execution "does not remove the separate employer/outside-business compliance question". A LinkedIn Company Page needs a personal LinkedIn account as its admin. So the LinkedIn page waits on that check.
+1. ~~**Employer clearance.**~~ ✅ **Cleared by the owner, 16 Oct 2026.** ~~The master to-do (P1, brand and content engine) says brand-led execution "does not remove the separate employer/outside-business compliance question". A LinkedIn Company Page needs a personal LinkedIn account as its admin. So the LinkedIn page waits on that check.~~
    - Do not add Threadline to the admin's personal Experience section.
    - Do not create a second personal LinkedIn account. The master to-do and the content engine both forbid it.
 2. **Domain.** Every link below uses **threadlinehq.com**, the main domain. It is **not yet connected to the website**: OWNER_DECISIONS D-02 records Google mail and DMARC on the domain, but no web record.
@@ -136,7 +136,7 @@ Adapted from the pack's LinkedIn post 1, post 3 and root thesis 5, plus two cano
 - Next action: the "Visit website" button.
 
 **Setup, specific to LinkedIn:**
-- [ ] Employer clearance confirmed (gate 1).
+- [x] ~~Employer clearance confirmed (gate 1).~~ ✅ **Cleared by the owner, 16 Oct 2026.**
 - [ ] 2FA on the admin's personal LinkedIn account, which is where page access lives.
 - [ ] Add no second admin unless a real, named second person exists.
 - [ ] Turn the page's "Visit website" button on only after D-02.

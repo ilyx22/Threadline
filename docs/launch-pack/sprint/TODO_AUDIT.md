@@ -209,7 +209,7 @@ Row IDs are local to this audit. Sections follow the TODO's order.
 
 | ID | Item | Class | Evidence | Next action |
 | --- | --- | --- | --- | --- |
-| C1 | Deloitte outside-business clearance | OWNER-ONLY | D-05 | This gates C3, A9 and library A |
+| C1 | ~~Deloitte outside-business clearance~~ ✅ **Cleared by the owner, 16 Oct 2026.** | OWNER-ONLY | D-05 | This gates C3, A9 and library A |
 | C2 | Reserve handles | OWNER-ONLY | `sprint/social/PROFILES.md` (no handle availability checked) | Claude can pre-check public availability |
 | C3 | LinkedIn Company Page | OWNER-ONLY | Needs a personal admin; D-05 | — |
 | C4 | Standardise logo, avatar, name, bio, link and CTA | DONE-IN-ASSETS | `brand-kit/icons/avatar-*`, `brand-kit/social/*`, `PROFILES.md` | The link waits on D-02 |
@@ -425,7 +425,7 @@ DF1–DF13 are all **DEFER**, exactly as the TODO says:
 
    | Decision | What it unblocks |
    | --- | --- |
-   | D-05: employer clearance (C1) | Sending, the LinkedIn page and library A |
+   | ~~D-05: employer clearance (C1)~~ ✅ **Cleared by the owner, 16 Oct 2026.** | Sending, the LinkedIn page and library A |
    | D-01: offer and 14-day terms (CM3) | — |
    | D-09: legal entity and address (F2, CM9) | Commercial email and contracts |
    | D-03: RPO/RTO and retention | — |

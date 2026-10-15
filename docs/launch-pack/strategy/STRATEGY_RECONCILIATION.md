@@ -22,7 +22,7 @@ The canonical sources are listed in `../SOURCE_REGISTER.md`. The public frontend
   - Video-led where useful, with a text-led fallback.
   - Long-form YouTube is a pilot or custom item.
   - Excluded unless agreed: ads, funnels, email marketing, appointment setting, web development, daily community management, unlimited revisions.
-- **Identity:** "Use a Threadline-led identity initially. Do not create a fabricated founder." Founder-personal commercial activity waits for the owner's employer clearance.
+- **Identity:** "Use a Threadline-led identity initially. Do not create a fabricated founder." ~~Founder-personal commercial activity waits for the owner's employer clearance.~~ ✅ **Cleared by the owner, 16 Oct 2026.**
 
 ## 2. Research gate (code change kept; owner review requested)
 
@@ -72,7 +72,7 @@ The canonical sources are listed in `../SOURCE_REGISTER.md`. The public frontend
 | K-08 | `HANDOFF.md` and the old repo brief | Marked historical. The Drive brief with 18A is now the repo copy. |
 | K-09 | Older favicon/OG identity vs the brand kit | **Frozen: no change.** The brand kit documents the mark as built. No owner action requested. |
 | K-10 | Domain | Main domain threadlinehq.com (Drive); the website is not yet connected. See decision D-02. |
-| K-11 | Research outreach from the founder's personal LinkedIn | Waits for employer clearance (Drive TODO). Company-led and covert initially. No fabricated persona. See decision D-05. |
+| K-11 | Research outreach from the founder's personal LinkedIn | ~~Waits for employer clearance (Drive TODO).~~ ✅ **Cleared by the owner, 16 Oct 2026.** Company-led and covert initially. No fabricated persona. See decision D-05. |
 | K-12 | Drive 18A graphic list vs the chat list | Both kept. The ten chat topics remain, and the missing Drive items were added: masthead, bottleneck diagnostic, attribution ladder, proof layout, sample newsletter. |
 
 ## 7. Content-engine discrepancies corrected in the pack

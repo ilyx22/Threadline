@@ -26,7 +26,7 @@ Launch-ready means the business items are owner-approved, production is verified
 | Legal identity pack | Externally blocked (D-09) |
 | Recovery objectives and retention | Decision pending (D-03) |
 | Support owner and response times | Decision pending (D-07) |
-| Founder identity for commercial activity | Employer clearance pending (D-05) |
+| Founder identity for commercial activity | ~~Employer clearance pending (D-05)~~ ✅ **Cleared by the owner, 16 Oct 2026.** |
 
 ## Assets
 
