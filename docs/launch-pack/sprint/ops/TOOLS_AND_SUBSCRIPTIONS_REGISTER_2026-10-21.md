@@ -1,3 +1,5 @@
+> **SUPERSEDED (21 Oct):** the main register is ChatGPT's `THREADLINE_LIVE_TOOLS_SUBSCRIPTIONS_REGISTER_2026-10-20_V11.md` (Drive 1K9BVs0fB4aB-FstXEmAg4JeC_H4q55Ko) plus Claude's `..._2026-10-21_V12_UPDATES.md`. This file was wrong on the social sign-up email (it is ilyas@threadlinehq.com, not social@) and on Instantly (planned, not purchased). Kept for history only.
+
 # Threadline — live tools and subscriptions register (21 October 2026)
 
 **New version.** It supersedes the Google Doc "THREADLINE — LIVE TOOLS & SUBSCRIPTIONS REGISTER" (last updated around 28 September), which is kept unchanged. Use this for account status, owner, cost and next action. STACK.md has vendor comparisons; STACK_SETUP_CHECKLIST.md has the setup order. "Account exists" never means "integrated and tested". **No passwords, keys, card details or full connection strings here.**
