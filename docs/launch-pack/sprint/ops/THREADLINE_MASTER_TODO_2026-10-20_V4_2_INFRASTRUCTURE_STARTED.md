@@ -220,7 +220,7 @@ All original A01–I06 IDs (113 launch tasks) and J01–J16 (16 retained later t
 **Owners:** OWNER handles identity/account/spend approval; BOTH tests; PREP maps events. **Dependencies:** approved tools/capacity and durable CRM identity. **Completion:** correct real records across success/duplicate/failure/opt-out. SUB01/02/04.
 
 - [ ] **E01 — Reserve and secure social accounts.** Fresh availability checks; existing suggestions X threadlinehq, other handles threadline_hq; check ownership of existing YouTube account.
-- [ ] **E02 — Set up LinkedIn founder presence and Company Page.** Use legitimate existing personal identity/admin; no duplicate personal account or assumed third-party ownership.
+- [~] **E02 — Set up LinkedIn founder presence and Company Page.** Use legitimate existing personal identity/admin; no duplicate personal account or assumed third-party ownership. *V4.2 (20 Oct):* Personal LinkedIn profile created/in use (linkedin.com/in/ilyas-t-0962aa445). OPEN: (1) complete LinkedIn ID verification; (2) confirm this is the owner's ONLY personal LinkedIn account (no duplicate); (3) create the Threadline Company Page from it.
 - [ ] **E03 — Finish profiles and working destinations.** Name/avatar/banner/bio/CTA across LinkedIn, X, IG, Threads, YouTube and TikTok as relevant; approved claims and working links.
 
   **Current evidence / remaining:** Bio B was selected before the proposed offer change; keep it as an existing choice and check claims against the eventual approved offer, not a missing draft.
