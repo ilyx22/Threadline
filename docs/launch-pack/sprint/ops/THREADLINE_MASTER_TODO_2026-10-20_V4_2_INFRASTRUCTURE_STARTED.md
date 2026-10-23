@@ -205,10 +205,10 @@ All original A01–I06 IDs (113 launch tasks) and J01–J16 (16 retained later t
 
 **Owners:** OWNER decides, PREP drafts/model-checks, solicitor reviews contractual claims. **Dependencies:** costs/research inform decisions; no universal completed-client prerequisite for guarantee. **Completion:** one approved specification and explicit unresolved limits.
 
-- [ ] **D01 — Choose the first offer configuration.** AI/tech advisory first working niche; video-led scope, written fallback, core outputs, client recording/approval burden and exclusions.
+- [ ] **D01 — Choose the first offer configuration.** *23 Oct: owner deferring ("decide in a bit"); D02 follows it.* AI/tech advisory first working niche; video-led scope, written fallback, core outputs, client recording/approval burden and exclusions.
 - [ ] **D02 — Confirm client channels.** Proposed LinkedIn/Shorts/Reels, TikTok exception; separate client scope from Threadline's own multi-channel GTM.
-- [ ] **D03 — Confirm pricing, period and payment timing.** Current hypothesis £2,500 implementation + three £2,500/28-day periods = £10,000/84 days; settle when money and service start.
-- [ ] **D04 — Decide guarantee or approved no-guarantee baseline.** 100k views is still a candidate. Choose target/remedy/fee pot/media cap/reserve/client conditions only if offered; do not imply approved wording.
+- [x] **D03 — Confirm pricing, period and payment timing.** *OWNER DECIDED 23 Oct (strategy/DECISION_2026-10-23_PRICE_AND_GUARANTEE_REMEDY.md): £10k/12 wks; implementation at signature; each period invoiced 14 days ahead, due by its first day; solicitor wording pending (F05/F09).* Current hypothesis £2,500 implementation + three £2,500/28-day periods = £10,000/84 days; settle when money and service start.
+- [~] **D04 — Decide guarantee or approved no-guarantee baseline.** *23 Oct: remedy shape C (proportional) chosen by owner; target, fee at risk, media cap and conditions wait for C01/D05/D06; nothing public.* 100k views is still a candidate. Choose target/remedy/fee pot/media cap/reserve/client conditions only if offered; do not imply approved wording.
 - [ ] **D05 — Run the paid-view experiment if used to underwrite guarantee.** Owner-approved budget/content/platform; define eligible metric before spend; measure real costs/audience quality, update full margin/refund scenarios.
 - [ ] **D06 — Prepare guarantee schedule and get review.** Owner approves claims; solicitor reviews before public use. Proportional refund can still be full fee at zero views.
 - [ ] **D07 — Check honest proof and differentiation.** Verify founder experience, standard sample examples and private proof-band evidence; no competitor results, fake case studies or implied client proof.
