@@ -105,19 +105,27 @@ export function OnboardingFlow({
     });
   };
 
+  // What the person actually typed in each one-per-line field. The stored list
+  // is trimmed and drops blank lines, so rendering it back would eat a space or
+  // newline the moment it is typed; the raw text is shown while it still parses
+  // to the stored list, and anything that replaces the list (a transcript
+  // draft) shows instead.
+  const rawLines = React.useRef<Record<string, { raw: string; joined: string }>>({});
+
   const setLines = (key: keyof OnboardingData, value: string) => {
-    set(
-      key,
-      value
-        .split(/\r?\n/)
-        .map((l) => l.trim())
-        .filter(Boolean) as OnboardingData[typeof key],
-    );
+    const parsed = value
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .filter(Boolean);
+    rawLines.current[key as string] = { raw: value, joined: parsed.join("\n") };
+    set(key, parsed as OnboardingData[typeof key]);
   };
 
   const lines = (key: keyof OnboardingData) => {
     const value = data[key];
-    return Array.isArray(value) ? value.join("\n") : "";
+    const joined = Array.isArray(value) ? value.join("\n") : "";
+    const cached = rawLines.current[key as string];
+    return cached && cached.joined === joined ? cached.raw : joined;
   };
 
   const advance = () => {
