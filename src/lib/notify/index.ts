@@ -53,7 +53,7 @@ export function defaultEmailPreference(role: string) {
   return CLIENT_ROLES.includes(role) ? "digest" : "off";
 }
 
-export async function notify(input: { orgId: string; audience: Audience; kind: string; title: string; body?: string | null; href?: string | null; severity?: "info" | "success" | "warning" | "critical"; dedupeKey: string; subject?: { type: "content_item"; id: string }; now?: Date }) {
+export async function notify(input: { orgId: string; audience: Audience; kind: string; title: string; body?: string | null; href?: string | null; severity?: "info" | "success" | "warning" | "critical"; dedupeKey: string; subject?: { type: "content_item"; id: string }; now?: Date; /** Email now unless the person turned email off: for something they are waiting on, not routine news. */ immediate?: boolean }) {
   const now = input.now ?? new Date();
   const ids = [...new Set(await recipients(input.orgId, input.audience))];
   const created: string[] = [];
@@ -64,7 +64,10 @@ export async function notify(input: { orgId: string; audience: Audience; kind: s
       });
       created.push(n.id);
       const pref = await prisma.notificationPreference.findUnique({ where: { userId_orgId: { userId, orgId: input.orgId } } });
-      if (pref?.email === "immediate" && !(pref.snoozedUntil && pref.snoozedUntil > now) && !inQuietHours(pref, now)) {
+      const emailNow = input.immediate
+        ? (pref?.email ?? defaultEmailPreference((await prisma.membership.findFirst({ where: { userId, orgId: input.orgId }, select: { role: true } }))?.role ?? "")) !== "off"
+        : pref?.email === "immediate" && !(pref.snoozedUntil && pref.snoozedUntil > now) && !inQuietHours(pref, now);
+      if (emailNow) {
         const user = await prisma.user.findUnique({ where: { id: userId }, select: { email: true, name: true, isActive: true } });
         if (user?.isActive) {
           await enqueue("email.send", { to: user.email, template: "notification", data: { name: user.name.split(" ")[0], title: n.title, body: n.body ?? "", link: n.href ? `${appUrl()}${n.href}` : appUrl() }, orgId: input.orgId }, { idempotencyKey: `notify:${n.id}`, orgId: input.orgId });

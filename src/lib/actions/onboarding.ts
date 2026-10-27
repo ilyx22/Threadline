@@ -713,10 +713,11 @@ export async function sendOnboardingForReviewAction(orgSlug: string): Promise<Ac
       body: "We filled in your onboarding with you on the call. Read it through, correct anything we got wrong, then confirm to build your workspace.",
       href: `/onboarding/${orgSlug}`,
       dedupeKey: `onboarding-review:${ctx.org.id}:${now.toISOString().slice(0, 10)}`,
+      immediate: true,
     });
     await audit(ctx, { action: "onboarding.sent_for_review", entityType: "organization", entityId: ctx.org.id, summary: "Sent kickoff-call onboarding answers to the client to check" });
     revalidatePath(`/onboarding/${orgSlug}`);
-    return okVoid("Sent. The client lands on Review and gets it in their daily email.");
+    return okVoid("Sent. The client gets an email now and lands on Review.");
   });
 }
 
