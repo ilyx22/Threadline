@@ -43,13 +43,23 @@ system already knows what to search, where, and what good looks like.
    (`src/lib/research/providers.ts`): YouTube first (official API + free captions), then TikTok and
    Instagram via a paid scraper (Apify adapter already built, off), LinkedIn last (hardest).
    Hard caps per run and per workspace per month.
-4. **Rank** by *outlier score*: views against the creator's usual views (not raw views), recency,
-   engagement rate; then a relevance check against the client's audience. Output: top N per week.
-5. **Analyse the top N (default 10/week)**
-   - *Transcript*: captions where available, else a transcription service (B08).
-   - *Visuals*: frames sampled densely in the first 3 seconds and sparsely after; the vision model
-     records hook type, opening shot, on-screen text, framing, cut pace, B-roll, caption style,
-     CTA.
+4. **Rank per platform**, never across platforms (a TikTok view and a YouTube view are not the
+   same thing, and what wins differs by platform). *Outlier score*: views against that creator's
+   usual views on that platform (not raw views), recency, engagement rate; then a relevance check
+   against the client's audience. Only the platforms the client targets are run.
+5. **Analyse in three tiers, per platform, per week** (defaults; configurable, capped):
+
+   | Tier | How many per platform | What |
+   |---|---|---|
+   | Collect + rank | 200–500 | Metadata only; cheap |
+   | Text analysis | Top 30 | Transcript (captions, else transcription, B08); hook, structure, angle, CTA |
+   | Full analysis | Top 10 | Text analysis + visuals: frames dense in the first 3 seconds, sparse after; opening shot, on-screen text, framing, cut pace, B-roll, caption style |
+
+   - **First run is a backfill**: the last 90 days, full analysis on the top 30 per platform, so
+     the patterns library is useful from day one. Weekly runs after that only add what is new.
+   - **Per niche, not per client**: with niche memory, a second client in the same niche costs
+     almost nothing extra. Only that client's own competitors/accounts are added on top.
+   - A pattern counts as "winning" only when it shows up in several outliers, not one viral post.
 6. **Winning patterns.** Per niche and per workspace: recurring hooks, structures, angles and
    visual patterns, each linked to the real examples behind it. Idea and script generation cite
    these. Anything shown to a client is labelled as other people's content, never as ours.
@@ -69,8 +79,10 @@ the hour (budget allowing); an existing niche is instant.
 
 ### Costs (to confirm in the pilot)
 
-Pay-per-use only: scraper per result, transcription per minute, model per analysis. Pilot budget
-£10–30 on one niche before any recurring spend; per-workspace monthly cap after.
+Pay-per-use only: scraper per result, transcription per minute, model per analysis. Rough working
+estimate before the pilot: a few pounds per niche per platform per week at the default tiers;
+the backfill costs more, once. Pilot budget £10–30 on one niche before any recurring spend; a
+per-niche monthly cap after, which stops the run and says so when it is reached.
 
 ## Build order
 
