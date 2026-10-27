@@ -352,6 +352,19 @@ No current Stripe account, provider pricing/terms, production code or vendor acc
 
 
 
+## R. Knowledge base and automatic niche research (owner request 27 Oct 2026)
+
+Spec: `docs/launch-pack/strategy/SPEC_2026-10-27_KNOWLEDGE_BASE_AND_AUTO_RESEARCH.md`. Goal: generation draws on Threadline know-how + the client + what is winning in their niche now; a new type of client needs no manual niche build-up. Supersedes the "deferred" stance in J09 for the research engine; J04 keeps the corpus/judge.
+
+- [ ] **R1 — Anthropic connected with spend cap (= B06).** Owner logs in to the console; Claude sets the monthly limit; owner pastes the key straight into Vercel.
+- [ ] **R2 — Knowledge base v1.** Staff library for SOPs, frameworks, example scripts (winning/losing), course notes; chunked, versioned, used on every generation with sources named. Owner supplies documents.
+- [ ] **R3 — Generated research plan + niche memory + YouTube collection + outlier ranking.** Runs on workspace build and weekly; editable plan; niche reuse across workspaces (public content only).
+- [ ] **R4 — Transcripts for top N (with B08).**
+- [ ] **R5 — TikTok/Instagram collection via scraper; £10–30 pilot on the first niche.** Owner creates the scraper account and approves the budget; caps in config.
+- [ ] **R6 — Visual analysis of top N** (hook, opening shot, on-screen text, framing, pace, B-roll, captions, CTA).
+- [ ] **R7 — Winning-patterns view; ideas and scripts cite it.** Others' content always labelled as such.
+- [ ] **R8 — LinkedIn collection** after a benchmark of options.
+
 ## J. Retained research, implementation, housekeeping and later work
 
 **Owners:** assigned when active; OWNER retains priorities. **Dependencies:** relevant evidence/client/scale trigger. **Completion:** dated evidence. Not every item blocks outreach.
