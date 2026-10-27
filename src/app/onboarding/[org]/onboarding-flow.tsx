@@ -497,7 +497,7 @@ export function OnboardingFlow({
                   <Field label="Your name" htmlFor="founderName" error={errors.founderName}>
                     <Input
                       id="founderName"
-                      value={data.founderName ?? founderName}
+                      value={data.founderName ?? (isStaff ? "" : founderName)}
                       onChange={(e) => set("founderName", e.target.value)}
                       autoFocus
                     />
@@ -505,7 +505,8 @@ export function OnboardingFlow({
                   <Field label="Title" htmlFor="founderTitle" optional>
                     <Input
                       id="founderTitle"
-                      value={data.founderTitle ?? "Founder"}
+                      value={data.founderTitle ?? ""}
+                      placeholder="Founder"
                       onChange={(e) => set("founderTitle", e.target.value)}
                     />
                   </Field>
