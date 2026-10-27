@@ -165,6 +165,14 @@ export async function buildWorkspaceAction(
     if (onboardingPhase({ mode: session.mode, isStaff: ctx.isInternal, sentForReview: Boolean(session.sentForReviewAt) }) === "prep") {
       return err("The rest of onboarding is filled in with you on your kickoff call. Your workspace is built after that.", "workflow");
     }
+    // Staff may skip answers on the call (and may build without them on
+    // purpose); the client's confirmation is where the gaps must be closed.
+    if (!ctx.isInternal) {
+      const gaps = ONBOARDING_STEPS.flatMap((s) => missingFields(s.key, data).map((f) => FIELD_LABELS[f as keyof OnboardingData] ?? f));
+      if (gaps.length) {
+        return err(`A few answers are still open: ${gaps.join(", ")}. Fill them in, then confirm.`, "validation");
+      }
+    }
 
     await prisma.onboardingSession.update({
       where: { orgId: ctx.org.id },
