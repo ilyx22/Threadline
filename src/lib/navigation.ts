@@ -30,7 +30,7 @@ import {
   Stethoscope,
   Telescope,
   Video,
-  Workflow, Timer, ListChecks } from "lucide-react";
+  Workflow, Timer, ListChecks, BookOpen } from "lucide-react";
 import type { Capability } from "@/lib/auth/roles";
 
 /**
@@ -444,6 +444,7 @@ export const ADMIN_NAV: NavItem[] = [
     capability: "admin.support",
   },
   { key: "sops", label: "SOPs", href: "/admin/sops", icon: ScrollText, capability: "admin.sops" },
+  { key: "knowledge", label: "Knowledge", href: "/admin/knowledge", icon: BookOpen, capability: "admin.sops" },
   { key: "system", label: "System", href: "/admin/system", icon: Activity, capability: "admin.view" },
   {
     key: "metrics",

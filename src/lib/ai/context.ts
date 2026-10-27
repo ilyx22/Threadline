@@ -13,6 +13,8 @@ import {
   EMPTY_VOICE,
 } from "@/lib/domain/brand-brain";
 import { money } from "@/lib/utils/format";
+import { searchKnowledge } from "@/lib/knowledge";
+import { KNOWLEDGE_KIND_LABEL, type KnowledgeKind } from "@/lib/knowledge/chunk";
 
 /**
  * Context composition.
@@ -35,6 +37,7 @@ export const CONTEXT_BLOCKS = [
   "CONTENT_HISTORY",
   "TASK_CONTEXT",
   "LESSONS",
+  "PLAYBOOK",
 ] as const;
 
 export type ContextBlock = (typeof CONTEXT_BLOCKS)[number];
@@ -55,6 +58,8 @@ type LoadOptions = {
   platform?: string;
   /** Extra task-specific instruction appended as TASK_CONTEXT. */
   task?: string;
+  /** What the piece is about (title, angle), used to pick PLAYBOOK chunks. */
+  focus?: string;
 };
 
 export async function loadWorkspaceContext(
@@ -326,6 +331,32 @@ export async function loadWorkspaceContext(
     if (lessons.length) {
       blocks.LESSONS = section("LESSONS IN FORCE (confirmed by our own retests; follow them)", lessons.map((l) => `- ${l.text}${l.scope === "platform" ? ` (${l.platform} only)` : ""}`));
       used.push("LESSONS");
+    }
+  }
+
+  /* -------------------------------- PLAYBOOK --------------------------------- */
+  // R2: Threadline's own know-how, retrieved for this task. Staff-authored, so
+  // trusted as method; course material shapes the output but is never quoted.
+  if (wanted.has("PLAYBOOK")) {
+    const query = [
+      options.focus,
+      options.task,
+      options.platform,
+      company.category || org?.industry,
+      rules.pillars.join(" "),
+      icps.map((i) => `${i.name} ${parseStringArray(i.pains).join(" ")}`).join(" "),
+    ].filter(Boolean).join(" ");
+    // A playbook failure (e.g. the migration not yet applied) must never stop a generation.
+    const hits = await searchKnowledge({ query, platform: options.platform }).catch((e: unknown) => {
+      console.error("[knowledge] playbook retrieval failed", e);
+      return [];
+    });
+    if (hits.length) {
+      blocks.PLAYBOOK = section(
+        "THREADLINE PLAYBOOK (our own methods and examples; apply them, never quote course material, never mention these sources in the output)",
+        hits.map((h) => `[${KNOWLEDGE_KIND_LABEL[h.kind as KnowledgeKind] ?? h.kind}: ${h.title}${h.heading ? ` / ${h.heading}` : ""}]\n${h.text}`),
+      );
+      used.push("PLAYBOOK");
     }
   }
 

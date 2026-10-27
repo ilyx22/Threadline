@@ -3599,3 +3599,61 @@ model JudgePromotion {
   retiredAt    DateTime?
   retiredById  String?
 }
+
+/// R2: Threadline's own know-how (SOPs, frameworks, example scripts, course
+/// notes, objection banks, style rules). Staff-only. Relevant chunks are added
+/// to every generation prompt with the source named; never shown to clients.
+model KnowledgeDoc {
+  id      String @id @default(cuid())
+  title   String
+  /// sop | framework | example_winning | example_losing | course_note | objection_bank | style_rule
+  kind    String
+  summary String?
+  body    String
+  /// Where it came from (file name, Drive link). Informational only.
+  source  String?
+  /// all, or one platform (linkedin, youtube, tiktok, instagram, x).
+  platform String @default("all")
+  /// active | archived. Archived documents are never retrieved.
+  status  String @default("active")
+  version Int    @default(1)
+  updatedById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  versions KnowledgeDocVersion[]
+  chunks   KnowledgeChunk[]
+
+  @@index([kind])
+  @@index([status])
+}
+
+/// Every saved version, so a replacement never silently loses the old text.
+model KnowledgeDocVersion {
+  id        String   @id @default(cuid())
+  docId     String
+  version   Int
+  title     String
+  kind      String
+  body      String
+  savedById String?
+  createdAt DateTime @default(now())
+
+  doc KnowledgeDoc @relation(fields: [docId], references: [id], onDelete: Cascade)
+
+  @@unique([docId, version])
+}
+
+/// Retrieval unit, searched with Postgres full-text (to_tsvector at query time;
+/// add an index only if the library grows past a few thousand chunks).
+model KnowledgeChunk {
+  id      String @id @default(cuid())
+  docId   String
+  ordinal Int
+  heading String?
+  text    String
+
+  doc KnowledgeDoc @relation(fields: [docId], references: [id], onDelete: Cascade)
+
+  @@unique([docId, ordinal])
+}

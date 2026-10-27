@@ -78,6 +78,7 @@ const IDEA_BLOCKS: ContextBlock[] = [
   "PERFORMANCE_CONTEXT",
   "CONTENT_HISTORY",
   "LESSONS",
+  "PLAYBOOK",
 ];
 
 export async function generateIdeas(input: {
@@ -88,7 +89,7 @@ export async function generateIdeas(input: {
   platforms?: string[];
   pillars?: string[];
 }): Promise<{ ideas: GeneratedIdea[]; meta: GenerationMeta }> {
-  const context = await loadWorkspaceContext(input.orgId, { blocks: IDEA_BLOCKS });
+  const context = await loadWorkspaceContext(input.orgId, { blocks: IDEA_BLOCKS, focus: [input.steer, ...(input.pillars ?? []), ...(input.platforms ?? [])].filter(Boolean).join(" ") });
 
   const template = ideasPrompt({
     context: renderContext(context, IDEA_BLOCKS),
@@ -149,6 +150,7 @@ const SCRIPT_BLOCKS: ContextBlock[] = [
   "PERFORMANCE_CONTEXT",
   "CONTENT_HISTORY",
   "LESSONS",
+  "PLAYBOOK",
 ];
 
 export async function generateScript(input: {
@@ -164,7 +166,7 @@ export async function generateScript(input: {
   entityId?: string;
   speakerUserId?: string;
 }): Promise<{ script: GeneratedScript; meta: GenerationMeta }> {
-  const context = await loadWorkspaceContext(input.orgId, { blocks: SCRIPT_BLOCKS, platform: input.platform, speakerUserId: input.speakerUserId });
+  const context = await loadWorkspaceContext(input.orgId, { blocks: SCRIPT_BLOCKS, platform: input.platform, speakerUserId: input.speakerUserId, focus: [input.title, input.angle, input.hookConcept, input.scriptType].filter(Boolean).join(" ") });
 
   const template = scriptPrompt({
     context: renderContext(context, SCRIPT_BLOCKS),
@@ -237,8 +239,8 @@ export async function generateHooks(input: {
   count: number;
   entityId?: string;
 }): Promise<{ hooks: string[]; meta: GenerationMeta }> {
-  const blocks: ContextBlock[] = ["FOUNDER_VOICE", "ICP_CONTEXT", "PERFORMANCE_CONTEXT"];
-  const context = await loadWorkspaceContext(input.orgId, { blocks });
+  const blocks: ContextBlock[] = ["FOUNDER_VOICE", "ICP_CONTEXT", "PERFORMANCE_CONTEXT", "PLAYBOOK"];
+  const context = await loadWorkspaceContext(input.orgId, { blocks, focus: `hooks ${input.title}` });
 
   const template = hooksPrompt({
     context: renderContext(context, blocks),
@@ -285,8 +287,8 @@ export async function refineScriptContent(input: {
   estimatedSeconds: number;
   meta: GenerationMeta;
 }> {
-  const blocks: ContextBlock[] = ["FOUNDER_VOICE", "OFFER_CONTEXT", "ICP_CONTEXT"];
-  const context = await loadWorkspaceContext(input.orgId, { blocks });
+  const blocks: ContextBlock[] = ["FOUNDER_VOICE", "OFFER_CONTEXT", "ICP_CONTEXT", "PLAYBOOK"];
+  const context = await loadWorkspaceContext(input.orgId, { blocks, focus: `${input.instruction} ${input.hook}` });
 
   const template = refinePrompt({
     context: renderContext(context, blocks),
