@@ -164,7 +164,7 @@ All original A01–I06 IDs (113 launch tasks) and J01–J16 (16 retained later t
 
 **Owners:** BOTH runs safe tests, PREP records/fixes authorised blockers, OWNER accepts. **Dependencies:** providers only where used; use existing test workspace. **Completion:** observed client/operator outcome, permission boundaries and recovery. SOP 01/05, SUB03/04.
 
-- [ ] **B01 — Refresh the live-state check.** Confirm the existing production still works; retain reported completed activation, rather than redo it. Use a safe synthetic workspace.
+- [~] **B01 — Refresh the live-state check.** *27 Oct (Claude, signed-out): threadlinehq.com, /apply, /login 200; www → apex 308; /api/health ok, database true, 0 config errors, production commit 53f63c2 = main HEAD; /app, /admin, /onboarding redirect to login. Signed-in checks follow in B03.* Confirm the existing production still works; retain reported completed activation, rather than redo it. Use a safe synthetic workspace.
 - [~] **B02 —Complete remaining client-access acceptance.** Owner sign-in/2FA/recovery and initial test invitation/onboarding already done. Retest remaining client sign-in/acceptance/tenant boundaries live using permitted test data; preserve synthetic-workspace CRM exclusion.
 - [ ] **B03 — Walk through live kickoff onboarding.** Client basics → staff call completion → send to client → client verifies From your call → confirmation → workspace built.
 - [ ] **B04 — Check saving and editing.** Required validation, recoverable errors, saved Brand Brain/ICP/voice/proof, visible feedback and no lost form data.
