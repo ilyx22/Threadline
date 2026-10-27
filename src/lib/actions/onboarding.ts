@@ -27,7 +27,10 @@ import { isLiveAi, runStructured } from "@/lib/ai";
 import { onboardingDraftPrompt } from "@/lib/ai/prompts";
 import { fence, neutralise } from "@/lib/ai/untrusted";
 import { notify } from "@/lib/notify";
+import { MASTER_TEMPLATE } from "@/lib/templates/master";
 import { cleanText, cleanUrl, err, guarded, ok, okVoid, type ActionResult } from "./shared";
+
+const ONBOARDING_TASK_TITLE = MASTER_TEMPLATE.onboardingTasks[0].title;
 
 /**
  * Onboarding.
@@ -525,44 +528,54 @@ export async function buildWorkspaceAction(
 
     /* 5. First tasks -------------------------------------------------------- */
 
-    const openTasks = await prisma.task.count({
-      where: { orgId: ctx.org.id, audience: "client", status: "open" },
+    // Onboarding itself is now done, so its own task closes. The first tasks
+    // are added alongside whatever else is still open (the client's other
+    // installation tasks), skipping any already there.
+    await prisma.task.updateMany({
+      where: { orgId: ctx.org.id, title: ONBOARDING_TASK_TITLE, status: { in: ["open", "in_progress"] } },
+      data: { status: "done", completedAt: new Date() },
     });
-    if (openTasks === 0) {
-      await prisma.task.createMany({
-        data: [
-          {
-            orgId: ctx.org.id,
-            title: "Review your first content opportunities",
-            description: `${ideaCount} ideas were generated from your answers. Shortlist the ones that sound like you.`,
-            kind: "review",
-            audience: "client",
-            priority: "high",
-            estimateMin: 10,
-          },
-          {
-            orgId: ctx.org.id,
-            title: "Complete the constraint diagnosis",
-            description:
-              "Four of the nine dimensions were rated from your answers. The rest need a look at the actual work, and until they are rated we would just be assuming more content is the answer.",
-            kind: "decide",
-            audience: "internal",
-            priority: "high",
-            estimateMin: 30,
-          },
-          {
-            orgId: ctx.org.id,
-            title: "Add your strongest proof",
-            description:
-              "Testimonials, case studies and real numbers. Anything cleared for public use makes every script stronger.",
-            kind: "upload",
-            audience: "client",
-            priority: "medium",
-            estimateMin: 10,
-          },
-        ],
-      });
-    }
+    const existingTitles = new Set(
+      (
+        await prisma.task.findMany({
+          where: { orgId: ctx.org.id, status: { in: ["open", "in_progress"] } },
+          select: { title: true },
+        })
+      ).map((t) => t.title),
+    );
+    const firstTasks = [
+      {
+        orgId: ctx.org.id,
+        title: "Review your first content opportunities",
+        description: `${ideaCount} ideas were generated from your answers. Shortlist the ones that sound like you.`,
+        kind: "review",
+        audience: "client",
+        priority: "high",
+        estimateMin: 10,
+      },
+      {
+        orgId: ctx.org.id,
+        title: "Complete the constraint diagnosis",
+        description:
+          "Four of the nine dimensions were rated from your answers. The rest need a look at the actual work, and until they are rated we would just be assuming more content is the answer.",
+        kind: "decide",
+        audience: "internal",
+        priority: "high",
+        estimateMin: 30,
+      },
+      {
+        orgId: ctx.org.id,
+        title: "Add your strongest proof",
+        description:
+          "Testimonials, case studies and real numbers. Anything cleared for public use makes every script stronger.",
+        kind: "upload",
+        audience: "client",
+        priority: "medium",
+        estimateMin: 10,
+      },
+    ];
+    const toCreate = firstTasks.filter((t) => !existingTitles.has(t.title));
+    if (toCreate.length) await prisma.task.createMany({ data: toCreate });
 
     /* 6. Finish ------------------------------------------------------------- */
 

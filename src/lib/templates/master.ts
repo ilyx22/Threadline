@@ -45,7 +45,7 @@ export const MASTER_TEMPLATE = {
     {
       title: "Complete the Threadline onboarding",
       description:
-        "Fifteen short steps. This is what configures the system around your business — it takes about 25 minutes and saves as you go.",
+        "Thirteen short steps. This is what configures the system around your business — it takes about 25 minutes and saves as you go.",
       kind: "decide",
       audience: "client",
       priority: "high",
