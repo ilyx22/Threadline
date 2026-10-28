@@ -356,14 +356,25 @@ No current Stripe account, provider pricing/terms, production code or vendor acc
 
 Spec: `docs/launch-pack/strategy/SPEC_2026-10-27_KNOWLEDGE_BASE_AND_AUTO_RESEARCH.md`. Goal: generation draws on Threadline know-how + the client + what is winning in their niche now; a new type of client needs no manual niche build-up. Supersedes the "deferred" stance in J09 for the research engine; J04 keeps the corpus/judge.
 
-- [ ] **R1 — Anthropic connected with spend cap (= B06).** Owner logs in to the console; Claude sets the monthly limit; owner pastes the key straight into Vercel.
-- [ ] **R2 — Knowledge base v1.** Staff library for SOPs, frameworks, example scripts (winning/losing), course notes; chunked, versioned, used on every generation with sources named. Owner supplies documents.
-- [ ] **R3 — Generated research plan + niche memory + YouTube collection + outlier ranking.** Runs on workspace build and weekly; editable plan; niche reuse across workspaces (public content only).
+- [ ] **R1 — Anthropic connected with spend cap (= B06).** Owner logs in to the console; Claude sets the monthly limit; owner pastes the key straight into Vercel. *28 Oct: deferred until a real client needs in-app generation; until then research and drafting run manually on Claude Max (Max cannot power the app under Anthropic's terms).*
+- [ ] **R2 — Knowledge base v1.** Staff library for SOPs, frameworks, example scripts (winning/losing), course notes; chunked, versioned, used on every generation with sources named. Owner supplies documents. *[~] 27 Oct: built and pushed (2f4daff): /admin/knowledge, versions/restore/archive, PLAYBOOK block on ideas/scripts/hooks/refine. Open: owner applies migration `20261027180000_knowledge_base` in production; owner sends the Drive folder of SOPs/course notes/scripts; Claude loads them plus the pilot patterns.*
+- [ ] **R3 — Generated research plan + niche memory + YouTube collection + outlier ranking.** Runs on workspace build and weekly; editable plan; niche reuse across workspaces (public content only). *27 Oct: manual pilot done on Max for "AI consultants on LinkedIn" (`docs/launch-pack/strategy/RESEARCH_PILOT_2026-10-27_AI_CONSULTANTS_LINKEDIN.md`, c3b6c43). Owner to judge usefulness before automating. Learned: rank by buyer relevance, not raw outliers; YouTube needs the official API; about half of LinkedIn profiles are blocked to guest fetches.*
 - [ ] **R4 — Transcripts for top N (with B08).**
 - [ ] **R5 — TikTok/Instagram collection via scraper; £10–30 pilot on the first niche.** Owner creates the scraper account and approves the budget; caps in config.
 - [ ] **R6 — Visual analysis of top N** (hook, opening shot, on-screen text, framing, pace, B-roll, captions, CTA).
 - [ ] **R7 — Winning-patterns view; ideas and scripts cite it.** Others' content always labelled as such.
 - [ ] **R8 — LinkedIn collection** after a benchmark of options.
+
+## S. Email deliverability (owner note 28 Oct 2026)
+
+Observed 28 Oct: the "send onboarding to client" email for the TEST workspace landed in Hotmail junk. SPF/DKIM for `mail.threadlinehq.com` (Resend) are published; root DMARC is `p=none`. Likely cause: new sender with no reputation at Microsoft.
+
+- [ ] **S1 — Confirm the cause.** Owner pastes the `Authentication-Results` line from the junked email (Hotmail: ... > View > View message details). All `pass` = reputation; any `fail` = fix DNS first.
+- [ ] **S2 — Train the test inbox.** Mark "Not junk" and add the sender to Safe senders; recheck on the next app email.
+- [ ] **S3 — Client instruction.** Add to the kickoff call script and the welcome/invite email: emails come from mail.threadlinehq.com; check junk once and mark it safe (Outlook/Microsoft 365 especially).
+- [ ] **S4 — Seed test.** Send one app email each to a Gmail, an Outlook.com and a Microsoft 365 inbox before the first real client; record inbox/junk per provider.
+- [ ] **S5 — Tighten DMARC** from `p=none` to `p=quarantine` (with an `rua` report address) after about 2 weeks of clean sending. DNS change: owner clicks save. Must not disturb Google Workspace mail on threadlinehq.com.
+- [ ] **S6 — Content check of app emails.** Plain wording, one link, a text version, no link shorteners; re-test after any template change.
 
 ## J. Retained research, implementation, housekeeping and later work
 
