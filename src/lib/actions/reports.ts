@@ -36,6 +36,10 @@ export async function generateWeeklyReportAction(
   return guarded(async () => {
     const ctx = await requireOrgAccess(orgSlug, "reports.generate");
 
+    // weekOffset is 0 for this week, -1 for last week and so on. A report can't
+    // describe a week that hasn't happened (found live 3 Nov 2026: "Last week"
+    // sent +1 and produced a report for the following week).
+    if (!Number.isInteger(weekOffset) || weekOffset > 0 || weekOffset < -12) return err("Choose this week or an earlier week.", "validation");
     const target = new Date();
     target.setDate(target.getDate() + weekOffset * 7);
     const range = weekRangeFor(target);

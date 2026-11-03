@@ -52,13 +52,13 @@ export function GenerateReportButton({ slug }: { slug: string }) {
               report is still saved with its figures intact.
             </Notice>
             <div className="flex flex-wrap gap-2">
-              <Button variant="secondary" loading={pending} onClick={() => generate(1)}>
+              <Button variant="secondary" loading={pending} onClick={() => generate(-1)}>
                 Last week
               </Button>
               <Button variant="secondary" loading={pending} onClick={() => generate(0)}>
                 This week so far
               </Button>
-              <Button variant="ghost" loading={pending} onClick={() => generate(2)}>
+              <Button variant="ghost" loading={pending} onClick={() => generate(-2)}>
                 Two weeks ago
               </Button>
             </div>
