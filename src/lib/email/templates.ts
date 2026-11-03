@@ -79,7 +79,7 @@ export function renderTemplate<K extends EmailTemplateKey>(key: K, data: Templat
     case "application_received": {
       const d = data as TemplateMap["application_received"];
       const title = "We have your application";
-      const paragraphs = [`Hello ${d.name},`, `Thank you — your application has arrived and a person will read it. We reply either way, usually within two working days.`, DELIVERABILITY_NOTE];
+      const paragraphs = [`Hello ${d.name},`, `Thank you — your application has arrived and a person will read it. We reply either way, usually within one working day.`, DELIVERABILITY_NOTE];
       return { subject: title, text: text(title, paragraphs), html: shell(title, paragraphs) };
     }
     case "application_operator_alert": {
