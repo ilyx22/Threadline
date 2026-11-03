@@ -17,6 +17,8 @@ import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import { queueProcessingFor } from "@/lib/processing";
 import { assertContentInScope } from "@/lib/team/scope";
 import { packageClaimProblems } from "@/lib/domain/package-claims";
+import { boundaryProblems } from "@/lib/domain/boundaries";
+import { loadBoundaries } from "@/lib/delivery/boundaries";
 import { getStorage, storageProviderName } from "@/lib/storage";
 import {
   cleanText,
@@ -713,6 +715,13 @@ export async function approvePackageAction(
       pkg.contentItem.script && v ? { text: [v.hook, v.body, v.cta, v.claims].filter(Boolean).join(" | "), claimsVerified: pkg.contentItem.script.claimsVerified } : null,
     );
     if (claimProblems.length) return err(claimProblems.join(" "), "workflow");
+
+    // DR-19: banned topics and avoided phrases are checked, not only prompted.
+    const limits = boundaryProblems(
+      [pkg.workingTitle, pkg.title, pkg.caption, pkg.description, pkg.overlays, pkg.ctaOptions].filter(Boolean).join(" | "),
+      await loadBoundaries(ctx.org.id),
+    );
+    if (limits.length) return err(limits.join(" "), "workflow");
 
     assertPackageApprovable(pkg.contentItem.format, {
       workingTitle: pkg.workingTitle,

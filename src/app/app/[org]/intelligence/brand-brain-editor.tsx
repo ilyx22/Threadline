@@ -819,6 +819,9 @@ function IcpSection({
                 {icp.description ? (
                   <p className="text-[13px] leading-relaxed text-ink">{icp.description}</p>
                 ) : null}
+                {icp.demographics ? (
+                  <p className="mt-2 text-[12.5px] leading-relaxed text-muted">{icp.demographics}</p>
+                ) : null}
                 {icp.firmographics ? (
                   <p className="mt-2 text-[12.5px] leading-relaxed text-muted">{icp.firmographics}</p>
                 ) : null}
@@ -924,6 +927,9 @@ function IcpDialog({
                 </Field>
                 <Field label="Description" htmlFor="icpDescription">
                   <Textarea id="icpDescription" name="description" defaultValue={icp?.description ?? ""} rows={3} />
+                </Field>
+                <Field label="Demographics" htmlFor="demographics" optional hint="Role, seniority, location, career stage.">
+                  <Textarea id="demographics" name="demographics" defaultValue={icp?.demographics ?? ""} rows={3} />
                 </Field>
                 <Field label="Firmographics" htmlFor="firmographics" optional>
                   <Textarea id="firmographics" name="firmographics" defaultValue={icp?.firmographics ?? ""} rows={3} />

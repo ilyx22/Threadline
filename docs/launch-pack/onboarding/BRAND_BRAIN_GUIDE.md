@@ -11,7 +11,7 @@ The Brand Brain is what Threadline writes from. It holds:
 - content pillars and calls to action;
 - content rules: banned topics, never-use phrases and compliance notes.
 
-Banned topics are absolute: the system won't generate anything that touches them.
+Banned topics and never-use phrases are passed to every draft as rules, then checked again before approval: a script or post that names one can't be approved until a person changes it. The check matches the words you gave us, so a person still reviews every piece for anything said another way.
 
 ## How it gets filled
 

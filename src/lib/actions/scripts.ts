@@ -14,6 +14,8 @@ import { REFINE_INSTRUCTIONS, type RefineInstruction } from "@/lib/ai/prompts";
 import { parseJson, parseStringArray, stringify, stringifyArray } from "@/lib/db/json";
 import { platformSchema, scriptQaStateSchema, scriptTypeSchema } from "@/lib/domain/enums";
 import { assertScriptTransition, type Claim } from "@/lib/domain/workflow";
+import { boundaryProblems } from "@/lib/domain/boundaries";
+import { loadBoundaries } from "@/lib/delivery/boundaries";
 import { recordDecision, supersedeApprovals } from "@/lib/delivery/approvals";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
 import { estimateSpokenSeconds } from "@/lib/utils/format";
@@ -495,6 +497,15 @@ export async function setScriptStateAction(
 
     // Throws WorkflowError if the transition is illegal or claims are unverified.
     assertScriptTransition(script.qaState as never, target, claims);
+
+    // DR-19: banned topics and avoided phrases are checked before approval, not only prompted.
+    if (target === "approved" && current) {
+      const limits = boundaryProblems(
+        [script.title, current.hook, current.body, current.cta].filter(Boolean).join(" | "),
+        await loadBoundaries(ctx.org.id),
+      );
+      if (limits.length) return err(limits.join(" "), "workflow");
+    }
 
     await prisma.script.update({
       where: { id: scriptId },
