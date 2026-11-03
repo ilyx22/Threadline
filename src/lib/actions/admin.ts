@@ -565,10 +565,16 @@ export async function qualifyApplicationAction(applicationId: string, _prev: Act
     if (input.outcome === "won" && !app.orgId) return err("Mark it won by converting it into a client.", "workflow");
     const due = input.nextActionDue ? new Date(`${input.nextActionDue}T09:00:00Z`) : null;
     if (due && Number.isNaN(due.getTime())) return err("Use a valid date.", "validation", { nextActionDue: "Invalid date." });
+    // DR-50: an open application is an active record, so it needs a next action
+    // with a date; with no owner chosen, the person qualifying it owns it.
+    if (input.outcome === "open") {
+      if (!input.nextAction?.trim()) return err("An open application needs a next action.", "validation", { nextAction: "Write what happens next." });
+      if (!due) return err("Give the next action a date.", "validation", { nextActionDue: "Choose a date." });
+    }
     await prisma.application.update({
       where: { id: app.id },
       data: {
-        ownerId: input.ownerId || null,
+        ownerId: input.ownerId || (input.outcome === "open" ? admin.user.id : null),
         nextAction: input.nextAction ? cleanText(input.nextAction, 300) : null,
         nextActionDue: due,
         outcome: input.outcome === "open" ? null : input.outcome,
