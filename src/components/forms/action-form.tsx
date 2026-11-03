@@ -139,8 +139,17 @@ export function ActionForm<T>({
       // silent: the form "does nothing". Found 27 Sept 2026 on New client, where
       // the template checkbox was refused with no visible message.
       const form = formRef.current;
-      const unshown = Object.entries(state.fieldErrors).filter(([k]) => !form?.querySelector(`[id="${CSS.escape(k)}-error"]`));
-      if (unshown.length) toast.error(`${state.error} ${unshown.map(([k, v]) => `${k}: ${v}`).join("; ")}`);
+      // A Field's error id follows its htmlFor, which need not equal the input's
+      // name (e.g. id "icpName", name "name"), so also follow the control's
+      // aria-describedby wrapper to a rendered "-error" element.
+      const shown = (k: string) => {
+        if (!form) return false;
+        if (form.querySelector(`[id="${CSS.escape(k)}-error"]`)) return true;
+        const ids = form.querySelector(`[name="${CSS.escape(k)}"]`)?.closest("[aria-describedby]")?.getAttribute("aria-describedby")?.split(/\s+/) ?? [];
+        return ids.some((id) => id.endsWith("-error") && form.querySelector(`[id="${CSS.escape(id)}"]`));
+      };
+      const unshown = Object.entries(state.fieldErrors).filter(([k]) => !shown(k));
+      if (unshown.length) toast.error(`${state.error} ${unshown.map(([, v]) => v).join(" ")}`);
     }
   }, [state, onSuccess, successMessage, resetOnSuccess]);
 

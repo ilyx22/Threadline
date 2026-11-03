@@ -464,7 +464,7 @@ export function BrandBrainEditor({
                   <LineField
                     label="Banned topics"
                     name="bannedTopics"
-                    hint="Absolute. The system will not generate against these."
+                    hint="One per line. Sent as rules with every draft, and a script or post that names one can't be approved until it is changed."
                     value={blocks.contentRules.bannedTopics}
                     disabled={!canEdit}
                   />
@@ -487,7 +487,7 @@ export function BrandBrainEditor({
                 {canEdit ? (
                   <CardFooter>
                     <span className="text-[12px] text-faint">
-                      Banned topics and compliance notes are enforced on every generation.
+                      Banned topics and compliance notes go into every generation. Banned topics are also checked before approval; compliance notes rely on the reviewer.
                     </span>
                     <SubmitButton variant="primary" icon={Check}>
                       Save rules

@@ -867,7 +867,7 @@ export function OnboardingFlow({
                 <Field
                   label="Anything we must never publish about"
                   htmlFor="bannedTopics"
-                  hint="One per line. Absolute — the system will not generate against these."
+                  hint="One per line. Sent as rules with every draft, and anything that names one can't be approved until it is changed."
                   optional
                 >
                   <Textarea
