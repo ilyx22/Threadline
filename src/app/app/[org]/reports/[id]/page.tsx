@@ -285,7 +285,7 @@ export default async function ReportDetailPage({
 
       {/* --------------------------------- Next week ------------------------------- */}
       <Card className="print-surface print-break">
-        <CardHeader title="Next week" eyebrow="Section 07" />
+        <CardHeader title="Next week" eyebrow="Section 13" />
         <CardBody className="space-y-5 pt-0">
           {p.nextWeek.priorities.length > 0 ? (
             <div>
@@ -341,7 +341,7 @@ export default async function ReportDetailPage({
       <Card className="print-surface print-break border-accent-line">
         <CardHeader
           title="What needs you"
-          eyebrow="Section 08"
+          eyebrow="Section 14"
           description="Everything else is handled."
         />
         <CardBody className="pt-0">
@@ -371,7 +371,7 @@ export default async function ReportDetailPage({
       {/* --------------------------- Operating + commercial ------------------------ */}
       <div className="grid gap-6 lg:grid-cols-2">
         <Card className="print-surface print-break">
-          <CardHeader title="Operating metrics" eyebrow="Section 09" />
+          <CardHeader title="Operating metrics" eyebrow="Section 15" />
           <CardBody className="pt-0">
             <dl className="grid grid-cols-2 gap-4">
               <Metric label="Founder time" value={hours(p.operating.founderHours)} />
@@ -399,7 +399,7 @@ export default async function ReportDetailPage({
         </Card>
 
         <Card className="print-surface print-break">
-          <CardHeader title="Commercial signal" eyebrow="Section 10" />
+          <CardHeader title="Commercial signal" eyebrow="Section 16" />
           <CardBody className="pt-0">
             <dl className="grid grid-cols-2 gap-4">
               <Metric label="Inquiries" value={String(p.commercial.inquiries)} />
@@ -434,7 +434,7 @@ export default async function ReportDetailPage({
         between a report and a sales document.
       */}
       <Card className="print-block">
-        <CardHeader title="How strongly this is evidenced" eyebrow="Section 11" />
+        <CardHeader title="How strongly this is evidenced" eyebrow="Section 17" />
         <CardBody className="space-y-3">
           {p.attribution.claims.length === 0 ? (
             <p className="text-[13px] leading-relaxed text-muted">
@@ -461,8 +461,8 @@ export default async function ReportDetailPage({
           ) : null}
 
           <p className="border-t border-line pt-3 text-[12px] text-ghost print-muted">
-            {p.attribution.dataQualityNote} Missing tracking is missing data, not zero commercial
-            value.
+            {p.attribution.dataQualityNote}
+            {/missing data/i.test(p.attribution.dataQualityNote ?? "") ? null : " Missing tracking is missing data, not zero commercial value."}
           </p>
         </CardBody>
       </Card>
