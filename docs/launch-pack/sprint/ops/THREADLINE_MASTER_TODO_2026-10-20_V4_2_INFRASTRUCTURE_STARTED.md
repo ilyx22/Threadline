@@ -188,7 +188,7 @@ All original A01–I06 IDs (113 launch tasks) and J01–J16 (16 retained later t
 
 **Owners:** OWNER films/tests/accepts; PREP assembles rubric/SOP/timing evidence. **Dependencies:** C01 can begin before app transcription. **Completion:** good accepted clips, real minutes/cost and tested production/fallback. SUB03.
 
-- [ ] **C01 — Run the 3–5-clip editing comparison.** Same source clips across useful AI/hybrid/manual/freelancer routes; record accepted quality, edits, minutes, costs and revisions.
+- [ ] **C01 — Run the 3–5-clip editing comparison.** Same source clips across useful AI/hybrid/manual/freelancer routes; record accepted quality, edits, minutes, costs and revisions. *3 Nov: run sheet ready (C01_EDITING_COMPARISON_RUN_SHEET_2026-11-03.md): brief, 3 free routes (OpusClip/Descript/CapCut, £0), blind evidence sheet. Waiting on owner: 25–30 min recording + 3 free accounts.*
 - [ ] **C02 — Choose the standard production route.** Recording, transcription, clip selection, edit/captions, voice/fact check and export; choose one route, not every editor subscription.
 - [ ] **C03 — Create acceptable/premium/reject examples.** Show standard editing before sale; document what changes require separate scope.
 - [ ] **C04 — Complete the editing/handoff SOP.** 12-criterion QA, file naming, storage, source-to-derivative IDs, handoff, revision/overflow and fallback.
