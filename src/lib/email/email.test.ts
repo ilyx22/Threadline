@@ -21,6 +21,14 @@ describe("email templates", () => {
     assert.ok(reset.text.includes("30 minutes"));
   });
 
+  test("the invitation states its lifetime in days and does not claim an account already exists", () => {
+    const r = renderTemplate("invite", { name: "Ada", inviterName: "Ops", workspaceName: "Northbeam", link: "https://x/i", expiresInHours: 168 });
+    assert.ok(r.text.includes("expires in 7 days"));
+    assert.ok(!r.text.includes("168 hours"));
+    assert.ok(!r.text.includes("set up a Threadline account"));
+    assert.ok(renderTemplate("invite", { name: "Ada", inviterName: "Ops", workspaceName: "N", link: "https://x/i", expiresInHours: 72 }).text.includes("expires in 3 days"));
+  });
+
   test("first emails ask the reader to keep us out of junk (S3); routine ones do not", () => {
     const invite = renderTemplate("invite", { name: "Ada", inviterName: "Ops", workspaceName: "Northbeam", link: "https://x/i", expiresInHours: 72 });
     const received = renderTemplate("application_received", { name: "Ada" });

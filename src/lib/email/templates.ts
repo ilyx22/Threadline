@@ -51,7 +51,7 @@ export function renderTemplate<K extends EmailTemplateKey>(key: K, data: Templat
       const title = `${d.inviterName} has added you to ${d.workspaceName} on Threadline`;
       const paragraphs = [
         `Hello ${d.name},`,
-        `${d.inviterName} set up a Threadline account for you in the ${d.workspaceName} workspace. Choose a password using the link below — it works once and expires in ${d.expiresInHours} hours.`,
+        `${d.inviterName} has invited you to the ${d.workspaceName} workspace. Choose a password using the link below to create your account — it works once and expires in ${d.expiresInHours >= 48 && d.expiresInHours % 24 === 0 ? `${d.expiresInHours / 24} days` : `${d.expiresInHours} hours`}.`,
         `If you were not expecting this, you can ignore it; nothing happens until the link is used.`,
         DELIVERABILITY_NOTE,
       ];
