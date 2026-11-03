@@ -110,6 +110,22 @@ export function trackedUrl(origin: string, slug: string): string {
  * The full referring URL can carry personal data in its query string, and the
  * host answers the only question worth asking of it: which platform sent them.
  */
+/**
+ * Requests that are not a person clicking: link-preview crawlers (LinkedIn,
+ * Slack, X, Facebook, WhatsApp, Telegram, Discord…), search bots, command-line
+ * clients, and browser prefetches. They still get the redirect, but they are
+ * not recorded as clicks; otherwise every post would show clicks before any
+ * human had seen it (found live 3 Nov 2026: a curl request counted as a click).
+ */
+const AUTOMATED_UA = /bot\b|bot\/|crawler|spider|slurp|preview|facebookexternalhit|facebot|linkedin|slack|twitter|whatsapp|telegram|discord|skype|embedly|vkshare|pinterest|redditbot|applebot|bingpreview|googleother|headless|curl\/|wget\/|python-requests|python-urllib|httpie|go-http-client|okhttp|java\/|axios\/|node-fetch|undici|libwww|scrapy|monitor|uptime|pingdom/i;
+
+export function isAutomatedRequest(userAgent: string | null | undefined, headers: { purpose?: string | null; secPurpose?: string | null } = {}): boolean {
+  const purpose = `${headers.purpose ?? ""} ${headers.secPurpose ?? ""}`.toLowerCase();
+  if (/prefetch|prerender/.test(purpose)) return true;
+  if (!userAgent || userAgent.trim().length < 8) return true;
+  return AUTOMATED_UA.test(userAgent);
+}
+
 export function referrerHost(referer: string | null | undefined): string | null {
   if (!referer) return null;
   try {

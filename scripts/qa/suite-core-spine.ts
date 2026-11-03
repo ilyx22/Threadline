@@ -73,7 +73,7 @@ const msg = (r: Awaited<ReturnType<typeof attempt<unknown>>>) => `${r.outcome}${
 
 async function follow(slug: string, cookie?: string, referer?: string) {
   const req = new NextRequest(`http://localhost:3000/t/${slug}`, {
-    headers: { cookie: `tl_consent=1${cookie ? `; tl_v=${cookie}` : ""}`, ...(referer ? { referer } : {}) },
+    headers: { "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36", cookie: `tl_consent=1${cookie ? `; tl_v=${cookie}` : ""}`, ...(referer ? { referer } : {}) },
   });
   const res = await redirectGET(req, { params: Promise.resolve({ slug }) });
   const token = /tl_v=([^;]+)/.exec(res.headers.get("set-cookie") ?? "")?.[1] ?? null;

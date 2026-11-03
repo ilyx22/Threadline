@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/lib/db/client";
-import { referrerHost } from "@/lib/domain/tracked-link";
+import { isAutomatedRequest, referrerHost } from "@/lib/domain/tracked-link";
 
 /**
  * The tracked redirect.
@@ -88,6 +88,13 @@ export async function GET(
       maxAge: COOKIE_MAX_AGE,
     });
   }
+
+  // Previews, crawlers and prefetches get the redirect but are not clicks.
+  const automated = request.method === "HEAD" || isAutomatedRequest(request.headers.get("user-agent"), {
+    purpose: request.headers.get("purpose"),
+    secPurpose: request.headers.get("sec-purpose"),
+  });
+  if (automated) return response;
 
   // Never let a measurement failure break somebody else's audience experience.
   try {
