@@ -32,6 +32,7 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "@/components/ui/toast";
 import { ActionForm, FormError, SubmitButton } from "@/components/forms/action-form";
+import { CheckboxField } from "@/components/ui/controls";
 import {
   addCommentAction,
   assignEditorAction,
@@ -51,6 +52,7 @@ type Comment = {
   id: string;
   body: string;
   kind: string;
+  internal?: boolean;
   resolved: boolean;
   authorName: string;
   authorHue: number;
@@ -86,6 +88,7 @@ export function ContentWorkspace({
   canAssign,
   canUpload,
   canGenerate,
+  isStaff = false,
   item,
   editors,
   comments,
@@ -97,6 +100,7 @@ export function ContentWorkspace({
   canAssign: boolean;
   canUpload: boolean;
   canGenerate: boolean;
+  isStaff?: boolean;
   item: {
     id: string;
     title: string;
@@ -263,6 +267,7 @@ export function ContentWorkspace({
                           {comment.kind === "revision_request" ? (
                             <Badge tone="warning">Revision request</Badge>
                           ) : null}
+                          {comment.internal ? <Badge tone="outline">Internal · client can't see</Badge> : null}
                           {comment.resolved ? <Badge tone="positive">Resolved</Badge> : null}
                           <span className="text-[11px] text-ghost">
                             {relativeTime(new Date(comment.createdAt))}
@@ -322,6 +327,14 @@ export function ContentWorkspace({
                           placeholder="Add a note. Reference a timecode where you can."
                         />
                       </Field>
+                      {isStaff ? (
+                        <CheckboxField
+                          id="commentInternal"
+                          name="internal"
+                          label="Internal note"
+                          description="Threadline only. The client never sees it."
+                        />
+                      ) : null}
                       <div className="flex justify-end">
                         <SubmitButton size="sm" variant="secondary" icon={MessageSquare}>
                           Comment

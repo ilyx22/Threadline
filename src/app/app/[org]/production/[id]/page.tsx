@@ -123,6 +123,7 @@ export default async function ContentDetailPage({
         canAssign={ctx.can("production.assign")}
         canUpload={ctx.can("library.upload")}
         canGenerate={ctx.can("ai.generate")}
+        isStaff={ctx.isInternal}
         item={{
           id: item.id,
           title: item.title,
@@ -138,6 +139,7 @@ export default async function ContentDetailPage({
           id: c.id,
           body: c.body,
           kind: c.kind,
+          internal: c.internal,
           resolved: c.resolved,
           authorName: c.author?.name ?? "Threadline",
           authorHue: c.author?.avatarHue ?? 210,

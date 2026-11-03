@@ -521,6 +521,14 @@ export async function setScriptStateAction(
 
     if (target === "approved") await recordDecision(ctx, { type: "script", id: scriptId }, "approved");
 
+    // A revised script going back for approval closes the "Changes requested" task it answered.
+    if (target === "ready_to_record" || target === "approved") {
+      await prisma.task.updateMany({
+        where: { orgId: ctx.org.id, entityType: "script", entityId: scriptId, audience: "internal", kind: "review", status: { in: ["open", "in_progress"] }, title: { startsWith: "Changes requested:" } },
+        data: { status: "done", completedAt: new Date() },
+      });
+    }
+
     // B13: a script waiting for the client's approval tells the approvers, once per version.
     if (target === "ready_to_record" && script.qaState !== "approved") {
       await notify({

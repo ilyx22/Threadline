@@ -312,6 +312,7 @@ export async function updateContentDetailsAction(
 const commentSchema = z.object({
   body: z.string().min(1, "Write a comment first.").max(4000),
   kind: z.enum(["comment", "revision_request", "approval_note"]).default("comment"),
+  internal: z.union([z.literal("on"), z.literal("true")]).optional(),
 });
 
 export async function addCommentAction(
@@ -324,6 +325,7 @@ export async function addCommentAction(
     const ctx = await requireOrgAccess(orgSlug, "production.view");
     await assertContentInScope(ctx, contentItemId);
     const input = parseForm(commentSchema, formData);
+    const internal = Boolean(input.internal) && ctx.isInternal;
 
     const item = await prisma.contentItem.findFirst({
       where: { id: contentItemId, orgId: ctx.org.id },
@@ -339,12 +341,16 @@ export async function addCommentAction(
         body: cleanText(input.body, 4000),
         kind: input.kind,
         authorId: ctx.user.id,
+        // Only Threadline staff can write an operator-private note (found 3 Nov 2026: the
+        // flag existed and reads honoured it, but nothing could set it).
+        internal,
         // CX-06: the version the comment is about, so feedback on an earlier cut is marked as such.
         version: (await fingerprint(ctx.org.id, { type: "content_item", id: contentItemId }))?.label ?? null,
       },
     });
 
-    await recordEvent(ctx, contentItemId, { type: "comment", note: cleanText(input.body, 300) });
+    // The activity feed is shared with the client, so an internal note leaves no text there.
+    if (!internal) await recordEvent(ctx, contentItemId, { type: "comment", note: cleanText(input.body, 300) });
     await touchOrg(ctx.org.id);
     revalidateContent(orgSlug, contentItemId);
 
