@@ -16,6 +16,7 @@ Sources: SOP 04 Close to Kickoff, the Master Blueprint (§3 scope, §9 Day-7 ins
 | [TEAM_AND_ACCESS.md](TEAM_AND_ACCESS.md) | Invites, roles, profiles, contacts, two-factor, notifications, removing people | READY FOR OWNER REVIEW |
 | [BRAND_BRAIN_GUIDE.md](BRAND_BRAIN_GUIDE.md) | Brand Brain, prefill confirmation, versions, installation sign-off | READY FOR OWNER REVIEW |
 | [RECORDING_GUIDE.md](RECORDING_GUIDE.md) | Setup review, pre-flight, Recording Room, troubleshooting | READY FOR OWNER REVIEW |
+| [WALKTHROUGH_VIDEOS.md](WALKTHROUGH_VIDEOS.md) | Six optional 2-minute screen walkthroughs (one per section), where the links go, recording rules | DRAFT FOR OWNER REVIEW |
 | [REVIEW_AND_APPROVAL.md](REVIEW_AND_APPROVAL.md) | Approvals queue, bulk approval, versions, what blocks approval | READY FOR OWNER REVIEW |
 | [REPORTING_SUPPORT_ESCALATION.md](REPORTING_SUPPORT_ESCALATION.md) | Weekly reports, four-week reviews, PDF, the first cycle, Help, escalation | READY FOR OWNER REVIEW (support owner and response times not set) |
 | [FAQ.md](FAQ.md) | 15 client questions | READY FOR OWNER REVIEW |

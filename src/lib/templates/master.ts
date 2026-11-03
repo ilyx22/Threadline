@@ -45,11 +45,11 @@ export const MASTER_TEMPLATE = {
     {
       title: "Complete the Threadline onboarding",
       description:
-        "Thirteen short steps. This is what configures the system around your business — it takes about 25 minutes and saves as you go.",
+        "Two short sections before your kickoff call: your business basics and access. About 10 minutes, and it saves as you go. Everything else is covered on the call, where we type while you talk.",
       kind: "decide",
       audience: "client",
       priority: "high",
-      estimateMin: 25,
+      estimateMin: 10,
     },
     {
       title: "Upload your three best-performing pieces of content",
@@ -72,11 +72,11 @@ export const MASTER_TEMPLATE = {
     {
       title: "Book your Brand Brain interview",
       description:
-        "A 60-minute conversation where we capture your beliefs, stories and voice properly. This is the single highest-leverage hour of the installation.",
+        "The 60–90 minute kickoff where we capture your buyer, beliefs, stories and voice while you talk. You check what we wrote afterwards (about 10 minutes).",
       kind: "decide",
       audience: "client",
       priority: "high",
-      estimateMin: 60,
+      estimateMin: 90,
     },
     {
       title: "Configure the client workspace",
