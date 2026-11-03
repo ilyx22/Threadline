@@ -1141,7 +1141,7 @@ function ProofDialog({
                   htmlFor="claimStatus"
                   hint="Prohibited proof is excluded from AI context entirely."
                 >
-                  <NativeSelect id="claimStatus" name="claimStatus" defaultValue={proof?.claimStatus ?? "allowed"}>
+                  <NativeSelect id="claimStatus" name="claimStatus" defaultValue={proof?.claimStatus ?? "needs_review"}>
                     <option value="allowed">Cleared for use</option>
                     <option value="needs_review">Needs review</option>
                     <option value="prohibited">Do not use</option>

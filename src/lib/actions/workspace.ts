@@ -509,7 +509,7 @@ const proofFormSchema = z.object({
   source: z.string().max(300).optional(),
   metricLabel: z.string().max(200).optional(),
   metricValue: z.string().max(200).optional(),
-  claimStatus: claimPermissionSchema.default("allowed"),
+  claimStatus: claimPermissionSchema.default("needs_review"),
 });
 
 export async function saveProofAction(
