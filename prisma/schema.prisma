@@ -1585,7 +1585,7 @@ model AiGeneration {
   id           String   @id @default(cuid())
   orgId        String?
   userId       String?
-  kind         String // ideas | script | hooks | refine | packaging | patterns | report | signals | brief
+  kind         String // ideas | script | hooks | refine | packaging | patterns | report | signals | brief | mine | expectation | judge | corpus | lead_reply | review_draft
   promptKey    String
   provider     String
   model        String
