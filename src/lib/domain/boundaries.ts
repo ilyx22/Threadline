@@ -26,6 +26,18 @@ function hits(text: string, terms: string[]): string[] {
   return terms.filter((t) => new RegExp(`(?<![\\p{L}\\p{N}])${escape(t).replace(/\s+/g, "\\s+")}(?![\\p{L}\\p{N}])`, "iu").test(text));
 }
 
+const flat = (s: string) => s.toLowerCase().replace(/[“”"'‘’.,!?;:—–-]/g, " ").replace(/\s+/g, " ").trim();
+
+/**
+ * A claim marked "removed" must actually be gone from the script (found live
+ * 3 Nov 2026: Remove cleared the fact-check gate while the sentence stayed in
+ * the body). Returns the removed claims whose text is still present.
+ */
+export function removedClaimsStillPresent(text: string, claims: { text: string; status: string }[]): string[] {
+  const hay = flat(text);
+  return claims.filter((c) => c.status === "removed" && flat(c.text).length >= 8 && hay.includes(flat(c.text))).map((c) => c.text);
+}
+
 /** Sentences a reviewer can act on. Empty means clear. */
 export function boundaryProblems(text: string, b: Boundaries): string[] {
   const problems: string[] = [];

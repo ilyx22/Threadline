@@ -14,7 +14,7 @@ import { REFINE_INSTRUCTIONS, type RefineInstruction } from "@/lib/ai/prompts";
 import { parseJson, parseStringArray, stringify, stringifyArray } from "@/lib/db/json";
 import { platformSchema, scriptQaStateSchema, scriptTypeSchema } from "@/lib/domain/enums";
 import { assertScriptTransition, type Claim } from "@/lib/domain/workflow";
-import { boundaryProblems } from "@/lib/domain/boundaries";
+import { boundaryProblems, removedClaimsStillPresent } from "@/lib/domain/boundaries";
 import { loadBoundaries } from "@/lib/delivery/boundaries";
 import { recordDecision, supersedeApprovals } from "@/lib/delivery/approvals";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
@@ -497,6 +497,12 @@ export async function setScriptStateAction(
 
     // Throws WorkflowError if the transition is illegal or claims are unverified.
     assertScriptTransition(script.qaState as never, target, claims);
+
+    // A claim marked "removed" has to be gone from the text before the script moves on.
+    if ((target === "ready_to_record" || target === "approved") && current) {
+      const still = removedClaimsStillPresent([current.hook, current.body, current.cta].filter(Boolean).join(" | "), claims);
+      if (still.length) return err(`You marked ${still.length === 1 ? "a claim" : "claims"} as removed, but the script still says: "${still.join('", "')}". Delete it from the text and save a new version.`, "workflow");
+    }
 
     // DR-19: banned topics and avoided phrases are checked before approval, not only prompted.
     if (target === "approved" && current) {
