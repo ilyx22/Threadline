@@ -267,7 +267,7 @@ export function ContentWorkspace({
                           {comment.kind === "revision_request" ? (
                             <Badge tone="warning">Revision request</Badge>
                           ) : null}
-                          {comment.internal ? <Badge tone="outline">Internal · client can't see</Badge> : null}
+                          {comment.internal ? <Badge tone="outline">{"Internal · client can't see"}</Badge> : null}
                           {comment.resolved ? <Badge tone="positive">Resolved</Badge> : null}
                           <span className="text-[11px] text-ghost">
                             {relativeTime(new Date(comment.createdAt))}
