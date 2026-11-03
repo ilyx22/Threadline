@@ -15,6 +15,7 @@ import { parseJson, parseStringArray, stringify, stringifyArray } from "@/lib/db
 import { platformSchema, scriptQaStateSchema, scriptTypeSchema } from "@/lib/domain/enums";
 import { assertScriptTransition, type Claim } from "@/lib/domain/workflow";
 import { boundaryProblems, removedClaimsStillPresent } from "@/lib/domain/boundaries";
+import { notify } from "@/lib/notify";
 import { loadBoundaries } from "@/lib/delivery/boundaries";
 import { recordDecision, supersedeApprovals } from "@/lib/delivery/approvals";
 import { enforceRateLimit, LIMITS } from "@/lib/security/rate-limit";
@@ -520,6 +521,19 @@ export async function setScriptStateAction(
 
     if (target === "approved") await recordDecision(ctx, { type: "script", id: scriptId }, "approved");
 
+    // B13: a script waiting for the client's approval tells the approvers, once per version.
+    if (target === "ready_to_record" && script.qaState !== "approved") {
+      await notify({
+        orgId: ctx.org.id,
+        audience: { orgRole: "approvers" },
+        kind: "approval",
+        title: `Script ready for your approval: ${script.title}`,
+        body: "Read it and approve it, or send it back with a note.",
+        href: `/app/${orgSlug}/create/scripts/${scriptId}`,
+        dedupeKey: `script-ready:${scriptId}:v${current?.version ?? 1}`,
+      });
+    }
+
     await audit(ctx, {
       action: "script.state",
       entityType: "script",
@@ -537,6 +551,63 @@ export async function setScriptStateAction(
     return okVoid(
       target === "approved" ? "Script approved and added to the recording queue." : "Script updated.",
     );
+  });
+}
+
+/**
+ * The approver sends a script back with a note (found missing 3 Nov 2026: the
+ * client's approval card said "approve, or send it back", but scripts had no
+ * way back). The script leaves the approval queue, returns to Threadline's
+ * fact-check step, the decision is recorded against the exact version, and
+ * Threadline gets a high-priority internal task carrying the note.
+ */
+const sendBackSchema = z.object({ note: z.string().trim().min(5, "Say what needs to change.").max(2000) });
+
+export async function sendScriptBackAction(
+  orgSlug: string,
+  scriptId: string,
+  _prev: ActionResult | null,
+  formData: FormData,
+): Promise<ActionResult> {
+  return guarded(async () => {
+    const ctx = await requireOrgAccess(orgSlug);
+    if (!ctx.can("scripts.approve")) return err("Only an approver can send a script back.", "auth");
+    const { note } = parseForm(sendBackSchema, formData);
+
+    const script = await loadScript(ctx, scriptId);
+    if (!script) return err("That script no longer exists.", "not_found");
+    if (script.qaState !== "ready_to_record" && script.qaState !== "approved") {
+      return err("This script isn't waiting for approval, so there is nothing to send back.", "workflow");
+    }
+
+    await recordDecision(ctx, { type: "script", id: scriptId }, "changes_requested", { note });
+    await prisma.script.update({ where: { id: scriptId }, data: { qaState: "needs_fact_check", approvedAt: null } });
+    await prisma.task.create({
+      data: {
+        orgId: ctx.org.id,
+        title: `Changes requested: ${script.title}`.slice(0, 200),
+        description: `${ctx.user.name ?? "The client"} sent version ${script.versions[0]?.version ?? 1} back: ${cleanText(note, 2000)}`,
+        kind: "review",
+        audience: "internal",
+        priority: "high",
+        entityType: "script",
+        entityId: scriptId,
+        estimateMin: 20,
+      },
+    });
+    await audit(ctx, {
+      action: "script.sent_back",
+      entityType: "script",
+      entityId: scriptId,
+      summary: `Sent script "${script.title}" back with a note`,
+      meta: { from: script.qaState, version: script.versions[0]?.version ?? null },
+    });
+    await touchOrg(ctx.org.id);
+
+    revalidatePath(`/app/${orgSlug}/create/scripts/${scriptId}`);
+    revalidatePath(`/app/${orgSlug}/approvals`);
+    revalidatePath(`/app/${orgSlug}`);
+    return okVoid("Sent back with your note. Threadline will revise it and send it again.");
   });
 }
 

@@ -39,6 +39,7 @@ import {
   restoreVersionAction,
   saveScriptAction,
   selectHookAction,
+  sendScriptBackAction,
   sendToRecordingAction,
   setClaimStatusAction,
   setScriptStateAction,
@@ -110,6 +111,7 @@ export function ScriptEditor({
   const [pending, startTransition] = React.useTransition();
   const [refining, setRefining] = React.useState<string | null>(null);
   const [claimOpen, setClaimOpen] = React.useState(false);
+  const [sendBackOpen, setSendBackOpen] = React.useState(false);
 
   // Reset local state when the server sends a new version through.
   React.useEffect(() => {
@@ -191,7 +193,11 @@ export function ScriptEditor({
               </Badge>
             ) : claims.length > 0 ? (
               <Badge tone="positive" icon={ShieldCheck}>
-                All claims verified
+                {claims.every((c) => c.status === "removed")
+                  ? "Claims removed"
+                  : claims.some((c) => c.status === "removed")
+                    ? "Claims verified or removed"
+                    : "All claims verified"}
               </Badge>
             ) : null}
           </div>
@@ -249,6 +255,12 @@ export function ScriptEditor({
               onClick={() => run(() => setScriptStateAction(slug, script.id, "approved"))}
             >
               Approve
+            </Button>
+          ) : null}
+
+          {canApprove && (script.qaState === "ready_to_record" || (script.qaState === "approved" && !inProduction)) ? (
+            <Button variant="secondary" icon={RotateCcw} loading={pending} onClick={() => setSendBackOpen(true)}>
+              Send back
             </Button>
           ) : null}
 
@@ -642,6 +654,48 @@ export function ScriptEditor({
                     Cancel
                   </Button>
                   <SubmitButton variant="primary">Flag claim</SubmitButton>
+                </DialogFooter>
+              </>
+            )}
+          </ActionForm>
+        </DialogContent>
+      </Dialog>
+
+      {/* Send back */}
+      <Dialog open={sendBackOpen} onOpenChange={setSendBackOpen}>
+        <DialogContent size="sm">
+          <DialogHeader
+            title="Send this script back"
+            description="Say what needs to change. Threadline revises it and sends it back to you for approval."
+          />
+          <ActionForm
+            action={sendScriptBackAction.bind(null, slug, script.id)}
+            onSuccess={() => {
+              setSendBackOpen(false);
+              router.refresh();
+            }}
+            className="contents"
+          >
+            {({ fieldErrors, error }) => (
+              <>
+                <DialogBody className="space-y-4">
+                  <FormError error={error} />
+                  <Field label="What needs to change" htmlFor="sendBackNote" error={fieldErrors.note}>
+                    <Textarea
+                      id="sendBackNote"
+                      name="note"
+                      rows={4}
+                      required
+                      autoFocus
+                      placeholder="The second point isn't how we'd say it. Use the onboarding example instead."
+                    />
+                  </Field>
+                </DialogBody>
+                <DialogFooter>
+                  <Button variant="ghost" onClick={() => setSendBackOpen(false)}>
+                    Cancel
+                  </Button>
+                  <SubmitButton variant="primary">Send back</SubmitButton>
                 </DialogFooter>
               </>
             )}
