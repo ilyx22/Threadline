@@ -2,7 +2,7 @@ import { test, describe, after } from "node:test";
 import assert from "node:assert/strict";
 import { prisma } from "@/lib/db/client";
 import { __setEmailProvider, captureProvider, recentEmails, resendProvider, sendEmail } from "./index";
-import { renderTemplate } from "./templates";
+import { DELIVERABILITY_NOTE, renderTemplate } from "./templates";
 
 const TO = "qa.email.capture@example.test";
 
@@ -19,6 +19,16 @@ describe("email templates", () => {
     assert.ok(r.subject.includes("Northbeam"));
     const reset = renderTemplate("password_reset", { name: "Ada", link: "https://x/reset-password?token=t", expiresInMinutes: 30 });
     assert.ok(reset.text.includes("30 minutes"));
+  });
+
+  test("first emails ask the reader to keep us out of junk (S3); routine ones do not", () => {
+    const invite = renderTemplate("invite", { name: "Ada", inviterName: "Ops", workspaceName: "Northbeam", link: "https://x/i", expiresInHours: 72 });
+    const received = renderTemplate("application_received", { name: "Ada" });
+    for (const r of [invite, received]) {
+      assert.ok(r.text.includes(DELIVERABILITY_NOTE));
+      assert.ok(r.html.includes("mark it as not junk"));
+    }
+    assert.ok(!renderTemplate("password_reset", { name: "Ada", link: "https://x/r", expiresInMinutes: 30 }).text.includes(DELIVERABILITY_NOTE));
   });
 });
 

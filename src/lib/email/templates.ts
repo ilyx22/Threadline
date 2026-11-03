@@ -22,6 +22,14 @@ export type TemplateMap = {
 export type EmailTemplateKey = keyof TemplateMap;
 export type TemplateInput<K extends EmailTemplateKey> = TemplateMap[K];
 
+/**
+ * S3: first emails ask the reader to keep later ones out of junk. A new sending
+ * domain starts with no reputation; one "Not junk" or a saved contact on the
+ * recipient's side is the quickest fix for that person's mailbox.
+ */
+export const DELIVERABILITY_NOTE =
+  "So reports and approval requests reach your inbox, add this sender to your contacts. If this email landed in junk or spam, please mark it as not junk.";
+
 const escape = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
 
 function shell(title: string, paragraphs: string[], cta?: { label: string; href: string }, footer = "Threadline · a managed authority system for expert-led firms.") {
@@ -45,6 +53,7 @@ export function renderTemplate<K extends EmailTemplateKey>(key: K, data: Templat
         `Hello ${d.name},`,
         `${d.inviterName} set up a Threadline account for you in the ${d.workspaceName} workspace. Choose a password using the link below — it works once and expires in ${d.expiresInHours} hours.`,
         `If you were not expecting this, you can ignore it; nothing happens until the link is used.`,
+        DELIVERABILITY_NOTE,
       ];
       const cta = { label: "Choose your password", href: d.link };
       return { subject: title, text: text(title, paragraphs, cta), html: shell(title, paragraphs, cta) };
@@ -70,7 +79,7 @@ export function renderTemplate<K extends EmailTemplateKey>(key: K, data: Templat
     case "application_received": {
       const d = data as TemplateMap["application_received"];
       const title = "We have your application";
-      const paragraphs = [`Hello ${d.name},`, `Thank you — your application has arrived and a person will read it. We reply either way, usually within two working days.`];
+      const paragraphs = [`Hello ${d.name},`, `Thank you — your application has arrived and a person will read it. We reply either way, usually within two working days.`, DELIVERABILITY_NOTE];
       return { subject: title, text: text(title, paragraphs), html: shell(title, paragraphs) };
     }
     case "application_operator_alert": {

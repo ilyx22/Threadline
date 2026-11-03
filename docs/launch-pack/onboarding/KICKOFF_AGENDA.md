@@ -13,7 +13,7 @@ The kickoff is a conversation, not homework. Threadline prefills the Brand Brain
 | 3. Expertise and point of view | Opinions you'd defend, stories, mistakes you learned from, frameworks you use but haven't named | Beliefs, stories and proof sections |
 | 4. Claims and proof | What you can prove, what you won't claim, what must never be used | Claims and proof limits |
 | 5. Voice and editing style | How you sound, phrases you'd never say; your **Editing Style Profile**, with visual references and examples of standard Threadline editing | Voice guide and editing profile |
-| 6. Ways of working | Approver and backup, recording cadence (if video is prescribed), how commercial signals reach us, measurement setup (see below) | Responsibilities confirmed |
+| 6. Ways of working | Approver and backup, recording cadence (if video is prescribed), how commercial signals reach us, measurement setup (see below), and a check that Threadline emails land in the inbox, not junk (if not: mark as not junk, add the sender to contacts) | Responsibilities confirmed |
 | 7. Early win and next steps | One **early win** agreed in words; the first-period plan; what happens this week | Early win recorded; installation steps assigned |
 
 **Measurement setup, agreed in the session:**

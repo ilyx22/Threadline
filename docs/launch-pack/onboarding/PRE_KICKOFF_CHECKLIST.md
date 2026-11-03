@@ -12,6 +12,7 @@ Send what you already have. Nothing here needs to be written specially, and anyt
 - [ ] **Sales and customer sources, if available:** call recordings or notes, common questions, objections, emails where buyers explain what they need.
 - [ ] **Your approver:** who approves content, and a backup for when they're away.
 - [ ] **Who records:** who will be on camera or voice, if video is part of the plan.
+- [ ] **Our emails reach you:** find your workspace invitation from Threadline. If it went to junk or spam, mark it as not junk and add the sender to your contacts, so reports and approval requests arrive in your inbox.
 
 Upload files in your workspace (**Content → Library**), or send links.
 

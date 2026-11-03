@@ -369,12 +369,12 @@ Spec: `docs/launch-pack/strategy/SPEC_2026-10-27_KNOWLEDGE_BASE_AND_AUTO_RESEARC
 
 Observed 28 Oct: the "send onboarding to client" email for the TEST workspace landed in Hotmail junk. SPF/DKIM for `mail.threadlinehq.com` (Resend) are published; root DMARC is `p=none`. Likely cause: new sender with no reputation at Microsoft.
 
-- [ ] **S1 — Confirm the cause.** Owner pastes the `Authentication-Results` line from the junked email (Hotmail: ... > View > View message details). All `pass` = reputation; any `fail` = fix DNS first.
+- [ ] **S1 — Confirm the cause.** Owner pastes the `Authentication-Results` line from the junked email (Hotmail: ... > View > View message details). All `pass` = reputation; any `fail` = fix DNS first. *3 Nov (Claude, DNS checked via 8.8.8.8): Resend DKIM at resend._domainkey.mail.threadlinehq.com present; Return-Path send.mail.threadlinehq.com -> SPF for Resend IPs; both align (relaxed) with threadlinehq.com; DMARC p=none, no rua. Setup looks correct, so a junk verdict is most likely new-sender reputation (Hotmail/Outlook is strict with new subdomains). Header line still wanted to confirm.*
 - [ ] **S2 — Train the test inbox.** Mark "Not junk" and add the sender to Safe senders; recheck on the next app email.
-- [ ] **S3 — Client instruction.** Add to the kickoff call script and the welcome/invite email: emails come from mail.threadlinehq.com; check junk once and mark it safe (Outlook/Microsoft 365 especially).
+- [x] **S3 — Client instruction.** Add to the kickoff call script and the welcome/invite email: emails come from mail.threadlinehq.com; check junk once and mark it safe (Outlook/Microsoft 365 especially). *3 Nov: done. Invite + application-received emails carry a contacts/not-junk line (DELIVERABILITY_NOTE, tested); PRE_KICKOFF_CHECKLIST item; KICKOFF_AGENDA part 6 check.*
 - [ ] **S4 — Seed test.** Send one app email each to a Gmail, an Outlook.com and a Microsoft 365 inbox before the first real client; record inbox/junk per provider.
 - [ ] **S5 — Tighten DMARC** from `p=none` to `p=quarantine` (with an `rua` report address) after about 2 weeks of clean sending. DNS change: owner clicks save. Must not disturb Google Workspace mail on threadlinehq.com.
-- [ ] **S6 — Content check of app emails.** Plain wording, one link, a text version, no link shorteners; re-test after any template change.
+- [~] **S6 — Content check of app emails.** Plain wording, one link, a text version, no link shorteners; re-test after any template change. *3 Nov review: every template has text + HTML, links point at our own domain (no shorteners), short plain wording, no tracking pixels. The junked email was the daily digest: very short, mostly a button/link, generic subject. Acceptable for now; re-test after S2/S4 before changing wording. Possible later: List-Unsubscribe header on digest/notification mail.*
 
 ## J. Retained research, implementation, housekeeping and later work
 
