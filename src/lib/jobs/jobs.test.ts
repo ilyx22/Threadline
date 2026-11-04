@@ -1,7 +1,7 @@
 import { test, describe, before, after } from "node:test";
 import assert from "node:assert/strict";
 import { prisma } from "@/lib/db/client";
-import { backoffMs, claimNext, drain, enqueue, LEASE_MS, registerHandler, requeueDead, runOnce } from "./index";
+import { backoffMs, claimNext, enqueue, LEASE_MS, registerHandler, requeueDead, runOnce } from "./index";
 
 const TYPE = "qa.test";
 
@@ -73,9 +73,13 @@ describe("durable jobs", () => {
 
   test("a job with no handler dies loudly instead of looping", async () => {
     await enqueue("qa.orphan", {}, { idempotencyKey: "qa-orphan" });
-    // Drain the whole queue: other due jobs left in a shared test database may be claimed first.
-    const results = await drain("w1", 500);
-    const orphan = results.find((r) => r.type === "qa.orphan");
+    // Scoped to this test's type. Draining the whole queue claimed and ran jobs
+    // that other test files (running in parallel on the shared database) had
+    // just queued, which made both this test and theirs flaky.
+    const orphan = await runOnce("w1", ["qa.orphan"]);
     assert.equal(orphan?.outcome, "no_handler");
+    const row = await prisma.job.findUnique({ where: { idempotencyKey: "qa-orphan" } });
+    assert.equal(row?.status, "dead");
+    assert.match(row?.lastError ?? "", /No handler registered/);
   });
 });
