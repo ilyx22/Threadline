@@ -190,7 +190,7 @@ npm run dev
 
 | # | Test | Expected | Result |
 |---|---|---|---|
-| O1 | 1440 / 1024 / 768 / 390 px | Usable; no horizontal scroll | **BROWSER** — built responsive throughout (sidebar collapses below `lg`, grids reflow, tables scroll in their own container); needs visual confirmation |
+| O1 | 1440 / 1024 / 768 / 390 px | Usable; no horizontal scroll | **PASS** — 4 Nov 2026 `qa:browser`, 33 routes × 4 widths, 0 fail, no page-level horizontal scroll; Home grid overflow at ~650px found on production and fixed (`[data-app-main] .grid > *` min-width 0) |
 | O2 | Mobile navigation drawer | Works | **BROWSER** — implemented |
 | O3 | Loading states | Module-shaped skeletons | **PASS** — `loading.tsx` for the app and admin segments |
 | O4 | Empty states | Every list explains itself | **PASS** — each list module has a distinct empty state, and distinguishes "nothing yet" from "nothing matches those filters" |
@@ -200,7 +200,7 @@ npm run dev
 | O8 | Keyboard focus | Visible ring; dialogs trap and restore focus | **PASS** — global `:focus-visible` ring; Radix handles focus management |
 | O9 | Demo tour | Nine stops, discreet, exitable | **BROWSER** — implemented with keyboard and progress controls |
 | O10 | Destructive actions confirmed | Always | **PASS** — every delete goes through a confirmation |
-| O11 | New screens at each breakpoint | Usable; the comparison table scrolls in its own container | **BROWSER** — the run detail, diagnosis, install and proof screens were built responsive and the markup reviewed; not visually confirmed |
+| O11 | New screens at each breakpoint | Usable; the comparison table scrolls in its own container | **PASS (swept routes)** — 4 Nov 2026 sweep covers install, intelligence, production, performance and reports routes at all four widths; detail pages outside the sweep's route list remain markup-reviewed only |
 | O12 | Marketing scroll reveal | Smooth, once per block, nothing above the fold flashes | **BROWSER** — implemented; server HTML confirmed visible without JavaScript, but the motion itself is unverified |
 | O13 | Sticky CTA behaviour | Appears after the hero, stands down near the footer | **BROWSER** — implemented; scroll behaviour unverified |
 
@@ -409,7 +409,7 @@ npm test
 
 ## Outstanding
 
-**One item.** Breakpoint behaviour at 1024, 768 and 390px.
+**Closed 4 Nov 2026 (B19)** — breakpoint behaviour at 1024, 768 and 390px verified by `qa:browser`. Still BROWSER-only: O2 drawer, O7 ⌘K, O9 demo tour interactions, and public O12/O13 (report-only under the frontend freeze).
 
 ## AE. ATTRIBUTION V1.5 (added 2026-09-06)
 

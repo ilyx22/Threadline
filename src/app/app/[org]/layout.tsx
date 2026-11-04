@@ -134,7 +134,7 @@ export default async function AppLayout({
               </p>
             </div>
           ) : null}
-          <main className="flex-1 px-4 py-6 lg:px-6 lg:py-8">
+          <main data-app-main className="flex-1 px-4 py-6 lg:px-6 lg:py-8">
             <div className="mx-auto w-full max-w-[1400px]">{children}</div>
           </main>
         </div>

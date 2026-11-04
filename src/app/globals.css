@@ -113,6 +113,14 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* App and admin screens: a grid item may shrink below its content's one-line
+     width, so a truncated title inside a card ellipsises instead of stretching
+     the column past the viewport. Scoped to the signed-in shells; public pages
+     do not carry the attribute. */
+  [data-app-main] .grid > * {
+    min-width: 0;
+  }
+
   /* Numeric data must align in columns. */
   .tabular,
   table td,

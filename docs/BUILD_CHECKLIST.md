@@ -139,7 +139,7 @@ session can resume from disk alone (see `/HANDOFF.md`).
 - [x] `npm test` passing
 - [x] `npm run build` passing
 - [x] Acceptance tests executed and recorded
-- [~] Responsive checks (desktop / tablet / mobile) — built responsive throughout and markup reviewed; visual confirmation in a browser is outstanding (see docs/ACCEPTANCE_TESTS.md section O)
+- [x] Responsive checks (desktop / tablet / mobile) — 4 Nov 2026 (B19): `qa:browser` against a local production build, 33 app/admin routes × 1440/1024/768/390, 98 pass, 0 fail, no horizontal page scroll at any width. Live production at ~650px found Home cards stretching to 834px (truncated task titles inside a grid with no column template); fixed app-wide with `[data-app-main] .grid > * { min-width: 0 }`. Remaining partials are small inline text-link targets (WCAG 2.5.8), not overflow
 - [x] Loading / empty / error states verified
 - [x] `README.md`
 - [x] `HANDOFF.md`
@@ -228,8 +228,8 @@ these workflows function.
 - [x] `npm run build` passing — 47 routes
 - [x] New flows verified against the running application, per role and per tenant
 - [x] Documentation updated to match the implementation
-- [~] Browser-only visual QA of the new screens — carried forward from v1; see
-      `docs/ACCEPTANCE_TESTS.md` section O
+- [x] Browser-only visual QA of the new screens — closed by the 4 Nov 2026 B19 sweep (see
+      `docs/ACCEPTANCE_TESTS.md` section O)
 
 ---
 
@@ -392,7 +392,11 @@ Built against the full business resource pack, present in the workspace for the 
 - [x] Migration applied and seed re-run on a clean database
 - [x] Browser QA: cockpit, market, wedge detail, prospects, prospect detail, acquisition — no
       console errors; the interview sample gate and the session-loop fix exercised end to end
-- [~] Checklist save and call outcome not confirmed by a human click in a browser — the tab began
+- [x] Checklist save and call outcome confirmed by real mouse clicks in headless Chrome on 4 Nov 2026
+      (B19, local production build): the SOP tick saved and survived a reload, then was restored;
+      Record outcome as follow-up was refused because diagnosis coverage was unmarked (intended
+      guard, message shown), and as not a fit it saved (attended, not_fit, completedAt set).
+      Earlier note: not confirmed by a human click in a browser — the tab began
       reporting `document.hidden` part way through; both actions were exercised in-process by the
       sales block of `qa:all` on 2026-09-09 and the pages render clean in `qa:browser`. One human
       click each remains on the founder manual QA list
@@ -556,7 +560,8 @@ Built against the full business resource pack, present in the workspace for the 
       250k-follower account banded `unknown` for lack of a baseline
 - [x] Calibration refused to conclude on 0 usable pairs and said why
 - [x] Browser QA of the corpus and calibration surfaces — not run in this phase; both render
-      without errors in the Phase 16 production browser sweep
+      without errors in the Phase 16 production browser sweep, and again on production on
+      4 Nov 2026 (B19: /admin/research and /admin/research/calibration, honest empty states, no console errors)
 
 ---
 
