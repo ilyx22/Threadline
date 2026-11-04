@@ -24,7 +24,7 @@
 | File storage | Cloudflare R2 | LIVE | 3 Nov (B09: upload, byte-identical read, tenant 404, signed-out 401) | £50 cap with alerts | Library link instead of upload | — |
 | Malware scanning of uploads | none | **OFF** | — | PROCESSING_SCAN off | Accept only known client files | Choose a processing worker (DR-11) |
 | Transactional email | Resend (mail.threadlinehq.com) | LIVE | 3 Nov (confirmation, ops alert, invitation and password reset all reached the Inbox) | Bounce/complaint webhook delivery not yet seen | Copy the link from the admin screen | Send one signed webhook test |
-| Absolute links in emails | `NEXT_PUBLIC_APP_URL` | **OFF** (falls back to the Vercel production hostname) | — | Warning on Admin → System | — | **Owner:** set it to `https://threadlinehq.com` in Vercel |
+| Absolute links in emails | `NEXT_PUBLIC_APP_URL` | CONFIGURED | 4 Nov: set to `https://threadlinehq.com` (Production, Config type). The 12 Sept entry was an empty Secret, which Vercel refuses for a `NEXT_PUBLIC_` name, so it was replaced | — | — | Confirm the Admin → System warning has cleared after the next deploy |
 | Scheduled jobs | Vercel cron + CRON_SECRET | LIVE | 3 Nov (50 jobs succeeded, none dead) | — | Run the job from Vercel by hand | — |
 | Shared rate limits | Upstash | **OFF** (in-memory per instance) | — | Weaker limits | — | Before real client data (DR-14) |
 | Error reporting | Sentry DSN | **OFF** | — | Errors are logged but nobody is alerted | Check Vercel logs | Before real client data (DR-14) |
@@ -60,6 +60,6 @@ Connectors are built for LinkedIn, X, YouTube, TikTok, Facebook, Instagram (Meta
 ## Owner actions from this register
 
 1. **Mark test-b16 as synthetic** before anyone sets the Attio key.
-2. **Set `NEXT_PUBLIC_APP_URL=https://threadlinehq.com`** in Vercel.
+2. ~~Set `NEXT_PUBLIC_APP_URL=https://threadlinehq.com` in Vercel.~~ Done 4 Nov.
 3. **Decide whether to set `NEXT_PUBLIC_BOOKING_URL`** (the Calendly link) for applicants.
 4. Before the first paying client: Vercel Pro, a backup plan for Neon, Upstash and Sentry (both free tiers), and a malware-scanning decision.
