@@ -6,7 +6,20 @@
 
 **Settings → Workspace → Your data → Prepare an export** (workspace admins only).
 
-- The export is a JSON copy of everything recorded for the workspace: Brand Brain, ideas, scripts, content, approvals, reports, invoices, pipeline and time.
+- The export is a JSON copy of the workspace's main records:
+  - Brand Brain;
+  - ideas;
+  - scripts, with every version;
+  - content and its platform packages;
+  - published posts;
+  - final reports and reviews;
+  - approvals and shared comments;
+  - invoices and payments;
+  - pipeline (enquiries, commercial events, lead messages);
+  - time entries;
+  - the member list.
+
+  Threadline's internal working notes, draft reports and research material aren't included.
 - Files are listed in the export but not included; download them from the **Library**.
 - The download link lasts seven days.
 

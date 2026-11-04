@@ -2,6 +2,8 @@ import "server-only";
 import { prisma } from "@/lib/db/client";
 import { WorkflowError } from "@/lib/domain/workflow";
 import { notify } from "@/lib/notify";
+import { appUrl } from "@/lib/app-url";
+import { enqueue } from "@/lib/jobs";
 
 /**
  * Client-raised support requests (CX-07). A member of a client workspace
@@ -24,6 +26,17 @@ export async function raiseRequest(orgId: string, userId: string, input: { title
     if (staff.length) {
       await notify({ orgId: internal.id, audience: { userIds: staff.map((s) => s.userId) }, kind: "support", title: `${input.blocking ? "Blocking: " : ""}${title}`, href: "/admin/support", severity: input.blocking ? "warning" : "info", dedupeKey: `support:${issue.id}` });
     }
+  }
+  // C09: staff email is off by default, so a blocking request would otherwise
+  // wait for someone to open the admin. It also goes to the operations inbox.
+  const ops = process.env.OPS_NOTIFY_EMAIL?.trim();
+  if (input.blocking && ops) {
+    const org = await prisma.organization.findUnique({ where: { id: orgId }, select: { name: true } });
+    await enqueue(
+      "email.send",
+      { to: ops, template: "notification", data: { name: "Threadline", title: `Blocking support request from ${org?.name ?? "a client"}: ${title}`, body: input.description?.trim().slice(0, 600) ?? "", link: `${appUrl()}/admin/support` } },
+      { idempotencyKey: `support:${issue.id}:ops-alert` },
+    );
   }
   return issue;
 }

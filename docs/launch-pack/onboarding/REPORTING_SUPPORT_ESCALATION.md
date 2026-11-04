@@ -33,7 +33,7 @@ The first four-week period is **Establish / Calibrate**. The first pieces are th
 ## Getting help (Help)
 
 - Anyone in the workspace can write **What do you need?** plus details, and press **Send to Threadline**.
-- Tick **This is stopping us from doing something** if it’s blocking you. It then reaches the team as a blocking request.
+- Tick **This is stopping us from doing something** if it’s blocking you. It then reaches the team as a blocking request, and also lands in Threadline’s operations inbox straight away.
 - Your workspace’s requests show their status:
   - **Received**
   - **Being looked at**

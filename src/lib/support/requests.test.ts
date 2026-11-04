@@ -27,4 +27,22 @@ describe("client support requests (CX-07)", () => {
     await raiseRequest(otherOrg, userId, { title: "Another workspace", blocking: false });
     assert.deepEqual((await listRequests(orgId)).map((r) => r.title), ["Cannot upload the raw take"]);
   });
+
+  it("emails the operations inbox for a blocking request only (C09)", async () => {
+    const was = process.env.OPS_NOTIFY_EMAIL;
+    process.env.OPS_NOTIFY_EMAIL = "ops-inbox@example.com";
+    try {
+      const blocking = await raiseRequest(orgId, userId, { title: "Recording Room will not open", blocking: true });
+      const quiet = await raiseRequest(orgId, userId, { title: "Question about the report", blocking: false });
+      const job = await prisma.job.findUnique({ where: { idempotencyKey: `support:${blocking.id}:ops-alert` } });
+      assert.ok(job, "blocking request queued an ops email");
+      assert.match(job.payload, /ops-inbox@example\.com/);
+      assert.match(job.payload, /QA Help: Recording Room will not open/);
+      assert.equal(await prisma.job.count({ where: { idempotencyKey: `support:${quiet.id}:ops-alert` } }), 0);
+      await prisma.job.deleteMany({ where: { idempotencyKey: { startsWith: "support:" }, payload: { contains: "ops-inbox@example.com" } } });
+    } finally {
+      if (was === undefined) delete process.env.OPS_NOTIFY_EMAIL;
+      else process.env.OPS_NOTIFY_EMAIL = was;
+    }
+  });
 });
