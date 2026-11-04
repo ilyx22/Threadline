@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/db/client";
 import { sideEffectsAllowed } from "@/lib/env";
 import { enqueue } from "@/lib/jobs";
-import { AttioClient, AttioError } from "./attio";
+import { AttioClient, AttioError, domainOf } from "./attio";
 
 /**
  * The CRM outbox (COM-04).
@@ -85,7 +85,21 @@ export async function sendOutboxRow(id: string, opts: { client?: AttioClient; en
     let result: { recordId: string; webUrl: string | null };
     let remoteObject: string;
     if (op.op === "upsert_company") {
-      result = await client.upsertCompany({ name: op.name, domain: op.domain });
+      // E07: without a domain the CRM cannot match the company, and creating it
+      // blind makes a duplicate every time. Use the domain the workspace has now
+      // (staff may have added it since), keep an existing link, or park it.
+      let domain = op.domain;
+      if (!domain && op.entityType === "organization") {
+        const site = (await prisma.organization.findUnique({ where: { id: op.entityId }, select: { website: true } }))?.website;
+        domain = domainOf(site);
+      }
+      if (!domain) {
+        const linked = await prisma.crmLink.findUnique({ where: { provider_entityType_entityId: { provider: "attio", entityType: op.entityType, entityId: op.entityId } } });
+        if (!linked) throw new AttioError("No website domain, so the CRM cannot match this company and would create a duplicate. Add the client's website (Admin → Clients), then retry.", "review");
+        result = { recordId: linked.remoteId, webUrl: linked.remoteUrl };
+      } else {
+        result = await client.upsertCompany({ name: op.name, domain });
+      }
       remoteObject = "companies";
     } else if (op.op === "upsert_person") {
       const company = await linkFor(op.companyEntity, "companies");
@@ -124,6 +138,19 @@ export async function sendOutboxRow(id: string, opts: { client?: AttioClient; en
     if (state === "failed") throw err;
     return state;
   }
+}
+
+/**
+ * E07: an Attio record reference pasted by staff — the record id itself or the
+ * URL of the record page. Returns the id, null for an empty field, or throws
+ * when something was entered that is not a record reference.
+ */
+export function parseAttioRecordRef(text: string | null | undefined): string | null {
+  const t = text?.trim();
+  if (!t) return null;
+  const id = /([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i.exec(t)?.[1];
+  if (!id) throw new Error("That is not an Attio record link or id. Open the deal in Attio and copy the page address.");
+  return id.toLowerCase();
 }
 
 /** Operator view: everything not yet in the CRM, oldest first. */

@@ -48,11 +48,20 @@ export type ProvisionInput = {
   feeOverrides?: { setupFeeMinor?: number; periodFeeMinor?: number };
   sourceApplicationId?: string | null;
   sourceProspectId?: string | null;
+  /**
+   * E07: the Attio deal already tracking this sale (staff worked it there as a
+   * prospect). The won deal updates that record instead of creating a second.
+   */
+  existingCrmDealId?: string | null;
 };
 
 type Actor = { userId: string; name: string; role: Role };
 
 export async function provisionClientWorkspace(actor: Actor, input: ProvisionInput) {
+  if (input.existingCrmDealId) {
+    const taken = await prisma.crmLink.findUnique({ where: { provider_remoteObject_remoteId: { provider: "attio", remoteObject: "deals", remoteId: input.existingCrmDealId } } });
+    if (taken) throw new ProvisionError("That Attio deal is already linked to another Threadline engagement. Check the deal in Attio, or leave the field empty to create a new one.");
+  }
   if (input.sourceApplicationId) {
     const app = await prisma.application.findUnique({ where: { id: input.sourceApplicationId }, select: { orgId: true, website: true } });
     if (!app) throw new ProvisionError("That application no longer exists.");
@@ -125,7 +134,11 @@ export async function provisionClientWorkspace(actor: Actor, input: ProvisionInp
           await tx.prospect.updateMany({ where: { id: input.sourceProspectId, orgId: null }, data: { orgId: org.id, convertedAt: new Date(), state: "won" } });
         }
 
-        // CRM mirror (COM-04): company, founder, and the won deal at its initial value.
+        if (input.existingCrmDealId) {
+          await tx.crmLink.create({ data: { provider: "attio", entityType: "engagement", entityId: engagement.id, remoteObject: "deals", remoteId: input.existingCrmDealId } });
+        }
+        // CRM mirror (COM-04): company, founder, and the won deal at its initial value
+        // (an update of the existing deal when one was linked above).
         const companyEntity = { type: "organization", id: org.id };
         const personEntity = { type: "application", id: input.sourceApplicationId ?? org.id };
         const rows = [

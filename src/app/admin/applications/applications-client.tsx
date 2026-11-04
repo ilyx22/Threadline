@@ -318,6 +318,15 @@ function ConvertForm({ application }: { application: Application }) {
               <Input id={`cslug-${application.id}`} name="slug" defaultValue={suggested} required />
             </Field>
           </div>
+          <Field
+            label="Existing Attio deal"
+            htmlFor={`cdeal-${application.id}`}
+            optional
+            hint="If you already track this sale as a deal in Attio, paste its page address. The won deal updates it instead of creating a second one."
+            error={fieldErrors.crmDeal}
+          >
+            <Input id={`cdeal-${application.id}`} name="crmDeal" placeholder="https://app.attio.com/…/deals/record/…" />
+          </Field>
           <SubmitButton size="sm" variant="primary">
             Convert and invite the founder
           </SubmitButton>

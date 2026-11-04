@@ -34,7 +34,7 @@ describe("CRM outbox and synthetic workspaces", () => {
 
   it("sends once the workspace is promoted to a real client", async () => {
     await prisma.organization.update({ where: { id: orgId }, data: { synthetic: false } });
-    const row = await queueCrm(prisma, { op: "upsert_company", entityType: "organization", entityId: orgId, name: "QA Synthetic CRM", domain: null }, `company:${orgId}:real`);
+    const row = await queueCrm(prisma, { op: "upsert_company", entityType: "organization", entityId: orgId, name: "QA Synthetic CRM", domain: "qa-synthetic-crm.example" }, `company:${orgId}:real`);
     assert.equal(await sendOutboxRow(row.id, { client }), "sent");
     assert.equal(calls, 1);
   });

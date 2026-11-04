@@ -8,6 +8,7 @@ import { auditInternal } from "@/lib/auth/audit";
 import { requireInternalStrict } from "@/lib/auth/guard";
 import { emailDeliveryConfigured } from "@/lib/email";
 import { provisionClientWorkspace, ProvisionError } from "@/lib/commercial/provision";
+import { parseAttioRecordRef } from "@/lib/crm/outbox";
 import { InvitationError } from "@/lib/team/invitations";
 import { parseStringArray, stringify, stringifyArray } from "@/lib/db/json";
 import {
@@ -60,7 +61,17 @@ const createClientSchema = z.object({
   founderName: z.string().min(2, "Enter the founder's name.").max(120),
   founderEmail: z.string().email("Enter a valid email address.").max(200),
   seedTemplate: checkbox,
+  crmDeal: z.string().max(500).optional(),
 });
+
+/** E07: the optional existing Attio deal, as a field error when it is not a record reference. */
+function crmDealOrError(text: string | undefined): { id: string | null } | { error: string } {
+  try {
+    return { id: parseAttioRecordRef(text) };
+  } catch (e) {
+    return { error: e instanceof Error ? e.message : "That is not an Attio record link." };
+  }
+}
 
 /**
  * Create a client workspace from the master template.
@@ -77,6 +88,8 @@ export async function createClientAction(
   return guarded(async () => {
     const admin = await requireInternalStrict("admin.clients.manage");
     const input = parseForm(createClientSchema, formData);
+    const deal = crmDealOrError(input.crmDeal);
+    if ("error" in deal) return err(deal.error, "validation", { crmDeal: deal.error });
     try {
       const { org, inviteLink } = await provisionClientWorkspace(
         { userId: admin.user.id, name: admin.user.name, role: admin.role },
@@ -93,6 +106,7 @@ export async function createClientAction(
           seedTemplate: input.seedTemplate,
           founder: { name: cleanText(input.founderName, 120), email: input.founderEmail },
           feeOverrides: { setupFeeMinor: Math.round(input.setupFee * 100), periodFeeMinor: Math.round(input.periodFee * 100) },
+          existingCrmDealId: deal.id,
         },
       );
       await auditInternal(admin.user.id, { orgId: org.id, action: "client.create", entityType: "organization", entityId: org.id, summary: `Created client workspace "${org.name}" and invited its founder`, meta: { slug: org.slug } });
@@ -112,6 +126,7 @@ const convertSchema = z.object({
   slug: z.string().min(2).max(60).regex(/^[a-z0-9-]+$/, "Use lowercase letters, numbers and hyphens only."),
   name: z.string().min(2).max(200),
   offerKey: z.string().max(60).default("standard"),
+  crmDeal: z.string().max(500).optional(),
 });
 
 /**
@@ -128,6 +143,8 @@ export async function convertApplicationAction(
     const input = parseForm(convertSchema, formData);
     const app = await prisma.application.findUnique({ where: { id: input.applicationId } });
     if (!app) return err("That application no longer exists.", "not_found");
+    const deal = crmDealOrError(input.crmDeal);
+    if ("error" in deal) return err(deal.error, "validation", { crmDeal: deal.error });
     try {
       const { org, inviteLink, alreadyConverted } = await provisionClientWorkspace(
         { userId: admin.user.id, name: admin.user.name, role: admin.role },
@@ -140,6 +157,7 @@ export async function convertApplicationAction(
           sourceApplicationId: app.id,
           sourceProspectId: app.prospectId,
           platforms: parseStringArray(app.platforms),
+          existingCrmDealId: deal.id,
         },
       );
       if (!alreadyConverted) {

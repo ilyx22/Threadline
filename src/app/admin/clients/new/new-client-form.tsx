@@ -169,6 +169,17 @@ export function NewClientForm({ defaultCadence }: { defaultCadence: number }) {
                   <Input id="founderEmail" name="founderEmail" type="email" required />
                 </Field>
               </div>
+              <div className="mt-5">
+                <Field
+                  label="Existing Attio deal"
+                  htmlFor="crmDeal"
+                  optional
+                  hint="If you already track this sale as a deal in Attio, paste its page address. The won deal updates it instead of creating a second one."
+                  error={fieldErrors.crmDeal}
+                >
+                  <Input id="crmDeal" name="crmDeal" placeholder="https://app.attio.com/…/deals/record/…" />
+                </Field>
+              </div>
             </div>
 
             <CheckboxField
