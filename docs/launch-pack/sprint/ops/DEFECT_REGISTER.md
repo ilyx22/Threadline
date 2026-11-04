@@ -107,8 +107,10 @@
 | DR-49 | VOC, next action and due date are optional on attended calls; the TODO requires them | S3 | `acquisition.ts` lines 559–569; CM18 | Claude | Fixed (3 Nov code read: sop.ts assertCallOutcome refuses an attended outcome without VOC, and requires next action + due date for follow-up/proposal outcomes; assertActiveRecord guards the prospect) | Make them required for attended outcomes, with a test (30 min) | Wk 1 |
 | DR-50 | "Every active record requires owner, next action and due date" isn't verified per model | S3 | TODO_AUDIT D9 | Claude | Fixed (3 Nov audit: prospects and wedges already refuse an active state without next action + date (sop.ts assertActiveRecord, 5 call sites) and prospects get the creating staff member as owner; applications did not, so an open application could sit with no owner, next action or date: qualify now requires next action + date for open, and defaults the owner to the person qualifying). Tasks carry due date + assignee by design, not enforced | Audit enforcement per model; add validation where it is missing | Wk 1 |
 | DR-51 | No end-to-end ROOT_ID lineage test through package, publish and metrics | S3 | TODO_AUDIT D7 | Claude | **Fixed 4 Nov** | Lineage check added to `qa:spine` (all three engagements): root → item → files → package → publish → snapshots → expectation/diagnosis → root listing. It found a real break: files uploaded before a piece was filed under its root kept no root (and stayed on the old root after a move). `attachToRootAction` now moves the piece's files with it; `sendToRecordingAction` inherits the idea's root. Proven: fails without the fix, passes with it. run-all 645 pass / 0 fail | Wk 1 |
-| DR-52 | No current results for `qa:public`, `qa:browser`, `qa:perf`, `qa:vitals` or `qa:visual:compare`; no accessibility sweep; the Recording Room modes are untested | S3 | TODO_AUDIT B5, F5, D5 | Claude | Open | Run them on a local production build and record the results. Report only for public routes (frozen) | Wk 1 |
+| DR-52 | No current results for `qa:public`, `qa:browser`, `qa:perf`, `qa:vitals` or `qa:visual:compare`; no accessibility sweep; the Recording Room modes are untested | S3 | TODO_AUDIT B5, F5, D5 | Claude | **Fixed 4 Nov** | All run on a local production build of HEAD (public code unchanged since freeze b344360). **qa:browser** (B19): 98 pass / 0 fail across 33 routes × 4 widths, incl. labels, names, one h1, keyboard focus. **qa:perf**: 9/9, heaviest reads ≤ 27 ms across 24 orgs. **qa:vitals**: 4/4 locally and on production (LCP 704 ms desktop / 208 ms phone, CLS 0). **qa:public**: 49 pass, 8 partial (nav targets 36 px < the suite's 44 px; above WCAG 2.2 AA 24 px; see DR-54), 20 fail all one local-only artefact (404 page's /app prefetch upgraded to https on http://localhost; production verified clean, no console errors); application submits end to end. **qa:visual:compare**: baselines were from 21 Sept (pre-freeze v5), so refreshed to the frozen site; recompare Δ0 on every page and width. **Recording Room**: new `qa:recording` (headless, real mouse/keys) 10 pass / 1 partial: list, teleprompter open, Space scroll/pause, speed remembered, R reset, ←/→ pieces, full screen in/out, Escape, phone fit; print keeps the list but also prints the app sidebar (DR-55) | Wk 1 |
 | DR-53 | Sales-call VOC and objections aren't mined into ideas | S3 | TODO_AUDIT TC6; AGENT_REGISTER | Claude | Open | Add a mining job and a weekly SOP step | Wk 2 |
+| DR-54 | Public nav links are 36 px tall, under the public suite's 44 px touch-target bar (they meet WCAG 2.2 AA 2.5.8 at 24 px) | S4 | qa:public 4 Nov | Owner (frozen) | Reported only (frozen public copy) | Leave unless the owner lifts the freeze | — |
+| DR-55 | The Recording Room has no print layout: printing keeps the ready list but also prints the app sidebar | S4 | qa:recording 4 Nov | Claude | Deferred | Add `no-print` to the app shell if a printed shot list is ever wanted | After Client #1 |
 
 ---
 
@@ -118,9 +120,9 @@
 | --- | --- | --- | --- |
 | S1 | 1 (DR-09, partly fixed) | 7 (DR-01, 02, 03, 05, 06, 07, 32) | 0 |
 | S2 | 3 (DR-11, 43, 46) | 6 (DR-04, 08, 17, 24, 25, 29) | 3 (DR-37, 38, 41) |
-| S3 | 10 | 5 (DR-19, 26, 27, 28, 30) | 7 (incl. DR-31 superseded) |
-| S4 | 5 | 2 (DR-18, 21) | 4 |
+| S3 | 8 | 7 (DR-19, 26, 27, 28, 30, 51, 52) | 7 (incl. DR-31 superseded) |
+| S4 | 5 | 2 (DR-18, 21) | 6 (incl. DR-54, 55) |
 
-53 rows in total. Reconciled against production and code on 3 Nov 2026 (smoke-prod 10/10, /api/health, code reads); the statuses above are the post-reconciliation counts.
+55 rows in total. Reconciled against production and code on 3 Nov 2026 (DR-51/52 fixed and DR-54/55 added on 4 Nov) (smoke-prod 10/10, /api/health, code reads); the statuses above are the post-reconciliation counts.
 
 **Every S1 item is owner configuration or an owner decision.** None needs new code.
