@@ -87,6 +87,58 @@ async function backdate(contentItemId: string, recordId: string, days: number) {
   await prisma.contentItem.update({ where: { id: contentItemId }, data: { liveAt: at } });
 }
 
+const MP4_HEAD = [0, 0, 0, 0x18, 0x66, 0x74, 0x79, 0x70, 0x69, 0x73, 0x6f, 0x6d];
+function rawTake(name: string) {
+  const b = Buffer.alloc(2048, 7);
+  Buffer.from(MP4_HEAD).copy(b);
+  const f = new FormData();
+  f.set("file", new File([new Uint8Array(b)], name, { type: "video/mp4" }));
+  f.set("category", "raw_media");
+  f.set("title", name);
+  return f;
+}
+
+/**
+ * DR-51: ROOT_ID lineage, end to end. From the root, every derivative record of
+ * the piece must be reachable and carry (or hang off something carrying) the
+ * root: content item → files → platform package → publish record → metric
+ * snapshots → expectations → diagnosis, and the root's own listing.
+ */
+async function checkLineage(e: Engagement, label: string, rootId: string, contentItemId: string) {
+  const org = await prisma.organization.findUniqueOrThrow({ where: { slug: e.slug }, select: { id: true } });
+  const item = await prisma.contentItem.findUnique({
+    where: { id: contentItemId },
+    select: {
+      rootId: true,
+      assets: { select: { id: true, rootId: true } },
+      packages: { select: { id: true } },
+      publishRecords: { select: { id: true, packageId: true, _count: { select: { snapshots: true } } } },
+    },
+  });
+  const expectations = await prisma.contentExpectation.findMany({ where: { orgId: org.id, subjectType: "content", subjectId: contentItemId }, select: { rootId: true } });
+  const diagnoses = await prisma.contentDiagnosis.findMany({ where: { orgId: org.id, contentItemId }, select: { rootId: true } });
+  const fromRoot = await prisma.contentRoot.findUnique({
+    where: { id: rootId },
+    select: { contentItems: { where: { id: contentItemId }, select: { publishRecords: { select: { snapshots: { select: { id: true } } } } } } },
+  });
+  const listed = (await listRoots(org.id)).find((r) => r.id === rootId)?.contentItems.some((c) => c.id === contentItemId) ?? false;
+  const isText = e.mode === "text";
+  const packageIds = new Set(item?.packages.map((p) => p.id));
+  const checks = {
+    item: item?.rootId === rootId,
+    files: isText ? true : (item?.assets.length ?? 0) > 0 && item!.assets.every((a) => a.rootId === rootId),
+    package: (item?.packages.length ?? 0) > 0,
+    publishOnPackage: (item?.publishRecords.length ?? 0) > 0 && item!.publishRecords.every((r) => !!r.packageId && packageIds.has(r.packageId)),
+    snapshots: (item?.publishRecords.reduce((n, r) => n + r._count.snapshots, 0) ?? 0) > 0,
+    snapshotsFromRoot: (fromRoot?.contentItems[0]?.publishRecords.flatMap((r) => r.snapshots).length ?? 0) > 0,
+    expectations: expectations.length > 0 && expectations.every((x) => x.rootId === rootId),
+    diagnoses: diagnoses.every((d) => d.rootId === rootId),
+    rootListing: listed,
+  };
+  const broken = Object.entries(checks).filter(([, v]) => !v).map(([k]) => k);
+  record(e.area, `${label}: ROOT_ID lineage holds root → item → files → package → publish → metrics → expectation/diagnosis`, broken.length === 0 ? "PASS" : "FAIL", broken.length ? `broken: ${broken.join(", ")}` : `files=${item?.assets.length} packages=${item?.packages.length} publishes=${item?.publishRecords.length} diagnoses=${diagnoses.length}`, broken.length ? "DR-51-LINEAGE" : undefined);
+}
+
 /** One published piece: idea → script → content → live. Returns ids or throws a recorded FAIL. */
 async function producePiece(e: Engagement, opts: { ideaId: string; rootId: string; lineageRole: "source" | "retest"; derivedFromId?: string; label: string; liveDaysAgo: number }) {
   const { area, slug, mode } = e;
@@ -133,6 +185,15 @@ async function producePiece(e: Engagement, opts: { ideaId: string; rootId: strin
   }
   if (!contentItemId) throw new Error(`${L}: no content item`);
 
+  // The raw take usually lands before the piece is filed under a test family (DR-51).
+  if (!isText) {
+    await actAs(e.founderEmail);
+    __resetRateLimits();
+    const up = await attempt(() => Content.uploadContentAssetAction(slug, contentItemId, null, rawTake(`${slug}-${L.replace(/\s+/g, "-")}-raw.mp4`)));
+    record(area, `${L}: raw take uploaded before the piece is filed under its root`, up.outcome === "ok" ? "PASS" : "FAIL", msg(up));
+    await actAs(OPERATOR);
+  }
+
   const att = await attempt(() => Learning.attachToRootAction(slug, { contentItemId, rootId: opts.rootId, lineageRole: opts.lineageRole, derivedFromId: opts.derivedFromId }));
   const exC = await attempt(() => Learning.recordExpectationAction(slug, { subjectType: "content", subjectId: contentItemId, rootId: opts.rootId }));
   const expRow = await prisma.contentExpectation.findFirst({ where: { subjectType: "content", subjectId: contentItemId }, orderBy: { createdAt: "desc" } });
@@ -166,8 +227,17 @@ async function producePiece(e: Engagement, opts: { ideaId: string; rootId: strin
   const events = await prisma.contentEvent.count({ where: { contentItemId } });
   record(area, `${L}: editing → review → changes → editing → review → approved (founder)`, [toReview, changes, back, review2, approve].every((r) => r.outcome === "ok") && stageRow?.stage === "approved" && events >= 6 ? "PASS" : "FAIL", `stage=${stageRow?.stage} events=${events} ${[toReview, changes, back, review2, approve].map((r) => r.outcome).join(",")}`);
 
+  // Package for the platform, approved by the founder, then published from it.
+  await actAs(OPERATOR);
+  const pk = await attempt(() => Content.createPackageAction(slug, contentItemId, "linkedin"));
+  const packageId = data<{ id: string }>(pk)?.id ?? "";
+  const pkSave = await attempt(() => Content.savePackageAction(slug, packageId, null, fd({ title: `${e.name}: ${L}`, caption: "What changed when the forecast stopped matching the board's gut feel.", hashtags: "founders" })));
+  await actAs(e.founderEmail);
+  const pkOk = await attempt(() => Content.approvePackageAction(slug, packageId));
+  record(area, `${L}: LinkedIn package created, captioned and approved`, pk.outcome === "ok" && pkSave.outcome === "ok" && pkOk.outcome === "ok" ? "PASS" : "FAIL", `${msg(pk)} / ${msg(pkSave)} / ${msg(pkOk)}`);
+
   // Publish.
-  const pr = await attempt(() => Distribution.createPublishRecordAction(slug, null, fd({ contentItemId, platform: "linkedin" })));
+  const pr = await attempt(() => Distribution.createPublishRecordAction(slug, null, fd({ contentItemId, platform: "linkedin", packageId })));
   const recordId = data<{ id: string }>(pr)?.id ?? "";
   const ready = await attempt(() => Distribution.updatePublishRecordAction(slug, recordId, null, fd({ status: "ready" })));
   const noUrl = await attempt(() => Distribution.updatePublishRecordAction(slug, recordId, null, fd({ status: "published" })));
@@ -318,6 +388,7 @@ async function runEngagement(e: Engagement) {
 
   /* ----- 7. Produce and publish the first piece. ----- */
   const piece = await producePiece(e, { ideaId, rootId, lineageRole: "source", label: "piece 1", liveDaysAgo: 21 });
+  const pieceLineage = () => checkLineage(e, "piece 1", rootId, piece.contentItemId);
 
   /* ----- 8. Attribution: click, inquiry, buyer-named event. ----- */
   await actAs(OPERATOR);
@@ -348,6 +419,7 @@ async function runEngagement(e: Engagement) {
   const diagId = data<{ id: string }>(diag)?.id ?? "";
   const diagClass = data<{ failureClass: string }>(diag)?.failureClass ?? "";
   const diagRow = diagId ? await prisma.contentDiagnosis.findUnique({ where: { id: diagId } }) : null;
+  await pieceLineage();
   if (strong) {
     record(area, "piece 1 diagnosed: strong result → failure class none / thesis preserved", diag.outcome === "ok" && diagClass === "none" && diagRow?.approvalState === "draft" ? "PASS" : "FAIL", `${msg(diag)} class=${diagClass} state=${diagRow?.approvalState}`);
   } else {
@@ -374,6 +446,7 @@ async function runEngagement(e: Engagement) {
     record(area, "retest idea created by the founder", idea2.outcome === "ok" ? "PASS" : "FAIL", msg(idea2));
     const piece2 = await producePiece(e, { ideaId: idea2Id, rootId, lineageRole: "retest", derivedFromId: piece.contentItemId, label: "retest", liveDaysAgo: 15 });
     await snapshots(e, piece2.recordId, piece2.contentItemId, true, "retest");
+    await checkLineage(e, "retest", rootId, piece2.contentItemId);
     const inq2 = await attempt(() => Pipeline.saveInquiryAction(slug, null, null, fd({ name: "Second Synthetic Buyer (QA)", stage: "inquiry", source: "content", contentItemId: piece2.contentItemId })));
     await actAs(OPERATOR);
     await Attribution.recordCommercialEventAction(slug, null, fd({ kind: "booked_call", source: "manual", attribution: "buyer_named", inquiryId: data<{ id: string }>(inq2)?.id ?? "", note: "Buyer quoted the board-meeting line on the call." }));

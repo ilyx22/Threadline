@@ -840,6 +840,8 @@ export async function sendToRecordingAction(
         format,
         priority: (script.idea?.priorityScore ?? 0) >= 78 ? "high" : "medium",
         founderId: ctx.user.id,
+        // DR-51: an idea already filed under a test family carries it into production.
+        rootId: script.idea?.rootId ?? null,
       },
     });
 

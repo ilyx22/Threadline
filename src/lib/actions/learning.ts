@@ -144,6 +144,14 @@ export async function attachToRootAction(
         derivedFromId: parsed.data.derivedFromId ?? null,
       },
     });
+    // DR-51: files are stamped with the piece's root at upload, and the raw take
+    // usually arrives before the piece is filed under a test family. The piece's
+    // files follow it, or they are orphaned from the lineage (or left on the old
+    // root after a move).
+    await prisma.asset.updateMany({
+      where: { orgId: ctx.org.id, contentItemId: item.id },
+      data: { rootId: root.id },
+    });
 
     await audit(ctx, {
       action: "learning.lineage.attach",
