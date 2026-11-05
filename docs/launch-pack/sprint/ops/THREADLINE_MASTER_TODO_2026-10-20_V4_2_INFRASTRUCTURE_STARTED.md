@@ -1,4 +1,6 @@
 # Threadline — detailed working TODO V4.2
+
+> **5 Nov 2026: ORDER SUPERSEDED.** Work order now follows the gates in `LAUNCH_SEQUENCE_V5_2026-11-05.md` (current gate: 1, prove delivery). Task wording and evidence below still apply.
 16 October 2026 · Status and execution reconciliation · New file; prior masters unchanged
 
 **Purpose:** take the existing business from its current built/drafted state to good working delivery, usable GTM infrastructure, sales/payment/legal readiness, approved assets and the first outreach batches. This is the current execution view requested by the owner, not approval of an undecided offer or a new strategic plan.
