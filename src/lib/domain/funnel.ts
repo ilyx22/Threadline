@@ -321,6 +321,15 @@ export const DEMAND_SOURCE_LABELS: Record<DemandSource | "unknown", string> = {
 export const TOUCH_KINDS = ["first", "follow_up", "value_sent", "reply", "booking", "other"] as const;
 export type TouchKind = (typeof TOUCH_KINDS)[number];
 
+/** Touches that send a message, and so carry the message version a reply answers. */
+export const OUTBOUND_TOUCH_KINDS = ["first", "follow_up", "value_sent"] as const;
+/**
+ * DR-48: written automatically when a prospect's reply is classified, carrying
+ * the version and channel of the last outbound touch. Distinct from "reply",
+ * which an operator records for a reply Threadline sent.
+ */
+export const REPLY_RECEIVED = "reply_received";
+
 export const EMPTY_COUNTS: FunnelCounts = {
   firstTouches: 0,
   replies: 0,

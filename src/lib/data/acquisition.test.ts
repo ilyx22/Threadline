@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { after, before, describe, it } from "node:test";
 import { PrismaClient } from "@prisma/client";
-import { funnelCounts, invariantBreaches, listProspects } from "./acquisition";
+import { funnelCounts, invariantBreaches, listProspects, repliesByMessageVersion } from "./acquisition";
 import { inputFromCounts } from "@/lib/domain/funnel";
 import { funnelRates } from "@/lib/domain/funnel";
 
@@ -163,5 +163,28 @@ describe("listing", () => {
       mine.every((r) => typeof r.overdue === "boolean"),
       true,
     );
+  });
+});
+
+describe("replies per message version (DR-48)", () => {
+  it("counts each prospect once per version, and a received reply is not a touch", async () => {
+    const V = `${MARK}-V`;
+    const [a, b] = await Promise.all(["va", "vb"].map((c) => prisma.prospect.create({ data: { company: `${MARK} ${c}`, sourceNote: MARK, state: "contacted", channel: V, nextAction: "x", nextActionDueAt: day(10) } })));
+    await prisma.prospectTouch.createMany({
+      data: [
+        { prospectId: a.id, at: day(1), kind: "first", messageVersion: `${V}1` },
+        { prospectId: a.id, at: day(2), kind: "follow_up", messageVersion: `${V}1` },
+        { prospectId: b.id, at: day(1), kind: "first", messageVersion: `${V}1` },
+        { prospectId: a.id, at: day(3), kind: "reply_received", messageVersion: `${V}1` },
+        { prospectId: b.id, at: day(4), kind: "first", messageVersion: `${V}2` },
+      ],
+    });
+    const rows = (await repliesByMessageVersion(range)).filter((r) => r.version.startsWith(V));
+    assert.deepEqual(rows, [
+      { version: `${V}1`, sent: 2, replied: 1 },
+      { version: `${V}2`, sent: 1, replied: 0 },
+    ]);
+    assert.equal((await funnelCounts(range, V)).touches, 4, "the received reply is not counted as a touch");
+    await prisma.prospect.deleteMany({ where: { id: { in: [a.id, b.id] } } });
   });
 });

@@ -24,7 +24,7 @@ import {
   resolveCheck,
 } from "@/lib/domain/sop";
 import { WorkflowError } from "@/lib/domain/workflow";
-import { DEMAND_SOURCES, TOUCH_KINDS } from "@/lib/domain/funnel";
+import { DEMAND_SOURCES, OUTBOUND_TOUCH_KINDS, REPLY_RECEIVED, TOUCH_KINDS } from "@/lib/domain/funnel";
 import {
   checkbox,
   cleanText,
@@ -331,6 +331,26 @@ export async function classifyReplyAction(
       dueAt.setDate(dueAt.getDate() + guidance.dueInDays);
       dueAt.setHours(12, 0, 0, 0);
     }
+
+    // DR-48: the reply is also a touch, carrying the message version and channel
+    // of the last outbound touch it answers, so replies per version are
+    // countable for DMs as well as email.
+    const answered = await prisma.prospectTouch.findFirst({
+      where: { prospectId, kind: { in: [...OUTBOUND_TOUCH_KINDS] } },
+      orderBy: { at: "desc" },
+      select: { messageVersion: true, channel: true },
+    });
+    await prisma.prospectTouch.create({
+      data: {
+        prospectId,
+        at: now,
+        kind: REPLY_RECEIVED,
+        messageVersion: answered?.messageVersion ?? null,
+        channel: answered?.channel ?? null,
+        note: `Reply classified: ${input.replyClass}`,
+        byId: admin.user.id,
+      },
+    });
 
     await prisma.prospect.update({
       where: { id: prospectId },

@@ -11,6 +11,8 @@ import {
   requiredFirstTouches,
   weakestConversion,
   workdaysBetween,
+  OUTBOUND_TOUCH_KINDS,
+  REPLY_RECEIVED,
   type FunnelCounts,
   type FunnelProjection,
   type Quota,
@@ -62,7 +64,7 @@ export async function funnelCounts(range: Range, channel?: string | null): Promi
 
   const [targeted, touches, firstTouches, replies, positive, booked, calls] = await Promise.all([
     prisma.prospect.count({ where: { ...channelWhere, createdAt: within } }),
-    prisma.prospectTouch.count({ where: { at: within, ...(channel ? { prospect: { channel } } : {}) } }),
+    prisma.prospectTouch.count({ where: { at: within, kind: { not: REPLY_RECEIVED }, ...(channel ? { prospect: { channel } } : {}) } }), // a reply received is not a touch Threadline made
     prisma.prospect.count({ where: { ...channelWhere, firstTouchAt: within } }),
     prisma.prospect.count({ where: { ...channelWhere, repliedAt: within } }),
     prisma.prospect.count({ where: { ...channelWhere, positiveReplyAt: within } }),
@@ -412,3 +414,24 @@ export async function invariantBreaches() {
 }
 
 export const EMPTY_FUNNEL = EMPTY_COUNTS;
+
+/**
+ * DR-48: sends and received replies per message version in a range, so a DM or
+ * email variant's reply rate can be read from Threadline's own records. A
+ * prospect counts once per version however many touches used it.
+ */
+export async function repliesByMessageVersion(range: Range) {
+  const touches = await prisma.prospectTouch.findMany({
+    where: { at: { gte: range.start, lte: range.end }, messageVersion: { not: null }, kind: { in: [...OUTBOUND_TOUCH_KINDS, REPLY_RECEIVED] } },
+    select: { prospectId: true, kind: true, messageVersion: true },
+  });
+  const by = new Map<string, { sent: Set<string>; replied: Set<string> }>();
+  for (const t of touches) {
+    const v = by.get(t.messageVersion!) ?? { sent: new Set(), replied: new Set() };
+    (t.kind === REPLY_RECEIVED ? v.replied : v.sent).add(t.prospectId);
+    by.set(t.messageVersion!, v);
+  }
+  return [...by.entries()]
+    .map(([version, v]) => ({ version, sent: v.sent.size, replied: v.replied.size }))
+    .sort((a, b) => a.version.localeCompare(b.version));
+}
