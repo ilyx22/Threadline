@@ -1,0 +1,7 @@
+post url,date,views,impressions,likes,comments,shares,saves
+https://example.invalid/NOT-LIVE/B1-LI-V01,2026-11-16,410,1250,18,3,1,
+https://example.invalid/NOT-LIVE/B1-LI-V01,2026-11-16,410,1250,18,3,1,
+https://example.invalid/NOT-LIVE/B1-LI-V01,2026-10-01,9999,9999,99,9,9,
+https://example.invalid/NOT-LIVE/B1-X-V01,2026-11-16,0,0,0,0,0,0
+https://example.invalid/NOT-LIVE/B1-VID-V01,2026-11-16,,2100,,,,
+https://example.invalid/NOT-LIVE/B1-VID-V01,2026-11-23,880,3400,41,6,4,2

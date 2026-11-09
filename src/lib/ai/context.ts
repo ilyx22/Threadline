@@ -15,6 +15,7 @@ import {
 import { money } from "@/lib/utils/format";
 import { searchKnowledge } from "@/lib/knowledge";
 import { KNOWLEDGE_KIND_LABEL, type KnowledgeKind } from "@/lib/knowledge/chunk";
+import { draftableResearch } from "@/lib/research/source-route";
 
 /**
  * Context composition.
@@ -95,7 +96,8 @@ export async function loadWorkspaceContext(
         : [],
       wanted.has("MARKET_CONTEXT")
         ? prisma.researchItem.findMany({
-            where: { orgId },
+            // Internal, private and excluded sources never reach a writer.
+            where: { orgId, ...draftableResearch() },
             orderBy: { capturedAt: "desc" },
             take: 30,
             include: { tags: { include: { tag: true } } },

@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db/client";
+import { draftableResearch } from "@/lib/research/source-route";
 import { audit, touchOrg } from "@/lib/auth/audit";
 import { requireOrgAccess } from "@/lib/auth/guard";
 import { resolveTags } from "@/lib/data/research";
@@ -452,7 +453,7 @@ export async function addPatternEvidenceAction(
 
     const [research, content] = await Promise.all([
       prisma.researchItem.findMany({
-        where: { id: { in: input.researchItemIds ?? [] }, orgId: ctx.org.id },
+        where: { id: { in: input.researchItemIds ?? [] }, orgId: ctx.org.id, ...draftableResearch() },
         select: { id: true },
       }),
       prisma.contentItem.findMany({

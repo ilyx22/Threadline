@@ -3,6 +3,7 @@
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db/client";
+import { draftableResearch } from "@/lib/research/source-route";
 import { audit, touchOrg } from "@/lib/auth/audit";
 import { requireOrgAccess } from "@/lib/auth/guard";
 import { stringify } from "@/lib/db/json";
@@ -694,7 +695,7 @@ export async function synthesiseRunAction(
     }
 
     const evidence = await prisma.researchItem.findMany({
-      where: { orgId: ctx.org.id, runId },
+      where: { orgId: ctx.org.id, runId, ...draftableResearch() },
       orderBy: { capturedAt: "desc" },
       take: 60,
       select: {

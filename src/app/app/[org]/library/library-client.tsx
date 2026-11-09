@@ -30,7 +30,8 @@ import {
   uploadLibraryAssetAction,
 } from "@/lib/actions/workspace";
 import { DIRECT_THRESHOLD, directUpload } from "@/lib/storage/direct-client";
-import { mineAssetAction } from "@/lib/actions/miner";
+import { mineAssetAction, setAssetRouteAction } from "@/lib/actions/miner";
+import { routeFromTags, SOURCE_ROUTE_LABEL, SOURCE_ROUTES, type SourceRoute } from "@/lib/research/source-route";
 
 const PROCESSING_LABEL: Record<string, string> = { queued: "Processing queued", processing: "Processing", ready: "Processed", failed: "Processing failed" };
 
@@ -53,6 +54,27 @@ type AssetView = {
   processingState?: string;
   sourceNote?: string | null;
 };
+
+/** BUILD-03: how a source may be used. Mining stays off until this is set. */
+function SourceRouteSelect({ slug, assetId, title, route }: { slug: string; assetId: string; title: string; route: SourceRoute | null }) {
+  const router = useRouter();
+  const [pending, start] = React.useTransition();
+  return (
+    <select
+      aria-label={`How ${title} may be used`}
+      className="max-w-32 rounded border border-line bg-transparent px-1 py-0.5 text-xs text-muted"
+      value={route ?? ""}
+      disabled={pending}
+      onChange={(e) => {
+        const next = e.target.value;
+        if (next) start(async () => { await setAssetRouteAction(slug, assetId, next); router.refresh(); });
+      }}
+    >
+      <option value="" disabled>Route source…</option>
+      {SOURCE_ROUTES.map((r) => <option key={r} value={r}>{SOURCE_ROUTE_LABEL[r]}</option>)}
+    </select>
+  );
+}
 
 function iconFor(mimeType: string | null, externalUrl: string | null) {
   if (externalUrl && !mimeType) return Link2;
@@ -153,9 +175,14 @@ export function LibraryGrid({
                     </a>
                   ) : null}
                   {canMine && asset.storagePath && asset.mimeType && /^text\/|application\/json/.test(asset.mimeType) ? (
-                    <ActionButton size="xs" variant="ghost" action={() => mineAssetAction(slug, asset.id)}>
-                      Mine it
-                    </ActionButton>
+                    <>
+                      <SourceRouteSelect slug={slug} assetId={asset.id} title={asset.title} route={routeFromTags(asset.tags)} />
+                      {routeFromTags(asset.tags) && routeFromTags(asset.tags) !== "EXCLUDED" ? (
+                        <ActionButton size="xs" variant="ghost" action={() => mineAssetAction(slug, asset.id)}>
+                          Mine it
+                        </ActionButton>
+                      ) : null}
+                    </>
                   ) : null}
                   {canManage ? (
                     <ActionButton

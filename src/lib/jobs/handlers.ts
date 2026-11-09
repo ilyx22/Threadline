@@ -75,7 +75,12 @@ registerHandler<{ assetId: string; orgId: string }>("mine.asset", async (payload
   const { mineAsset } = await import("@/lib/research/miner");
   // Mined on behalf of the workspace's owner, recorded on each item.
   const owner = await prisma.membership.findFirst({ where: { orgId: payload.orgId, isOwner: true }, select: { userId: true } });
-  if (owner) await mineAsset(payload.orgId, owner.userId, payload.assetId);
+  if (!owner) return;
+  // An unrouted or excluded file is held for a person, not retried.
+  const { WorkflowError } = await import("@/lib/domain/workflow");
+  await mineAsset(payload.orgId, owner.userId, payload.assetId).catch((e: unknown) => {
+    if (!(e instanceof WorkflowError)) throw e;
+  });
 });
 
 /**

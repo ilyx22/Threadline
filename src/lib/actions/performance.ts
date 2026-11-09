@@ -43,6 +43,12 @@ const metricSchema = z.object({
   revenue: z.coerce.number().min(0).default(0),
 });
 
+const MANUAL_METRICS = ["views", "impressions", "reach", "likes", "comments", "shares", "saves", "watchTimeSec", "avgViewSec", "retentionPct", "ctrPct", "leads", "bookedCalls", "revenue"] as const;
+
+function blankMetrics(formData: FormData): string[] {
+  return MANUAL_METRICS.filter((k) => String(formData.get(k) ?? "").trim() === "");
+}
+
 export async function addPerformanceSnapshotAction(
   orgSlug: string,
   _prev: ActionResult | null,
@@ -80,6 +86,8 @@ export async function addPerformanceSnapshotAction(
         bookedCalls: input.bookedCalls,
         revenueMinor: Math.round(input.revenue * 100),
         source: "manual",
+        // A blank box means not known, which is different from a measured zero.
+        unavailable: JSON.stringify(blankMetrics(formData)),
       },
     });
 
@@ -286,7 +294,7 @@ export async function importMetricsCsvAction(
       summary.matched++;
       if (mode !== "import") continue;
       try {
-        await prisma.performanceSnapshot.create({ data: { orgId: ctx.org.id, publishRecordId: recordId, capturedAt: c.capturedAt ?? new Date(), source: "csv", providerRecordId: c.fingerprint, fetchedAt: new Date(), provenance: JSON.stringify({ provider: "csv", file: file.name.slice(0, 120), line: c.line }), ...c.metrics } });
+        await prisma.performanceSnapshot.create({ data: { orgId: ctx.org.id, publishRecordId: recordId, capturedAt: c.capturedAt ?? new Date(), source: "csv", providerRecordId: c.fingerprint, fetchedAt: new Date(), provenance: JSON.stringify({ provider: "csv", file: file.name.slice(0, 120), line: c.line }), unavailable: JSON.stringify(MANUAL_METRICS.filter((k) => !(k in c.metrics))), ...c.metrics } });
         summary.created++;
       } catch (e) {
         if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2002") summary.duplicates++;

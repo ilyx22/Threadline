@@ -4,6 +4,7 @@ import { assertLongFormAllowed, isLongForm, longFormEnabled } from "@/lib/domain
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/db/client";
+import { draftableResearch } from "@/lib/research/source-route";
 import { audit, touchOrg } from "@/lib/auth/audit";
 import { requireOrgAccess } from "@/lib/auth/guard";
 import { generateIdeas } from "@/lib/ai/generators";
@@ -360,7 +361,7 @@ export async function linkIdeaEvidenceAction(
     const [idea, research] = await Promise.all([
       prisma.idea.findFirst({ where: { id: ideaId, orgId: ctx.org.id }, select: { id: true } }),
       prisma.researchItem.findMany({
-        where: { id: { in: researchItemIds }, orgId: ctx.org.id },
+        where: { id: { in: researchItemIds }, orgId: ctx.org.id, ...draftableResearch() },
         select: { id: true },
       }),
     ]);
